@@ -55,16 +55,40 @@ export function enumLabel(map: Record<string, string>, key: string): string {
   return map[key] ?? key;
 }
 
-export const listProgrammes = cache(async (): Promise<ProgrammeWithUniversity[]> => {
-  const { data, error } = await supabase
-    .from("programme")
-    .select("*, university(slug, name_lv, name_en, city)")
-    .order("degree_level")
-    .order("name_en");
+export type ProgrammeFilters = {
+  budgetOnly?: boolean;
+  cities?: string[];
+  language?: string;
+  mode?: string;
+};
 
-  if (error) throw error;
-  return data as ProgrammeWithUniversity[];
-});
+export const listProgrammes = cache(
+  async (filters: ProgrammeFilters = {}): Promise<ProgrammeWithUniversity[]> => {
+    let query = supabase.from("programme").select("*, university(slug, name_lv, name_en, city)");
+
+    if (filters.budgetOnly) {
+      query = query.in("funding_type", ["budget", "both"]);
+    }
+    // Фильтр смотрит только на programme.city, не на university.city — пока
+    // у всех наших записей город указан явно на уровне программы, этого
+    // достаточно. Если появятся программы без своего city, нужно будет
+    // учитывать город вуза как запасной вариант.
+    if (filters.cities && filters.cities.length > 0) {
+      query = query.in("city", filters.cities);
+    }
+    if (filters.language) {
+      query = query.eq("language_of_instruction", filters.language);
+    }
+    if (filters.mode) {
+      query = query.eq("study_mode", filters.mode);
+    }
+
+    const { data, error } = await query.order("degree_level").order("name_en");
+
+    if (error) throw error;
+    return data as ProgrammeWithUniversity[];
+  },
+);
 
 export const getProgramme = cache(
   async (

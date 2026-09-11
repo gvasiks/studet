@@ -14,6 +14,7 @@
     "title": "Study programme catalogue",
     "subtitle": "Every programme we've checked so far. No registration required.",
     "empty": "Nothing here yet.",
+    "emptyFiltered": "Nothing matches this filter. Try widening your choices.",
     "years": "years",
     "degreeLevel": {
       "college": "College studies",
@@ -46,7 +47,11 @@
     },
     "verifiedPrefix": "Verified",
     "unverifiedLabel": "Auto-extracted — check the university's website",
-    "sourceLinkLabel": "Official source"
+    "sourceLinkLabel": "Official source",
+    "surveyTeaser": "Not sure what to pick?",
+    "surveyCta": "Take the questionnaire",
+    "filtersSummary": "Shown by filter:",
+    "clearFilters": "Clear filter"
   },
   "programme": {
     "backToCatalog": "Back to catalogue",
@@ -58,5 +63,58 @@
     "funding": "Funding",
     "accreditation": "Accredited until",
     "notFoundTitle": "Programme not found"
+  },
+  "survey": {
+    "title": "What fits you?",
+    "intro": "Six quick questions. No registration, nothing is saved anywhere.",
+    "stepLabel": "Step",
+    "of": "of",
+    "back": "Back",
+    "next": "Next",
+    "submit": "See programmes",
+    "skipToSearch": "I already know what I'm looking for",
+    "exams": {
+      "title": "Which national exams have you taken or plan to take?",
+      "hint": "This answer doesn't affect the list yet — the competition score calculator is still being built.",
+      "subjects": {
+        "mathematics": "Mathematics",
+        "latvian": "Latvian language",
+        "english": "English language",
+        "physics": "Physics",
+        "chemistry": "Chemistry",
+        "biology": "Biology",
+        "history": "History",
+        "literature": "Latvian literature"
+      }
+    },
+    "interests": {
+      "title": "Which fields interest you?",
+      "hint": "This list is still a draft and doesn't affect the result yet.",
+      "categories": {
+        "business": "Business and economics",
+        "it": "IT and technology",
+        "law": "Law",
+        "health": "Health and social care",
+        "humanities": "Humanities and communication",
+        "engineering": "Engineering and natural sciences"
+      }
+    },
+    "funding": {
+      "title": "Budget place or ready to pay?",
+      "budgetOnly": "Budget places only",
+      "any": "Any option"
+    },
+    "city": {
+      "title": "Which city do you want to study in?",
+      "anywhere": "I'm ready to relocate anywhere"
+    },
+    "language": {
+      "title": "Which language do you want to study in?",
+      "any": "Doesn't matter"
+    },
+    "mode": {
+      "title": "Which study mode do you want?",
+      "any": "Doesn't matter"
+    }
   }
 }

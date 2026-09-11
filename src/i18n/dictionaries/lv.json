@@ -14,6 +14,7 @@
     "title": "Studiju programmu katalogs",
     "subtitle": "Visas programmas, ko līdz šim esam pārbaudījuši. Bez reģistrācijas.",
     "empty": "Pagaidām šeit nekā nav.",
+    "emptyFiltered": "Ar šādu filtru nekas neatbilst. Pamēģini paplašināt izvēli.",
     "years": "gadi",
     "degreeLevel": {
       "college": "Koledžas studijas",
@@ -46,7 +47,11 @@
     },
     "verifiedPrefix": "Pārbaudīts",
     "unverifiedLabel": "Iegūts automātiski — pārbaudiet augstskolas mājaslapā",
-    "sourceLinkLabel": "Oficiālais avots"
+    "sourceLinkLabel": "Oficiālais avots",
+    "surveyTeaser": "Nezini, ko izvēlēties?",
+    "surveyCta": "Aizpildi aptauju",
+    "filtersSummary": "Rādīts pēc filtra:",
+    "clearFilters": "Notīrīt filtru"
   },
   "programme": {
     "backToCatalog": "Atpakaļ uz katalogu",
@@ -58,5 +63,58 @@
     "funding": "Finansējums",
     "accreditation": "Akreditēta līdz",
     "notFoundTitle": "Programma nav atrasta"
+  },
+  "survey": {
+    "title": "Kas tev der?",
+    "intro": "Seši ātri jautājumi. Bez reģistrācijas, atbildes nekur nesaglabājas.",
+    "stepLabel": "Solis",
+    "of": "no",
+    "back": "Atpakaļ",
+    "next": "Tālāk",
+    "submit": "Skatīt programmas",
+    "skipToSearch": "Es jau zinu, ko meklēju",
+    "exams": {
+      "title": "Kurus centralizētos eksāmenus esi kārtojis vai plāno kārtot?",
+      "hint": "Pagaidām šī atbilde neietekmē sarakstu — konkursa punktu aprēķins vēl top.",
+      "subjects": {
+        "mathematics": "Matemātika",
+        "latvian": "Latviešu valoda",
+        "english": "Angļu valoda",
+        "physics": "Fizika",
+        "chemistry": "Ķīmija",
+        "biology": "Bioloģija",
+        "history": "Vēsture",
+        "literature": "Latviešu literatūra"
+      }
+    },
+    "interests": {
+      "title": "Kuras jomas tev interesē?",
+      "hint": "Saraksts vēl tiek pilnveidots un pagaidām neietekmē rezultātu.",
+      "categories": {
+        "business": "Bizness un ekonomika",
+        "it": "IT un tehnoloģijas",
+        "law": "Tiesības",
+        "health": "Veselība un sociālā joma",
+        "humanities": "Humanitārās zinātnes un komunikācija",
+        "engineering": "Inženierzinātnes un dabaszinātnes"
+      }
+    },
+    "funding": {
+      "title": "Budžeta vieta vai esi gatavs maksāt?",
+      "budgetOnly": "Tikai budžeta vietas",
+      "any": "Visi varianti"
+    },
+    "city": {
+      "title": "Kurā pilsētā vēlies studēt?",
+      "anywhere": "Esmu gatavs pārcelties uz jebkuru pilsētu"
+    },
+    "language": {
+      "title": "Kādā valodā vēlies studēt?",
+      "any": "Nav svarīgi"
+    },
+    "mode": {
+      "title": "Kādā formā vēlies studēt?",
+      "any": "Nav svarīgi"
+    }
   }
 }
