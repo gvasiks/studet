@@ -4,6 +4,59 @@
   },
   "home": {
     "title": "Where can I actually get in?",
-    "description": "Questionnaire, catalogue and competition score calculator in one place. No registration required."
+    "description": "Questionnaire, catalogue and competition score calculator in one place. No registration required.",
+    "catalogCta": "Browse the catalogue"
+  },
+  "nav": {
+    "catalog": "Programme catalogue"
+  },
+  "catalog": {
+    "title": "Study programme catalogue",
+    "subtitle": "Every programme we've checked so far. No registration required.",
+    "empty": "Nothing here yet.",
+    "years": "years",
+    "degreeLevel": {
+      "college": "College studies",
+      "bachelor": "Bachelor's studies",
+      "master": "Master's studies",
+      "doctoral": "Doctoral studies",
+      "foundation": "Foundation programme"
+    },
+    "studyMode": {
+      "full_time": "Full-time",
+      "part_time": "Part-time",
+      "distance": "Distance learning"
+    },
+    "language": {
+      "lv": "Latvian",
+      "en": "English"
+    },
+    "city": {
+      "riga": "Riga",
+      "daugavpils": "Daugavpils",
+      "valmiera": "Valmiera",
+      "ventspils": "Ventspils",
+      "jelgava": "Jelgava",
+      "liepaja": "Liepāja"
+    },
+    "funding": {
+      "budget": "Budget places",
+      "paid": "Paid studies",
+      "both": "Budget and paid places"
+    },
+    "verifiedPrefix": "Verified",
+    "unverifiedLabel": "Auto-extracted — check the university's website",
+    "sourceLinkLabel": "Official source"
+  },
+  "programme": {
+    "backToCatalog": "Back to catalogue",
+    "degreeLevel": "Degree level",
+    "language": "Language of instruction",
+    "studyMode": "Study mode",
+    "duration": "Duration",
+    "city": "City",
+    "funding": "Funding",
+    "accreditation": "Accredited until",
+    "notFoundTitle": "Programme not found"
   }
 }

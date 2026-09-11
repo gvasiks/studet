@@ -4,6 +4,59 @@
   },
   "home": {
     "title": "Kur tiešām varu iestāties?",
-    "description": "Aptauja, katalogs un konkursa punktu aprēķins vienuviet. Bez reģistrācijas."
+    "description": "Aptauja, katalogs un konkursa punktu aprēķins vienuviet. Bez reģistrācijas.",
+    "catalogCta": "Skatīt katalogu"
+  },
+  "nav": {
+    "catalog": "Programmu katalogs"
+  },
+  "catalog": {
+    "title": "Studiju programmu katalogs",
+    "subtitle": "Visas programmas, ko līdz šim esam pārbaudījuši. Bez reģistrācijas.",
+    "empty": "Pagaidām šeit nekā nav.",
+    "years": "gadi",
+    "degreeLevel": {
+      "college": "Koledžas studijas",
+      "bachelor": "Bakalaura studijas",
+      "master": "Maģistra studijas",
+      "doctoral": "Doktora studijas",
+      "foundation": "Sagatavošanas programma"
+    },
+    "studyMode": {
+      "full_time": "Pilna laika",
+      "part_time": "Nepilna laika",
+      "distance": "Tālmācība"
+    },
+    "language": {
+      "lv": "latviešu",
+      "en": "angļu"
+    },
+    "city": {
+      "riga": "Rīga",
+      "daugavpils": "Daugavpils",
+      "valmiera": "Valmiera",
+      "ventspils": "Ventspils",
+      "jelgava": "Jelgava",
+      "liepaja": "Liepāja"
+    },
+    "funding": {
+      "budget": "Budžeta vietas",
+      "paid": "Maksas studijas",
+      "both": "Budžeta un maksas vietas"
+    },
+    "verifiedPrefix": "Pārbaudīts",
+    "unverifiedLabel": "Iegūts automātiski — pārbaudiet augstskolas mājaslapā",
+    "sourceLinkLabel": "Oficiālais avots"
+  },
+  "programme": {
+    "backToCatalog": "Atpakaļ uz katalogu",
+    "degreeLevel": "Studiju līmenis",
+    "language": "Studiju valoda",
+    "studyMode": "Studiju forma",
+    "duration": "Ilgums",
+    "city": "Pilsēta",
+    "funding": "Finansējums",
+    "accreditation": "Akreditēta līdz",
+    "notFoundTitle": "Programma nav atrasta"
   }
 }
