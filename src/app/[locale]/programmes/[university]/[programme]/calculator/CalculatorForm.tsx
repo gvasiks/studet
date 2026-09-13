@@ -48,10 +48,16 @@ export function CalculatorForm({
     () => [...new Set(terms.filter((t) => t.kind === "ce" && t.subject).map((t) => t.subject as string))],
     [terms],
   );
+  // certificate/entrance_exam — не привязаны к предмету, у каждой формулы
+  // максимум по одному слагаемому такого рода (ЛУ/Вентспилс, сентябрь 2026)
+  const hasCertificate = terms.some((t) => t.kind === "certificate");
+  const hasEntranceExam = terms.some((t) => t.kind === "entrance_exam");
 
   const [inputs, setInputs] = useState<Record<string, SubjectInput>>(() =>
     Object.fromEntries(subjects.map((subject) => [subject, { percent: "", level: "augstakais" as ExamLevel }])),
   );
+  const [certificate, setCertificate] = useState("");
+  const [entranceExam, setEntranceExam] = useState("");
 
   const examResults: ExamResult[] = subjects.flatMap((subject) => {
     const value = inputs[subject];
@@ -60,7 +66,11 @@ export function CalculatorForm({
     return [{ subject, percent, level: value.level }];
   });
 
-  const result = calculateScore(terms, gates, examResults, levelCoefficients);
+  const extras: { certificate?: number; entranceExam?: number } = {};
+  if (certificate !== "" && !Number.isNaN(Number(certificate))) extras.certificate = Number(certificate);
+  if (entranceExam !== "" && !Number.isNaN(Number(entranceExam))) extras.entranceExam = Number(entranceExam);
+
+  const result = calculateScore(terms, gates, examResults, levelCoefficients, extras);
 
   return (
     <div className="mt-8">
@@ -98,6 +108,40 @@ export function CalculatorForm({
             </RadioGroup>
           </div>
         ))}
+
+        {hasCertificate && (
+          <div className="flex flex-wrap items-center gap-4">
+            <span className="w-40 shrink-0 text-sm font-medium text-zinc-700">
+              {dict.calculator.termKinds.certificate}
+            </span>
+            <Input
+              type="number"
+              min={0}
+              max={10}
+              size="sm"
+              className="w-24"
+              value={certificate}
+              onValueChange={setCertificate}
+            />
+          </div>
+        )}
+
+        {hasEntranceExam && (
+          <div className="flex flex-wrap items-center gap-4">
+            <span className="w-40 shrink-0 text-sm font-medium text-zinc-700">
+              {dict.calculator.termKinds.entrance_exam}
+            </span>
+            <Input
+              type="number"
+              min={0}
+              max={10}
+              size="sm"
+              className="w-24"
+              value={entranceExam}
+              onValueChange={setEntranceExam}
+            />
+          </div>
+        )}
       </div>
 
       <div className="mt-8 rounded-xl bg-zinc-50 p-6">
