@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { calculateScore, type ExamResult, type FormulaTerm } from "./formula";
+import { calculateScore, extraKey, type ExamResult, type FormulaTerm } from "./formula";
 
 // Пример расчёта ЛУ из docs/PLAN.md, раздел 6 (опубликован университетом):
 // математика 56% (augstākais) × 1,00 × 6,5 = 364,00
@@ -52,6 +52,29 @@ describe("calculateScore — пример ЛУ из docs/PLAN.md", () => {
     );
     expect(result.lines[1].input).toBeNull(); // латышский не сдавали
     expect(result.lines[1].points).toBe(0);
+  });
+});
+
+describe("calculateScore — несколько именованных entrance_exam в одной формуле", () => {
+  // RTU Rīgas Biznesa skola: тест английского + собеседование + тест
+  // математики — три разных числа, не одно (pipeline/src/seed_formulas.py)
+  it("различает слагаемые по extraKey (kind + subject-метка), не путает их значения", () => {
+    const terms: FormulaTerm[] = [
+      { kind: "entrance_exam", subject: "english_test", coefficient: 0.25 },
+      { kind: "entrance_exam", subject: "interview", coefficient: 0.25 },
+      { kind: "entrance_exam", subject: "math_test", coefficient: 0.25 },
+    ];
+    const extras = {
+      [extraKey(terms[0])]: 80,
+      [extraKey(terms[1])]: 60,
+      [extraKey(terms[2])]: 90,
+    };
+
+    const result = calculateScore(terms, [], [], LEVEL_COEFFICIENTS, extras);
+
+    expect(result.lines[0].points).toBeCloseTo(20, 2); // 80 * 0.25
+    expect(result.lines[1].points).toBeCloseTo(15, 2); // 60 * 0.25
+    expect(result.lines[2].points).toBeCloseTo(22.5, 2); // 90 * 0.25
   });
 });
 

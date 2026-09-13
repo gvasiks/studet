@@ -135,7 +135,10 @@
     "termKinds": {
       "ce_average": "Vidējais % visos CE",
       "certificate": "Atestāta vērtējums",
-      "entrance_exam": "Iestājpārbaudījums"
+      "entrance_exam": "Iestājpārbaudījums",
+      "entrance_exam_english_test": "Angļu valodas zināšanu pārbaude",
+      "entrance_exam_interview": "Strukturētā intervija",
+      "entrance_exam_math_test": "Matemātikas iestājpārbaudījums"
     }
   }
 }

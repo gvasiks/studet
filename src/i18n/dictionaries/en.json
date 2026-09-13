@@ -135,7 +135,10 @@
     "termKinds": {
       "ce_average": "Average % across all exams",
       "certificate": "Certificate grade",
-      "entrance_exam": "Entrance exam"
+      "entrance_exam": "Entrance exam",
+      "entrance_exam_english_test": "English proficiency test",
+      "entrance_exam_interview": "Structured interview",
+      "entrance_exam_math_test": "Mathematics entrance exam"
     }
   }
 }

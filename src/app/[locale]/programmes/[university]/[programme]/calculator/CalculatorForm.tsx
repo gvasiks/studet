@@ -6,6 +6,7 @@ import type { Locale } from "@/i18n/config";
 import type { Dictionary } from "@/i18n/dictionaries";
 import {
   calculateScore,
+  extraKey,
   type ExamLevel,
   type ExamResult,
   type FormulaGate,
@@ -22,8 +23,12 @@ function subjectLabel(dict: Dictionary, subject: string): string {
 }
 
 function termLabel(dict: Dictionary, term: FormulaTerm): string {
-  if (term.subject) return subjectLabel(dict, term.subject);
+  if (term.kind === "ce" && term.subject) return subjectLabel(dict, term.subject);
   const known = dict.calculator.termKinds as Record<string, string>;
+  // Именованное испытание (RTU Rīgas Biznesa skola: несколько разных
+  // entrance_exam в одной формуле) — своя метка по составному ключу;
+  // безымянное (Вентспилс) — просто по виду термина.
+  if (term.subject) return known[`${term.kind}_${term.subject}`] ?? term.subject;
   return known[term.kind] ?? term.kind;
 }
 
@@ -48,16 +53,21 @@ export function CalculatorForm({
     () => [...new Set(terms.filter((t) => t.kind === "ce" && t.subject).map((t) => t.subject as string))],
     [terms],
   );
-  // certificate/entrance_exam — не привязаны к предмету, у каждой формулы
-  // максимум по одному слагаемому такого рода (ЛУ/Вентспилс, сентябрь 2026)
-  const hasCertificate = terms.some((t) => t.kind === "certificate");
-  const hasEntranceExam = terms.some((t) => t.kind === "entrance_exam");
+  // certificate/entrance_exam — формула может нести несколько таких
+  // слагаемых сразу (RTU Rīgas Biznesa skola: тест английского +
+  // собеседование + тест математики — три разных числа), различаются
+  // по extraKey (kind + subject-метка испытания).
+  const extraTerms = useMemo(
+    () => terms.filter((t) => t.kind === "certificate" || t.kind === "entrance_exam"),
+    [terms],
+  );
 
   const [inputs, setInputs] = useState<Record<string, SubjectInput>>(() =>
     Object.fromEntries(subjects.map((subject) => [subject, { percent: "", level: "augstakais" as ExamLevel }])),
   );
-  const [certificate, setCertificate] = useState("");
-  const [entranceExam, setEntranceExam] = useState("");
+  const [extraInputs, setExtraInputs] = useState<Record<string, string>>(() =>
+    Object.fromEntries(extraTerms.map((term) => [extraKey(term), ""])),
+  );
 
   const examResults: ExamResult[] = subjects.flatMap((subject) => {
     const value = inputs[subject];
@@ -66,9 +76,12 @@ export function CalculatorForm({
     return [{ subject, percent, level: value.level }];
   });
 
-  const extras: { certificate?: number; entranceExam?: number } = {};
-  if (certificate !== "" && !Number.isNaN(Number(certificate))) extras.certificate = Number(certificate);
-  if (entranceExam !== "" && !Number.isNaN(Number(entranceExam))) extras.entranceExam = Number(entranceExam);
+  const extras: Record<string, number> = {};
+  for (const term of extraTerms) {
+    const key = extraKey(term);
+    const value = Number(extraInputs[key]);
+    if (extraInputs[key] !== "" && !Number.isNaN(value)) extras[key] = value;
+  }
 
   const result = calculateScore(terms, gates, examResults, levelCoefficients, extras);
 
@@ -109,39 +122,23 @@ export function CalculatorForm({
           </div>
         ))}
 
-        {hasCertificate && (
-          <div className="flex flex-wrap items-center gap-4">
-            <span className="w-40 shrink-0 text-sm font-medium text-zinc-700">
-              {dict.calculator.termKinds.certificate}
-            </span>
-            <Input
-              type="number"
-              min={0}
-              max={10}
-              size="sm"
-              className="w-24"
-              value={certificate}
-              onValueChange={setCertificate}
-            />
-          </div>
-        )}
-
-        {hasEntranceExam && (
-          <div className="flex flex-wrap items-center gap-4">
-            <span className="w-40 shrink-0 text-sm font-medium text-zinc-700">
-              {dict.calculator.termKinds.entrance_exam}
-            </span>
-            <Input
-              type="number"
-              min={0}
-              max={10}
-              size="sm"
-              className="w-24"
-              value={entranceExam}
-              onValueChange={setEntranceExam}
-            />
-          </div>
-        )}
+        {extraTerms.map((term) => {
+          const key = extraKey(term);
+          return (
+            <div key={key} className="flex flex-wrap items-center gap-4">
+              <span className="w-40 shrink-0 text-sm font-medium text-zinc-700">{termLabel(dict, term)}</span>
+              <Input
+                type="number"
+                min={0}
+                max={100}
+                size="sm"
+                className="w-24"
+                value={extraInputs[key]}
+                onValueChange={(value) => setExtraInputs((prev) => ({ ...prev, [key]: value }))}
+              />
+            </div>
+          );
+        })}
       </div>
 
       <div className="mt-8 rounded-xl bg-zinc-50 p-6">

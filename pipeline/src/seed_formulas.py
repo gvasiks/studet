@@ -86,6 +86,38 @@ akadēmisko gadu на сайте ЛУ уже опубликован
 (60% веса на entrance_exam) тихо считалась в 0. Исправлено в том же
 коммите, что и эта партия формул.
 
+=== RTU — 2 программы Rīgas Biznesa skola (RBS) ===
+
+Источник — та же страница, что и в предыдущем RTU-заходе (она
+дословно воспроизводит решение Сената с номером и датой, не сторонняя
+интерпретация — так уже решили при загрузке каталога):
+
+  "Uzņemšanas noteikumi īsā cikla un pirmā cikla studiju programmās
+  2026./2027. akadēmiskajā gadā", 31.7. punkts
+  (RTU Senāta 24.11.2025. sēdes protokollēmums Nr. 697)
+  https://www.rtu.lv/lv/studijas/uznemsana/uznemsanas-noteikumi/uznemsanas-noteikumi-pamatstudijas
+
+Из всего каталога РТУ (без Liepāja — её отдельно и точнее покрывает
+rtu_liepaja.py) это единственные 2 бакалаврские программы без
+слагаемого "fizika un/vai ķīmija": почти весь остальной каталог живёт
+по общему правилу п.31.1, где это слагаемое есть у всех ~20
+направлений подряд, включая формально гуманитарную "Tehniskā
+tulkošana un tekstveide" (п.31.6). Программы Rēzekne (RTU RA) сюда не
+попали по другой причине — там принципиально другая модель (сумма
+ВСЕХ сданных ЦЭ без разных весов по предметам + оценки аттестата,
+делённые на 1000), не сумма поимённо взвешенных предметов, как у нас.
+
+У RBS-формулы — три разных вступительных испытания с одинаковым весом
+0,25 каждое (тест английского, собеседование, тест математики), а не
+один общий балл. Раньше наша схема не могла их различить — CalculatorForm.tsx
+показывал одно поле "Iestājpārbaudījums" на формулу. Решение —
+переиспользовать существующее поле formula_term.subject и для
+entrance_exam/certificate тоже (не только для 'ce'): там это не
+предмет ЦЭ, а метка конкретного испытания ('english_test',
+'interview', 'math_test'), различаемая в калькуляторе по extraKey()
+(formula.ts) вместо одного жёстко зашитого имени. Миграция схемы не
+потребовалась — subject уже был текстовым полем без ограничений.
+
 verified_at везде NULL — этот скрипт заполняет только источник и
 данные, подтверждает формулу исключительно человек через Supabase
 Studio (правило 6 CLAUDE.md).
@@ -120,6 +152,17 @@ LU_SOURCE_DOC = (
     "konsolidēts ar grozījumiem līdz 04.07.2025.)"
 )
 LU_VALID_FROM = date(2024, 11, 28)
+
+RTU_SOURCE_URL = (
+    "https://www.rtu.lv/lv/studijas/uznemsana/uznemsanas-noteikumi/"
+    "uznemsanas-noteikumi-pamatstudijas"
+)
+RTU_SOURCE_DOC = (
+    "Uzņemšanas noteikumi īsā cikla un pirmā cikla studiju programmās "
+    "2026./2027. akadēmiskajā gadā, 31.7. punkts "
+    "(RTU Senāta 24.11.2025. sēdes protokollēmums Nr. 697)"
+)
+RTU_VALID_FROM = date(2025, 11, 24)
 
 # subject — те же ключи, что в dict.survey.exams.subjects (lv.json/en.json),
 # иначе калькулятор покажет сырой ключ вместо перевода (CalculatorForm.tsx).
@@ -335,6 +378,23 @@ LU_FORMULA_SEEDS = [
     },
 ]
 
+# RBS-формула у обеих программ идентична (п.31.7 — оба названия
+# программ перечислены в одном пункте документа).
+_RBS_TERMS = [
+    ("ce", "mathematics", 0.25),
+    ("ce", "latvian", 0.25),
+    ("ce", "english", 1.0),
+    ("entrance_exam", "english_test", 0.25),
+    ("entrance_exam", "interview", 0.25),
+    ("entrance_exam", "math_test", 0.25),
+    ("ce_average", None, 0.5),
+]
+
+RTU_FORMULA_SEEDS = [
+    {"programme_slug": "ibx-02c60", "terms": _RBS_TERMS},  # Vadīšana starptautiskos uzņēmumos
+    {"programme_slug": "dbt-02c60", "terms": _RBS_TERMS},  # Datorzinātne un organizāciju tehnoloģijas
+]
+
 
 def seed(
     university_slug: str,
@@ -392,3 +452,4 @@ if __name__ == "__main__":
     load_dotenv()
     seed("venta", FORMULA_SEEDS, VENTA_SOURCE_URL, VENTA_SOURCE_DOC, VENTA_VALID_FROM)
     seed("lu", LU_FORMULA_SEEDS, LU_SOURCE_URL, LU_SOURCE_DOC, LU_VALID_FROM)
+    seed("rtu", RTU_FORMULA_SEEDS, RTU_SOURCE_URL, RTU_SOURCE_DOC, RTU_VALID_FROM)

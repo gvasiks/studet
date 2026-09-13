@@ -16,6 +16,16 @@ export type FormulaTerm = {
   coefficient: number;
 };
 
+// Ключ для extras — один формула может нести несколько отдельных
+// certificate/entrance_exam слагаемых (RTU Rīgas Biznesa skola: тест
+// английского + собеседование + тест математики, три разных числа,
+// не одно). subject здесь — не CE-предмет, а метка конкретного
+// испытания ("interview", "math_test" и т.п.); null — старый случай
+// одного безымянного испытания на формулу (Вентспилс).
+export function extraKey(term: Pick<FormulaTerm, "kind" | "subject">): string {
+  return `${term.kind}:${term.subject ?? "default"}`;
+}
+
 export type FormulaGate = {
   subject: string;
   minPercent: number;
@@ -40,7 +50,7 @@ export function calculateScore(
   gates: FormulaGate[],
   examResults: ExamResult[],
   levelCoefficients: Record<ExamLevel, number>,
-  extras: { certificate?: number; entranceExam?: number } = {},
+  extras: Record<string, number> = {},
 ): ScoreResult {
   const bySubject = new Map(examResults.map((result) => [result.subject, result]));
 
@@ -58,7 +68,7 @@ export function calculateScore(
       return { term, input: average, points: average * term.coefficient };
     }
 
-    const raw = term.kind === "certificate" ? extras.certificate : extras.entranceExam;
+    const raw = extras[extraKey(term)];
     if (raw === undefined) return { term, input: null, points: 0 };
     return { term, input: raw, points: raw * term.coefficient };
   });
