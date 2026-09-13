@@ -60,6 +60,9 @@ export default async function ProgrammePage({ params }: { params: Params }) {
             value={`${record.tuition_fee_amount} ${record.tuition_fee_currency}`}
           />
         )}
+        {record.budget_places !== null && (
+          <Fact label={dict.programme.budgetPlaces} value={String(record.budget_places)} />
+        )}
         {record.accreditation_valid_until && (
           <Fact label={dict.programme.accreditation} value={record.accreditation_valid_until} />
         )}

@@ -9,9 +9,9 @@ sys.path.insert(0, str(Path(__file__).parent))
 from dotenv import load_dotenv
 
 from db import get_service_client
-from sources import riseba, turiba
+from sources import riseba, rtu_liepaja, turiba
 
-SOURCES = [turiba, riseba]
+SOURCES = [turiba, riseba, rtu_liepaja]
 
 
 def main() -> None:

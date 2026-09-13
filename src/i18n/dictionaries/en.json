@@ -62,6 +62,7 @@
     "duration": "Duration",
     "city": "City",
     "funding": "Funding",
+    "budgetPlaces": "Budget places",
     "accreditation": "Accredited until",
     "notFoundTitle": "Programme not found"
   },
