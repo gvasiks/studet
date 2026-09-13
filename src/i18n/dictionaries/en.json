@@ -58,6 +58,7 @@
     "degreeLevel": "Degree level",
     "language": "Language of instruction",
     "studyMode": "Study mode",
+    "tuitionFee": "Fee per year (EU/EEA)",
     "duration": "Duration",
     "city": "City",
     "funding": "Funding",

@@ -54,6 +54,12 @@ export default async function ProgrammePage({ params }: { params: Params }) {
         )}
         {record.city && <Fact label={dict.programme.city} value={enumLabel(dict.catalog.city, record.city)} />}
         <Fact label={dict.programme.funding} value={enumLabel(dict.catalog.funding, record.funding_type)} />
+        {record.tuition_fee_amount !== null && (
+          <Fact
+            label={dict.programme.tuitionFee}
+            value={`${record.tuition_fee_amount} ${record.tuition_fee_currency}`}
+          />
+        )}
         {record.accreditation_valid_until && (
           <Fact label={dict.programme.accreditation} value={record.accreditation_valid_until} />
         )}
