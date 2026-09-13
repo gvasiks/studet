@@ -1,15 +1,17 @@
-"""LU (Latvijas Universitāte) — английский раздел сайта.
+"""LU (Latvijas Universitāte) — английский раздел сайта, все 6
+факультетов бакалавриата целиком (их оказалось всего 6, не десяток,
+как выглядело до проверки — Economics and Social Sciences, Science
+and Technology, Humanities, Education Sciences and Psychology, Law,
+Medicine and Life Sciences).
 
-ЛУ огромен: только на бакалавриате около десятка факультетов, в одном
-факультете экономики и социальных наук — уже 17 программ. Полный обход
-всего университета — отдельная задача на будущее (как и с частными
-вузами, "два вуза точно лучше восьми приблизительно" — CLAUDE.md).
-В этом источнике — один факультет, Faculty of Economics and Social
-Sciences, целиком, оба уровня LV/EN там, где они есть отдельными
-программами. Он же, похоже, содержит ту самую программу "Economics" из
-примера расчёта конкурсного балла в docs/PLAN.md (математика ×6,5) —
-но саму формулу сюда не тащим, это отдельная задача с утверждённым PDF
-(правило 6 CLAUDE.md), здесь только факты каталога.
+Магистратура и докторантура ЛУ — отдельная задача на будущее, здесь не
+трогаем: у каждого уровня своя структура страниц, объединять с
+бакалавриатом в одном заходе — терять фокус.
+
+В выборке — та самая программа "Economics" из примера расчёта
+конкурсного балла в docs/PLAN.md (математика ×6,5) — но саму формулу
+сюда не тащим, это отдельная задача с утверждённым PDF (правило 6
+CLAUDE.md), здесь только факты каталога.
 
 Структура найдена вручную в браузере 2026-09-13: TYPO3-сайт, факты —
 один блок `.ce-bodytext` с парами "Label: значение" через перенос
@@ -30,10 +32,16 @@ from playwright.sync_api import Page, sync_playwright
 
 from models import ProgrammeDraft, UniversityDraft
 
-FACULTY_URL = (
-    "https://www.lu.lv/en/studies/study-programmes-1/bachelors-study-programmes/"
-    "faculty-of-economics-and-social-sciences/"
-)
+BACHELOR_BASE = "https://www.lu.lv/en/studies/study-programmes-1/bachelors-study-programmes/"
+
+FACULTY_URLS = [
+    f"{BACHELOR_BASE}faculty-of-economics-and-social-sciences/",
+    f"{BACHELOR_BASE}faculty-of-science-and-technology/",
+    f"{BACHELOR_BASE}faculty-of-humanities/",
+    f"{BACHELOR_BASE}faculty-of-education-sciences-and-psychology/",
+    f"{BACHELOR_BASE}faculty-of-law/",
+    f"{BACHELOR_BASE}faculty-of-medicine-and-life-sciences/",
+]
 
 UNIVERSITY = UniversityDraft(
     slug="lu",
@@ -42,12 +50,12 @@ UNIVERSITY = UniversityDraft(
     kind="public",
     city="riga",
     website_url="https://www.lu.lv",
-    source_url=FACULTY_URL,
+    source_url=BACHELOR_BASE,
 )
 
 
-def _discover_links(page: Page) -> list[tuple[str, str]]:
-    page.goto(FACULTY_URL, wait_until="domcontentloaded")
+def _discover_links(page: Page, faculty_url: str) -> list[tuple[str, str]]:
+    page.goto(faculty_url, wait_until="domcontentloaded")
     links = page.locator("main a")
 
     seen: dict[str, str] = {}
@@ -56,8 +64,8 @@ def _discover_links(page: Page) -> list[tuple[str, str]]:
         text = links.nth(i).inner_text().strip()
         if not href or "/bachelors-study-programmes/" not in href:
             continue
-        href = urljoin(FACULTY_URL, href)
-        if href.rstrip("/") == FACULTY_URL.rstrip("/"):
+        href = urljoin(faculty_url, href)
+        if href.rstrip("/") in {u.rstrip("/") for u in FACULTY_URLS} or href.rstrip("/") == BACHELOR_BASE.rstrip("/"):
             continue
         seen.setdefault(href, text)
 
@@ -144,14 +152,24 @@ def _scrape_programme(page: Page, url: str, link_text: str) -> ProgrammeDraft | 
 
 def scrape() -> tuple[UniversityDraft, list[ProgrammeDraft]]:
     programmes: list[ProgrammeDraft] = []
+    seen_urls: set[str] = set()
+
     with sync_playwright() as p:
         browser = p.chromium.launch()
         page = browser.new_page()
+        page.set_default_timeout(8000)
 
-        for url, link_text in _discover_links(page):
-            programme = _scrape_programme(page, url, link_text)
-            if programme:
-                programmes.append(programme)
+        for faculty_url in FACULTY_URLS:
+            for url, link_text in _discover_links(page, faculty_url):
+                if url in seen_urls:
+                    continue  # программа может значиться на стыке двух факультетов
+                seen_urls.add(url)
+                try:
+                    programme = _scrape_programme(page, url, link_text)
+                except Exception:
+                    programme = None
+                if programme:
+                    programmes.append(programme)
 
         browser.close()
 

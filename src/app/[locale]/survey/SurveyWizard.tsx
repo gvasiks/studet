@@ -31,7 +31,7 @@ const initialAnswers: Answers = {
   mode: "any",
 };
 
-const CITY_KEYS = ["riga", "daugavpils", "valmiera", "ventspils", "jelgava", "liepaja"];
+const CITY_KEYS = ["riga", "daugavpils", "valmiera", "ventspils", "jelgava", "liepaja", "rezekne"];
 const STEP_COUNT = 6;
 
 export function SurveyWizard({ locale, dict }: { locale: Locale; dict: Dictionary }) {
