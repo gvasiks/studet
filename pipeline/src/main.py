@@ -9,9 +9,9 @@ sys.path.insert(0, str(Path(__file__).parent))
 from dotenv import load_dotenv
 
 from db import get_service_client
-from sources import bsa, du, eka, lbtu, lu, rgsl, riseba, rtu_liepaja, sse_riga, tsi, turiba, venta
+from sources import bsa, du, eka, lbtu, lu, rgsl, riseba, rnu, rtu_liepaja, sse_riga, tsi, turiba, venta
 
-SOURCES = [turiba, riseba, rtu_liepaja, tsi, bsa, sse_riga, rgsl, lu, venta, lbtu, du, eka]
+SOURCES = [turiba, riseba, rtu_liepaja, tsi, bsa, sse_riga, rgsl, lu, venta, lbtu, du, eka, rnu]
 
 
 def main() -> None:
