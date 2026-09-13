@@ -11,12 +11,15 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-sans: var(--font-sans);
+  /* Тот же синий, что даёт HeroUI по умолчанию для color="primary" (heroui.com) —
+     на обычных Tailwind-страницах задаём его явно, чтобы кнопки совпадали
+     с тем, что рендерит HeroUI в анкете. */
+  --color-brand: #006fee;
+  --color-brand-dark: #005bc4;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
 }

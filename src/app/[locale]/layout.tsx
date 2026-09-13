@@ -1,19 +1,16 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Inter } from "next/font/google";
 import { isLocale, locales } from "@/i18n/config";
 import { getDictionary } from "@/i18n/dictionaries";
 import { Providers } from "./providers";
 import "../globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
+// latin-ext обязателен — без него диакритика латышского (ā, š, ž...)
+// молча падает на системный шрифт вместо Inter.
+const inter = Inter({
+  variable: "--font-sans",
+  subsets: ["latin", "latin-ext"],
 });
 
 export function generateStaticParams() {
@@ -40,9 +37,9 @@ export default async function LocaleLayout({
   return (
     <html
       lang={locale}
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      className={`${inter.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">
+      <body className="min-h-full flex flex-col font-sans">
         <Providers>{children}</Providers>
       </body>
     </html>

@@ -61,7 +61,7 @@ export function SurveyWizard({ locale, dict }: { locale: Locale; dict: Dictionar
   return (
     <main className="mx-auto max-w-2xl px-6 py-16">
       <div className="flex items-start justify-between gap-4">
-        <h1 className="text-2xl font-semibold tracking-tight text-zinc-900">{dict.survey.title}</h1>
+        <h1 className="text-2xl font-bold tracking-tighter text-zinc-900">{dict.survey.title}</h1>
         <button type="button" onClick={skipToSearch} className="shrink-0 text-sm text-zinc-500 underline">
           {dict.survey.skipToSearch}
         </button>

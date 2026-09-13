@@ -48,12 +48,12 @@ export default async function ProgrammesPage({
     <main className="mx-auto max-w-3xl px-6 py-16">
       <div className="flex items-start justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-semibold tracking-tight text-zinc-900">{dict.catalog.title}</h1>
+          <h1 className="text-3xl font-bold tracking-tighter text-zinc-900">{dict.catalog.title}</h1>
           <p className="mt-2 text-zinc-600">{dict.catalog.subtitle}</p>
         </div>
         <Link
           href={`/${locale}/survey`}
-          className="shrink-0 rounded-lg border border-zinc-300 px-4 py-2 text-sm font-medium text-zinc-700 hover:bg-zinc-50"
+          className="shrink-0 rounded-full border border-zinc-300 px-4 py-2 text-sm font-medium text-zinc-700 hover:bg-zinc-50"
         >
           {dict.catalog.surveyTeaser} {dict.catalog.surveyCta}
         </Link>

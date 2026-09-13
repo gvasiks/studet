@@ -40,7 +40,7 @@ export default async function ProgrammePage({ params }: { params: Params }) {
       </Link>
 
       <p className="mt-4 text-sm text-zinc-500">{universityName}</p>
-      <h1 className="mt-1 text-3xl font-semibold tracking-tight text-zinc-900">{name}</h1>
+      <h1 className="mt-1 text-3xl font-bold tracking-tighter text-zinc-900">{name}</h1>
 
       <dl className="mt-8 grid grid-cols-1 gap-x-6 gap-y-4 sm:grid-cols-2">
         <Fact label={dict.programme.degreeLevel} value={enumLabel(dict.catalog.degreeLevel, record.degree_level)} />
@@ -59,7 +59,7 @@ export default async function ProgrammePage({ params }: { params: Params }) {
         )}
       </dl>
 
-      <p className="mt-8 rounded-lg bg-amber-50 px-4 py-3 text-sm text-amber-900">
+      <p className="mt-8 rounded-xl bg-amber-50 px-4 py-3 text-sm text-amber-900">
         {record.verified_at
           ? `${dict.catalog.verifiedPrefix} ${new Date(record.verified_at).toLocaleDateString(locale)}`
           : dict.catalog.unverifiedLabel}
