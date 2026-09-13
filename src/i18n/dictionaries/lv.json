@@ -118,5 +118,22 @@
       "title": "Kādā formā vēlies studēt?",
       "any": "Nav svarīgi"
     }
+  },
+  "calculator": {
+    "title": "Konkursa punktu kalkulators",
+    "notAvailable": "Šai programmai formula vēl nav pievienota datubāzē.",
+    "totalLabel": "Konkursa punkti",
+    "gateWarning": "Nav sasniegts minimālais slieksnis vienā vai vairākos priekšmetos — pēc uzņemšanas noteikumiem uz šo programmu var nepretendēt.",
+    "disclaimer": "Šis ir orientējošs aprēķins pēc mūsu ievāktās formulas, nevis oficiāls rezultāts. Galīgo lēmumu pieņem augstskola.",
+    "levels": {
+      "augstakais": "Augstākais līmenis",
+      "optimalais": "Optimālais līmenis",
+      "vispaarigais": "Vispārīgais līmenis"
+    },
+    "termKinds": {
+      "ce_average": "Vidējais % visos CE",
+      "certificate": "Atestāta vērtējums",
+      "entrance_exam": "Iestājpārbaudījums"
+    }
   }
 }

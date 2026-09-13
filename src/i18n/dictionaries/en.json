@@ -118,5 +118,22 @@
       "title": "Which study mode do you want?",
       "any": "Doesn't matter"
     }
+  },
+  "calculator": {
+    "title": "Competition score calculator",
+    "notAvailable": "No formula has been added for this programme yet.",
+    "totalLabel": "Competition score",
+    "gateWarning": "The minimum threshold wasn't met in one or more subjects — under the admission rules you may not be eligible for this programme.",
+    "disclaimer": "This is an estimate based on the formula we've collected, not an official result. The university makes the final decision.",
+    "levels": {
+      "augstakais": "Highest level",
+      "optimalais": "Optimal level",
+      "vispaarigais": "General level"
+    },
+    "termKinds": {
+      "ce_average": "Average % across all exams",
+      "certificate": "Certificate grade",
+      "entrance_exam": "Entrance exam"
+    }
   }
 }

@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { isLocale } from "@/i18n/config";
 import { getDictionary } from "@/i18n/dictionaries";
 import { enumLabel, getProgramme, localizedName } from "@/lib/catalog";
+import { getFormula } from "@/lib/formula-queries";
 
 type Params = PageProps<"/[locale]/programmes/[university]/[programme]">["params"];
 
@@ -29,6 +30,7 @@ export async function generateMetadata({ params }: { params: Params }): Promise<
 export default async function ProgrammePage({ params }: { params: Params }) {
   const { locale, record } = await loadProgramme(params);
   const dict = await getDictionary(locale);
+  const formula = await getFormula(record.id);
 
   const name = localizedName(record, locale);
   const universityName = localizedName(record.university, locale);
@@ -67,6 +69,15 @@ export default async function ProgrammePage({ params }: { params: Params }) {
           <Fact label={dict.programme.accreditation} value={record.accreditation_valid_until} />
         )}
       </dl>
+
+      {formula && (
+        <Link
+          href={`/${locale}/programmes/${record.university.slug}/${record.slug}/calculator`}
+          className="mt-8 inline-block w-fit rounded-full bg-brand px-5 py-2.5 text-sm font-medium text-white hover:bg-brand-dark"
+        >
+          {dict.calculator.title}
+        </Link>
+      )}
 
       <p className="mt-8 rounded-xl bg-amber-50 px-4 py-3 text-sm text-amber-900">
         {record.verified_at
