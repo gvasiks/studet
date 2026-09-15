@@ -12,7 +12,7 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
   const dict = await getDictionary(locale);
 
   return (
-    <main className="relative flex-1 overflow-hidden bg-slate-950">
+    <main className="relative min-h-dvh flex-1 overflow-hidden bg-slate-950">
       <Image
         src={heroBg}
         alt=""
