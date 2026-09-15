@@ -60,11 +60,21 @@ export type ProgrammeFilters = {
   cities?: string[];
   language?: string;
   mode?: string;
+  university?: string;
 };
+
+// Единственный список городов каталога — раньше дублировался в
+// SurveyWizard.tsx, из-за чего Rēzekne один раз добавили только в одном
+// месте. Здесь и в форме анкеты, и в фильтре на /programmes.
+export const CITY_KEYS = ["riga", "daugavpils", "valmiera", "ventspils", "jelgava", "liepaja", "rezekne"];
 
 export const listProgrammes = cache(
   async (filters: ProgrammeFilters = {}): Promise<ProgrammeWithUniversity[]> => {
-    let query = supabase.from("programme").select("*, university(slug, name_lv, name_en, city)");
+    // university!inner — нужен, чтобы можно было фильтровать по
+    // university.slug ниже (PostgREST требует inner-join для фильтрации
+    // встроенного ресурса). У программы university_id обязателен, так что
+    // на набор результатов без фильтра по вузу это не влияет.
+    let query = supabase.from("programme").select("*, university!inner(slug, name_lv, name_en, city)");
 
     if (filters.budgetOnly) {
       query = query.in("funding_type", ["budget", "both"]);
@@ -82,11 +92,26 @@ export const listProgrammes = cache(
     if (filters.mode) {
       query = query.eq("study_mode", filters.mode);
     }
+    if (filters.university) {
+      query = query.eq("university.slug", filters.university);
+    }
 
     const { data, error } = await query.order("degree_level").order("name_en");
 
     if (error) throw error;
     return data as ProgrammeWithUniversity[];
+  },
+);
+
+export const listUniversities = cache(
+  async (): Promise<Pick<University, "slug" | "name_lv" | "name_en">[]> => {
+    const { data, error } = await supabase
+      .from("university")
+      .select("slug, name_lv, name_en")
+      .order("name_en");
+
+    if (error) throw error;
+    return data;
   },
 );
 

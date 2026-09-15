@@ -52,7 +52,18 @@
     "surveyTeaser": "Nezini, ko izvēlēties?",
     "surveyCta": "Aizpildi aptauju",
     "filtersSummary": "Rādīts pēc filtra:",
-    "clearFilters": "Notīrīt filtru"
+    "clearFilters": "Notīrīt filtru",
+    "filters": {
+      "university": "Universitāte",
+      "anyUniversity": "Visas universitātes",
+      "city": "Pilsēta",
+      "language": "Studiju valoda",
+      "anyLanguage": "Jebkura valoda",
+      "mode": "Studiju forma",
+      "anyMode": "Jebkura forma",
+      "budgetOnly": "Tikai budžeta vietas",
+      "apply": "Filtrēt"
+    }
   },
   "programme": {
     "backToCatalog": "Atpakaļ uz katalogu",
@@ -140,5 +151,8 @@
       "entrance_exam_interview": "Strukturētā intervija",
       "entrance_exam_math_test": "Matemātikas iestājpārbaudījums"
     }
+  },
+  "footer": {
+    "disclaimer": "Studet ir neatkarīgs informatīvs portāls, nevis augstskola vai valsts iestāde — ar aplūkotajām augstskolām mūs nesaista nekādas līgumattiecības. Programmu apraksti, termiņi, maksa un konkursa formulas iegūti no augstskolu publiski pieejamiem avotiem un var būt novecojuši vai neprecīzi; katras programmas kartītē norādīts, vai fakts ir pārbaudīts cilvēka rokām vai iegūts automātiski. Pirms lēmuma pieņemšanas vienmēr pārbaudiet aktuālo informāciju augstskolas oficiālajā mājaslapā — galīgo lēmumu par uzņemšanu pieņem tikai augstskola."
   }
 }

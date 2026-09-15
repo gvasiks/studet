@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { Button, Checkbox, CheckboxGroup, Radio, RadioGroup } from "@heroui/react";
 import type { Locale } from "@/i18n/config";
 import type { Dictionary } from "@/i18n/dictionaries";
-import { enumLabel } from "@/lib/catalog";
+import { CITY_KEYS, enumLabel } from "@/lib/catalog";
 
 type Funding = "budget_only" | "any";
 type LanguageChoice = "lv" | "en" | "any";
@@ -31,7 +31,6 @@ const initialAnswers: Answers = {
   mode: "any",
 };
 
-const CITY_KEYS = ["riga", "daugavpils", "valmiera", "ventspils", "jelgava", "liepaja", "rezekne"];
 const STEP_COUNT = 6;
 
 export function SurveyWizard({ locale, dict }: { locale: Locale; dict: Dictionary }) {
