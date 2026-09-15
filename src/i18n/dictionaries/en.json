@@ -149,7 +149,8 @@
       "entrance_exam": "Entrance exam",
       "entrance_exam_english_test": "English proficiency test",
       "entrance_exam_interview": "Structured interview",
-      "entrance_exam_math_test": "Mathematics entrance exam"
+      "entrance_exam_math_test": "Mathematics entrance exam",
+      "entrance_exam_art_test": "Visual arts practical exam"
     }
   },
   "footer": {

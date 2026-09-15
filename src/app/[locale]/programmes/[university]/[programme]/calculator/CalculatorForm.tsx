@@ -127,10 +127,12 @@ export function CalculatorForm({
           return (
             <div key={key} className="flex flex-wrap items-center gap-4">
               <span className="w-40 shrink-0 text-sm font-medium text-zinc-700">{termLabel(dict, term)}</span>
+              {/* Без max: у разных вузов эти слагаемые на разных сырых
+                  шкалах — ЛУ где-то (5×100=500) даёт вход 0–100, а где-то
+                  (0,4×1000=400) — 0–1000. Единого ограничения нет. */}
               <Input
                 type="number"
                 min={0}
-                max={100}
                 size="sm"
                 className="w-24"
                 value={extraInputs[key]}

@@ -378,6 +378,170 @@ LU_FORMULA_SEEDS = [
     },
 ]
 
+# Вторая партия ЛУ — 11 программ ещё из трёх факультетов (Humanitāro
+# zinātņu, Izglītības zinātņu un psiholoģijas, Medicīnas un dzīvības
+# zinātņu). Тот же источник и то же ограничение valid_from/2025-2026,
+# см. докстринг выше LU_SOURCE_DOC.
+#
+# По пути выяснилось: факультета Eksakto zinātņu un tehnoloģiju
+# (Datorzinātnes, Matemātika, Fizika, Optometrija и т.д.) в каталоге
+# ЛУ нет вообще ни одной строки — видимо, баг обхода ссылок в lu.py на
+# этой конкретной странице факультета, не текущая (формульная) задача.
+# Формулы для него добавить нечему, пока каталог не дополнят.
+#
+# Из оставшихся факультетов включены только программы с уже
+# представимой моделью:
+# - Juridiskā fakultāte — не дала ни одной: все три программы
+#   (Pirmstiesas izmeklēšana × 2, Tiesību zinātne) используют цепочку
+#   "gada atzīme vēsturē VAI sociālajās zinībās un vēsturē VAI
+#   vēsturē un sociālajās zinātnēs VAI sociālajās zinātnēs" — это уже
+#   не "нет экзамена — 0" (безопасный паттерн из первой партии), а
+#   настоящая развилка "источник A или B или C", тот же класс
+#   проблемы, что и RTU-шная физика/химия.
+# - Humanitāro zinātņu: apakšprogrammas филологии (Franču, Krievu,
+#   Vācu, Klasiskā, Somugru) НЕ имеют собственных строк в каталоге —
+#   lu.py нашёл их как agregētas карточки "philology-lv"/"philology-en"
+#   (сайт объединяет несколько языковых модулей на одной странице
+#   программы), а у модулей разные формулы (Krievu/Vācu вдобавок несут
+#   отдельную оценку по языку из аттестата — тот же грейд-в-ЦЭ-формуле
+#   паттерн, что и Industriālā inženierija из первой партии). Раз
+#   нельзя однозначно сказать, какая из формул относится к
+#   агрегированной карточке — не трогаем "philology-lv"/"philology-en"
+#   вовсе. Взяты только те apakšprogrammas, что оказались в каталоге
+#   отдельной строкой: Anglistikas..., Filozofija, Latvistika, Vēsture
+#   un arheoloģija, и "Āzijas studijas" (латышский вариант — совпадает
+#   по языку с каталожной записью "asian-and-intercultural-studies";
+#   англоязычный вариант той же apakšprogrammas, "Austrumu-Rietumu
+#   starpkultūru studijas", своей строки в каталоге не имеет).
+# - Izglītības zinātņu un psiholoģijas: 8 apakšprogrammas "Skolotājs"
+#   и "Sporta treneris" тоже не попали — либо агрегированы в одну
+#   каталожную карточку ("professional-bachelor-study-programme-
+#   teacher"), либо вовсе отсутствуют в каталоге по отдельности.
+#   "Pirmsskolas skolotājs" по той же причине пропущен — своей строки
+#   в каталоге нет.
+# - Medicīnas: "Ārstniecība", "Zobārstniecība", "Biotehnoloģija un
+#   bioinženierija" несут "CE fizikā VAI ķīmijā VAI bioloģijā" —
+#   тот же класс развилки, что и Juridiskā выше. "Farmācija",
+#   "Māszinības" несут оценку из аттестата с развилкой ("ķīmijā VAI
+#   dabaszinībās") — тоже исключены. "Ķīmija" — два варианта формулы
+#   на выбор абитуриента, как и Fizika из Eksakto (была бы исключена
+#   в любом случае).
+#
+# entrance_exam с меткой 'art_test' (Māksla) и обычный именованный
+# entrance_exam (Sākumizglītības skolotājs, 'interview') — расширение
+# extraKey() из RTU-партии уже покрывает оба случая без доработок.
+LU_FACULTY2_FORMULA_SEEDS = [
+    {
+        "programme_slug": "english-european-languages-and-business-studies",
+        "terms": [
+            ("ce", "latvian", 2.0),
+            ("ce", "english", 4.5),
+            ("ce", "mathematics", 2.5),
+            ("ce_average", None, 1.0),
+        ],
+    },
+    {
+        "programme_slug": "philosophy",
+        "terms": [
+            ("ce", "latvian", 3.0),
+            ("ce", "english", 5.0),
+            ("ce", "mathematics", 1.0),
+            ("ce_average", None, 1.0),
+        ],
+    },
+    {
+        "programme_slug": "latvian-studies",
+        "terms": [
+            ("ce", "latvian", 6.0),
+            ("ce", "english", 2.0),
+            ("ce", "mathematics", 1.0),
+            ("ce_average", None, 1.0),
+        ],
+    },
+    {
+        "programme_slug": "history-and-archeology",
+        "terms": [
+            ("ce", "latvian", 3.5),
+            ("ce", "english", 3.5),
+            ("ce", "mathematics", 2.0),
+            ("ce_average", None, 1.0),
+            ("ce", "history", 1.0),
+        ],
+    },
+    {
+        # apakšprogramma "Āzijas studijas" (studiju valoda: latviešu) —
+        # совпадает языком с каталожной записью; "Austrumu-Rietumu
+        # starpkultūru studijas" (angļu) своей строки в каталоге нет.
+        "programme_slug": "asian-and-intercultural-studies",
+        "terms": [
+            ("ce", "latvian", 2.0),
+            ("ce", "english", 6.0),
+            ("ce", "mathematics", 1.0),
+            ("ce_average", None, 1.0),
+        ],
+    },
+    {
+        "programme_slug": "art-1",
+        "terms": [
+            ("ce", "latvian", 2.5),
+            ("ce", "english", 1.5),
+            ("ce", "mathematics", 1.0),
+            ("ce_average", None, 1.0),
+            ("entrance_exam", "art_test", 0.4),
+        ],
+    },
+    {
+        "programme_slug": "psychology-1",
+        "terms": [
+            ("ce", "latvian", 2.5),
+            ("ce", "english", 4.0),
+            ("ce", "mathematics", 2.5),
+            ("ce_average", None, 1.0),
+        ],
+    },
+    {
+        "programme_slug": "primary-education-teacher",
+        "terms": [
+            ("ce", "latvian", 2.0),
+            ("ce", "english", 1.0),
+            ("ce", "mathematics", 1.0),
+            ("ce_average", None, 1.0),
+            ("entrance_exam", "interview", 5.0),
+        ],
+    },
+    {
+        "programme_slug": "sports-technology-and-public-health",
+        "terms": [
+            ("ce", "latvian", 4.0),
+            ("ce", "english", 4.0),
+            ("ce", "mathematics", 1.0),
+            ("ce_average", None, 1.0),
+        ],
+    },
+    {
+        "programme_slug": "occupational-health-and-safety-at-work",
+        "terms": [
+            ("ce", "latvian", 1.5),
+            ("ce", "english", 1.0),
+            ("ce", "mathematics", 6.5),
+            ("ce_average", None, 1.0),
+        ],
+    },
+    {
+        # "Biology and biomedicine" в каталоге — apakšprogramma
+        # "Bioloģija" (не "Biomedicīna"): у обеих apakšprogrammas формула
+        # 1. varianta общая, различается только на этапе регистрации.
+        "programme_slug": "biology",
+        "terms": [
+            ("ce", "latvian", 1.5),
+            ("ce", "english", 1.0),
+            ("ce", "mathematics", 2.5),
+            ("ce", "biology", 4.0),
+            ("ce_average", None, 1.0),
+        ],
+    },
+]
+
 # RBS-формула у обеих программ идентична (п.31.7 — оба названия
 # программ перечислены в одном пункте документа).
 _RBS_TERMS = [
@@ -452,4 +616,5 @@ if __name__ == "__main__":
     load_dotenv()
     seed("venta", FORMULA_SEEDS, VENTA_SOURCE_URL, VENTA_SOURCE_DOC, VENTA_VALID_FROM)
     seed("lu", LU_FORMULA_SEEDS, LU_SOURCE_URL, LU_SOURCE_DOC, LU_VALID_FROM)
+    seed("lu", LU_FACULTY2_FORMULA_SEEDS, LU_SOURCE_URL, LU_SOURCE_DOC, LU_VALID_FROM)
     seed("rtu", RTU_FORMULA_SEEDS, RTU_SOURCE_URL, RTU_SOURCE_DOC, RTU_VALID_FROM)

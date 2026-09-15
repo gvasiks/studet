@@ -149,7 +149,8 @@
       "entrance_exam": "Iestājpārbaudījums",
       "entrance_exam_english_test": "Angļu valodas zināšanu pārbaude",
       "entrance_exam_interview": "Strukturētā intervija",
-      "entrance_exam_math_test": "Matemātikas iestājpārbaudījums"
+      "entrance_exam_math_test": "Matemātikas iestājpārbaudījums",
+      "entrance_exam_art_test": "Praktiskais pārbaudījums vizuālajā mākslā"
     }
   },
   "footer": {
