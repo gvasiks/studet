@@ -2,6 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { isLocale } from "@/i18n/config";
 import { getDictionary } from "@/i18n/dictionaries";
+import { FavoriteButton } from "@/components/FavoriteButton";
 import {
   CITY_KEYS,
   enumLabel,
@@ -182,23 +183,31 @@ export default async function ProgrammesPage({
       ) : (
         <ul className="mt-8 divide-y divide-zinc-200">
           {programmes.map((programme) => (
-            <li key={programme.id} className="py-5">
-              <Link
-                href={`/${locale}/programmes/${programme.university.slug}/${programme.slug}`}
-                className="text-lg font-medium text-zinc-900 hover:underline"
-              >
-                {localizedName(programme, locale)}
-              </Link>
-              <p className="mt-1 text-sm text-zinc-600">
-                {localizedName(programme.university, locale)}
-                {" · "}
-                {enumLabel(dict.catalog.degreeLevel, programme.degree_level)}
-                {" · "}
-                {enumLabel(dict.catalog.language, programme.language_of_instruction)}
-                {programme.duration_years !== null
-                  ? ` · ${programme.duration_years} ${dict.catalog.years}`
-                  : ""}
-              </p>
+            <li key={programme.id} className="flex items-start justify-between gap-3 py-5">
+              <div>
+                <Link
+                  href={`/${locale}/programmes/${programme.university.slug}/${programme.slug}`}
+                  className="text-lg font-medium text-zinc-900 hover:underline"
+                >
+                  {localizedName(programme, locale)}
+                </Link>
+                <p className="mt-1 text-sm text-zinc-600">
+                  {localizedName(programme.university, locale)}
+                  {" · "}
+                  {enumLabel(dict.catalog.degreeLevel, programme.degree_level)}
+                  {" · "}
+                  {enumLabel(dict.catalog.language, programme.language_of_instruction)}
+                  {programme.duration_years !== null
+                    ? ` · ${programme.duration_years} ${dict.catalog.years}`
+                    : ""}
+                </p>
+              </div>
+              <FavoriteButton
+                programmeId={programme.id}
+                addLabel={dict.favorites.add}
+                removeLabel={dict.favorites.remove}
+                className="mt-0.5"
+              />
             </li>
           ))}
         </ul>

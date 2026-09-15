@@ -5,6 +5,7 @@ import { isLocale } from "@/i18n/config";
 import { getDictionary } from "@/i18n/dictionaries";
 import { enumLabel, getProgramme, localizedName } from "@/lib/catalog";
 import { getFormula } from "@/lib/formula-queries";
+import { FavoriteButton } from "@/components/FavoriteButton";
 
 type Params = PageProps<"/[locale]/programmes/[university]/[programme]">["params"];
 
@@ -42,7 +43,15 @@ export default async function ProgrammePage({ params }: { params: Params }) {
       </Link>
 
       <p className="mt-4 text-sm text-zinc-500">{universityName}</p>
-      <h1 className="mt-1 text-3xl font-bold tracking-tighter text-zinc-900">{name}</h1>
+      <div className="flex items-start justify-between gap-3">
+        <h1 className="mt-1 text-3xl font-bold tracking-tighter text-zinc-900">{name}</h1>
+        <FavoriteButton
+          programmeId={record.id}
+          addLabel={dict.favorites.add}
+          removeLabel={dict.favorites.remove}
+          className="mt-2 text-2xl"
+        />
+      </div>
 
       <dl className="mt-8 grid grid-cols-1 gap-x-6 gap-y-4 sm:grid-cols-2">
         <Fact label={dict.programme.degreeLevel} value={enumLabel(dict.catalog.degreeLevel, record.degree_level)} />

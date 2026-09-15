@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { Inter } from "next/font/google";
 import { isLocale, locales } from "@/i18n/config";
 import { getDictionary } from "@/i18n/dictionaries";
+import { FavoritesNavLink } from "@/components/FavoritesNavLink";
 import { LocaleSwitcher } from "@/components/LocaleSwitcher";
 import { SiteFooter } from "@/components/SiteFooter";
 import { Providers } from "./providers";
@@ -49,7 +50,10 @@ export default async function LocaleLayout({
           <Link href={`/${locale}`} className="text-sm font-semibold tracking-tight text-zinc-900">
             Studet
           </Link>
-          <LocaleSwitcher locale={locale} />
+          <div className="flex items-center gap-5">
+            <FavoritesNavLink locale={locale} label={dict.favorites.navLink} />
+            <LocaleSwitcher locale={locale} />
+          </div>
         </header>
         <Providers>{children}</Providers>
         <SiteFooter dict={dict} />

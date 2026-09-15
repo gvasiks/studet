@@ -153,6 +153,15 @@
       "entrance_exam_art_test": "Visual arts practical exam"
     }
   },
+  "favorites": {
+    "navLink": "My list",
+    "add": "Add to my list",
+    "remove": "Remove from my list",
+    "title": "My list",
+    "subtitle": "Saved only in this browser — nothing is sent anywhere, and it stays until you clear your browser data.",
+    "empty": "Nothing saved yet. Browse the catalogue and mark programmes with ★ to compare them here.",
+    "removeFromCompare": "Remove"
+  },
   "footer": {
     "disclaimer": "Studet is an independent informational portal, not a university or a government body — we have no contractual relationship with the universities listed here. Programme descriptions, deadlines, fees and competition-score formulas come from each university's own publicly available sources and may be outdated or inaccurate; every programme card states whether a fact was checked by a person or extracted automatically. Always verify current information on the university's official website before making a decision — only the university makes the final admission decision."
   }

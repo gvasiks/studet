@@ -153,6 +153,15 @@
       "entrance_exam_art_test": "Praktiskais pārbaudījums vizuālajā mākslā"
     }
   },
+  "favorites": {
+    "navLink": "Mans saraksts",
+    "add": "Pievienot manam sarakstam",
+    "remove": "Noņemt no saraksta",
+    "title": "Mans saraksts",
+    "subtitle": "Saglabāts tikai šajā pārlūkā — nekur netiek nosūtīts un nepazūd pēc lapas aizvēršanas, kamēr nenotīri pārlūka datus.",
+    "empty": "Vēl nekas nav saglabāts. Pārlūko katalogu un atzīmē programmas ar ★, lai tās salīdzinātu šeit.",
+    "removeFromCompare": "Noņemt"
+  },
   "footer": {
     "disclaimer": "Studet ir neatkarīgs informatīvs portāls, nevis augstskola vai valsts iestāde — ar aplūkotajām augstskolām mūs nesaista nekādas līgumattiecības. Programmu apraksti, termiņi, maksa un konkursa formulas iegūti no augstskolu publiski pieejamiem avotiem un var būt novecojuši vai neprecīzi; katras programmas kartītē norādīts, vai fakts ir pārbaudīts cilvēka rokām vai iegūts automātiski. Pirms lēmuma pieņemšanas vienmēr pārbaudiet aktuālo informāciju augstskolas oficiālajā mājaslapā — galīgo lēmumu par uzņemšanu pieņem tikai augstskola."
   }

@@ -103,6 +103,21 @@ export const listProgrammes = cache(
   },
 );
 
+// Не обёрнута в cache() — та предназначена для дедупликации запросов внутри
+// одного серверного рендера (React Server Components), а этот вызов идёт
+// с клиента (страница /favorites читает список из localStorage браузера).
+export async function getProgrammesByIds(ids: string[]): Promise<ProgrammeWithUniversity[]> {
+  if (ids.length === 0) return [];
+
+  const { data, error } = await supabase
+    .from("programme")
+    .select("*, university!inner(slug, name_lv, name_en, city)")
+    .in("id", ids);
+
+  if (error) throw error;
+  return data as ProgrammeWithUniversity[];
+}
+
 export const listUniversities = cache(
   async (): Promise<Pick<University, "slug" | "name_lv" | "name_en">[]> => {
     const { data, error } = await supabase
