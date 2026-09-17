@@ -31,7 +31,6 @@ class ProgrammeDraft(BaseModel):
     tuition_fee_amount: float | None = None
     tuition_fee_currency: str = "EUR"
     budget_places: int | None = None
-    application_deadline: date | None = None
     duration_years: float | None = None
     accreditation_valid_until: date | None = None
     description_lv: str | None = None

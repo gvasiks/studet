@@ -7,6 +7,8 @@ import { isLocale } from "@/i18n/config";
 import { getDictionary } from "@/i18n/dictionaries";
 import { enumLabel, getProgramme, localizedName, type Programme, type University } from "@/lib/catalog";
 import { getFormula } from "@/lib/formula-queries";
+import { getApplicationRounds } from "@/lib/deadline-queries";
+import { matchRounds } from "@/lib/deadlines";
 import { FavoriteButton } from "@/components/FavoriteButton";
 import { buildAlternates, SITE_URL } from "@/lib/site";
 
@@ -68,7 +70,13 @@ export async function generateMetadata({ params }: { params: Params }): Promise<
 export default async function ProgrammePage({ params }: { params: Params }) {
   const { locale, record } = await loadProgramme(params);
   const dict = await getDictionary(locale);
-  const formula = await getFormula(record.id);
+  const [formula, rounds] = await Promise.all([getFormula(record.id), getApplicationRounds()]);
+  const applicationRounds = matchRounds(
+    rounds,
+    record.university_id,
+    record.degree_level,
+    record.language_of_instruction,
+  );
 
   const name = localizedName(record, locale);
   const universityName = localizedName(record.university, locale);
@@ -147,6 +155,29 @@ export default async function ProgrammePage({ params }: { params: Params }) {
           <Fact label={dict.programme.accreditation} value={record.accreditation_valid_until} />
         )}
       </dl>
+
+      <section className="mt-8">
+        <h2 className="text-xs uppercase tracking-wide text-zinc-500">{dict.programme.deadlinesTitle}</h2>
+        {applicationRounds.length > 0 ? (
+          <ul className="mt-2 space-y-1 text-zinc-900">
+            {applicationRounds.map((round) => (
+              <li key={round.label}>
+                {round.label}
+                {(round.opensOn || round.closesOn) && (
+                  <>
+                    {": "}
+                    {round.opensOn && `${dict.programme.deadlinesOpens} ${new Date(round.opensOn).toLocaleDateString(locale)}`}
+                    {round.opensOn && round.closesOn && " "}
+                    {round.closesOn && `${dict.programme.deadlinesCloses} ${new Date(round.closesOn).toLocaleDateString(locale)}`}
+                  </>
+                )}
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <p className="mt-2 text-zinc-500">{dict.programme.deadlinesNotAvailable}</p>
+        )}
+      </section>
 
       {formula && (
         <Link

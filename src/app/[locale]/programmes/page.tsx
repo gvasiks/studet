@@ -5,6 +5,8 @@ import { isLocale } from "@/i18n/config";
 import { getDictionary } from "@/i18n/dictionaries";
 import { FavoriteButton } from "@/components/FavoriteButton";
 import { buildAlternates } from "@/lib/site";
+import { getApplicationRounds } from "@/lib/deadline-queries";
+import { matchRounds } from "@/lib/deadlines";
 import {
   CITY_KEYS,
   enumLabel,
@@ -72,7 +74,11 @@ export default async function ProgrammesPage({
     budgetOnly || cities.length > 0 || Boolean(languageParam) || Boolean(modeParam) || Boolean(universityParam);
 
   const dict = await getDictionary(locale);
-  const [programmes, universities] = await Promise.all([listProgrammes(filters), listUniversities()]);
+  const [programmes, universities, applicationRounds] = await Promise.all([
+    listProgrammes(filters),
+    listUniversities(),
+    getApplicationRounds(),
+  ]);
   const selectedUniversity = universities.find((u) => u.slug === universityParam);
 
   const summaryParts = [
@@ -199,34 +205,52 @@ export default async function ProgrammesPage({
         </p>
       ) : (
         <ul className="mt-8 divide-y divide-zinc-200">
-          {programmes.map((programme) => (
-            <li key={programme.id} className="flex items-start justify-between gap-3 py-5">
-              <div>
-                <Link
-                  href={`/${locale}/programmes/${programme.university.slug}/${programme.slug}`}
-                  className="text-lg font-medium text-zinc-900 hover:underline"
-                >
-                  {localizedName(programme, locale)}
-                </Link>
-                <p className="mt-1 text-sm text-zinc-600">
-                  {localizedName(programme.university, locale)}
-                  {" · "}
-                  {enumLabel(dict.catalog.degreeLevel, programme.degree_level)}
-                  {" · "}
-                  {enumLabel(dict.catalog.language, programme.language_of_instruction)}
-                  {programme.duration_years !== null
-                    ? ` · ${programme.duration_years} ${dict.catalog.years}`
-                    : ""}
-                </p>
-              </div>
-              <FavoriteButton
-                programmeId={programme.id}
-                addLabel={dict.favorites.add}
-                removeLabel={dict.favorites.remove}
-                className="mt-0.5"
-              />
-            </li>
-          ))}
+          {programmes.map((programme) => {
+            // Только ближайший подходящий раунд с известной датой закрытия —
+            // список и так плотный, полный перечень окон уместнее на
+            // странице самой программы (deadlinesTitle там же).
+            const nextRound = matchRounds(
+              applicationRounds,
+              programme.university_id,
+              programme.degree_level,
+              programme.language_of_instruction,
+            ).find((round) => round.closesOn !== null);
+
+            return (
+              <li key={programme.id} className="flex items-start justify-between gap-3 py-5">
+                <div>
+                  <Link
+                    href={`/${locale}/programmes/${programme.university.slug}/${programme.slug}`}
+                    className="text-lg font-medium text-zinc-900 hover:underline"
+                  >
+                    {localizedName(programme, locale)}
+                  </Link>
+                  <p className="mt-1 text-sm text-zinc-600">
+                    {localizedName(programme.university, locale)}
+                    {" · "}
+                    {enumLabel(dict.catalog.degreeLevel, programme.degree_level)}
+                    {" · "}
+                    {enumLabel(dict.catalog.language, programme.language_of_instruction)}
+                    {programme.duration_years !== null
+                      ? ` · ${programme.duration_years} ${dict.catalog.years}`
+                      : ""}
+                    {nextRound && (
+                      <>
+                        {" · "}
+                        {dict.programme.deadlinesCloses} {new Date(nextRound.closesOn!).toLocaleDateString(locale)}
+                      </>
+                    )}
+                  </p>
+                </div>
+                <FavoriteButton
+                  programmeId={programme.id}
+                  addLabel={dict.favorites.add}
+                  removeLabel={dict.favorites.remove}
+                  className="mt-0.5"
+                />
+              </li>
+            );
+          })}
         </ul>
       )}
     </main>

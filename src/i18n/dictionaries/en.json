@@ -76,7 +76,11 @@
     "funding": "Funding",
     "budgetPlaces": "Budget places",
     "accreditation": "Accredited until",
-    "notFoundTitle": "Programme not found"
+    "notFoundTitle": "Programme not found",
+    "deadlinesTitle": "Application windows",
+    "deadlinesNotAvailable": "Admission dates for this programme aren't confirmed yet.",
+    "deadlinesOpens": "from",
+    "deadlinesCloses": "to"
   },
   "survey": {
     "title": "What fits you?",

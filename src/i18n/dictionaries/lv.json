@@ -76,7 +76,11 @@
     "funding": "Finansējums",
     "budgetPlaces": "Budžeta vietu skaits",
     "accreditation": "Akreditēta līdz",
-    "notFoundTitle": "Programma nav atrasta"
+    "notFoundTitle": "Programma nav atrasta",
+    "deadlinesTitle": "Pieteikšanās termiņi",
+    "deadlinesNotAvailable": "Uzņemšanas datumi šai programmai vēl nav apstiprināti.",
+    "deadlinesOpens": "no",
+    "deadlinesCloses": "līdz"
   },
   "survey": {
     "title": "Kas tev der?",

@@ -28,7 +28,6 @@ export type Programme = {
   tuition_fee_amount: number | null;
   tuition_fee_currency: string;
   budget_places: number | null;
-  application_deadline: string | null;
   duration_years: number | null;
   accreditation_valid_until: string | null;
   description_lv: string | null;
