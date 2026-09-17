@@ -1,9 +1,22 @@
 import Image from "next/image";
 import Link from "next/link";
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { isLocale } from "@/i18n/config";
 import { getDictionary } from "@/i18n/dictionaries";
+import { buildAlternates } from "@/lib/site";
 import heroBg from "../../../public/images/hero-bg.png";
+
+export async function generateMetadata({ params }: PageProps<"/[locale]">): Promise<Metadata> {
+  const { locale } = await params;
+  if (!isLocale(locale)) notFound();
+
+  const dict = await getDictionary(locale);
+  return {
+    description: dict.home.description,
+    alternates: buildAlternates("", locale),
+  };
+}
 
 export default async function HomePage({ params }: PageProps<"/[locale]">) {
   const { locale } = await params;

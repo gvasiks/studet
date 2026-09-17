@@ -7,6 +7,7 @@ import { getDictionary } from "@/i18n/dictionaries";
 import { FavoritesNavLink } from "@/components/FavoritesNavLink";
 import { LocaleSwitcher } from "@/components/LocaleSwitcher";
 import { SiteFooter } from "@/components/SiteFooter";
+import { SITE_URL } from "@/lib/site";
 import { Providers } from "./providers";
 import "../globals.css";
 
@@ -28,7 +29,10 @@ export async function generateMetadata({
   if (!isLocale(locale)) notFound();
 
   const dict = await getDictionary(locale);
-  return { title: dict.meta.title };
+  return {
+    metadataBase: new URL(SITE_URL),
+    title: { default: dict.meta.title, template: `%s — ${dict.meta.title}` },
+  };
 }
 
 export default async function LocaleLayout({

@@ -1,14 +1,32 @@
 import Link from "next/link";
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { isLocale } from "@/i18n/config";
 import { getDictionary } from "@/i18n/dictionaries";
 import { getProgramme, localizedName } from "@/lib/catalog";
 import { getFormula, getLevelCoefficients } from "@/lib/formula-queries";
+import { buildAlternates } from "@/lib/site";
 import { CalculatorForm } from "./CalculatorForm";
 
 type Params = PageProps<"/[locale]/programmes/[university]/[programme]/calculator">["params"];
 
 export const dynamic = "force-dynamic";
+
+export async function generateMetadata({ params }: { params: Params }): Promise<Metadata> {
+  const { locale, university, programme: programmeSlug } = await params;
+  if (!isLocale(locale)) notFound();
+
+  const dict = await getDictionary(locale);
+  const record = await getProgramme(university, programmeSlug);
+  if (!record) notFound();
+
+  const name = localizedName(record, locale);
+  const path = `/programmes/${university}/${programmeSlug}/calculator`;
+  return {
+    title: { absolute: `${dict.calculator.title} — ${name}` },
+    alternates: buildAlternates(path, locale),
+  };
+}
 
 export default async function CalculatorPage({ params }: { params: Params }) {
   const { locale, university, programme: programmeSlug } = await params;

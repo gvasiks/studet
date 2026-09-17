@@ -1,8 +1,10 @@
 import Link from "next/link";
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { isLocale } from "@/i18n/config";
 import { getDictionary } from "@/i18n/dictionaries";
 import { FavoriteButton } from "@/components/FavoriteButton";
+import { buildAlternates } from "@/lib/site";
 import {
   CITY_KEYS,
   enumLabel,
@@ -15,6 +17,21 @@ import {
 // Каталог обновляет Python-конвейер напрямую в базе, мимо Next.js —
 // без этого страница закаменеет на состоянии последней сборки.
 export const dynamic = "force-dynamic";
+
+// canonical — всегда на страницу без параметров фильтра, независимо от
+// того, что нафильтровал пользователь: иначе каждая комбинация фильтров
+// (а их сотни) — отдельный "дублирующийся" для поисковика документ.
+export async function generateMetadata({ params }: PageProps<"/[locale]/programmes">): Promise<Metadata> {
+  const { locale } = await params;
+  if (!isLocale(locale)) notFound();
+
+  const dict = await getDictionary(locale);
+  return {
+    title: dict.catalog.title,
+    description: dict.catalog.subtitle,
+    alternates: buildAlternates("/programmes", locale),
+  };
+}
 
 function firstValue(value: string | string[] | undefined): string | undefined {
   return Array.isArray(value) ? value[0] : value;
