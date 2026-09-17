@@ -11,15 +11,25 @@ export type FormulaRecord = {
   gates: FormulaGate[];
 };
 
-// Действующая формула — с наибольшим valid_from среди тех, что ещё не
-// закрыты (valid_to пуст). История прошлых лет остаётся в базе, но сюда
-// не попадает — калькулятор всегда считает по актуальным коэффициентам.
+// Гейт на verified_at — на уровне самого запроса, не как правило,
+// которое можно забыть соблюсти в UI. Правило 6 CLAUDE.md: формулу
+// подтверждает только человек через Supabase Studio; пока этого не
+// произошло, калькулятор не должен считать баллы для живых людей,
+// сколько бы конвейер ни извлёк за ночь. Дублируется RLS-политикой
+// самой таблицы (supabase/migrations/..._gate_unverified_formulas.sql)
+// — она и есть настоящая граница: anon key публичный, и без неё
+// прямой запрос к Supabase REST API в обход этого файла всё равно
+// вернул бы неподтверждённые формулы. Из-за этого локального флага
+// "показать неподтверждённые для разработки" здесь нет и быть не
+// может — RLS его всё равно проигнорирует; проверить черновую формулу
+// локально можно, только временно проставив verified_at в Studio.
 export const getFormula = cache(async (programmeId: string): Promise<FormulaRecord | null> => {
   const { data: formula, error } = await supabase
     .from("formula")
     .select("id, variant, source_url, verified_at")
     .eq("programme_id", programmeId)
     .is("valid_to", null)
+    .not("verified_at", "is", null)
     .order("valid_from", { ascending: false })
     .limit(1)
     .maybeSingle();

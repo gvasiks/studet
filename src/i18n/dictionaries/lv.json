@@ -134,7 +134,7 @@
   },
   "calculator": {
     "title": "Konkursa punktu kalkulators",
-    "notAvailable": "Šai programmai formula vēl nav pievienota datubāzē.",
+    "notAvailable": "Konkursa punktu aprēķins šai programmai vēl nav publicēts — vai nu formula vēl nav savākta, vai tā gaida pārbaudi.",
     "totalLabel": "Konkursa punkti",
     "gateWarning": "Nav sasniegts minimālais slieksnis vienā vai vairākos priekšmetos — pēc uzņemšanas noteikumiem uz šo programmu var nepretendēt.",
     "disclaimer": "Šis ir orientējošs aprēķins pēc mūsu ievāktās formulas, nevis oficiāls rezultāts. Galīgo lēmumu pieņem augstskola.",

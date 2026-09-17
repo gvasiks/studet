@@ -134,7 +134,7 @@
   },
   "calculator": {
     "title": "Competition score calculator",
-    "notAvailable": "No formula has been added for this programme yet.",
+    "notAvailable": "The competition-score calculation for this programme isn't published yet — either the formula hasn't been collected, or it's still awaiting review.",
     "totalLabel": "Competition score",
     "gateWarning": "The minimum threshold wasn't met in one or more subjects — under the admission rules you may not be eligible for this programme.",
     "disclaimer": "This is an estimate based on the formula we've collected, not an official result. The university makes the final decision.",
