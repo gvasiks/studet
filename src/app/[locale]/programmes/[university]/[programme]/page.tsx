@@ -9,6 +9,7 @@ import { enumLabel, getProgramme, localizedName, type Programme, type University
 import { getFormula } from "@/lib/formula-queries";
 import { getApplicationRounds } from "@/lib/deadline-queries";
 import { matchRounds } from "@/lib/deadlines";
+import { getAdmissionType } from "@/lib/admission-type-queries";
 import { FavoriteButton } from "@/components/FavoriteButton";
 import { buildAlternates, SITE_URL } from "@/lib/site";
 
@@ -70,13 +71,27 @@ export async function generateMetadata({ params }: { params: Params }): Promise<
 export default async function ProgrammePage({ params }: { params: Params }) {
   const { locale, record } = await loadProgramme(params);
   const dict = await getDictionary(locale);
-  const [formula, rounds] = await Promise.all([getFormula(record.id), getApplicationRounds()]);
+  const [formula, rounds, admissionType] = await Promise.all([
+    getFormula(record.id),
+    getApplicationRounds(),
+    getAdmissionType(record.university_id),
+  ]);
   const applicationRounds = matchRounds(
     rounds,
     record.university_id,
     record.degree_level,
     record.language_of_instruction,
   );
+  // Пункт 06 ревью 2026-09: без формулы карточка молчала одинаково и
+  // там, где формулу ещё не собрали, и там, где конкурсного балла нет
+  // в принципе (8 из 14 вузов — все частные). Если тип отбора
+  // подтверждён и это не конкурсный балл — показываем объяснение вместо
+  // тишины; если неизвестен или сам конкурсный балл — поведение прежнее
+  // (пусто, пока формулу не собрали и не подтвердили).
+  let noCompetitiveScoreReason: string | null = null;
+  if (!formula && admissionType && admissionType.selectionType !== "competitive_score") {
+    noCompetitiveScoreReason = dict.programme.selectionTypes[admissionType.selectionType];
+  }
 
   const name = localizedName(record, locale);
   const universityName = localizedName(record.university, locale);
@@ -187,6 +202,8 @@ export default async function ProgrammePage({ params }: { params: Params }) {
           {dict.calculator.title}
         </Link>
       )}
+
+      {noCompetitiveScoreReason && <p className="mt-8 text-sm text-zinc-600">{noCompetitiveScoreReason}</p>}
 
       <p className="mt-8 rounded-xl bg-amber-50 px-4 py-3 text-sm text-amber-900">
         {record.verified_at

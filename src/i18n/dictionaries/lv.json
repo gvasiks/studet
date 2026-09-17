@@ -80,7 +80,12 @@
     "deadlinesTitle": "Pieteikšanās termiņi",
     "deadlinesNotAvailable": "Uzņemšanas datumi šai programmai vēl nav apstiprināti.",
     "deadlinesOpens": "no",
-    "deadlinesCloses": "līdz"
+    "deadlinesCloses": "līdz",
+    "selectionTypes": {
+      "entrance_exam": "Šajā augstskolā nav konkursa punktu — uzņemšana notiek pēc iestājpārbaudījumiem.",
+      "open_admission": "Šajā augstskolā nav konkursa punktu — uzņem pēc prasību izpildes, bez konkursa.",
+      "interview": "Šajā augstskolā nav konkursa punktu — lēmumu pieņem pēc pārrunām."
+    }
   },
   "survey": {
     "title": "Kas tev der?",

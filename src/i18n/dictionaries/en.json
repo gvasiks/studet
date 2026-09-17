@@ -80,7 +80,12 @@
     "deadlinesTitle": "Application windows",
     "deadlinesNotAvailable": "Admission dates for this programme aren't confirmed yet.",
     "deadlinesOpens": "from",
-    "deadlinesCloses": "to"
+    "deadlinesCloses": "to",
+    "selectionTypes": {
+      "entrance_exam": "This university has no competition score — admission is based on entrance exams.",
+      "open_admission": "This university has no competition score — admission is based on meeting requirements, not competing.",
+      "interview": "This university has no competition score — the decision is based on an interview."
+    }
   },
   "survey": {
     "title": "What fits you?",
