@@ -10,7 +10,9 @@ export default function robots(): MetadataRoute.Robots {
         // /favorites — своя страница у каждого посетителя (localStorage),
         // индексировать нечего; уже noindex на уровне метаданных, disallow
         // здесь дополнительно экономит краулинговый бюджет.
-        disallow: ["/*/favorites"],
+        // /verification — внутренний рабочий инструмент (пункт 03), не
+        // часть продукта ни для одной аудитории.
+        disallow: ["/*/favorites", "/*/verification"],
       },
     ],
     sitemap: `${SITE_URL}/sitemap.xml`,
