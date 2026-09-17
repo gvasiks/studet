@@ -99,6 +99,11 @@ export function CalculatorForm({
               max={100}
               size="sm"
               className="w-24"
+              // Видимый <span> рядом — не <label>, программно ни с чем
+              // не связан; без aria-label скринридер объявил бы просто
+              // "number input" без указания предмета (ревью 2026-09,
+              // пункт 15: "читаются ли подписи к полям калькулятора").
+              aria-label={subjectLabel(dict, subject)}
               value={inputs[subject].percent}
               onValueChange={(value) =>
                 setInputs((prev) => ({ ...prev, [subject]: { ...prev[subject], percent: value } }))
@@ -108,6 +113,7 @@ export function CalculatorForm({
             <RadioGroup
               orientation="horizontal"
               size="sm"
+              aria-label={subjectLabel(dict, subject)}
               value={inputs[subject].level}
               onValueChange={(value) =>
                 setInputs((prev) => ({ ...prev, [subject]: { ...prev[subject], level: value as ExamLevel } }))
@@ -135,6 +141,7 @@ export function CalculatorForm({
                 min={0}
                 size="sm"
                 className="w-24"
+                aria-label={termLabel(dict, term)}
                 value={extraInputs[key]}
                 onValueChange={(value) => setExtraInputs((prev) => ({ ...prev, [key]: value }))}
               />

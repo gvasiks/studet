@@ -32,7 +32,11 @@ export function FavoriteButton({
       title={favorited ? removeLabel : addLabel}
       onClick={() => toggleFavorite(programmeId)}
       className={`shrink-0 text-xl leading-none transition-colors ${
-        favorited ? "text-amber-500" : "text-zinc-300 hover:text-zinc-400"
+        // zinc-300 давал ~1.5:1 к белому фону — ниже порога 3:1 для
+        // графических элементов интерфейса (WCAG 1.4.11), а именно эта
+        // звёздочка и есть визуальный индикатор состояния для зрячих
+        // пользователей, не декоративный элемент. zinc-500 даёт ~4.8:1.
+        favorited ? "text-amber-500" : "text-zinc-500 hover:text-zinc-600"
       } ${className ?? ""}`}
     >
       {favorited ? "★" : "☆"}
