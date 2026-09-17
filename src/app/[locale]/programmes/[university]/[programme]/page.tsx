@@ -1,11 +1,14 @@
 import Link from "next/link";
 import type { Metadata } from "next";
+import type { Dictionary } from "@/i18n/dictionaries";
+import type { Locale } from "@/i18n/config";
 import { notFound } from "next/navigation";
 import { isLocale } from "@/i18n/config";
 import { getDictionary } from "@/i18n/dictionaries";
-import { enumLabel, getProgramme, localizedName } from "@/lib/catalog";
+import { enumLabel, getProgramme, localizedName, type Programme, type University } from "@/lib/catalog";
 import { getFormula } from "@/lib/formula-queries";
 import { FavoriteButton } from "@/components/FavoriteButton";
+import { buildAlternates, SITE_URL } from "@/lib/site";
 
 type Params = PageProps<"/[locale]/programmes/[university]/[programme]">["params"];
 
@@ -21,11 +24,45 @@ async function loadProgramme(params: Params) {
   return { locale, record };
 }
 
+// Из реальных полей карточки, не шаблонная фраза "изучите X у нас" —
+// ревью 2026-09, пункт 08. Структура предложения одна и та же для всех
+// программ (иначе никак), но содержание каждый раз собирается из того,
+// что реально известно об этой конкретной программе.
+function buildDescription(
+  record: Programme & { university: Pick<University, "name_lv" | "name_en"> },
+  dict: Dictionary,
+  locale: Locale,
+): string {
+  const universityName = localizedName(record.university, locale);
+  const degree = enumLabel(dict.catalog.degreeLevel, record.degree_level);
+  const language = enumLabel(dict.catalog.language, record.language_of_instruction);
+  const mode = enumLabel(dict.catalog.studyMode, record.study_mode);
+  const city = record.city ? enumLabel(dict.catalog.city, record.city) : null;
+
+  const parts = [`${degree} — ${universityName}${city ? `, ${city}` : ""}.`];
+  parts.push(`${dict.programme.language}: ${language}. ${dict.programme.studyMode}: ${mode}.`);
+  parts.push(
+    record.tuition_fee_amount !== null
+      ? `${dict.programme.tuitionFee}: ${record.tuition_fee_amount} ${record.tuition_fee_currency}.`
+      : `${enumLabel(dict.catalog.funding, record.funding_type)}.`,
+  );
+  return parts.join(" ");
+}
+
 export async function generateMetadata({ params }: { params: Params }): Promise<Metadata> {
   const { locale, record } = await loadProgramme(params);
+  const dict = await getDictionary(locale);
   const name = localizedName(record, locale);
   const universityName = localizedName(record.university, locale);
-  return { title: `${name} — ${universityName}` };
+  const path = `/programmes/${record.university.slug}/${record.slug}`;
+
+  return {
+    // title.absolute обходит шаблон "%s — {название сайта}" из
+    // [locale]/layout.tsx — тут уже есть своё "программа — вуз".
+    title: { absolute: `${name} — ${universityName}` },
+    description: buildDescription(record, dict, locale),
+    alternates: buildAlternates(path, locale),
+  };
 }
 
 export default async function ProgrammePage({ params }: { params: Params }) {
@@ -35,9 +72,41 @@ export default async function ProgrammePage({ params }: { params: Params }) {
 
   const name = localizedName(record, locale);
   const universityName = localizedName(record.university, locale);
+  const pageUrl = `${SITE_URL}/${locale}/programmes/${record.university.slug}/${record.slug}`;
+
+  // Course + provider (CollegeOrUniversity) — ревью 2026-09, пункт 08.
+  // Держим схему минимальной и корректной, а не максималистской:
+  // study_mode ("full_time"/"part_time"/"distance") — это не то же
+  // самое, что schema.org courseMode ("online"/"onsite"/"blended"),
+  // натягивать одно на другое значило бы публиковать неверные данные
+  // ради галочки "разметка есть" — hasCourseInstance сюда сознательно
+  // не пошёл.
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Course",
+    name,
+    description: buildDescription(record, dict, locale),
+    url: pageUrl,
+    inLanguage: record.language_of_instruction,
+    provider: {
+      "@type": "CollegeOrUniversity",
+      name: universityName,
+      ...(record.university.website_url ? { sameAs: record.university.website_url } : {}),
+    },
+    ...(record.tuition_fee_amount !== null
+      ? {
+          offers: {
+            "@type": "Offer",
+            price: record.tuition_fee_amount,
+            priceCurrency: record.tuition_fee_currency,
+          },
+        }
+      : {}),
+  };
 
   return (
     <main className="mx-auto max-w-3xl px-6 py-16">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       <Link href={`/${locale}/programmes`} className="text-sm text-zinc-500 hover:underline">
         {dict.programme.backToCatalog}
       </Link>
