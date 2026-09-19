@@ -76,15 +76,21 @@ RULES: list[tuple[str, list[str]]] = [
     (r"industrial design|industriālais dizains", ["214"]),
     (r"dizaina inženierija", ["521"]),
     (r"materiālu tehnoloģija un dizains|dizaina tehnoloģijas", ["542", "214"]),
-    (r"interior|brand design|game design|computer game|digital visualization|dizain|\bdesign\b", ["214"]),
+    # академии искусств (LMA, LKA): у LMA все специальности в данных ИЗМ
+    # лежат в 211; театр и танец у LKA — в 212. Сценография стоит до
+    # общего "design", иначе "stage design" уйдёт в 214
+    (r"stage design|scenograph|scenogrāf", ["211", "212"]),
+    (r"interior|brand design|game design|computer game|digital visualization|visual communication|vizuālā komunikācija|dizain|\bdesign\b", ["214"]),
     (r"music|mūzik", ["212"]),
+    (r"theatre|theater|teātr|\bacting\b|aktier|drama|\bdance\b|dejas|\bdirecting|režij", ["212"]),
+    (r"painting|glezn|sculpture|tēlniec|ceramic|keramik|glass art|stikl|graphic art|drawing|zīmēšan|environmental art|restoration|restaurācij|curatorial|kuratori|motion\. image|^textile \|", ["211"]),
     (r"^art\b|\bart \|| māksla\b", ["211"]),
     # --- гуманитарные
     (r"theolog|teoloģ|religio", ["221"]),
     (r"philosoph|filozof", ["226", "225"]),
     (r"history|vēstur|archeolog|archaeolog", ["224", "225"]),
     (r"latvian studies|latvistik", ["223"]),
-    (r"cultural and environmental heritage|kultūras un vides mantojum", ["227", "224"]),
+    (r"cultural and environmental heritage|kultūras un vides mantojum|cultural heritage", ["227", "224"]),
     (r"culture management|kultūras vadīb|cultural project|kultūras projekt", ["345", "214"]),
     (r"digital humanities|digitālās humanitārās", ["222", "227"]),
     (r"digitālā kultūra", ["222", "321"]),

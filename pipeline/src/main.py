@@ -9,9 +9,9 @@ sys.path.insert(0, str(Path(__file__).parent))
 from dotenv import load_dotenv
 
 from db import get_service_client
-from sources import bsa, du, eka, lbtu, lu, rgsl, riseba, rnu, rsu, rtu_catalog, rtu_liepaja, sse_riga, tsi, turiba, venta, via
+from sources import bsa, du, eka, lbtu, lka, lma, lu, rgsl, riseba, rnu, rsu, rtu_catalog, rtu_liepaja, sse_riga, tsi, turiba, venta, via
 
-SOURCES = [turiba, riseba, rtu_liepaja, tsi, bsa, sse_riga, rgsl, lu, venta, lbtu, du, eka, rnu, rtu_catalog, via, rsu]
+SOURCES = [turiba, riseba, rtu_liepaja, tsi, bsa, sse_riga, rgsl, lu, venta, lbtu, du, eka, rnu, rtu_catalog, via, rsu, lka, lma]
 
 # Ревью 2026-09, пункт 05: конвейер должен падать, если число найденных
 # программ у источника резко просело — lu.py однажды тихо потерял целый
@@ -44,6 +44,8 @@ MIN_PROGRAMME_COUNT = {
     "sources.rtu_catalog": 124,
     "sources.via": 21,
     "sources.rsu": 58,
+    "sources.lka": 15,
+    "sources.lma": 35,
 }
 
 
