@@ -5,7 +5,8 @@
   "home": {
     "title": "Kur tiešām varu iestāties?",
     "description": "Aptauja, katalogs un konkursa punktu aprēķins vienuviet. Bez reģistrācijas.",
-    "catalogCta": "Skatīt katalogu"
+    "catalogCta": "Skatīt katalogu",
+    "surveyCta": "Aizpildīt aptauju"
   },
   "catalog": {
     "title": "Studiju programmu katalogs",
@@ -115,7 +116,8 @@
   "nav": {
     "catalog": "Katalogs",
     "survey": "Aptauja",
-    "main": "Galvenā navigācija"
+    "main": "Galvenā navigācija",
+    "footer": "Navigācija lapas apakšā"
   },
   "outcomes": {
     "title": "Kas noticis ar absolventiem",

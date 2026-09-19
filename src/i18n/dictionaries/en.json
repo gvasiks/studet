@@ -5,7 +5,8 @@
   "home": {
     "title": "Where can I actually get in?",
     "description": "Questionnaire, catalogue and competition score calculator in one place. No registration required.",
-    "catalogCta": "Browse the catalogue"
+    "catalogCta": "Browse the catalogue",
+    "surveyCta": "Take the survey"
   },
   "catalog": {
     "title": "Study programme catalogue",
@@ -115,7 +116,8 @@
   "nav": {
     "catalog": "Catalogue",
     "survey": "Survey",
-    "main": "Main navigation"
+    "main": "Main navigation",
+    "footer": "Footer navigation"
   },
   "outcomes": {
     "title": "What happened to graduates",
