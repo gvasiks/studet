@@ -69,7 +69,7 @@ RULES: list[tuple[str, list[str]]] = [
     (r"geomatic|ģeomātik", ["582", "443"]),
     (r"real estate|nekustam", ["345", "582"]),
     (r"mašīnu un aparātu", ["521"]),
-    (r"būvniecīb|construction|building|būvuzņēm|transportbūv|siltuma, gāzes|heating|ēku", ["582"]),
+    (r"būvniecīb|construction|building|būvuzņēm|transportbūv|siltuma, gāzes|heating|(?<![a-zāčēģīķļņšūž])ēku", ["582"]),
     # --- искусство и дизайн
     (r"audiovisual|film|audiovizuāl|new media|jauno mediju", ["213", "214"]),
     (r"radošās industrijas|creative industries", ["345", "214"]),
@@ -144,6 +144,7 @@ RULES: list[tuple[str, list[str]]] = [
     (r"ražošanas tehnoloģija|manufacturing", ["521", "526"]),
     (r"biosystems|biosistēm", ["621", "521"]),
     (r"food|pārtik", ["541"]),
+    (r"militār|military", ["863"]),
     (r"gaisa kuģ|aircraft", ["525"]),
     (r"gaisa satiksm|air traffic", ["840"]),
     (r"elektronisko iekārt", ["523"]),
