@@ -43,9 +43,11 @@ export function SurveyWizard({ locale, dict }: { locale: Locale; dict: Dictionar
   }
 
   function submit() {
-    // Экзамены и интересы (шаги 1-2) сознательно не попадают в URL — они
-    // пока ни на что не влияют, см. подсказки под этими вопросами.
+    // Экзамены (шаг 1) сознательно не попадают в URL — пока ни на что не
+    // влияют, см. подсказку под вопросом. Интересы (шаг 2) — влияют:
+    // каталог фильтрует по направлению программы (пункт 16 ревью).
     const params = new URLSearchParams();
+    if (answers.interests.length > 0) params.set("interest", answers.interests.join(","));
     if (answers.funding === "budget_only") params.set("budget", "1");
     if (!answers.anywhere && answers.cities.length > 0) {
       params.set("city", answers.cities.join(","));

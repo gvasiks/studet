@@ -7,6 +7,7 @@ import { FavoriteButton } from "@/components/FavoriteButton";
 import { buildAlternates } from "@/lib/site";
 import { getApplicationRounds } from "@/lib/deadline-queries";
 import { matchRounds } from "@/lib/deadlines";
+import { INTEREST_KEYS, isInterestKey } from "@/lib/fields";
 import {
   CITY_KEYS,
   enumLabel,
@@ -39,11 +40,11 @@ function firstValue(value: string | string[] | undefined): string | undefined {
   return Array.isArray(value) ? value[0] : value;
 }
 
-// Города приходят в двух форматах: одной строкой через запятую (ссылка
-// из анкеты, SurveyWizard.tsx) или несколькими одноимёнными параметрами
-// (форма фильтра ниже — несколько чекбоксов с name="city" в GET-запросе
-// дают city=riga&city=jelgava, а не одну строку).
-function cityValues(value: string | string[] | undefined): string[] {
+// Города и интересы приходят в двух форматах: одной строкой через запятую
+// (ссылка из анкеты, SurveyWizard.tsx) или несколькими одноимёнными
+// параметрами (форма фильтра ниже — несколько чекбоксов с name="city" в
+// GET-запросе дают city=riga&city=jelgava, а не одну строку).
+function listValues(value: string | string[] | undefined): string[] {
   if (!value) return [];
   const parts = Array.isArray(value) ? value : [value];
   return parts.flatMap((part) => part.split(",")).filter(Boolean);
@@ -57,7 +58,8 @@ export default async function ProgrammesPage({
   if (!isLocale(locale)) notFound();
 
   const sp = await searchParams;
-  const cities = cityValues(sp.city);
+  const cities = listValues(sp.city);
+  const interests = listValues(sp.interest).filter(isInterestKey);
   const languageParam = firstValue(sp.language);
   const modeParam = firstValue(sp.mode);
   const universityParam = firstValue(sp.university);
@@ -66,12 +68,18 @@ export default async function ProgrammesPage({
   const filters: ProgrammeFilters = {
     budgetOnly,
     cities,
+    interests,
     language: languageParam,
     mode: modeParam,
     university: universityParam,
   };
   const hasFilters =
-    budgetOnly || cities.length > 0 || Boolean(languageParam) || Boolean(modeParam) || Boolean(universityParam);
+    budgetOnly ||
+    cities.length > 0 ||
+    interests.length > 0 ||
+    Boolean(languageParam) ||
+    Boolean(modeParam) ||
+    Boolean(universityParam);
 
   const dict = await getDictionary(locale);
   const [programmes, universities, applicationRounds] = await Promise.all([
@@ -84,6 +92,7 @@ export default async function ProgrammesPage({
   const summaryParts = [
     budgetOnly ? dict.survey.funding.budgetOnly : null,
     ...cities.map((city) => enumLabel(dict.catalog.city, city)),
+    ...interests.map((key) => dict.survey.interests.categories[key]),
     languageParam ? enumLabel(dict.catalog.language, languageParam) : null,
     modeParam ? enumLabel(dict.catalog.studyMode, modeParam) : null,
     selectedUniversity ? localizedName(selectedUniversity, locale) : null,
@@ -165,6 +174,24 @@ export default async function ProgrammesPage({
                   className="rounded border-zinc-300 text-brand focus:ring-brand"
                 />
                 {enumLabel(dict.catalog.city, city)}
+              </label>
+            ))}
+          </div>
+        </fieldset>
+
+        <fieldset className="flex flex-col gap-1 text-sm">
+          <legend className="text-zinc-600">{dict.catalog.filters.interest}</legend>
+          <div className="flex max-w-md flex-wrap gap-x-3 gap-y-1">
+            {INTEREST_KEYS.map((key) => (
+              <label key={key} className="flex items-center gap-1.5 text-zinc-800">
+                <input
+                  type="checkbox"
+                  name="interest"
+                  value={key}
+                  defaultChecked={interests.includes(key)}
+                  className="rounded border-zinc-300 text-brand focus:ring-brand"
+                />
+                {dict.survey.interests.categories[key]}
               </label>
             ))}
           </div>

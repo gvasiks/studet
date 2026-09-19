@@ -27,6 +27,7 @@ const FACT_TYPE_LABEL: Record<VerificationQueueItem["factType"], string> = {
   formula: "Konkursa formula",
   application_round: "Pieteikšanās termiņš",
   admission_type: "Uzņemšanas veids",
+  programme_field: "Programmu virzieni",
 };
 
 export default async function VerificationPage({ params }: PageProps<"/[locale]/verification">) {
@@ -49,7 +50,7 @@ export default async function VerificationPage({ params }: PageProps<"/[locale]/
           Apstiprinātas formulas: <strong>{health.verifiedFormulas}</strong> no <strong>{health.totalFormulas}</strong> (
           {healthPercent}%)
         </p>
-        <p className="mt-1 text-zinc-600">Rindā palicis: {queue.length}</p>
+        <p className="mt-1 text-zinc-600">Rindā palicis: {queue.reduce((total, item) => total + item.itemCount, 0)}</p>
       </div>
 
       {queue.length === 0 ? (
@@ -62,6 +63,7 @@ export default async function VerificationPage({ params }: PageProps<"/[locale]/
                 <p className="font-medium text-zinc-900">
                   {FACT_TYPE_LABEL[item.factType]}
                   {item.programmeName && ` — ${item.programmeName}`}
+                  {item.itemCount > 1 && ` (${item.itemCount})`}
                 </p>
                 <p className="mt-1 text-sm text-zinc-600">
                   {item.universityName}

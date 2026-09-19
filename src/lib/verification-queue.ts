@@ -3,13 +3,16 @@ import { supabase } from "@/lib/supabase";
 
 export type VerificationQueueItem = {
   factId: string;
-  factType: "formula" | "application_round" | "admission_type";
+  factType: "formula" | "application_round" | "admission_type" | "programme_field";
   programmeId: string | null;
   programmeName: string | null;
   universitySlug: string;
   universityName: string;
   collectedAt: string;
   sourceUrl: string | null;
+  // Для programme_field одна строка на вуз — сколько программ ждут проверки;
+  // для остальных типов всегда 1.
+  itemCount: number;
 };
 
 // Приоритет по спросу — прямое указание ревью 2026-09, пункт 03: РТУ
@@ -26,7 +29,7 @@ function priority(universitySlug: string): number {
 export const getVerificationQueue = cache(async (): Promise<VerificationQueueItem[]> => {
   const { data, error } = await supabase
     .from("verification_queue")
-    .select("fact_id, fact_type, programme_id, programme_name, university_slug, university_name, collected_at, source_url");
+    .select("fact_id, fact_type, programme_id, programme_name, university_slug, university_name, collected_at, source_url, item_count");
 
   if (error) throw error;
 
@@ -39,6 +42,7 @@ export const getVerificationQueue = cache(async (): Promise<VerificationQueueIte
     universityName: row.university_name,
     collectedAt: row.collected_at,
     sourceUrl: row.source_url,
+    itemCount: row.item_count,
   }));
 
   return items.sort((a, b) => {

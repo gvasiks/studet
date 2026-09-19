@@ -10,6 +10,9 @@ import { getFormula } from "@/lib/formula-queries";
 import { getApplicationRounds } from "@/lib/deadline-queries";
 import { matchRounds } from "@/lib/deadlines";
 import { getAdmissionType } from "@/lib/admission-type-queries";
+import { getProgrammeOutcome } from "@/lib/outcome-queries";
+import { areaCode } from "@/lib/fields";
+import { employmentPercent, interpolate, OUTCOMES_SOURCE_URL, pickOutcomes } from "@/lib/outcomes";
 import { FavoriteButton } from "@/components/FavoriteButton";
 import { buildAlternates, SITE_URL } from "@/lib/site";
 
@@ -71,11 +74,15 @@ export async function generateMetadata({ params }: { params: Params }): Promise<
 export default async function ProgrammePage({ params }: { params: Params }) {
   const { locale, record } = await loadProgramme(params);
   const dict = await getDictionary(locale);
-  const [formula, rounds, admissionType] = await Promise.all([
+  const [formula, rounds, admissionType, outcome] = await Promise.all([
     getFormula(record.id),
     getApplicationRounds(),
     getAdmissionType(record.university_id),
+    getProgrammeOutcome(record.id, record.university_id),
   ]);
+  // Блок "что стало с выпускниками" (пункт 14 ревью) — только при
+  // подтверждённом направлении программы, см. outcome-queries.ts.
+  const outcomeSnapshots = outcome ? pickOutcomes(outcome.rows, record.degree_level) : [];
   const applicationRounds = matchRounds(
     rounds,
     record.university_id,
@@ -204,6 +211,55 @@ export default async function ProgrammePage({ params }: { params: Params }) {
       )}
 
       {noCompetitiveScoreReason && <p className="mt-8 text-sm text-zinc-600">{noCompetitiveScoreReason}</p>}
+
+      {outcome && outcomeSnapshots.length > 0 && (
+        <section className="mt-8">
+          <h2 className="text-xs uppercase tracking-wide text-zinc-500">{dict.outcomes.title}</h2>
+          <p className="mt-2 text-sm text-zinc-600">
+            {interpolate(dict.outcomes.scope, {
+              university: universityName,
+              field: enumLabel(dict.fields.areas, areaCode(outcome.fieldCode)),
+              code: outcome.fieldCode,
+              level: enumLabel(dict.outcomes.levels, record.degree_level),
+            })}
+          </p>
+          <ul className="mt-3 space-y-3">
+            {outcomeSnapshots.map((snapshot) => (
+              <li key={snapshot.graduationYear} className="text-zinc-900">
+                <p className="text-sm font-medium">
+                  {interpolate(dict.outcomes.cohort, { year: snapshot.graduationYear, taxYear: snapshot.taxYear })}
+                </p>
+                <p>
+                  {interpolate(dict.outcomes.employed, {
+                    employed: snapshot.employed,
+                    graduates: snapshot.graduates,
+                    percent: employmentPercent(snapshot),
+                  })}
+                </p>
+                {snapshot.medianIncomeEur !== null ? (
+                  <p>
+                    {interpolate(dict.outcomes.median, {
+                      amount: Math.round(snapshot.medianIncomeEur).toLocaleString(locale),
+                    })}
+                  </p>
+                ) : (
+                  // У докторов доходы не публикуются вовсе — причина другая,
+                  // чем "меньше 30 занятых", поэтому там строку не показываем.
+                  record.degree_level !== "doctoral" && (
+                    <p className="text-sm text-zinc-500">{dict.outcomes.incomeHidden}</p>
+                  )
+                )}
+              </li>
+            ))}
+          </ul>
+          <p className="mt-3 text-xs text-zinc-500">{dict.outcomes.caveat}</p>
+          <p className="mt-1 text-xs text-zinc-500">
+            <a href={OUTCOMES_SOURCE_URL} target="_blank" rel="noopener noreferrer" className="underline">
+              {dict.outcomes.source}
+            </a>
+          </p>
+        </section>
+      )}
 
       <p className="mt-8 rounded-xl bg-amber-50 px-4 py-3 text-sm text-amber-900">
         {record.verified_at

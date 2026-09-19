@@ -62,6 +62,7 @@
       "mode": "Studiju forma",
       "anyMode": "Jebkura forma",
       "budgetOnly": "Tikai budžeta vietas",
+      "interest": "Virziens",
       "apply": "Filtrēt"
     }
   },
@@ -85,6 +86,48 @@
       "entrance_exam": "Šajā augstskolā nav konkursa punktu — uzņemšana notiek pēc iestājpārbaudījumiem.",
       "open_admission": "Šajā augstskolā nav konkursa punktu — uzņem pēc prasību izpildes, bez konkursa.",
       "interview": "Šajā augstskolā nav konkursa punktu — lēmumu pieņem pēc pārrunām."
+    }
+  },
+  "outcomes": {
+    "title": "Kas noticis ar absolventiem",
+    "scope": "{university} absolventi virzienā “{field}” (grupas kods {code}), {level}",
+    "cohort": "{year}. gada izlaidums, dati par {taxYear}. gadu",
+    "employed": "Strādāja {employed} no {graduates} absolventiem ({percent}%)",
+    "median": "Gada ienākumu mediāna: {amount} EUR",
+    "incomeHidden": "Ienākumi nav publicēti — nodarbināto ir mazāk nekā 30 (datu aizsardzība).",
+    "caveat": "Tie ir dati par visiem šīs augstskolas absolventiem šajā virzienā un studiju līmenī, nevis par konkrēto programmu, un pat viena virziena ietvaros atšķirības starp absolventiem ir lielas — tas ir orientieris, nevis solījums. Ienākumi ir visi gada ienākumi (arī par nepilnu darba laiku) tikai nodarbinātajiem; nodarbinātību nosaka novembrī. Daļa bakalauru turpina studijas, tāpēc viņu nodarbinātības īpatsvars ir zemāks.",
+    "source": "Avots: IZM/CSP augstākās izglītības absolventu monitorings",
+    "levels": {
+      "college": "koledža",
+      "bachelor": "bakalaurs",
+      "master": "maģistrs",
+      "doctoral": "doktors"
+    }
+  },
+  "fields": {
+    "areas": {
+      "14": "Izglītība",
+      "21": "Māksla",
+      "22": "Humanitārās zinātnes",
+      "31": "Sociālās un uzvedības zinātnes",
+      "32": "Žurnālistika un informācija",
+      "34": "Bizness un pārvaldība",
+      "38": "Tiesības",
+      "42": "Dzīvās dabas zinātnes",
+      "44": "Fizikālās zinātnes",
+      "46": "Matemātika un statistika",
+      "48": "Datorzinātnes",
+      "52": "Inženierzinātnes",
+      "54": "Ražošana un pārstrāde",
+      "58": "Arhitektūra un būvniecība",
+      "62": "Lauksaimniecība un mežsaimniecība",
+      "64": "Veterinārija",
+      "72": "Veselības aprūpe",
+      "76": "Sociālie pakalpojumi",
+      "81": "Personiskie pakalpojumi (tūrisms, sports)",
+      "84": "Transporta pakalpojumi",
+      "85": "Vides aizsardzība",
+      "86": "Drošības pakalpojumi"
     }
   },
   "survey": {
@@ -113,14 +156,18 @@
     },
     "interests": {
       "title": "Kuras jomas tev interesē?",
-      "hint": "Saraksts vēl tiek pilnveidots un pagaidām neietekmē rezultātu.",
+      "hint": "Katalogs tiks atlasīts pēc virziena. Ja neko neatzīmē, rādām visas programmas.",
       "categories": {
         "business": "Bizness un ekonomika",
         "it": "IT un tehnoloģijas",
-        "law": "Tiesības",
+        "law": "Tiesības un drošība",
         "health": "Veselība un sociālā joma",
+        "engineering": "Inženierzinātnes un būvniecība",
+        "science": "Dabaszinātnes un vide",
         "humanities": "Humanitārās zinātnes un komunikācija",
-        "engineering": "Inženierzinātnes un dabaszinātnes"
+        "arts": "Māksla un dizains",
+        "society": "Psiholoģija, sociālās zinātnes un izglītība",
+        "services": "Tūrisms un sports"
       }
     },
     "funding": {

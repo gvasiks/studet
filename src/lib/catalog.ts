@@ -1,6 +1,7 @@
 import { cache } from "react";
 import { supabase } from "@/lib/supabase";
 import type { Locale } from "@/i18n/config";
+import { fieldCodesForInterests, type InterestKey } from "@/lib/fields";
 
 export type University = {
   id: string;
@@ -55,6 +56,7 @@ export function enumLabel(map: Record<string, string>, key: string): string {
 }
 
 export type ProgrammeFilters = {
+  interests?: InterestKey[];
   budgetOnly?: boolean;
   cities?: string[];
   language?: string;
@@ -73,8 +75,24 @@ export const listProgrammes = cache(
     // university.slug ниже (PostgREST требует inner-join для фильтрации
     // встроенного ресурса). У программы university_id обязателен, так что
     // на набор результатов без фильтра по вузу это не влияет.
-    let query = supabase.from("programme").select("*, university!inner(slug, name_lv, name_en, city)");
+    // Фильтр по интересам (пункт 16 ревью) идёт через направление
+    // программы. programme_field!inner — только когда фильтр задан, иначе
+    // программы без разметки выпали бы из обычного каталога. Неподтверждённая
+    // разметка здесь допустима: это подсказка для поиска, а не факт, на
+    // который человек опирается (блок с доходами требует verified_at).
+    const interestCodes =
+      filters.interests && filters.interests.length > 0 ? fieldCodesForInterests(filters.interests) : null;
+    let query = supabase
+      .from("programme")
+      .select(
+        interestCodes
+          ? "*, university!inner(slug, name_lv, name_en, city), programme_field!inner(field_code)"
+          : "*, university!inner(slug, name_lv, name_en, city)",
+      );
 
+    if (interestCodes) {
+      query = query.in("programme_field.field_code", interestCodes);
+    }
     if (filters.budgetOnly) {
       query = query.in("funding_type", ["budget", "both"]);
     }
@@ -98,7 +116,9 @@ export const listProgrammes = cache(
     const { data, error } = await query.order("degree_level").order("name_en");
 
     if (error) throw error;
-    return data as ProgrammeWithUniversity[];
+    // Через unknown: строка select собирается условно, и разборщик типов
+    // supabase-js не может вывести форму строки из неё.
+    return data as unknown as ProgrammeWithUniversity[];
   },
 );
 

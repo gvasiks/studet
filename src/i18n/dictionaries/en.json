@@ -62,6 +62,7 @@
       "mode": "Study mode",
       "anyMode": "Any mode",
       "budgetOnly": "Budget places only",
+      "interest": "Field",
       "apply": "Filter"
     }
   },
@@ -85,6 +86,48 @@
       "entrance_exam": "This university has no competition score — admission is based on entrance exams.",
       "open_admission": "This university has no competition score — admission is based on meeting requirements, not competing.",
       "interview": "This university has no competition score — the decision is based on an interview."
+    }
+  },
+  "outcomes": {
+    "title": "What happened to graduates",
+    "scope": "{university} graduates in “{field}” (programme group {code}), {level}",
+    "cohort": "Class of {year}, data for {taxYear}",
+    "employed": "{employed} of {graduates} graduates were employed ({percent}%)",
+    "median": "Median annual income: {amount} EUR",
+    "incomeHidden": "Income isn't published — fewer than 30 employed graduates (data protection).",
+    "caveat": "This covers all of this university's graduates in this field and study level, not this specific programme, and even within one field the spread between graduates is wide — treat it as a pointer, not a promise. Income is total annual income (including part-time work) for employed graduates only; employment is determined as of November. Some bachelor's graduates go on to study, which lowers their employment share.",
+    "source": "Source: IZM/CSP higher-education graduate monitoring",
+    "levels": {
+      "college": "college",
+      "bachelor": "bachelor's",
+      "master": "master's",
+      "doctoral": "doctoral"
+    }
+  },
+  "fields": {
+    "areas": {
+      "14": "Education",
+      "21": "Arts",
+      "22": "Humanities",
+      "31": "Social and behavioural sciences",
+      "32": "Journalism and information",
+      "34": "Business and administration",
+      "38": "Law",
+      "42": "Life sciences",
+      "44": "Physical sciences",
+      "46": "Mathematics and statistics",
+      "48": "Computing",
+      "52": "Engineering",
+      "54": "Manufacturing and processing",
+      "58": "Architecture and construction",
+      "62": "Agriculture and forestry",
+      "64": "Veterinary",
+      "72": "Health",
+      "76": "Social services",
+      "81": "Personal services (tourism, sport)",
+      "84": "Transport services",
+      "85": "Environmental protection",
+      "86": "Security services"
     }
   },
   "survey": {
@@ -113,14 +156,18 @@
     },
     "interests": {
       "title": "Which fields interest you?",
-      "hint": "This list is still a draft and doesn't affect the result yet.",
+      "hint": "The catalogue will be filtered by field. Leave everything unticked to see all programmes.",
       "categories": {
         "business": "Business and economics",
         "it": "IT and technology",
-        "law": "Law",
+        "law": "Law and security",
         "health": "Health and social care",
+        "engineering": "Engineering and construction",
+        "science": "Natural sciences and environment",
         "humanities": "Humanities and communication",
-        "engineering": "Engineering and natural sciences"
+        "arts": "Arts and design",
+        "society": "Psychology, social sciences and education",
+        "services": "Tourism and sport"
       }
     },
     "funding": {
