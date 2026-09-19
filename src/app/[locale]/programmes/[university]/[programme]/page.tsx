@@ -135,7 +135,8 @@ export default async function ProgrammePage({ params }: { params: Params }) {
   };
 
   return (
-    <main className="mx-auto max-w-3xl px-6 py-16">
+    <main className="page-container py-8 sm:py-12">
+      <div className="surface mx-auto max-w-3xl p-6 sm:p-10">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       <Link href={`/${locale}/programmes`} className="text-sm text-zinc-500 hover:underline">
         {dict.programme.backToCatalog}
@@ -148,7 +149,8 @@ export default async function ProgrammePage({ params }: { params: Params }) {
           programmeId={record.id}
           addLabel={dict.favorites.add}
           removeLabel={dict.favorites.remove}
-          className="mt-2 text-2xl"
+          size={22}
+          className="mt-1"
         />
       </div>
 
@@ -279,6 +281,7 @@ export default async function ProgrammePage({ params }: { params: Params }) {
           </>
         )}
       </p>
+    </div>
     </main>
   );
 }

@@ -7,9 +7,6 @@
     "description": "Aptauja, katalogs un konkursa punktu aprēķins vienuviet. Bez reģistrācijas.",
     "catalogCta": "Skatīt katalogu"
   },
-  "nav": {
-    "catalog": "Programmu katalogs"
-  },
   "catalog": {
     "title": "Studiju programmu katalogs",
     "subtitle": "Visas programmas, ko līdz šim esam pārbaudījuši. Bez reģistrācijas.",
@@ -53,7 +50,34 @@
     "surveyCta": "Aizpildi aptauju",
     "filtersSummary": "Rādīts pēc filtra:",
     "clearFilters": "Notīrīt filtru",
+    "heroBadge": "{programmes} programmas · {universities} augstskolas",
+    "surveyCardText": "Aizpildi aptauju — atlasīsim tev programmas",
+    "surveyCardCta": "Sākt",
+    "searchLabel": "Meklēt programmas",
+    "searchPlaceholder": "Meklēt programmu vai augstskolu…",
+    "sortMenu": {
+      "label": "Kārtot",
+      "name": "A–Z",
+      "name_desc": "Z–A",
+      "university": "Pēc augstskolas"
+    },
+    "tabs": {
+      "all": "Visi",
+      "bachelor": "Bakalaurs",
+      "master": "Maģistrs",
+      "doctoral": "Doktors",
+      "college": "Koledža"
+    },
+    "levelTabsLabel": "Studiju līmenis",
+    "found": "Atrastas {count} programmas",
+    "foundOne": "Atrasta {count} programma",
+    "shown": "Parādītas {shown} no {total}",
+    "showMore": "Rādīt vairāk",
+    "clear": "Notīrīt",
+    "openFilters": "Filtri",
     "filters": {
+      "title": "Filtri",
+      "budgetOnlyHint": "Valsts finansētās programmas",
       "university": "Universitāte",
       "anyUniversity": "Visas universitātes",
       "city": "Pilsēta",
@@ -87,6 +111,11 @@
       "open_admission": "Šajā augstskolā nav konkursa punktu — uzņem pēc prasību izpildes, bez konkursa.",
       "interview": "Šajā augstskolā nav konkursa punktu — lēmumu pieņem pēc pārrunām."
     }
+  },
+  "nav": {
+    "catalog": "Katalogs",
+    "survey": "Aptauja",
+    "main": "Galvenā navigācija"
   },
   "outcomes": {
     "title": "Kas noticis ar absolventiem",

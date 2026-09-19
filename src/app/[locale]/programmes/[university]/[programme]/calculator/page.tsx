@@ -53,7 +53,8 @@ export default async function CalculatorPage({ params }: { params: Params }) {
   }
 
   return (
-    <main className="mx-auto max-w-2xl px-6 py-16">
+    <main className="page-container py-8 sm:py-12">
+      <div className="surface mx-auto max-w-2xl p-6 sm:p-10">
       <Link
         href={`/${locale}/programmes/${university}/${programmeSlug}`}
         className="text-sm text-zinc-500 hover:underline"
@@ -77,6 +78,7 @@ export default async function CalculatorPage({ params }: { params: Params }) {
           locale={locale}
         />
       )}
+    </div>
     </main>
   );
 }

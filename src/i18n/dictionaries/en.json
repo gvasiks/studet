@@ -7,9 +7,6 @@
     "description": "Questionnaire, catalogue and competition score calculator in one place. No registration required.",
     "catalogCta": "Browse the catalogue"
   },
-  "nav": {
-    "catalog": "Programme catalogue"
-  },
   "catalog": {
     "title": "Study programme catalogue",
     "subtitle": "Every programme we've checked so far. No registration required.",
@@ -51,9 +48,36 @@
     "sourceLinkLabel": "Official source",
     "surveyTeaser": "Not sure what to pick?",
     "surveyCta": "Take the questionnaire",
+    "heroBadge": "{programmes} programmes · {universities} universities",
+    "surveyCardText": "Take the survey — we'll pick programmes for you",
+    "surveyCardCta": "Start",
+    "searchLabel": "Search programmes",
+    "searchPlaceholder": "Search a programme or university…",
+    "sortMenu": {
+      "label": "Sort",
+      "name": "A–Z",
+      "name_desc": "Z–A",
+      "university": "By university"
+    },
+    "tabs": {
+      "all": "All",
+      "bachelor": "Bachelor's",
+      "master": "Master's",
+      "doctoral": "Doctoral",
+      "college": "College"
+    },
+    "levelTabsLabel": "Study level",
+    "found": "{count} programmes found",
+    "foundOne": "{count} programme found",
+    "shown": "Showing {shown} of {total}",
+    "showMore": "Show more",
+    "clear": "Clear",
+    "openFilters": "Filters",
     "filtersSummary": "Shown by filter:",
     "clearFilters": "Clear filter",
     "filters": {
+      "title": "Filters",
+      "budgetOnlyHint": "State-funded programmes",
       "university": "University",
       "anyUniversity": "All universities",
       "city": "City",
@@ -87,6 +111,11 @@
       "open_admission": "This university has no competition score — admission is based on meeting requirements, not competing.",
       "interview": "This university has no competition score — the decision is based on an interview."
     }
+  },
+  "nav": {
+    "catalog": "Catalogue",
+    "survey": "Survey",
+    "main": "Main navigation"
   },
   "outcomes": {
     "title": "What happened to graduates",

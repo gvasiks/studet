@@ -4,8 +4,9 @@
 @custom-variant dark (&:is(.dark *));
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* zinc-100 — фон страниц; карточки (.surface) лежат на нём белыми. */
+  --background: #f4f4f5;
+  --foreground: #18181b;
 }
 
 @theme inline {
@@ -17,9 +18,36 @@
      с тем, что рендерит HeroUI в анкете. */
   --color-brand: #006fee;
   --color-brand-dark: #005bc4;
+  /* Светлая подложка под бейджи, метки уровня и выбранные чипы. */
+  --color-brand-soft: #e6f1fe;
+  /* Тень карточек из макета каталога: три слоя, самая мягкая из возможных. */
+  --shadow-card: 0 2px 4px rgba(0, 0, 0, 0.04), 0 1px 2px rgba(0, 0, 0, 0.06), 0 0 1px rgba(0, 0, 0, 0.06);
+  --shadow-control: 0 1px 2px rgba(0, 0, 0, 0.06), 0 0 1px rgba(0, 0, 0, 0.1);
+  --shadow-pill: 0 1px 2px rgba(0, 0, 0, 0.08), 0 0 1px rgba(0, 0, 0, 0.12);
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
+}
+
+/* Общая ширина и боковые поля: макет — 64px на десктопе, ограничение на
+   очень широких экранах, чтобы карточки не растягивались бесконечно. */
+@utility page-container {
+  margin-inline: auto;
+  max-width: 1440px;
+  padding-inline: 1rem;
+  @media (min-width: 640px) {
+    padding-inline: 2rem;
+  }
+  @media (min-width: 1024px) {
+    padding-inline: 4rem;
+  }
+}
+
+/* Белая карточка на сером фоне — основа всех блоков интерфейса. */
+@utility surface {
+  background: #fff;
+  border-radius: 1.5rem;
+  box-shadow: var(--shadow-card);
 }

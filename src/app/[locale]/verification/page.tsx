@@ -38,7 +38,8 @@ export default async function VerificationPage({ params }: PageProps<"/[locale]/
   const healthPercent = health.totalFormulas > 0 ? Math.round((health.verifiedFormulas / health.totalFormulas) * 100) : 0;
 
   return (
-    <main className="mx-auto max-w-4xl px-6 py-16">
+    <main className="page-container py-8 sm:py-12">
+      <div className="surface mx-auto max-w-4xl p-6 sm:p-10">
       <h1 className="text-3xl font-bold tracking-tighter text-zinc-900">Verifikācijas rinda</h1>
       <p className="mt-2 max-w-2xl text-zinc-600">
         Kas vēl nav apstiprināts. Pats šis saraksts neko negroza — apstiprināšana notiek Supabase Studio
@@ -85,6 +86,7 @@ export default async function VerificationPage({ params }: PageProps<"/[locale]/
           ))}
         </ul>
       )}
+    </div>
     </main>
   );
 }

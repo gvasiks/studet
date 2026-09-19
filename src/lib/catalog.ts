@@ -1,6 +1,5 @@
 import { cache } from "react";
 import { supabase } from "@/lib/supabase";
-import type { Locale } from "@/i18n/config";
 import { fieldCodesForInterests, type InterestKey } from "@/lib/fields";
 
 export type University = {
@@ -41,19 +40,16 @@ export type ProgrammeWithUniversity = Programme & {
   university: Pick<University, "slug" | "name_lv" | "name_en" | "city">;
 };
 
-// Латышское название приоритетнее (аудитория А — основная), но пока конвейер
-// читает только английский раздел сайтов, поэтому падаем на то, что есть.
-export function localizedName(
-  entity: { name_lv: string | null; name_en: string | null },
-  locale: Locale,
-): string {
-  const primary = locale === "lv" ? entity.name_lv : entity.name_en;
-  return primary ?? entity.name_en ?? entity.name_lv ?? "";
-}
+// Переехали в names.ts (без обращения к базе — тестируются отдельно);
+// реэкспорт, чтобы существующие импорты из "@/lib/catalog" не менялись.
+export { localizedName, enumLabel } from "@/lib/names";
 
-export function enumLabel(map: Record<string, string>, key: string): string {
-  return map[key] ?? key;
-}
+/** Сколько программ в каталоге всего — для бейджа в шапке страницы. */
+export const getProgrammeCount = cache(async (): Promise<number> => {
+  const { count, error } = await supabase.from("programme").select("id", { count: "exact", head: true });
+  if (error) throw error;
+  return count ?? 0;
+});
 
 export type ProgrammeFilters = {
   interests?: InterestKey[];

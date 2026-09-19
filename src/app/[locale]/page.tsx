@@ -25,7 +25,8 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
   const dict = await getDictionary(locale);
 
   return (
-    <main className="relative min-h-dvh flex-1 overflow-hidden bg-slate-950">
+    // 4.5rem — высота шапки: без вычета страница получала лишний скролл
+    <main className="relative min-h-[calc(100dvh-4.5rem)] flex-1 overflow-hidden bg-slate-950">
       <Image
         src={heroBg}
         alt=""
@@ -38,17 +39,21 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
           на широком экране светлая (фиолетовая) часть картинки съедет влево. */}
       <div className="absolute inset-0 bg-gradient-to-r from-slate-950 via-slate-950/70 to-transparent" />
 
-      <div className="relative flex h-full max-w-3xl flex-col justify-center px-6 py-24">
-        <h1 className="text-4xl font-bold tracking-tighter text-white">
-          {dict.home.title}
-        </h1>
-        <p className="mt-4 text-lg text-slate-200">{dict.home.description}</p>
-        <Link
-          href={`/${locale}/programmes`}
-          className="mt-6 inline-block w-fit rounded-full bg-brand px-5 py-2.5 text-sm font-medium text-white hover:bg-brand-dark"
-        >
-          {dict.home.catalogCta}
-        </Link>
+      {/* page-container — та же ширина и поля, что у шапки, чтобы текст
+          героя стоял на одной вертикали с логотипом */}
+      <div className="page-container relative flex h-full flex-col justify-center py-24">
+        <div className="max-w-3xl">
+          <h1 className="text-4xl font-bold tracking-tighter text-white sm:text-5xl">
+            {dict.home.title}
+          </h1>
+          <p className="mt-4 text-lg text-slate-200">{dict.home.description}</p>
+          <Link
+            href={`/${locale}/programmes`}
+            className="mt-6 inline-flex h-11 items-center rounded-full bg-brand px-6 text-sm font-medium text-white hover:bg-brand-dark"
+          >
+            {dict.home.catalogCta}
+          </Link>
+        </div>
       </div>
     </main>
   );
