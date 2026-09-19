@@ -30,10 +30,15 @@ CSV_URL = (
     "a2cd227c-892f-49c8-9088-ae678bccf50e/download/2017_2023_ai_absolventi_2024_taksacijas_g.csv"
 )
 
-# Iestades_reg_numurs из датасета -> university.slug. RNU (Rīgas
-# Ziemeļvalstu augstskola) в датасете нет вообще — ни под каким номером
-# (проверено по полному списку из 58 учреждений 2026-09-19), поэтому
-# здесь его нет и блок у его программ не появится.
+# Iestades_reg_numurs из датасета -> university.slug.
+#
+# RNU (Rīgas Ziemeļvalstu augstskola, Riga Nordic University) — это
+# бывшая Informācijas sistēmu menedžmenta augstskola (ISMA): история
+# на rnu.lv/par-rnu/vesture/ начинается с ISMA (основана в 1994), адрес
+# и сайт те же. В датасете он поэтому записан под СТАРЫМ названием ISMA
+# (3393800183). Первая версия этого файла ошибочно считала, что RNU в
+# датасете нет вообще — сверка названий по одному лишь слову "Nordic"
+# не могла его найти.
 REG_NUMBER_TO_SLUG = {
     "2594001659": "via",
     "2793000222": "du",
@@ -48,6 +53,7 @@ REG_NUMBER_TO_SLUG = {
     "3394800214": "eka",
     "3394802425": "rgsl",
     "3394802920": "sse-riga",
+    "3393800183": "rnu",
 }
 
 # Studiju_limenis -> наш degree_level. Расшифровка получена не из
