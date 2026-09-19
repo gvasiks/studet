@@ -144,6 +144,9 @@ RULES: list[tuple[str, list[str]]] = [
     (r"ražošanas tehnoloģija|manufacturing", ["521", "526"]),
     (r"biosystems|biosistēm", ["621", "521"]),
     (r"food|pārtik", ["541"]),
+    (r"gaisa kuģ|aircraft", ["525"]),
+    (r"gaisa satiksm|air traffic", ["840"]),
+    (r"elektronisko iekārt", ["523"]),
     (r"aviation|aviācij|aeronaut|aerokosm|aerospace|autotransport|motor vehicle", ["525", "840"]),
     (r"machine|mašīn|mechanic|mehānika|inženiertehnika|machinery", ["521"]),
     # --- логистика и транспорт
