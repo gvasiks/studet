@@ -9,9 +9,9 @@ sys.path.insert(0, str(Path(__file__).parent))
 from dotenv import load_dotenv
 
 from db import get_service_client
-from sources import bsa, du, eka, lbtu, lu, rgsl, riseba, rnu, rtu_catalog, rtu_liepaja, sse_riga, tsi, turiba, venta, via
+from sources import bsa, du, eka, lbtu, lu, rgsl, riseba, rnu, rsu, rtu_catalog, rtu_liepaja, sse_riga, tsi, turiba, venta, via
 
-SOURCES = [turiba, riseba, rtu_liepaja, tsi, bsa, sse_riga, rgsl, lu, venta, lbtu, du, eka, rnu, rtu_catalog, via]
+SOURCES = [turiba, riseba, rtu_liepaja, tsi, bsa, sse_riga, rgsl, lu, venta, lbtu, du, eka, rnu, rtu_catalog, via, rsu]
 
 # Ревью 2026-09, пункт 05: конвейер должен падать, если число найденных
 # программ у источника резко просело — lu.py однажды тихо потерял целый
@@ -43,6 +43,7 @@ MIN_PROGRAMME_COUNT = {
     "sources.rnu": 8,
     "sources.rtu_catalog": 124,
     "sources.via": 21,
+    "sources.rsu": 58,
 }
 
 
@@ -55,7 +56,13 @@ def main() -> None:
     client = get_service_client()
     now = datetime.now(timezone.utc).isoformat()
 
-    for source in SOURCES:
+    # python src/main.py rsu lmu — прогнать только перечисленные источники
+    # (по имени модуля); без аргументов — все. Так новый вуз добавляется,
+    # не перескрапливая остальные четырнадцать.
+    only = set(sys.argv[1:])
+    sources = [s for s in SOURCES if not only or s.__name__.split(".")[-1] in only]
+
+    for source in sources:
         university, programmes = source.scrape()
 
         minimum = MIN_PROGRAMME_COUNT.get(source.__name__)

@@ -8,7 +8,7 @@
 // синхроне с тем файлом.
 export const LEVEL_CODES_BY_DEGREE: Record<string, string[]> = {
   college: ["41"],
-  bachelor: ["42", "43", "48"],
+  bachelor: ["42", "43", "48", "49"],
   master: ["45", "47"],
   doctoral: ["51"],
 };
