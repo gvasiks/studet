@@ -52,7 +52,7 @@ RULES: list[tuple[str, list[str]]] = [
     (r"pharmac|farmāc", ["727"]),
     (r"logopēd|speech therap", ["726"]),
     (r"\bmedicine\b|medicīna\b", ["721"]),
-    (r"social work|sociālais darbs|sociālais rehabilit|sociālā rehabilit", ["762"]),
+    (r"social work|sociālais darbs|sociālais rehabilit|sociālā rehabilit|supervīzij", ["762"]),
     (r"occupational health|darba aizsardzīb", ["862"]),
     # lookbehind: иначе "transporta" срабатывает как "sporta"
     (r"(?<![a-zāčēģīķļņšūž])sport", ["813"]),

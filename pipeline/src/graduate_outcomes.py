@@ -60,6 +60,8 @@ REG_NUMBER_TO_SLUG = {
     "3392301472": "jvlma",
     "3394801470": "rai",
     "3394400217": "lnaa",
+    "3394802695": "lutera",
+    "2994801398": "ekra",
 }
 
 # Studiju_limenis -> наш degree_level. Расшифровка получена не из
