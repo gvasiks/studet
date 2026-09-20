@@ -12,25 +12,11 @@ import {
   type FormulaGate,
   type FormulaTerm,
 } from "@/lib/formula";
+import { subjectLabel, termLabel } from "@/lib/term-labels";
 
 const LEVELS: ExamLevel[] = ["augstakais", "optimalais", "vispaarigais"];
 
 type SubjectInput = { percent: string; level: ExamLevel };
-
-function subjectLabel(dict: Dictionary, subject: string): string {
-  const known = dict.survey.exams.subjects as Record<string, string>;
-  return known[subject] ?? subject;
-}
-
-function termLabel(dict: Dictionary, term: FormulaTerm): string {
-  if (term.kind === "ce" && term.subject) return subjectLabel(dict, term.subject);
-  const known = dict.calculator.termKinds as Record<string, string>;
-  // Именованное испытание (RTU Rīgas Biznesa skola: несколько разных
-  // entrance_exam в одной формуле) — своя метка по составному ключу;
-  // безымянное (Вентспилс) — просто по виду термина.
-  if (term.subject) return known[`${term.kind}_${term.subject}`] ?? term.subject;
-  return known[term.kind] ?? term.kind;
-}
 
 export function CalculatorForm({
   dict,

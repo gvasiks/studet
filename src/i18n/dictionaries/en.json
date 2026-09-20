@@ -254,5 +254,36 @@
   },
   "footer": {
     "disclaimer": "Studet is an independent informational portal, not a university or a government body — we have no contractual relationship with the universities listed here. Programme descriptions, deadlines, fees and competition-score formulas come from each university's own publicly available sources and may be outdated or inaccurate; every programme card states whether a fact was checked by a person or extracted automatically. Always verify current information on the university's official website before making a decision — only the university makes the final admission decision."
+  },
+  "match": {
+    "title": "Where can I apply?",
+    "intro": "Enter your centralised exam results — we'll show which programmes you can already calculate a competition score for, and which exams are still missing.",
+    "privacy": "Results are calculated in your browser — they are not sent to a server and are not stored anywhere.",
+    "examsHeading": "Your exams",
+    "examsHint": "Fill in only the exams you have taken. Leave the rest empty.",
+    "percentSuffix": "%",
+    "levelLabel": "Level",
+    "emptyNoFormulas": "The competition-score formulas are being reviewed right now. Once they are confirmed you'll be able to enter your exam results here and see where you can apply. Meanwhile, browse the programme catalogue.",
+    "emptyNoExams": "Enter at least one exam to see results.",
+    "testData": "TEST DATA — invented programmes and formulas, visible only in development mode.",
+    "summary": "Can calculate: {computed} · Missing exams: {missingExams} · Need extra data: {missingExtras} · Threshold not met: {gateFailed}",
+    "notComparable": "Scores are not comparable between universities: each university has its own scale. The list is not sorted by score and does not promise admission.",
+    "groups": {
+      "computed": "Score can be calculated",
+      "computedHint": "All exams the formula needs have been entered.",
+      "gateFailed": "Minimum threshold not met",
+      "gateFailedHint": "Under the admission rules you may not be eligible for these programmes.",
+      "missingExtras": "Extra data needed",
+      "missingExtrasHint": "These programmes also count an entrance test or a school-certificate mark — calculate them in the programme's own calculator.",
+      "missingExams": "Missing exams",
+      "missingExamsHint": "The formula for these programmes includes exams you haven't entered."
+    },
+    "scoreLabel": "Competition score",
+    "missingPrefix": "Missing",
+    "extrasPrefix": "Also needs",
+    "gateFailedPrefix": "Threshold",
+    "openCalculator": "Open the calculator",
+    "openProgramme": "Programme page",
+    "breakdown": "How the score adds up"
   }
 }

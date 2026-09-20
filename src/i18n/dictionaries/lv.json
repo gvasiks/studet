@@ -254,5 +254,36 @@
   },
   "footer": {
     "disclaimer": "Studet ir neatkarīgs informatīvs portāls, nevis augstskola vai valsts iestāde — ar aplūkotajām augstskolām mūs nesaista nekādas līgumattiecības. Programmu apraksti, termiņi, maksa un konkursa formulas iegūti no augstskolu publiski pieejamiem avotiem un var būt novecojuši vai neprecīzi; katras programmas kartītē norādīts, vai fakts ir pārbaudīts cilvēka rokām vai iegūts automātiski. Pirms lēmuma pieņemšanas vienmēr pārbaudiet aktuālo informāciju augstskolas oficiālajā mājaslapā — galīgo lēmumu par uzņemšanu pieņem tikai augstskola."
+  },
+  "match": {
+    "title": "Kur es varu iestāties?",
+    "intro": "Ievadi centralizēto eksāmenu rezultātus — parādīsim, pēc kurām programmām konkursa punktus var aprēķināt jau tagad, un kādu eksāmenu vēl trūkst.",
+    "privacy": "Rezultāti tiek aprēķināti tavā pārlūkā — tie netiek sūtīti uz serveri un nekur netiek saglabāti.",
+    "examsHeading": "Tavi eksāmeni",
+    "examsHint": "Aizpildi tikai tos eksāmenus, ko esi kārtojis. Pārējos atstāj tukšus.",
+    "percentSuffix": "%",
+    "levelLabel": "Līmenis",
+    "emptyNoFormulas": "Konkursa punktu formulas šobrīd tiek pārbaudītas. Kad tās būs apstiprinātas, šeit varēsi ievadīt eksāmenu rezultātus un redzēt, kur vari pretendēt. Pa to laiku skaties programmu katalogu.",
+    "emptyNoExams": "Ievadi vismaz vienu eksāmenu, lai redzētu rezultātus.",
+    "testData": "TESTA DATI — izdomātas programmas un formulas, redzamas tikai izstrādes režīmā.",
+    "summary": "Var aprēķināt: {computed} · Trūkst eksāmenu: {missingExams} · Vajag papildu datus: {missingExtras} · Slieksnis nav sasniegts: {gateFailed}",
+    "notComparable": "Punkti dažādās augstskolās nav salīdzināmi: katrai augstskolai sava skala. Saraksts nav sakārtots pēc punktiem un nesola uzņemšanu.",
+    "groups": {
+      "computed": "Punktus var aprēķināt",
+      "computedHint": "Visi formulai vajadzīgie eksāmeni ir ievadīti.",
+      "gateFailed": "Nav sasniegts minimālais slieksnis",
+      "gateFailedHint": "Pēc uzņemšanas noteikumiem uz šīm programmām var nepretendēt.",
+      "missingExtras": "Vajag papildu datus",
+      "missingExtrasHint": "Šajās programmās punktos ieskaita iestājpārbaudījumu vai atestāta vērtējumu — aprēķini tos programmas kalkulatorā.",
+      "missingExams": "Trūkst eksāmenu",
+      "missingExamsHint": "Šīm programmām formulā ir eksāmeni, kurus tu neesi ievadījis."
+    },
+    "scoreLabel": "Konkursa punkti",
+    "missingPrefix": "Trūkst",
+    "extrasPrefix": "Vajag arī",
+    "gateFailedPrefix": "Slieksnis",
+    "openCalculator": "Atvērt kalkulatoru",
+    "openProgramme": "Programmas lapa",
+    "breakdown": "No kā veidojas punkti"
   }
 }
