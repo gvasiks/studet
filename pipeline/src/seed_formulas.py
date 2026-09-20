@@ -680,6 +680,9 @@ def seed(
 if __name__ == "__main__":
     load_dotenv()
     seed("venta", FORMULA_SEEDS, VENTA_SOURCE_URL, VENTA_SOURCE_DOC, VENTA_VALID_FROM, VENTA_PROTOCOL)
-    seed("lu", LU_FORMULA_SEEDS, LU_SOURCE_URL, LU_SOURCE_DOC, LU_VALID_FROM, LU_PROTOCOL)
-    seed("lu", LU_FACULTY2_FORMULA_SEEDS, LU_SOURCE_URL, LU_SOURCE_DOC, LU_VALID_FROM, LU_PROTOCOL)
+    # ЛУ здесь больше не сеется: формулы 2025/26 (LU_FORMULA_SEEDS и
+    # LU_FACULTY2_FORMULA_SEEDS выше — историческая справка, 22 из них
+    # совпали с документом 2026/27) закрыты, а действующие берёт из
+    # документа 2026/27 formulas_lu.py. Повторный посев вернул бы старые
+    # коэффициенты как действующие.
     seed("rtu", RTU_FORMULA_SEEDS, RTU_SOURCE_URL, RTU_SOURCE_DOC, RTU_VALID_FROM, RTU_PROTOCOL)

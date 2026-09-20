@@ -14,6 +14,11 @@ export type FormulaTerm = {
   kind: "ce" | "ce_average" | "certificate" | "entrance_exam";
   subject: string | null;
   coefficient: number;
+  // "Ja nav CE …, tad 0" / "ja iestājpārbaudījums netiek kārtots, tad 0":
+  // слагаемое можно не иметь, оно тогда равно нулю, а программа остаётся
+  // доступной. calculateScore считает так же (нет данных — 0); флаг нужен
+  // тем, кто решает, чего "не хватает" (обратный поиск).
+  optional?: boolean;
 };
 
 // Ключ для extras — один формула может нести несколько отдельных

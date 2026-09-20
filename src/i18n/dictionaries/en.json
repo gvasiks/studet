@@ -185,7 +185,8 @@
         "biology": "Biology",
         "history": "History",
         "literature": "Latvian literature",
-        "socialstudies": "Social studies"
+        "socialstudies": "Social studies",
+        "german": "German"
       }
     },
     "interests": {
@@ -240,7 +241,9 @@
       "entrance_exam_english_test": "English proficiency test",
       "entrance_exam_interview": "Structured interview",
       "entrance_exam_math_test": "Mathematics entrance exam",
-      "entrance_exam_art_test": "Visual arts practical exam"
+      "entrance_exam_art_test": "Visual arts practical exam",
+      "certificate_physics": "School certificate annual mark in physics (1–10)",
+      "certificate_geography": "School certificate annual mark in geography (1–10)"
     }
   },
   "favorites": {

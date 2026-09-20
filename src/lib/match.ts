@@ -58,7 +58,9 @@ export type MatchGroups = Record<MatchStatus, MatchItem[]>;
 function requiredSubjects(formula: MatchFormula): string[] {
   const subjects = new Set<string>();
   for (const term of formula.terms) {
-    if (term.kind === "ce" && term.subject) subjects.add(term.subject);
+    // необязательное слагаемое ("ja nav CE …, tad 0") не делает экзамен
+    // недостающим: без него программа доступна, балл просто без этой части
+    if (term.kind === "ce" && term.subject && !term.optional) subjects.add(term.subject);
   }
   for (const gate of formula.gates) subjects.add(gate.subject);
   return [...subjects];
@@ -74,7 +76,9 @@ export function matchFormula(
   // "ce_average" считается по СДАННЫМ экзаменам, поэтому без единого
   // экзамена посчитать нельзя
   const needsAnyExam = formula.terms.some((term) => term.kind === "ce_average") && exams.length === 0;
-  const missingExtras = formula.terms.filter((term) => term.kind === "certificate" || term.kind === "entrance_exam");
+  const missingExtras = formula.terms.filter(
+    (term) => (term.kind === "certificate" || term.kind === "entrance_exam") && !term.optional,
+  );
 
   const base = { formula, missingSubjects, missingExtras: [] as FormulaTerm[], failedGates: [] as FormulaGate[] };
 

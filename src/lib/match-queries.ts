@@ -55,7 +55,7 @@ export const getMatchData = cache(async (locale: Locale): Promise<MatchData> => 
   const ids = chosen.map((row) => row.id);
 
   const [termsResult, gatesResult, levelCoefficients] = await Promise.all([
-    supabase.from("formula_term").select("formula_id, kind, subject, coefficient").in("formula_id", ids),
+    supabase.from("formula_term").select("formula_id, kind, subject, coefficient, optional").in("formula_id", ids),
     supabase.from("formula_gate").select("formula_id, subject, min_percent").in("formula_id", ids),
     getLevelCoefficients(),
   ]);
@@ -65,7 +65,12 @@ export const getMatchData = cache(async (locale: Locale): Promise<MatchData> => 
   const termsByFormula = new Map<string, FormulaTerm[]>();
   for (const term of termsResult.data ?? []) {
     const list = termsByFormula.get(term.formula_id) ?? [];
-    list.push({ kind: term.kind as FormulaTerm["kind"], subject: term.subject, coefficient: Number(term.coefficient) });
+    list.push({
+      kind: term.kind as FormulaTerm["kind"],
+      subject: term.subject,
+      coefficient: Number(term.coefficient),
+      optional: term.optional,
+    });
     termsByFormula.set(term.formula_id, list);
   }
   const gatesByFormula = new Map<string, FormulaGate[]>();

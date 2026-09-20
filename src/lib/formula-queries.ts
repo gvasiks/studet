@@ -38,7 +38,7 @@ export const getFormula = cache(async (programmeId: string): Promise<FormulaReco
   if (!formula) return null;
 
   const [{ data: terms, error: termsError }, { data: gates, error: gatesError }] = await Promise.all([
-    supabase.from("formula_term").select("kind, subject, coefficient").eq("formula_id", formula.id),
+    supabase.from("formula_term").select("kind, subject, coefficient, optional").eq("formula_id", formula.id),
     supabase.from("formula_gate").select("subject, min_percent").eq("formula_id", formula.id),
   ]);
 
@@ -54,6 +54,7 @@ export const getFormula = cache(async (programmeId: string): Promise<FormulaReco
       kind: term.kind as FormulaTerm["kind"],
       subject: term.subject,
       coefficient: Number(term.coefficient),
+      optional: term.optional,
     })),
     gates: (gates ?? []).map((gate) => ({
       subject: gate.subject,

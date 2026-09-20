@@ -97,6 +97,31 @@ describe("обратный поиск: matchFormula", () => {
     expect(matchFormula(f, MATH_ENGLISH, LEVELS).status).toBe("computed");
   });
 
+  it("необязательное слагаемое ('ja nav CE …, tad 0') не делает экзамен недостающим", () => {
+    const f = formula({
+      programmeName: "Information",
+      terms: [
+        { kind: "ce", subject: "mathematics", coefficient: 0.5 },
+        { kind: "ce", subject: "socialstudies", coefficient: 0.5, optional: true },
+      ],
+    });
+    const item = matchFormula(f, MATH_ENGLISH, LEVELS);
+    expect(item.status).toBe("computed");
+    // социальных наук нет — эта часть 0, остальное считается
+    expect(item.score?.total).toBe(40);
+  });
+
+  it("необязательное вступительное испытание не переводит программу в 'нужны данные'", () => {
+    const f = formula({
+      programmeName: "Business",
+      terms: [
+        { kind: "ce", subject: "mathematics", coefficient: 0.2 },
+        { kind: "entrance_exam", subject: null, coefficient: 0.8, optional: true },
+      ],
+    });
+    expect(matchFormula(f, MATH_ENGLISH, LEVELS).status).toBe("computed");
+  });
+
   it("уровень экзамена меняет балл: оптимальный = 0,75 от высшего", () => {
     const f = formula({ programmeName: "Level", terms: [{ kind: "ce", subject: "mathematics", coefficient: 1 }] });
     const high = matchFormula(f, [{ subject: "mathematics", percent: 80, level: "augstakais" }], LEVELS);

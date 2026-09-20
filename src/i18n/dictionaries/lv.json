@@ -185,7 +185,8 @@
         "biology": "Bioloģija",
         "history": "Vēsture",
         "literature": "Latviešu literatūra",
-        "socialstudies": "Sociālās zinātnes"
+        "socialstudies": "Sociālās zinātnes",
+        "german": "Vācu valoda"
       }
     },
     "interests": {
@@ -240,7 +241,9 @@
       "entrance_exam_english_test": "Angļu valodas zināšanu pārbaude",
       "entrance_exam_interview": "Strukturētā intervija",
       "entrance_exam_math_test": "Matemātikas iestājpārbaudījums",
-      "entrance_exam_art_test": "Praktiskais pārbaudījums vizuālajā mākslā"
+      "entrance_exam_art_test": "Praktiskais pārbaudījums vizuālajā mākslā",
+      "certificate_physics": "Atestāta gada atzīme fizikā (1–10)",
+      "certificate_geography": "Atestāta gada atzīme ģeogrāfijā (1–10)"
     }
   },
   "favorites": {
