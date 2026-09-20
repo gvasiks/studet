@@ -44,7 +44,9 @@ MIN_PROGRAMME_COUNT = {
     "sources.du": 10,
     "sources.eka": 21,
     "sources.rnu": 8,
-    "sources.rtu_catalog": 124,
+    # 2026-09-21: 124 -> 163. Раньше терялись программы в нескольких городах, только
+    # в Лиепае и морские (Jūras akadēmija) — см. docstring rtu_catalog.py
+    "sources.rtu_catalog": 163,
     "sources.via": 21,
     "sources.rsu": 58,
     "sources.lka": 15,
@@ -79,6 +81,11 @@ MIN_PROGRAMME_COUNT = {
     "sources.niid_colleges:rti": 1,
     "sources.niid_colleges:rarzi": 1,
 }
+
+
+# Со скольки пропусков подряд программа скрывается от публики. То же число
+# в политике RLS программы (supabase/migrations/20260920133000_*.sql).
+HIDE_AFTER_MISSED_RUNS = 2
 
 
 class CatalogCompletenessError(RuntimeError):
@@ -159,12 +166,50 @@ def _check_and_save(client, now: str, key: str, university, programmes) -> None:
         row = programme.model_dump(exclude_none=True, mode="json")
         row["university_id"] = university_id
         row["extracted_at"] = now
+        row["source_key"] = key
+        row["missed_runs"] = 0  # найдена на сайте — счётчик пропусков обнуляется
         programme_rows.append(row)
 
     if programme_rows:
         client.table("programme").upsert(programme_rows, on_conflict="university_id,slug").execute()
 
-    print(f"{key}: upserted 1 university, {len(programme_rows)} programmes")
+    missing = _count_missed(client, university_id, key, {row["slug"] for row in programme_rows})
+    print(f"{key}: upserted 1 university, {len(programme_rows)} programmes" + _missed_note(missing))
+
+
+def _count_missed(client, university_id: str, key: str, seen_slugs: set[str]) -> list[dict]:  # type: ignore[no-untyped-def]
+    """Программы этого источника, которых на сайте больше нет: +1 к счётчику
+    пропусков. Вызывается только после прохождения проверки полноты и записи —
+    сбойный прогон (сайт лёг, сборщик сломался) ничего не скрывает. Строки без
+    source_key (записаны до миграции) считаются принадлежащими любому
+    источнику вуза: это ровно те, что ни один источник не нашёл."""
+    owned = (
+        client.table("programme")
+        .select("id,slug,name_lv,name_en,missed_runs")
+        .eq("university_id", university_id)
+        .or_(f"source_key.eq.{key},source_key.is.null")
+        .execute()
+        .data
+    )
+    missing = [row for row in owned if row["slug"] not in seen_slugs]
+    for row in missing:
+        # source_key здесь не трогаем: строка без отметки может принадлежать
+        # другому источнику этого же вуза (лиепайские программы РТУ до первого
+        # прогона rtu_liepaja), и чужой прогон не должен её присваивать
+        client.table("programme").update({"missed_runs": row["missed_runs"] + 1}).eq("id", row["id"]).execute()
+        row["missed_runs"] += 1
+    return missing
+
+
+def _missed_note(missing: list[dict]) -> str:
+    if not missing:
+        return ""
+    hidden = [row for row in missing if row["missed_runs"] >= HIDE_AFTER_MISSED_RUNS]
+    names = ", ".join((row["name_en"] or row["name_lv"] or row["slug"]) for row in missing[:3])
+    return (
+        f"\n  не найдено на сайте: {len(missing)} ({names}{' …' if len(missing) > 3 else ''}); "
+        f"скрыто от публики: {len(hidden)} (порог — {HIDE_AFTER_MISSED_RUNS} прогона подряд)"
+    )
 
 
 if __name__ == "__main__":

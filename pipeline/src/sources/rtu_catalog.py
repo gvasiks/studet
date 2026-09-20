@@ -12,10 +12,20 @@ Playwright уважает видимость и вернёт пусто для �
 поэтому JS-эвакуация делается через `page.evaluate()` напрямую.
 
 Многие программы реализуются сразу в нескольких городах (Rīga, Rēzekne,
-Liepāja) с ОБЩЕЙ квотой бюджетных мест на все города разом — та же
-проблема, что уже решалась для Лиепаи. То же решение: берём только
-программы с ровно одним городом реализации — тогда квота однозначно
-её. Список городов реализации спрятан в HTML-комментарии внутри первой
+Liepāja) с ОБЩЕЙ квотой бюджетных мест на все города разом. Первая
+версия таких программ не брала вовсе ("честно не делим") — и потеряла
+36 из 157 строк реестра, среди них самую востребованную "Datorsistēmas"
+(200 бюджетных мест). Аудит полноты 2026-09-21 это вскрыл. Теперь:
+
+- программа в нескольких городах — ПО СТРОКЕ НА КАЖДЫЙ город, слаг с
+  суффиксом города, число бюджетных мест пустое (общая квота не делится
+  честно), funding_type "both", если в реестре бюджет указан;
+- программа только в Лиепае, которой нет среди трёх вручную отобранных
+  в rtu_liepaja.py, — обычная строка с городом liepaja (квота её);
+- программа без города в реестре — морские программы Latvijas Jūras
+  akadēmija (подразделение 0J000, Ķīpsalas iela 6B): город riga.
+
+Список городов реализации спрятан в HTML-комментарии внутри первой
 ячейки каждой строки (`study_program_list_note`), не виден пользователю
 на странице, но есть в разметке.
 
@@ -37,6 +47,7 @@ from urllib.parse import urljoin
 from playwright.sync_api import Page, sync_playwright
 
 from models import ProgrammeDraft, UniversityDraft
+from sources import rtu_liepaja
 
 REGISTRY_URL = "https://www.rtu.lv/lv/studijas/visas-studiju-programmas"
 
@@ -147,12 +158,31 @@ def _parse_years(text: str) -> float | None:
     return float(match.group(1).replace(",", ".")) if match else None
 
 
+def _is_legacy(row: dict) -> bool:
+    """Строка, которую сборщик брал с самого начала: программа ровно в
+    одном городе — Rīga или Rēzekne. Слаг таких строк не меняется: по нему
+    в базе уже лежат данные и формулы. Остальным слаг получает суффикс
+    города, потому что код+подразделение не уникальны ("GDI/0R000" —
+    докторантура и в Лиепае, и в Резекне)."""
+    return len(row["venues"]) == 1 and row["venues"][0] in ("Rīga", "Rēzekne")
+
+
 def _scrape_detail(page: Page, url: str) -> tuple[float | None, str]:
-    page.goto(url, wait_until="domcontentloaded")
-    facts = _facts(page)
-    duration = _parse_years(facts.get("studiju ilgums", ""))
-    language = "en" if "angļu" in facts.get("īstenošanas valoda", "").lower() else "lv"
-    return duration, language
+    """Срок и язык с карточки программы. Один повтор при сбое: сайт РТУ
+    изредка отвечает дольше таймаута. Не вышло и со второго раза — срок
+    пустой, язык латышский (предположение), и об этом пишется в журнал:
+    раньше это проглатывалось молча."""
+    for attempt in (1, 2):
+        try:
+            page.goto(url, wait_until="domcontentloaded")
+            facts = _facts(page)
+            duration = _parse_years(facts.get("studiju ilgums", ""))
+            language = "en" if "angļu" in facts.get("īstenošanas valoda", "").lower() else "lv"
+            return duration, language
+        except Exception as exc:  # noqa: BLE001
+            if attempt == 2:
+                print(f"rtu_catalog: не прочиталась {url}: {type(exc).__name__}; срок пуст, язык lv (предположение)")
+    return None, "lv"
 
 
 def scrape() -> tuple[UniversityDraft, list[ProgrammeDraft]]:
@@ -165,41 +195,53 @@ def scrape() -> tuple[UniversityDraft, list[ProgrammeDraft]]:
 
         rows = page.evaluate(_DISCOVER_JS)
 
+        # Строки, которые брались с самого начала, идут первыми — при
+        # совпадении именно они сохраняют слаг (см. _is_legacy)
+        rows.sort(key=lambda row: 0 if _is_legacy(row) else 1)
+        seen: set[tuple[str, str, str, str]] = set()
+
         for row in rows:
-            venues = row["venues"]
-            if len(venues) != 1:
-                continue  # общая квота на несколько городов — честно не делим
-            city = KNOWN_VENUES[venues[0]]
-            if city == "liepaja":
-                continue  # уже покрыто отдельным, более точным источником
+            cities = [KNOWN_VENUES[venue] for venue in row["venues"]] or ["riga"]
+            # ^ пусто — морские программы Latvijas Jūras akadēmija (0J000), они в Риге
 
             url = urljoin(REGISTRY_URL, row["href"])
-            try:
-                duration_years, language = _scrape_detail(page, url)
-            except Exception:
-                # одна нестандартная страница не должна ронять весь прогон
-                # по остальным ~120 программам
-                duration_years, language = None, "lv"
-
             code, department = _code_and_department(row["href"])
-            slug = f"{code}-{department}".lower() if department else code.lower()
-            budget_places = _parse_budget(row["budget"])
+            if cities == ["liepaja"] and code in rtu_liepaja.PROGRAMMES:
+                continue  # три программы, уже покрытые более точным источником
 
-            programmes.append(
-                ProgrammeDraft(
-                    slug=slug,
-                    name_lv=row["name"],
-                    degree_level=_map_level(row["level"]),
-                    language_of_instruction=language,
-                    study_mode="full_time",
-                    city=city,
-                    funding_type="both" if budget_places else "paid",
-                    tuition_fee_amount=_parse_price(row["price"]),
-                    budget_places=budget_places,
-                    duration_years=duration_years,
-                    source_url=url,
+            # Реестр иногда даёт одну программу двумя строками под разными
+            # подразделениями ("Būvniecība": 31000 и 0R000), каждая со всеми
+            # тремя городами — одинаковые название, уровень, город и цена.
+            # Одна карточка на такую программу, а не две
+            fresh = [
+                city for city in cities if (row["name"], row["level"], city, row["price"]) not in seen
+            ]
+            if not fresh:
+                continue
+            seen.update((row["name"], row["level"], city, row["price"]) for city in fresh)
+
+            shared = len(cities) > 1  # общая квота на несколько городов
+            base_slug = f"{code}-{department}".lower() if department else code.lower()
+            legacy = _is_legacy(row)
+            registry_budget = _parse_budget(row["budget"])
+            duration_years, language = _scrape_detail(page, url)  # одна карточка на все города
+
+            for city in fresh:
+                programmes.append(
+                    ProgrammeDraft(
+                        slug=base_slug if legacy else f"{base_slug}-{city}",
+                        name_lv=row["name"],
+                        degree_level=_map_level(row["level"]),
+                        language_of_instruction=language,
+                        study_mode="full_time",
+                        city=city,
+                        funding_type="both" if registry_budget else "paid",
+                        tuition_fee_amount=_parse_price(row["price"]),
+                        budget_places=None if shared else registry_budget,
+                        duration_years=duration_years,
+                        source_url=url,
+                    )
                 )
-            )
 
         browser.close()
 
