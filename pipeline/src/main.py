@@ -8,6 +8,7 @@ sys.path.insert(0, str(Path(__file__).parent))
 
 from dotenv import load_dotenv
 
+import polite
 from db import get_service_client
 from sources import bsa, du, eka, ekra, jvlma, lbtu, lka, lma, lnaa, lu, lutera, niid_colleges, rai, rgsl, riseba, rnu, rsu, rtu_catalog, rtu_liepaja, sse_riga, tsi, turiba, venta, via
 
@@ -32,7 +33,9 @@ MIN_PROGRAMME_COUNT = {
     "sources.riseba": 13,
     "sources.rtu_liepaja": 3,
     "sources.tsi": 27,
-    "sources.bsa": 13,
+    # 2026-09-20: 13 -> 12, BSA закрыла "Digital Visualization Design"
+    # (computer-design.html отдаёт 404, в списке бакалавриата её нет)
+    "sources.bsa": 12,
     "sources.sse_riga": 1,
     "sources.rgsl": 4,
     "sources.lu": 166,
@@ -84,6 +87,7 @@ class CatalogCompletenessError(RuntimeError):
 
 def main() -> None:
     load_dotenv()
+    polite.install()  # честный User-Agent, паузы, robots.txt — см. polite.py
     client = get_service_client()
     now = datetime.now(timezone.utc).isoformat()
 
@@ -93,48 +97,74 @@ def main() -> None:
     only = set(sys.argv[1:])
     sources = [s for s in SOURCES if not only or s.__name__.split(".")[-1] in only]
 
+    # Один упавший источник не должен останавливать остальные: ночной прогон
+    # иначе теряет всё, что стоит после него в списке. Ошибки копятся и
+    # печатаются в конце, код возврата ненулевой — GitHub Actions покажет
+    # прогон красным. Запись в базу для источника, не прошедшего проверку
+    # полноты, не происходит: проверка стоит до неё.
+    errors: list[str] = []
+
     for source in sources:
-        # у большинства источников один вуз (scrape), у колледжей из NIID
-        # — много сразу (scrape_all)
-        results = source.scrape_all() if hasattr(source, "scrape_all") else [source.scrape()]
+        multi = hasattr(source, "scrape_all")  # колледжи из NIID — много учреждений сразу
+        try:
+            results = source.scrape_all() if multi else [source.scrape()]
+        except Exception as exc:  # noqa: BLE001
+            errors.append(f"{source.__name__}: {type(exc).__name__}: {exc}")
+            print(f"ОШИБКА {errors[-1]}")
+            print(polite.report_and_reset())
+            continue
 
         # учреждение, у которого есть порог, но которого нет в результате
         # (колледж пропал целиком), — тоже сбой, а не "ноль программ"
-        if hasattr(source, "scrape_all"):
+        if multi:
             got = {f"{source.__name__}:{university.slug}" for university, _ in results}
-            lost = [k for k in MIN_PROGRAMME_COUNT if k.startswith(f"{source.__name__}:") and k not in got]
-            if lost:
-                raise CatalogCompletenessError(f"{lost}: учреждение не вернуло ни одной программы — проверьте вручную.")
+            for lost in (k for k in MIN_PROGRAMME_COUNT if k.startswith(f"{source.__name__}:") and k not in got):
+                errors.append(f"{lost}: учреждение не вернуло ни одной программы — проверьте вручную.")
+                print(f"ОШИБКА {errors[-1]}")
 
         for university, programmes in results:
-            key = f"{source.__name__}:{university.slug}" if hasattr(source, "scrape_all") else source.__name__
-            minimum = MIN_PROGRAMME_COUNT.get(key)
-            if minimum is not None and len(programmes) < minimum:
-                raise CatalogCompletenessError(
-                    f"{key}: нашёл {len(programmes)} программ, ожидал минимум {minimum}. "
-                    "Похоже на баг сборщика (например, тихо потерянный раздел сайта), а не на "
-                    "сокращение набора у вуза — проверьте вручную. Если сокращение подтвердится, "
-                    "поднимите порог в MIN_PROGRAMME_COUNT (main.py)."
-                )
+            key = f"{source.__name__}:{university.slug}" if multi else source.__name__
+            try:
+                _check_and_save(client, now, key, university, programmes)
+            except CatalogCompletenessError as exc:
+                errors.append(str(exc))
+                print(f"ОШИБКА {exc}")
 
-            uni_row = university.model_dump(exclude_none=True)
-            uni_row["extracted_at"] = now
-            result = client.table("university").upsert(uni_row, on_conflict="slug").execute()
-            university_id = result.data[0]["id"]
+        print(polite.report_and_reset())
 
-            programme_rows = []
-            for programme in programmes:
-                row = programme.model_dump(exclude_none=True, mode="json")
-                row["university_id"] = university_id
-                row["extracted_at"] = now
-                programme_rows.append(row)
+    if errors:
+        print(f"\nИтого сбоев: {len(errors)}")
+        for error in errors:
+            print(f" - {error[:300]}")
+        sys.exit(1)
 
-            if programme_rows:
-                client.table("programme").upsert(
-                    programme_rows, on_conflict="university_id,slug"
-                ).execute()
 
-            print(f"{key}: upserted 1 university, {len(programme_rows)} programmes")
+def _check_and_save(client, now: str, key: str, university, programmes) -> None:  # type: ignore[no-untyped-def]
+    minimum = MIN_PROGRAMME_COUNT.get(key)
+    if minimum is not None and len(programmes) < minimum:
+        raise CatalogCompletenessError(
+            f"{key}: нашёл {len(programmes)} программ, ожидал минимум {minimum}. "
+            "Похоже на баг сборщика (например, тихо потерянный раздел сайта), а не на "
+            "сокращение набора у вуза — проверьте вручную. Если сокращение подтвердится, "
+            "поднимите порог в MIN_PROGRAMME_COUNT (main.py)."
+        )
+
+    uni_row = university.model_dump(exclude_none=True)
+    uni_row["extracted_at"] = now
+    result = client.table("university").upsert(uni_row, on_conflict="slug").execute()
+    university_id = result.data[0]["id"]
+
+    programme_rows = []
+    for programme in programmes:
+        row = programme.model_dump(exclude_none=True, mode="json")
+        row["university_id"] = university_id
+        row["extracted_at"] = now
+        programme_rows.append(row)
+
+    if programme_rows:
+        client.table("programme").upsert(programme_rows, on_conflict="university_id,slug").execute()
+
+    print(f"{key}: upserted 1 university, {len(programme_rows)} programmes")
 
 
 if __name__ == "__main__":

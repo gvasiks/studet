@@ -2,12 +2,17 @@ name: Scrape catalog
 
 on:
   schedule:
-    - cron: "0 6 * * 1" # каждый понедельник в 06:00 UTC
+    # ночью по Риге (03:00–04:00), не в рабочие часы вузов — вежливый
+    # обход, ревизия 2026-09, пункт 04
+    - cron: "0 1 * * 1" # каждый понедельник в 01:00 UTC
   workflow_dispatch: {}
 
 jobs:
   scrape:
     runs-on: ubuntu-latest
+    # паузы между страницами (1,5 с; у niid.lv 10 с) делают полный прогон
+    # долгим — по оценке до часа
+    timeout-minutes: 120
     defaults:
       run:
         working-directory: pipeline
@@ -25,3 +30,7 @@ jobs:
         env:
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
           SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+          # публичный контакт для User-Agent: URL страницы о проекте или почта.
+          # Это variable (Settings -> Secrets and variables -> Actions ->
+          # Variables), не secret: контакт должен быть виден администраторам
+          SCRAPER_CONTACT: ${{ vars.SCRAPER_CONTACT }}
