@@ -290,5 +290,255 @@
     "openCalculator": "Atvērt kalkulatoru",
     "openProgramme": "Programmas lapa",
     "breakdown": "No kā veidojas punkti"
+  },
+  "rights": {
+    "title": "Tavas tiesības, iestājoties augstskolā",
+    "intro": "Ko Latvijas likumi un Ministru kabineta noteikumi garantē reflektantam: kad jāpublicē noteikumi, kad var reģistrēties, kad slēdz līgumu, cik ātri jāizziņo rezultāti un kā apstrīdēt lēmumu.",
+    "checkedNote": "Sagatavots pēc likumu teksta, ko lasījām likumi.lv 2026. gada 20. septembrī (MK noteikumi Nr. 846 — redakcija uz 30.12.2025.; Augstskolu likums — spēkā esošā redakcija). Tas nav juridisks padoms: noteicošie ir likumu teksti un konkrētās augstskolas uzņemšanas noteikumi.",
+    "sourceLabel": "Avots",
+    "sourcesTitle": "Avoti",
+    "glossaryLink": "Nesaprotami vārdi? Skati vārdnīcu",
+    "items": [
+      {
+        "id": "rules-published",
+        "title": "Noteikumi jāpublicē līdz 30. novembrim",
+        "text": "Augstskola katru gadu līdz 30. novembrim savā tīmekļvietnē publisko uzņemšanas prasības un reģistrācijas un uzņemšanas sākuma termiņu nākamajam akadēmiskajam gadam.",
+        "source": "Augstskolu likums, 46. panta piektā daļa; MK noteikumi Nr. 846, 3. punkts"
+      },
+      {
+        "id": "rules-contents",
+        "title": "Ko noteikumiem jāsatur",
+        "text": "Uzņemšanas noteikumos jābūt norādītam: kāda iepriekšējā izglītība vajadzīga, kuri centralizētie eksāmeni jākārto, kādas ir papildu prasības, kad sākas reģistrācija un uzņemšana, konkursa vērtēšanas kritēriji un to svars, rezultātu aprēķināšanas kārtība, konkursa noslēguma termiņš, abu pušu tiesības un pienākumi, kā iegūt informāciju par uzņemšanas norisi un kā apstrīdēt lēmumus.",
+        "source": "MK noteikumi Nr. 846, 13. punkts"
+      },
+      {
+        "id": "open-competition",
+        "title": "Atklāts un vienlīdzīgs konkurss",
+        "text": "Uzņemšanā notiek atklāts un vienlīdzīgs konkurss pēc augstskolas uzņemšanas noteikumiem. Augstskola nedrīkst nevienam radīt priekšrocības, kas ir pretrunā tās noteikumiem, normatīvajiem aktiem vai vispārējiem tiesību principiem.",
+        "source": "MK noteikumi Nr. 846, 2. un 8. punkts; Augstskolu likums, 46. panta trešā daļa"
+      },
+      {
+        "id": "register-before-exams",
+        "title": "Reģistrēties var pirms centralizēto eksāmenu kārtošanas",
+        "text": "Augstskola drīkst sākt reģistrāciju un uzņemšanu, pirms ir nokārtoti centralizētie eksāmeni. Reģistrējoties nav jāuzrāda atestāts un eksāmenu sertifikāti.",
+        "source": "Augstskolu likums, 46. panta piektā un 6.¹ daļa; MK noteikumi Nr. 846, 6.¹ un 6.⁴ punkts (piemēro no 2026./2027. akadēmiskā gada)"
+      },
+      {
+        "id": "how-to-register",
+        "title": "Kā var reģistrēties",
+        "text": "Reģistrēties var klātienē augstskolā (iesniegums un pase vai personas apliecība) vai elektroniski — portālā www.latvija.lv vai augstskolas informācijas sistēmā ar drošu autentifikāciju.",
+        "source": "MK noteikumi Nr. 846, 6. punkts"
+      },
+      {
+        "id": "contract-timing",
+        "title": "Studiju līgumu slēdz pēc dokumentiem un rezultātiem",
+        "text": "Augstskolai ir tiesības slēgt studiju līgumu pēc tam, kad esi iesniedzis vidējo izglītību apliecinošu dokumentu un eksāmenu sertifikātus un kad ir izziņoti konkursa rezultāti. Pēc rezultātu izziņošanas augstskola nosūta uzaicinājumu noslēgt līgumu; imatrikulācija notiek pēc līguma noslēgšanas.",
+        "source": "Augstskolu likums, 46. panta 6.¹ un 6.² daļa; MK noteikumi Nr. 846, 4. punkts"
+      },
+      {
+        "id": "results-in-three-days",
+        "title": "Rezultāti — ne vēlāk kā trīs dienu laikā",
+        "text": "Konkursa rezultātus nosaka un apstiprina uzņemšanas komisija. Tos izziņo ne vēlāk kā triju dienu laikā no konkursa noslēguma dienas.",
+        "source": "MK noteikumi Nr. 846, 14. punkts"
+      },
+      {
+        "id": "written-refusal",
+        "title": "Atteikumu var pieprasīt rakstiski",
+        "text": "Ja augstskola atsakās tevi imatrikulēt, tev ir tiesības prasīt, lai lēmums tiktu noformēts rakstiski (Administratīvā procesa likumā noteiktajā kārtībā).",
+        "source": "MK noteikumi Nr. 846, 16. punkts"
+      },
+      {
+        "id": "appeal",
+        "title": "Lēmumu var apstrīdēt un pārsūdzēt",
+        "text": "Uzņemšanas komisijas lēmumu par konkursa rezultātiem var apstrīdēt, iesniedzot iesniegumu augstskolas rektoram (koledžā — direktoram). Rektora lēmumu var pārsūdzēt tiesā Administratīvā procesa likumā noteiktajā kārtībā. Apstrīdēšanas termiņus nosaka konkrētās augstskolas noteikumi.",
+        "source": "MK noteikumi Nr. 846, 17. punkts"
+      },
+      {
+        "id": "exam-levels",
+        "title": "Dažādu līmeņu eksāmeni ir salīdzināmi",
+        "text": "Lai salīdzinātu centralizētos eksāmenus dažādos mācību satura apguves līmeņos, piemēro koeficientus: optimālā līmeņa eksāmeniem 0,75 un vispārīgā līmeņa eksāmeniem 0,50 attiecībā pret augstāko līmeni. Eksāmeniem, kas iegūti pēc vecās kārtības (pirms jaunajiem vidējās izglītības standartiem), piemēro koeficientu 0,75.",
+        "source": "MK noteikumi Nr. 846, 10.1., 10.2. un 20. punkts"
+      },
+      {
+        "id": "no-exam-groups",
+        "title": "Kas var nekārtot centralizētos eksāmenus",
+        "text": "Centralizētos eksāmenus var nekārtot personas, kuras vidējo izglītību ieguvušas līdz 2004. gadam, kuras to ieguvušas ārvalstīs, kā arī personas ar īpašām vajadzībām; matemātikas eksāmenu var nekārtot arī tie, kas vidējo izglītību ieguvuši līdz 2008. gadam (ieskaitot). Kārtību, kādā šīs personas uzņem, nosaka augstskola savos noteikumos.",
+        "source": "MK noteikumi Nr. 846, 12. punkts; Augstskolu likums, 46. panta trešā daļa"
+      },
+      {
+        "id": "extra-requirements",
+        "title": "Augstskola var noteikt papildu prasības",
+        "text": "Augstskola var noteikt papildu prasības — speciālu iepriekšējo izglītību, īpašu piemērotību vai sagatavotību — un iestājpārbaudījumus, lai pārbaudītu, vai tās izpildītas. Šīs prasības jānorāda uzņemšanas noteikumos.",
+        "source": "Augstskolu likums, 46. panta ceturtā daļa; MK noteikumi Nr. 846, 5.¹ un 13.3. punkts"
+      },
+      {
+        "id": "education-abroad",
+        "title": "Ja izglītību ieguvi ārzemēs",
+        "text": "Ja izglītības dokuments iegūts ārvalstīs, iesniegumam pievieno Akadēmiskās informācijas centra (vai tiesīgas augstskolas) izziņu par to, kādam Latvijas dokumentam tas atbilst. Ārzemniekam jāpievieno arī dokuments par studiju valodas prasmi vismaz B2 līmenī, ja vien nav izņēmumu, un augstskola viņu intervē.",
+        "source": "MK noteikumi Nr. 846, 7., 7.¹, 7.² un 13.¹ punkts"
+      }
+    ],
+    "sources": [
+      {
+        "label": "Ministru kabineta 2006. gada 10. oktobra noteikumi Nr. 846 «Noteikumi par prasībām, kritērijiem un kārtību uzņemšanai studiju programmās…»",
+        "url": "https://likumi.lv/ta/id/146637-noteikumi-par-prasibam-kriterijiem-un-kartibu-uznemsanai-studiju-programmas"
+      },
+      {
+        "label": "Augstskolu likums, 46. pants",
+        "url": "https://likumi.lv/ta/id/37967-augstskolu-likums"
+      }
+    ]
+  },
+  "glossary": {
+    "title": "Uzņemšanas vārdnīca",
+    "intro": "Vārdi, ko sastapsi augstskolu uzņemšanas noteikumos un šajā vietnē. Definīcijas ņemtas no likumiem un augstskolu noteikumiem; pie katras norādīts avots.",
+    "sourceLabel": "Avots",
+    "rightsLink": "Kādas ir tavas tiesības uzņemšanā",
+    "items": [
+      {
+        "id": "accredited-programme",
+        "term": "Akreditēta studiju programma",
+        "definition": "Studiju programma, kas attiecīgā studiju virziena novērtēšanā atzīta par atbilstošu likuma prasībām.",
+        "source": "Augstskolu likums, 1. panta 1.¹ punkts"
+      },
+      {
+        "id": "licensing",
+        "term": "Licencēšana",
+        "definition": "Tiesību piešķiršana īstenot noteiktu studiju programmu. Augstskola drīkst uzņemt studējošos programmā tikai pēc tās licencēšanas.",
+        "source": "Augstskolu likums, 1. panta 12. punkts un 46. panta pirmā daļa"
+      },
+      {
+        "id": "applicant",
+        "term": "Reflektants",
+        "definition": "Persona, kas pretendē uz uzņemšanu studiju programmā. Šo vārdu lieto normatīvie akti un uzņemšanas noteikumi.",
+        "source": "Augstskolu likums, 46. pants; MK noteikumi Nr. 846"
+      },
+      {
+        "id": "admission-rules",
+        "term": "Uzņemšanas noteikumi",
+        "definition": "Augstskolas dokuments, kas nosaka uzņemšanas prasības, konkursa kritērijus un kārtību. Tiem jābūt publicētiem līdz 30. novembrim par nākamo akadēmisko gadu.",
+        "source": "MK noteikumi Nr. 846, 3. un 13. punkts"
+      },
+      {
+        "id": "admission-committee",
+        "term": "Uzņemšanas komisija",
+        "definition": "Augstskolas izveidota komisija, kas nodrošina uzņemšanu, nosaka un apstiprina konkursa rezultātus.",
+        "source": "MK noteikumi Nr. 846, 5. un 14. punkts"
+      },
+      {
+        "id": "competition",
+        "term": "Konkurss",
+        "definition": "Atklāta un vienlīdzīga atlase uz studiju vietām pēc augstskolas noteikumiem; mērķis ir izvēlēties atbilstošākos pretendentus programmā.",
+        "source": "MK noteikumi Nr. 846, 8. punkts"
+      },
+      {
+        "id": "ce",
+        "term": "Centralizētais eksāmens (CE)",
+        "definition": "Valsts centralizētais eksāmens vidusskolas beigās. Konkursā var ņemt vērā matemātikas, latviešu valodas un svešvalodas CE, kā arī citus izvēlētos CE.",
+        "source": "MK noteikumi Nr. 846, 9. un 10. punkts"
+      },
+      {
+        "id": "level",
+        "term": "Mācību satura apguves līmenis",
+        "definition": "Līmenis, kādā kārtots CE: vispārīgais, optimālais vai augstākais. To izvēlas pats reflektants.",
+        "source": "MK noteikumi Nr. 846, 10. punkts"
+      },
+      {
+        "id": "level-coefficient",
+        "term": "Līmeņa koeficients",
+        "definition": "Skaitlis, ar ko reizina CE rezultātu, lai dažādu līmeņu eksāmeni būtu salīdzināmi: augstākajam līmenim 1, optimālajam 0,75, vispārīgajam 0,50.",
+        "source": "MK noteikumi Nr. 846, 10.1. un 10.2. punkts"
+      },
+      {
+        "id": "ce-percent",
+        "term": "CE kopvērtējums procentos",
+        "definition": "CE rezultāts procentos, kāds norādīts eksāmena sertifikātā. Šo skaitli augstskolas reizina ar saviem koeficientiem.",
+        "source": "Augstskolu uzņemšanas noteikumi (piem., LU, RTU)"
+      },
+      {
+        "id": "competition-score",
+        "term": "Konkursa punkti (rangs)",
+        "definition": "Skaitlis, ko augstskola aprēķina pēc sava noteikuma no CE rezultātiem un citiem kritērijiem. Skalas ir atšķirīgas (piem., LU — 1000 punktu, RSU — 100), tāpēc punkti nav salīdzināmi starp augstskolām.",
+        "source": "MK noteikumi Nr. 846, 13.4. punkts; LU un RSU uzņemšanas noteikumi"
+      },
+      {
+        "id": "annual-mark",
+        "term": "Gada atzīme",
+        "definition": "Atzīme vidējās izglītības dokumentā (sekmju izrakstā). Augstskolas to izmanto konkursā tiem, kas nav kārtojuši CE, piemēram, vidējo izglītību ieguvušajiem līdz 2004. gadam.",
+        "source": "MK noteikumi Nr. 846, 12. punkts; LU uzņemšanas noteikumi"
+      },
+      {
+        "id": "international-test",
+        "term": "Starptautiskās testēšanas institūcijas pārbaudījums (STIP)",
+        "definition": "Svešvalodas pārbaudījums, ar kuru noteiktajos gadījumos var aizstāt CE svešvalodā.",
+        "source": "MK noteikumi Nr. 846, 6.¹ 1.2. apakšpunkts"
+      },
+      {
+        "id": "additional-requirements",
+        "term": "Papildu prasības",
+        "definition": "Augstskolas noteiktas prasības ārpus CE — piemēram, speciāla iepriekšējā izglītība vai īpaša piemērotība.",
+        "source": "Augstskolu likums, 46. panta ceturtā daļa"
+      },
+      {
+        "id": "entrance-test",
+        "term": "Iestājpārbaudījums",
+        "definition": "Pārbaudījums, ko augstskola var noteikt, lai konstatētu atbilstību papildu prasībām.",
+        "source": "MK noteikumi Nr. 846, 5.¹ punkts"
+      },
+      {
+        "id": "outside-competition",
+        "term": "Uzņemšana ārpus konkursa",
+        "definition": "Atsevišķas grupas augstskolas uzņem bez konkursa — piemēram, olimpiāžu godalgu ieguvējus. Kuras grupas, nosaka konkrētās augstskolas noteikumi. Valsts aizsardzības dienestu pabeigušajiem valsts augstskolas nodrošina budžeta vietu bez konkursa.",
+        "source": "MK noteikumi Nr. 846, 17.¹ punkts; DU un LBTU uzņemšanas noteikumi"
+      },
+      {
+        "id": "priorities",
+        "term": "Prioritātes",
+        "definition": "Programmas, ko reflektants pieteikumā sakārto pēc svarīguma. Rezultāts tiek paziņots vienā programmā — augstākajā prioritātē, kurā konkurss izturēts; pārējās vairs neskata.",
+        "source": "RSU un DU uzņemšanas noteikumi"
+      },
+      {
+        "id": "budget-place",
+        "term": "Budžeta vieta",
+        "definition": "Studiju vieta, kurā studijas finansē no valsts budžeta.",
+        "source": "DU uzņemšanas noteikumi"
+      },
+      {
+        "id": "paid-place",
+        "term": "Maksas vieta",
+        "definition": "Studiju vieta, kurā studijas finansē fiziskas vai juridiskas personas.",
+        "source": "DU uzņemšanas noteikumi"
+      },
+      {
+        "id": "study-contract",
+        "term": "Studiju līgums",
+        "definition": "Rakstveida līgums starp studējošo un augstskolu. To slēdz pēc dokumentu iesniegšanas un konkursa rezultātu izziņošanas.",
+        "source": "Augstskolu likums, 46. panta otrā un 6.¹ daļa"
+      },
+      {
+        "id": "matriculation",
+        "term": "Imatrikulācija",
+        "definition": "Personas ierakstīšana augstskolas studējošo sarakstā. Tā notiek pēc studiju līguma noslēgšanas.",
+        "source": "Augstskolu likums, 1. panta 6. punkts un 46. panta 6.² daļa"
+      },
+      {
+        "id": "credit-point",
+        "term": "Kredītpunkts (KP)",
+        "definition": "Studiju darba apjoma mērvienība. Pilna laika studijās vienā akadēmiskajā gadā apgūst 60 kredītpunktus; viens kredītpunkts atbilst 25–30 stundu studiju darbam.",
+        "source": "Augstskolu likums, 1. panta 8. punkts"
+      },
+      {
+        "id": "full-part-time",
+        "term": "Pilna laika un nepilna laika studijas",
+        "definition": "Pilna laika studijas atbilst 60 kredītpunktiem akadēmiskajā gadā, nepilna laika — mazāk nekā 60.",
+        "source": "Augstskolu likums, 1. panta 9. un 10. punkts"
+      },
+      {
+        "id": "short-cycle-first-cycle",
+        "term": "Īsā cikla un pirmā cikla programma",
+        "definition": "Programmu veidi, uz kuriem uzņem ar vidējo izglītību: īsā cikla profesionālās augstākās izglītības programmas un pirmā cikla augstākās izglītības programmas.",
+        "source": "MK noteikumi Nr. 846, 1.2. punkts"
+      }
+    ]
   }
 }

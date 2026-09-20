@@ -290,5 +290,255 @@
     "openCalculator": "Open the calculator",
     "openProgramme": "Programme page",
     "breakdown": "How the score adds up"
+  },
+  "rights": {
+    "title": "Your rights when applying to university",
+    "intro": "What Latvian law and Cabinet regulations guarantee an applicant: when rules must be published, when you can register, when the contract is signed, how fast results must be announced and how to challenge a decision.",
+    "checkedNote": "Prepared from the legal texts we read on likumi.lv on 20 September 2026 (Cabinet Regulation No. 846 — version of 30.12.2025; Law on Institutions of Higher Education — the version in force). This is not legal advice: the legal texts and each university's admission rules are what count.",
+    "sourceLabel": "Source",
+    "sourcesTitle": "Sources",
+    "glossaryLink": "Unfamiliar words? See the glossary",
+    "items": [
+      {
+        "id": "rules-published",
+        "title": "Rules must be published by 30 November",
+        "text": "Every year by 30 November a university must publish, on its website, the admission requirements and the start date of registration and admission for the next academic year.",
+        "source": "Higher Education Law, Article 46(5); Cabinet Regulation No. 846, point 3"
+      },
+      {
+        "id": "rules-contents",
+        "title": "What the rules must contain",
+        "text": "The admission rules must state: what prior education is needed, which centralised exams must be taken, any additional requirements, when registration and admission start, the competition criteria and their weight, how the result is calculated, the competition deadline, the rights and duties of both sides, how to get information on the process, and how to appeal decisions.",
+        "source": "Cabinet Regulation No. 846, point 13"
+      },
+      {
+        "id": "open-competition",
+        "title": "An open and equal competition",
+        "text": "Admission runs as an open and equal competition under the university's rules. A university may not give anyone an advantage that contradicts its own rules, the law or general legal principles.",
+        "source": "Cabinet Regulation No. 846, points 2 and 8; Higher Education Law, Article 46(3)"
+      },
+      {
+        "id": "register-before-exams",
+        "title": "You can register before the centralised exams",
+        "text": "A university may open registration and admission before the centralised exams are taken. You do not have to show a school certificate or exam certificates when registering.",
+        "source": "Higher Education Law, Article 46(5) and (6¹); Cabinet Regulation No. 846, points 6¹ and 6⁴ (applied from the 2026/27 academic year)"
+      },
+      {
+        "id": "how-to-register",
+        "title": "How you can register",
+        "text": "You can register in person at the university (application plus passport or ID card) or electronically — through www.latvija.lv or the university's information system with secure authentication.",
+        "source": "Cabinet Regulation No. 846, point 6"
+      },
+      {
+        "id": "contract-timing",
+        "title": "The study contract comes after documents and results",
+        "text": "A university may sign the study contract only after you have submitted your secondary-education document and exam certificates and the competition results have been announced. After the results the university sends an invitation to sign; matriculation follows the signing of the contract.",
+        "source": "Higher Education Law, Article 46(6¹) and (6²); Cabinet Regulation No. 846, point 4"
+      },
+      {
+        "id": "results-in-three-days",
+        "title": "Results within three days",
+        "text": "The admission committee determines and approves the competition results. They must be announced no later than three days after the competition closes.",
+        "source": "Cabinet Regulation No. 846, point 14"
+      },
+      {
+        "id": "written-refusal",
+        "title": "You can ask for a refusal in writing",
+        "text": "If the university refuses to matriculate you, you have the right to require the decision in writing (as set out in the Administrative Procedure Law).",
+        "source": "Cabinet Regulation No. 846, point 16"
+      },
+      {
+        "id": "appeal",
+        "title": "You can appeal a decision",
+        "text": "You can challenge the admission committee's decision on the results by submitting an application to the university's rector (at a college — the director). The rector's decision can be taken to court as set out in the Administrative Procedure Law. The deadlines for appeals are set in the university's own rules.",
+        "source": "Cabinet Regulation No. 846, point 17"
+      },
+      {
+        "id": "exam-levels",
+        "title": "Exams of different levels are comparable",
+        "text": "To compare centralised exams taken at different levels, coefficients apply: 0.75 for optimal-level exams and 0.50 for general-level exams, relative to the highest level. Exams obtained under the old system (before the new secondary-education standards) get the coefficient 0.75.",
+        "source": "Cabinet Regulation No. 846, points 10.1, 10.2 and 20"
+      },
+      {
+        "id": "no-exam-groups",
+        "title": "Who may skip the centralised exams",
+        "text": "People who completed secondary education before 2004, people who completed it abroad, and people with special needs may skip the centralised exams; the mathematics exam may also be skipped by those who completed secondary education up to and including 2008. The university sets out in its rules how these people are admitted.",
+        "source": "Cabinet Regulation No. 846, point 12; Higher Education Law, Article 46(3)"
+      },
+      {
+        "id": "extra-requirements",
+        "title": "A university may set additional requirements",
+        "text": "A university may set additional requirements — special prior education, aptitude or preparation — and entrance tests to check them. These must be stated in the admission rules.",
+        "source": "Higher Education Law, Article 46(4); Cabinet Regulation No. 846, points 5¹ and 13.3"
+      },
+      {
+        "id": "education-abroad",
+        "title": "If you were educated abroad",
+        "text": "If your education document was issued abroad, attach a certificate from the Academic Information Centre (or an authorised university) saying which Latvian document it corresponds to. A foreigner must also attach proof of the language of instruction at level B2 or higher, unless an exception applies, and the university interviews them.",
+        "source": "Cabinet Regulation No. 846, points 7, 7¹, 7² and 13¹"
+      }
+    ],
+    "sources": [
+      {
+        "label": "Cabinet Regulation No. 846 of 10 October 2006 “Regulations on the requirements, criteria and procedure for admission to study programmes…”",
+        "url": "https://likumi.lv/ta/id/146637-noteikumi-par-prasibam-kriterijiem-un-kartibu-uznemsanai-studiju-programmas"
+      },
+      {
+        "label": "Law on Institutions of Higher Education (Augstskolu likums), Article 46",
+        "url": "https://likumi.lv/ta/id/37967-augstskolu-likums"
+      }
+    ]
+  },
+  "glossary": {
+    "title": "Admission glossary",
+    "intro": "Words you will meet in university admission rules and on this site. Definitions come from the laws and university rules; each one names its source.",
+    "sourceLabel": "Source",
+    "rightsLink": "Your rights when applying",
+    "items": [
+      {
+        "id": "accredited-programme",
+        "term": "Accredited study programme (akreditēta studiju programma)",
+        "definition": "A programme that was found to meet the requirements of the law when its study field was evaluated.",
+        "source": "Higher Education Law, Article 1, clause 1¹"
+      },
+      {
+        "id": "licensing",
+        "term": "Licensing (licencēšana)",
+        "definition": "Granting the right to deliver a particular study programme. A university may admit students to a programme only after it is licensed.",
+        "source": "Higher Education Law, Article 1 clause 12 and Article 46(1)"
+      },
+      {
+        "id": "applicant",
+        "term": "Applicant (reflektants)",
+        "definition": "A person applying for admission to a study programme. The word is used in the regulations and in admission rules.",
+        "source": "Higher Education Law, Article 46; Cabinet Regulation No. 846"
+      },
+      {
+        "id": "admission-rules",
+        "term": "Admission rules (uzņemšanas noteikumi)",
+        "definition": "The university document setting the admission requirements, competition criteria and procedure. It must be published by 30 November for the next academic year.",
+        "source": "Cabinet Regulation No. 846, points 3 and 13"
+      },
+      {
+        "id": "admission-committee",
+        "term": "Admission committee (uzņemšanas komisija)",
+        "definition": "The committee a university sets up to run admission and to determine and approve the competition results.",
+        "source": "Cabinet Regulation No. 846, points 5 and 14"
+      },
+      {
+        "id": "competition",
+        "term": "Competition (konkurss)",
+        "definition": "The open and equal selection for study places under the university's rules; its aim is to pick the best-suited candidates for the programme.",
+        "source": "Cabinet Regulation No. 846, point 8"
+      },
+      {
+        "id": "ce",
+        "term": "Centralised exam (CE, centralizētais eksāmens)",
+        "definition": "The national exam at the end of secondary school. The competition may count the mathematics, Latvian and foreign-language CEs, and other CEs you chose to take.",
+        "source": "Cabinet Regulation No. 846, points 9 and 10"
+      },
+      {
+        "id": "level",
+        "term": "Level of study content (mācību satura apguves līmenis)",
+        "definition": "The level at which a CE was taken: general, optimal or highest. You choose it yourself.",
+        "source": "Cabinet Regulation No. 846, point 10"
+      },
+      {
+        "id": "level-coefficient",
+        "term": "Level coefficient (līmeņa koeficients)",
+        "definition": "The number by which a CE result is multiplied so that exams of different levels can be compared: 1 for highest, 0.75 for optimal, 0.50 for general.",
+        "source": "Cabinet Regulation No. 846, points 10.1 and 10.2"
+      },
+      {
+        "id": "ce-percent",
+        "term": "Total CE result in per cent (CE kopvērtējums procentos)",
+        "definition": "The CE result in per cent as shown on the exam certificate. Universities multiply this number by their own coefficients.",
+        "source": "University admission rules (e.g. LU, RTU)"
+      },
+      {
+        "id": "competition-score",
+        "term": "Competition score (konkursa punkti, rangs)",
+        "definition": "The number a university calculates by its own rule from CE results and other criteria. Scales differ (e.g. LU — 1000 points, RSU — 100), so scores cannot be compared between universities.",
+        "source": "Cabinet Regulation No. 846, point 13.4; LU and RSU admission rules"
+      },
+      {
+        "id": "annual-mark",
+        "term": "Annual mark (gada atzīme)",
+        "definition": "A mark in the secondary-education document. Universities use it in the competition for those who did not take CEs, for example people who completed school before 2004.",
+        "source": "Cabinet Regulation No. 846, point 12; LU admission rules"
+      },
+      {
+        "id": "international-test",
+        "term": "International language test (STIP)",
+        "definition": "A foreign-language test that can replace the CE in a foreign language in the cases set by the rules.",
+        "source": "Cabinet Regulation No. 846, point 6¹ 1.2"
+      },
+      {
+        "id": "additional-requirements",
+        "term": "Additional requirements (papildu prasības)",
+        "definition": "Requirements a university sets beyond the CEs — for example special prior education or aptitude.",
+        "source": "Higher Education Law, Article 46(4)"
+      },
+      {
+        "id": "entrance-test",
+        "term": "Entrance test (iestājpārbaudījums)",
+        "definition": "A test a university may set to check that you meet its additional requirements.",
+        "source": "Cabinet Regulation No. 846, point 5¹"
+      },
+      {
+        "id": "outside-competition",
+        "term": "Admission outside the competition (ārpus konkursa)",
+        "definition": "Universities admit certain groups without a competition — for example olympiad prize winners. Which groups is set in each university's rules. State universities provide a budget place without competition to people who completed state defence service.",
+        "source": "Cabinet Regulation No. 846, point 17¹; DU and LBTU admission rules"
+      },
+      {
+        "id": "priorities",
+        "term": "Priorities (prioritātes)",
+        "definition": "The programmes an applicant ranks by preference in the application. The result is announced for one programme only — the highest priority where the competition was passed; the rest are no longer considered.",
+        "source": "RSU and DU admission rules"
+      },
+      {
+        "id": "budget-place",
+        "term": "Budget place (budžeta vieta)",
+        "definition": "A study place where studies are funded from the state budget.",
+        "source": "DU admission rules"
+      },
+      {
+        "id": "paid-place",
+        "term": "Paid place (maksas vieta)",
+        "definition": "A study place where studies are funded by a private individual or a legal entity.",
+        "source": "DU admission rules"
+      },
+      {
+        "id": "study-contract",
+        "term": "Study contract (studiju līgums)",
+        "definition": "The written contract between the student and the university. It is signed after the documents are submitted and the competition results are announced.",
+        "source": "Higher Education Law, Article 46(2) and (6¹)"
+      },
+      {
+        "id": "matriculation",
+        "term": "Matriculation (imatrikulācija)",
+        "definition": "Entering a person on the university's list of students. It takes place after the study contract is signed.",
+        "source": "Higher Education Law, Article 1 clause 6 and Article 46(6²)"
+      },
+      {
+        "id": "credit-point",
+        "term": "Credit point (kredītpunkts, KP)",
+        "definition": "The unit of study workload. A full-time student earns 60 credit points per academic year; one credit point equals 25–30 hours of study work.",
+        "source": "Higher Education Law, Article 1 clause 8"
+      },
+      {
+        "id": "full-part-time",
+        "term": "Full-time and part-time studies (pilna laika, nepilna laika)",
+        "definition": "Full-time studies correspond to 60 credit points per academic year, part-time studies to fewer than 60.",
+        "source": "Higher Education Law, Article 1 clauses 9 and 10"
+      },
+      {
+        "id": "short-cycle-first-cycle",
+        "term": "Short-cycle and first-cycle programme (īsā cikla, pirmā cikla)",
+        "definition": "The programme types you can enter with secondary education: short-cycle professional higher-education programmes and first-cycle higher-education programmes.",
+        "source": "Cabinet Regulation No. 846, point 1.2"
+      }
+    ]
   }
 }
