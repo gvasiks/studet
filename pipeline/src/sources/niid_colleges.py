@@ -52,7 +52,8 @@ from models import ProgrammeDraft, UniversityDraft
 from sources.via import _EXTRACT_JS, _extract_languages, _programme_id
 
 BASE_URL = "https://www.niid.lv"
-LISTING = BASE_URL + "/niid_search/provider/{name}?qy&tg=&level_1=7&page={page}"
+# level_1: 7 — бакалавриат и короткие программы, 8 — магистратура, 9 — докторантура
+LISTING = BASE_URL + "/niid_search/provider/{name}?qy&tg=&level_1={level}&page={page}"
 MAX_PAGES = 10  # страховка от бесконечного цикла; у самого большого — 2 страницы
 
 
@@ -180,11 +181,11 @@ def _fee_and_funding(fee_text: str) -> tuple[float | None, str]:
     return fee, "paid"
 
 
-def _scrape_provider(page: Page, name: str) -> tuple[list[dict], str | None]:
+def _scrape_provider(page: Page, name: str, level: str = "7") -> tuple[list[dict], str | None]:
     entries: dict[str, dict] = {}
     website: str | None = None
     for number in range(1, MAX_PAGES + 1):
-        page.goto(LISTING.format(name=quote(name), page=number), wait_until="domcontentloaded")
+        page.goto(LISTING.format(name=quote(name), level=level, page=number), wait_until="domcontentloaded")
         if website is None:
             website = page.evaluate(_WEBSITE_JS)
         found = page.evaluate(_EXTRACT_JS)
@@ -251,7 +252,7 @@ def scrape_all() -> list[tuple[UniversityDraft, list[ProgrammeDraft]]]:
                 kind=college.kind,
                 city=college.city,
                 website_url=website,
-                source_url=LISTING.format(name=quote(college.providers[0][0]), page=1),
+                source_url=LISTING.format(name=quote(college.providers[0][0]), level="7", page=1),
             )
             results.append((university, programmes))
 

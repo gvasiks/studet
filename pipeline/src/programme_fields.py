@@ -100,7 +100,7 @@ RULES: list[tuple[str, list[str]]] = [
     (r"digital humanities|digitālās humanitārās", ["222", "227"]),
     (r"digitālā kultūra", ["222", "321"]),
     (r"valodas, saziņa|language and culture|eastern european", ["227", "222", "345"]),
-    (r"translat|tulkoš|terminolog|philolog|filolog|linguist|european languages|eiropas valodu|language|zīmju valod", ["222"]),
+    (r"translat|tulkoš|terminolog|philolog|filolo[gģ]|linguist|lingvist|valodu un literatūr|european languages|eiropas valodu|language|zīmju valod", ["222"]),
     (r"anthropolog|asian|āzijas|cultural studies|kultūrvide", ["227", "314"]),
     # --- социальные науки
     (r"psycholog|psiholo[gģ]", ["313"]),
@@ -127,7 +127,7 @@ RULES: list[tuple[str, list[str]]] = [
     (r"financial engineering|finanšu inženier", ["343"]),
     (r"finanšu pārvaldības informācijas", ["343"]),
     (r"accounting and finance|grāmatvedīb", ["344", "343"]),
-    (r"financial management|finance|finanš|banking|banku", ["343"]),
+    (r"financial management|finance|finanses|finanš|banking|banku", ["343"]),
     (r"accounting|audit", ["344"]),
     (r"public relations|sabiedriskās attiecības|komunikācija un sabiedr", ["321", "342"]),
     (r"marketing|mārketing|advertising|reklām", ["342"]),
@@ -180,6 +180,23 @@ RULES: list[tuple[str, list[str]]] = [
     # --- управление (самое общее — последним)
     (r"management|vadīb|vadīšana|vadība|administration|business|uzņēmējdarb|entrepreneur|līderīb|leadership|innovation|inovācij|quality|kvalitāt|vadībzinātn|strategic|customs|muit|regional|reģionāl|urban|pilsētu|human resource|personāl|sabiedrības pārvald", ["345"]),
     (r"economics|ekonomika|ekonomik", ["311"]),
+    # --- латышские названия из добора NIID (2026-09-20): у этих программ нет
+    # английского названия, и ни одно правило выше их не находило. Стоят в
+    # конце: срабатывают только на то, что выше не совпало
+    (r"mežzinātn|mežinženier|forestry", ["623"]),
+    (r"koksn|būvzinātn", ["543", "582"]),
+    (r"vide un ūdenssaimniec|vides, ūdens", ["850", "529"]),
+    (r"zemes ierīcīb|mērniecīb", ["582", "443"]),
+    (r"lielo datu|datu analītik", ["481", "483", "484"]),
+    (r"starptautiskais bizness|international business", ["345"]),
+    (r"paplašinātās kompetences māsa", ["723"]),
+    (r"mākslas menedžment|arts management", ["345"]),
+    (r"vides plānošan", ["850"]),
+    (r"juridisk", ["380"]),
+    (r"sociālais darbinieks", ["762"]),
+    (r"rakstniecīb", ["222"]),
+    (r"publiskā pārvald|public administration", ["345", "310"]),
+    (r"komandējošā sastāva|virsnieks", ["863"]),
 ]
 
 _COMPILED = [(re.compile(pattern), candidates) for pattern, candidates in RULES]

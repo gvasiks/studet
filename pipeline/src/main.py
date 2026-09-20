@@ -10,9 +10,9 @@ from dotenv import load_dotenv
 
 import polite
 from db import get_service_client
-from sources import bsa, du, eka, ekra, jvlma, lbtu, lka, lma, lnaa, lu, lutera, niid_colleges, rai, rgsl, riseba, rnu, rsu, rtu_catalog, rtu_liepaja, sse_riga, tsi, turiba, venta, via
+from sources import bsa, du, eka, ekra, jvlma, lbtu, lka, lma, lnaa, lu, lutera, niid_colleges, niid_universities, rai, rgsl, riseba, rnu, rsu, rtu_catalog, rtu_liepaja, sse_riga, tsi, turiba, venta, via
 
-SOURCES = [turiba, riseba, rtu_liepaja, tsi, bsa, sse_riga, rgsl, lu, venta, lbtu, du, eka, rnu, rtu_catalog, via, rsu, lka, lma, jvlma, rai, lnaa, lutera, ekra, niid_colleges]
+SOURCES = [turiba, riseba, rtu_liepaja, tsi, bsa, sse_riga, rgsl, lu, venta, lbtu, du, eka, rnu, rtu_catalog, via, rsu, lka, lma, jvlma, rai, lnaa, lutera, ekra, niid_colleges, niid_universities]
 
 # Ревью 2026-09, пункт 05: конвейер должен падать, если число найденных
 # программ у источника резко просело — lu.py однажды тихо потерял целый
@@ -80,6 +80,13 @@ MIN_PROGRAMME_COUNT = {
     "sources.niid_colleges:novikonta": 2,
     "sources.niid_colleges:rti": 1,
     "sources.niid_colleges:rarzi": 1,
+    # niid_universities: добор недостающих программ из NIID (аудит 2026-09-20),
+    # снимок на тот же день
+    "sources.niid_universities:lbtu": 56,
+    "sources.niid_universities:du": 56,
+    "sources.niid_universities:turiba": 17,
+    "sources.niid_universities:riseba": 15,
+    "sources.niid_universities:rsu": 9,
 }
 
 

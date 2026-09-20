@@ -73,21 +73,18 @@ NIID_LEVELS = ("7", "8", "9")
 def _niid_counts(slugs: list[str]) -> tuple[dict[str, Counter], dict[str, list[tuple[str, str]]]]:
     counts: dict[str, Counter] = {slug: Counter() for slug in slugs}
     names: dict[str, list[tuple[str, str]]] = defaultdict(list)
-    template = niid.LISTING
     with sync_playwright() as p:
         browser = p.chromium.launch()
         page = browser.new_page()
         for level in NIID_LEVELS:
-            niid.LISTING = template.replace("level_1=7", f"level_1={level}")
             for slug in slugs:
-                entries, _ = niid._scrape_provider(page, PROVIDERS[slug])
+                entries, _ = niid._scrape_provider(page, PROVIDERS[slug], level)
                 for entry in entries:
                     ours = niid._college_level(entry["fields"].get("Programmas veids", "")) or "other"
                     counts[slug][ours] += 1
                     names[slug].append((ours, entry["name"]))
                 print(f"  NIID {slug} уровень {level}: {len(entries)}", flush=True)
         browser.close()
-    niid.LISTING = template
     return counts, names
 
 
