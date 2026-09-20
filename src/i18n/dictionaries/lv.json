@@ -540,5 +540,129 @@
         "source": "MK noteikumi Nr. 846, 1.2. punkts"
       }
     ]
+  },
+  "privacy": {
+    "title": "Privātuma politika",
+    "intro": "Kā šī vietne apstrādā personas datus: ko mēs uzglabājam, ko nē, un kādas ir tavas tiesības.",
+    "updated": "Redakcija: 2026. gada 20. septembris",
+    "authorityLabel": "Datu valsts inspekcija (dvi.gov.lv)",
+    "authorityUrl": "https://www.dvi.gov.lv",
+    "sections": [
+      {
+        "id": "summary",
+        "title": "Īsumā",
+        "body": [
+          "- Vietnei nav lietotāju kontu, un reģistrācija nav vajadzīga.",
+          "- Eksāmenu rezultāti, ko ievadi kalkulatorā vai meklēšanā «Kur es varu iestāties?», tiek aprēķināti tavā pārlūkā. Tie netiek nosūtīti uz mūsu serveri un nekur netiek saglabāti.",
+          "- Mēs neizmantojam sīkdatnes izsekošanai un nerādām reklāmu.",
+          "- Izlase (sirdiņas pie programmām) glabājas tikai tavā ierīcē."
+        ]
+      },
+      {
+        "id": "controller",
+        "title": "Kas ir pārzinis",
+        "body": [
+          "Personas datu pārzinis ir {controller}. Jautājumos par personas datiem raksti: {email}."
+        ]
+      },
+      {
+        "id": "visit",
+        "title": "Vietnes apmeklējums",
+        "body": [
+          "Kad atver lapu, hostinga pakalpojuma sniedzējs automātiski reģistrē tehniskos datus: IP adresi, laiku, pieprasīto adresi un pārlūka veidu. To dara, lai vietne darbotos un būtu droša. Mēs šos datus neizmantojam, lai kādu identificētu.",
+          "Pamats: mūsu leģitīmās intereses nodrošināt vietnes drošību un darbību (Vispārīgās datu aizsardzības regulas 6. panta 1. punkta f) apakšpunkts). Glabāšanas termiņu nosaka pakalpojuma sniedzējs.",
+          "Valodu (latviešu vai angļu) pirmajā apmeklējumā izvēlamies pēc pārlūka valodas iestatījuma; tas netiek saglabāts."
+        ]
+      },
+      {
+        "id": "survey",
+        "title": "Aptauja un kalkulatori",
+        "body": [
+          "- Eksāmenu rezultāti kalkulatorā un meklēšanā «Kur es varu iestāties?» tiek aprēķināti tikai tavā pārlūkā. Tie netiek sūtīti uz serveri, netiek saglabāti un netiek ielikti lapas adresē.",
+          "- Aptaujā izvēlētie filtri (interešu joma, pilsēta, studiju valoda un forma, budžeta vietas) tiek ielikti lapas adresē, lai varētu parādīt programmu sarakstu. Līdz ar apmeklējumu tie nonāk tehniskajos žurnālos (skat. iepriekš), bet mēs tos nesaistām ar personu. Eksāmenu atbildes aptaujā uz serveri netiek nosūtītas."
+        ]
+      },
+      {
+        "id": "favorites",
+        "title": "Izlase",
+        "body": [
+          "Programmu saraksts, ko atzīmē ar sirdiņu, glabājas tikai tavā pārlūkā (localStorage) un netiek nosūtīts mums. To var dzēst, iztīrot vietnes datus pārlūka iestatījumos. Šī glabāšana ir vajadzīga funkcijai, ko tu pats izvēlies izmantot."
+        ]
+      },
+      {
+        "id": "cookies",
+        "title": "Sīkdatnes",
+        "body": [
+          "Mēs neizmantojam sīkdatnes izsekošanai. Vietne pārlūkā glabā tikai izlases sarakstu (skat. iepriekš)."
+        ]
+      },
+      {
+        "id": "analytics",
+        "title": "Vietnes lietošanas statistika",
+        "body": [
+          "Lai saprastu, kuras lapas tiek lasītas un cik ātri tās ielādējas, mēs izmantojam PostHog analītiku ar serveriem Eiropas Savienībā. Tā ir iestatīta šādi:",
+          "- bez sīkdatnēm un bez datu glabāšanas pārlūkā;",
+          "- bez cilvēka identificēšanas, bez sesiju ierakstiem un bez ievadīto lauku satura — eksāmenu rezultāti analītikā nenonāk;",
+          "- IP adrese netiek glabāta.",
+          "Pamats: mūsu leģitīmās intereses uzlabot vietni (regulas 6. panta 1. punkta f) apakšpunkts). Tu vari iebilst — raksti uz {email}."
+        ]
+      },
+      {
+        "id": "email",
+        "title": "E-pasta atgādinājumi",
+        "body": [
+          "Ja pats pieprasi atgādinājumu (piemēram, par uzņemšanas sākumu vai izmaiņām tavā programmu sarakstā), mēs uzglabājam tavu e-pasta adresi un to, par ko vēlies saņemt ziņas. Mēs tos izmantojam tikai tam, ko tu pieprasīji.",
+          "Pamats: tava piekrišana (regulas 6. panta 1. punkta a) apakšpunkts). Piekrišanu vari atsaukt jebkurā brīdī ar saiti katrā e-pastā vai rakstot uz {email}; atsaukums neietekmē iepriekšējo e-pastu likumību.",
+          "E-pastus sūta pakalpojuma sniedzējs Resend. Adresi izdzēšam pēc piekrišanas atsaukšanas un ne vēlāk kā 12 mēnešus pēc pēdējā nosūtītā e-pasta."
+        ]
+      },
+      {
+        "id": "minors",
+        "title": "Skolēni un jaunieši",
+        "body": [
+          "Vietnes auditorija galvenokārt ir skolēni un jaunieši. Latvijā bērns pats var dot piekrišanu informācijas sabiedrības pakalpojumam no 13 gadu vecuma; jaunākam bērnam vajadzīga vecāka vai likumiskā aizbildņa piekrišana (Fizisko personu datu apstrādes likuma 33. pants).",
+          "Eksāmenu rezultātus, ko ievadi vietnē, mēs neuzglabājam un nenosūtām."
+        ]
+      },
+      {
+        "id": "recipients",
+        "title": "Kam mēs datus nododam",
+        "body": [
+          "Mēs nepārdodam datus un nerādām reklāmu. Datus apstrādā tikai mūsu pakalpojumu sniedzēji (apstrādātāji), un tikai mūsu uzdevumā:",
+          "- hostinga pakalpojuma sniedzējs (vietnes darbība);",
+          "- Supabase (datubāze ar serveriem Eiropas Savienībā; e-pasta adreses, ja tu tās iesniedz);",
+          "- PostHog (lietošanas statistika, serveri Eiropas Savienībā);",
+          "- Resend (e-pastu nosūtīšana).",
+          "Ja pakalpojuma sniedzējs datus nodod ārpus Eiropas Ekonomikas zonas, tas notiek ar Eiropas Komisijas apstiprinātiem aizsardzības mehānismiem, piemēram, standarta līguma klauzulām."
+        ]
+      },
+      {
+        "id": "rights",
+        "title": "Tavas tiesības",
+        "body": [
+          "Tev ir tiesības:",
+          "- saņemt informāciju par saviem datiem un piekļūt tiem;",
+          "- prasīt datu labošanu vai dzēšanu;",
+          "- ierobežot apstrādi un iebilst pret apstrādi, kas balstīta uz leģitīmajām interesēm;",
+          "- saņemt datus pārnesamā formātā;",
+          "- atsaukt piekrišanu jebkurā brīdī.",
+          "Raksti uz {email} — atbildēsim viena mēneša laikā. Ja uzskati, ka tavas tiesības pārkāptas, vari iesniegt sūdzību Datu valsts inspekcijai (Elijas iela 17, Rīga, LV-1050)."
+        ]
+      },
+      {
+        "id": "decisions",
+        "title": "Automatizēti lēmumi",
+        "body": [
+          "Mēs nepieņemam automatizētus lēmumus, kas tevi ietekmē, un neveicam profilēšanu. Aprēķini vietnē ir orientējoši; galīgo lēmumu par uzņemšanu pieņem augstskola."
+        ]
+      },
+      {
+        "id": "changes",
+        "title": "Izmaiņas",
+        "body": [
+          "Ja politika mainās, mēs atjaunināsim šo lapu un redakcijas datumu."
+        ]
+      }
+    ]
   }
 }

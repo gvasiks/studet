@@ -7,7 +7,7 @@ import AxeBuilder from "@axe-core/playwright";
 // 2026-09, пункт 15: "клавиатурный проход по новым экранам на обоих
 // языках" был сделан руками (см. коммит с фиксами) — это его
 // автоматизированное продолжение на каждый push.
-const ROUTES = ["", "/programmes", "/programmes/lu/economics", "/survey", "/match", "/rights", "/glossary"];
+const ROUTES = ["", "/programmes", "/programmes/lu/economics", "/survey", "/match", "/rights", "/glossary", "/privacy"];
 const LOCALES = ["lv", "en"] as const;
 
 for (const locale of LOCALES) {

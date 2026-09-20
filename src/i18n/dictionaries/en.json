@@ -540,5 +540,129 @@
         "source": "Cabinet Regulation No. 846, point 1.2"
       }
     ]
+  },
+  "privacy": {
+    "title": "Privacy policy",
+    "intro": "How this site handles personal data: what we keep, what we don't, and what your rights are.",
+    "updated": "Version: 20 September 2026",
+    "authorityLabel": "Data State Inspectorate (dvi.gov.lv)",
+    "authorityUrl": "https://www.dvi.gov.lv/en",
+    "sections": [
+      {
+        "id": "summary",
+        "title": "In short",
+        "body": [
+          "- The site has no user accounts and needs no registration.",
+          "- Exam results that you enter in the calculator or in “Where can I get in?” are calculated in your browser. They are not sent to our server and are not stored anywhere.",
+          "- We do not use tracking cookies and we show no advertising.",
+          "- Your favourites (the hearts on programmes) stay on your device only."
+        ]
+      },
+      {
+        "id": "controller",
+        "title": "Who is responsible",
+        "body": [
+          "The data controller is {controller}. For questions about personal data write to: {email}."
+        ]
+      },
+      {
+        "id": "visit",
+        "title": "Visiting the site",
+        "body": [
+          "When you open a page, our hosting provider automatically records technical data: your IP address, the time, the requested address and the browser type. This is done so the site works and stays secure. We do not use this data to identify anyone.",
+          "Legal basis: our legitimate interest in keeping the site secure and running (General Data Protection Regulation, Article 6(1)(f)). The retention period is set by the provider.",
+          "On a first visit we pick the language (Latvian or English) from your browser's language setting; this is not stored."
+        ]
+      },
+      {
+        "id": "survey",
+        "title": "The survey and calculators",
+        "body": [
+          "- Exam results in the calculator and in “Where can I get in?” are calculated only in your browser. They are not sent to a server, not stored and not put into the page address.",
+          "- The filters you choose in the survey (field of interest, city, language and mode of study, budget places) are put into the page address so the programme list can be shown. Together with the visit they end up in the technical logs (see above), but we do not link them to a person. Exam answers from the survey are not sent to the server."
+        ]
+      },
+      {
+        "id": "favorites",
+        "title": "Favourites",
+        "body": [
+          "The list of programmes you mark with a heart is kept only in your browser (localStorage) and is not sent to us. You can delete it by clearing the site's data in your browser settings. This storage is needed for a feature you choose to use."
+        ]
+      },
+      {
+        "id": "cookies",
+        "title": "Cookies",
+        "body": [
+          "We do not use cookies for tracking. The site keeps only the favourites list in your browser (see above)."
+        ]
+      },
+      {
+        "id": "analytics",
+        "title": "Usage statistics",
+        "body": [
+          "To understand which pages are read and how fast they load, we use PostHog analytics with servers in the European Union. It is set up as follows:",
+          "- no cookies and no data kept in the browser;",
+          "- no identification of people, no session recordings and no content of entered fields — exam results never reach analytics;",
+          "- IP addresses are not stored.",
+          "Legal basis: our legitimate interest in improving the site (Article 6(1)(f)). You can object — write to {email}."
+        ]
+      },
+      {
+        "id": "email",
+        "title": "E-mail reminders",
+        "body": [
+          "If you ask for a reminder yourself (for example about the start of admission or changes in your programme list), we store your e-mail address and what you want to be told about. We use them only for what you asked.",
+          "Legal basis: your consent (Article 6(1)(a)). You can withdraw consent at any time with the link in every e-mail or by writing to {email}; withdrawal does not affect e-mails already sent.",
+          "E-mails are sent by the provider Resend. We delete the address after you withdraw consent and no later than 12 months after the last e-mail sent."
+        ]
+      },
+      {
+        "id": "minors",
+        "title": "School pupils and young people",
+        "body": [
+          "The site is mainly for school pupils and young people. In Latvia a child can give consent to an information society service from the age of 13; for a younger child the consent of a parent or legal guardian is needed (Personal Data Processing Law, Article 33).",
+          "We do not store or send the exam results you enter on the site."
+        ]
+      },
+      {
+        "id": "recipients",
+        "title": "Who we share data with",
+        "body": [
+          "We do not sell data and we show no advertising. Data is processed only by our service providers (processors), and only on our behalf:",
+          "- a hosting provider (running the site);",
+          "- Supabase (database with servers in the European Union; e-mail addresses, if you submit them);",
+          "- PostHog (usage statistics, servers in the European Union);",
+          "- Resend (sending e-mail).",
+          "If a provider transfers data outside the European Economic Area, it does so with safeguards approved by the European Commission, for example standard contractual clauses."
+        ]
+      },
+      {
+        "id": "rights",
+        "title": "Your rights",
+        "body": [
+          "You have the right to:",
+          "- be informed about your data and access it;",
+          "- ask for it to be corrected or deleted;",
+          "- restrict processing and object to processing based on legitimate interests;",
+          "- receive your data in a portable format;",
+          "- withdraw consent at any time.",
+          "Write to {email} — we will answer within one month. If you believe your rights have been violated, you can complain to the Data State Inspectorate (Elijas iela 17, Riga, LV-1050)."
+        ]
+      },
+      {
+        "id": "decisions",
+        "title": "Automated decisions",
+        "body": [
+          "We do not make automated decisions that affect you and we do not profile. Calculations on the site are indicative; the final admission decision is made by the university."
+        ]
+      },
+      {
+        "id": "changes",
+        "title": "Changes",
+        "body": [
+          "If the policy changes we will update this page and the version date."
+        ]
+      }
+    ]
   }
 }
