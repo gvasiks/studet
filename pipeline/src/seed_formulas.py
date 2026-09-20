@@ -9,7 +9,7 @@
 Поменяли число тут — поменяйте и там, иначе тест продолжит проверять
 старое значение и не заметит расхождение с тем, что реально ушло в базу.
 
-=== Ventspils Augstskola — 7 из 13 программ каталога ===
+=== Ventspils Augstskola — 8 из 13 программ каталога ===
 
 Источник — единственный принятый правилом 6 CLAUDE.md: утверждённый
 Сенатом ВеА PDF правил приёма, не страница сайта (venta.lv/program/...
@@ -21,8 +21,8 @@
   Nr. 26-28)
   https://irp.cdn-website.com/f6b5d556/files/uploaded/26-28_Pielikums-2_Uznemsanas_noteikumi_2026-2027_grozits_06-2026.pdf
 
-Из 13 программ Вентспилса в каталоге сюда попали только 7 — те, где
-формула однозначно строится из уже поддерживаемых formula_term.kind
+Из 13 программ Вентспилса в каталоге сюда попали 8 (все не магистерские) —
+те, где формула строится из уже поддерживаемых formula_term.kind
 ('ce' / 'ce_average' / 'entrance_exam') без исключений:
 
 - Не включены все магистерские и докторская программы — у них
@@ -30,14 +30,14 @@
   модель начисления, не сумма процентов ЦЭ; переиспользовать
   kind='certificate' для неё было бы натяжкой, а не честным
   прочтением документа.
-- Не включена "Elektronikas inženierija" (bachelor): в таблице PDF
-  сумма коэффициентов формулы равна 1,1 (0,6+0,2+0,1+0,1+0,1) из-за
-  условного слагаемого "P4 – CE fizikā (ja ir kārtots)" — неясно,
-  заменяет это одно из других слагаемых или действительно
-  прибавляется сверху 100%. Класть числа, в которых сам не уверен, в
-  таблицу, где формулу проверяет только человек (правило 6), хуже,
-  чем не класть вовсе — оставлено на потом, дать человеку свериться
-  с сайтом/деканатом напрямую.
+- "Elektronikas inženierija" (bachelor) сначала была пропущена: в
+  таблице PDF сумма коэффициентов равна 1,1 (0,6+0,2+0,1+0,1+0,1) из-за
+  условного слагаемого "P4 – CE fizikā (ja ir kārtots)". После появления
+  флага formula_term.optional (сентябрь 2026) добавлена с физикой как
+  необязательным слагаемым — буквальное прочтение печатной формулы; что
+  документ прямо этого не говорит, отмечено в комментарии у самой формулы
+  ниже. Магистерские программы Ventspils (VSA — средняя оценка диплома
+  бакалавра) не берутся: они не для выпускников школ.
 
 === Latvijas Universitāte — 15 бакалаврских программ Ekonomikas un
 sociālo zinātņu fakultāte (полный список факультетов ЛУ в каталоге —
@@ -292,6 +292,30 @@ FORMULA_SEEDS = [
             ("ce", "mathematics", 0.1),
             ("ce_average", None, 0.1),
         ],
+    },
+    {
+        # Раньше пропущена: "P4 – CE fizikā (ja ir kārtots)" даёт сумму 1,1.
+        # Теперь есть флаг optional: без физики (P1 0,6 + P2 0,2 + P3 0,1 +
+        # среднее 0,1) ровно 1,0, физика добавляется сверху — так же, как у
+        # ЛУ ("ja nav CE …, tad 0"). Документ этого прямо не говорит, и его
+        # же фраза "результат — по шкале 100 баллов" при физике даёт до 110:
+        # человек, подтверждающий формулу, решает, верно ли такое прочтение
+        # (вопрос приёмной комиссии Ventspils Augstskola).
+        "programme_slug": "elektronika-bakalaurs",
+        "terms": [
+            ("ce", "mathematics", 0.6),
+            ("ce", "english", 0.2),
+            ("ce", "latvian", 0.1),
+            ("ce", "physics", 0.1, True),
+            ("ce_average", None, 0.1),
+        ],
+        "excerpt": (
+            "Pirmā cikla profesionālās augstākās izglītības (bakalaura) studiju programma “Elektronikas inženierija” "
+            "… Vidējā izglītība; P1 - CE matemātikā; P2 - CE vai STIP angļu valodā; P3 – CE latviešu valodā; "
+            "P4 – CE fizikā (ja ir kārtots); Konkursa rezultāta aprēķināšana: CE l.k*P1*0,6 + CE l.k *P2*0,2 + "
+            "CE l.k*P3*0,1 + CE l.k *P4*0,1 + 0,1*visu CE kopvērtējumu vidējā vērtība. "
+            "(Текст строки таблицы 1. pielikums, извлечён из PDF; таблица в PDF разбита на колонки.)"
+        ),
     },
 ]
 
@@ -649,12 +673,27 @@ def seed(
         )
         programme_id = programme.data["id"]
 
+        already = (
+            client.table("formula")
+            .select("verified_at")
+            .eq("programme_id", programme_id)
+            .eq("variant", "ce")
+            .eq("valid_from", valid_from.isoformat())
+            .execute()
+            .data
+        )
+        if already and already[0]["verified_at"]:
+            # человек уже подтвердил: перезапись молча подменила бы числа
+            print(f"{entry['programme_slug']}: уже подтверждена — не трогаю")
+            continue
+
         formula_row = {
             "programme_id": programme_id,
             "variant": "ce",
             "valid_from": valid_from.isoformat(),
             "source_url": source_url,
             "source_doc": source_doc,
+            **({"source_excerpt": entry["excerpt"]} if "excerpt" in entry else {}),
             **protocol,
         }
         formula = (
@@ -668,9 +707,17 @@ def seed(
         # снести и вставить заново, чем сверять построчно при повторном
         # запуске.
         client.table("formula_term").delete().eq("formula_id", formula_id).execute()
+        # слагаемое — (kind, subject, coefficient) или с четвёртым элементом
+        # True для необязательного ("ja nav …, tad 0")
         term_rows = [
-            {"formula_id": formula_id, "kind": kind, "subject": subject, "coefficient": coefficient}
-            for kind, subject, coefficient in entry["terms"]
+            {
+                "formula_id": formula_id,
+                "kind": term[0],
+                "subject": term[1],
+                "coefficient": term[2],
+                "optional": len(term) > 3 and bool(term[3]),
+            }
+            for term in entry["terms"]
         ]
         client.table("formula_term").insert(term_rows).execute()
 

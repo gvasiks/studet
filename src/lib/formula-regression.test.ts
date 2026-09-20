@@ -72,6 +72,19 @@ const cases: Case[] = [
     expectedTotal: 100,
   },
   {
+    // Ventspils: elektronika-bakalaurs. Физика — необязательное слагаемое
+    // (optional в базе): при 100% по физике итог 110, без неё был бы 100.
+    label: "Ventspils — elektronika-bakalaurs (CE физика сверху)",
+    terms: [
+      { kind: "ce", subject: "mathematics", coefficient: 0.6 },
+      { kind: "ce", subject: "english", coefficient: 0.2 },
+      { kind: "ce", subject: "latvian", coefficient: 0.1 },
+      { kind: "ce", subject: "physics", coefficient: 0.1, optional: true },
+      { kind: "ce_average", subject: null, coefficient: 0.1 },
+    ],
+    expectedTotal: 110,
+  },
+  {
     label: "Ventspils — valodas-sazina-un-kulturvide",
     terms: [
       { kind: "ce", subject: "english", coefficient: 0.4 },
