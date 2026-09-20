@@ -242,6 +242,7 @@
       "entrance_exam_interview": "Strukturētā intervija",
       "entrance_exam_math_test": "Matemātikas iestājpārbaudījums",
       "entrance_exam_art_test": "Praktiskais pārbaudījums vizuālajā mākslā",
+      "entrance_exam_osppp": "Profesionālās piemērotības pārbaudījums OSPPP (0–10)",
       "certificate_physics": "Atestāta gada atzīme fizikā (1–10)",
       "certificate_geography": "Atestāta gada atzīme ģeogrāfijā (1–10)"
     }

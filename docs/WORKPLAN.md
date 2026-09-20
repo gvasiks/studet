@@ -200,10 +200,19 @@
   (2) п. 31.1 задан по *направлениям* обучения, а в нашем каталоге у программ
   РТУ направления нет — нужен источник соответствия (страницы программ).
   Rēzekne (31.5.3) — другая модель (сумма оценок аттестата / 1000).
-- *Не разобраны, документы найдены:* RSU — [PDF правил 2026/27](https://www.rsu.lv/sites/default/files/imce/Dokumenti/noteikumi/uznemsanas_noteikumi_pamatstudijas_2026_2027.pdf);
-  LBTU — коэффициенты в специфических правилах по программам; DU — документы
-  на [странице приёма](https://du.lv/gribu-studet/uznemsana/). Скачивание —
-  по вашему «да» (имя файла, источник, размер называю перед этим).
+- *RSU:* 16 из 29 приложений (18 программ каталога) — `pipeline/src/formulas_rsu.py`,
+  документ [1-PB-9/36/2025 с поправками до 14.05.2026](https://www.rsu.lv/sites/default/files/imce/Dokumenti/noteikumi/uznemsanas_noteikumi_pamatstudijas_2026_2027_rev1.pdf).
+  Проценты приложений — коэффициенты (итог 100 баллов, п. 25); OSPPP —
+  вход 0–10 (п. 24), коэффициент 50 % → 5,0. Не взяты 13: «gala atzīme
+  bioloģijā **vai** dabaszinībās» (Audiologopēdija, Ergoterapija, Māszinības,
+  Ortozēšana, Sabiedrības veselība, Vecmāte) и «ķīmijā vai bioloģijā»
+  (Farmācija, Medicīna, Uzturs) — «или», как в ЛУ; Sporta zinātne и
+  Veselība/fiziskā aktivitāte — шкала физической подготовки вне документа
+  (таблицы Nr. 29); Policijas darbs, Jaunsardze — приём по списку. Программы
+  филиала Liepāja сопоставлены с теми же приложениями: приложение места
+  реализации не различает — человек проверяет при подтверждении.
+- *Не скачаны, найдены:* LBTU — коэффициенты в специфических правилах по
+  программам; DU — документы на [странице приёма](https://du.lv/gribu-studet/uznemsana/).
 
 **Как включить обратный поиск в декабре:** (1) формулы подтверждены — страница
 сама показывает форму; (2) добавить ссылку «Kur es varu iestāties?» в шапку

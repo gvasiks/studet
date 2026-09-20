@@ -278,3 +278,27 @@ describe("calculateScore — регрессия по всем засеянным
     expect(scoreAllTermsAt100(terms)).toBeCloseTo(expectedTotal, 2);
   });
 });
+
+// RSU (pipeline/src/formulas_rsu.py): проценты приложений документа как
+// коэффициенты, итог — 100 баллов (п. 25 правил). Все различающиеся наборы
+// CE-слагаемых; при 100% по каждому предмету итог обязан быть ровно 100.
+// Формулы с OSPPP (шкала 0–10) сюда не входят: у них вход не 100.
+const rsuSets: Array<[string, Array<[string, number]>]> = [
+  ["10/45/45 (массаж, врач-помощник, соц. работа, мультимедиа, межд. отношения)", [["mathematics", 0.1], ["latvian", 0.45], ["english", 0.45]]],
+  ["20/40/40 (психология)", [["mathematics", 0.2], ["latvian", 0.4], ["english", 0.4]]],
+  ["10/50/40 (PR)", [["mathematics", 0.1], ["latvian", 0.5], ["english", 0.4]]],
+  ["40/30/30 (бизнес и устойчивая экономика)", [["mathematics", 0.4], ["latvian", 0.3], ["english", 0.3]]],
+  ["30/30/40 (бизнес и стартапы, англ.)", [["mathematics", 0.3], ["latvian", 0.3], ["english", 0.4]]],
+  ["15/45/40 (маркетинг)", [["mathematics", 0.15], ["latvian", 0.45], ["english", 0.4]]],
+  ["30/40/30 (право)", [["mathematics", 0.3], ["latvian", 0.4], ["english", 0.3]]],
+  ["10/55/35 (журналистика)", [["mathematics", 0.1], ["latvian", 0.55], ["english", 0.35]]],
+  ["био 40 (физиотерапия)", [["biology", 0.4], ["mathematics", 0.2], ["latvian", 0.2], ["english", 0.2]]],
+  ["био 40 / химия 40 (зубоврачевание)", [["biology", 0.4], ["chemistry", 0.4], ["mathematics", 0.05], ["latvian", 0.1], ["english", 0.05]]],
+];
+
+describe("calculateScore — RSU: сумма процентов приложений даёт 100", () => {
+  it.each(rsuSets)("%s", (_label, pairs) => {
+    const terms: FormulaTerm[] = pairs.map(([subject, coefficient]) => ({ kind: "ce", subject, coefficient }));
+    expect(scoreAllTermsAt100(terms)).toBeCloseTo(100, 2);
+  });
+});

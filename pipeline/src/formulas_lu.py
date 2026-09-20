@@ -42,10 +42,12 @@ from __future__ import annotations
 import re
 import sys
 from dataclasses import dataclass, field
-from datetime import date, timedelta
+from datetime import date
 from pathlib import Path
 
 import pypdf
+
+from formula_drafts import Draft, DocumentMeta, ParsedTerm, write_drafts
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
 PDF_PATH = REPO_ROOT / "docs/source-documents/lu/uzn-prasibas-pamat-2026-27.pdf"
@@ -144,14 +146,6 @@ ENTRANCE_LABELS = (
     ("praktiskais pārbaudījums vizuālajā mākslā", "art_test"),
     ("intervija", "interview"),
 )
-
-
-@dataclass
-class ParsedTerm:
-    kind: str
-    subject: str | None
-    coefficient: float
-    optional: bool = False
 
 
 @dataclass
@@ -398,98 +392,23 @@ COPY_PATH = "docs/source-documents/lu/uzn-prasibas-pamat-2026-27.pdf"
 
 
 def seed(programmes: list[ParsedProgramme], apply: bool) -> None:
-    """Кладёт разобранные формулы в базу черновиками (verified_at не трогаем —
-    правило 6). Без --apply только показывает, что было бы записано."""
+    """Черновики формул ЛУ в базу (см. formula_drafts.py). Без --apply —
+    только показывает, что было бы записано."""
     ready = [p for p in programmes if p.ce_formula and p.ce_formula.ok and p.slugs and not p.deleted]
-    if not apply:
-        print(f"\nсухой прогон: было бы записано {len(ready)} блоков; для записи запустите с --apply")
-        return
+    drafts = [Draft(p.block, p.slugs, p.ce_formula.terms, p.excerpt) for p in ready]  # type: ignore[union-attr]
 
-    from dotenv import load_dotenv
+    protocol = None
+    if apply:
+        from seed_formulas import source_protocol
 
-    from db import get_service_client
-    from seed_formulas import source_protocol
-
-    load_dotenv()
-    protocol = source_protocol(
-        number="1-4/506 (grozījumi: 1-4/22, 1-4/105, 1-4/167, 1-4/195, 1-4/250)",
-        doc_date=date(2026, 7, 3),
-        copy_path=COPY_PATH,
-        fetched_on=date(2026, 9, 20),
-    )
-    client = get_service_client()
-    university_id = client.table("university").select("id").eq("slug", "lu").single().execute().data["id"]
-
-    written = 0
-    for p in ready:
-        for slug in p.slugs:
-            found = (
-                client.table("programme").select("id").eq("university_id", university_id).eq("slug", slug).execute().data
-            )
-            if not found:
-                print(f"  [{p.block}] программы {slug} нет в каталоге — пропуск")
-                continue
-            programme_id = found[0]["id"]
-
-            existing = (
-                client.table("formula")
-                .select("id, verified_at")
-                .eq("programme_id", programme_id)
-                .eq("variant", "ce")
-                .eq("valid_from", VALID_FROM.isoformat())
-                .execute()
-                .data
-            )
-            if existing and existing[0]["verified_at"]:
-                # человек уже подтвердил: перезапись молча подменила бы
-                # подтверждённые числа
-                print(f"  [{p.block}] {slug}: формула уже подтверждена — не трогаю")
-                continue
-
-            row = {
-                "programme_id": programme_id,
-                "variant": "ce",
-                "valid_from": VALID_FROM.isoformat(),
-                "source_url": SOURCE_URL,
-                "source_doc": SOURCE_DOC,
-                "source_excerpt": p.excerpt,
-                **protocol,
-            }
-            formula_id = (
-                client.table("formula").upsert(row, on_conflict="programme_id,variant,valid_from").execute().data[0]["id"]
-            )
-            client.table("formula_term").delete().eq("formula_id", formula_id).execute()
-            client.table("formula_term").insert(
-                [
-                    {
-                        "formula_id": formula_id,
-                        "kind": t.kind,
-                        "subject": t.subject,
-                        "coefficient": t.coefficient,
-                        "optional": t.optional,
-                    }
-                    for t in p.ce_formula.terms  # type: ignore[union-attr]
-                ]
-            ).execute()
-            written += 1
-    print(f"записано формул-черновиков: {written}")
-
-    # Формулы 2025/26 больше не действуют: документ заменён. Закрываем их всем
-    # (в том числе тем программам, для которых новую формулу разобрать не
-    # удалось): нет формулы честнее, чем формула прошлого года.
-    old = (
-        client.table("formula")
-        .select("id, programme!inner(university_id)")
-        .eq("programme.university_id", university_id)
-        .eq("variant", "ce")
-        .is_("valid_to", "null")
-        .lt("valid_from", VALID_FROM.isoformat())
-        .execute()
-        .data
-    )
-    for row in old:
-        client.table("formula").update({"valid_to": (VALID_FROM - timedelta(days=1)).isoformat()}).eq("id", row["id"]).execute()
-    print(f"закрыто формул 2025/26: {len(old)}")
+        protocol = source_protocol(
+            number="1-4/506 (grozījumi: 1-4/22, 1-4/105, 1-4/167, 1-4/195, 1-4/250)",
+            doc_date=date(2026, 7, 3),
+            copy_path=COPY_PATH,
+            fetched_on=date(2026, 9, 20),
+        )
+    meta = DocumentMeta("lu", SOURCE_URL, SOURCE_DOC, VALID_FROM, protocol or {})
+    write_drafts(meta, drafts, apply)
 
 
 # --- самотест: живые куски документа ------------------------------------

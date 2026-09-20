@@ -242,6 +242,7 @@
       "entrance_exam_interview": "Structured interview",
       "entrance_exam_math_test": "Mathematics entrance exam",
       "entrance_exam_art_test": "Visual arts practical exam",
+      "entrance_exam_osppp": "Professional aptitude test OSPPP (0–10)",
       "certificate_physics": "School certificate annual mark in physics (1–10)",
       "certificate_geography": "School certificate annual mark in geography (1–10)"
     }
