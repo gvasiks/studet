@@ -59,8 +59,9 @@ export default async function VerificationPage({ params }: PageProps<"/[locale]/
         <p className="mt-8 text-zinc-500">Rinda tukša — viss savāktais ir apstiprināts.</p>
       ) : (
         <ul className="mt-8 divide-y divide-zinc-200">
+          {/* fact_id у типов admission_type и programme_field — id вуза, один и тот же: ключом служит пара */}
           {queue.map((item) => (
-            <li key={item.factId} className="flex items-start justify-between gap-3 py-4">
+            <li key={`${item.factType}:${item.factId}`} className="flex items-start justify-between gap-3 py-4">
               <div>
                 <p className="font-medium text-zinc-900">
                   {FACT_TYPE_LABEL[item.factType]}
