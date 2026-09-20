@@ -10,6 +10,7 @@ import {
   ClipboardCheckIcon,
   ClockIcon,
   GlobeIcon,
+  MapPinIcon,
   SearchIcon,
   SortIcon,
 } from "@/components/icons";
@@ -356,6 +357,12 @@ export function ProgrammeCard({
         <div className="flex flex-wrap gap-2 border-t border-zinc-100 pt-4">
           <Chip icon={<GlobeIcon size={13} />}>
             {enumLabel(dict.catalog.language, programme.language_of_instruction)}
+          </Chip>
+          {/* город программы, а не вуза: у колледжей с филиалами (Juridiskā
+              koledža, LU P.Stradiņa) одна и та же программа идёт в разных
+              городах, и без города карточки неотличимы */}
+          <Chip icon={<MapPinIcon size={13} />}>
+            {enumLabel(dict.catalog.city, programme.city ?? programme.university.city)}
           </Chip>
           {programme.duration_years !== null && (
             <Chip icon={<ClockIcon size={13} />}>

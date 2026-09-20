@@ -73,6 +73,8 @@ MIN_PROGRAMME_COUNT = {
     "sources.niid_colleges:rmenk": 2,
     "sources.niid_colleges:hotel-school": 2,
     "sources.niid_colleges:novikonta": 2,
+    "sources.niid_colleges:rti": 1,
+    "sources.niid_colleges:rarzi": 1,
 }
 
 

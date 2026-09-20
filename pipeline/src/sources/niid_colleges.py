@@ -29,6 +29,15 @@ Kultūras koledža — структурное подразделение LKA, у
 записи. Добавлены три колледжа, которых нет в списке, но есть в NIID и в
 датасете выпускников: HOTEL SCHOOL, Novikontas Jūras koledža, Rīgas
 Menedžmenta Koledža.
+
+Сюда же добавлены два рижских филиала Латеранского
+Папского университета (Laterāna Pontifikālās universitātes filiāle):
+Rīgas Teoloģijas institūts и Rīgas Augstākais reliģijas zinātņu institūts.
+Это не колледжи, но у них та же картина — одна-две программы, данные
+только в NIID (собственные сайты garigais.lv и rarzi.lv — одностраничные).
+У обоих в поле оплаты стоит не цена: у RTI — "Katoļu Baznīcas
+finansējums" (финансирует Католическая церковь), поэтому цена пуста, а
+funding_type остаётся осторожным 'paid'.
 """
 
 from __future__ import annotations
@@ -40,7 +49,7 @@ from urllib.parse import quote, urljoin
 from playwright.sync_api import Page, sync_playwright
 
 from models import ProgrammeDraft, UniversityDraft
-from sources.via import _EXTRACT_JS, _extract_languages, _parse_years, _programme_id
+from sources.via import _EXTRACT_JS, _extract_languages, _programme_id
 
 BASE_URL = "https://www.niid.lv"
 LISTING = BASE_URL + "/niid_search/provider/{name}?qy&tg=&level_1=7&page={page}"
@@ -104,6 +113,10 @@ COLLEGES = [
             [('"HOTEL SCHOOL" Viesnīcu biznesa koledža', None)]),
     College("novikonta", "Novikontas Jūras koledža", "private", "riga",
             [("Novikontas Jūras koledža", None)]),
+    College("rti", "Rīgas Teoloģijas institūts (Laterāna Pontifikālās universitātes filiāle)", "private", "riga",
+            [("Laterāna Pontifikālās universitātes filiāle Rīgas Teoloģijas institūts", None)]),
+    College("rarzi", "Rīgas Augstākais reliģijas zinātņu institūts (Laterāna Pontifikālās universitātes filiāle)", "private", "riga",
+            [("Laterāna Pontifikālās universitātes filiāle Rīgas Augstākais reliģijas zinātņu institūts", None)]),
 ]
 
 _WEBSITE_JS = """
@@ -118,7 +131,12 @@ _WEBSITE_JS = """
 def _college_level(programme_type: str) -> str | None:
     """None — не высшее образование, пропускаем."""
     lowered = programme_type.lower()
-    if "augstāk" not in lowered:
+    # у бакалавриата в NIID нет слова "augstākā" ("Pirmā cikla bakalaura
+    # studiju programma - 6. LKI"), поэтому признак — либо оно, либо
+    # название степени; средние профессиональные отсекаются словом "vidējā"
+    if "vidējā izglītība" in lowered or "pamatizglītīb" in lowered:
+        return None
+    if not any(word in lowered for word in ("augstāk", "bakalaura", "maģistra", "doktora")):
         return None
     if "doktora" in lowered or "trešā cikla" in lowered:
         return "doctoral"
@@ -127,6 +145,16 @@ def _college_level(programme_type: str) -> str | None:
     if "īsā cikla" in lowered:
         return "college"
     return "bachelor"
+
+
+def _duration_years(value: str) -> float | None:
+    """"2,5 gadi" -> 2.5; "3 gadi un 3 mēneši" -> 3.25."""
+    years = re.search(r"(\d+(?:[.,]\d+)?)\s*gad", value)
+    months = re.search(r"(\d+)\s*mēnes", value)
+    if not years and not months:
+        return None
+    total = float(years.group(1).replace(",", ".")) if years else 0.0
+    return total + (int(months.group(1)) / 12 if months else 0)
 
 
 def _study_mode(value: str) -> str:
@@ -189,7 +217,7 @@ def _programmes_from(entries: list[dict], city: str) -> list[ProgrammeDraft]:
                     city=city,
                     funding_type=funding,
                     tuition_fee_amount=fee,
-                    duration_years=_parse_years(fields.get("Ilgums", "")),
+                    duration_years=_duration_years(fields.get("Ilgums", "")),
                     source_url=urljoin(BASE_URL, entry["href"]),
                 )
             )

@@ -82,6 +82,8 @@ REG_NUMBER_TO_SLUG = {
     "3397802535": "rmenk",
     "3397802926": "hotel-school",
     "3397800727": "novikonta",
+    "3396801789": "rti",
+    "3396801788": "rarzi",
 }
 
 # Studiju_limenis -> наш degree_level. Расшифровка получена не из
