@@ -38,7 +38,9 @@
       "jelgava": "Jelgava",
       "liepaja": "Liepāja",
       "rezekne": "Rēzekne",
-      "jurmala": "Jūrmala"
+      "jurmala": "Jūrmala",
+      "gulbene": "Gulbene",
+      "malnava": "Malnava"
     },
     "funding": {
       "budget": "Budžeta vietas",
@@ -52,7 +54,7 @@
     "surveyCta": "Aizpildi aptauju",
     "filtersSummary": "Rādīts pēc filtra:",
     "clearFilters": "Notīrīt filtru",
-    "heroBadge": "{programmes} programmas · {universities} augstskolas",
+    "heroBadge": "{programmes} programmas · {universities} iestādes",
     "surveyCardText": "Aizpildi aptauju — atlasīsim tev programmas",
     "surveyCardCta": "Sākt",
     "searchLabel": "Meklēt programmas",

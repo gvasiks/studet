@@ -38,7 +38,9 @@
       "jelgava": "Jelgava",
       "liepaja": "Liepāja",
       "rezekne": "Rēzekne",
-      "jurmala": "Jūrmala"
+      "jurmala": "Jūrmala",
+      "gulbene": "Gulbene",
+      "malnava": "Malnava"
     },
     "funding": {
       "budget": "Budget places",
@@ -50,7 +52,7 @@
     "sourceLinkLabel": "Official source",
     "surveyTeaser": "Not sure what to pick?",
     "surveyCta": "Take the questionnaire",
-    "heroBadge": "{programmes} programmes · {universities} universities",
+    "heroBadge": "{programmes} programmes · {universities} institutions",
     "surveyCardText": "Take the survey — we'll pick programmes for you",
     "surveyCardCta": "Start",
     "searchLabel": "Search programmes",
