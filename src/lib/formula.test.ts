@@ -55,6 +55,31 @@ describe("calculateScore — пример ЛУ из docs/PLAN.md", () => {
   });
 });
 
+describe("calculateScore — среднее по CE с учётом уровня (ce_average, subject 'leveled')", () => {
+  const results: ExamResult[] = [
+    { subject: "mathematics", percent: 80, level: "augstakais" }, // 80 × 1,00
+    { subject: "latvian", percent: 60, level: "optimalais" }, // 60 × 0,75 = 45
+  ];
+
+  it("усредняет проценты, уже умноженные на коэффициент уровня", () => {
+    const terms: FormulaTerm[] = [{ kind: "ce_average", subject: "leveled", coefficient: 0.15 }];
+    const result = calculateScore(terms, [], results, LEVEL_COEFFICIENTS);
+    expect(result.lines[0].input).toBeCloseTo(62.5, 4); // (80 + 45) / 2
+    expect(result.total).toBeCloseTo(9.375, 4);
+  });
+
+  it("без subject среднее прежнее: сырые проценты без уровня", () => {
+    const terms: FormulaTerm[] = [{ kind: "ce_average", subject: null, coefficient: 0.15 }];
+    const result = calculateScore(terms, [], results, LEVEL_COEFFICIENTS);
+    expect(result.lines[0].input).toBeCloseTo(70, 4); // (80 + 60) / 2
+  });
+
+  it("без экзаменов данных нет — 0, как и у обычного среднего", () => {
+    const terms: FormulaTerm[] = [{ kind: "ce_average", subject: "leveled", coefficient: 0.15 }];
+    expect(calculateScore(terms, [], [], LEVEL_COEFFICIENTS).lines[0].input).toBeNull();
+  });
+});
+
 describe("calculateScore — несколько именованных entrance_exam в одной формуле", () => {
   // RTU Rīgas Biznesa skola: тест английского + собеседование + тест
   // математики — три разных числа, не одно (pipeline/src/seed_formulas.py)

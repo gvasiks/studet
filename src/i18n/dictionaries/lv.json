@@ -236,6 +236,7 @@
     },
     "termKinds": {
       "ce_average": "Vidējais % visos CE",
+      "ce_average_leveled": "Vidējais % visos CE (ar līmeņa koeficientu)",
       "certificate": "Atestāta vērtējums",
       "entrance_exam": "Iestājpārbaudījums",
       "entrance_exam_english_test": "Angļu valodas zināšanu pārbaude",

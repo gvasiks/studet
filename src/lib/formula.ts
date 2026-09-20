@@ -10,6 +10,13 @@ export type ExamResult = {
   level: ExamLevel;
 };
 
+// Вариант слагаемого ce_average: subject = "leveled" — среднее по CE
+// "с учётом коэффициента уровня каждого экзамена" (Daugavpils, LBTU:
+// "visu CE kopvērtējumu vidējā vērtība (ņemot vērā katra CE līmeņa
+// koeficientu)"). Без него (subject = null) — среднее сырых процентов,
+// как у ЛУ и Ventspils.
+export const AVERAGE_WITH_LEVEL = "leveled";
+
 export type FormulaTerm = {
   kind: "ce" | "ce_average" | "certificate" | "entrance_exam";
   subject: string | null;
@@ -69,7 +76,10 @@ export function calculateScore(
 
     if (term.kind === "ce_average") {
       if (examResults.length === 0) return { term, input: null, points: 0 };
-      const average = examResults.reduce((sum, r) => sum + r.percent, 0) / examResults.length;
+      const withLevel = term.subject === AVERAGE_WITH_LEVEL;
+      const average =
+        examResults.reduce((sum, r) => sum + r.percent * (withLevel ? levelCoefficients[r.level] : 1), 0) /
+        examResults.length;
       return { term, input: average, points: average * term.coefficient };
     }
 

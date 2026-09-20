@@ -236,6 +236,7 @@
     },
     "termKinds": {
       "ce_average": "Average % across all exams",
+      "ce_average_leveled": "Average % across all exams (with level coefficient)",
       "certificate": "Certificate grade",
       "entrance_exam": "Entrance exam",
       "entrance_exam_english_test": "English proficiency test",
