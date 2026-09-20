@@ -28,7 +28,7 @@ if (!SUPABASE_URL || !SUPABASE_SERVICE_ROLE_KEY) {
 const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY, { auth: { persistSession: false } });
 
 // Тот же вычислитель, что и на сайте — не копия его логики.
-const { calculateScore, extraKey } = await import("../src/lib/formula.ts");
+const { calculateScore } = await import("../src/lib/formula.ts");
 
 const input = JSON.parse(readFileSync(inputPath, "utf-8"));
 
