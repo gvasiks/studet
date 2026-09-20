@@ -44,7 +44,7 @@ MIN_PROGRAMME_COUNT = {
     "sources.du": 10,
     "sources.eka": 21,
     "sources.rnu": 8,
-    # 2026-09-21: 124 -> 163. Раньше терялись программы в нескольких городах, только
+    # 2026-09-20: 124 -> 163. Раньше терялись программы в нескольких городах, только
     # в Лиепае и морские (Jūras akadēmija) — см. docstring rtu_catalog.py
     "sources.rtu_catalog": 163,
     "sources.via": 21,
