@@ -13,6 +13,13 @@ export type VerificationQueueItem = {
   // Для programme_field одна строка на вуз — сколько программ ждут проверки;
   // для остальных типов всегда 1.
   itemCount: number;
+  // Только для формул (иначе null): полон ли протокол источника — номер и
+  // дата документа, копия в репозитории — и чего не хватает. Дата — версия
+  // документа (у документа с поправками дата последней). Пока протокол
+  // неполон, база не даст поставить verified_at.
+  protocolComplete: boolean | null;
+  protocolMissing: string | null;
+  sourceDocDate: string | null;
 };
 
 // Приоритет по спросу — прямое указание ревью 2026-09, пункт 03: РТУ
@@ -29,7 +36,9 @@ function priority(universitySlug: string): number {
 export const getVerificationQueue = cache(async (): Promise<VerificationQueueItem[]> => {
   const { data, error } = await supabase
     .from("verification_queue")
-    .select("fact_id, fact_type, programme_id, programme_name, university_slug, university_name, collected_at, source_url, item_count");
+    .select(
+      "fact_id, fact_type, programme_id, programme_name, university_slug, university_name, collected_at, source_url, item_count, protocol_complete, protocol_missing, source_doc_date",
+    );
 
   if (error) throw error;
 
@@ -43,6 +52,9 @@ export const getVerificationQueue = cache(async (): Promise<VerificationQueueIte
     collectedAt: row.collected_at,
     sourceUrl: row.source_url,
     itemCount: row.item_count,
+    protocolComplete: row.protocol_complete,
+    protocolMissing: row.protocol_missing,
+    sourceDocDate: row.source_doc_date,
   }));
 
   return items.sort((a, b) => {

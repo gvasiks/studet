@@ -1,0 +1,10 @@
+{
+  "note": "ПРИМЕР с выдуманными числами — замените своими настоящими результатами",
+  "exams": [
+    { "subject": "mathematics", "percent": 72, "level": "augstakais" },
+    { "subject": "english", "percent": 85, "level": "augstakais" },
+    { "subject": "latvian", "percent": 66, "level": "optimalais" }
+  ],
+  "extras": {},
+  "actualScore": null
+}

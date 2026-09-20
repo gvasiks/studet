@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { isLocale } from "@/i18n/config";
+import { isDocumentStale } from "@/lib/document-age";
 import { getVerificationHealth, getVerificationQueue, type VerificationQueueItem } from "@/lib/verification-queue";
 
 // Данные меняются с каждым запуском конвейера — как и /programmes,
@@ -71,6 +72,23 @@ export default async function VerificationPage({ params }: PageProps<"/[locale]/
                   {" · savākts "}
                   {new Date(item.collectedAt).toLocaleDateString(locale)}
                 </p>
+                {item.factType === "formula" && (
+                  <p className="mt-1 text-sm">
+                    {item.sourceDocDate && (
+                      <span className="text-zinc-600">Dokuments: {new Date(item.sourceDocDate).toLocaleDateString(locale)} </span>
+                    )}
+                    {item.protocolComplete === false && (
+                      <span className="font-medium text-red-700">
+                        Protokols nepilns — nevar apstiprināt: trūkst {item.protocolMissing}.{" "}
+                      </span>
+                    )}
+                    {isDocumentStale(item.sourceDocDate) && (
+                      <span className="font-medium text-amber-800">
+                        Dokuments vecāks par 12 mēnešiem — jāpārsēj no jaunākā, nevis jāapstiprina.
+                      </span>
+                    )}
+                  </p>
+                )}
               </div>
               {item.sourceUrl && (
                 <a

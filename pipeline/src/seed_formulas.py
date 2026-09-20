@@ -131,11 +131,35 @@ Studio (правило 6 CLAUDE.md).
 
 from __future__ import annotations
 
+import hashlib
 from datetime import date
+from pathlib import Path
 
 from dotenv import load_dotenv
 
 from db import get_service_client
+
+REPO_ROOT = Path(__file__).resolve().parents[2]
+
+
+def source_protocol(number: str, doc_date: date, copy_path: str, fetched_on: date) -> dict:
+    """Протокол источника (план работ, неделя 3): номер и дата документа,
+    копия документа в репозитории и её хэш. Хэш считается ЗДЕСЬ, из файла,
+    а не вписывается руками: подмена или порча копии станет видна при
+    следующем запуске. Без файла — ошибка: формулу без копии документа
+    в базу не кладём, подтвердить её всё равно нельзя (ограничение
+    formula_verified_needs_protocol в БД)."""
+    path = REPO_ROOT / copy_path
+    if not path.exists():
+        raise FileNotFoundError(f"нет копии документа {copy_path} — скачайте её в docs/source-documents/")
+    return {
+        "source_doc_number": number,
+        "source_doc_date": doc_date.isoformat(),
+        "source_copy_path": copy_path,
+        "source_copy_sha256": hashlib.sha256(path.read_bytes()).hexdigest(),
+        "source_copy_fetched_on": fetched_on.isoformat(),
+    }
+
 
 VENTA_SOURCE_URL = (
     "https://irp.cdn-website.com/f6b5d556/files/uploaded/"
@@ -147,6 +171,17 @@ VENTA_SOURCE_DOC = (
     "(VeA Senāta lēmums Nr. 25-39, 27.11.2025.)"
 )
 VENTA_VALID_FROM = date(2025, 11, 27)
+# ВАЖНО: копия — версия документа с ДВУМЯ поправками после утверждения
+# (Senāta lēmums Nr. 26-3 от 28.01.2026 и Nr. 26-28 от 18.06.2026), а
+# формулы посеяны 2026-09-13 с версии, где о поправках не помнили. Совпадают
+# ли коэффициенты с текущей версией, должен проверить человек при
+# подтверждении. Дата документа — дата последней поправки.
+VENTA_PROTOCOL = source_protocol(
+    number="25-39 (grozījumi: 26-3, 26-28)",
+    doc_date=date(2026, 6, 18),
+    copy_path="docs/source-documents/venta/uznemsanas-noteikumi-2026-27-pielikums-2-grozits-06-2026.pdf",
+    fetched_on=date(2026, 9, 20),
+)
 
 LU_SOURCE_URL = (
     "https://www.lu.lv/fileadmin/user_upload/lu_portal/gribustudet/pamatstudijas/"
@@ -158,6 +193,19 @@ LU_SOURCE_DOC = (
     "konsolidēts ar grozījumiem līdz 04.07.2025.)"
 )
 LU_VALID_FROM = date(2024, 11, 28)
+# УСТАРЕЛО: это правила 2025/2026. На сайте ЛУ уже лежат правила 2026/2027
+# (agrā uzņemšana с 02.03.2026, vasaras — с 09.07.2026; копия страницы в
+# docs/source-documents/lu/uznemsanas-prasibas-un-kriteriji-2026-27.html),
+# а правила на 2027/2028 вузы обязаны опубликовать до 30 ноября 2026.
+# Подтверждать эти формулы нет смысла: их надо пересеять с документа
+# 2027/28 в декабрьском цикле сверки. Дата документа — дата последней
+# поправки (rīkojums Nr. 1-4/298 от 04.07.2025).
+LU_PROTOCOL = source_protocol(
+    number="1-4/588 (grozījumi: 1-4/37, 1-4/146, 1-4/298)",
+    doc_date=date(2025, 7, 4),
+    copy_path="docs/source-documents/lu/1-4-588-2024-piel-kons-04.07.25-2025-26.pdf",
+    fetched_on=date(2026, 9, 20),
+)
 
 RTU_SOURCE_URL = (
     "https://www.rtu.lv/lv/studijas/uznemsana/uznemsanas-noteikumi/"
@@ -169,6 +217,15 @@ RTU_SOURCE_DOC = (
     "(RTU Senāta 24.11.2025. sēdes protokollēmums Nr. 697)"
 )
 RTU_VALID_FROM = date(2025, 11, 24)
+# У РТУ утверждённого PDF нет: официальный текст правил (Senāta
+# protokollēmums Nr. 697) опубликован только страницей сайта — копией
+# служит сохранённая страница.
+RTU_PROTOCOL = source_protocol(
+    number="697",
+    doc_date=date(2025, 11, 24),
+    copy_path="docs/source-documents/rtu/uznemsanas-noteikumi-pamatstudijas-2026-27.html",
+    fetched_on=date(2026, 9, 20),
+)
 
 # subject — те же ключи, что в dict.survey.exams.subjects (lv.json/en.json),
 # иначе калькулятор покажет сырой ключ вместо перевода (CalculatorForm.tsx).
@@ -572,6 +629,7 @@ def seed(
     source_url: str,
     source_doc: str,
     valid_from: date,
+    protocol: dict,
 ) -> None:
     client = get_service_client()
 
@@ -597,6 +655,7 @@ def seed(
             "valid_from": valid_from.isoformat(),
             "source_url": source_url,
             "source_doc": source_doc,
+            **protocol,
         }
         formula = (
             client.table("formula")
@@ -620,7 +679,7 @@ def seed(
 
 if __name__ == "__main__":
     load_dotenv()
-    seed("venta", FORMULA_SEEDS, VENTA_SOURCE_URL, VENTA_SOURCE_DOC, VENTA_VALID_FROM)
-    seed("lu", LU_FORMULA_SEEDS, LU_SOURCE_URL, LU_SOURCE_DOC, LU_VALID_FROM)
-    seed("lu", LU_FACULTY2_FORMULA_SEEDS, LU_SOURCE_URL, LU_SOURCE_DOC, LU_VALID_FROM)
-    seed("rtu", RTU_FORMULA_SEEDS, RTU_SOURCE_URL, RTU_SOURCE_DOC, RTU_VALID_FROM)
+    seed("venta", FORMULA_SEEDS, VENTA_SOURCE_URL, VENTA_SOURCE_DOC, VENTA_VALID_FROM, VENTA_PROTOCOL)
+    seed("lu", LU_FORMULA_SEEDS, LU_SOURCE_URL, LU_SOURCE_DOC, LU_VALID_FROM, LU_PROTOCOL)
+    seed("lu", LU_FACULTY2_FORMULA_SEEDS, LU_SOURCE_URL, LU_SOURCE_DOC, LU_VALID_FROM, LU_PROTOCOL)
+    seed("rtu", RTU_FORMULA_SEEDS, RTU_SOURCE_URL, RTU_SOURCE_DOC, RTU_VALID_FROM, RTU_PROTOCOL)
