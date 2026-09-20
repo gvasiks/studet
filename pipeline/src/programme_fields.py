@@ -58,13 +58,13 @@ RULES: list[tuple[str, list[str]]] = [
     (r"logopēd|speech therap", ["726"]),
     (r"\bmedicine\b|medicīna\b", ["721"]),
     (r"social work|sociālais darbs|sociālais rehabilit|sociālā rehabilit|supervīzij", ["762"]),
-    (r"occupational health|darba aizsardzīb", ["862"]),
+    (r"occupational health|occupational safety|labour protection|darba aizsardzīb", ["862"]),
     # lookbehind: иначе "transporta" срабатывает как "sporta"
     (r"(?<![a-zāčēģīķļņšūž])sport", ["813"]),
     (r"cosmetolog|kosmetolo[gģ]", ["815"]),
     # --- образование
     (r"speciālā izglītība|special education", ["141", "142"]),
-    (r"izglītības zinātn|education science", ["142", "141"]),
+    (r"izglītības zinātn|education science|educational science", ["142", "141"]),
     (r"teacher|skolotāj|pedagog|pirmsskolas", ["141"]),
     # --- туризм
     (r"tourism|tūrism|hospitality|hotel|viesnīc", ["812", "811"]),
@@ -106,7 +106,7 @@ RULES: list[tuple[str, list[str]]] = [
     (r"psycholog|psiholo[gģ]", ["313"]),
     (r"sociolog|socioloģ", ["314"]),
     (r"political|politolog", ["312"]),
-    (r"international relations|starptautisk\w* attiecīb", ["310", "312"]),
+    (r"international relations|starptautisk\w* attiecīb|(?<!commercial )diplomac", ["310", "312"]),
     (r"social sciences|sociālās zinātnes", ["310"]),
     (r"international economics and commercial diplomacy", ["311", "310"]),
     (r"international finance and economics", ["343", "311"]),

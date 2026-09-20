@@ -35,7 +35,7 @@ MIN_PROGRAMME_COUNT = {
     "sources.bsa": 13,
     "sources.sse_riga": 1,
     "sources.rgsl": 4,
-    "sources.lu": 55,
+    "sources.lu": 166,
     "sources.venta": 13,
     "sources.lbtu": 9,
     "sources.du": 10,
