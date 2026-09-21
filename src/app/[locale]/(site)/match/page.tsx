@@ -5,6 +5,7 @@ import { isLocale } from "@/i18n/config";
 import { getDictionary } from "@/i18n/dictionaries";
 import { getMatchData } from "@/lib/match-queries";
 import { buildAlternates } from "@/lib/site";
+import { ArrowRightIcon } from "@/components/icons";
 import { MatchForm } from "./MatchForm";
 
 // Данные — подтверждённые формулы: их подтверждают людьми уже после сборки
@@ -32,20 +33,25 @@ export default async function MatchPage({ params }: PageProps<"/[locale]/match">
 
   return (
     <main className="page-container py-8 sm:py-12">
-      <div className="surface mx-auto max-w-3xl p-6 sm:p-10">
-        <h1 className="text-3xl font-bold tracking-tighter text-zinc-900">{dict.match.title}</h1>
-        <p className="mt-2 max-w-2xl text-zinc-600">{dict.match.intro}</p>
+      {/* Заголовок на сером фоне: ввод и результаты — два разных блока, и
+          общая карточка вокруг них склеивала бы вопрос с ответом. */}
+      <header className="mx-auto max-w-5xl">
+        <h1 className="text-3xl font-bold tracking-tighter text-zinc-900 sm:text-4xl">{dict.match.title}</h1>
+        <p className="mt-3 max-w-[65ch] text-lg leading-relaxed text-zinc-600">{dict.match.intro}</p>
+      </header>
 
+      <div className="mx-auto mt-8 max-w-5xl">
         {formulas.length === 0 ? (
-          <>
-            <p className="mt-8 text-zinc-700">{dict.match.emptyNoFormulas}</p>
+          <div className="surface p-6 sm:p-10">
+            <p className="text-zinc-700">{dict.match.emptyNoFormulas}</p>
             <Link
               href={`/${locale}/programmes`}
-              className="mt-4 inline-block text-brand underline"
+              className="mt-4 inline-flex items-center gap-1.5 text-sm font-medium text-brand hover:text-brand-dark"
             >
               {dict.nav.catalog}
+              <ArrowRightIcon size={14} />
             </Link>
-          </>
+          </div>
         ) : (
           <MatchForm
             dict={dict}
