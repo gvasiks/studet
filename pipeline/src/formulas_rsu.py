@@ -113,6 +113,9 @@ class ParsedAppendix:
     slugs: list[str]
     formula: ParsedFormula | None
     note: str | None
+    # сырой текст критериев (до разбора весов) — для requirements_rsu.py:
+    # тот же документ, вопрос беднее ("какие CE нужны", не веса)
+    criteria_text: str | None = None
 
 
 def load_text(pdf_path: Path = PDF_PATH) -> str:
@@ -152,6 +155,9 @@ def _classify(percent: float, description: str) -> tuple[str, str | None, float]
 
 
 BULLET_RE = re.compile(r"(\d+(?:[.,]\d+)?)\s*%\s+no kopējā vērtējuma\s+(.+?)(?=\s*•|\s*$)", re.S)
+# один маркер "• N% no kopējā vērtējuma [CE] [veido|ietekmē] <тело>" — общий
+# для parse_criteria (нужны веса) и requirements_rsu.py (нужны только предметы)
+BULLET_LINE_RE = re.compile(r"\s*(\d+(?:[.,]\d+)?)\s*%\s+no kopējā vērtējuma\s+(?:CE\s+)?(?:veido|ietekmē)?\s*(.+)$")
 
 
 def parse_criteria(criteria: str) -> ParsedFormula:
@@ -166,7 +172,7 @@ def parse_criteria(criteria: str) -> ParsedFormula:
         total += pct
     else:
         for bullet in re.split(r"•", flat)[1:]:
-            match = re.match(r"\s*(\d+(?:[.,]\d+)?)\s*%\s+no kopējā vērtējuma\s+(?:CE\s+)?(?:veido|ietekmē)?\s*(.+)$", bullet.strip(" ,.;"))
+            match = BULLET_LINE_RE.match(bullet.strip(" ,.;"))
             if not match:
                 result.problems.append(f"строка без «N% no kopējā vērtējuma»: «{bullet.strip()[:70]}»")
                 continue
@@ -203,6 +209,7 @@ def parse_document(text: str) -> list[ParsedAppendix]:
         row = re.search(r"Konkursa vērtēšanas\s+kritē-?\s*riji:?\s+(Studiju programm.*)", txt, re.S)
         formula: ParsedFormula | None = None
         note: str | None = None
+        criteria_text: str | None = None
         if number not in RSU_SLUGS:
             note = "нет конкурса по баллам (приём по направлению/списку) или нет в каталоге"
         elif not row:
@@ -210,8 +217,11 @@ def parse_document(text: str) -> list[ParsedAppendix]:
         else:
             crit = re.split(r"Vienād[au] |Papildu punkti|Papildus punkti|Piezīme\.|\* Studiju programmas nosaukums", row.group(1))[0]
             formula = parse_criteria(crit)
+            criteria_text = crit
             # "Uzņemšanas rezultāta kopvērtējums nevar būt zemāks par N punktiem" — только в excerpt
-        appendices.append(ParsedAppendix(number, name, excerpt, RSU_SLUGS.get(number, []), formula, note))
+        appendices.append(
+            ParsedAppendix(number, name, excerpt, RSU_SLUGS.get(number, []), formula, note, criteria_text)
+        )
     return appendices
 
 
