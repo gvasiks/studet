@@ -4,6 +4,11 @@ import type { OutcomeRow } from "@/lib/outcomes";
 
 export type ProgrammeOutcome = {
   fieldCode: string;
+  // План 2026-09-21, пункт 01: направление подтверждается не по одной
+  // строке, а по правилу целиком (docs/checks/PROGRAMME-FIELD-REVIEW.md) —
+  // страница программы показывает разную оговорку в зависимости от того,
+  // как именно подтверждена ЭТА конкретная строка.
+  verificationMethod: "manual" | "rule" | null;
   rows: OutcomeRow[];
 };
 
@@ -21,7 +26,7 @@ export const getProgrammeOutcome = cache(
   async (programmeId: string, universityId: string): Promise<ProgrammeOutcome | null> => {
     const { data: field, error } = await supabase
       .from("programme_field")
-      .select("field_code")
+      .select("field_code, verification_method")
       .eq("programme_id", programmeId)
       .not("verified_at", "is", null)
       .maybeSingle();
@@ -39,6 +44,7 @@ export const getProgrammeOutcome = cache(
 
     return {
       fieldCode: field.field_code,
+      verificationMethod: field.verification_method,
       rows: (data ?? []).map((row) => ({
         graduationYear: row.graduation_year,
         taxYear: row.tax_year,

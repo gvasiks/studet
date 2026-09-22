@@ -131,6 +131,7 @@
     "incomeHidden": "Income isn't published — fewer than 30 employed graduates (data protection).",
     "caveat": "This covers all of this university's graduates in this field and study level, not this specific programme, and even within one field the spread between graduates is wide — treat it as a pointer, not a promise. Income is total annual income (including part-time work) for employed graduates only; employment is determined as of November. Some bachelor's graduates go on to study, which lowers their employment share.",
     "source": "Source: IZM/CSP higher-education graduate monitoring",
+    "fieldAutomatic": "This programme's field was determined automatically from its name, not checked individually.",
     "levels": {
       "college": "college",
       "bachelor": "bachelor's",

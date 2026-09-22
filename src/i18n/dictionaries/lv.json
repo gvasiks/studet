@@ -131,6 +131,7 @@
     "incomeHidden": "Ienākumi nav publicēti — nodarbināto ir mazāk nekā 30 (datu aizsardzība).",
     "caveat": "Tie ir dati par visiem šīs augstskolas absolventiem šajā virzienā un studiju līmenī, nevis par konkrēto programmu, un pat viena virziena ietvaros atšķirības starp absolventiem ir lielas — tas ir orientieris, nevis solījums. Ienākumi ir visi gada ienākumi (arī par nepilnu darba laiku) tikai nodarbinātajiem; nodarbinātību nosaka novembrī. Daļa bakalauru turpina studijas, tāpēc viņu nodarbinātības īpatsvars ir zemāks.",
     "source": "Avots: IZM/CSP augstākās izglītības absolventu monitorings",
+    "fieldAutomatic": "Virziens šai programmai noteikts automātiski pēc nosaukuma, ne pārbaudīts katrai programmai atsevišķi.",
     "levels": {
       "college": "koledža",
       "bachelor": "bakalaurs",

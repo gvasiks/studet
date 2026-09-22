@@ -255,6 +255,14 @@ export default async function ProgrammePage({ params }: { params: Params }) {
             ))}
           </ul>
           <p className="mt-3 text-xs text-zinc-500">{dict.outcomes.caveat}</p>
+          {/* Привязка "программа -> направление" подтверждена ПРАВИЛОМ
+              (план 2026-09-21, пункт 01), не проверена по этой конкретной
+              программе вручную — цифры выпускников настоящие (ИЗМ/ЦСУ),
+              но группа, к которой их привязали, может неточно совпасть
+              с этой самой программой. */}
+          {outcome.verificationMethod === "rule" && (
+            <p className="mt-1 text-xs text-zinc-500">{dict.outcomes.fieldAutomatic}</p>
+          )}
           <p className="mt-1 text-xs text-zinc-500">
             <a href={OUTCOMES_SOURCE_URL} target="_blank" rel="noopener noreferrer" className="underline">
               {dict.outcomes.source}

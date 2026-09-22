@@ -20,6 +20,13 @@ export type VerificationQueueItem = {
   protocolComplete: boolean | null;
   protocolMissing: string | null;
   sourceDocDate: string | null;
+  // План 2026-09-21, пункт 03: третье состояние факта — уже разобрана
+  // человеком или осторожной автоматикой, подтвердить нельзя, потому что
+  // сам документ неоднозначен (не путать с protocolMissing — там
+  // неполный протокол источника, здесь источник полон, но не однозначен).
+  // Не альтернатива verified_at — запись остаётся неподтверждённой.
+  disputedAt: string | null;
+  disputedReason: string | null;
 };
 
 // Приоритет по спросу — прямое указание ревью 2026-09, пункт 03: РТУ
@@ -37,7 +44,7 @@ export const getVerificationQueue = cache(async (): Promise<VerificationQueueIte
   const { data, error } = await supabase
     .from("verification_queue")
     .select(
-      "fact_id, fact_type, programme_id, programme_name, university_slug, university_name, collected_at, source_url, item_count, protocol_complete, protocol_missing, source_doc_date",
+      "fact_id, fact_type, programme_id, programme_name, university_slug, university_name, collected_at, source_url, item_count, protocol_complete, protocol_missing, source_doc_date, disputed_at, disputed_reason",
     );
 
   if (error) throw error;
@@ -55,6 +62,8 @@ export const getVerificationQueue = cache(async (): Promise<VerificationQueueIte
     protocolComplete: row.protocol_complete,
     protocolMissing: row.protocol_missing,
     sourceDocDate: row.source_doc_date,
+    disputedAt: row.disputed_at,
+    disputedReason: row.disputed_reason,
   }));
 
   return items.sort((a, b) => {

@@ -43,6 +43,12 @@ RULES: list[tuple[str, list[str]]] = [
     (r"physician assistant|ārsta palīg", ["722"]),
     (r"nutrition|uztur", ["722"]),
     (r"orthotics|prosthetics|ortoz|protēz", ["726", "725"]),
+    # "sociālā rehabilitācija" (соцработа, 762) — раньше общего правила ниже,
+    # иначе подстрока "rehabilitācij" молча уводила в медицинскую
+    # реабилитацию (726). Найдено на выборке для подтверждения по правилу
+    # (план 2026-09-21, неделя 3, пункт 01): RTU "Sociālais darbs un sociālā
+    # rehabilitācija", DMK и PSMK "Sociālā rehabilitācija" были в 726.
+    (r"sociālā(?:is)? rehabilit", ["762"]),
     (r"occupational therapy|physiotherap|rehabilitation|massage|ergoterap|fizioterap|rehabilitācij|masāž", ["726"]),
     (r"physical activity", ["813"]),
     (r"ārstniecīb", ["723", "721"]),
@@ -89,7 +95,12 @@ RULES: list[tuple[str, list[str]]] = [
     (r"music|mūzik", ["212"]),
     (r"theatre|theater|teātr|\bacting\b|aktier|drama|\bdance\b|dejas|\bdirecting|režij", ["212"]),
     (r"painting|glezn|sculpture|tēlniec|ceramic|keramik|glass art|stikl|graphic art|drawing|zīmēšan|environmental art|restoration|restaurācij|curatorial|kuratori|motion\. image|^textile \|", ["211"]),
-    (r"^art\b|\bart \|| māksla\b", ["211"]),
+    # \bart\b без "s" пропускал "Arts" (JVLMA, LKA — докторские программы,
+    # названные буквально "Arts"): между "art" и "s" нет границы слова,
+    # поэтому \b не срабатывал. Обнаружено при подготовке выборки для
+    # подтверждения по правилу (план 2026-09-21, неделя 3, пункт 01, отчёт
+    # seed_programme_fields.py, "NO RULE MATCHED").
+    (r"^arts?\b|\bart \|| māksla\b", ["211"]),
     # --- гуманитарные
     (r"theolog|teoloģ|religio", ["221"]),
     (r"philosoph|filozof", ["226", "225"]),

@@ -5,7 +5,7 @@ import { isDocumentStale } from "@/lib/document-age";
 import { isPipelineStale } from "@/lib/pipeline-health";
 import { getPipelineHealth } from "@/lib/pipeline-health-queries";
 import { getVerificationHealth, getVerificationQueue, type VerificationQueueItem } from "@/lib/verification-queue";
-import { ArrowRightIcon, CheckIcon, ClockIcon } from "@/components/icons";
+import { ArrowRightIcon, CheckIcon, ClockIcon, InfoIcon } from "@/components/icons";
 
 // Данные меняются с каждым запуском конвейера — как и /programmes,
 // страница не может закаменеть на состоянии последней сборки.
@@ -67,12 +67,19 @@ export default async function VerificationPage({ params }: PageProps<"/[locale]/
   ]);
   const healthPercent = health.totalFormulas > 0 ? Math.round((health.verifiedFormulas / health.totalFormulas) * 100) : 0;
   const pipelineStale = isPipelineStale(pipeline.lastSuccessAt);
-  const remaining = queue.reduce((total, item) => total + item.itemCount, 0);
-  const blocked = queue.filter((item) => getBlocker(item) !== null).length;
+
+  // План 2026-09-21, пункт 03: спорное — уже разобранное человеком или
+  // осторожной автоматикой, а не "давайте посмотрим это" — считается и
+  // показывается отдельно от обычной очереди, не в "Rindā"/"Bloķēti" и не
+  // в группах по типу факта.
+  const active = queue.filter((item) => item.disputedAt === null);
+  const disputed = queue.filter((item) => item.disputedAt !== null);
+  const remaining = active.reduce((total, item) => total + item.itemCount, 0);
+  const blocked = active.filter((item) => getBlocker(item) !== null).length;
 
   const groups = FACT_TYPE_ORDER.map((factType) => ({
     factType,
-    items: queue.filter((item) => item.factType === factType),
+    items: active.filter((item) => item.factType === factType),
   })).filter((group) => group.items.length > 0);
 
   return (
@@ -142,6 +149,11 @@ export default async function VerificationPage({ params }: PageProps<"/[locale]/
         <p className="surface mt-6 flex items-center gap-3 p-6 text-zinc-600 sm:p-8">
           <CheckIcon size={18} className="shrink-0 text-emerald-600" />
           Rinda tukša — viss savāktais ir apstiprināts.
+        </p>
+      ) : groups.length === 0 ? (
+        <p className="surface mt-6 flex items-center gap-3 p-6 text-zinc-600 sm:p-8">
+          <CheckIcon size={18} className="shrink-0 text-emerald-600" />
+          Jaunu pārbaudāmo nav — atlikušais atzīmēts kā strīdīgs (skat. zemāk).
         </p>
       ) : (
         <div className="mt-6 space-y-6">
@@ -214,6 +226,52 @@ export default async function VerificationPage({ params }: PageProps<"/[locale]/
             </section>
           ))}
         </div>
+      )}
+
+      {/* Спорное — отдельно от очереди выше (план, пункт 03): уже
+          разобрано, подтвердить нельзя, потому что неоднозначен сам
+          документ. Не красный ("заблокировано, почините"), а янтарный
+          ("ждёт ответа извне") — тон другой, действие другое. */}
+      {disputed.length > 0 && (
+        <section className="surface mt-6 overflow-hidden border border-amber-200">
+          <h2 className="flex items-baseline justify-between gap-3 border-b border-amber-100 bg-amber-50/60 px-6 py-4 sm:px-8">
+            <span className="text-sm font-semibold tracking-tight text-zinc-900">Strīdīgs</span>
+            <span className="text-xs tabular-nums text-zinc-500">{disputed.length}</span>
+          </h2>
+          <ul className="divide-y divide-zinc-100">
+            {disputed.map((item) => (
+              <li key={`${item.factType}:${item.factId}`} className="px-6 py-4 sm:px-8">
+                <p className="font-medium leading-snug text-zinc-900">
+                  {FACT_TYPE_LABEL[item.factType]}
+                  {item.programmeName && ` — ${item.programmeName}`}
+                </p>
+                <p className="mt-1 flex flex-wrap items-center gap-x-2 gap-y-1 text-xs text-zinc-500">
+                  <span>{item.universityName}</span>
+                  {item.disputedAt && (
+                    <span className="tabular-nums">{new Date(item.disputedAt).toLocaleDateString(locale)}</span>
+                  )}
+                </p>
+                {item.disputedReason && (
+                  <p className="mt-2 flex items-start gap-2 rounded-lg bg-amber-50 px-3 py-2 text-sm leading-relaxed text-amber-900">
+                    <InfoIcon size={14} className="mt-0.5 shrink-0" />
+                    {item.disputedReason}
+                  </p>
+                )}
+                {item.sourceUrl && (
+                  <a
+                    href={item.sourceUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="mt-2 inline-flex items-center gap-1.5 text-sm text-brand hover:underline"
+                  >
+                    Avots
+                    <ArrowRightIcon size={11} className="-rotate-45" />
+                  </a>
+                )}
+              </li>
+            ))}
+          </ul>
+        </section>
       )}
     </main>
   );
