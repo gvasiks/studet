@@ -1,0 +1,90 @@
+name: Backup
+
+# План 2026-09-21, неделя 1, пункт 06. Самое дорогое в проекте — не код
+# (он в git), а часы владельца, потраченные на подтверждение фактов через
+# Supabase Studio. На бесплатном тарифе у Supabase нет ежедневных резервных
+# копий. Два независимых слоя:
+#
+# 1. snapshot-verified — узкий JSON только с ПОДТВЕРЖДЁННЫМИ фактами
+#    (formula/application_round/university_admission_type/programme_field
+#    с verified_at) коммитится прямо в репозиторий: подтверждения живут
+#    в истории git и переживают полную потерю базы без какого-либо
+#    восстановления БД вообще (pipeline/src/backup_verified.py).
+# 2. full-dump — полный дамп схемы public (весь каталог, включая ещё не
+#    подтверждённые черновики) через pg_dump уходит в артефакт прогона,
+#    не в git: он больше и может быстро устареть, поэтому не тот случай,
+#    где нужна история версий.
+#
+# Раз в квартал стоит вручную развернуть дамп или снимок на чистый проект
+# и убедиться, что это действительно работает (копия, которую ни разу не
+# разворачивали, копией не является) — это отдельная ручная задача,
+# не автоматизирована здесь.
+on:
+  schedule:
+    # понедельник 03:00 UTC — через два часа после недельного сбора
+    # каталога (01:00 UTC, .github/workflows/scrape-catalog.yml, тайм-аут
+    # 120 минут), чтобы дамп заодно захватывал каталог этой недели
+    - cron: "0 3 * * 1"
+  workflow_dispatch: {}
+
+jobs:
+  snapshot-verified:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    defaults:
+      run:
+        working-directory: pipeline
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+
+      - run: pip install supabase~=2.31 python-dotenv~=1.2
+
+      - run: python src/backup_verified.py
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+
+      - name: Закоммитить снимок, если он изменился
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add ../docs/backups/verified-facts.json
+          git diff --cached --quiet && echo "без изменений" || git commit -m "Snapshot verified facts ($(date -u +%F))"
+          git push
+
+  full-dump:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Проверить наличие секрета SUPABASE_DB_URL
+        run: |
+          if [ -z "${{ secrets.SUPABASE_DB_URL }}" ]; then
+            echo "::error::SUPABASE_DB_URL не задан (Settings -> Secrets and variables -> Actions)."
+            echo "Формат: строка подключения Postgres из дэшборда Supabase — Settings -> Database ->"
+            echo "Connection string (Session pooler или Direct connection), с паролем внутри."
+            echo "Без него полный дамп не снимается; снимок подтверждённых фактов (соседняя работа"
+            echo "этого workflow) продолжает идти независимо."
+            exit 1
+          fi
+
+      - name: Установить postgresql-client, если его нет
+        run: command -v pg_dump || (sudo apt-get update && sudo apt-get install -y postgresql-client)
+
+      # --schema=public: только наши таблицы, без служебных схем Supabase
+      # (auth, storage, realtime), к которым у сервисного ключа нет прав
+      # на дамп и которые нам не принадлежат
+      - name: pg_dump схемы public
+        run: |
+          pg_dump "${{ secrets.SUPABASE_DB_URL }}" \
+            --schema=public --no-owner --no-privileges --format=custom \
+            --file=studet-public-schema.dump
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: studet-db-dump-${{ github.run_id }}
+          path: studet-public-schema.dump
+          retention-days: 90

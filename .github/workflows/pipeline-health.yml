@@ -1,0 +1,37 @@
+name: Pipeline health check
+
+# План 2026-09-21, неделя 1, пункт 08. Проверяет каждый день, был ли за
+# последние 9 дней успешный ПОЛНЫЙ сбор каталога (см.
+# pipeline/src/check_pipeline_health.py) — сам ничего не собирает, только
+# смотрит на pipeline_health. Упавший запланированный workflow GitHub
+# по умолчанию присылает письмо администратору репозитория — этого
+# достаточно без почтового сервиса (Resend — только с выпуска 4,
+# CLAUDE.md).
+on:
+  schedule:
+    # 06:00 UTC ежедневно — после понедельничного сбора (01:00 UTC) остаётся
+    # запас часов на его завершение, не только на сам факт запуска
+    - cron: "0 6 * * *"
+  workflow_dispatch: {}
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: pipeline
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+
+      # Только клиент базы, без Playwright: сторож ничего не скрапит,
+      # тяжёлые зависимости из requirements.txt ему не нужны
+      - run: pip install supabase~=2.31 python-dotenv~=1.2
+
+      - run: python src/check_pipeline_health.py
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}

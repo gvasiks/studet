@@ -2,8 +2,10 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { isLocale } from "@/i18n/config";
 import { isDocumentStale } from "@/lib/document-age";
+import { isPipelineStale } from "@/lib/pipeline-health";
+import { getPipelineHealth } from "@/lib/pipeline-health-queries";
 import { getVerificationHealth, getVerificationQueue, type VerificationQueueItem } from "@/lib/verification-queue";
-import { ArrowRightIcon, CheckIcon } from "@/components/icons";
+import { ArrowRightIcon, CheckIcon, ClockIcon } from "@/components/icons";
 
 // Данные меняются с каждым запуском конвейера — как и /programmes,
 // страница не может закаменеть на состоянии последней сборки.
@@ -58,8 +60,13 @@ export default async function VerificationPage({ params }: PageProps<"/[locale]/
   const { locale } = await params;
   if (!isLocale(locale)) notFound();
 
-  const [health, queue] = await Promise.all([getVerificationHealth(), getVerificationQueue()]);
+  const [health, queue, pipeline] = await Promise.all([
+    getVerificationHealth(),
+    getVerificationQueue(),
+    getPipelineHealth(),
+  ]);
   const healthPercent = health.totalFormulas > 0 ? Math.round((health.verifiedFormulas / health.totalFormulas) * 100) : 0;
+  const pipelineStale = isPipelineStale(pipeline.lastSuccessAt);
   const remaining = queue.reduce((total, item) => total + item.itemCount, 0);
   const blocked = queue.filter((item) => getBlocker(item) !== null).length;
 
@@ -77,6 +84,25 @@ export default async function VerificationPage({ params }: PageProps<"/[locale]/
           (CLAUDE.md, 6. noteikums).
         </p>
       </header>
+
+      {/* Дата последнего успешного полного сбора (план 2026-09-21, неделя 1,
+          пункт 08) — самое дешёвое место её заметить: эту страницу и так
+          открывают для подтверждений. Точечные перезапуски одного вуза сюда
+          не попадают (full_run=false в базе), поэтому дата не мигает от
+          них — только от настоящего понедельничного прогона. */}
+      <p
+        className={`mt-4 flex items-center gap-2 text-sm ${pipelineStale ? "font-medium text-red-700" : "text-zinc-500"}`}
+      >
+        <ClockIcon size={14} className="shrink-0" />
+        {pipeline.lastSuccessAt ? (
+          <>
+            Pēdējā veiksmīgā savākšana: {new Date(pipeline.lastSuccessAt).toLocaleString(locale)}
+            {pipelineStale && " — pagājuši vairāk par 9 dienām, pārbaudiet grafiku GitHub Actions"}
+          </>
+        ) : (
+          "Veiksmīga pilna savākšana vēl nav reģistrēta"
+        )}
+      </p>
 
       {/* Показатель здоровья — главное число страницы, а не сноска:
           доля подтверждённых формул решает, что вообще можно показывать

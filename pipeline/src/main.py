@@ -111,12 +111,29 @@ def main() -> None:
     only = set(sys.argv[1:])
     sources = [s for s in SOURCES if not only or s.__name__.split(".")[-1] in only]
 
+    # План 2026-09-21, неделя 1, пункт 08: начало прогона фиксируется СРАЗУ,
+    # до единого запроса к вузам, — если прогон упадёт необработанным
+    # исключением (не через errors ниже) или зависнет на таймауте GitHub
+    # Actions, в pipeline_run всё равно останется строка status='running',
+    # и сторож (check_pipeline_health.py) увидит, что "последнего успешного"
+    # давно не было, а не тишину. full_run=False у точечного перезапуска
+    # (аргументы в sys.argv) — pipeline_health считает "последний успешный
+    # сбор" только по полным прогонам, иначе починка одного вуза молча
+    # обновляла бы дату, скрывая остановившееся расписание.
+    run_id = (
+        client.table("pipeline_run")
+        .insert({"started_at": now, "full_run": not only})
+        .execute()
+        .data[0]["id"]
+    )
+
     # Один упавший источник не должен останавливать остальные: ночной прогон
     # иначе теряет всё, что стоит после него в списке. Ошибки копятся и
     # печатаются в конце, код возврата ненулевой — GitHub Actions покажет
     # прогон красным. Запись в базу для источника, не прошедшего проверку
     # полноты, не происходит: проверка стоит до неё.
     errors: list[str] = []
+    programme_count = 0
 
     for source in sources:
         multi = hasattr(source, "scrape_all")  # колледжи из NIID — много учреждений сразу
@@ -139,12 +156,25 @@ def main() -> None:
         for university, programmes in results:
             key = f"{source.__name__}:{university.slug}" if multi else source.__name__
             try:
-                _check_and_save(client, now, key, university, programmes)
+                programme_count += _check_and_save(client, now, key, university, programmes)
             except CatalogCompletenessError as exc:
                 errors.append(str(exc))
                 print(f"ОШИБКА {exc}")
 
         print(polite.report_and_reset())
+
+    finished_at = datetime.now(timezone.utc).isoformat()
+    note = "; ".join(error[:200] for error in errors[:5]) or None
+    client.table("pipeline_run").update(
+        {
+            "finished_at": finished_at,
+            "status": "failed" if errors else "success",
+            "source_count": len(sources),
+            "programme_count": programme_count,
+            "error_count": len(errors),
+            "note": note,
+        }
+    ).eq("id", run_id).execute()
 
     if errors:
         print(f"\nИтого сбоев: {len(errors)}")
@@ -153,7 +183,7 @@ def main() -> None:
         sys.exit(1)
 
 
-def _check_and_save(client, now: str, key: str, university, programmes) -> None:  # type: ignore[no-untyped-def]
+def _check_and_save(client, now: str, key: str, university, programmes) -> int:  # type: ignore[no-untyped-def]
     minimum = MIN_PROGRAMME_COUNT.get(key)
     if minimum is not None and len(programmes) < minimum:
         raise CatalogCompletenessError(
@@ -182,6 +212,7 @@ def _check_and_save(client, now: str, key: str, university, programmes) -> None:
 
     missing = _count_missed(client, university_id, key, {row["slug"] for row in programme_rows})
     print(f"{key}: upserted 1 university, {len(programme_rows)} programmes" + _missed_note(missing))
+    return len(programme_rows)
 
 
 def _count_missed(client, university_id: str, key: str, seen_slugs: set[str]) -> list[dict]:  # type: ignore[no-untyped-def]
