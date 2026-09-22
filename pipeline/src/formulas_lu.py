@@ -209,28 +209,51 @@ def split_terms(formula_text: str) -> list[str]:
     return [re.sub(r"\s+", " ", part).strip(" ;.") for part in parts if part.strip(" ;.")]
 
 
-def _classify(description: str) -> tuple[str, str | None] | str:
-    """(kind, subject) или строка с причиной, почему слагаемое не берётся."""
+CE_AVERAGE_PREFIX = "ce kopvērtējumu vidējais vērtējums"
+# группа 1 — предмет(ы) CE, "kopvērtējums" не всегда есть в тексте перед "procentos"
+CE_PROCENTOS_RE = re.compile(r"^ce (.+?) (?:kopvērtējums )?procentos")
+
+
+def _normalize(description: str) -> str:
+    """Нижний регистр, схлопнутые пробелы + починка разрывов слов, которые PDF
+    местами вставляет: "c e kopvērtējumu v idējais", "i estāj…". Общая часть
+    для formulas_lu.py и requirements_lu.py — оба разбирают один документ."""
     text = re.sub(r"\s+", " ", description).strip(" ;,.+(").lower()
-    # PDF местами рвёт слова пробелом: "c e kopvērtējumu v idējais", "i estāj…"
     for broken, fixed in (("c e ", "ce "), ("v idējais", "vidējais"), ("i estāj", "iestāj")):
         text = text.replace(broken, fixed)
+    return text
 
-    if text.startswith("ce kopvērtējumu vidējais vērtējums"):
+
+def _ce_phrase_parts(text: str) -> list[str] | None:
+    """Части предмета(ов) из «CE <phrase> [kopvērtējums] procentos» —
+    len==1 обычное слагаемое, len>=2 альтернатива «vai CE …». None — не
+    такая структура (среднее по CE, испытание, оценка, нераспознанное)."""
+    if text.startswith(CE_AVERAGE_PREFIX):
+        return None
+    match = CE_PROCENTOS_RE.match(text)
+    if not match:
+        return None
+    return [p.strip() for p in re.split(r",?\s*vai\s+ce\s+", match.group(1))]
+
+
+def _classify(description: str) -> tuple[str, str | None] | str:
+    """(kind, subject) или строка с причиной, почему слагаемое не берётся."""
+    text = _normalize(description)
+
+    if text.startswith(CE_AVERAGE_PREFIX):
         return ("ce_average", None)
 
-    match = re.match(r"^ce (.+?) (?:kopvērtējums )?procentos", text)
-    if match:
-        phrase = match.group(1)
-        parts = [p.strip() for p in re.split(r",?\s*vai\s+ce\s+", phrase)]
+    parts = _ce_phrase_parts(text)
+    if parts is not None:
         if len(parts) == 1:
             subject = CE_SUBJECTS.get(parts[0])
             return ("ce", subject) if subject else f"неизвестный предмет CE: «{parts[0]}»"
         # язык: любые ≥2 из {en, fr, de, ru} с английским — один слот "english"
         # (так уже принято для всех формул ЛУ; п. 1.4 документа называет языки
         # равноправными)
-        if len(parts) >= 2 and set(parts) <= LANGUAGE_SLOT and "angļu valodā" in parts:
+        if set(parts) <= LANGUAGE_SLOT and "angļu valodā" in parts:
             return ("ce", "english")
+        phrase = " vai CE ".join(parts)
         return f"альтернатива между экзаменами (сколько брать, если сданы несколько, документ не говорит): «{phrase}»"
 
     for marker, label in ENTRANCE_LABELS:
@@ -289,8 +312,13 @@ def parse_formula(text: str) -> ParsedFormula:
 V1_HEAD = re.compile(r"^vērtējuma aprēķināšanas formulas (1(?:\.[ab])?)\.? variants vasaras uzņemšanā([^:]*):\s*(.*)$", re.S)
 
 
-def _pick_v1_formula(block_text: str) -> tuple[ParsedFormula | None, str | None]:
-    """Формула 1-го варианта (CE) из блока программы.
+def _find_v1_texts(block_text: str) -> tuple[list[str], str | None]:
+    """Сырые тексты формулы 1-го варианта (CE) для очной формы — один на
+    обычный блок, несколько на блок с подпрограммами. Общая часть для
+    formulas_lu.py (нужны веса) и requirements_lu.py (нужны только
+    предметы — подпрограммы с разными весами, но одинаковым набором
+    предметов для требований не проблема, поэтому решение "брать или нет"
+    здесь не принимается, только сбор текстов).
 
     Берём только чистый "1. variants". Не берём:
     - "1.a"/"1.b": два варианта с разными весами, а как выбирается между ними,
@@ -305,23 +333,30 @@ def _pick_v1_formula(block_text: str) -> tuple[ParsedFormula | None, str | None]
             found.append((match.group(1), match.group(2).strip(), match.group(3)))
 
     if not found:
-        return None, "в блоке нет формулы 1-го варианта (CE)"
+        return [], "в блоке нет формулы 1-го варианта (CE)"
     if any(label != "1" for label, _, _ in found):
-        return None, "варианты 1.a/1.b: как выбирается между ними, документ не говорит — вопрос приёмной комиссии"
+        return [], "варианты 1.a/1.b: как выбирается между ними, документ не говорит — вопрос приёмной комиссии"
 
     full = [item for item in found if "nepilna" not in item[1]]
     if not full:
-        return None, "в блоке нет формулы 1-го варианта для очной формы"
-    parsed = [parse_formula(item[2]) for item in full]
-    # У блока с подпрограммами формул несколько. Программа в каталоге одна,
-    # поэтому берём их только если они одинаковы; иначе какая-то из подпрограмм
-    # осталась бы без своей формулы, а показать чужую — соврать.
+        return [], "в блоке нет формулы 1-го варианта для очной формы"
+    return [item[2] for item in full], None
+
+
+def _pick_v1_formula(block_text: str) -> tuple[ParsedFormula | None, str | None]:
+    """Формула 1-го варианта (CE) с весами — для записи в formula/formula_term.
+    Требует РОВНО один текст (см. _find_v1_texts); подпрограммы с разными
+    весами сюда не годятся — программа в каталоге одна, а показать чужой
+    набор весов — соврать (для требований этого ограничения нет,
+    см. requirements_lu.py)."""
+    texts, note = _find_v1_texts(block_text)
+    if note:
+        return None, note
+    parsed = [parse_formula(text) for text in texts]
     signatures = {tuple((t.kind, t.subject, t.coefficient, t.optional) for t in f.terms) for f in parsed}
     if len(signatures) > 1:
-        return None, f"{len(full)} формул 1-го варианта (подпрограммы) с разными весами — в каталоге программа одна"
-    formula = parsed[0]
-    formula.scope = full[0][1]
-    return formula, None
+        return None, f"{len(texts)} формул 1-го варианта (подпрограммы) с разными весами — в каталоге программа одна"
+    return parsed[0], None
 
 
 def parse_document(text: str) -> list[ParsedProgramme]:
