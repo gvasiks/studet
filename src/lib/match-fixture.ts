@@ -11,7 +11,7 @@
 //
 // Названия помечены "[TEST]", чтобы их не спутать с настоящими программами.
 import type { ExamLevel } from "./formula";
-import type { MatchFormula } from "./match";
+import type { MatchFormula, MatchRequirement } from "./match";
 
 export const FIXTURE_LEVEL_COEFFICIENTS: Record<ExamLevel, number> = {
   augstakais: 1,
@@ -75,4 +75,30 @@ export const FIXTURE_FORMULAS: MatchFormula[] = [
     { kind: "ce", subject: "latvian", coefficient: 0.3 },
     { kind: "ce", subject: "english", coefficient: 0.3 },
   ]),
+];
+
+// Программы БЕЗ формулы, но с подтверждёнными требованиями (план
+// 2026-09-21, пункт 02) — для проверки второй, более бедной ветки
+// обратного поиска отдельно от формул.
+function requirementFixture(
+  university: string,
+  programme: string,
+  subjectGroups: string[][],
+): MatchRequirement {
+  return {
+    requirementId: `fixture-req-${university}-${programme}`,
+    programmeSlug: "fixture",
+    programmeName: `[TEST] ${programme}`,
+    universitySlug: "fixture",
+    universityName: `[TEST] ${university}`,
+    verifiedAt: VERIFIED,
+    sourceUrl: null,
+    subjectGroups,
+  };
+}
+
+export const FIXTURE_REQUIREMENTS: MatchRequirement[] = [
+  requirementFixture("Universitāte C", "Sociology", [["mathematics"], ["english"]]),
+  // альтернатива — LU "CE fizikā vai CE ķīmijā, vai CE bioloģijā"
+  requirementFixture("Universitāte C", "Nursing", [["mathematics"], ["physics", "chemistry", "biology"]]),
 ];

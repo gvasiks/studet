@@ -32,11 +32,13 @@ const FACT_TYPE_LABEL: Record<VerificationQueueItem["factType"], string> = {
   application_round: "Pieteikšanās termiņš",
   admission_type: "Uzņemšanas veids",
   programme_field: "Programmu virzieni",
+  programme_requirement: "Nepieciešamie eksāmeni",
 };
 
 // Порядок групп: сверху то, что дороже стоит при ошибке (правило 6 CLAUDE.md).
 const FACT_TYPE_ORDER: VerificationQueueItem["factType"][] = [
   "formula",
+  "programme_requirement",
   "application_round",
   "admission_type",
   "programme_field",
@@ -46,7 +48,7 @@ const FACT_TYPE_ORDER: VerificationQueueItem["factType"][] = [
 // показать объём, а чтобы ответить «что брать следующим» — поэтому
 // заблокированное должно быть видно до чтения текста.
 function getBlocker(item: VerificationQueueItem): { text: string; tone: "red" | "amber" } | null {
-  if (item.factType !== "formula") return null;
+  if (item.factType !== "formula" && item.factType !== "programme_requirement") return null;
   if (item.protocolComplete === false) {
     return { text: `Protokols nepilns — trūkst ${item.protocolMissing}`, tone: "red" };
   }

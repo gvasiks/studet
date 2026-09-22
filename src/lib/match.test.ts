@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 import type { ExamLevel, ExamResult } from "./formula";
 import { calculateScore } from "./formula";
-import { matchFormula, matchProgrammes, type MatchFormula } from "./match";
+import { matchFormula, matchProgrammes, matchRequirement, matchRequirements, type MatchFormula, type MatchRequirement } from "./match";
 
 const LEVELS: Record<ExamLevel, number> = { augstakais: 1, optimalais: 0.75, vispaarigais: 0.5 };
 
@@ -153,5 +153,74 @@ describe("обратный поиск: matchProgrammes", () => {
       missing_extras: [],
       gate_failed: [],
     });
+  });
+});
+
+function requirement(overrides: Partial<MatchRequirement> & Pick<MatchRequirement, "programmeName">): MatchRequirement {
+  return {
+    requirementId: overrides.programmeName,
+    programmeSlug: overrides.programmeName.toLowerCase(),
+    universitySlug: "u1",
+    universityName: "Universitāte A",
+    verifiedAt: "2026-12-10T10:00:00Z",
+    sourceUrl: null,
+    subjectGroups: [["mathematics"], ["english"]],
+    ...overrides,
+  };
+}
+
+describe("обратный поиск: matchRequirement (программа без формулы)", () => {
+  it("все обязательные предметы сданы — проходит", () => {
+    const r = requirement({ programmeName: "Law" });
+    const item = matchRequirement(r, MATH_ENGLISH);
+    expect(item.eligible).toBe(true);
+    expect(item.missingGroups).toEqual([]);
+  });
+
+  it("не хватает обязательного предмета — не проходит", () => {
+    const r = requirement({ programmeName: "Physics", subjectGroups: [["mathematics"], ["physics"]] });
+    const item = matchRequirement(r, MATH_ENGLISH);
+    expect(item.eligible).toBe(false);
+    expect(item.missingGroups).toEqual([["physics"]]);
+  });
+
+  it("группа-альтернатива ('нужен хотя бы один из') — достаточно одного сданного", () => {
+    // LU "CE fizikā vai CE ķīmijā, vai CE bioloģijā": сдана только химия
+    const r = requirement({
+      programmeName: "Medicine",
+      subjectGroups: [["mathematics"], ["physics", "chemistry", "biology"]],
+    });
+    const exams: ExamResult[] = [
+      { subject: "mathematics", percent: 80, level: "augstakais" },
+      { subject: "chemistry", percent: 70, level: "augstakais" },
+    ];
+    expect(matchRequirement(r, exams).eligible).toBe(true);
+  });
+
+  it("ни один предмет группы-альтернативы не сдан — не проходит, и видно какая группа", () => {
+    const r = requirement({
+      programmeName: "Medicine",
+      subjectGroups: [["mathematics"], ["physics", "chemistry", "biology"]],
+    });
+    const item = matchRequirement(r, [{ subject: "mathematics", percent: 80, level: "augstakais" }]);
+    expect(item.eligible).toBe(false);
+    expect(item.missingGroups).toEqual([["physics", "chemistry", "biology"]]);
+  });
+});
+
+describe("обратный поиск: matchRequirements", () => {
+  it("оставляет только те, где всё сдано, и сортирует по вузу и названию", () => {
+    const requirements = [
+      requirement({ programmeName: "Zoology", universityName: "B" }),
+      requirement({ programmeName: "Algebra", universityName: "B" }),
+      requirement({ programmeName: "Chemistry", universityName: "A", subjectGroups: [["chemistry"]] }),
+      requirement({ programmeName: "Biology", universityName: "A" }),
+    ];
+    const eligible = matchRequirements(requirements, MATH_ENGLISH);
+    expect(eligible.map((i) => i.requirement.programmeName)).toEqual(["Biology", "Algebra", "Zoology"]);
+  });
+
+  it("без требований — пустой список", () => {
+    expect(matchRequirements([], MATH_ENGLISH)).toEqual([]);
   });
 });

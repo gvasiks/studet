@@ -29,7 +29,7 @@ export default async function MatchPage({ params }: PageProps<"/[locale]/match">
   if (!isLocale(locale)) notFound();
 
   const dict = await getDictionary(locale);
-  const { formulas, levelCoefficients, isFixture } = await getMatchData(locale);
+  const { formulas, requirements, levelCoefficients, isFixture } = await getMatchData(locale);
 
   return (
     <main className="page-container py-8 sm:py-12">
@@ -41,7 +41,7 @@ export default async function MatchPage({ params }: PageProps<"/[locale]/match">
       </header>
 
       <div className="mx-auto mt-8 max-w-5xl">
-        {formulas.length === 0 ? (
+        {formulas.length === 0 && requirements.length === 0 ? (
           <div className="surface p-6 sm:p-10">
             <p className="text-zinc-700">{dict.match.emptyNoFormulas}</p>
             <Link
@@ -57,6 +57,7 @@ export default async function MatchPage({ params }: PageProps<"/[locale]/match">
             dict={dict}
             locale={locale}
             formulas={formulas}
+            requirements={requirements}
             levelCoefficients={levelCoefficients}
             isFixture={isFixture}
           />

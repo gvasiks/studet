@@ -11,9 +11,10 @@
 // - не сортирует по баллу и не говорит "проходишь / не проходишь": шкалы у
 //   вузов разные (ЛУ — 1000, Вентспилс — около 100), балл несравним между
 //   вузами, а проходных баллов нет (правило 2 и раздел "Чего в проекте нет");
-// - не отбрасывает программы по формальным требованиям кроме порогов
-//   formula_gate: требований к экзаменам (programme_requirement) в базе нет,
-//   известны только предметы из самой формулы;
+// - не отбрасывает программы с формулой по формальным требованиям кроме
+//   порогов formula_gate — у формулы известны только её собственные
+//   предметы. Программы БЕЗ формулы, но с подтверждёнными требованиями,
+//   обрабатывает отдельная пара функций ниже (matchRequirement/-s);
 // - не угадывает недостающие данные: без слагаемого "вступительное
 //   испытание" или "оценка аттестата" балл не считается вовсе.
 import {
@@ -117,4 +118,58 @@ export function matchProgrammes(
   }
   for (const status of Object.keys(groups) as MatchStatus[]) groups[status].sort(byUniversityThenProgramme);
   return groups;
+}
+
+// --- Требования без формулы (план 2026-09-21, пункт 02) ------------------
+//
+// Программа может иметь подтверждённые требования к экзаменам без
+// подтверждённой формулы — у РТУ, LBTU, DU формулы почти нигде не
+// разобраны (нельзя честно взвесить "fizikā un/vai ķīmijā"), а вот САМ
+// список нужных экзаменов из документа читается однозначно. Здесь
+// НАМЕРЕННО не MatchStatus и не MatchItem формулы: это другое, более
+// бедное вычисление — нет баллов, нет порогов, нет вступительных
+// испытаний, — и склеивать его с расчётом балла было бы нечестной
+// экономией на типах. matchProgrammes() эти программы не видит вовсе;
+// вызывающая сторона объединяет оба результата сама (MatchForm.tsx).
+
+export type MatchRequirement = {
+  requirementId: string;
+  programmeSlug: string;
+  programmeName: string;
+  universitySlug: string;
+  universityName: string;
+  verifiedAt: string;
+  sourceUrl: string | null;
+  // Группа предметов = "нужен хотя бы один из них" (LU "CE fizikā vai CE
+  // ķīmijā, vai CE bioloģijā" → одна группа из трёх). Группа из одного
+  // предмета = предмет обязателен сам по себе.
+  subjectGroups: string[][];
+};
+
+export type RequirementMatchItem = {
+  requirement: MatchRequirement;
+  eligible: boolean;
+  // Группы, ни один предмет которых не сдан — только у eligible=false.
+  missingGroups: string[][];
+};
+
+export function matchRequirement(requirement: MatchRequirement, exams: ExamResult[]): RequirementMatchItem {
+  const taken = new Set(exams.map((exam) => exam.subject));
+  const missingGroups = requirement.subjectGroups.filter((group) => !group.some((subject) => taken.has(subject)));
+  return { requirement, eligible: missingGroups.length === 0, missingGroups };
+}
+
+// Только "проходишь по требованиям" — вторую группу (чего не хватает)
+// сознательно не считаем и не показываем: она бы почти повторила "не
+// хватает экзаменов" у формул, раздувая самую большую и так группу без
+// новой пользы (правило "режем охват, а не качество").
+export function matchRequirements(requirements: MatchRequirement[], exams: ExamResult[]): RequirementMatchItem[] {
+  return requirements
+    .map((requirement) => matchRequirement(requirement, exams))
+    .filter((item) => item.eligible)
+    .sort(
+      (a, b) =>
+        a.requirement.universityName.localeCompare(b.requirement.universityName) ||
+        a.requirement.programmeName.localeCompare(b.requirement.programmeName),
+    );
 }

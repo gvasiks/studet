@@ -6,8 +6,8 @@ import { Input } from "@heroui/react";
 import type { Locale } from "@/i18n/config";
 import type { Dictionary } from "@/i18n/dictionaries";
 import type { ExamLevel, ExamResult } from "@/lib/formula";
-import { matchProgrammes, type MatchItem, type MatchStatus } from "@/lib/match";
-import type { MatchFormula } from "@/lib/match";
+import { matchProgrammes, matchRequirements, type MatchItem, type MatchStatus } from "@/lib/match";
+import type { MatchFormula, MatchRequirement, RequirementMatchItem } from "@/lib/match";
 import { interpolate } from "@/lib/outcomes";
 import { subjectLabel, termLabel } from "@/lib/term-labels";
 import { ArrowRightIcon, CheckIcon, InfoIcon } from "@/components/icons";
@@ -16,8 +16,10 @@ const LEVELS: ExamLevel[] = ["augstakais", "optimalais", "vispaarigais"];
 
 type SubjectInput = { percent: string; level: ExamLevel };
 
-// Порядок групп на экране: сначала то, что уже можно посчитать
-const GROUP_ORDER: MatchStatus[] = ["computed", "gate_failed", "missing_extras", "missing_exams"];
+// Порядок групп на экране после "можно посчитать" и "атбилст прасибам"
+// (эта — не MatchStatus, у неё свой блок и в счётчиках, и в результатах,
+// см. ниже) — остальные три статуса формулы, от красного к серому.
+const TAIL_STATUSES: MatchStatus[] = ["gate_failed", "missing_extras", "missing_exams"];
 
 // Статус — главное, что несёт эта страница, поэтому он закодирован не только
 // текстом заголовка: у каждой группы свой цвет полосы и метки. Классы записаны
@@ -35,16 +37,23 @@ const GROUP_STYLE: Record<
   missing_exams: { bar: "bg-zinc-300", edge: "border-zinc-300", chip: "bg-zinc-100 text-zinc-700", key: "missingExams" },
 };
 
+// "Атбилст прасибам" — не MatchStatus (это НЕ формула, счёта нет вовсе),
+// поэтому свой стиль рядом, не внутри GROUP_STYLE. Синий, не зелёный:
+// не путать с "можно посчитать балл" (computed) — это более бедный ответ.
+const REQUIREMENTS_STYLE = { bar: "bg-sky-500", edge: "border-sky-500", chip: "bg-sky-50 text-sky-800" };
+
 export function MatchForm({
   dict,
   locale,
   formulas,
+  requirements,
   levelCoefficients,
   isFixture,
 }: {
   dict: Dictionary;
   locale: Locale;
   formulas: MatchFormula[];
+  requirements: MatchRequirement[];
   levelCoefficients: Record<ExamLevel, number>;
   isFixture: boolean;
 }) {
@@ -67,9 +76,11 @@ export function MatchForm({
   // Без useMemo: формул десятки-сотни, счёт мгновенный, а зависимость от
   // пересобираемого на каждый рендер списка экзаменов только запутала бы код
   const groups = matchProgrammes(formulas, exams, levelCoefficients);
+  const eligibleByRequirements = matchRequirements(requirements, exams);
 
   const summary = interpolate(t.summary, {
     computed: groups.computed.length,
+    eligible: eligibleByRequirements.length,
     missingExams: groups.missing_exams.length,
     missingExtras: groups.missing_extras.length,
     gateFailed: groups.gate_failed.length,
@@ -158,8 +169,22 @@ export function MatchForm({
           <p className="surface p-6 text-zinc-600 sm:p-8">{t.emptyNoExams}</p>
         ) : (
           <div className="surface p-6 sm:p-8">
-            <dl className="grid grid-cols-2 gap-4 sm:grid-cols-4">
-              {GROUP_ORDER.map((status) => {
+            <dl className="grid grid-cols-2 gap-4 sm:grid-cols-5">
+              <div className={`min-w-0 border-l-4 pl-3 ${GROUP_STYLE.computed.edge}`}>
+                <dt className="text-xs font-medium leading-snug text-zinc-500">{dict.match.groups.computed}</dt>
+                <dd className="mt-0.5 text-2xl font-bold tabular-nums tracking-tight text-zinc-900">
+                  {groups.computed.length}
+                </dd>
+              </div>
+              <div className={`min-w-0 border-l-4 pl-3 ${REQUIREMENTS_STYLE.edge}`}>
+                <dt className="text-xs font-medium leading-snug text-zinc-500">
+                  {dict.match.groups.eligibleByRequirements}
+                </dt>
+                <dd className="mt-0.5 text-2xl font-bold tabular-nums tracking-tight text-zinc-900">
+                  {eligibleByRequirements.length}
+                </dd>
+              </div>
+              {TAIL_STATUSES.map((status) => {
                 const style = GROUP_STYLE[status];
                 return (
                   <div key={status} className={`min-w-0 border-l-4 pl-3 ${style.edge}`}>
@@ -180,7 +205,20 @@ export function MatchForm({
 
       {exams.length > 0 && (
         <>
-          {GROUP_ORDER.map((status) =>
+          {groups.computed.length > 0 && (
+            <ResultGroup
+              status="computed"
+              items={groups.computed}
+              dict={dict}
+              locale={locale}
+              isFixture={isFixture}
+              notComparable={t.notComparable}
+            />
+          )}
+          {eligibleByRequirements.length > 0 && (
+            <RequirementGroup items={eligibleByRequirements} dict={dict} locale={locale} isFixture={isFixture} />
+          )}
+          {TAIL_STATUSES.map((status) =>
             groups[status].length > 0 ? (
               <ResultGroup
                 key={status}
@@ -375,6 +413,109 @@ function ResultRow({
           </p>
         </details>
       )}
+    </li>
+  );
+}
+
+// Программы без формулы, но с подтверждёнными требованиями (план
+// 2026-09-21, пункт 02) — своя, более бедная карточка: нет балла, нет
+// разбора, нет ссылки на калькулятор программы (калькулятора без формулы
+// не существует). Структурно повторяет ResultGroup (группировка по вузу),
+// но не переиспользует её: типы разные (RequirementMatchItem — не MatchItem).
+function RequirementGroup({
+  items,
+  dict,
+  locale,
+  isFixture,
+}: {
+  items: RequirementMatchItem[];
+  dict: Dictionary;
+  locale: Locale;
+  isFixture: boolean;
+}) {
+  const t = dict.match;
+  const headingId = "match-group-eligible-requirements";
+
+  const byUniversity = new Map<string, RequirementMatchItem[]>();
+  for (const item of items) {
+    const list = byUniversity.get(item.requirement.universityName) ?? [];
+    list.push(item);
+    byUniversity.set(item.requirement.universityName, list);
+  }
+
+  return (
+    <section aria-labelledby={headingId} className="surface mt-6 overflow-hidden">
+      <div className="flex gap-4 border-b border-zinc-100 p-6 sm:p-8">
+        <span aria-hidden="true" className={`w-1 shrink-0 rounded-full ${REQUIREMENTS_STYLE.bar}`} />
+        <div className="min-w-0">
+          <h2 id={headingId} className="flex flex-wrap items-baseline gap-2 text-lg font-semibold tracking-tight text-zinc-900">
+            {t.groups.eligibleByRequirements}
+            <span className={`rounded-full px-2 py-0.5 text-xs font-semibold tabular-nums ${REQUIREMENTS_STYLE.chip}`}>
+              {items.length}
+            </span>
+          </h2>
+          <p className="mt-1 max-w-[65ch] text-sm leading-relaxed text-zinc-600">{t.groups.eligibleByRequirementsHint}</p>
+        </div>
+      </div>
+
+      <div className="divide-y divide-zinc-100">
+        {[...byUniversity.entries()].map(([universityName, universityItems]) => (
+          <div key={universityName} className="px-6 py-5 sm:px-8">
+            <h3 className="text-xs font-semibold uppercase tracking-wide text-zinc-500">{universityName}</h3>
+            <ul className="mt-3 space-y-2">
+              {universityItems.map((item) => (
+                <RequirementRow key={item.requirement.requirementId} item={item} locale={locale} isFixture={isFixture} dict={dict} />
+              ))}
+            </ul>
+          </div>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+function RequirementRow({
+  item,
+  dict,
+  locale,
+  isFixture,
+}: {
+  item: RequirementMatchItem;
+  dict: Dictionary;
+  locale: Locale;
+  isFixture: boolean;
+}) {
+  const { requirement } = item;
+  const programmeHref = `/${locale}/programmes/${requirement.universitySlug}/${requirement.programmeSlug}`;
+
+  return (
+    <li className="rounded-2xl border border-zinc-200 p-4">
+      <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-1">
+        {isFixture ? (
+          <span className="min-w-0 flex-1 font-medium leading-snug text-zinc-900">{requirement.programmeName}</span>
+        ) : (
+          <Link href={programmeHref} className="min-w-0 flex-1 font-medium leading-snug text-zinc-900 hover:text-brand">
+            {requirement.programmeName}
+          </Link>
+        )}
+      </div>
+      <p className="mt-2 flex flex-wrap items-center gap-x-2 gap-y-1 text-xs text-zinc-600">
+        <CheckIcon size={13} className="shrink-0 text-emerald-600" />
+        <span>
+          {dict.catalog.verifiedPrefix} {new Date(requirement.verifiedAt).toLocaleDateString(locale)}
+        </span>
+        {requirement.sourceUrl && (
+          <a
+            href={requirement.sourceUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-1 text-brand hover:underline"
+          >
+            {dict.catalog.sourceLinkLabel}
+            <ArrowRightIcon size={11} className="-rotate-45" />
+          </a>
+        )}
+      </p>
     </li>
   );
 }
