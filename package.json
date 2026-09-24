@@ -13,7 +13,8 @@
     "test:a11y": "playwright test",
     "check:static-budget": "node scripts/check-static-budget.mjs",
     "check:formula": "node scripts/check-formula.mjs",
-    "check:privacy-env": "node scripts/check-privacy-env.mjs"
+    "check:privacy-env": "node scripts/check-privacy-env.mjs",
+    "check:glossary-terms": "node scripts/check-glossary-terms.mjs"
   },
   "dependencies": {
     "@heroui/react": "^2.8.10",

@@ -20,6 +20,7 @@ jobs:
       - run: npm run lint
       - run: npm run test
       - run: npm run check:static-budget
+      - run: npm run check:glossary-terms
       # NEXT_PUBLIC_* — publishable anon key, ограничения через RLS,
       # не service_role (CLAUDE.md, A02). Сборка требует их на этапе
       # build, не только runtime — без них src/lib/supabase.ts падает.
