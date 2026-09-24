@@ -5,13 +5,15 @@
   "type": "module",
   "scripts": {
     "dev": "next dev",
+    "prebuild": "node scripts/check-privacy-env.mjs",
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
     "test": "vitest run",
     "test:a11y": "playwright test",
     "check:static-budget": "node scripts/check-static-budget.mjs",
-    "check:formula": "node scripts/check-formula.mjs"
+    "check:formula": "node scripts/check-formula.mjs",
+    "check:privacy-env": "node scripts/check-privacy-env.mjs"
   },
   "dependencies": {
     "@heroui/react": "^2.8.10",
