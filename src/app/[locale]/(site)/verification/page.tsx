@@ -253,12 +253,15 @@ export default async function VerificationPage({ params }: PageProps<"/[locale]/
                     <span className="tabular-nums">{new Date(item.disputedAt).toLocaleDateString(locale)}</span>
                   )}
                 </p>
-                {item.disputedReason && (
-                  <p className="mt-2 flex items-start gap-2 rounded-lg bg-amber-50 px-3 py-2 text-sm leading-relaxed text-amber-900">
-                    <InfoIcon size={14} className="mt-0.5 shrink-0" />
-                    {item.disputedReason}
-                  </p>
-                )}
+                {/* disputed_reason больше не приходит через это (анонимно читаемое)
+                    view — миграция 20260924180000, ревью security-tester нашёл, что
+                    сюда попадал дословный текст неподтверждённой формулы. Причина
+                    по-прежнему в самой таблице (formula/application_round/...),
+                    смотреть в Studio сервисной ролью. */}
+                <p className="mt-2 flex items-start gap-2 rounded-lg bg-amber-50 px-3 py-2 text-sm leading-relaxed text-amber-900">
+                  <InfoIcon size={14} className="mt-0.5 shrink-0" />
+                  Iemesls — pašā ierakstā (Studio), šeit netiek rādīts.
+                </p>
                 {item.sourceUrl && (
                   <a
                     href={item.sourceUrl}
