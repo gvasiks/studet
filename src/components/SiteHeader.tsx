@@ -48,7 +48,11 @@ export function SiteHeader({ locale, dict, tone }: { locale: Locale; dict: Dicti
           не причина для noindex), просто не выдаём каталог и калькулятор за
           нечто большее, чем они есть сегодня. */}
       {locale === "en" && (
-        <div className={dark ? "relative z-20 bg-amber-400/95" : "bg-amber-50"}>
+        <div
+          role="region"
+          aria-label="Coverage notice"
+          className={dark ? "relative z-20 bg-amber-400/95" : "bg-amber-50"}
+        >
           <p
             className={`page-container py-2 text-center text-xs leading-relaxed ${
               dark ? "text-amber-950" : "text-amber-900"
