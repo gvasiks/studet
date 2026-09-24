@@ -9,6 +9,7 @@ sys.path.insert(0, str(Path(__file__).parent))
 from dotenv import load_dotenv
 
 import polite
+from catalog_diff import CONTENT_FIELDS, compute_diff, format_report
 from db import get_service_client
 from sources import bsa, du, eka, ekra, jvlma, lbtu, lka, lma, lnaa, lu, lutera, niid_colleges, niid_universities, rai, rgsl, riseba, rnu, rsu, rtu_catalog, rtu_liepaja, sse_riga, tsi, turiba, venta, via
 
@@ -208,6 +209,24 @@ def _check_and_save(client, now: str, key: str, university, programmes) -> int: 
         programme_rows.append(row)
 
     if programme_rows:
+        # План 2026-09-21, пункт 07: прежде чем перезаписать, сверяем с тем,
+        # что было — апсерт сам по себе не трогает verified_at, но если
+        # подтверждённое человеком поле изменилось, пометку надо снять, а
+        # не молча оставить "Verified" висеть на уже неверных данных
+        # (см. catalog_diff.py). Запрос перед апсертом, не после: изменение
+        # должно попасть в ТУ ЖЕ запись, что мы вот-вот отправим.
+        existing = (
+            client.table("programme")
+            .select("slug, verified_at, verified_by, " + ", ".join(CONTENT_FIELDS))
+            .eq("university_id", university_id)
+            .in_("slug", [row["slug"] for row in programme_rows])
+            .execute()
+            .data
+        )
+        existing_by_slug = {row["slug"]: row for row in existing}
+        diff = compute_diff(existing_by_slug, programme_rows)  # мутирует programme_rows при сбросе
+        if diff.has_changes:
+            print(format_report(diff, university.slug))
         client.table("programme").upsert(programme_rows, on_conflict="university_id,slug").execute()
 
     missing = _count_missed(client, university_id, key, {row["slug"] for row in programme_rows})
