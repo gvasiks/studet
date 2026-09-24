@@ -8,6 +8,9 @@
     "catalogCta": "Skatīt katalogu",
     "surveyCta": "Aizpildīt aptauju"
   },
+  "coverage": {
+    "notice": "Pagaidām šeit ir aptverta tikai Latvijas uzņemšanas sistēma vietējiem skolu absolventiem — atbalsts ārvalstu reflektantiem (pilnas izmaksas, dokumentu saraksti, uzturēšanās atļaujas) vēl nav izveidots."
+  },
   "catalog": {
     "title": "Studiju programmu katalogs",
     "subtitle": "Visas programmas, ko līdz šim esam pārbaudījuši. Bez reģistrācijas.",

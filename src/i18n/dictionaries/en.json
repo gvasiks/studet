@@ -4,9 +4,12 @@
   },
   "home": {
     "title": "Where can I actually get in?",
-    "description": "Questionnaire, catalogue and competition score calculator in one place. No registration required.",
+    "description": "Questionnaire, catalogue and competition score calculator in one place, currently covering Latvia's local admission system. No registration required.",
     "catalogCta": "Browse the catalogue",
     "surveyCta": "Take the survey"
+  },
+  "coverage": {
+    "notice": "This currently covers Latvia's own admission system for local school-leavers. Support for international applicants — full costs, document checklists, residence permits — isn't built yet."
   },
   "catalog": {
     "title": "Study programme catalogue",
