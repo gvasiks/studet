@@ -37,8 +37,9 @@ export type VerificationQueueItem = {
 // Приоритет по спросу — прямое указание ревью 2026-09, пункт 03: РТУ
 // и ЛУ сопоставимы по числу заявок, но покрытие формул сейчас сильно
 // перекошено в пользу ЛУ (было собрано в первую очередь, потому что
-// удобнее, не потому что нужнее). Всё, чего нет в списке, идёт следом
-// по алфавиту slug.
+// удобнее, не потому что нужнее). Запасной порядок для вузов, для
+// которых пока нет известного срока подачи (см. ниже) — всё остальное
+// идёт следом по алфавиту slug.
 const UNIVERSITY_PRIORITY: Record<string, number> = { rtu: 0, lu: 1 };
 
 function priority(universitySlug: string): number {
@@ -46,11 +47,14 @@ function priority(universitySlug: string): number {
 }
 
 export const getVerificationQueue = cache(async (): Promise<VerificationQueueItem[]> => {
-  const { data, error } = await supabase
-    .from("verification_queue")
-    .select(
-      "fact_id, fact_type, programme_id, programme_name, university_slug, university_name, collected_at, source_url, item_count, protocol_complete, protocol_missing, source_doc_date, disputed_at, disputed_reason",
-    );
+  const [{ data, error }, earliestOpensBySlug] = await Promise.all([
+    supabase
+      .from("verification_queue")
+      .select(
+        "fact_id, fact_type, programme_id, programme_name, university_slug, university_name, collected_at, source_url, item_count, protocol_complete, protocol_missing, source_doc_date, disputed_at, disputed_reason",
+      ),
+    getEarliestOpensBySlug(),
+  ]);
 
   if (error) throw error;
 
@@ -72,12 +76,50 @@ export const getVerificationQueue = cache(async (): Promise<VerificationQueueIte
   }));
 
   return items.sort((a, b) => {
+    // План 2026-09-21, разбор бизнес-процессов, предложение №3: у вуза с
+    // известной (подтверждённой — см. getEarliestOpensBySlug) датой
+    // открытия регистрации факты подтверждаются раньше, чем у вуза, чей
+    // срок ещё дальше или вовсе неизвестен — иначе в декабре, когда в
+    // очереди разом копится порция 2 требований и обновлённые формулы,
+    // часы владельца идут по порядку добавления записи, а не по тому,
+    // где дедлайн ближе.
+    const opensA = earliestOpensBySlug.get(a.universitySlug);
+    const opensB = earliestOpensBySlug.get(b.universitySlug);
+    if (opensA && opensB && opensA !== opensB) return opensA < opensB ? -1 : 1;
+    if (opensA && !opensB) return -1;
+    if (!opensA && opensB) return 1;
+
     const priorityDiff = priority(a.universitySlug) - priority(b.universitySlug);
     if (priorityDiff !== 0) return priorityDiff;
     // Старые несобранные записи — вперёд, чтобы ничего не забывалось.
     return new Date(a.collectedAt).getTime() - new Date(b.collectedAt).getTime();
   });
 });
+
+// Самая ранняя известная дата открытия регистрации на вуз. Только
+// ПОДТВЕРЖДЁННЫЕ строки — этот запрос идёт через анонимный ключ (тот же
+// клиент, что у публичных страниц), а RLS application_round
+// (application_round_public_read, verified_at is not null) неподтверждённые
+// черновые даты и не отдаст. Сигнал уже полезен и в таком урезанном виде:
+// как только срок вуза подтверждён, его оставшиеся факты в очереди
+// подтверждения поднимаются наверх сами, без ручной перестановки.
+async function getEarliestOpensBySlug(): Promise<Map<string, string>> {
+  const { data, error } = await supabase
+    .from("application_round")
+    .select("opens_on, university:university_id(slug)")
+    .not("opens_on", "is", null);
+
+  if (error) throw error;
+
+  const earliest = new Map<string, string>();
+  for (const row of data ?? []) {
+    const slug = (row.university as unknown as { slug: string } | null)?.slug;
+    if (!slug || !row.opens_on) continue;
+    const current = earliest.get(slug);
+    if (!current || row.opens_on < current) earliest.set(slug, row.opens_on);
+  }
+  return earliest;
+}
 
 export type VerificationHealth = {
   verifiedFormulas: number;
