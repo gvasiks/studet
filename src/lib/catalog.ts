@@ -36,9 +36,19 @@ export type Programme = {
   verified_at: string | null;
 };
 
-export type ProgrammeWithUniversity = Programme & {
+// Без description_lv/description_en: ни список каталога, ни карточка
+// избранного их не показывают (только сама страница программы, через
+// getProgramme ниже) — на 899 строках каталога это была самая тяжёлая
+// пара колонок в запросе без всякой пользы (ревью performance-tester,
+// 2026-09-24). CATALOG_LIST_COLUMNS ниже — та же мысль на уровне SQL.
+export type ProgrammeWithUniversity = Omit<Programme, "description_lv" | "description_en"> & {
   university: Pick<University, "slug" | "name_lv" | "name_en" | "city">;
 };
+
+const CATALOG_LIST_COLUMNS =
+  "id, university_id, slug, name_lv, name_en, degree_level, language_of_instruction, study_mode, " +
+  "city, funding_type, tuition_fee_amount, tuition_fee_currency, budget_places, duration_years, " +
+  "accreditation_valid_until, source_url, verified_at";
 
 // Переехали в names.ts (без обращения к базе — тестируются отдельно);
 // реэкспорт, чтобы существующие импорты из "@/lib/catalog" не менялись.
@@ -82,8 +92,8 @@ export const listProgrammes = cache(
       .from("programme")
       .select(
         interestCodes
-          ? "*, university!inner(slug, name_lv, name_en, city), programme_field!inner(field_code)"
-          : "*, university!inner(slug, name_lv, name_en, city)",
+          ? `${CATALOG_LIST_COLUMNS}, university!inner(slug, name_lv, name_en, city), programme_field!inner(field_code)`
+          : `${CATALOG_LIST_COLUMNS}, university!inner(slug, name_lv, name_en, city)`,
       );
 
     if (interestCodes) {
@@ -126,11 +136,11 @@ export async function getProgrammesByIds(ids: string[]): Promise<ProgrammeWithUn
 
   const { data, error } = await supabase
     .from("programme")
-    .select("*, university!inner(slug, name_lv, name_en, city)")
+    .select(`${CATALOG_LIST_COLUMNS}, university!inner(slug, name_lv, name_en, city)`)
     .in("id", ids);
 
   if (error) throw error;
-  return data as ProgrammeWithUniversity[];
+  return data as unknown as ProgrammeWithUniversity[];
 }
 
 export const listUniversities = cache(
@@ -150,25 +160,22 @@ export const getProgramme = cache(
     universitySlug: string,
     programmeSlug: string,
   ): Promise<(Programme & { university: University }) | null> => {
-    const { data: university, error: universityError } = await supabase
-      .from("university")
-      .select("*")
-      .eq("slug", universitySlug)
-      .maybeSingle();
-
-    if (universityError) throw universityError;
-    if (!university) return null;
-
-    const { data: programme, error: programmeError } = await supabase
+    // Один запрос вместо двух последовательных (вуз, потом программа) —
+    // это самая приоритетная для роста страница (правило 4 CLAUDE.md:
+    // весь канал роста — поиск, и приходят сразу на карточку), лишний
+    // круг до Supabase на каждый визит был чистой потерей (ревью
+    // performance-tester, 2026-09-24). university!inner — тот же приём,
+    // что и в listProgrammes, чтобы фильтровать по university.slug.
+    const { data, error } = await supabase
       .from("programme")
-      .select("*")
-      .eq("university_id", university.id)
+      .select("*, university!inner(*)")
+      .eq("university.slug", universitySlug)
       .eq("slug", programmeSlug)
       .maybeSingle();
 
-    if (programmeError) throw programmeError;
-    if (!programme) return null;
+    if (error) throw error;
+    if (!data) return null;
 
-    return { ...programme, university };
+    return data as unknown as Programme & { university: University };
   },
 );

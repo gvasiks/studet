@@ -118,53 +118,59 @@ export const getMatchData = cache(async (locale: Locale): Promise<MatchData> => 
   return { formulas, requirements, levelCoefficients, isFixture: false };
 });
 
-// Требования читаются отдельным запросом, не JOIN'ом от formula: у
-// большинства программ требований пока нет вовсе (охват растёт по частям,
-// план 2026-09-21, пункт 02), и связывать несвязанные наборы через JOIN
-// только усложнило бы типы без выгоды. excludeProgrammeIds — программы,
-// у которых уже есть формула: их требования избыточны (формула строже —
-// в ней те же предметы плюс веса), не показываем программу дважды.
+// excludeProgrammeIds — программы, у которых уже есть формула: их
+// требования избыточны (формула строже — в ней те же предметы плюс веса),
+// не показываем программу дважды. programme_requirement вложен в тот же
+// запрос (PostgREST-эмбед по requirement_set_id), не отдельным запросом —
+// раньше было два последовательных круга до Supabase на каждый визит
+// /match, лишний вариант (ревью performance-tester, 2026-09-24).
 async function getMatchRequirements(locale: Locale, excludeProgrammeIds: Set<string>): Promise<MatchRequirement[]> {
   const { data: sets, error } = await supabase
     .from("programme_requirement_set")
     .select(
-      "id, programme_id, source_url, verified_at, programme!inner(slug, name_lv, name_en, university!inner(slug, name_lv, name_en))",
+      "id, programme_id, source_url, verified_at, " +
+        "programme!inner(slug, name_lv, name_en, university!inner(slug, name_lv, name_en)), " +
+        "programme_requirement(subject, alternative_group)",
     )
     .not("verified_at", "is", null);
 
   if (error) throw error;
-  const rows = (sets ?? []).filter((row) => !excludeProgrammeIds.has(row.programme_id));
-  if (rows.length === 0) return [];
-
-  const { data: items, error: itemsError } = await supabase
-    .from("programme_requirement")
-    .select("requirement_set_id, subject, alternative_group")
-    .in(
-      "requirement_set_id",
-      rows.map((row) => row.id),
-    );
-  if (itemsError) throw itemsError;
-
-  // Строки одного requirement_set группируются по alternative_group: строки
-  // с одинаковым (непустым) значением — одна группа "нужен хотя бы один из
-  // них"; alternative_group=null — своя группа из одного предмета.
-  const groupsBySet = new Map<string, Map<string, string[]>>();
-  for (const item of items ?? []) {
-    const bySet = groupsBySet.get(item.requirement_set_id) ?? new Map<string, string[]>();
-    const key = item.alternative_group ?? `__solo_${item.subject}`;
-    const group = bySet.get(key) ?? [];
-    group.push(item.subject);
-    bySet.set(key, group);
-    groupsBySet.set(item.requirement_set_id, bySet);
-  }
-
-  return rows.map((row) => {
-    const programme = row.programme as unknown as {
+  // Через unknown: два вложенных !inner плюс отдельный эмбед — supabase-js
+  // не выводит форму строки из такой строки select (см. тот же приём в
+  // listProgrammes, src/lib/catalog.ts).
+  type RequirementSetRow = {
+    id: string;
+    programme_id: string;
+    source_url: string | null;
+    verified_at: string;
+    programme: {
       slug: string;
       name_lv: string | null;
       name_en: string | null;
       university: { slug: string; name_lv: string; name_en: string | null };
     };
+    programme_requirement: { subject: string; alternative_group: string | null }[];
+  };
+  const rows = ((sets ?? []) as unknown as RequirementSetRow[]).filter(
+    (row) => !excludeProgrammeIds.has(row.programme_id),
+  );
+  if (rows.length === 0) return [];
+
+  return rows.map((row) => {
+    const programme = row.programme;
+    const items = row.programme_requirement;
+
+    // Строки одного requirement_set группируются по alternative_group: строки
+    // с одинаковым (непустым) значением — одна группа "нужен хотя бы один из
+    // них"; alternative_group=null — своя группа из одного предмета.
+    const groups = new Map<string, string[]>();
+    for (const item of items) {
+      const key = item.alternative_group ?? `__solo_${item.subject}`;
+      const group = groups.get(key) ?? [];
+      group.push(item.subject);
+      groups.set(key, group);
+    }
+
     return {
       requirementId: row.id,
       programmeSlug: programme.slug,
@@ -173,7 +179,7 @@ async function getMatchRequirements(locale: Locale, excludeProgrammeIds: Set<str
       universityName: localizedName(programme.university, locale),
       verifiedAt: row.verified_at as string,
       sourceUrl: row.source_url,
-      subjectGroups: [...(groupsBySet.get(row.id)?.values() ?? [])],
+      subjectGroups: [...groups.values()],
     };
   });
 }
