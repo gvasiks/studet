@@ -174,9 +174,12 @@ BLOCKS: list[DuBlock] = [
     DuBlock(
         "Mūzika (42212, D04A8)",
         ["niid-26827-lv", "niid-26827-en"],
-        "Kopējais vērtējums (100%): iestājpārbaudījums specialitātē (30%) + kolokvijs "
-        "(30%) + CE latviešu valodā (10%) + CE svešvalodā (10%) + CE matemātikā (10%) "
-        "+ visu CE kopvērtējumu vidējā vērtība (10%).",
+        "Iestājpārbaudījumi: eksāmens specialitātē, kolokvijs specialitātē. "
+        "Centralizētais eksāmens: latviešu valodā, pirmajā svešvalodā, matemātikā, "
+        "visu CE kopvērtējumu vidējā vērtība. Kopējais vērtējums (100%) veidojas no "
+        "iestājpārbaudījuma specialitātē (30%) un kolokvijā (30%), vērtējumiem "
+        "centralizētajos eksāmenos latviešu valodā (10%), svešvalodā (10%) un "
+        "matemātikā (10%), visu CE kopvērtējumu vidējā vērtība (10%).",
     ),
     DuBlock(
         "Biznesa un finanšu procesi (42311, D1270)",

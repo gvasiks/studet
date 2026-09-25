@@ -4,6 +4,7 @@
   "formulas": [
     {
       "gates": [],
+      "programme_name": null,
       "programme_slug": "accountancy-and-finance-lv-college",
       "source_copy_path": "docs/source-documents/lu/uzn-prasibas-pamat-2026-27.pdf",
       "source_copy_sha256": "3e8f33e136a55307c53e7b9ef4631890a439d9d62ef63d61f254a35cbb62eccc",
@@ -47,6 +48,7 @@
     },
     {
       "gates": [],
+      "programme_name": null,
       "programme_slug": "accounting-analysis-and-audit",
       "source_copy_path": "docs/source-documents/lu/uzn-prasibas-pamat-2026-27.pdf",
       "source_copy_sha256": "3e8f33e136a55307c53e7b9ef4631890a439d9d62ef63d61f254a35cbb62eccc",
@@ -90,6 +92,7 @@
     },
     {
       "gates": [],
+      "programme_name": null,
       "programme_slug": "art-1",
       "source_copy_path": "docs/source-documents/lu/uzn-prasibas-pamat-2026-27.pdf",
       "source_copy_sha256": "3e8f33e136a55307c53e7b9ef4631890a439d9d62ef63d61f254a35cbb62eccc",
@@ -139,6 +142,7 @@
     },
     {
       "gates": [],
+      "programme_name": null,
       "programme_slug": "biology",
       "source_copy_path": "docs/source-documents/lu/uzn-prasibas-pamat-2026-27.pdf",
       "source_copy_sha256": "3e8f33e136a55307c53e7b9ef4631890a439d9d62ef63d61f254a35cbb62eccc",
@@ -188,6 +192,7 @@
     },
     {
       "gates": [],
+      "programme_name": null,
       "programme_slug": "business-administration-en",
       "source_copy_path": "docs/source-documents/lu/uzn-prasibas-pamat-2026-27.pdf",
       "source_copy_sha256": "3e8f33e136a55307c53e7b9ef4631890a439d9d62ef63d61f254a35cbb62eccc",
@@ -231,6 +236,7 @@
     },
     {
       "gates": [],
+      "programme_name": null,
       "programme_slug": "business-administration-lv",
       "source_copy_path": "docs/source-documents/lu/uzn-prasibas-pamat-2026-27.pdf",
       "source_copy_sha256": "3e8f33e136a55307c53e7b9ef4631890a439d9d62ef63d61f254a35cbb62eccc",
@@ -274,6 +280,7 @@
     },
     {
       "gates": [],
+      "programme_name": null,
       "programme_slug": "business-process-management-en",
       "source_copy_path": "docs/source-documents/lu/uzn-prasibas-pamat-2026-27.pdf",
       "source_copy_sha256": "3e8f33e136a55307c53e7b9ef4631890a439d9d62ef63d61f254a35cbb62eccc",
@@ -317,6 +324,7 @@
     },
     {
       "gates": [],
+      "programme_name": null,
       "programme_slug": "communication-science",
       "source_copy_path": "docs/source-documents/lu/uzn-prasibas-pamat-2026-27.pdf",
       "source_copy_sha256": "3e8f33e136a55307c53e7b9ef4631890a439d9d62ef63d61f254a35cbb62eccc",
@@ -366,6 +374,7 @@
     },
     {
       "gates": [],
+      "programme_name": null,
       "programme_slug": "computer-science",
       "source_copy_path": "docs/source-documents/lu/uzn-prasibas-pamat-2026-27.pdf",
       "source_copy_sha256": "3e8f33e136a55307c53e7b9ef4631890a439d9d62ef63d61f254a35cbb62eccc",
@@ -409,6 +418,7 @@
     },
     {
       "gates": [],
+      "programme_name": null,
       "programme_slug": "computer-science-en",
       "source_copy_path": "docs/source-documents/lu/uzn-prasibas-pamat-2026-27.pdf",
       "source_copy_sha256": "3e8f33e136a55307c53e7b9ef4631890a439d9d62ef63d61f254a35cbb62eccc",
@@ -452,6 +462,7 @@
     },
     {
       "gates": [],
+      "programme_name": null,
       "programme_slug": "cultural-and-social-anthropology",
       "source_copy_path": "docs/source-documents/lu/uzn-prasibas-pamat-2026-27.pdf",
       "source_copy_sha256": "3e8f33e136a55307c53e7b9ef4631890a439d9d62ef63d61f254a35cbb62eccc",
@@ -501,6 +512,7 @@
     },
     {
       "gates": [],
+      "programme_name": null,
       "programme_slug": "cultural-and-social-anthropology-en",
       "source_copy_path": "docs/source-documents/lu/uzn-prasibas-pamat-2026-27.pdf",
       "source_copy_sha256": "3e8f33e136a55307c53e7b9ef4631890a439d9d62ef63d61f254a35cbb62eccc",
@@ -550,6 +562,7 @@
     },
     {
       "gates": [],
+      "programme_name": null,
       "programme_slug": "e-business-management",
       "source_copy_path": "docs/source-documents/lu/uzn-prasibas-pamat-2026-27.pdf",
       "source_copy_sha256": "3e8f33e136a55307c53e7b9ef4631890a439d9d62ef63d61f254a35cbb62eccc",
@@ -593,6 +606,7 @@
     },
     {
       "gates": [],
+      "programme_name": null,
       "programme_slug": "economics",
       "source_copy_path": "docs/source-documents/lu/uzn-prasibas-pamat-2026-27.pdf",
       "source_copy_sha256": "3e8f33e136a55307c53e7b9ef4631890a439d9d62ef63d61f254a35cbb62eccc",
@@ -636,6 +650,7 @@
     },
     {
       "gates": [],
+      "programme_name": null,
       "programme_slug": "english-european-languages-and-business-studies",
       "source_copy_path": "docs/source-documents/lu/uzn-prasibas-pamat-2026-27.pdf",
       "source_copy_sha256": "3e8f33e136a55307c53e7b9ef4631890a439d9d62ef63d61f254a35cbb62eccc",
@@ -679,6 +694,7 @@
     },
     {
       "gates": [],
+      "programme_name": null,
       "programme_slug": "environmental-science",
       "source_copy_path": "docs/source-documents/lu/uzn-prasibas-pamat-2026-27.pdf",
       "source_copy_sha256": "3e8f33e136a55307c53e7b9ef4631890a439d9d62ef63d61f254a35cbb62eccc",
@@ -728,6 +744,7 @@
     },
     {
       "gates": [],
+      "programme_name": null,
       "programme_slug": "finance-management-information-systems-en",
       "source_copy_path": "docs/source-documents/lu/uzn-prasibas-pamat-2026-27.pdf",
       "source_copy_sha256": "3e8f33e136a55307c53e7b9ef4631890a439d9d62ef63d61f254a35cbb62eccc",
@@ -771,6 +788,7 @@
     },
     {
       "gates": [],
+      "programme_name": null,
       "programme_slug": "financial-management",
       "source_copy_path": "docs/source-documents/lu/uzn-prasibas-pamat-2026-27.pdf",
       "source_copy_sha256": "3e8f33e136a55307c53e7b9ef4631890a439d9d62ef63d61f254a35cbb62eccc",
@@ -814,6 +832,7 @@
     },
     {
       "gates": [],
+      "programme_name": null,
       "programme_slug": "geography",
       "source_copy_path": "docs/source-documents/lu/uzn-prasibas-pamat-2026-27.pdf",
       "source_copy_sha256": "3e8f33e136a55307c53e7b9ef4631890a439d9d62ef63d61f254a35cbb62eccc",
@@ -863,6 +882,7 @@
     },
     {
       "gates": [],
+      "programme_name": null,
       "programme_slug": "geoinformatics",
       "source_copy_path": "docs/source-documents/lu/uzn-prasibas-pamat-2026-27.pdf",
       "source_copy_sha256": "3e8f33e136a55307c53e7b9ef4631890a439d9d62ef63d61f254a35cbb62eccc",
@@ -912,6 +932,7 @@
     },
     {
       "gates": [],
+      "programme_name": null,
       "programme_slug": "geology",
       "source_copy_path": "docs/source-documents/lu/uzn-prasibas-pamat-2026-27.pdf",
       "source_copy_sha256": "3e8f33e136a55307c53e7b9ef4631890a439d9d62ef63d61f254a35cbb62eccc",
@@ -961,6 +982,7 @@
     },
     {
       "gates": [],
+      "programme_name": null,
       "programme_slug": "history-and-archeology",
       "source_copy_path": "docs/source-documents/lu/uzn-prasibas-pamat-2026-27.pdf",
       "source_copy_sha256": "3e8f33e136a55307c53e7b9ef4631890a439d9d62ef63d61f254a35cbb62eccc",
@@ -1010,6 +1032,7 @@
     },
     {
       "gates": [],
+      "programme_name": null,
       "programme_slug": "industrial-engineering-and-management-en",
       "source_copy_path": "docs/source-documents/lu/uzn-prasibas-pamat-2026-27.pdf",
       "source_copy_sha256": "3e8f33e136a55307c53e7b9ef4631890a439d9d62ef63d61f254a35cbb62eccc",
@@ -1059,6 +1082,7 @@
     },
     {
       "gates": [],
+      "programme_name": null,
       "programme_slug": "industrial-engineering-and-management-lv",
       "source_copy_path": "docs/source-documents/lu/uzn-prasibas-pamat-2026-27.pdf",
       "source_copy_sha256": "3e8f33e136a55307c53e7b9ef4631890a439d9d62ef63d61f254a35cbb62eccc",
@@ -1114,6 +1138,7 @@
     },
     {
       "gates": [],
+      "programme_name": null,
       "programme_slug": "information-management",
       "source_copy_path": "docs/source-documents/lu/uzn-prasibas-pamat-2026-27.pdf",
       "source_copy_sha256": "3e8f33e136a55307c53e7b9ef4631890a439d9d62ef63d61f254a35cbb62eccc",
@@ -1163,6 +1188,7 @@
     },
     {
       "gates": [],
+      "programme_name": null,
       "programme_slug": "international-economics-and-commercial-diplomacy-en",
       "source_copy_path": "docs/source-documents/lu/uzn-prasibas-pamat-2026-27.pdf",
       "source_copy_sha256": "3e8f33e136a55307c53e7b9ef4631890a439d9d62ef63d61f254a35cbb62eccc",
@@ -1206,6 +1232,7 @@
     },
     {
       "gates": [],
+      "programme_name": null,
       "programme_slug": "international-economics-and-commercial-diplomacy-lv",
       "source_copy_path": "docs/source-documents/lu/uzn-prasibas-pamat-2026-27.pdf",
       "source_copy_sha256": "3e8f33e136a55307c53e7b9ef4631890a439d9d62ef63d61f254a35cbb62eccc",
@@ -1249,6 +1276,7 @@
     },
     {
       "gates": [],
+      "programme_name": null,
       "programme_slug": "international-finance-en",
       "source_copy_path": "docs/source-documents/lu/uzn-prasibas-pamat-2026-27.pdf",
       "source_copy_sha256": "3e8f33e136a55307c53e7b9ef4631890a439d9d62ef63d61f254a35cbb62eccc",
@@ -1298,6 +1326,7 @@
     },
     {
       "gates": [],
+      "programme_name": null,
       "programme_slug": "labour-protection-college",
       "source_copy_path": "docs/source-documents/lu/uzn-prasibas-pamat-2026-27.pdf",
       "source_copy_sha256": "3e8f33e136a55307c53e7b9ef4631890a439d9d62ef63d61f254a35cbb62eccc",
@@ -1341,6 +1370,7 @@
     },
     {
       "gates": [],
+      "programme_name": null,
       "programme_slug": "latvian-studies",
       "source_copy_path": "docs/source-documents/lu/uzn-prasibas-pamat-2026-27.pdf",
       "source_copy_sha256": "3e8f33e136a55307c53e7b9ef4631890a439d9d62ef63d61f254a35cbb62eccc",
@@ -1384,6 +1414,7 @@
     },
     {
       "gates": [],
+      "programme_name": null,
       "programme_slug": "mathematician-statistician",
       "source_copy_path": "docs/source-documents/lu/uzn-prasibas-pamat-2026-27.pdf",
       "source_copy_sha256": "3e8f33e136a55307c53e7b9ef4631890a439d9d62ef63d61f254a35cbb62eccc",
@@ -1427,6 +1458,7 @@
     },
     {
       "gates": [],
+      "programme_name": null,
       "programme_slug": "mathematics",
       "source_copy_path": "docs/source-documents/lu/uzn-prasibas-pamat-2026-27.pdf",
       "source_copy_sha256": "3e8f33e136a55307c53e7b9ef4631890a439d9d62ef63d61f254a35cbb62eccc",
@@ -1470,6 +1502,7 @@
     },
     {
       "gates": [],
+      "programme_name": null,
       "programme_slug": "occupational-health-and-safety-at-work",
       "source_copy_path": "docs/source-documents/lu/uzn-prasibas-pamat-2026-27.pdf",
       "source_copy_sha256": "3e8f33e136a55307c53e7b9ef4631890a439d9d62ef63d61f254a35cbb62eccc",
@@ -1513,6 +1546,7 @@
     },
     {
       "gates": [],
+      "programme_name": null,
       "programme_slug": "optometry-en",
       "source_copy_path": "docs/source-documents/lu/uzn-prasibas-pamat-2026-27.pdf",
       "source_copy_sha256": "3e8f33e136a55307c53e7b9ef4631890a439d9d62ef63d61f254a35cbb62eccc",
@@ -1556,6 +1590,7 @@
     },
     {
       "gates": [],
+      "programme_name": null,
       "programme_slug": "optometry-lv",
       "source_copy_path": "docs/source-documents/lu/uzn-prasibas-pamat-2026-27.pdf",
       "source_copy_sha256": "3e8f33e136a55307c53e7b9ef4631890a439d9d62ef63d61f254a35cbb62eccc",
@@ -1599,6 +1634,7 @@
     },
     {
       "gates": [],
+      "programme_name": null,
       "programme_slug": "philosophy",
       "source_copy_path": "docs/source-documents/lu/uzn-prasibas-pamat-2026-27.pdf",
       "source_copy_sha256": "3e8f33e136a55307c53e7b9ef4631890a439d9d62ef63d61f254a35cbb62eccc",
@@ -1642,6 +1678,7 @@
     },
     {
       "gates": [],
+      "programme_name": null,
       "programme_slug": "political-science",
       "source_copy_path": "docs/source-documents/lu/uzn-prasibas-pamat-2026-27.pdf",
       "source_copy_sha256": "3e8f33e136a55307c53e7b9ef4631890a439d9d62ef63d61f254a35cbb62eccc",
@@ -1691,6 +1728,7 @@
     },
     {
       "gates": [],
+      "programme_name": null,
       "programme_slug": "preschool-teacher-college",
       "source_copy_path": "docs/source-documents/lu/uzn-prasibas-pamat-2026-27.pdf",
       "source_copy_sha256": "3e8f33e136a55307c53e7b9ef4631890a439d9d62ef63d61f254a35cbb62eccc",
@@ -1734,6 +1772,7 @@
     },
     {
       "gates": [],
+      "programme_name": null,
       "programme_slug": "primary-education-teacher",
       "source_copy_path": "docs/source-documents/lu/uzn-prasibas-pamat-2026-27.pdf",
       "source_copy_sha256": "3e8f33e136a55307c53e7b9ef4631890a439d9d62ef63d61f254a35cbb62eccc",
@@ -1783,6 +1822,7 @@
     },
     {
       "gates": [],
+      "programme_name": null,
       "programme_slug": "programming-and-computer-network-administration-college",
       "source_copy_path": "docs/source-documents/lu/uzn-prasibas-pamat-2026-27.pdf",
       "source_copy_sha256": "3e8f33e136a55307c53e7b9ef4631890a439d9d62ef63d61f254a35cbb62eccc",
@@ -1826,6 +1866,7 @@
     },
     {
       "gates": [],
+      "programme_name": null,
       "programme_slug": "psychology-1",
       "source_copy_path": "docs/source-documents/lu/uzn-prasibas-pamat-2026-27.pdf",
       "source_copy_sha256": "3e8f33e136a55307c53e7b9ef4631890a439d9d62ef63d61f254a35cbb62eccc",
@@ -1869,6 +1910,7 @@
     },
     {
       "gates": [],
+      "programme_name": null,
       "programme_slug": "research-and-protection-of-cultural-and-environmental-heritage",
       "source_copy_path": "docs/source-documents/lu/uzn-prasibas-pamat-2026-27.pdf",
       "source_copy_sha256": "3e8f33e136a55307c53e7b9ef4631890a439d9d62ef63d61f254a35cbb62eccc",
@@ -1924,6 +1966,7 @@
     },
     {
       "gates": [],
+      "programme_name": null,
       "programme_slug": "social-work-in-riga-and-ul-branches",
       "source_copy_path": "docs/source-documents/lu/uzn-prasibas-pamat-2026-27.pdf",
       "source_copy_sha256": "3e8f33e136a55307c53e7b9ef4631890a439d9d62ef63d61f254a35cbb62eccc",
@@ -1973,6 +2016,7 @@
     },
     {
       "gates": [],
+      "programme_name": null,
       "programme_slug": "sociology",
       "source_copy_path": "docs/source-documents/lu/uzn-prasibas-pamat-2026-27.pdf",
       "source_copy_sha256": "3e8f33e136a55307c53e7b9ef4631890a439d9d62ef63d61f254a35cbb62eccc",
@@ -2022,6 +2066,7 @@
     },
     {
       "gates": [],
+      "programme_name": null,
       "programme_slug": "sports-technology-and-public-health",
       "source_copy_path": "docs/source-documents/lu/uzn-prasibas-pamat-2026-27.pdf",
       "source_copy_sha256": "3e8f33e136a55307c53e7b9ef4631890a439d9d62ef63d61f254a35cbb62eccc",
@@ -2065,6 +2110,7 @@
     },
     {
       "gates": [],
+      "programme_name": null,
       "programme_slug": "dental-hygiene",
       "source_copy_path": "docs/source-documents/rsu/uznemsanas-noteikumi-pamatstudijas-2026-27-rev1.pdf",
       "source_copy_sha256": "216cb0a5dac3502154f57f960a00c8a6298af8c631cc02628bec839b71b0d6a2",
@@ -2090,6 +2136,7 @@
     },
     {
       "gates": [],
+      "programme_name": null,
       "programme_slug": "dentistry",
       "source_copy_path": "docs/source-documents/rsu/uznemsanas-noteikumi-pamatstudijas-2026-27-rev1.pdf",
       "source_copy_sha256": "216cb0a5dac3502154f57f960a00c8a6298af8c631cc02628bec839b71b0d6a2",
@@ -2139,6 +2186,7 @@
     },
     {
       "gates": [],
+      "programme_name": null,
       "programme_slug": "dentistry-lv",
       "source_copy_path": "docs/source-documents/rsu/uznemsanas-noteikumi-pamatstudijas-2026-27-rev1.pdf",
       "source_copy_sha256": "216cb0a5dac3502154f57f960a00c8a6298af8c631cc02628bec839b71b0d6a2",
@@ -2188,6 +2236,7 @@
     },
     {
       "gates": [],
+      "programme_name": null,
       "programme_slug": "international-business-and-start-up-entrepreneurship",
       "source_copy_path": "docs/source-documents/rsu/uznemsanas-noteikumi-pamatstudijas-2026-27-rev1.pdf",
       "source_copy_sha256": "216cb0a5dac3502154f57f960a00c8a6298af8c631cc02628bec839b71b0d6a2",
@@ -2225,6 +2274,7 @@
     },
     {
       "gates": [],
+      "programme_name": null,
       "programme_slug": "international-business-and-sustainable-economy",
       "source_copy_path": "docs/source-documents/rsu/uznemsanas-noteikumi-pamatstudijas-2026-27-rev1.pdf",
       "source_copy_sha256": "216cb0a5dac3502154f57f960a00c8a6298af8c631cc02628bec839b71b0d6a2",
@@ -2262,6 +2312,7 @@
     },
     {
       "gates": [],
+      "programme_name": null,
       "programme_slug": "international-marketing-and-advertising",
       "source_copy_path": "docs/source-documents/rsu/uznemsanas-noteikumi-pamatstudijas-2026-27-rev1.pdf",
       "source_copy_sha256": "216cb0a5dac3502154f57f960a00c8a6298af8c631cc02628bec839b71b0d6a2",
@@ -2299,6 +2350,7 @@
     },
     {
       "gates": [],
+      "programme_name": null,
       "programme_slug": "international-relations-european-studies",
       "source_copy_path": "docs/source-documents/rsu/uznemsanas-noteikumi-pamatstudijas-2026-27-rev1.pdf",
       "source_copy_sha256": "216cb0a5dac3502154f57f960a00c8a6298af8c631cc02628bec839b71b0d6a2",
@@ -2336,6 +2388,7 @@
     },
     {
       "gates": [],
+      "programme_name": null,
       "programme_slug": "journalism",
       "source_copy_path": "docs/source-documents/rsu/uznemsanas-noteikumi-pamatstudijas-2026-27-rev1.pdf",
       "source_copy_sha256": "216cb0a5dac3502154f57f960a00c8a6298af8c631cc02628bec839b71b0d6a2",
@@ -2373,6 +2426,7 @@
     },
     {
       "gates": [],
+      "programme_name": null,
       "programme_slug": "law",
       "source_copy_path": "docs/source-documents/rsu/uznemsanas-noteikumi-pamatstudijas-2026-27-rev1.pdf",
       "source_copy_sha256": "216cb0a5dac3502154f57f960a00c8a6298af8c631cc02628bec839b71b0d6a2",
@@ -2410,6 +2464,7 @@
     },
     {
       "gates": [],
+      "programme_name": null,
       "programme_slug": "medical-massage-liepaja-branch",
       "source_copy_path": "docs/source-documents/rsu/uznemsanas-noteikumi-pamatstudijas-2026-27-rev1.pdf",
       "source_copy_sha256": "216cb0a5dac3502154f57f960a00c8a6298af8c631cc02628bec839b71b0d6a2",
@@ -2447,6 +2502,7 @@
     },
     {
       "gates": [],
+      "programme_name": null,
       "programme_slug": "multimedia-communication",
       "source_copy_path": "docs/source-documents/rsu/uznemsanas-noteikumi-pamatstudijas-2026-27-rev1.pdf",
       "source_copy_sha256": "216cb0a5dac3502154f57f960a00c8a6298af8c631cc02628bec839b71b0d6a2",
@@ -2484,6 +2540,7 @@
     },
     {
       "gates": [],
+      "programme_name": null,
       "programme_slug": "physician-assistant-liepaja-branch",
       "source_copy_path": "docs/source-documents/rsu/uznemsanas-noteikumi-pamatstudijas-2026-27-rev1.pdf",
       "source_copy_sha256": "216cb0a5dac3502154f57f960a00c8a6298af8c631cc02628bec839b71b0d6a2",
@@ -2521,6 +2578,7 @@
     },
     {
       "gates": [],
+      "programme_name": null,
       "programme_slug": "physiotherapy-0-lv",
       "source_copy_path": "docs/source-documents/rsu/uznemsanas-noteikumi-pamatstudijas-2026-27-rev1.pdf",
       "source_copy_sha256": "216cb0a5dac3502154f57f960a00c8a6298af8c631cc02628bec839b71b0d6a2",
@@ -2564,6 +2622,7 @@
     },
     {
       "gates": [],
+      "programme_name": null,
       "programme_slug": "psychology-0",
       "source_copy_path": "docs/source-documents/rsu/uznemsanas-noteikumi-pamatstudijas-2026-27-rev1.pdf",
       "source_copy_sha256": "216cb0a5dac3502154f57f960a00c8a6298af8c631cc02628bec839b71b0d6a2",
@@ -2601,6 +2660,7 @@
     },
     {
       "gates": [],
+      "programme_name": null,
       "programme_slug": "public-relations",
       "source_copy_path": "docs/source-documents/rsu/uznemsanas-noteikumi-pamatstudijas-2026-27-rev1.pdf",
       "source_copy_sha256": "216cb0a5dac3502154f57f960a00c8a6298af8c631cc02628bec839b71b0d6a2",
@@ -2638,6 +2698,7 @@
     },
     {
       "gates": [],
+      "programme_name": null,
       "programme_slug": "social-work-0",
       "source_copy_path": "docs/source-documents/rsu/uznemsanas-noteikumi-pamatstudijas-2026-27-rev1.pdf",
       "source_copy_sha256": "216cb0a5dac3502154f57f960a00c8a6298af8c631cc02628bec839b71b0d6a2",
@@ -2675,6 +2736,7 @@
     },
     {
       "gates": [],
+      "programme_name": null,
       "programme_slug": "sports-coach",
       "source_copy_path": "docs/source-documents/rsu/uznemsanas-noteikumi-pamatstudijas-2026-27-rev1.pdf",
       "source_copy_sha256": "216cb0a5dac3502154f57f960a00c8a6298af8c631cc02628bec839b71b0d6a2",
@@ -2718,6 +2780,7 @@
     },
     {
       "gates": [],
+      "programme_name": null,
       "programme_slug": "sports-coach-liepaja-branch",
       "source_copy_path": "docs/source-documents/rsu/uznemsanas-noteikumi-pamatstudijas-2026-27-rev1.pdf",
       "source_copy_sha256": "216cb0a5dac3502154f57f960a00c8a6298af8c631cc02628bec839b71b0d6a2",
@@ -2761,6 +2824,7 @@
     },
     {
       "gates": [],
+      "programme_name": "Datorzinātne un organizāciju tehnoloģijas",
       "programme_slug": "dbt-02c60",
       "source_copy_path": "docs/source-documents/rtu/uznemsanas-noteikumi-pamatstudijas-2026-27.html",
       "source_copy_sha256": "905063710a4c8f7fcda82d900c95b83389a4308d754af442361f2c4007b4bf86",
@@ -2822,6 +2886,7 @@
     },
     {
       "gates": [],
+      "programme_name": "Vadīšana starptautiskos uzņēmumos",
       "programme_slug": "ibx-02c60",
       "source_copy_path": "docs/source-documents/rtu/uznemsanas-noteikumi-pamatstudijas-2026-27.html",
       "source_copy_sha256": "905063710a4c8f7fcda82d900c95b83389a4308d754af442361f2c4007b4bf86",
@@ -2883,6 +2948,7 @@
     },
     {
       "gates": [],
+      "programme_name": "Biznesa vadība",
       "programme_slug": "biznesa-vadiba-bakalaurs",
       "source_copy_path": "docs/source-documents/venta/uznemsanas-noteikumi-2026-27-pielikums-2-grozits-06-2026.pdf",
       "source_copy_sha256": "00e4d4530d48142f578a39fdf8c8ecc3199f49965cb625a7bfcec27d5a1a5341",
@@ -2926,6 +2992,7 @@
     },
     {
       "gates": [],
+      "programme_name": "Datorzinātnes",
       "programme_slug": "datorzinatnes-bakalaurs",
       "source_copy_path": "docs/source-documents/venta/uznemsanas-noteikumi-2026-27-pielikums-2-grozits-06-2026.pdf",
       "source_copy_sha256": "00e4d4530d48142f578a39fdf8c8ecc3199f49965cb625a7bfcec27d5a1a5341",
@@ -2969,6 +3036,7 @@
     },
     {
       "gates": [],
+      "programme_name": "Jaunuzņēmumu vadība",
       "programme_slug": "jaunuznemumu-vadiba",
       "source_copy_path": "docs/source-documents/venta/uznemsanas-noteikumi-2026-27-pielikums-2-grozits-06-2026.pdf",
       "source_copy_sha256": "00e4d4530d48142f578a39fdf8c8ecc3199f49965cb625a7bfcec27d5a1a5341",
@@ -3012,6 +3080,7 @@
     },
     {
       "gates": [],
+      "programme_name": "Programmēšanas speciālists",
       "programme_slug": "programmesanas-specialists",
       "source_copy_path": "docs/source-documents/venta/uznemsanas-noteikumi-2026-27-pielikums-2-grozits-06-2026.pdf",
       "source_copy_sha256": "00e4d4530d48142f578a39fdf8c8ecc3199f49965cb625a7bfcec27d5a1a5341",
@@ -3055,6 +3124,7 @@
     },
     {
       "gates": [],
+      "programme_name": "Vadībzinātne",
       "programme_slug": "vadibzinatne-en-full_time",
       "source_copy_path": "docs/source-documents/venta/uznemsanas-noteikumi-2026-27-pielikums-2-grozits-06-2026.pdf",
       "source_copy_sha256": "00e4d4530d48142f578a39fdf8c8ecc3199f49965cb625a7bfcec27d5a1a5341",
@@ -3098,6 +3168,7 @@
     },
     {
       "gates": [],
+      "programme_name": "Vadībzinātne",
       "programme_slug": "vadibzinatne-lv-distance",
       "source_copy_path": "docs/source-documents/venta/uznemsanas-noteikumi-2026-27-pielikums-2-grozits-06-2026.pdf",
       "source_copy_sha256": "00e4d4530d48142f578a39fdf8c8ecc3199f49965cb625a7bfcec27d5a1a5341",
@@ -3141,6 +3212,7 @@
     },
     {
       "gates": [],
+      "programme_name": "Valodas, saziņa un kultūrvide",
       "programme_slug": "valodas-sazina-un-kulturvide",
       "source_copy_path": "docs/source-documents/venta/uznemsanas-noteikumi-2026-27-pielikums-2-grozits-06-2026.pdf",
       "source_copy_sha256": "00e4d4530d48142f578a39fdf8c8ecc3199f49965cb625a7bfcec27d5a1a5341",

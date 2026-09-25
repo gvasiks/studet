@@ -40,7 +40,7 @@ def _formulas(client) -> list[dict]:  # type: ignore[no-untyped-def]
             "id, variant, valid_from, valid_to, source_url, source_doc, source_doc_number, "
             "source_doc_date, source_copy_path, source_copy_sha256, source_excerpt, "
             "verified_at, verified_by, "
-            "programme!inner(slug, university!inner(slug))"
+            "programme!inner(slug, name_lv, university!inner(slug))"
         )
         .not_.is_("verified_at", "null")
         .execute()
@@ -67,6 +67,11 @@ def _formulas(client) -> list[dict]:  # type: ignore[no-untyped-def]
             {
                 "university_slug": programme["university"]["slug"],
                 "programme_slug": programme["slug"],
+                # план 2026-09-21, пункт 06: имя на момент подтверждения — не для
+                # отображения, а чтобы restore_verified.py мог заметить, что слаг
+                # при повторном сборе стал указывать на ДРУГУЮ программу, а не
+                # молча приписать восстановленный факт не той записи
+                "programme_name": programme.get("name_lv"),
                 "variant": row["variant"],
                 "valid_from": row["valid_from"],
                 "valid_to": row["valid_to"],
@@ -139,7 +144,7 @@ def _admission_types(client) -> list[dict]:  # type: ignore[no-untyped-def]
 def _programme_fields(client) -> list[dict]:  # type: ignore[no-untyped-def]
     rows = (
         client.table("programme_field")
-        .select("field_code, source, verified_at, verified_by, programme!inner(slug, university!inner(slug))")
+        .select("field_code, source, verified_at, verified_by, programme!inner(slug, name_lv, university!inner(slug))")
         .not_.is_("verified_at", "null")
         .execute()
         .data
@@ -148,6 +153,7 @@ def _programme_fields(client) -> list[dict]:  # type: ignore[no-untyped-def]
         {
             "university_slug": row["programme"]["university"]["slug"],
             "programme_slug": row["programme"]["slug"],
+            "programme_name": row["programme"].get("name_lv"),
             "field_code": row["field_code"],
             "source": row["source"],
             "verified_at": row["verified_at"],

@@ -18,7 +18,7 @@ const DICT_FILES = ["en.json", "lv.json"];
 
 // [регулярное выражение, что писать вместо этого — см. docs/TRANSLATION-GLOSSARY.md]
 const BANNED = [
-  [/\bcatalog\b(?!ue)/i, "catalogue"],
+  [/\bcatalogs?\b(?!ue)/i, "catalogue"], // \bcatalog\b (без s?) пропускал множественное число "catalogs" — \b не даёт границы между "g" и "s"
   [/\bcompetitive score\b/i, "competition score"],
   [/\branking calculator\b/i, "competition score calculator"],
 ];

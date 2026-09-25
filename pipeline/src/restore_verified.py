@@ -27,6 +27,18 @@ programme_id/university_id по слагам из снимка и сообщае
 на непустой базе это безопасный no-op, если ничего не терялось (те же
 значения перезаписываются теми же), но НЕ заменяет квартальную проверку
 на пустом проекте.
+
+Второй риск, найденный ревью 2026-09-24: слаг мог не пропасть, а
+ПЕРЕСЛАГОВАТЬСЯ — при повторном сборе каталога та же пара (вуз, слаг)
+из снимка вполне может теперь указывать на ДРУГУЮ программу (слаги
+генерируются из названия). Без проверки это выглядело бы как "нашёл
+программу" и молча приписало бы восстановленную формулу не той записи.
+Снимок (backup_verified.py) теперь хранит name_lv на момент
+подтверждения; `_resolve_programme` сравнивает его с текущим именем той
+же пары (вуз, слаг) и не восстанавливает при расхождении — ни в сухом
+прогоне, ни с --apply — а отдельно сообщает об этом как о вероятном
+переслаговании. Снимки без name_lv (сделанные до этой проверки)
+сравнивать не с чем — восстанавливаются как раньше.
 """
 
 from __future__ import annotations
@@ -52,25 +64,51 @@ def _university_ids(client) -> dict[str, str]:  # type: ignore[no-untyped-def]
     return {row["slug"]: row["id"] for row in rows}
 
 
-def _programme_ids(client, university_ids: dict[str, str]) -> dict[tuple[str, str], str]:  # type: ignore[no-untyped-def]
+def _programme_lookup(client, university_ids: dict[str, str]) -> dict[tuple[str, str], dict]:  # type: ignore[no-untyped-def]
     slug_by_uid = {v: k for k, v in university_ids.items()}
-    rows = client.table("programme").select("id, slug, university_id").execute().data
-    out: dict[tuple[str, str], str] = {}
+    rows = client.table("programme").select("id, slug, name_lv, university_id").execute().data
+    out: dict[tuple[str, str], dict] = {}
     for row in rows:
         uni_slug = slug_by_uid.get(row["university_id"])
         if uni_slug:
-            out[(uni_slug, row["slug"])] = row["id"]
+            out[(uni_slug, row["slug"])] = {"id": row["id"], "name_lv": row.get("name_lv")}
     return out
 
 
+def _resolve_programme(
+    lookup: dict[tuple[str, str], dict], key: tuple[str, str], snapshot_name: str | None
+) -> tuple[str | None, str | None]:
+    """(programme_id, collision_note) — второе не None, если слаг нашёлся, но
+    похоже указывает уже на ДРУГУЮ программу (каталог мог переслаговать
+    записи при повторном сборе между снимком и восстановлением). Сравниваем
+    имя на момент подтверждения (снимок) с текущим именем той же пары
+    (вуз, слаг); снимков без programme_name (сделанных до этой проверки) не
+    касается — сравнивать не с чем, восстанавливаем как раньше."""
+    found = lookup.get(key)
+    if found is None:
+        return None, None
+    current_name = found.get("name_lv")
+    if snapshot_name and current_name and snapshot_name != current_name:
+        return None, (
+            f"{key[0]}/{key[1]}: в снимке подтверждена «{snapshot_name}», сейчас по этому "
+            f"слагу «{current_name}» — похоже на переслагование каталога, не восстанавливаю "
+            "автоматически, сверьте вручную"
+        )
+    return found["id"], None
+
+
 def restore_formulas(
-    client, rows: list[dict], programme_ids: dict[tuple[str, str], str], apply: bool  # type: ignore[no-untyped-def]
-) -> tuple[int, list[str]]:
+    client, rows: list[dict], programme_lookup: dict[tuple[str, str], dict], apply: bool  # type: ignore[no-untyped-def]
+) -> tuple[int, list[str], list[str]]:
     restored = 0
     missing = []
+    collisions = []
     for row in rows:
         key = (row["university_slug"], row["programme_slug"])
-        programme_id = programme_ids.get(key)
+        programme_id, collision = _resolve_programme(programme_lookup, key, row.get("programme_name"))
+        if collision:
+            collisions.append(f"formula {collision}")
+            continue
         if programme_id is None:
             missing.append(f"formula {key[0]}/{key[1]} ({row['variant']}): программы нет в текущем каталоге")
             continue
@@ -105,7 +143,7 @@ def restore_formulas(
             client.table("formula_gate").insert(
                 [{**g, "formula_id": formula_id} for g in row["gates"]]
             ).execute()
-    return restored, missing
+    return restored, missing, collisions
 
 
 def restore_application_rounds(
@@ -145,13 +183,17 @@ def restore_admission_types(
 
 
 def restore_programme_fields(
-    client, rows: list[dict], programme_ids: dict[tuple[str, str], str], apply: bool  # type: ignore[no-untyped-def]
-) -> tuple[int, list[str]]:
+    client, rows: list[dict], programme_lookup: dict[tuple[str, str], dict], apply: bool  # type: ignore[no-untyped-def]
+) -> tuple[int, list[str], list[str]]:
     restored = 0
     missing = []
+    collisions = []
     for row in rows:
         key = (row["university_slug"], row["programme_slug"])
-        programme_id = programme_ids.get(key)
+        programme_id, collision = _resolve_programme(programme_lookup, key, row.get("programme_name"))
+        if collision:
+            collisions.append(f"programme_field {collision}")
+            continue
         if programme_id is None:
             missing.append(f"programme_field {key[0]}/{key[1]}: программы нет в текущем каталоге")
             continue
@@ -166,7 +208,7 @@ def restore_programme_fields(
             "verified_by": row["verified_by"],
         }
         client.table("programme_field").upsert(payload, on_conflict="programme_id").execute()
-    return restored, missing
+    return restored, missing, collisions
 
 
 def main(apply: bool) -> None:
@@ -175,12 +217,14 @@ def main(apply: bool) -> None:
     snapshot = load_snapshot()
 
     university_ids = _university_ids(client)
-    programme_ids = _programme_ids(client, university_ids)
+    programme_lookup = _programme_lookup(client, university_ids)
 
-    f_restored, f_missing = restore_formulas(client, snapshot["formulas"], programme_ids, apply)
+    f_restored, f_missing, f_collisions = restore_formulas(client, snapshot["formulas"], programme_lookup, apply)
     ar_restored, ar_missing = restore_application_rounds(client, snapshot["application_rounds"], university_ids, apply)
     at_restored, at_missing = restore_admission_types(client, snapshot["admission_types"], university_ids, apply)
-    pf_restored, pf_missing = restore_programme_fields(client, snapshot["programme_fields"], programme_ids, apply)
+    pf_restored, pf_missing, pf_collisions = restore_programme_fields(
+        client, snapshot["programme_fields"], programme_lookup, apply
+    )
 
     verb = "восстановлено" if apply else "было бы восстановлено (сухой прогон, для записи запустите с --apply)"
     print(f"формулы: {verb} {f_restored} из {len(snapshot['formulas'])}")
@@ -192,6 +236,12 @@ def main(apply: bool) -> None:
     if missing:
         print(f"\nне нашлось в текущем каталоге ({len(missing)}):")
         for line in missing:
+            print(f"  {line}")
+
+    collisions = f_collisions + pf_collisions
+    if collisions:
+        print(f"\nПОХОЖЕ НА ПЕРЕСЛАГОВАНИЕ, НЕ ВОССТАНОВЛЕНО АВТОМАТИЧЕСКИ ({len(collisions)}):")
+        for line in collisions:
             print(f"  {line}")
 
 
@@ -235,15 +285,19 @@ def selftest() -> None:
             return FakeTable(name, self.store)
 
     client = FakeClient()
-    programme_ids = {("lu", "sociology"): "prog-1"}
+    programme_lookup = {
+        ("lu", "sociology"): {"id": "prog-1", "name_lv": "Socioloģija"},
+        ("lu", "renamed-slug"): {"id": "prog-2", "name_lv": "Совсем другая программа"},
+    }
     university_ids = {"lu": "uni-1"}
 
-    restored, missing = restore_formulas(
+    restored, missing, collisions = restore_formulas(
         client,
         [
             {
                 "university_slug": "lu",
                 "programme_slug": "sociology",
+                "programme_name": "Socioloģija",
                 "variant": "ce",
                 "valid_from": "2026-01-01",
                 "valid_to": None,
@@ -262,6 +316,29 @@ def selftest() -> None:
             {
                 "university_slug": "lu",
                 "programme_slug": "does-not-exist",
+                "programme_name": "Что угодно",
+                "variant": "ce",
+                "valid_from": "2026-01-01",
+                "valid_to": None,
+                "source_url": None,
+                "source_doc": None,
+                "source_doc_number": None,
+                "source_doc_date": None,
+                "source_copy_path": None,
+                "source_copy_sha256": None,
+                "source_excerpt": None,
+                "verified_at": "2026-09-20T00:00:00Z",
+                "verified_by": "owner",
+                "terms": [],
+                "gates": [],
+            },
+            {
+                # слаг нашёлся, но по нему сейчас СОВСЕМ ДРУГАЯ программа —
+                # переслагование каталога между снимком и восстановлением;
+                # не восстанавливаем молча, даже с --apply
+                "university_slug": "lu",
+                "programme_slug": "renamed-slug",
+                "programme_name": "Старая программа с этим именем",
                 "variant": "ce",
                 "valid_from": "2026-01-01",
                 "valid_to": None,
@@ -278,11 +355,13 @@ def selftest() -> None:
                 "gates": [],
             },
         ],
-        programme_ids,
+        programme_lookup,
         apply=True,
     )
     assert restored == 1, restored
     assert len(missing) == 1 and "does-not-exist" in missing[0], missing
+    assert len(collisions) == 1 and "renamed-slug" in collisions[0], collisions
+    assert "prog-2" not in [call.get("programme_id") for call in client.store.get("formula", [])]
     assert client.store["formula"][0]["programme_id"] == "prog-1"
     assert client.store["formula"][0]["verified_at"] == "2026-09-20T00:00:00Z"
     assert client.store["formula_term_children"][0]["subject"] == "latvian"
