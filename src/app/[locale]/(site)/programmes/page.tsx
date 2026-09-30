@@ -6,10 +6,9 @@ import { getDictionary } from "@/i18n/dictionaries";
 import { buildAlternates } from "@/lib/site";
 import { getApplicationRounds } from "@/lib/deadline-queries";
 import { matchRounds } from "@/lib/deadlines";
-import { getProgrammeCount, listProgrammes, listUniversities } from "@/lib/catalog";
+import { listProgrammes, listUniversities } from "@/lib/catalog";
 import { hasActiveFilters, parseCatalogState } from "@/lib/catalog-query";
 import { buildCatalogView } from "@/lib/catalog-view";
-import { interpolate } from "@/lib/outcomes";
 import { FilterSidebar, LevelTabs, LoadMore, ProgrammeCard, SearchAndSort, SurveyCard } from "./CatalogControls";
 
 // Каталог обновляет Python-конвейер напрямую в базе, мимо Next.js —
@@ -45,7 +44,7 @@ export default async function ProgrammesPage({
   // направление... Поиск, уровень, сортировка и "показать ещё" считаются
   // по уже выбранному набору (каталог — сотни строк, не миллионы), иначе
   // счётчики табов пришлось бы получать отдельными запросами.
-  const [programmes, universities, applicationRounds, totalProgrammes] = await Promise.all([
+  const [programmes, universities, applicationRounds] = await Promise.all([
     listProgrammes({
       budgetOnly: state.budgetOnly,
       cities: state.cities,
@@ -56,7 +55,6 @@ export default async function ProgrammesPage({
     }),
     listUniversities(),
     getApplicationRounds(),
-    getProgrammeCount(),
   ]);
   const view = buildCatalogView(programmes, state, locale);
 
@@ -64,13 +62,7 @@ export default async function ProgrammesPage({
     <main className="page-container pb-16">
       <section className="flex flex-col gap-6 pb-8 pt-8 sm:pt-12 lg:flex-row lg:items-end lg:justify-between">
         <div className="max-w-3xl">
-          {/* Не "проверенных": программы в базе пока извлечены автоматически
-              (см. плашку на странице программы), человек их не подтверждал. */}
-          <span className="inline-flex h-[26px] items-center gap-2 rounded-full bg-brand-soft px-2.5 text-xs font-semibold text-brand-dark">
-            <span className="h-1.5 w-1.5 rounded-full bg-brand" aria-hidden="true" />
-            {interpolate(dict.catalog.heroBadge, { programmes: totalProgrammes, universities: universities.length })}
-          </span>
-          <h1 className="mt-4 text-4xl font-bold leading-[1.1] tracking-[-0.025em] text-zinc-900 lg:text-[44px]">
+          <h1 className="text-4xl font-bold leading-[1.1] tracking-[-0.025em] text-zinc-900 lg:text-[44px]">
             {dict.catalog.title}
           </h1>
           <p className="mt-2.5 text-[17px] leading-relaxed text-zinc-600">{dict.catalog.subtitle}</p>
