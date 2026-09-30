@@ -29,11 +29,10 @@ export default async function GlossaryPage({ params }: PageProps<"/[locale]/glos
   const { glossary } = await getDictionary(locale);
   const items = [...glossary.items].sort((a, b) => a.term.localeCompare(b.term, locale));
 
-  // Группировка по первой букве: двадцать четыре термина без указателя
-  // листаются вслепую. Буквы берутся из самих терминов, поэтому это данные,
-  // а не текст интерфейса (правило 1 CLAUDE.md). Группы живут внутри одной
-  // карточки: на большинство букв приходится один термин, и отдельная
-  // карточка на каждую рассыпала бы страницу.
+  // Группировка по первой букве — заголовки-разделители внутри одной
+  // карточки. Буквы берутся из самих терминов, поэтому это данные, а не
+  // текст интерфейса (правило 1 CLAUDE.md). Отдельного алфавитного
+  // указателя нет: владелец убрал его как лишний (2026-09-30).
   const groups: { letter: string; items: typeof items }[] = [];
   for (const item of items) {
     const letter = item.term.charAt(0).toLocaleUpperCase(locale);
@@ -41,21 +40,6 @@ export default async function GlossaryPage({ params }: PageProps<"/[locale]/glos
     if (last?.letter === letter) last.items.push(item);
     else groups.push({ letter, items: [item] });
   }
-
-  const letterIndex = (
-    <ul className="flex flex-wrap gap-1.5">
-      {groups.map((group) => (
-        <li key={group.letter}>
-          <a
-            href={`#letter-${group.letter}`}
-            className="grid h-9 w-9 place-items-center rounded-xl bg-white text-sm font-semibold text-zinc-700 shadow-control hover:text-brand"
-          >
-            {group.letter}
-          </a>
-        </li>
-      ))}
-    </ul>
-  );
 
   return (
     <main className="page-container py-8 sm:py-12">
@@ -71,25 +55,10 @@ export default async function GlossaryPage({ params }: PageProps<"/[locale]/glos
         </Link>
       </header>
 
-      {/* Указатель: на телефоне строкой над содержанием, на десктопе прилипает сбоку. */}
-      <nav aria-labelledby="glossary-index" className="mt-8 lg:hidden">
-        <p id="glossary-index" className="sr-only">
-          {glossary.title}
-        </p>
-        {letterIndex}
-      </nav>
-
-      <div className="mt-6 flex flex-col gap-8 lg:mt-10 lg:flex-row lg:items-start lg:gap-10">
-        <nav aria-labelledby="glossary-index-lg" className="hidden shrink-0 lg:sticky lg:top-24 lg:block lg:w-40">
-          <p id="glossary-index-lg" className="sr-only">
-            {glossary.title}
-          </p>
-          {letterIndex}
-        </nav>
-
-        <div className="surface min-w-0 flex-1 p-6 sm:p-10">
+      <div className="mt-8 lg:mt-10">
+        <div className="surface p-6 sm:p-10">
           {groups.map((group, groupIndex) => (
-            <section key={group.letter} id={`letter-${group.letter}`} className="scroll-mt-24">
+            <section key={group.letter}>
               <h2
                 aria-hidden="true"
                 className={`flex items-center gap-3 text-xs font-bold uppercase tracking-[0.2em] text-brand ${
