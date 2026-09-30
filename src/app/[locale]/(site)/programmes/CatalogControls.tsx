@@ -15,7 +15,7 @@ import {
   SortIcon,
 } from "@/components/icons";
 import { FavoriteButton } from "@/components/FavoriteButton";
-import { CITY_KEYS, enumLabel, localizedName, type ProgrammeWithUniversity, type University } from "@/lib/catalog";
+import { CITY_KEYS, enumLabel, localizedName, type ProgrammeWithUniversity, type UniversityOption } from "@/lib/catalog";
 import { catalogQuery, LEVEL_KEYS, PAGE_SIZE, SORT_KEYS, type CatalogState } from "@/lib/catalog-query";
 import type { CatalogView } from "@/lib/catalog-view";
 import { INTEREST_KEYS } from "@/lib/fields";
@@ -96,7 +96,7 @@ export function FilterSidebar({
   locale: Locale;
   dict: Dictionary;
   state: CatalogState;
-  universities: Pick<University, "slug" | "name_lv" | "name_en">[];
+  universities: UniversityOption[];
 }) {
   const filters = dict.catalog.filters;
 
@@ -128,7 +128,7 @@ export function FilterSidebar({
           <option value="">{filters.anyUniversity}</option>
           {universities.map((university) => (
             <option key={university.slug} value={university.slug}>
-              {localizedName(university, locale)}
+              {localizedName(university, locale)} ({university.programmeCount})
             </option>
           ))}
         </SelectField>

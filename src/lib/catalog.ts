@@ -143,17 +143,30 @@ export async function getProgrammesByIds(ids: string[]): Promise<ProgrammeWithUn
   return data as unknown as ProgrammeWithUniversity[];
 }
 
-export const listUniversities = cache(
-  async (): Promise<Pick<University, "slug" | "name_lv" | "name_en">[]> => {
-    const { data, error } = await supabase
-      .from("university")
-      .select("slug, name_lv, name_en")
-      .order("name_en");
+export type UniversityOption = Pick<University, "slug" | "name_lv" | "name_en"> & {
+  /** Сколько программ вуза видно в каталоге — для списка «Augstskola». */
+  programmeCount: number;
+};
 
-    if (error) throw error;
-    return data;
-  },
-);
+export const listUniversities = cache(async (): Promise<UniversityOption[]> => {
+  // programme(count) — PostgREST считает встроенные строки сам, одним
+  // запросом. RLS программы действует и здесь: скрытые программы
+  // (missed_runs >= 2) в число не попадают, как и в сам каталог.
+  const { data, error } = await supabase
+    .from("university")
+    .select("slug, name_lv, name_en, programme(count)")
+    .order("name_en");
+
+  if (error) throw error;
+  // Через unknown: разборщик типов supabase-js не выводит форму count.
+  const rows = data as unknown as (Pick<University, "slug" | "name_lv" | "name_en"> & {
+    programme: { count: number }[];
+  })[];
+  return rows.map(({ programme, ...university }) => ({
+    ...university,
+    programmeCount: programme[0]?.count ?? 0,
+  }));
+});
 
 export const getProgramme = cache(
   async (
