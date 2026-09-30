@@ -9,6 +9,7 @@ import { matchRounds } from "@/lib/deadlines";
 import { listProgrammes, listUniversities } from "@/lib/catalog";
 import { hasActiveFilters, parseCatalogState } from "@/lib/catalog-query";
 import { buildCatalogView } from "@/lib/catalog-view";
+import { CatalogForm } from "./CatalogForm";
 import { FilterSidebar, LevelTabs, LoadMore, ProgrammeCard, SearchAndSort, SurveyCard } from "./CatalogControls";
 
 // Каталог обновляет Python-конвейер напрямую в базе, мимо Next.js —
@@ -70,11 +71,11 @@ export default async function ProgrammesPage({
         <SurveyCard locale={locale} dict={dict} />
       </section>
 
-      {/* Одна GET-форма на весь каталог (поиск + фильтры), без клиентского
-          JS — правило 4 CLAUDE.md. Сортировка, табы и "показать ещё" —
-          обычные ссылки на тот же адрес с другими параметрами. */}
-      <form
-        method="get"
+      {/* Одна GET-форма на весь каталог (поиск + фильтры). Поля и карточки
+          рисует сервер; CatalogForm — тонкая клиентская обёртка, которая
+          применяет фильтр сразу при изменении. Сортировка, табы и "показать
+          ещё" — обычные ссылки на тот же адрес с другими параметрами. */}
+      <CatalogForm
         action={`/${locale}/programmes`}
         className="grid gap-4 lg:grid-cols-[300px_minmax(0,1fr)] lg:gap-8"
       >
@@ -132,7 +133,7 @@ export default async function ProgrammesPage({
             </>
           )}
         </div>
-      </form>
+      </CatalogForm>
     </main>
   );
 }

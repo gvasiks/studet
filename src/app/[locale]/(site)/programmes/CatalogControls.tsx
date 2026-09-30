@@ -21,9 +21,10 @@ import type { CatalogView } from "@/lib/catalog-view";
 import { INTEREST_KEYS } from "@/lib/fields";
 import { interpolate } from "@/lib/outcomes";
 
-// Поля фильтров — обычные нативные input/select, без JS: страница
-// остаётся серверной (правило 4 CLAUDE.md). Состояние "включено"
-// рисуется через peer-checked, а не через клиентское состояние.
+// Поля фильтров — обычные нативные input/select, их рисует сервер
+// (правило 4 CLAUDE.md). Состояние "включено" рисуется через
+// peer-checked, а не через клиентское состояние. Применение фильтра
+// при изменении — в CatalogForm.tsx.
 const FOCUS_RING = "peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-brand";
 
 function SelectField({
@@ -201,12 +202,16 @@ export function FilterSidebar({
         {state.sort !== "name" && <input type="hidden" name="sort" value={state.sort} />}
         {state.level && <input type="hidden" name="level" value={state.level} />}
 
-        <button
-          type="submit"
-          className="h-11 w-full rounded-full bg-brand text-sm font-semibold text-white transition-colors hover:bg-brand-dark focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"
-        >
-          {filters.apply}
-        </button>
+        {/* С JavaScript фильтр применяется сразу (CatalogForm.tsx), кнопка
+            нужна только без него. */}
+        <noscript>
+          <button
+            type="submit"
+            className="h-11 w-full rounded-full bg-brand text-sm font-semibold text-white transition-colors hover:bg-brand-dark focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"
+          >
+            {filters.apply}
+          </button>
+        </noscript>
       </aside>
     </>
   );
