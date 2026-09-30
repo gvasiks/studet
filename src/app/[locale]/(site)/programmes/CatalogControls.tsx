@@ -99,6 +99,11 @@ export function FilterSidebar({
   universities: UniversityOption[];
 }) {
   const filters = dict.catalog.filters;
+  // По названию на языке страницы: база отдаёт по name_en, и на латышской
+  // странице порядок выглядел случайным.
+  const sortedUniversities = [...universities].sort((a, b) =>
+    localizedName(a, locale).localeCompare(localizedName(b, locale), locale),
+  );
 
   return (
     <>
@@ -126,7 +131,7 @@ export function FilterSidebar({
 
         <SelectField label={filters.university} name="university" defaultValue={state.university ?? ""}>
           <option value="">{filters.anyUniversity}</option>
-          {universities.map((university) => (
+          {sortedUniversities.map((university) => (
             <option key={university.slug} value={university.slug}>
               {localizedName(university, locale)} ({university.programmeCount})
             </option>
