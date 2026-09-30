@@ -13,6 +13,7 @@ import { getAdmissionType } from "@/lib/admission-type-queries";
 import { getProgrammeOutcome } from "@/lib/outcome-queries";
 import { areaCode } from "@/lib/fields";
 import { employmentPercent, interpolate, OUTCOMES_SOURCE_URL, pickOutcomes } from "@/lib/outcomes";
+import { BackButton } from "@/components/BackButton";
 import { FavoriteButton } from "@/components/FavoriteButton";
 import { buildAlternates, SITE_URL } from "@/lib/site";
 
@@ -138,9 +139,7 @@ export default async function ProgrammePage({ params }: { params: Params }) {
     <main className="page-container py-8 sm:py-12">
       <div className="surface mx-auto max-w-3xl p-6 sm:p-10">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
-      <Link href={`/${locale}/programmes`} className="text-sm text-zinc-500 hover:underline">
-        {dict.programme.backToCatalog}
-      </Link>
+      <BackButton fallbackHref={`/${locale}/programmes`} label={dict.programme.back} />
 
       <p className="mt-4 text-sm text-zinc-500">{universityName}</p>
       <div className="flex items-start justify-between gap-3">

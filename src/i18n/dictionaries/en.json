@@ -98,7 +98,7 @@
     }
   },
   "programme": {
-    "backToCatalog": "Back to catalogue",
+    "back": "Back",
     "degreeLevel": "Degree level",
     "language": "Language of instruction",
     "studyMode": "Study mode",

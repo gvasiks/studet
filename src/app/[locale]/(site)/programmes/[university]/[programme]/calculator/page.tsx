@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { BackButton } from "@/components/BackButton";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { isLocale } from "@/i18n/config";
@@ -55,12 +55,7 @@ export default async function CalculatorPage({ params }: { params: Params }) {
   return (
     <main className="page-container py-8 sm:py-12">
       <div className="surface mx-auto max-w-2xl p-6 sm:p-10">
-      <Link
-        href={`/${locale}/programmes/${university}/${programmeSlug}`}
-        className="text-sm text-zinc-500 hover:underline"
-      >
-        {dict.programme.backToCatalog}
-      </Link>
+      <BackButton fallbackHref={`/${locale}/programmes/${university}/${programmeSlug}`} label={dict.programme.back} />
 
       <p className="mt-4 text-sm text-zinc-500">{localizedName(record, locale)}</p>
       <h1 className="mt-1 text-2xl font-bold tracking-tighter text-zinc-900">{dict.calculator.title}</h1>

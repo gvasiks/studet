@@ -98,7 +98,7 @@
     }
   },
   "programme": {
-    "backToCatalog": "Atpakaļ uz katalogu",
+    "back": "Atpakaļ",
     "degreeLevel": "Studiju līmenis",
     "language": "Studiju valoda",
     "studyMode": "Studiju forma",
