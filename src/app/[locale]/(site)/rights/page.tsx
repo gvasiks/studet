@@ -35,20 +35,20 @@ export default async function RightsPage({ params }: PageProps<"/[locale]/rights
           содержания. */}
       <header className="mx-auto max-w-3xl lg:mx-0 lg:max-w-none">
         <h1 className="text-3xl font-bold tracking-tighter text-zinc-900 sm:text-4xl">{rights.title}</h1>
-        <p className="mt-3 max-w-[65ch] text-lg leading-relaxed text-zinc-600">{rights.intro}</p>
-        <div className="mt-5 flex flex-wrap items-center gap-3">
-          <p className="inline-flex max-w-[60ch] items-start gap-2 rounded-2xl bg-brand-soft px-4 py-2.5 text-xs leading-relaxed text-zinc-700">
-            <ClipboardCheckIcon size={14} className="mt-0.5 shrink-0 text-brand" />
-            <span>{rights.checkedNote}</span>
-          </p>
-          <Link
-            href={`/${locale}/glossary`}
-            className="inline-flex items-center gap-1.5 text-sm font-medium text-brand-dark hover:text-brand"
-          >
-            {rights.glossaryLink}
-            <ArrowRightIcon size={14} />
-          </Link>
-        </div>
+        {/* Вступление и плашка — на всю ширину, ссылка на словарь под ними
+            (правка владельца 2026-09-30). */}
+        <p className="mt-3 text-lg leading-relaxed text-zinc-600">{rights.intro}</p>
+        <p className="mt-5 flex items-start gap-2 rounded-2xl bg-brand-soft px-4 py-2.5 text-xs leading-relaxed text-zinc-700">
+          <ClipboardCheckIcon size={14} className="mt-0.5 shrink-0 text-brand" />
+          <span>{rights.checkedNote}</span>
+        </p>
+        <Link
+          href={`/${locale}/glossary`}
+          className="mt-4 inline-flex items-center gap-1.5 text-sm font-medium text-brand-dark hover:text-brand"
+        >
+          {rights.glossaryLink}
+          <ArrowRightIcon size={14} />
+        </Link>
       </header>
 
       <div className="mt-8 flex flex-col gap-8 lg:mt-10 lg:flex-row lg:items-start lg:gap-10">
