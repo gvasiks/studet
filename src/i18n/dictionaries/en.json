@@ -6,7 +6,11 @@
     "title": "Where can I actually get in?",
     "description": "Questionnaire, catalogue and competition score calculator in one place, currently covering Latvia's local admission system.",
     "catalogCta": "Browse the catalogue",
-    "surveyCta": "Take the survey"
+    "surveyCta": "Take the survey",
+    "sectionsLabel": "More sections",
+    "matchText": "Enter your exam results and see which programmes you can already calculate a competition score for.",
+    "glossaryText": "Admission-rules terms in plain words — each with its source.",
+    "rightsText": "What the law guarantees applicants: deadlines, contracts, results and appeals."
   },
   "coverage": {
     "notice": "This currently covers Latvia's own admission system for local school-leavers. Support for international applicants — full costs, document checklists, residence permits — isn't built yet."
@@ -123,6 +127,10 @@
   "nav": {
     "catalog": "Catalogue",
     "survey": "Survey",
+    "match": "Where can I apply",
+    "glossary": "Glossary",
+    "rights": "Your rights",
+    "menu": "Menu",
     "main": "Main navigation",
     "footer": "Footer navigation"
   },

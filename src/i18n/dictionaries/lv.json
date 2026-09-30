@@ -6,7 +6,11 @@
     "title": "Kur tiešām varu iestāties?",
     "description": "Aptauja, katalogs un konkursa punktu aprēķins vienuviet.",
     "catalogCta": "Skatīt katalogu",
-    "surveyCta": "Aizpildīt aptauju"
+    "surveyCta": "Aizpildīt aptauju",
+    "sectionsLabel": "Citas sadaļas",
+    "matchText": "Ievadi eksāmenu rezultātus un redzi, kurām programmām punktus var aprēķināt jau tagad.",
+    "glossaryText": "Uzņemšanas noteikumu vārdi skaidrā valodā — katram norādīts avots.",
+    "rightsText": "Ko likums garantē reflektantam: termiņi, līgums, rezultāti un lēmuma apstrīdēšana."
   },
   "coverage": {
     "notice": "Pagaidām šeit ir aptverta tikai Latvijas uzņemšanas sistēma vietējiem skolu absolventiem — atbalsts ārvalstu reflektantiem (pilnas izmaksas, dokumentu saraksti, uzturēšanās atļaujas) vēl nav izveidots."
@@ -123,6 +127,10 @@
   "nav": {
     "catalog": "Katalogs",
     "survey": "Aptauja",
+    "match": "Kur varu iestāties",
+    "glossary": "Vārdnīca",
+    "rights": "Tiesības",
+    "menu": "Izvēlne",
     "main": "Galvenā navigācija",
     "footer": "Navigācija lapas apakšā"
   },

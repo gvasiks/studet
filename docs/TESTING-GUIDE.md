@@ -95,6 +95,12 @@ npm run dev
       не падает.
 - [ ] Обе кнопки («Skatīt katalogu» / «Aizpildīt aptauju»; на EN — «Browse
       the catalogue» / «Take the survey») ведут на `/programmes` и `/survey`.
+- [ ] Шапка на ширине ≥1024 px: Katalogs · Aptauja · Kur varu iestāties ·
+      Mans saraksts · Vārdnīca · Tiesības в одну строку, текущий раздел
+      подсвечен. Уже — кнопка «Izvēlne» (☰): открывается кликом и Enter,
+      закрывается Esc (фокус на кнопке), кликом мимо и выбором пункта.
+- [ ] На главной под кнопками — три карточки: «Kur varu iestāties»,
+      «Vārdnīca», «Tiesības»; те же ссылки в подвале главной.
 - [ ] На `/en` — янтарный баннер под шапкой: «This currently covers Latvia's
       own admission system...». На `/lv` баннера быть не должно.
 - [ ] Мобильная раскладка (375px) — без горизонтального скролла и наплывов.

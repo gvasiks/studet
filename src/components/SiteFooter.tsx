@@ -19,7 +19,10 @@ export function SiteFooter({ dict, locale, tone }: { dict: Dictionary; locale: L
   const links = [
     { href: `/${locale}/programmes`, label: dict.nav.catalog },
     { href: `/${locale}/survey`, label: dict.nav.survey },
+    { href: `/${locale}/match`, label: dict.nav.match },
     { href: `/${locale}/favorites`, label: dict.favorites.navLink },
+    { href: `/${locale}/glossary`, label: dict.nav.glossary },
+    { href: `/${locale}/rights`, label: dict.nav.rights },
   ];
 
   return (
@@ -33,7 +36,7 @@ export function SiteFooter({ dict, locale, tone }: { dict: Dictionary; locale: L
             <span className="text-sm font-bold text-white">Studet</span>
           </div>
           <nav aria-label={dict.nav.footer} className="mt-3">
-            <ul className="flex gap-4 text-xs">
+            <ul className="flex flex-wrap gap-x-4 gap-y-2 text-xs">
               {links.map((link) => (
                 <li key={link.href}>
                   <Link href={link.href} className="text-slate-300 hover:text-white hover:underline">

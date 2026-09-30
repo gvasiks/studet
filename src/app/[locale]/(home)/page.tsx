@@ -43,6 +43,11 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
 
   const dict = await getDictionary(locale);
   const stats = await loadStats();
+  const sections = [
+    { href: `/${locale}/match`, title: dict.nav.match, text: dict.home.matchText },
+    { href: `/${locale}/glossary`, title: dict.nav.glossary, text: dict.home.glossaryText },
+    { href: `/${locale}/rights`, title: dict.nav.rights, text: dict.home.rightsText },
+  ];
 
   return (
     <main className="page-container relative z-10 flex flex-1 flex-col justify-center py-16">
@@ -73,6 +78,27 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
           </Link>
         </div>
       </div>
+
+      {/* Остальные разделы — карточками под главными кнопками: без них
+          «Kur varu iestāties», словарь и права были видны только из шапки. */}
+      <nav aria-label={dict.home.sectionsLabel} className="mt-14 max-w-4xl">
+        <ul className="grid gap-3 sm:grid-cols-3">
+          {sections.map((section) => (
+            <li key={section.href}>
+              <Link
+                href={section.href}
+                className={`group flex h-full flex-col rounded-2xl border border-white/10 bg-white/5 p-5 backdrop-blur transition-colors hover:bg-white/10 ${FOCUS}`}
+              >
+                <span className="flex items-center justify-between gap-2 text-[15px] font-semibold text-white">
+                  {section.title}
+                  <ArrowRightIcon size={15} className="shrink-0 text-slate-400 transition-colors group-hover:text-white" />
+                </span>
+                <span className="mt-1.5 text-[13px] leading-relaxed text-slate-300">{section.text}</span>
+              </Link>
+            </li>
+          ))}
+        </ul>
+      </nav>
     </main>
   );
 }
