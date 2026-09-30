@@ -4,7 +4,7 @@
   },
   "home": {
     "title": "Where can I actually get in?",
-    "description": "Questionnaire, catalogue and competition score calculator in one place, currently covering Latvia's local admission system. No registration required.",
+    "description": "Questionnaire, catalogue and competition score calculator in one place, currently covering Latvia's local admission system.",
     "catalogCta": "Browse the catalogue",
     "surveyCta": "Take the survey"
   },
@@ -13,7 +13,7 @@
   },
   "catalog": {
     "title": "Study programme catalogue",
-    "subtitle": "Every programme we've checked so far. No registration required.",
+    "subtitle": "Every programme we've checked so far.",
     "empty": "Nothing here yet.",
     "emptyFiltered": "Nothing matches this filter. Try widening your choices.",
     "years": "years",
@@ -170,7 +170,7 @@
   },
   "survey": {
     "title": "What fits you?",
-    "intro": "Six quick questions. No registration, nothing is saved anywhere.",
+    "intro": "Six quick questions. Nothing is saved anywhere.",
     "stepLabel": "Step",
     "of": "of",
     "back": "Back",

@@ -4,7 +4,7 @@
   },
   "home": {
     "title": "Kur tiešām varu iestāties?",
-    "description": "Aptauja, katalogs un konkursa punktu aprēķins vienuviet. Bez reģistrācijas.",
+    "description": "Aptauja, katalogs un konkursa punktu aprēķins vienuviet.",
     "catalogCta": "Skatīt katalogu",
     "surveyCta": "Aizpildīt aptauju"
   },
@@ -13,7 +13,7 @@
   },
   "catalog": {
     "title": "Studiju programmu katalogs",
-    "subtitle": "Visas programmas, ko līdz šim esam pārbaudījuši. Bez reģistrācijas.",
+    "subtitle": "Visas programmas, ko līdz šim esam pārbaudījuši.",
     "empty": "Pagaidām šeit nekā nav.",
     "emptyFiltered": "Ar šādu filtru nekas neatbilst. Pamēģini paplašināt izvēli.",
     "years": "gadi",
@@ -170,7 +170,7 @@
   },
   "survey": {
     "title": "Kas tev der?",
-    "intro": "Seši ātri jautājumi. Bez reģistrācijas, atbildes nekur nesaglabājas.",
+    "intro": "Seši ātri jautājumi. Atbildes nekur nesaglabājas.",
     "stepLabel": "Solis",
     "of": "no",
     "back": "Atpakaļ",
