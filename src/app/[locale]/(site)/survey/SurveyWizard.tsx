@@ -103,10 +103,6 @@ export function SurveyWizard({ locale, dict }: { locale: Locale; dict: Dictionar
 
   const isLast = step === STEP_COUNT - 1;
   const progress = ((step + 1) / STEP_COUNT) * 100;
-  // Сколько выбрано на шагах с множественным выбором: человеку нужно видеть,
-  // что «ничего не выбрано» — это допустимый ответ, а не незаполненный шаг.
-  const selectedOnStep =
-    step === 0 ? answers.exams.length : step === 1 ? answers.interests.length : step === 3 ? answers.cities.length : null;
 
   return (
     <main className="page-container py-8 sm:py-12">
@@ -295,12 +291,8 @@ export function SurveyWizard({ locale, dict }: { locale: Locale; dict: Dictionar
           )}
 
           {/* Кнопки — внутри карточки за разделителем, а не в воздухе под ней:
-              они относятся к вопросу, а не к странице. Счётчик выбранного
-              слева показывает, что пустой ответ тоже ответ. */}
-          <div className="mt-8 flex flex-wrap items-center justify-between gap-3 border-t border-zinc-100 pt-6">
-            <p className="text-sm tabular-nums text-zinc-500">
-              {selectedOnStep !== null && selectedOnStep > 0 ? `${selectedOnStep} ✓` : ""}
-            </p>
+              они относятся к вопросу, а не к странице. */}
+          <div className="mt-8 flex flex-wrap items-center justify-end gap-3 border-t border-zinc-100 pt-6">
             <div className="flex items-center gap-2">
               <Button variant="flat" isDisabled={step === 0} onPress={() => setStep((s) => s - 1)}>
                 {dict.survey.back}
