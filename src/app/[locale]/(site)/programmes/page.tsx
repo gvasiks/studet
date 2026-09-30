@@ -5,6 +5,7 @@ import { isLocale } from "@/i18n/config";
 import { getDictionary } from "@/i18n/dictionaries";
 import { buildAlternates } from "@/lib/site";
 import { getApplicationRounds } from "@/lib/deadline-queries";
+import { getProgrammeIdsWithFormula } from "@/lib/formula-queries";
 import { matchRounds } from "@/lib/deadlines";
 import { listProgrammes, listUniversities } from "@/lib/catalog";
 import { hasActiveFilters, parseCatalogState } from "@/lib/catalog-query";
@@ -45,7 +46,7 @@ export default async function ProgrammesPage({
   // направление... Поиск, уровень, сортировка и "показать ещё" считаются
   // по уже выбранному набору (каталог — сотни строк, не миллионы), иначе
   // счётчики табов пришлось бы получать отдельными запросами.
-  const [programmes, universities, applicationRounds] = await Promise.all([
+  const [programmes, universities, applicationRounds, calculatorIds] = await Promise.all([
     listProgrammes({
       budgetOnly: state.budgetOnly,
       cities: state.cities,
@@ -56,6 +57,7 @@ export default async function ProgrammesPage({
     }),
     listUniversities(),
     getApplicationRounds(),
+    getProgrammeIdsWithFormula(),
   ]);
   const view = buildCatalogView(programmes, state, locale);
 
@@ -120,6 +122,7 @@ export default async function ProgrammesPage({
                       locale={locale}
                       dict={dict}
                       programme={programme}
+                      hasCalculator={calculatorIds.has(programme.id)}
                       deadline={
                         nextRound
                           ? `${dict.programme.deadlinesCloses} ${new Date(nextRound.closesOn!).toLocaleDateString(locale)}`

@@ -320,12 +320,16 @@ export function ProgrammeCard({
   dict,
   programme,
   deadline,
+  hasCalculator,
 }: {
   locale: Locale;
   dict: Dictionary;
   programme: ProgrammeWithUniversity;
   deadline: string | null;
+  /** Есть действующая подтверждённая формула — можно посчитать балл. */
+  hasCalculator: boolean;
 }) {
+  const programmeHref = `/${locale}/programmes/${programme.university.slug}/${programme.slug}`;
   const levelLabel = programme.degree_level in dict.catalog.tabs
     ? dict.catalog.tabs[programme.degree_level as keyof typeof dict.catalog.tabs]
     : enumLabel(dict.catalog.degreeLevel, programme.degree_level);
@@ -347,7 +351,7 @@ export function ProgrammeCard({
       <h2 className="mt-3 text-[17px] font-semibold leading-snug text-zinc-900">
         {/* Растянутая ссылка: кликабельна вся карточка, а звезда выше по z-index */}
         <Link
-          href={`/${locale}/programmes/${programme.university.slug}/${programme.slug}`}
+          href={programmeHref}
           className="after:absolute after:inset-0 after:rounded-3xl after:content-[''] focus-visible:outline-none focus-visible:after:outline-2 focus-visible:after:outline-brand"
         >
           {localizedName(programme, locale)}
@@ -376,6 +380,18 @@ export function ProgrammeCard({
           )}
           {deadline && <Chip icon={<CalendarIcon size={13} />}>{deadline}</Chip>}
         </div>
+        {/* relative z-10 — над растянутой ссылкой карточки, как звезда.
+            Ссылка стоит внутри карточки с названием программы, так что её
+            цель понятна из контекста (WCAG 2.4.4). */}
+        {hasCalculator && (
+          <Link
+            href={`${programmeHref}/calculator`}
+            className="relative z-10 mt-3 inline-flex h-8 items-center gap-1.5 rounded-full bg-brand-soft px-3 text-xs font-semibold text-brand-dark hover:bg-brand hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"
+          >
+            {dict.catalog.calculatorCta}
+            <ArrowRightIcon size={13} />
+          </Link>
+        )}
       </div>
     </article>
   );

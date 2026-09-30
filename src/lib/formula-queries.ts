@@ -63,6 +63,21 @@ export const getFormula = cache(async (programmeId: string): Promise<FormulaReco
   };
 });
 
+// Какие программы можно посчитать — для кнопки калькулятора на карточках
+// каталога. Тот же гейт, что в getFormula: только действующая (valid_to
+// is null) и подтверждённая человеком формула; RLS таблицы formula
+// дублирует это на стороне базы. Один запрос на весь каталог.
+export const getProgrammeIdsWithFormula = cache(async (): Promise<Set<string>> => {
+  const { data, error } = await supabase
+    .from("formula")
+    .select("programme_id")
+    .is("valid_to", null)
+    .not("verified_at", "is", null);
+
+  if (error) throw error;
+  return new Set((data ?? []).map((row) => row.programme_id as string));
+});
+
 // Для каждого уровня — коэффициент с самым свежим valid_from.
 export const getLevelCoefficients = cache(async (): Promise<Record<ExamLevel, number>> => {
   const { data, error } = await supabase
