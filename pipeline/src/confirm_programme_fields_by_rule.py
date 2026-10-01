@@ -36,7 +36,9 @@ from programme_fields import candidates_for, choose_field, groups_with_data
 # в docs/checks/PROGRAMME-FIELD-REVIEW.md, ДО первого запуска с --apply.
 EXCLUDE: set[tuple[str, str]] = set()
 
-VERIFIED_BY = "Gvasiks (подтверждение по правилу после ревью выборки, docs/checks/PROGRAMME-FIELD-REVIEW.md)"
+# Основание — решение владельца, а не построчная проверка: в подписи так и
+# сказано, чтобы через год было видно, на чём держится это подтверждение.
+VERIFIED_BY = "Gvasiks (подтверждение по правилу, решение владельца 2026-10-01; правила и выборка — docs/checks/PROGRAMME-FIELD-REVIEW.md)"
 
 
 def main(apply: bool) -> None:

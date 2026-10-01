@@ -40,6 +40,14 @@ export type OutcomeSnapshot = {
 // для нескольких выпусков подряд.
 const COMPARISON_YEARS_AFTER = 5;
 
+// Самый свежий выпуск старше этого числа лет не показываем вовсе (решение
+// владельца 2026-10-01): цифры о трудоустройстве шестилетней давности
+// человек, выбирающий программу сегодня, примет за нынешние. Возраст
+// считается от года выпуска до текущего года. Следствие: если датасет на
+// data.gov.lv не обновлять, блок сам исчезнет со всех карточек — обновление
+// датасета входит в годовой цикл сверки (pipeline/README.md).
+export const MAX_COHORT_AGE_YEARS = 5;
+
 // Для программы берутся только строки того же уровня обучения. Если на
 // одном уровне у вуза в этом направлении несколько кодов уровня (у ЛУ
 // бакалавриат разбит на 42 и 43 — профессиональный и академический),
@@ -47,7 +55,10 @@ const COMPARISON_YEARS_AFTER = 5;
 // медианы нельзя, а больший набор всё же ближе к "типичной" программе
 // направления. Поэтому в тексте блока сказано "выпускники направления",
 // не "выпускники программы".
-export function pickOutcomes(rows: OutcomeRow[], degreeLevel: string): OutcomeSnapshot[] {
+// currentYear передаётся явно, а не берётся из new Date() внутри: так
+// функция остаётся чистой и тест не зависит от того, в каком году его
+// запустили.
+export function pickOutcomes(rows: OutcomeRow[], degreeLevel: string, currentYear: number): OutcomeSnapshot[] {
   const levels = LEVEL_CODES_BY_DEGREE[degreeLevel];
   if (!levels) return [];
 
@@ -69,6 +80,9 @@ export function pickOutcomes(rows: OutcomeRow[], degreeLevel: string): OutcomeSn
   });
 
   const latest = largestByYear.get(Math.max(...largestByYear.keys()))!;
+  if (currentYear - latest.graduationYear > MAX_COHORT_AGE_YEARS) return [];
+  // Выпуск для сравнения «через пять лет» по определению старый — к нему
+  // правило возраста не относится: он показывается только рядом со свежим.
   const snapshots = [toSnapshot(latest)];
 
   for (const row of largestByYear.values()) {

@@ -83,7 +83,7 @@ export default async function ProgrammePage({ params }: { params: Params }) {
   ]);
   // Блок "что стало с выпускниками" (пункт 14 ревью) — только при
   // подтверждённом направлении программы, см. outcome-queries.ts.
-  const outcomeSnapshots = outcome ? pickOutcomes(outcome.rows, record.degree_level) : [];
+  const outcomeSnapshots = outcome ? pickOutcomes(outcome.rows, record.degree_level, new Date().getFullYear()) : [];
   const applicationRounds = matchRounds(
     rounds,
     record.university_id,
