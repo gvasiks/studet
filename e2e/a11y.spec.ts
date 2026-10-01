@@ -35,3 +35,32 @@ for (const locale of LOCALES) {
     expect(results.violations, JSON.stringify(results.violations, null, 2)).toEqual([]);
   });
 }
+
+// «Мой список» с сохранёнными программами: карточки, галочки «сравнить»
+// (пятая и дальше — неактивные) и таблица сравнения. Пустую страницу
+// проверяет общий цикл выше, но вся вёрстка появляется только со списком.
+for (const locale of LOCALES) {
+  test(`нет нарушений axe на /${locale}/favorites с пятью программами`, async ({ page }) => {
+    await page.goto(`/${locale}/programmes`);
+    const stars = page.locator('main article button[aria-pressed="false"]');
+    for (let i = 0; i < 5; i++) await stars.first().click();
+    await page.goto(`/${locale}/favorites`);
+    await page.locator("table").waitFor();
+    await expect(page.locator('main article input[type="checkbox"]:disabled')).toHaveCount(1);
+    const results = await new AxeBuilder({ page }).analyze();
+    expect(results.violations, JSON.stringify(results.violations, null, 2)).toEqual([]);
+  });
+}
+
+// Меню шапки на телефоне: общий цикл идёт в широкой раскладке, где шесть
+// пунктов стоят строкой, а кнопки «Izvēlne» нет вовсе.
+for (const locale of LOCALES) {
+  test(`нет нарушений axe на /${locale}/programmes с открытым меню на телефоне`, async ({ page }) => {
+    await page.setViewportSize({ width: 375, height: 812 });
+    await page.goto(`/${locale}/programmes`);
+    await page.locator('button[aria-controls="site-menu"]').click();
+    await page.locator("#site-menu").waitFor();
+    const results = await new AxeBuilder({ page }).analyze();
+    expect(results.violations, JSON.stringify(results.violations, null, 2)).toEqual([]);
+  });
+}
