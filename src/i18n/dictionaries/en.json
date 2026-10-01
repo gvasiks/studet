@@ -99,6 +99,13 @@
       "anyMode": "Any mode",
       "budgetOnly": "Budget places only",
       "interest": "Field",
+      "duration": "Length of studies",
+      "anyDuration": "Any length",
+      "durationUpTo": "Up to {years} years",
+      "fee": "Fee per year",
+      "anyFee": "Any fee",
+      "feeUpTo": "Up to {amount} EUR",
+      "feeHint": "Fees are extracted automatically — check the university's own website. Programmes with no fee listed stay in the list.",
       "apply": "Filter"
     }
   },
@@ -179,7 +186,7 @@
   },
   "survey": {
     "title": "What fits you?",
-    "intro": "Six quick questions. Nothing is saved anywhere.",
+    "intro": "A few quick questions. Nothing is saved anywhere.",
     "stepLabel": "Step",
     "of": "of",
     "back": "Back",
@@ -226,6 +233,18 @@
     "city": {
       "title": "Which city do you want to study in?",
       "anywhere": "I'm ready to relocate anywhere"
+    },
+    "level": {
+      "title": "Which level of study are you looking for?",
+      "any": "Doesn't matter"
+    },
+    "duration": {
+      "title": "How long are you ready to study?",
+      "any": "Doesn't matter"
+    },
+    "fee": {
+      "title": "How much can you pay per year?",
+      "any": "Doesn't matter"
     },
     "language": {
       "title": "Which language do you want to study in?",

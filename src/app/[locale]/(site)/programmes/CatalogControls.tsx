@@ -10,7 +10,15 @@ import {
   SortIcon,
 } from "@/components/icons";
 import { CITY_KEYS, enumLabel, localizedName, type UniversityOption } from "@/lib/catalog";
-import { catalogQuery, LEVEL_KEYS, PAGE_SIZE, SORT_KEYS, type CatalogState } from "@/lib/catalog-query";
+import {
+  catalogQuery,
+  DURATION_LIMITS,
+  FEE_LIMITS,
+  LEVEL_KEYS,
+  PAGE_SIZE,
+  SORT_KEYS,
+  type CatalogState,
+} from "@/lib/catalog-query";
 import type { CatalogView } from "@/lib/catalog-view";
 import { INTEREST_KEYS } from "@/lib/fields";
 import { interpolate } from "@/lib/outcomes";
@@ -144,6 +152,29 @@ export function FilterSidebar({
           <option value="part_time">{dict.catalog.studyMode.part_time}</option>
           <option value="distance">{dict.catalog.studyMode.distance}</option>
         </SelectField>
+
+        {/* Длительность и плата — те же пороги, что в анкете. Без видимого
+            поля фильтр из анкеты нельзя было бы ни заметить, ни снять. */}
+        <SelectField label={filters.duration} name="years" defaultValue={state.maxYears ? String(state.maxYears) : ""}>
+          <option value="">{filters.anyDuration}</option>
+          {DURATION_LIMITS.map((years) => (
+            <option key={years} value={years}>
+              {interpolate(filters.durationUpTo, { years })}
+            </option>
+          ))}
+        </SelectField>
+
+        <div>
+          <SelectField label={filters.fee} name="fee" defaultValue={state.maxFee ? String(state.maxFee) : ""}>
+            <option value="">{filters.anyFee}</option>
+            {FEE_LIMITS.map((amount) => (
+              <option key={amount} value={amount}>
+                {interpolate(filters.feeUpTo, { amount })}
+              </option>
+            ))}
+          </SelectField>
+          <p className="mt-1.5 text-xs leading-relaxed text-zinc-600">{filters.feeHint}</p>
+        </div>
 
         <fieldset>
           <legend className="text-[13px] font-medium leading-4 text-zinc-700">{filters.city}</legend>

@@ -7,16 +7,26 @@ import { Button, Checkbox, CheckboxGroup, Radio, RadioGroup } from "@heroui/reac
 import type { Locale } from "@/i18n/config";
 import type { Dictionary } from "@/i18n/dictionaries";
 import { CITY_KEYS, enumLabel } from "@/lib/catalog";
+import { DURATION_LIMITS, FEE_LIMITS } from "@/lib/catalog-query";
+import { interpolate } from "@/lib/outcomes";
 import { ArrowRightIcon, CheckIcon, SearchIcon } from "@/components/icons";
 
 type Funding = "budget_only" | "any";
 type LanguageChoice = "lv" | "en" | "any";
 type ModeChoice = "full_time" | "part_time" | "distance" | "any";
+// Анкета — для выпускников школ: магистратура и докторантура им недоступны,
+// поэтому из уровней здесь только бакалавриат и колледж.
+type LevelChoice = "bachelor" | "college" | "any";
+// "any" либо порог из DURATION_LIMITS / FEE_LIMITS строкой (значение радио).
+type LimitChoice = string;
 
 type Answers = {
   exams: string[];
   interests: string[];
+  level: LevelChoice;
+  maxYears: LimitChoice;
   funding: Funding;
+  maxFee: LimitChoice;
   cities: string[];
   anywhere: boolean;
   language: LanguageChoice;
@@ -26,14 +36,19 @@ type Answers = {
 const initialAnswers: Answers = {
   exams: [],
   interests: [],
+  level: "any",
+  maxYears: "any",
   funding: "any",
+  maxFee: "any",
   cities: [],
   anywhere: false,
   language: "any",
   mode: "any",
 };
 
-const STEP_COUNT = 6;
+// Шагов меньше, чем вопросов: близкие вопросы стоят на одном экране
+// (уровень + длительность, бюджет + плата).
+const STEP_COUNT = 7;
 
 const FOCUS = "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand";
 
@@ -56,6 +71,10 @@ const TILE_GRID = { wrapper: "grid grid-cols-1 gap-2.5 sm:grid-cols-2 lg:grid-co
 // Радио — те же плитки, но вариантов два-четыре: в один столбец на телефоне,
 // в ряд дальше. Слот control — сама точка, её оставляем как есть.
 const RADIO_GRID = { wrapper: "grid grid-cols-1 gap-2.5 sm:grid-cols-2" };
+
+// Второй вопрос на том же шаге — за разделителем, чтобы два вопроса не
+// читались как один длинный список вариантов.
+const SECOND_QUESTION = "mt-8 border-t border-zinc-100 pt-8";
 
 function StepShell({
   title,
@@ -90,7 +109,10 @@ export function SurveyWizard({ locale, dict }: { locale: Locale; dict: Dictionar
     // каталог фильтрует по направлению программы (пункт 16 ревью).
     const params = new URLSearchParams();
     if (answers.interests.length > 0) params.set("interest", answers.interests.join(","));
+    if (answers.level !== "any") params.set("level", answers.level);
+    if (answers.maxYears !== "any") params.set("years", answers.maxYears);
     if (answers.funding === "budget_only") params.set("budget", "1");
+    if (answers.maxFee !== "any") params.set("fee", answers.maxFee);
     if (!answers.anywhere && answers.cities.length > 0) {
       params.set("city", answers.cities.join(","));
     }
@@ -202,23 +224,86 @@ export function SurveyWizard({ locale, dict }: { locale: Locale; dict: Dictionar
           )}
 
           {step === 2 && (
-            <StepShell title={dict.survey.funding.title}>
-              <RadioGroup
-                classNames={RADIO_GRID}
-                value={answers.funding}
-                onValueChange={(value) => setAnswers((a) => ({ ...a, funding: value as Funding }))}
-              >
-                <Radio value="budget_only" classNames={TILE}>
-                  {dict.survey.funding.budgetOnly}
-                </Radio>
-                <Radio value="any" classNames={TILE}>
-                  {dict.survey.funding.any}
-                </Radio>
-              </RadioGroup>
-            </StepShell>
+            <>
+              <StepShell title={dict.survey.level.title}>
+                <RadioGroup
+                  classNames={RADIO_GRID}
+                  value={answers.level}
+                  onValueChange={(value) => setAnswers((a) => ({ ...a, level: value as LevelChoice }))}
+                >
+                  <Radio value="bachelor" classNames={TILE}>
+                    {dict.catalog.degreeLevel.bachelor}
+                  </Radio>
+                  <Radio value="college" classNames={TILE}>
+                    {dict.catalog.degreeLevel.college}
+                  </Radio>
+                  <Radio value="any" classNames={TILE}>
+                    {dict.survey.level.any}
+                  </Radio>
+                </RadioGroup>
+              </StepShell>
+              <div className={SECOND_QUESTION}>
+                <StepShell title={dict.survey.duration.title}>
+                  <RadioGroup
+                    classNames={RADIO_GRID}
+                    value={answers.maxYears}
+                    onValueChange={(value) => setAnswers((a) => ({ ...a, maxYears: value }))}
+                  >
+                    {DURATION_LIMITS.map((years) => (
+                      <Radio key={years} value={String(years)} classNames={TILE}>
+                        {interpolate(dict.catalog.filters.durationUpTo, { years })}
+                      </Radio>
+                    ))}
+                    <Radio value="any" classNames={TILE}>
+                      {dict.survey.duration.any}
+                    </Radio>
+                  </RadioGroup>
+                </StepShell>
+              </div>
+            </>
           )}
 
           {step === 3 && (
+            <>
+              <StepShell title={dict.survey.funding.title}>
+                <RadioGroup
+                  classNames={RADIO_GRID}
+                  value={answers.funding}
+                  onValueChange={(value) => setAnswers((a) => ({ ...a, funding: value as Funding }))}
+                >
+                  <Radio value="budget_only" classNames={TILE}>
+                    {dict.survey.funding.budgetOnly}
+                  </Radio>
+                  <Radio value="any" classNames={TILE}>
+                    {dict.survey.funding.any}
+                  </Radio>
+                </RadioGroup>
+              </StepShell>
+              <div className={SECOND_QUESTION}>
+                {/* Плата не подтверждена человеком (правило 6) — подсказка
+                    говорит об этом прямо и объясняет, что программы без
+                    указанной платы из списка не пропадут. */}
+                <StepShell title={dict.survey.fee.title} hint={dict.catalog.filters.feeHint}>
+                  <RadioGroup
+                    classNames={RADIO_GRID}
+                    value={answers.maxFee}
+                    onValueChange={(value) => setAnswers((a) => ({ ...a, maxFee: value }))}
+                  >
+                    {FEE_LIMITS.map((amount) => (
+                      <Radio key={amount} value={String(amount)} classNames={TILE}>
+                        {interpolate(dict.catalog.filters.feeUpTo, { amount })}
+                      </Radio>
+                    ))}
+                    <Radio value="any" classNames={TILE}>
+                      {dict.survey.fee.any}
+                    </Radio>
+                  </RadioGroup>
+                </StepShell>
+              </div>
+            </>
+          )}
+
+          {step === 4 && (
             <StepShell title={dict.survey.city.title}>
               <CheckboxGroup
                 classNames={TILE_GRID}
@@ -247,7 +332,7 @@ export function SurveyWizard({ locale, dict }: { locale: Locale; dict: Dictionar
             </StepShell>
           )}
 
-          {step === 4 && (
+          {step === 5 && (
             <StepShell title={dict.survey.language.title}>
               <RadioGroup
                 classNames={RADIO_GRID}
@@ -267,7 +352,7 @@ export function SurveyWizard({ locale, dict }: { locale: Locale; dict: Dictionar
             </StepShell>
           )}
 
-          {step === 5 && (
+          {step === 6 && (
             <StepShell title={dict.survey.mode.title}>
               <RadioGroup
                 classNames={RADIO_GRID}

@@ -114,3 +114,48 @@ describe("адрес каталога", () => {
     expect(hasActiveFilters(parseCatalogState({ q: "x" }))).toBe(true);
   });
 });
+
+describe("длительность и плата", () => {
+  const withFacts = (name: string, duration_years: number | null, tuition_fee_amount: number | null) =>
+    ({ ...programme(name, "bachelor", LU), duration_years, tuition_fee_amount }) as ProgrammeWithUniversity;
+
+  const FACTS = [
+    withFacts("Short cheap", 3, 2500),
+    withFacts("Four years", 4, 3500),
+    withFacts("Long expensive", 5.5, 6000),
+    withFacts("Unknown", null, null),
+  ];
+  const names = (sp: Record<string, string>) =>
+    buildCatalogView(FACTS, parseCatalogState(sp), "en").visible.map((p) => p.name_en);
+
+  it("порог длительности включает программы ровно на границе", () => {
+    expect(names({ years: "3" })).toEqual(["Short cheap", "Unknown"]);
+    expect(names({ years: "4" })).toEqual(["Four years", "Short cheap", "Unknown"]);
+  });
+
+  it("порог платы работает так же", () => {
+    expect(names({ fee: "3000" })).toEqual(["Short cheap", "Unknown"]);
+    expect(names({ fee: "4000" })).toEqual(["Four years", "Short cheap", "Unknown"]);
+  });
+
+  it("программа без длительности или платы остаётся в списке — пробел в данных не считается «долго» или «дорого»", () => {
+    expect(names({ years: "3", fee: "3000" })).toContain("Unknown");
+  });
+
+  it("оба порога действуют вместе, счётчики табов считаются уже после них", () => {
+    const view = buildCatalogView(FACTS, parseCatalogState({ years: "4", fee: "3000" }), "en");
+    expect(view.visible.map((p) => p.name_en)).toEqual(["Short cheap", "Unknown"]);
+    expect(view.levelCounts.bachelor).toBe(2);
+  });
+
+  it("принимает только известные пороги; остальное — «без ограничения»", () => {
+    expect(parseCatalogState({ years: "7", fee: "abc" })).toMatchObject({ maxYears: null, maxFee: null });
+    expect(parseCatalogState({ years: "3", fee: "4000" })).toMatchObject({ maxYears: 3, maxFee: 4000 });
+  });
+
+  it("пороги попадают в адрес и считаются фильтрами", () => {
+    const state = parseCatalogState({ years: "4", fee: "3000" });
+    expect(catalogQuery(state)).toBe("?years=4&fee=3000");
+    expect(hasActiveFilters(state)).toBe(true);
+  });
+});

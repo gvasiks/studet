@@ -99,6 +99,13 @@
       "anyMode": "Jebkura forma",
       "budgetOnly": "Tikai budžeta vietas",
       "interest": "Virziens",
+      "duration": "Studiju ilgums",
+      "anyDuration": "Jebkurš ilgums",
+      "durationUpTo": "Līdz {years} gadiem",
+      "fee": "Maksa gadā",
+      "anyFee": "Jebkura maksa",
+      "feeUpTo": "Līdz {amount} EUR",
+      "feeHint": "Maksa iegūta automātiski — pārbaudi augstskolas mājaslapā. Programmas bez norādītas maksas paliek sarakstā.",
       "apply": "Filtrēt"
     }
   },
@@ -179,7 +186,7 @@
   },
   "survey": {
     "title": "Kas tev der?",
-    "intro": "Seši ātri jautājumi. Atbildes nekur nesaglabājas.",
+    "intro": "Daži ātri jautājumi. Atbildes nekur nesaglabājas.",
     "stepLabel": "Solis",
     "of": "no",
     "back": "Atpakaļ",
@@ -226,6 +233,18 @@
     "city": {
       "title": "Kurā pilsētā vēlies studēt?",
       "anywhere": "Esmu gatavs pārcelties uz jebkuru pilsētu"
+    },
+    "level": {
+      "title": "Kādu studiju līmeni meklē?",
+      "any": "Nav svarīgi"
+    },
+    "duration": {
+      "title": "Cik ilgi esi gatavs studēt?",
+      "any": "Nav svarīgi"
+    },
+    "fee": {
+      "title": "Cik esi gatavs maksāt gadā?",
+      "any": "Nav svarīgi"
     },
     "language": {
       "title": "Kādā valodā vēlies studēt?",

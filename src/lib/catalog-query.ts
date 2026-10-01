@@ -11,6 +11,16 @@ export type SortKey = (typeof SORT_KEYS)[number];
 export const LEVEL_KEYS = ["bachelor", "master", "doctoral", "college"] as const;
 export type LevelKey = (typeof LEVEL_KEYS)[number];
 
+// Пороги «не дольше N лет» и «не дороже N евро в год» — вопросы анкеты и
+// фильтры каталога. Значения выбраны по данным каталога (2026-10-01): у
+// бакалавриата и колледжей 250 программ до 3 лет и 438 до 4; плата до
+// 3000 EUR — у 165, до 4000 — у 240.
+export const DURATION_LIMITS = [3, 4] as const;
+export type DurationLimit = (typeof DURATION_LIMITS)[number];
+
+export const FEE_LIMITS = [3000, 4000] as const;
+export type FeeLimit = (typeof FEE_LIMITS)[number];
+
 export const PAGE_SIZE = 12;
 // Потолок нужен, чтобы ?limit=999999 не превратился в запрос на весь
 // каталог с рендером всех карточек разом.
@@ -27,6 +37,10 @@ export type CatalogState = {
   language?: string;
   mode?: string;
   budgetOnly: boolean;
+  /** Не дольше стольких лет; null — без ограничения. */
+  maxYears: DurationLimit | null;
+  /** Не дороже стольких евро в год; null — без ограничения. */
+  maxFee: FeeLimit | null;
 };
 
 type SearchParams = Record<string, string | string[] | undefined>;
@@ -42,6 +56,13 @@ function listValues(value: string | string[] | undefined): string[] {
   if (!value) return [];
   const parts = Array.isArray(value) ? value : [value];
   return parts.flatMap((part) => part.split(",")).filter(Boolean);
+}
+
+// Значение из адреса принимается, только если оно есть в списке порогов:
+// ?years=7 или ?fee=abc — это «без ограничения», а не ошибка.
+function oneOf<T extends number>(allowed: readonly T[], value: string | undefined): T | null {
+  const parsed = Number(value);
+  return (allowed as readonly number[]).includes(parsed) ? (parsed as T) : null;
 }
 
 export function parseCatalogState(sp: SearchParams): CatalogState {
@@ -60,6 +81,8 @@ export function parseCatalogState(sp: SearchParams): CatalogState {
     language: firstValue(sp.language) || undefined,
     mode: firstValue(sp.mode) || undefined,
     budgetOnly: firstValue(sp.budget) === "1",
+    maxYears: oneOf(DURATION_LIMITS, firstValue(sp.years)),
+    maxFee: oneOf(FEE_LIMITS, firstValue(sp.fee)),
   };
 }
 
@@ -79,6 +102,8 @@ export function catalogQuery(state: CatalogState, overrides: Partial<CatalogStat
   if (next.language) params.set("language", next.language);
   if (next.mode) params.set("mode", next.mode);
   if (next.budgetOnly) params.set("budget", "1");
+  if (next.maxYears) params.set("years", String(next.maxYears));
+  if (next.maxFee) params.set("fee", String(next.maxFee));
 
   const query = params.toString();
   return query ? `?${query}` : "";
@@ -94,6 +119,8 @@ export function hasActiveFilters(state: CatalogState): boolean {
       state.university ||
       state.language ||
       state.mode ||
-      state.budgetOnly,
+      state.budgetOnly ||
+      state.maxYears ||
+      state.maxFee,
   );
 }
