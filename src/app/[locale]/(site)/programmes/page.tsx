@@ -11,7 +11,8 @@ import { listProgrammes, listUniversities } from "@/lib/catalog";
 import { hasActiveFilters, parseCatalogState } from "@/lib/catalog-query";
 import { buildCatalogView } from "@/lib/catalog-view";
 import { CatalogForm } from "./CatalogForm";
-import { FilterSidebar, LevelTabs, LoadMore, ProgrammeCard, SearchAndSort, SurveyCard } from "./CatalogControls";
+import { ProgrammeCard } from "@/components/ProgrammeCard";
+import { FilterSidebar, LevelTabs, LoadMore, SearchAndSort, SurveyCard } from "./CatalogControls";
 
 // Каталог обновляет Python-конвейер напрямую в базе, мимо Next.js —
 // без этого страница закаменеет на состоянии последней сборки.
