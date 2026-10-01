@@ -17,6 +17,7 @@ import {
   LEVEL_KEYS,
   PAGE_SIZE,
   SORT_KEYS,
+  UNIVERSITY_KINDS,
   type CatalogState,
 } from "@/lib/catalog-query";
 import type { CatalogView } from "@/lib/catalog-view";
@@ -136,6 +137,15 @@ export function FilterSidebar({
           {sortedUniversities.map((university) => (
             <option key={university.slug} value={university.slug}>
               {localizedName(university, locale)} ({university.programmeCount})
+            </option>
+          ))}
+        </SelectField>
+
+        <SelectField label={filters.kind} name="kind" defaultValue={state.kind ?? ""}>
+          <option value="">{filters.anyKind}</option>
+          {UNIVERSITY_KINDS.map((kind) => (
+            <option key={kind} value={kind}>
+              {filters.kinds[kind]}
             </option>
           ))}
         </SelectField>

@@ -68,6 +68,8 @@ export type ProgrammeFilters = {
   language?: string;
   mode?: string;
   university?: string;
+  /** university.kind: 'public' | 'private' */
+  kind?: string;
 };
 
 // Единственный список городов каталога — раньше дублировался в
@@ -117,6 +119,10 @@ export const listProgrammes = cache(
     }
     if (filters.university) {
       query = query.eq("university.slug", filters.university);
+    }
+    // Тот же inner-join, что и для university.slug: фильтр по полю вуза.
+    if (filters.kind) {
+      query = query.eq("university.kind", filters.kind);
     }
 
     const { data, error } = await query.order("degree_level").order("name_en");

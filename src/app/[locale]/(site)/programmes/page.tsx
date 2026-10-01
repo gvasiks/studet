@@ -55,6 +55,7 @@ export default async function ProgrammesPage({
       language: state.language,
       mode: state.mode,
       university: state.university,
+      kind: state.kind ?? undefined,
     }),
     listUniversities(),
     getApplicationRounds(),

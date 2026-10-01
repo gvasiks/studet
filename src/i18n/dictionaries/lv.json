@@ -106,6 +106,12 @@
       "anyFee": "Jebkura maksa",
       "feeUpTo": "Līdz {amount} EUR",
       "feeHint": "Maksa iegūta automātiski — pārbaudi augstskolas mājaslapā. Programmas bez norādītas maksas paliek sarakstā.",
+      "kind": "Augstskolas dibinātājs",
+      "anyKind": "Valsts un privātās",
+      "kinds": {
+        "public": "Valsts",
+        "private": "Privāta"
+      },
       "apply": "Filtrēt"
     }
   },
@@ -244,6 +250,10 @@
     },
     "fee": {
       "title": "Cik esi gatavs maksāt gadā?",
+      "any": "Nav svarīgi"
+    },
+    "kind": {
+      "title": "Valsts vai privāta augstskola?",
       "any": "Nav svarīgi"
     },
     "language": {

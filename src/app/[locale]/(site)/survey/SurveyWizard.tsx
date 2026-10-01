@@ -7,7 +7,7 @@ import { Button, Checkbox, CheckboxGroup, Radio, RadioGroup } from "@heroui/reac
 import type { Locale } from "@/i18n/config";
 import type { Dictionary } from "@/i18n/dictionaries";
 import { CITY_KEYS, enumLabel } from "@/lib/catalog";
-import { DURATION_LIMITS, FEE_LIMITS } from "@/lib/catalog-query";
+import { DURATION_LIMITS, FEE_LIMITS, UNIVERSITY_KINDS } from "@/lib/catalog-query";
 import { interpolate } from "@/lib/outcomes";
 import { ArrowRightIcon, CheckIcon, SearchIcon } from "@/components/icons";
 
@@ -19,6 +19,8 @@ type ModeChoice = "full_time" | "part_time" | "distance" | "any";
 type LevelChoice = "bachelor" | "college" | "any";
 // "any" либо порог из DURATION_LIMITS / FEE_LIMITS строкой (значение радио).
 type LimitChoice = string;
+// "any" либо значение из UNIVERSITY_KINDS.
+type KindChoice = string;
 
 type Answers = {
   exams: string[];
@@ -31,6 +33,7 @@ type Answers = {
   anywhere: boolean;
   language: LanguageChoice;
   mode: ModeChoice;
+  kind: KindChoice;
 };
 
 const initialAnswers: Answers = {
@@ -44,10 +47,11 @@ const initialAnswers: Answers = {
   anywhere: false,
   language: "any",
   mode: "any",
+  kind: "any",
 };
 
 // Шагов меньше, чем вопросов: близкие вопросы стоят на одном экране
-// (уровень + длительность, бюджет + плата).
+// (уровень + длительность, бюджет + плата, язык + форма).
 const STEP_COUNT = 7;
 
 const FOCUS = "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand";
@@ -118,6 +122,7 @@ export function SurveyWizard({ locale, dict }: { locale: Locale; dict: Dictionar
     }
     if (answers.language !== "any") params.set("language", answers.language);
     if (answers.mode !== "any") params.set("mode", answers.mode);
+    if (answers.kind !== "any") params.set("kind", answers.kind);
 
     const query = params.toString();
     router.push(`/${locale}/programmes${query ? `?${query}` : ""}`);
@@ -333,43 +338,63 @@ export function SurveyWizard({ locale, dict }: { locale: Locale; dict: Dictionar
           )}
 
           {step === 5 && (
-            <StepShell title={dict.survey.language.title}>
-              <RadioGroup
-                classNames={RADIO_GRID}
-                value={answers.language}
-                onValueChange={(value) => setAnswers((a) => ({ ...a, language: value as LanguageChoice }))}
-              >
-                <Radio value="lv" classNames={TILE}>
-                  {dict.catalog.language.lv}
-                </Radio>
-                <Radio value="en" classNames={TILE}>
-                  {dict.catalog.language.en}
-                </Radio>
-                <Radio value="any" classNames={TILE}>
-                  {dict.survey.language.any}
-                </Radio>
-              </RadioGroup>
-            </StepShell>
+            <>
+              <StepShell title={dict.survey.language.title}>
+                <RadioGroup
+                  classNames={RADIO_GRID}
+                  value={answers.language}
+                  onValueChange={(value) => setAnswers((a) => ({ ...a, language: value as LanguageChoice }))}
+                >
+                  <Radio value="lv" classNames={TILE}>
+                    {dict.catalog.language.lv}
+                  </Radio>
+                  <Radio value="en" classNames={TILE}>
+                    {dict.catalog.language.en}
+                  </Radio>
+                  <Radio value="any" classNames={TILE}>
+                    {dict.survey.language.any}
+                  </Radio>
+                </RadioGroup>
+              </StepShell>
+              <div className={SECOND_QUESTION}>
+                <StepShell title={dict.survey.mode.title}>
+                  <RadioGroup
+                    classNames={RADIO_GRID}
+                    value={answers.mode}
+                    onValueChange={(value) => setAnswers((a) => ({ ...a, mode: value as ModeChoice }))}
+                  >
+                    <Radio value="full_time" classNames={TILE}>
+                      {dict.catalog.studyMode.full_time}
+                    </Radio>
+                    <Radio value="part_time" classNames={TILE}>
+                      {dict.catalog.studyMode.part_time}
+                    </Radio>
+                    <Radio value="distance" classNames={TILE}>
+                      {dict.catalog.studyMode.distance}
+                    </Radio>
+                    <Radio value="any" classNames={TILE}>
+                      {dict.survey.mode.any}
+                    </Radio>
+                  </RadioGroup>
+                </StepShell>
+              </div>
+            </>
           )}
 
           {step === 6 && (
-            <StepShell title={dict.survey.mode.title}>
+            <StepShell title={dict.survey.kind.title}>
               <RadioGroup
                 classNames={RADIO_GRID}
-                value={answers.mode}
-                onValueChange={(value) => setAnswers((a) => ({ ...a, mode: value as ModeChoice }))}
+                value={answers.kind}
+                onValueChange={(value) => setAnswers((a) => ({ ...a, kind: value }))}
               >
-                <Radio value="full_time" classNames={TILE}>
-                  {dict.catalog.studyMode.full_time}
-                </Radio>
-                <Radio value="part_time" classNames={TILE}>
-                  {dict.catalog.studyMode.part_time}
-                </Radio>
-                <Radio value="distance" classNames={TILE}>
-                  {dict.catalog.studyMode.distance}
-                </Radio>
+                {UNIVERSITY_KINDS.map((kind) => (
+                  <Radio key={kind} value={kind} classNames={TILE}>
+                    {dict.catalog.filters.kinds[kind]}
+                  </Radio>
+                ))}
                 <Radio value="any" classNames={TILE}>
-                  {dict.survey.mode.any}
+                  {dict.survey.kind.any}
                 </Radio>
               </RadioGroup>
             </StepShell>

@@ -159,3 +159,18 @@ describe("длительность и плата", () => {
     expect(hasActiveFilters(state)).toBe(true);
   });
 });
+
+describe("государственный или частный вуз", () => {
+  it("принимает только public и private", () => {
+    expect(parseCatalogState({ kind: "private" }).kind).toBe("private");
+    expect(parseCatalogState({ kind: "public" }).kind).toBe("public");
+    expect(parseCatalogState({ kind: "secret" }).kind).toBeNull();
+    expect(parseCatalogState({}).kind).toBeNull();
+  });
+
+  it("попадает в адрес и считается фильтром", () => {
+    const state = parseCatalogState({ kind: "private" });
+    expect(catalogQuery(state)).toBe("?kind=private");
+    expect(hasActiveFilters(state)).toBe(true);
+  });
+});

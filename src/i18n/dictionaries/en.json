@@ -106,6 +106,12 @@
       "anyFee": "Any fee",
       "feeUpTo": "Up to {amount} EUR",
       "feeHint": "Fees are extracted automatically — check the university's own website. Programmes with no fee listed stay in the list.",
+      "kind": "Founded by",
+      "anyKind": "State and private",
+      "kinds": {
+        "public": "State",
+        "private": "Private"
+      },
       "apply": "Filter"
     }
   },
@@ -244,6 +250,10 @@
     },
     "fee": {
       "title": "How much can you pay per year?",
+      "any": "Doesn't matter"
+    },
+    "kind": {
+      "title": "State or private institution?",
       "any": "Doesn't matter"
     },
     "language": {

@@ -21,6 +21,10 @@ export type DurationLimit = (typeof DURATION_LIMITS)[number];
 export const FEE_LIMITS = [3000, 4000] as const;
 export type FeeLimit = (typeof FEE_LIMITS)[number];
 
+// Кто основал вуз: значения поля university.kind в базе.
+export const UNIVERSITY_KINDS = ["public", "private"] as const;
+export type UniversityKind = (typeof UNIVERSITY_KINDS)[number];
+
 export const PAGE_SIZE = 12;
 // Потолок нужен, чтобы ?limit=999999 не превратился в запрос на весь
 // каталог с рендером всех карточек разом.
@@ -37,6 +41,8 @@ export type CatalogState = {
   language?: string;
   mode?: string;
   budgetOnly: boolean;
+  /** Государственный или частный вуз; null — любой. */
+  kind: UniversityKind | null;
   /** Не дольше стольких лет; null — без ограничения. */
   maxYears: DurationLimit | null;
   /** Не дороже стольких евро в год; null — без ограничения. */
@@ -69,6 +75,7 @@ export function parseCatalogState(sp: SearchParams): CatalogState {
   const sort = firstValue(sp.sort);
   const level = firstValue(sp.level);
   const limit = Number(firstValue(sp.limit));
+  const kind = firstValue(sp.kind);
 
   return {
     q: (firstValue(sp.q) ?? "").trim().slice(0, 100),
@@ -81,6 +88,7 @@ export function parseCatalogState(sp: SearchParams): CatalogState {
     language: firstValue(sp.language) || undefined,
     mode: firstValue(sp.mode) || undefined,
     budgetOnly: firstValue(sp.budget) === "1",
+    kind: (UNIVERSITY_KINDS as readonly string[]).includes(kind ?? "") ? (kind as UniversityKind) : null,
     maxYears: oneOf(DURATION_LIMITS, firstValue(sp.years)),
     maxFee: oneOf(FEE_LIMITS, firstValue(sp.fee)),
   };
@@ -102,6 +110,7 @@ export function catalogQuery(state: CatalogState, overrides: Partial<CatalogStat
   if (next.language) params.set("language", next.language);
   if (next.mode) params.set("mode", next.mode);
   if (next.budgetOnly) params.set("budget", "1");
+  if (next.kind) params.set("kind", next.kind);
   if (next.maxYears) params.set("years", String(next.maxYears));
   if (next.maxFee) params.set("fee", String(next.maxFee));
 
@@ -120,6 +129,7 @@ export function hasActiveFilters(state: CatalogState): boolean {
       state.language ||
       state.mode ||
       state.budgetOnly ||
+      state.kind ||
       state.maxYears ||
       state.maxFee,
   );
