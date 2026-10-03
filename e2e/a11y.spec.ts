@@ -7,7 +7,9 @@ import AxeBuilder from "@axe-core/playwright";
 // 2026-09, пункт 15: "клавиатурный проход по новым экранам на обоих
 // языках" был сделан руками (см. коммит с фиксами) — это его
 // автоматизированное продолжение на каждый push.
-const ROUTES = ["", "/programmes", "/programmes/lu/economics", "/survey", "/match", "/rights", "/glossary", "/privacy", "/favorites"];
+// /programmes/gfk/110 — программа из NIID: на ней есть блоки «Ko iegūsi» и
+// «Par programmu» (диплом и описание), которых нет у программ ЛУ.
+const ROUTES = ["", "/programmes", "/programmes/lu/economics", "/programmes/gfk/110", "/survey", "/match", "/rights", "/glossary", "/privacy", "/favorites"];
 const LOCALES = ["lv", "en"] as const;
 
 for (const locale of LOCALES) {

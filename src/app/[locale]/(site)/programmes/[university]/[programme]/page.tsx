@@ -244,7 +244,6 @@ export default async function ProgrammePage({ params }: { params: Params }) {
                   target="_blank"
                   rel="noopener noreferrer"
                   className="underline"
-                  lang="lv"
                 >
                   {dict.programme.fullDescriptionLink}
                 </a>
