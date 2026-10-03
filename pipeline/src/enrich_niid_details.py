@@ -15,8 +15,8 @@
   Licence / akreditācija     -> programme.accreditation_valid_until
 
 Отдельный скрипт, а не часть main.py: у niid.lv в robots.txt пауза 10
-секунд между страницами (polite.py её соблюдает), а сама страница грузится
-долго — выходит около 20 секунд на каждую, 242 страницы — примерно 80 минут. Диплом и описание меняются редко, поэтому обход идёт раз в
+секунд между страницами (polite.py её соблюдает): на 242 страницы это 40
+минут одного ожидания (замер 2026-10-03) плюс загрузка самих страниц. Диплом и описание меняются редко, поэтому обход идёт раз в
 месяц (.github/workflows/enrich-niid.yml), а не каждую неделю.
 
   python src/enrich_niid_details.py                 # показать, что будет записано
@@ -81,6 +81,8 @@ def clean_line(text: str | None) -> str | None:
     if not text:
         return None
     cleaned = re.sub(r"\s+", " ", text).strip().rstrip(";,").strip()
+    # у составных квалификаций NIID пишет «A ; B» — пробел перед «;» лишний
+    cleaned = re.sub(r"\s+;", ";", cleaned)
     return cleaned or None
 
 
@@ -238,6 +240,7 @@ def main(apply: bool, everything: bool, limit: int | None) -> None:
 def selftest() -> None:
     assert clean_line("  Profesionālā bakalaura diploms;  ") == "Profesionālā bakalaura diploms"
     assert clean_line("") is None and clean_line(None) is None
+    assert clean_line("Vides speciālists (7. PKL) ; Dabas speciālists (7. PKL)") == "Vides speciālists (7. PKL); Dabas speciālists (7. PKL)"
 
     assert parse_accreditation("Studiju virziens akreditēts līdz 26.10.2029.") == date(2029, 10, 26)
     assert parse_accreditation("Studiju programma akreditēta līdz 1.6.2027") == date(2027, 6, 1)
