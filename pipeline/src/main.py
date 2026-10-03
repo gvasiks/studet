@@ -11,6 +11,7 @@ from dotenv import load_dotenv
 import polite
 from catalog_diff import CONTENT_FIELDS, compute_diff, format_report
 from db import get_service_client
+from scrape_scope import LOCAL_ONLY
 from sources import bsa, du, eka, ekra, jvlma, lbtu, lka, lma, lnaa, lu, lutera, niid_colleges, niid_universities, rai, rgsl, riseba, rnu, rsu, rtu_catalog, rtu_liepaja, sse_riga, tsi, turiba, venta, via
 
 SOURCES = [turiba, riseba, rtu_liepaja, tsi, bsa, sse_riga, rgsl, lu, venta, lbtu, du, eka, rnu, rtu_catalog, via, rsu, lka, lma, jvlma, rai, lnaa, lutera, ekra, niid_colleges, niid_universities]
@@ -109,8 +110,25 @@ def main() -> None:
     # python src/main.py rsu lmu — прогнать только перечисленные источники
     # (по имени модуля); без аргументов — все. Так новый вуз добавляется,
     # не перескрапливая остальные четырнадцать.
-    only = set(sys.argv[1:])
-    sources = [s for s in SOURCES if not only or s.__name__.split(".")[-1] in only]
+    #
+    # Два флага про источники, которые сервер GitHub собрать не может
+    # (scrape_scope.py):
+    #   --skip-local — все, кроме них (так запускает расписание GitHub);
+    #   --local      — только они (так запускает владелец на своём компьютере).
+    args = sys.argv[1:]
+    skip_local = "--skip-local" in args
+    only = {arg for arg in args if not arg.startswith("--")}
+    if "--local" in args:
+        only |= set(LOCAL_ONLY)
+
+    def _name(source) -> str:  # type: ignore[no-untyped-def]
+        return source.__name__.split(".")[-1]
+
+    sources = [
+        s
+        for s in SOURCES
+        if (not only or _name(s) in only) and not (skip_local and _name(s) in LOCAL_ONLY)
+    ]
 
     # План 2026-09-21, неделя 1, пункт 08: начало прогона фиксируется СРАЗУ,
     # до единого запроса к вузам, — если прогон упадёт необработанным
@@ -118,9 +136,12 @@ def main() -> None:
     # Actions, в pipeline_run всё равно останется строка status='running',
     # и сторож (check_pipeline_health.py) увидит, что "последнего успешного"
     # давно не было, а не тишину. full_run=False у точечного перезапуска
-    # (аргументы в sys.argv) — pipeline_health считает "последний успешный
-    # сбор" только по полным прогонам, иначе починка одного вуза молча
-    # обновляла бы дату, скрывая остановившееся расписание.
+    # (имена источников или --local в аргументах) — pipeline_health считает
+    # "последний успешный сбор" только по полным прогонам, иначе починка
+    # одного вуза молча обновляла бы дату, скрывая остановившееся
+    # расписание. Прогон с --skip-local — полный: это всё, что расписание
+    # GitHub вообще может собрать; за остальным следит
+    # check_local_sources.py.
     run_id = (
         client.table("pipeline_run")
         .insert({"started_at": now, "full_run": not only})

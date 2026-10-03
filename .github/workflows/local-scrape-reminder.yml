@@ -1,0 +1,37 @@
+name: "Reminder: run local scrape (RTU, LMA)"
+
+# Сайты rtu.lv и lma.lv не отдают программы серверу GitHub, поэтому эти два
+# источника владелец собирает на своём компьютере (pipeline/src/scrape_scope.py).
+# Этот workflow ничего не собирает: он раз в день смотрит, когда они
+# обновлялись в последний раз, и ПАДАЕТ, если прошло больше недели.
+# Упавший запланированный workflow GitHub присылает письмо — это и есть
+# напоминание; название workflow попадает в тему письма.
+#
+# Что делать, получив письмо — на своём компьютере, в папке pipeline:
+#   .venv\Scripts\python.exe src\main.py --local
+on:
+  schedule:
+    # 06:30 UTC ежедневно — рядом с проверкой здоровья конвейера (06:00)
+    - cron: "30 6 * * *"
+  workflow_dispatch: {}
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: pipeline
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+
+      # Только клиент базы, без Playwright — как у pipeline-health.yml
+      - run: pip install supabase~=2.31 python-dotenv~=1.2
+
+      - run: python src/check_local_sources.py
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
