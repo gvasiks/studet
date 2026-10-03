@@ -1,4 +1,4 @@
-name: Enrich programme details (NIID, LU)
+name: Enrich programme details (NIID, LU, university sites)
 
 # Диплом, квалификация, описание и срок аккредитации — со страниц программ
 # в NIID.lv (pipeline/src/enrich_niid_details.py). Отдельно от еженедельного
@@ -50,6 +50,16 @@ jobs:
       # if: always() — сбой обхода NIID не должен отменять обход ЛУ.
       - if: always()
         run: python src/enrich_lu_details.py --apply
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+          SCRAPER_CONTACT: ${{ vars.SCRAPER_CONTACT }}
+
+      # Остальные вузы с английскими страницами программ (сейчас RSU).
+      # --skip-local: lma.lv не отвечает серверу GitHub — LMA владелец
+      # заполняет локально: python src/enrich_site_details.py --local --apply
+      - if: always()
+        run: python src/enrich_site_details.py --apply --skip-local
         env:
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
           SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}

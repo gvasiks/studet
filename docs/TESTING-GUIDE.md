@@ -167,9 +167,11 @@ npm run dev
       названию (`/lv/programmes/rtu/dbd-33000-riga`). У программ ЛУ
       (`/lv/programmes/lu/economics`) степень и описание — на английском,
       источник в пометке — lu.lv, и на латышской странице есть строка
-      «Nosaukumi un apraksts ir angļu valodā…». У 25 несопоставленных
-      программ (например, `/lv/programmes/rtu/hbe`) и у остальных 14
-      вузов блоков нет — это ожидаемо. На `/en/…` названия остаются на латышском, и об этом
+      «Nosaukumi un apraksts ir angļu valodā…». То же у RSU
+      (`/lv/programmes/rsu/biomedicine`, источник rsu.lv) и LMA
+      (`/lv/programmes/lma/ceramics-bachelor`, источник lma.lv). У 25
+      несопоставленных программ (например, `/lv/programmes/rtu/hbe`) и у
+      остальных 12 вузов блоков нет — это ожидаемо. На `/en/…` названия остаются на латышском, и об этом
       есть строка под блоком.
 - [ ] Блок «Что стало с выпускниками» — есть на карточке со свежими
       данными (например, `/lv/programmes/rgsl/law-and-business`: выпуск
