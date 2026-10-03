@@ -55,7 +55,8 @@ jobs:
           SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
           SCRAPER_CONTACT: ${{ vars.SCRAPER_CONTACT }}
 
-      # Остальные вузы с английскими страницами программ (RSU, TSI, EKA).
+      # Остальные вузы с английскими страницами программ (12 вузов: RSU,
+      # TSI, EKA, BSA, DU, LKA, LBTU, RGSL, RISEBA, RNU, Turība, SSE Riga).
       # --skip-local: lma.lv не отвечает серверу GitHub — LMA владелец
       # заполняет локально: python src/enrich_site_details.py --local --apply
       - if: always()

@@ -172,9 +172,14 @@ npm run dev
       (`/lv/programmes/lma/ceramics-bachelor`, источник lma.lv), TSI
       (`/lv/programmes/tsi/double-degree-in-robotics-and-artificial-intelligence`
       — в степени названы оба вуза) и EKA (`/lv/programmes/eka/law` — там же
-      появилась строка «Akreditēta līdz 22.04.2027.»). У 25
+      появилась строка «Akreditēta līdz 22.04.2027.»), а также у Turība
+      (`/lv/programmes/turiba/business-administration` — степень и
+      квалификация одной строкой), DU (`/en/programmes/du/biology`), LKA,
+      RISEBA, BSA, LBTU, RNU, RGSL и SSE Riga. У `/lv/programmes/riseba/architecture`
+      есть только «Par programmu» (степень на сайте не названа), у
+      `/en/programmes/lka/theatre-directing` — только степень. У 25
       несопоставленных программ (например, `/lv/programmes/rtu/hbe`) и у
-      остальных 10 вузов блоков нет — это ожидаемо. На `/en/…` названия остаются на латышском, и об этом
+      JVLMA блоков нет — это ожидаемо. На `/en/…` названия остаются на латышском, и об этом
       есть строка под блоком.
 - [ ] Блок «Что стало с выпускниками» — есть на карточке со свежими
       данными (например, `/lv/programmes/rgsl/law-and-business`: выпуск

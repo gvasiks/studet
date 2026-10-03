@@ -9,7 +9,7 @@ NIID их по названию не найти) и чьи собственны�
   степень  -> programme.degree_awarded_en
   описание -> programme.description_en (начало, как у NIID и ЛУ)
 
-Сейчас: RSU, LMA, TSI, EKA.
+Сейчас: RSU, LMA, TSI, EKA, BSA, DU, LKA, LBTU, RGSL, RISEBA, RNU, Turība, SSE Riga.
 
 Как добавить вуз: написать функцию-разборщик `(текст страницы, заголовок h1,
 уровень программы) -> {"degree_awarded_en", "description_en"}` — чистую, с
@@ -74,6 +74,73 @@ def _degree(lines: list[str]) -> str | None:
     if not degree or len(degree) > MAX_DEGREE_LENGTH or _LATVIAN_LETTERS.search(degree):
         return None
     return degree
+
+
+def _field(lines: list[str], *labels: str) -> str | None:
+    """Значение поля «Подпись: значение» или «Подпись<TAB>значение».
+
+    Подпись сравнивается целиком и без учёта регистра («Degree» не совпадёт
+    с «Degree to be obtained»); вариантов подписи может быть несколько — на
+    одном сайте страницы подписаны по-разному. Если после подписи пусто —
+    берётся следующая строка (так у RISEBA).
+    """
+    wanted = {label.lower() for label in labels}
+    for index, line in enumerate(lines):
+        match = re.match(r"([^:\t]*)[:\t](.*)", line)
+        if not match or match.group(1).strip().lower() not in wanted:
+            continue
+        value = match.group(2).strip()
+        return value or next((candidate for candidate in lines[index + 1 : index + 3] if candidate), None)
+    return None
+
+
+def _first_paragraphs(lines: list[str]) -> list[str]:
+    """Первые абзацы текста, идущего после названия или блока фактов.
+
+    Заголовком считается короткая строка или строка с двоеточием в конце;
+    так же отбрасывается пункт списка — строка со строчной буквы.
+    Заголовки в начале пропускаются; первый заголовок после абзаца — конец
+    описания (дальше идут списки, учебный план, контакты).
+    """
+    lead: list[str] = []
+    for line in lines:
+        if not line:
+            continue
+        if len(line) < MIN_DESCRIPTION_LENGTH or line.endswith(":") or line[0].islower():
+            if lead:
+                break
+            continue
+        if line not in lead:
+            lead.append(line)
+    return lead
+
+
+def _after_table(lines: list[str]) -> list[str]:
+    """Строки после таблицы фактов (её строки — «Подпись<TAB>значение»)."""
+    rows = [index for index, line in enumerate(lines) if "\t" in line]
+    if not rows:
+        return []
+    end = rows[0]
+    for row in rows[1:]:
+        # значение ячейки бывает в две строки (DU: «Language») и между
+        # строками бывают пустые — небольшой разрыв таблицу не кончает
+        if row - end > 4:
+            break
+        end = row
+    return lines[end + 1 :]
+
+
+def _details(degree_lines: list[str | None], lead: list[str], accreditation: str | None = None) -> Details:
+    # точка в конце слова — опечатка сайта («…hospitality business.»);
+    # сокращения («Ph.D.», «Mg.sc.ing.») не трогаем
+    parts = [re.sub(r"(?<=[a-z]{4})\.$", "", line.strip()) for line in degree_lines if line]
+    details: Details = {
+        "degree_awarded_en": _degree(parts),
+        "description_en": excerpt(_join_paragraphs(lead)),
+    }
+    if accreditation:
+        details["accreditation_valid_until"] = accreditation
+    return details
 
 
 # ---------- RSU: rsu.lv/en/study-programme/<slug> ----------
@@ -252,7 +319,7 @@ def tsi_details(body: str, title: str, level: str) -> Details:
 
 # ---------- EKA: augstskola.lv/?parent=<id>&lng=eng ----------
 
-_EKA_MONTHS = {
+_MONTHS = {
     name: number
     for number, name in enumerate(
         ["january", "february", "march", "april", "may", "june", "july", "august", "september", "october",
@@ -262,23 +329,38 @@ _EKA_MONTHS = {
 }
 
 
-def eka_accreditation(text: str) -> str | None:
-    """«…accredited until July 1, 2027.» -> «2027-07-01».
+# «accredited until July 1, 2027», «accredited till August 26th, 2027»,
+# «Accredited until: May 27, 2027», «Accredited until<TAB>31 December 2027»,
+# «is accreditate for 6 years till June 20, 2030» (так у BSA).
+_ACCREDITED_UNTIL = re.compile(
+    r"accredit\w*\b[^.\n]{0,40}?\b(?:until|till)\b:?\s+"
+    r"(?:([A-Za-z]+),?\s+(\d{1,2})(?:st|nd|rd|th)?,?\s*(\d{4})|(\d{1,2})\s+([A-Za-z]+)\s+(\d{4}))",
+    re.IGNORECASE,
+)
 
-    На сайте встречаются «until» и «till», число — «26» и «26th».
-    """
-    match = re.search(
-        r"accredited\s+(?:until|till)\s+([A-Za-z]+)\s+(\d{1,2})(?:st|nd|rd|th)?,\s*(\d{4})", text, re.IGNORECASE
-    )
+
+def accredited_until(text: str) -> str | None:
+    """«…accredited until July 1, 2027.» -> «2027-07-01»; нет даты -> None."""
+    match = _ACCREDITED_UNTIL.search(text)
     if not match:
         return None
-    month = _EKA_MONTHS.get(match.group(1).lower())
+    month_name, day, year = (
+        (match.group(1), match.group(2), match.group(3))
+        if match.group(1)
+        else (match.group(5), match.group(4), match.group(6))
+    )
+    month = _MONTHS.get(month_name.lower())
     if month is None:
         return None
     try:
-        return datetime(int(match.group(3)), month, int(match.group(2))).date().isoformat()
+        return datetime(int(year), month, int(day)).date().isoformat()
     except ValueError:
         return None
+
+
+def _page_accreditation(lines: list[str]) -> str | None:
+    """Первая строка страницы, где назван срок аккредитации."""
+    return next((found for found in map(accredited_until, lines) if found), None)
 
 
 def eka_details(body: str, title: str, level: str) -> Details:
@@ -294,7 +376,7 @@ def eka_details(body: str, title: str, level: str) -> Details:
         line.split(":", 1)[1].strip() for line in lines if line.lower().startswith("degree to be achieved:")
     ][:1]
     accreditation = next(
-        (eka_accreditation(line) for line in lines if line.lower().startswith("accreditation:")), None
+        (accredited_until(line) for line in lines if line.lower().startswith("accreditation:")), None
     )
 
     lead: list[str] = []
@@ -317,12 +399,167 @@ def eka_details(body: str, title: str, level: str) -> Details:
     }
 
 
+# ---------- Ещё девять вузов (2026-10-03) ----------
+# У всех одна схема: степень (и квалификация, если названа отдельно) — из
+# строки-поля, описание — первые абзацы после названия или блока фактов,
+# срок аккредитации — если он назван на странице.
+
+
+def bsa_details(body: str, title: str, level: str) -> Details:
+    """BSA: bsa.edu.lv/index.php/en/<уровень>/<slug>.html"""
+    lines = _lines(body)
+    after_title = lines[lines.index(title) + 1 :] if title in lines else []
+    # сразу под названием — строка о сроке аккредитации направления; в описание не идёт
+    lead = _first_paragraphs([line for line in after_title if "accredit" not in line.lower()])
+    return _details(
+        [_field(lines, "Course Degree"), _field(lines, "Qualification to be obtained")],
+        lead,
+        _page_accreditation(lines),
+    )
+
+
+def du_details(body: str, title: str, level: str) -> Details:
+    """DU: du.lv/en/studies/study-programmes/<уровень>/<slug>/"""
+    lines = _lines(body)
+    degree = _field(lines, "Obtainable Degree", "Obtainable Degree and Qualification", "Degree to be acquired")
+    return _details([degree], _first_paragraphs(_after_table(lines)))
+
+
+def lka_details(body: str, title: str, level: str) -> Details:
+    """LKA: lka.edu.lv/en/studies/study-programmes/<уровень>/<slug>/
+
+    Блок «Course Brief» — строки «Подпись: значение», последняя нужная —
+    «Degree to be obtained». Описание — абзацы под первым заголовком
+    ПРОПИСНЫМИ после неё (обычно «THE AIM AND OBJECTIVES OF THE STUDY
+    PROGRAMME»); у докторантуры такого заголовка нет — тогда первый абзац
+    после блока. Строки-факты в описание не идут, поиск кончается на
+    подвале («Important shortcuts»).
+    """
+    lines = _lines(body)
+    lead: list[str] = []
+    degree_index = next(
+        (index for index, line in enumerate(lines) if line.lower().startswith("degree to be obtained")), None
+    )
+    if degree_index is not None:
+        end = lines.index("Important shortcuts") if "Important shortcuts" in lines else len(lines)
+        region = [line for line in lines[degree_index + 1 : end] if not re.match(r"[^:]{3,45}: ", line)]
+        heading = next(
+            (
+                index
+                for index, line in enumerate(region)
+                if len(line) >= 10 and line == line.upper() and any(ch.isalpha() for ch in line)
+            ),
+            None,
+        )
+        if heading is not None:
+            lead = _first_paragraphs(region[heading + 1 :])
+        elif "Profesors" in region:
+            # без заголовков: описание — только абзац сразу под списком
+            # вкладок (последняя — «Profesors», так на сайте). Если там
+            # подзаголовок («Application procedure»), дальше идут правила
+            # подачи, а не описание.
+            after_tabs = [line for line in region[region.index("Profesors") + 1 :] if line]
+            if after_tabs and len(after_tabs[0]) >= MIN_DESCRIPTION_LENGTH:
+                lead = _first_paragraphs(after_tabs)
+    degree = _field(lines, "Degree to be obtained")
+    return _details([re.sub(r"^the\s+", "", degree) if degree else None], lead)
+
+
+def lbtu_details(body: str, title: str, level: str) -> Details:
+    """LBTU: llu.lv/en/<slug>. Описание — абзацы прямо над строкой «Degree:»."""
+    lines = [line for line in _lines(body) if line]
+    lead: list[str] = []
+    degree_index = next((index for index, line in enumerate(lines) if line.startswith("Degree:")), None)
+    if degree_index is not None:
+        index = degree_index - 1
+        while index >= 0 and len(lines[index]) >= MIN_DESCRIPTION_LENGTH and lines[index] != title:
+            lead.insert(0, lines[index])
+            index -= 1
+    return _details([_field(lines, "Degree")], lead, _page_accreditation(lines))
+
+
+def rgsl_details(body: str, title: str, level: str) -> Details:
+    """RGSL: rgsl.edu.lv/programmes/<slug>"""
+    lines = _lines(body)
+    degree = _field(lines, "Degree", "Degree awarded")
+    return _details([degree], _first_paragraphs(_after_table(lines)), _page_accreditation(lines))
+
+
+def riseba_details(body: str, title: str, level: str) -> Details:
+    """RISEBA: riseba.lv/en/program/<slug>/
+
+    Описание — абзац между названием и блоком «General information».
+    Строка «Programme degree:» есть не у всех программ.
+    """
+    lines = _lines(body)
+    lead: list[str] = []
+    if "General information" in lines:
+        general = lines.index("General information")
+        titles = [index for index in range(general) if lines[index] == title]
+        if titles:
+            lead = _first_paragraphs(lines[titles[-1] + 1 : general])
+    return _details([_field(lines, "Programme degree")], lead, _page_accreditation(lines))
+
+
+def rnu_details(body: str, title: str, level: str) -> Details:
+    """RNU: rnu.lv/en/studies/study-programs/<уровень>/<slug>/
+
+    Описание — под заголовком «PROGRAMME DESCRIPTION» («PROGRAM
+    DESCRIPTION»); где его нет — первый абзац после кнопки «APPLY HERE!»
+    (раздел «Goal»). Если там только список — описания нет.
+    """
+    lines = _lines(body)
+    upper = [line.upper() for line in lines]
+    start = next((index for index, line in enumerate(upper) if line in ("PROGRAMME DESCRIPTION", "PROGRAM DESCRIPTION")), None)
+    if start is None:
+        start = next((index for index, line in enumerate(upper) if line.startswith("APPLY HERE")), None)
+    lead = _first_paragraphs(lines[start + 1 :]) if start is not None else []
+    return _details(
+        [_field(lines, "Degree to be awarded", "Degree Awarded"), _field(lines, "Qualifications", "Qualification")], lead
+    )
+
+
+def turiba_details(body: str, title: str, level: str) -> Details:
+    """Turība: turiba.lv/en/admission/study-programs/<уровень>/<slug>
+
+    Название стоит дважды: над блоком фактов и над описанием — нужно второе.
+    """
+    lines = _lines(body)
+    titles = [index for index, line in enumerate(lines) if title and line == title]
+    lead = _first_paragraphs(lines[titles[-1] + 1 :]) if titles else []
+    return _details(
+        [_field(lines, "DEGREE AWARDED"), _field(lines, "QUALIFICATION AWARDED")], lead, _page_accreditation(lines)
+    )
+
+
+def sse_details(body: str, title: str, level: str) -> Details:
+    """SSE Riga: sseriga.edu/education/bachelor — одна программа, текст прозой."""
+    lines = [line for line in _lines(body) if line]
+    match = re.search(r"Graduate with a (Bachelor[’']s Degree in [A-Za-z ]+?)[,.]", body)
+    lead: list[str] = []
+    for index, line in enumerate(lines[:-1]):
+        # название страницы есть и в меню — нужно то, за которым сразу идёт абзац
+        if title and line == title and len(lines[index + 1]) >= MIN_DESCRIPTION_LENGTH:
+            lead = [lines[index + 1]]
+            break
+    return _details([match.group(1) if match else None], lead)
+
+
 # source_key -> (короткое имя для командной строки, разборщик)
 PARSERS: dict[str, tuple[str, Callable[[str, str, str], Details]]] = {
     "sources.rsu": ("rsu", rsu_details),
     "sources.lma": ("lma", lma_details),
     "sources.tsi": ("tsi", tsi_details),
     "sources.eka": ("eka", eka_details),
+    "sources.bsa": ("bsa", bsa_details),
+    "sources.du": ("du", du_details),
+    "sources.lka": ("lka", lka_details),
+    "sources.lbtu": ("lbtu", lbtu_details),
+    "sources.rgsl": ("rgsl", rgsl_details),
+    "sources.riseba": ("riseba", riseba_details),
+    "sources.rnu": ("rnu", rnu_details),
+    "sources.turiba": ("turiba", turiba_details),
+    "sources.sse_riga": ("sse", sse_details),
 }
 
 
@@ -566,12 +803,215 @@ def selftest() -> None:
     assert details["description_en"].startswith("Are numbers your language? Make it your career!\n\nAccounting and"), details
     assert "ACCOUNTING AND FINANCE" not in details["description_en"], "название в описание не попадает"
     assert "What will you learn" not in details["description_en"]
-    assert eka_accreditation("accredited until February 30, 2027") is None, "несуществующая дата"
-    assert eka_accreditation("is licensed") is None
-    assert eka_accreditation("Study direction is accredited till January 18, 2030.") == "2030-01-18"
-    assert eka_accreditation("accredited until August 26th, 2027.") == "2027-08-26"
+    assert accredited_until("accredited until February 30, 2027") is None, "несуществующая дата"
+    assert accredited_until("is licensed") is None
+    assert accredited_until("Study direction is accredited till January 18, 2030.") == "2030-01-18"
+    assert accredited_until("accredited until August 26th, 2027.") == "2027-08-26"
     # нет названия прописными над описанием — начало описания не угадываем
     assert eka_details("Some text\nLanguage: Latvian", "", "bachelor")["description_en"] is None
+
+    long_a = "This programme will enable you to become a leader within established organizations by providing comprehensive knowledge."
+    long_b = "The second paragraph continues the description and is long enough to be treated as a paragraph, not a heading."
+
+    assert accredited_until("Accredited until: May 27, 2027") == "2027-05-27"
+    assert accredited_until("Accredited until\t31 December 2027") == "2027-12-31"
+    assert accredited_until('study Direction "X" is accreditate for 6 years till June 20, 2030') == "2030-06-20"
+    assert accredited_until("The study program is accredited until August 5, 2027.") == "2027-08-05"
+    assert accredited_until("Information on study programme accreditation") is None
+    assert accredited_until('study Direction "Y" is accreditate for 6 years till October, 3, 2030') == "2030-10-03"
+    assert _field(["Degree awarded\tBachelor in Social Science in Law"], "Degree", "Degree awarded") == "Bachelor in Social Science in Law"
+    assert _first_paragraphs(["learning modern management and governance methodologies based on international experience in this field;"]) == []
+    table = ["Language\tLatvian (for studies in Latvian);", "English (for studies in English)", "Amount (CP)\t180 ECTS CP", "After"]
+    assert _after_table(table) == ["After"], "ячейка в две строки таблицу не кончает"
+    assert _details(["Professional Bachelor degree in tourism and hospitality business.", "Travel Manager"], [])["degree_awarded_en"] == "Professional Bachelor degree in tourism and hospitality business; Travel Manager"
+    assert _details(["Doctor of Science, Ph.D."], [])["degree_awarded_en"] == "Doctor of Science, Ph.D."
+
+    assert _field(["Degree to be obtained: A"], "Degree") is None, "подпись сравнивается целиком"
+    assert _field(["Degree\tBachelor in Social Science in Law"], "degree") == "Bachelor in Social Science in Law"
+    assert _field(["Programme degree:", "Bachelor's Degree in Audiovisual Arts"], "Programme degree") == "Bachelor's Degree in Audiovisual Arts"
+    assert _first_paragraphs(["Heading", long_a, long_b, "Next heading", long_a]) == [long_a, long_b]
+    assert _first_paragraphs([long_a, "Tasks of the study programme and everything that follows after this long heading line:", long_b]) == [long_a]
+
+    bsa_page = "\n".join(
+        [
+            "STUDIESADMISSIONABOUT US",
+            "Entrepreneurship management",
+            'According decisions by the Study Quality Commission from June 19, 2024 study Direction "MANAGEMENT" is accreditate for 6 years till June 20, 2030',
+            "Advantages of the program",
+            long_a,
+            "Competencies acquired",
+            long_b,
+            "Course Degree: Professional Bachelor’s degree in Business Management",
+            "Qualification to be obtained: Manager of an Enterprise",
+            "Course Length: 4 years - Full-Time",
+        ]
+    )
+    details = bsa_details(bsa_page, "Entrepreneurship management", "bachelor")
+    assert details["degree_awarded_en"] == "Professional Bachelor’s degree in Business Management; Manager of an Enterprise", details
+    assert details["description_en"] == long_a, details
+    assert details["accreditation_valid_until"] == "2030-06-20", details
+
+    du_page = "\n".join(
+        [
+            "Biology",
+            "Faculty\tFaculty of Natural Sciences and Healthcare",
+            "Obtainable Degree\tNatural Sciences Bachelor’s Degree in Biology",
+            "Study course descriptions\tStudy course descriptions",
+            "Aim of the study programme",
+            long_a,
+            "Tasks of the study programme:",
+            long_b,
+        ]
+    )
+    details = du_details(du_page, "Biology", "bachelor")
+    assert details == {"degree_awarded_en": "Natural Sciences Bachelor’s Degree in Biology", "description_en": long_a}, details
+
+    lka_page = "\n".join(
+        [
+            "Audiovisual Art",
+            "Course Brief",
+            "Language of study: Latvian",
+            "Degree to be obtained: Bachelor of Arts in Audiovisual Art",
+            "International mobility opportunities: Studies, internships and graduate internships within the ERASMUS + exchange programme",
+            "Study Overview",
+            "THE AIM AND OBJECTIVES OF THE STUDY PROGRAMME",
+            long_a,
+            "STUDENT PROFILE",
+            long_b,
+        ]
+    )
+    details = lka_details(lka_page, "Audiovisual Art", "bachelor")
+    assert details == {"degree_awarded_en": "Bachelor of Arts in Audiovisual Art", "description_en": long_a}, details
+    lka_doctoral = "\n".join(
+        [
+            "Course Brief",
+            "THE PROGRAMME IS PROVIDED IN COLLABORATION WITH RIGA TECHNICAL UNIVERSITY",  # над фактами — не заголовок описания
+            "Degree to be obtained: the Bachelor of Arts in Creative Industries",
+            "Place of study: LAC (Riga, Ludzas Street 24); RTU Faculty of Engineering Economics and Management (Riga, Kalnciema Street 6)",
+            "Programme description",
+            "Handbook for the Development and Submission of Theoretical Research in Final Theses for Professional Doctoral Study Programs",
+            "Profesors",
+            long_b,
+            "Important shortcuts",
+            "National Film School of the Latvian Academy of Culture / Department of Audiovisual Art and something else",
+        ]
+    )
+    details = lka_details(lka_doctoral, "", "doctoral")
+    assert details == {"degree_awarded_en": "Bachelor of Arts in Creative Industries", "description_en": long_b}, details
+    no_text = lka_doctoral.replace(long_b, "Profesors")
+    assert lka_details(no_text, "", "bachelor")["description_en"] is None, "подвал сайта — не описание"
+    rules = lka_doctoral.replace(long_b, "Application procedure\n" + long_b)
+    assert lka_details(rules, "", "doctoral")["description_en"] is None, "под вкладками подзаголовок — это не описание"
+
+    lbtu_page = "\n".join(
+        [
+            "About University",
+            "Geoinformatics and Remote Sensing",
+            long_a,
+            "",
+            "Degree: Master Degree in Geoinformatics and Remote Sensing (Mg.sc.ing.)",
+            "Credits: 120 ECTS",
+            "Accredited until: October 27, 2028",
+            "Abstract",
+            long_b,
+        ]
+    )
+    details = lbtu_details(lbtu_page, "Geoinformatics and Remote Sensing", "master")
+    assert details["degree_awarded_en"] == "Master Degree in Geoinformatics and Remote Sensing (Mg.sc.ing.)", details
+    assert details["description_en"] == long_a, details
+    assert details["accreditation_valid_until"] == "2028-10-27", details
+    long_title = "Professional master study programme – Human Resource Management and Career Counselling"
+    details = lbtu_details(lbtu_page.replace("Geoinformatics and Remote Sensing\n", long_title + "\n"), long_title, "master")
+    assert details["description_en"] == long_a, "длинное название — не абзац описания"
+
+    rgsl_page = "\n".join(
+        [
+            "LL.B.",
+            "Degree\tBachelor in Social Science in Law",
+            "Programme duration\t3 years",
+            "Accredited until\t31 December 2027",
+            long_a,
+            long_b,
+            "The bachelor programmes brochure is available here:",
+            "Apply",
+        ]
+    )
+    details = rgsl_details(rgsl_page, "", "bachelor")
+    assert details["degree_awarded_en"] == "Bachelor in Social Science in Law", details
+    assert details["description_en"] == long_a + "\n\n" + long_b, details
+    assert details["accreditation_valid_until"] == "2027-12-31", details
+
+    riseba_page = "\n".join(
+        [
+            "Programmes",
+            "Architecture",
+            "Academic bachelor’s programme 210 ECTS",
+            long_a,
+            "Apply",
+            "General information",
+            "Credit points:",
+            "210 ECTS",
+            "Programme degree:",
+            "Bachelor's Degree in Architecture",
+            "About the Programme",
+            long_b,
+        ]
+    )
+    details = riseba_details(riseba_page, "Architecture", "bachelor")
+    assert details == {"degree_awarded_en": "Bachelor's Degree in Architecture", "description_en": long_a}, details
+    without_degree = riseba_details(riseba_page.replace("Programme degree:", "Other:"), "Architecture", "bachelor")
+    assert without_degree["degree_awarded_en"] is None and without_degree["description_en"] == long_a
+
+    rnu_page = "\n".join(
+        [
+            "BUSINESS ADMINISTRATION",
+            "PROGRAMME DESCRIPTION",
+            long_a,
+            "PROGRAMME OVERVIEW",
+            "Degree to be awarded: Professional Bachelor of Business Administration",
+            "Qualifications: Business Administrator",
+            "During the conversation, you will be able to discuss study opportunities and ask any questions you have.",
+            "APPLY HERE!",
+            "Goal",
+            long_b,
+        ]
+    )
+    details = rnu_details(rnu_page, "BUSINESS ADMINISTRATION", "bachelor")
+    assert details["degree_awarded_en"] == "Professional Bachelor of Business Administration; Business Administrator", details
+    assert details["description_en"] == long_a, details
+    no_heading = rnu_details(rnu_page.replace("PROGRAMME DESCRIPTION", "Intro"), "", "master")
+    assert no_heading["description_en"] == long_b, "без заголовка — абзац после кнопки APPLY HERE!"
+
+    turiba_page = "\n".join(
+        [
+            "BUSINESS ADMINISTRATION",
+            "Professional Bachelor's Study Program",
+            "DEGREE AWARDED: Professional Bachelor's Degree in Business Administration",
+            "QUALIFICATION AWARDED: Company Manager",
+            "INTERNSHIP: Companies of various sectors, Turība University Business incubator and other partner companies",
+            "BUSINESS ADMINISTRATION",
+            long_a,
+            "The study program is accredited until August 5, 2027.",
+            "LECTURE TIMES:",
+        ]
+    )
+    details = turiba_details(turiba_page, "BUSINESS ADMINISTRATION", "bachelor")
+    assert details["degree_awarded_en"] == "Professional Bachelor's Degree in Business Administration; Company Manager", details
+    assert details["description_en"] == long_a, details
+    assert details["accreditation_valid_until"] == "2027-08-05", details
+
+    sse_page = "\n".join(
+        [
+            "BSc Programme",
+            "Curriculum",
+            "BSc Programme",
+            long_a,
+            "Bachelor's degree",
+            "Graduate with a Bachelor’s Degree in Social Sciences in Economics, a valuable credential for your future goals.",
+        ]
+    )
+    details = sse_details(sse_page, "BSc Programme", "bachelor")
+    assert details == {"degree_awarded_en": "Bachelor’s Degree in Social Sciences in Economics", "description_en": long_a}, details
     print("самотест пройден")
 
 
