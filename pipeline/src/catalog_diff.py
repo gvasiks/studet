@@ -18,6 +18,8 @@ main.py убирает из payload отсутствующие у источни
 
 from __future__ import annotations
 
+import re
+
 from dataclasses import dataclass, field
 
 # Поля программы, которые подтверждает человек (правило 6 CLAUDE.md:
@@ -132,7 +134,44 @@ def format_report(diff: CatalogDiff, university_slug: str) -> str:
     return "\n".join(lines)
 
 
+# Название программы, которое на самом деле адрес сайта: «www.rtu.lv»,
+# «https://…», «rtu.lv». Так выглядит заголовок страницы-заглушки, которую
+# сайт отдаёт вместо карточки программы (случай rtu_liepaja, 2026-10-03).
+_WEB_ADDRESS = re.compile(r"^(?:https?://|www\.)\S*$|^[\w-]+(?:\.[\w-]+)*\.[a-z]{2,}$", re.IGNORECASE)
+
+
+def suspicious_names(programme_rows: list[dict]) -> list[str]:
+    """Слаги программ, у которых название похоже на адрес сайта или пусто.
+
+    Чистая функция; main.py отказывается записывать источник, если список
+    не пуст: лучше оставить прошлонедельные данные, чем заменить название
+    программы мусором.
+    """
+    bad: list[str] = []
+    for row in programme_rows:
+        names = [row.get("name_lv"), row.get("name_en")]
+        present = [name.strip() for name in names if isinstance(name, str) and name.strip()]
+        if not present or any(_WEB_ADDRESS.match(name) for name in present):
+            bad.append(row.get("slug", "?"))
+    return bad
+
+
 def selftest() -> None:
+    assert suspicious_names([{"slug": "hbe", "name_lv": "www.rtu.lv"}]) == ["hbe"]
+    assert suspicious_names([{"slug": "a", "name_en": "https://example.com/x"}]) == ["a"]
+    assert suspicious_names([{"slug": "b", "name_lv": "rtu.lv"}]) == ["b"]
+    assert suspicious_names([{"slug": "c", "name_lv": "  "}]) == ["c"], "пустое название — тоже мусор"
+    assert suspicious_names([{"slug": "d"}]) == ["d"]
+    assert suspicious_names(
+        [
+            {"slug": "ok1", "name_lv": "Logopēdija"},
+            {"slug": "ok2", "name_en": "B.Sc. in Economics"},
+            {"slug": "ok3", "name_en": "Ph.D"},
+            {"slug": "ok4", "name_lv": "E-biznesa vadība", "name_en": "E-business Management"},
+            {"slug": "ok5", "name_en": "Industry 4.0"},
+        ]
+    ) == [], "обычные названия с точками и дефисами не трогаем"
+
     # добавленная программа — просто в список added, не трогаем verified_at
     added_row = {"slug": "new-programme", "name_en": "New", "tuition_fee_amount": 1500.0}
     diff = compute_diff({}, [added_row])

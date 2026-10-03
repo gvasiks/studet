@@ -9,7 +9,7 @@ sys.path.insert(0, str(Path(__file__).parent))
 from dotenv import load_dotenv
 
 import polite
-from catalog_diff import CONTENT_FIELDS, compute_diff, format_report
+from catalog_diff import CONTENT_FIELDS, compute_diff, format_report, suspicious_names
 from db import get_service_client
 from scrape_scope import LOCAL_ONLY
 from sources import bsa, du, eka, ekra, jvlma, lbtu, lka, lma, lnaa, lu, lutera, niid_colleges, niid_universities, rai, rgsl, riseba, rnu, rsu, rtu_catalog, rtu_liepaja, sse_riga, tsi, turiba, venta, via
@@ -213,6 +213,18 @@ def _check_and_save(client, now: str, key: str, university, programmes) -> int: 
             "Похоже на баг сборщика (например, тихо потерянный раздел сайта), а не на "
             "сокращение набора у вуза — проверьте вручную. Если сокращение подтвердится, "
             "поднимите порог в MIN_PROGRAMME_COUNT (main.py)."
+        )
+
+    # Название-адрес («www.rtu.lv») или пустое — признак, что сайт отдал
+    # не карточку программы, а заглушку. Источник не записывается целиком:
+    # прошлые данные лучше мусора (см. catalog_diff.suspicious_names).
+    bad = suspicious_names([programme.model_dump(exclude_none=True) for programme in programmes])
+    if bad:
+        raise CatalogCompletenessError(
+            f"{key}: у {len(bad)} программ вместо названия адрес сайта или пусто "
+            f"({', '.join(bad[:5])}{' …' if len(bad) > 5 else ''}). Похоже, сайт отдал заглушку "
+            "вместо страницы программы — источник не записан. Если сайт не отвечает серверу "
+            "GitHub, добавьте источник в LOCAL_ONLY (scrape_scope.py)."
         )
 
     uni_row = university.model_dump(exclude_none=True)
