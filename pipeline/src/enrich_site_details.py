@@ -9,10 +9,14 @@ NIID их по названию не найти) и чьи собственны�
   степень  -> programme.degree_awarded_en
   описание -> programme.description_en (начало, как у NIID и ЛУ)
 
+Сейчас: RSU, LMA, TSI, EKA.
+
 Как добавить вуз: написать функцию-разборщик `(текст страницы, заголовок h1,
 уровень программы) -> {"degree_awarded_en", "description_en"}` — чистую, с
 примером в selftest() — и внести её в PARSERS под ключом source_key. Сеть и
-база у всех общие.
+база у всех общие. Разборщик может вернуть и необязательный ключ
+"accreditation_valid_until" (ISO-дата, так делает EKA): он записывается,
+только когда найден, — это поле заполняют и сборщики каталога.
 
   python src/enrich_site_details.py                # показать, что будет записано
   python src/enrich_site_details.py --apply        # записать
@@ -172,10 +176,153 @@ def lma_details(body: str, title: str, level: str) -> Details:
     return {"degree_awarded_en": degree, "description_en": excerpt(description)}
 
 
+# ---------- TSI: tsi.lv/study_programmes/<slug>/ ----------
+
+
+def tsi_details(body: str, title: str, level: str) -> Details:
+    """Страница программы TSI.
+
+    У сайта два вида страниц.
+
+    Новый: степень — значение поля блока «Key Data», чья подпись начинается с
+    «AWARDED» («AWARDED ACADEMIC DEGREE»…), на следующей строке. У программ
+    двойного диплома значений два, каждое вида «ВУЗ: степень» — берутся оба.
+    Описание — абзац между названием программы и кнопкой «Apply Now».
+    Название встречается на странице несколько раз (меню, хлебные крошки),
+    поэтому берётся то вхождение, за которым в пределах нескольких строк
+    идёт «Apply Now».
+
+    Старый (докторантура и одна магистратура): степень — в той же строке,
+    «Awarded academic degree: …»; описание — абзацы под заголовком
+    «About the Programme» до следующего заголовка.
+    """
+    lines = _lines(body)
+
+    degree_lines: list[str] = []
+    for index, line in enumerate(lines):
+        if not line.upper().startswith("AWARDED"):
+            continue
+        inline = line.partition(":")[2].strip()
+        if inline:
+            values = [inline]
+        else:
+            following = [candidate for candidate in lines[index + 1 : index + 6] if candidate]
+            values = following[:1]
+            # вторая строка — только у двойного диплома: обе вида «ВУЗ: степень»
+            if len(following) > 1 and ": " in following[0] and ": " in following[1]:
+                values.append(following[1])
+        for value in values:
+            if value not in degree_lines:
+                degree_lines.append(value)
+
+    lead: list[str] = []
+    if title:
+        for index, line in enumerate(lines):
+            if line != title:
+                continue
+            between: list[str] = []
+            for candidate in lines[index + 1 : index + 8]:
+                if candidate == title:
+                    break  # ниже есть вхождение ближе к кнопке — возьмём его
+                if candidate.startswith("Apply Now"):
+                    lead = between
+                    break
+                if candidate:
+                    between.append(candidate)
+            if lead:
+                break
+
+    if not lead:  # страница старого вида
+        for index, line in enumerate(lines):
+            if line.lower() != "about the programme":
+                continue
+            for candidate in lines[index + 1 :]:
+                if not candidate:
+                    continue
+                # короткая строка или строка с двоеточием в конце — заголовок
+                # следующего раздела или начало списка
+                if candidate.endswith(":") or len(candidate) < MIN_DESCRIPTION_LENGTH:
+                    break
+                lead.append(candidate)
+            if lead:
+                break
+
+    return {"degree_awarded_en": _degree(degree_lines), "description_en": excerpt(_join_paragraphs(lead))}
+
+
+# ---------- EKA: augstskola.lv/?parent=<id>&lng=eng ----------
+
+_EKA_MONTHS = {
+    name: number
+    for number, name in enumerate(
+        ["january", "february", "march", "april", "may", "june", "july", "august", "september", "october",
+         "november", "december"],
+        start=1,
+    )
+}
+
+
+def eka_accreditation(text: str) -> str | None:
+    """«…accredited until July 1, 2027.» -> «2027-07-01».
+
+    На сайте встречаются «until» и «till», число — «26» и «26th».
+    """
+    match = re.search(
+        r"accredited\s+(?:until|till)\s+([A-Za-z]+)\s+(\d{1,2})(?:st|nd|rd|th)?,\s*(\d{4})", text, re.IGNORECASE
+    )
+    if not match:
+        return None
+    month = _EKA_MONTHS.get(match.group(1).lower())
+    if month is None:
+        return None
+    try:
+        return datetime(int(match.group(3)), month, int(match.group(2))).date().isoformat()
+    except ValueError:
+        return None
+
+
+def eka_details(body: str, title: str, level: str) -> Details:
+    """Страница программы EKA.
+
+    Блок фактов — строки «Language: …», «Degree to Be Achieved: …»,
+    «Accreditation: …». Описание — строки между названием программы
+    (написано ПРОПИСНЫМИ над описанием) и строкой «Language:».
+    """
+    lines = _lines(body)
+
+    degree_lines = [
+        line.split(":", 1)[1].strip() for line in lines if line.lower().startswith("degree to be achieved:")
+    ][:1]
+    accreditation = next(
+        (eka_accreditation(line) for line in lines if line.lower().startswith("accreditation:")), None
+    )
+
+    lead: list[str] = []
+    language_index = next((i for i, line in enumerate(lines) if line.startswith("Language:")), None)
+    if language_index is not None:
+        # идём от «Language:» вверх до названия программы — строки из прописных букв
+        start = language_index
+        while start > 0:
+            candidate = lines[start - 1]
+            if candidate and candidate == candidate.upper() and any(ch.isalpha() for ch in candidate):
+                break
+            start -= 1
+        if start > 0:  # название найдено; без него не угадываем, где начало описания
+            lead = [line for line in lines[start:language_index] if line]
+
+    return {
+        "degree_awarded_en": _degree(degree_lines),
+        "description_en": excerpt(_join_paragraphs(lead)),
+        "accreditation_valid_until": accreditation,
+    }
+
+
 # source_key -> (короткое имя для командной строки, разборщик)
 PARSERS: dict[str, tuple[str, Callable[[str, str, str], Details]]] = {
     "sources.rsu": ("rsu", rsu_details),
     "sources.lma": ("lma", lma_details),
+    "sources.tsi": ("tsi", tsi_details),
+    "sources.eka": ("eka", eka_details),
 }
 
 
@@ -233,6 +380,10 @@ def main(apply: bool, everything: bool, limit: int | None, only: set[str], skip_
 
             for row in by_url[url]:
                 details = PARSERS[row["source_key"]][1](body, title, row["degree_level"])
+                # Срок аккредитации — необязательная находка разборщика (EKA).
+                # Записывается, только когда найден: это поле заполняют и
+                # сборщики, и стирать их значение пустотой нельзя.
+                accreditation = details.pop("accreditation_valid_until", None)
                 if not any(details.values()):
                     empty += 1
                     print(f"ПУСТО {row['slug']} ({url})")
@@ -240,13 +391,16 @@ def main(apply: bool, everything: bool, limit: int | None, only: set[str], skip_
                 description = details["description_en"] or ""
                 print(
                     f"{row['slug']}: degree={details['degree_awarded_en']!r}; "
-                    f"description={len(description)} chars: {description[:90]!r}"
+                    + (f"accreditation={accreditation}; " if accreditation else "")
+                    + f"description={len(description)} chars: {description[:90]!r}"
                 )
                 if apply:
                     # None пишется явно: эти колонки у таких программ заполняет
                     # только этот скрипт, и после правки разборщика прежнее
                     # значение должно исчезнуть (как в enrich_lu_details.py).
                     update: dict[str, object] = dict(details)
+                    if accreditation:
+                        update["accreditation_valid_until"] = accreditation
                     update["details_source_url"] = url
                     update["details_extracted_at"] = now.isoformat()
                     client.table("programme").update(update).eq("id", row["id"]).execute()
@@ -340,6 +494,84 @@ def selftest() -> None:
     ma_only = lma_page.replace("Bachelor of Humanities in Visual Plastic Arts / ", "")
     assert lma_details(ma_only, "", "bachelor")["degree_awarded_en"] is None
     assert lma_details(ma_only, "", "master")["degree_awarded_en"] == "Master of Humanities in Visual Plastic Arts"
+
+    tsi_page = "\n".join(
+        [
+            "Study Programmes",
+            "Aviation Engineering",  # пункт меню — за ним нет «Apply Now»
+            "Key Data",
+            "ENGINEERING FACULTY",
+            "Aviation Engineering",
+            "Study the technologies that keep aircraft safe and operational, from aerodynamics to airworthiness management.",
+            "Apply Now →",
+            "Explore Courses ↓",
+            "KEY DATA",
+            "PROGRAMME VOLUME ECTS (CP)",
+            "240",
+            "AWARDED ACADEMIC DEGREE",
+            "BSc Engineering in Mechanical Engineering",
+            "LOCATION",
+            "TSI Campus, Riga",
+        ]
+    )
+    details = tsi_details(tsi_page, "Aviation Engineering", "bachelor")
+    assert details["degree_awarded_en"] == "BSc Engineering in Mechanical Engineering", details
+    assert details["description_en"].startswith("Study the technologies that keep aircraft safe"), details
+    assert "Key Data" not in details["description_en"]
+    assert tsi_details("nothing", "X", "bachelor") == {"degree_awarded_en": None, "description_en": None}
+
+    double = "AWARDED ACADEMIC DEGREE\nTSI: MSc Smart Electronic Systems and Robotics\nUWE Bristol: MSc Robotics and Artificial Intelligence\nLOCATION\nTSI Campus, Riga or online"
+    assert (
+        tsi_details(double, "", "master")["degree_awarded_en"]
+        == "TSI: MSc Smart Electronic Systems and Robotics; UWE Bristol: MSc Robotics and Artificial Intelligence"
+    )
+    single = "AWARDED ACADEMIC DEGREE\nMSc Management\nLOCATION\nTSI Campus, Riga: main building"
+    assert tsi_details(single, "", "master")["degree_awarded_en"] == "MSc Management", "вторая строка — не степень"
+
+    old_page = "\n".join(
+        [
+            "Awarded academic degree: MSc Transport and Logistics",
+            "In the frame of study project and master thesis students can specialize in:",
+            "Urban Mobility",
+            "Complete study program volume ECTS (CP): 120 and 90",
+            "Director of the Programme",
+            "About the Programme",
+            "Transportation serves as a foundation for progress across all domains of human activity, ensuring the reliable supply of goods.",
+            "The programme is designed on the knowledge and research of European-level experts in an intellectual environment.",
+            "Competences acquired as a result of studying at the programme:",
+            "perform the independent critical analysis, synthesis and evaluation of significant research tasks in engineering",
+        ]
+    )
+    details = tsi_details(old_page, "Intelligent Transport and Smart Logistics", "master")
+    assert details["degree_awarded_en"] == "MSc Transport and Logistics", details
+    assert details["description_en"].startswith("Transportation serves as a foundation"), details
+    assert details["description_en"].endswith("intellectual environment."), "список компетенций в описание не попадает"
+
+    eka_page = "\n".join(
+        [
+            "Professional Bachelor Study Programme",
+            "ACCOUNTING AND FINANCE MANAGEMENT",
+            "Are numbers your language? Make it your career!",
+            "Accounting and financial management is a profession that requires an understanding of a company's finances.",
+            "Language: Latvian",
+            "Degree to Be Achieved: Bachelor's degree in accounting and financial management",
+            "Accreditation: Study programme is accredited until July 1, 2027.",
+            "What will you learn?",
+            "Accounting basics: Accounting for economic transactions.",
+        ]
+    )
+    details = eka_details(eka_page, "", "bachelor")
+    assert details["degree_awarded_en"] == "Bachelor's degree in accounting and financial management", details
+    assert details["accreditation_valid_until"] == "2027-07-01", details
+    assert details["description_en"].startswith("Are numbers your language? Make it your career!\n\nAccounting and"), details
+    assert "ACCOUNTING AND FINANCE" not in details["description_en"], "название в описание не попадает"
+    assert "What will you learn" not in details["description_en"]
+    assert eka_accreditation("accredited until February 30, 2027") is None, "несуществующая дата"
+    assert eka_accreditation("is licensed") is None
+    assert eka_accreditation("Study direction is accredited till January 18, 2030.") == "2030-01-18"
+    assert eka_accreditation("accredited until August 26th, 2027.") == "2027-08-26"
+    # нет названия прописными над описанием — начало описания не угадываем
+    assert eka_details("Some text\nLanguage: Latvian", "", "bachelor")["description_en"] is None
     print("самотест пройден")
 
 

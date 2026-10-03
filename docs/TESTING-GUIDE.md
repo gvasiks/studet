@@ -169,9 +169,12 @@ npm run dev
       источник в пометке — lu.lv, и на латышской странице есть строка
       «Nosaukumi un apraksts ir angļu valodā…». То же у RSU
       (`/lv/programmes/rsu/biomedicine`, источник rsu.lv) и LMA
-      (`/lv/programmes/lma/ceramics-bachelor`, источник lma.lv). У 25
+      (`/lv/programmes/lma/ceramics-bachelor`, источник lma.lv), TSI
+      (`/lv/programmes/tsi/double-degree-in-robotics-and-artificial-intelligence`
+      — в степени названы оба вуза) и EKA (`/lv/programmes/eka/law` — там же
+      появилась строка «Akreditēta līdz 22.04.2027.»). У 25
       несопоставленных программ (например, `/lv/programmes/rtu/hbe`) и у
-      остальных 12 вузов блоков нет — это ожидаемо. На `/en/…` названия остаются на латышском, и об этом
+      остальных 10 вузов блоков нет — это ожидаемо. На `/en/…` названия остаются на латышском, и об этом
       есть строка под блоком.
 - [ ] Блок «Что стало с выпускниками» — есть на карточке со свежими
       данными (например, `/lv/programmes/rgsl/law-and-business`: выпуск
