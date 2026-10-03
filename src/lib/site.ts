@@ -1,10 +1,16 @@
 import { defaultLocale, locales, type Locale } from "@/i18n/config";
 
-// Домен ещё не решён (ревью 2026-09, пункт 07) — заглушка, чтобы
-// hreflang/canonical/sitemap не падали без него уже сейчас. Как только
-// домен определится, поменять один раз здесь: .env.local.example и
-// переменную окружения NEXT_PUBLIC_SITE_URL на проде.
-export const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://studet.lv";
+// Название продукта — имя собственное, одинаковое на всех языках, поэтому
+// живёт здесь, а не в словарях локалей. Решение владельца 2026-10-03
+// (docs/NAMING-2026-10.md); до этого проект назывался Studet — это имя
+// осталось только во внутренних идентификаторах (репозиторий, имя пакета,
+// ключ localStorage), которые пользователь не видит.
+export const SITE_NAME = "StudyPick";
+
+// Адрес сайта — для hreflang/canonical/sitemap. Значение по умолчанию —
+// выбранный домен; на проде задаётся переменной окружения
+// NEXT_PUBLIC_SITE_URL (см. .env.local.example).
+export const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://studypick.eu";
 
 // path — без локали, начинается с "/" или пустой для главной, например
 // "/programmes" или "/programmes/lu/economics". Canonical — на текущую

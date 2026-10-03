@@ -11,7 +11,7 @@
 поэтому подмена двух методов Playwright заменяет правку каждого
 сборщика. Что делает:
 
-- честный User-Agent: "StudetBot/1.0 (+контакт)" — администратор,
+- честный User-Agent: "StudyPickBot/1.0 (+контакт)" — администратор,
   которому что-то не нравится, напишет письмо, а не заблокирует адрес.
   Контакт берётся из переменной SCRAPER_CONTACT (URL или почта);
   без неё User-Agent остаётся без контакта, и об этом предупреждают;
@@ -42,7 +42,7 @@ from urllib.parse import urlparse
 
 from playwright.sync_api import Browser, Page, Route
 
-PRODUCT_TOKEN = "StudetBot"
+PRODUCT_TOKEN = "StudyPickBot"
 DEFAULT_DELAY_SECONDS = 1.5
 CACHE_TTL_SECONDS = 24 * 3600
 CACHE_DIR = Path(__file__).resolve().parent.parent / ".cache"

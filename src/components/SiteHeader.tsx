@@ -4,6 +4,7 @@ import type { Dictionary } from "@/i18n/dictionaries";
 import { GraduationCapIcon } from "@/components/icons";
 import { FavoritesLink, HeaderNav } from "@/components/HeaderNav";
 import { LocaleSwitcher, type Tone } from "@/components/LocaleSwitcher";
+import { SITE_NAME } from "@/lib/site";
 
 // Два варианта из макетов: светлая липкая шапка на страницах сайта и
 // прозрачная поверх тёмной сцены на главной.
@@ -18,11 +19,11 @@ export function SiteHeader({ locale, dict, tone }: { locale: Locale; dict: Dicti
         }
       >
         <div className="page-container flex min-h-[72px] items-center gap-x-3 lg:gap-x-6">
-          <Link href={`/${locale}`} className="flex items-center gap-2.5" aria-label="Studet">
+          <Link href={`/${locale}`} className="flex items-center gap-2.5" aria-label={SITE_NAME}>
             <span className="grid h-8 w-8 place-items-center rounded-[10px] bg-brand text-white">
               <GraduationCapIcon size={18} />
             </span>
-            <span className={`text-lg font-bold tracking-tight ${dark ? "text-white" : "text-zinc-900"}`}>Studet</span>
+            <span className={`text-lg font-bold tracking-tight ${dark ? "text-white" : "text-zinc-900"}`}>{SITE_NAME}</span>
           </Link>
           {/* от lg — строка пунктов рядом с логотипом; уже — кнопка «Izvēlne»
               в самом конце строки, после переключателя языка */}

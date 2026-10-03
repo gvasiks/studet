@@ -3,6 +3,7 @@ import type { Locale } from "@/i18n/config";
 import type { Dictionary } from "@/i18n/dictionaries";
 import { GraduationCapIcon, InfoIcon } from "@/components/icons";
 import type { Tone } from "@/components/LocaleSwitcher";
+import { SITE_NAME } from "@/lib/site";
 
 export function SiteFooter({ dict, locale, tone }: { dict: Dictionary; locale: Locale; tone: Tone }) {
   if (tone === "light") {
@@ -33,7 +34,7 @@ export function SiteFooter({ dict, locale, tone }: { dict: Dictionary; locale: L
             <span className="grid h-7 w-7 place-items-center rounded-lg bg-brand text-white">
               <GraduationCapIcon size={15} />
             </span>
-            <span className="text-sm font-bold text-white">Studet</span>
+            <span className="text-sm font-bold text-white">{SITE_NAME}</span>
           </div>
           <nav aria-label={dict.nav.footer} className="mt-3">
             <ul className="flex flex-wrap gap-x-4 gap-y-2 text-xs">
