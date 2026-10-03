@@ -30,6 +30,15 @@ jobs:
       - run: pip install -r requirements.txt
       - run: playwright install --with-deps chromium
 
+      # Сначала — найти страницу NIID для программ, собранных с сайтов вузов
+      # (по латышскому названию и уровню; новые программы РТУ появляются
+      # между обходами). Потом — прочитать страницы.
+      - run: python src/match_niid_by_name.py --apply
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+          SCRAPER_CONTACT: ${{ vars.SCRAPER_CONTACT }}
+
       - run: python src/enrich_niid_details.py --apply
         env:
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}

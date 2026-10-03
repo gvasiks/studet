@@ -27,7 +27,7 @@ jobs:
       - run: playwright install --with-deps chromium
 
       # --skip-local: rtu.lv и lma.lv не отдают программы серверу GitHub
-      # (pipeline/src/scrape_scope.py) — эти два источника владелец собирает
+      # (pipeline/src/scrape_scope.py) — их источники владелец собирает
       # локально, напоминает об этом local-scrape-reminder.yml
       - run: python src/main.py --skip-local
         env:

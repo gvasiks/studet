@@ -25,10 +25,12 @@
   python src/enrich_niid_details.py --all --apply   # перечитать и уже заполненные
   python src/enrich_niid_details.py --selftest      # самотест без сети и базы
 
-Берутся только программы, у которых источник — страница NIID
-(programme.source_url). Программы с собственным сборщиком вуза (ЛУ, РТУ и
-другие) этим скриптом не заполняются: надёжно сопоставить их с записями
-NIID по названию нельзя.
+Берутся программы, для которых известна страница в NIID: либо программа
+оттуда и собрана (programme.source_url), либо её страницу нашёл по
+латышскому названию match_niid_by_name.py (programme.details_source_url) —
+так заполняются РТУ, RAI, Ventspils, LNAA, Lutera. У программ с английским
+названием (ЛУ и другие) страницы NIID нет, и этим скриптом они не
+заполняются.
 
 Описание сохраняется НЕ целиком, а началом (DESCRIPTION_LIMIT знаков, до
 конца предложения): это авторский текст вуза, а не факт. На карточке рядом
@@ -155,39 +157,44 @@ def main(apply: bool, everything: bool, limit: int | None) -> None:
     client = get_service_client()
     now = datetime.now(timezone.utc)
 
-    def _select(columns: str) -> list[dict]:
-        return (
+    # Страница NIID известна двумя путями:
+    #   source_url         — программа и собрана из NIID (sources/niid_*.py, via.py);
+    #   details_source_url — программа собрана с сайта вуза, а её страницу в
+    #                        NIID нашёл match_niid_by_name.py по названию.
+    pattern = f"*{NIID_PROGRAMME_PATH}*"
+    try:
+        rows = (
             client.table("programme")
-            .select(columns)
-            .like("source_url", f"%{NIID_PROGRAMME_PATH}%")
+            .select("id, slug, name_lv, source_url, details_source_url, details_extracted_at")
+            .or_(f"source_url.like.{pattern},details_source_url.like.{pattern}")
             .execute()
             .data
         )
-
-    try:
-        rows = _select("id, slug, name_lv, source_url, details_extracted_at")
     except Exception as exc:  # noqa: BLE001
         # Колонки появляются миграцией 20261003120000_programme_details.sql,
         # а миграции в этом проекте применяет владелец вручную (Studio).
-        if apply:
-            print(
-                "В базе нет колонки details_extracted_at — миграция "
-                "supabase/migrations/20261003120000_programme_details.sql ещё не применена. "
-                f"Запись невозможна. ({type(exc).__name__})"
-            )
-            sys.exit(1)
-        print("миграция ещё не применена — сухой прогон по всем страницам NIID")
-        rows = [{**row, "details_extracted_at": None} for row in _select("id, slug, name_lv, source_url")]
-    # Одна страница NIID может давать две программы каталога (latviešu и
-    # angļu поток) — страницу открываем один раз.
+        print(
+            "Не удалось прочитать programme.details_source_url / details_extracted_at — "
+            "проверьте, применена ли миграция "
+            f"supabase/migrations/20261003120000_programme_details.sql. ({type(exc).__name__}: {exc})"
+        )
+        sys.exit(1)
+
+    def niid_url(row: dict) -> str:
+        """Адрес страницы NIID для программы: найденный по названию важнее."""
+        details = row["details_source_url"] or ""
+        return details if NIID_PROGRAMME_PATH in details else row["source_url"]
+
+    # Одна страница NIID может давать несколько программ каталога (latviešu и
+    # angļu поток, разные города) — страницу открываем один раз.
     by_url: dict[str, list[dict]] = {}
     for row in rows:
         if everything or is_due(row["details_extracted_at"], now):
-            by_url.setdefault(row["source_url"], []).append(row)
+            by_url.setdefault(niid_url(row), []).append(row)
 
     urls = sorted(by_url)[:limit] if limit else sorted(by_url)
     print(
-        f"программ с источником NIID: {len(rows)}; страниц к обходу: {len(urls)}"
+        f"программ со страницей в NIID: {len(rows)}; страниц к обходу: {len(urls)}"
         + ("" if apply else " (сухой прогон — запись только с --apply)")
     )
 
