@@ -1,0 +1,36 @@
+name: Enrich programme details (NIID)
+
+# Диплом, квалификация, описание и срок аккредитации — со страниц программ
+# в NIID.lv (pipeline/src/enrich_niid_details.py). Отдельно от еженедельного
+# сбора: у niid.lv пауза 10 секунд между страницами, 242 страницы — это
+# около сорока минут, а меняются эти сведения редко. Раз в месяц достаточно;
+# скрипт сам пропускает страницы, прочитанные меньше 30 дней назад.
+on:
+  schedule:
+    # 2-е число каждого месяца, 02:30 UTC — ночь по Риге, не в понедельник,
+    # когда идёт сбор каталога
+    - cron: "30 2 2 * *"
+  workflow_dispatch: {}
+
+jobs:
+  enrich:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    defaults:
+      run:
+        working-directory: pipeline
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+
+      - run: pip install -r requirements.txt
+      - run: playwright install --with-deps chromium
+
+      - run: python src/enrich_niid_details.py --apply
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+          SCRAPER_CONTACT: ${{ vars.SCRAPER_CONTACT }}

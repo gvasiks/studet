@@ -34,6 +34,14 @@ export type Programme = {
   description_en: string | null;
   source_url: string | null;
   verified_at: string | null;
+  // Со страницы программы в NIID.lv (pipeline/src/enrich_niid_details.py).
+  // Официальные латышские названия — без английской пары. Заполнены только
+  // у программ, чей источник — NIID; у остальных null.
+  degree_awarded_lv: string | null;
+  qualification_lv: string | null;
+  diploma_document_lv: string | null;
+  details_source_url: string | null;
+  details_extracted_at: string | null;
 };
 
 // Без description_lv/description_en: ни список каталога, ни карточка
