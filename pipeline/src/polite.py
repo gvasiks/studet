@@ -183,7 +183,14 @@ def install() -> None:
     def goto(self: Page, url: str, **kwargs):  # type: ignore[no-untyped-def]
         _wait_turn(url)
         try:
-            return original_goto(self, url, **kwargs)
+            response = original_goto(self, url, **kwargs)
+            # Отказ сайта (403, 429, 503…) сборщики не замечают: страница
+            # открылась, просто на ней нет программ, и в журнале остаётся
+            # только "нашёл 0 программ". Так было 2026-10-03 с rtu.lv и
+            # lma.lv на сервере GitHub — локально оба сайта отвечали нормально.
+            if response is not None and response.status >= 400:
+                print(f"polite: HTTP {response.status} — {url}")
+            return response
         finally:
             _stats["pages"] += 1
             _last_finished[urlparse(url).netloc] = time.monotonic()
