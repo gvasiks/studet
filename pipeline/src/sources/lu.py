@@ -107,11 +107,14 @@ FIELD_ALIASES = {
     "degree": ("obtainable degree", "degree awarded", "degree"),
     "places": (
         "number of study places", "number of places", "number of students accepted",
+        "number of admission places",
         "amount of spaces", "student places",
     ),
     "fee": ("tuition fee", "study fee"),
     "location": ("study location", "location"),
-    "accredited": ("accredited until",),
+    # "accreditation until" — так поле названо на страницах докторантуры;
+    # без этого срок аккредитации у 13 докторских программ терялся
+    "accredited": ("accredited until", "accreditation until"),
 }
 EXACT_ALIASES = {
     "level": ("level",),

@@ -42,6 +42,10 @@ SOURCE_KEY = "sources.lu"
 # (на части страниц описание идёт сразу за полем, без пустой строки).
 MAX_DEGREE_LENGTH = 200
 
+# Описание короче этого — не описание, а обрывок страницы: подпись ссылки
+# («Broschure (PDF)»), одиночная строка сноски.
+MIN_DESCRIPTION_LENGTH = 80
+
 
 def description_from(text: str) -> str | None:
     """Текст страницы программы без блока фактов.
@@ -67,7 +71,11 @@ def description_from(text: str) -> str | None:
             value_lines = 1 if rest.strip() else 0
             seen_field = True
         elif not stripped:
-            current = None
+            # как в lu._parse_facts: поле заканчивается пустой строкой только
+            # ПОСЛЕ значения. «Метка:» + пустая строка + значение — это всё
+            # ещё значение (иначе степень попадала в описание).
+            if current is None or value_lines > 0:
+                current = None
             if paragraphs and paragraphs[-1] != "":
                 paragraphs.append("")  # граница абзаца
         elif current:
@@ -87,7 +95,8 @@ def description_from(text: str) -> str | None:
         elif buffer:
             blocks.append(" ".join(buffer))
             buffer = []
-    return "\n\n".join(blocks) or None
+    description = "\n\n".join(blocks)
+    return description if len(description) >= MIN_DESCRIPTION_LENGTH else None
 
 
 def degree_from(text: str) -> str | None:
@@ -196,7 +205,10 @@ def main(apply: bool, everything: bool, limit: int | None) -> None:
                 f"description={len(description)} chars: {description[:90]!r}"
             )
             if apply:
-                update: dict[str, object] = {key: value for key, value in details.items() if value is not None}
+                # None пишется явно (в отличие от enrich_niid_details.py): эти
+                # две колонки у программ ЛУ заполняет только этот скрипт, и
+                # после исправления разбора прежнее значение должно исчезнуть.
+                update: dict[str, object] = dict(details)
                 update["details_source_url"] = row["source_url"]
                 update["details_extracted_at"] = now.isoformat()
                 client.table("programme").update(update).eq("id", row["id"]).execute()
@@ -237,10 +249,13 @@ def selftest() -> None:
     assert "Bachelor's study programme" not in description, "строки до первого поля отброшены"
 
     # докторантура: значение на следующей строке после метки
-    doctoral = "Level:\nDoctoral\n\nObtainable degree:\nDoctor of Science (Ph.D.) in Physics\n\nAbout\nResearch in physics."
+    doctoral = (
+        "Level:\nDoctoral\n\nObtainable degree:\nDoctor of Science (Ph.D.) in Physics\n\n"
+        "About\nResearch in physics, from condensed matter to astrophysics and applied optics."
+    )
     details = details_from_text(doctoral)
     assert details["degree_awarded_en"] == "Doctor of Science (Ph.D.) in Physics"
-    assert details["description_en"] == "About Research in physics."
+    assert details["description_en"] == "About Research in physics, from condensed matter to astrophysics and applied optics."
 
     two = (
         "Obtainable degree or qualification: Biology - Bachelor of Natural Sciences in Biology\n"
@@ -253,6 +268,21 @@ def selftest() -> None:
     assert details_from_text(glued)["degree_awarded_en"] is None
 
     assert description_from("Just a title\nAnother line") is None, "без полей описания нет"
+
+    # «Метка:» + пустая строка + значение: значение не должно стать описанием
+    spaced = (
+        "Obtainable degree or qualification:\n\nfor the sub-programme A qualification: Teacher\n"
+        "for the sub-programme B qualification: Speech Therapist\n\n" + "Real description sentence. " * 5
+    )
+    spaced_details = details_from_text(spaced)
+    assert spaced_details["degree_awarded_en"] == (
+        "for the sub-programme A qualification: Teacher; for the sub-programme B qualification: Speech Therapist"
+    ), spaced_details["degree_awarded_en"]
+    assert spaced_details["description_en"].startswith("Real description sentence."), spaced_details["description_en"]
+
+    # подпись ссылки и строка об аккредитации — не описание
+    assert details_from_text("Language: English\n\nBroschure (PDF)")["description_en"] is None
+    assert details_from_text("Language: English\n\nAccreditation until: 24.08.2029.")["description_en"] is None
     print("самотест пройден")
 
 
