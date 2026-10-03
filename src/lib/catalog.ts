@@ -38,6 +38,8 @@ export type Programme = {
   // Официальные латышские названия — без английской пары. Заполнены только
   // у программ, чей источник — NIID; у остальных null.
   degree_awarded_lv: string | null;
+  // С английской страницы программы на lu.lv (enrich_lu_details.py).
+  degree_awarded_en: string | null;
   qualification_lv: string | null;
   diploma_document_lv: string | null;
   details_source_url: string | null;

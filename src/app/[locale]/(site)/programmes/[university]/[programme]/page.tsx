@@ -12,6 +12,7 @@ import { matchRounds } from "@/lib/deadlines";
 import { getAdmissionType } from "@/lib/admission-type-queries";
 import { getProgrammeOutcome } from "@/lib/outcome-queries";
 import { areaCode } from "@/lib/fields";
+import { pickDetails } from "@/lib/programme-details";
 import { employmentPercent, interpolate, OUTCOMES_SOURCE_URL, pickOutcomes } from "@/lib/outcomes";
 import { BackButton } from "@/components/BackButton";
 import { FavoriteButton } from "@/components/FavoriteButton";
@@ -135,11 +136,10 @@ export default async function ProgrammePage({ params }: { params: Params }) {
       : {}),
   };
 
-  // Сведения со страницы NIID есть не у всех программ (только у тех, чей
-  // источник — NIID), а до применения миграции колонок нет вовсе.
-  const hasDetails = Boolean(
-    record.degree_awarded_lv || record.qualification_lv || record.diploma_document_lv || record.description_lv,
-  );
+  // Диплом и описание есть не у всех программ: у взятых из NIID и
+  // найденных там по названию — латышские, у ЛУ — английские, у остальных
+  // их нет вовсе (см. src/lib/programme-details.ts).
+  const details = pickDetails(record, locale);
 
   return (
     <main className="page-container py-8 sm:py-12">
@@ -188,41 +188,37 @@ export default async function ProgrammePage({ params }: { params: Params }) {
         )}
       </dl>
 
-      {/* Диплом, квалификация и описание — со страницы программы в NIID.lv
-          (комментарий владельца к USER-STORIES, 2026-09-30). Это не поля
-          правила 6: человек их не подтверждает, поэтому под блоком всегда
-          стоит пометка об автоматическом извлечении, дата и ссылка на
-          источник (правило 5). Названия официальные латышские — на
-          английской странице они помечены lang="lv" (WCAG 3.1.2), и об
-          этом сказано словами. */}
-      {hasDetails && (
+      {/* Диплом, квалификация и описание (комментарий владельца к
+          USER-STORIES, 2026-09-30) — из NIID.lv или со страницы вуза. Это
+          не поля правила 6: человек их не подтверждает, поэтому под блоком
+          всегда стоит пометка об автоматическом извлечении, дата и ссылка
+          на источник (правило 5). Названия официальные, мы их не
+          переводим: язык значения помечен атрибутом lang (WCAG 3.1.2), а
+          если он не совпадает с языком страницы — ещё и словами. */}
+      {details && (
         <section className="mt-8">
-          {(record.degree_awarded_lv || record.qualification_lv || record.diploma_document_lv) && (
+          {(details.degree || details.qualification || details.document) && (
             <>
               <h2 className="text-xs uppercase tracking-wide text-zinc-500">{dict.programme.detailsTitle}</h2>
-              <dl className="mt-3 grid grid-cols-1 gap-x-6 gap-y-4 sm:grid-cols-2" lang="lv">
-                {record.degree_awarded_lv && (
-                  <Fact label={dict.programme.degreeAwarded} value={record.degree_awarded_lv} labelLang={locale} />
+              <dl className="mt-3 grid grid-cols-1 gap-x-6 gap-y-4 sm:grid-cols-2" lang={details.lang}>
+                {details.degree && (
+                  <Fact label={dict.programme.degreeAwarded} value={details.degree} labelLang={locale} />
                 )}
-                {record.qualification_lv && (
-                  <Fact label={dict.programme.qualification} value={record.qualification_lv} labelLang={locale} />
+                {details.qualification && (
+                  <Fact label={dict.programme.qualification} value={details.qualification} labelLang={locale} />
                 )}
-                {record.diploma_document_lv && (
-                  <Fact
-                    label={dict.programme.diplomaDocument}
-                    value={record.diploma_document_lv}
-                    labelLang={locale}
-                  />
+                {details.document && (
+                  <Fact label={dict.programme.diplomaDocument} value={details.document} labelLang={locale} />
                 )}
               </dl>
             </>
           )}
 
-          {record.description_lv && (
+          {details.paragraphs.length > 0 && (
             <>
               <h2 className="mt-8 text-xs uppercase tracking-wide text-zinc-500">{dict.programme.aboutTitle}</h2>
-              <div className="mt-3 space-y-3 leading-relaxed text-zinc-800" lang="lv">
-                {record.description_lv.split(/\n\s*\n/).map((paragraph, index) => (
+              <div className="mt-3 space-y-3 leading-relaxed text-zinc-800" lang={details.lang}>
+                {details.paragraphs.map((paragraph, index) => (
                   <p key={index}>{paragraph}</p>
                 ))}
               </div>
@@ -230,22 +226,17 @@ export default async function ProgrammePage({ params }: { params: Params }) {
           )}
 
           <p className="mt-4 text-xs leading-relaxed text-zinc-500">
-            {locale !== "lv" && `${dict.programme.originalLanguageNote} `}
+            {details.lang !== locale &&
+              `${details.lang === "lv" ? dict.programme.contentInLatvian : dict.programme.contentInEnglish} `}
             {interpolate(dict.programme.detailsSource, {
-              date: record.details_extracted_at
-                ? new Date(record.details_extracted_at).toLocaleDateString(locale)
-                : "",
+              source: details.sourceHost ?? "",
+              date: details.extractedAt ? new Date(details.extractedAt).toLocaleDateString(locale) : "",
             })}
-            {record.details_source_url && (
+            {details.sourceUrl && (
               <>
                 {" "}
-                <a
-                  href={record.details_source_url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="underline"
-                >
-                  {dict.programme.fullDescriptionLink}
+                <a href={details.sourceUrl} target="_blank" rel="noopener noreferrer" className="underline">
+                  {interpolate(dict.programme.fullDescriptionLink, { source: details.sourceHost ?? "" })}
                 </a>
               </>
             )}

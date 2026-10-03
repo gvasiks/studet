@@ -1,4 +1,4 @@
-name: Enrich programme details (NIID)
+name: Enrich programme details (NIID, LU)
 
 # Диплом, квалификация, описание и срок аккредитации — со страниц программ
 # в NIID.lv (pipeline/src/enrich_niid_details.py). Отдельно от еженедельного
@@ -40,6 +40,16 @@ jobs:
           SCRAPER_CONTACT: ${{ vars.SCRAPER_CONTACT }}
 
       - run: python src/enrich_niid_details.py --apply
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+          SCRAPER_CONTACT: ${{ vars.SCRAPER_CONTACT }}
+
+      # ЛУ: степень и описание — с английских страниц программ на lu.lv
+      # (у программ ЛУ нет латышских названий, найти их в NIID нельзя).
+      # if: always() — сбой обхода NIID не должен отменять обход ЛУ.
+      - if: always()
+        run: python src/enrich_lu_details.py --apply
         env:
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
           SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
