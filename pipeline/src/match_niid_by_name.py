@@ -21,6 +21,19 @@ Lutera — 209 программ на 2026-10-03. У ЛУ и других вуз�
   программы с одним названием) — программа пропускается и попадает в отчёт.
   Неверно привязанная страница показала бы человеку чужой диплом.
 
+Три уточнения (2026-10-04, разбор 25 несопоставленных программ):
+- тип NIID «programma ar kodu 44» (профессиональная программа 6-го уровня
+  после короткого цикла) считается бакалавриатом — так эти программы
+  записаны в каталоге;
+- у РТУ несколько программ с одним названием различает вторая буква кода
+  программы (RTU_TYPE_CODES) — она однозначно соответствует типу программы
+  в NIID;
+- названия, которые автоматически не совпадают, привязаны вручную
+  (MANUAL_PAGES): два отличаются от NIID одним словом, ещё у четырёх
+  программ (EKrA, RAI) в NIID в названии стоит специализация.
+Специализация в скобках («(pilots)», «(Ikonogrāfija)») — НЕ хвост: такие
+программы автоматически не привязываются, только по решению владельца.
+
   python src/match_niid_by_name.py             # только отчёт
   python src/match_niid_by_name.py --apply     # записать найденные адреса
   python src/match_niid_by_name.py --selftest  # самотест без сети и базы
@@ -44,13 +57,59 @@ NIID_LEVELS = ("7", "8", "9")
 # Ключ — university.slug. Дополняется, когда отчёт покажет «в NIID 0 программ».
 PROVIDER_NAMES: dict[str, list[str]] = {}
 
+# Вторая буква кода программы РТУ (slug «bcb-31000» -> «C») -> код типа
+# программы в NIID. Проверено 2026-10-04 на 151 уже привязанной программе:
+# соответствие без единого исключения. Нужно только там, где в NIID у РТУ
+# несколько программ с одним названием на одном уровне.
+RTU_TYPE_CODES = {"B": "43", "C": "42", "M": "45", "G": "47", "K": "41", "D": "51"}
+
+# Привязка вручную: (university.slug, programme.slug) -> страница NIID.
+# Только для названий, которые отличаются от NIID одним словом и потому не
+# совпадают автоматически. Страница принимается, только пока она есть в
+# списке вуза в NIID на том же уровне.
+MANUAL_PAGES: dict[tuple[str, str], str] = {
+    # «Eiropas valodu un kultūras studijas» у нас, «…kultūru studijas» в NIID
+    ("rtu", "hbe"): "https://www.niid.lv/niid_search/program/435",
+    # «…savstarpēji saistītu sistēmu…» у нас, «…savienotu… (MERIT)» в NIID
+    ("rtu", "dms-33000"): "https://www.niid.lv/niid_search/program/28240",
+    # Решение владельца 2026-10-04: в NIID у этих программ в названии стоит
+    # специализация, а другой записи программы у вуза нет — привязываем к ней.
+    # «Bībeles māksla» -> «Bībeles māksla (Ikonogrāfija)»
+    ("ekra", "biblijas-maksla-bachelor"): "https://www.niid.lv/niid_search/program/189",
+    ("ekra", "biblijas-maksla-master"): "https://www.niid.lv/niid_search/program/17277",
+    # «Gaisa transportsistēmu vadība un ekspluatācija» -> «… (pilots)»
+    ("rai", "gtve-lv"): "https://www.niid.lv/niid_search/program/8377",
+    ("rai", "gtve-en"): "https://www.niid.lv/niid_search/program/8377",
+}
+
 # Хвосты в скобках, которые сборщики вузов добавляют к названию, а NIID нет.
 _LANGUAGE_SUFFIX = re.compile(r"\((?:angļu|latviešu|krievu)\s+valodā\)", re.IGNORECASE)
+# Пометки в скобках, не относящиеся к названию: «(kopīga programma ar Banku
+# augstskolu)» у РТУ, «(uzņemšana plānota 2027./28. studiju gadā)» в NIID.
+# Специализации («(pilots)») сюда не входят и остаются частью названия.
+_NOTE_SUFFIX = re.compile(r"\((?:kopīga programma|uzņemšana plānota)[^)]*\)", re.IGNORECASE)
+
+
+def type_code(kind: str) -> str | None:
+    """«… - 6. LKI (programma ar kodu 44)» -> «44»."""
+    match = re.search(r"kodu\s+(\d+)", kind)
+    return match.group(1) if match else None
+
+
+def extra_level(kind: str) -> str | None:
+    """Уровень каталога для типов NIID, которых не знает сборщик колледжей."""
+    return "bachelor" if type_code(kind) == "44" else None
+
+
+def rtu_type_code(slug: str) -> str | None:
+    """Slug программы РТУ («bcb-31000») -> код типа программы в NIID («42»)."""
+    return RTU_TYPE_CODES.get(slug[1].upper()) if len(slug) > 1 else None
 
 
 def normalize(name: str) -> str:
     """Название для сравнения: без регистра, кавычек, хвоста про язык и лишних пробелов."""
     text = _LANGUAGE_SUFFIX.sub(" ", name)
+    text = _NOTE_SUFFIX.sub(" ", text)
     text = text.replace("–", "-").replace("—", "-")
     text = re.sub(r"[\"'“”„«»`]", "", text)
     text = re.sub(r"\s*-\s*", " - ", text)
@@ -69,9 +128,21 @@ def build_index(entries: list[tuple[str, str, str]]) -> dict[tuple[str, str], se
     return index
 
 
-def find_match(index: dict[tuple[str, str], set[str]], level: str, name_lv: str) -> tuple[str | None, str]:
-    """Адрес страницы или None и причина: 'ok' | 'нет в NIID' | 'несколько в NIID'."""
+def find_match(
+    index: dict[tuple[str, str], set[str]],
+    level: str,
+    name_lv: str,
+    type_codes: dict[str, str | None] | None = None,
+    wanted_code: str | None = None,
+) -> tuple[str | None, str]:
+    """Адрес страницы или None и причина: 'ok' | 'нет в NIID' | 'несколько в NIID'.
+
+    type_codes (адрес -> код типа программы в NIID) и wanted_code — подсказка
+    для случая «несколько»: если ровно у одной из страниц нужный тип, это она.
+    """
     urls = index.get((level, normalize(name_lv)), set())
+    if len(urls) > 1 and type_codes and wanted_code:
+        urls = {url for url in urls if type_codes.get(url) == wanted_code} or urls
     if len(urls) == 1:
         return next(iter(urls)), "ok"
     return None, "нет в NIID" if not urls else "несколько в NIID"
@@ -121,19 +192,38 @@ def main(apply: bool) -> None:
         for slug, programmes in sorted(by_university.items()):
             providers = PROVIDER_NAMES.get(slug) or [programmes[0]["university"]["name_lv"]]
             entries: list[tuple[str, str, str]] = []
+            type_codes: dict[str, str | None] = {}
             for provider in providers:
                 for niid_level in NIID_LEVELS:
                     found, _ = base._scrape_provider(page, provider, niid_level)
                     for entry in found:
-                        level = base._college_level(entry["fields"].get("Programmas veids", ""))
+                        kind = entry["fields"].get("Programmas veids", "")
+                        level = base._college_level(kind) or extra_level(kind)
                         if level is not None:
-                            entries.append((level, entry["name"], clean_url(entry["href"], base.BASE_URL)))
+                            url = clean_url(entry["href"], base.BASE_URL)
+                            entries.append((level, entry["name"], url))
+                            type_codes[url] = type_code(kind)
             index = build_index(entries)
+            levels_by_url = {url: level for level, _, url in entries}
 
             matched: list[tuple[dict, str]] = []
             skipped: dict[str, list[str]] = defaultdict(list)
             for programme in programmes:
-                url, reason = find_match(index, programme["degree_level"], programme["name_lv"])
+                manual = MANUAL_PAGES.get((slug, programme["slug"]))
+                if manual:
+                    # ручная привязка действует, пока страница есть у вуза в NIID на том же уровне
+                    if levels_by_url.get(manual) == programme["degree_level"]:
+                        url, reason = manual, "ok"
+                    else:
+                        url, reason = None, "страницы из MANUAL_PAGES нет в NIID"
+                else:
+                    url, reason = find_match(
+                        index,
+                        programme["degree_level"],
+                        programme["name_lv"],
+                        type_codes,
+                        rtu_type_code(programme["slug"]) if slug == "rtu" else None,
+                    )
                 if url:
                     matched.append((programme, url))
                 else:
@@ -143,6 +233,8 @@ def main(apply: bool) -> None:
                 f"\n{slug} ({', '.join(providers)}): в NIID {len({url for _, _, url in entries})} программ; "
                 f"у нас {len(programmes)}; найдено {len(matched)}"
             )
+            for programme, url in matched:
+                print(f"  найдено: {programme['name_lv']} [{programme['degree_level']}] ({programme['slug']}) -> {url}")
             for reason, names in skipped.items():
                 unique = sorted(set(names))
                 print(f"  {reason}: {len(names)} — " + "; ".join(unique[:12]) + (" …" if len(unique) > 12 else ""))
@@ -189,6 +281,28 @@ def selftest() -> None:
     assert find_match(index, "bachelor", "Arhitektūra") == ("https://niid/5", "ok")
 
     assert clean_url("/niid_search/program/743?qy=&tg=&level_1=7", "https://www.niid.lv") == "https://www.niid.lv/niid_search/program/743"
+
+    # пометки в скобках — не часть названия; специализация — часть
+    assert normalize("Finanšu pārvaldības informācijas sistēmas (kopīga programma ar Banku augstskolu)") == normalize("Finanšu pārvaldības informācijas sistēmas")
+    assert normalize("Datorzinātne un organizāciju tehnoloģijas (uzņemšana plānota 2027./28. studiju gadā)") == normalize("Datorzinātne un organizāciju tehnoloģijas")
+    assert normalize("Gaisa transportsistēmu vadība un ekspluatācija (pilots)") != normalize("Gaisa transportsistēmu vadība un ekspluatācija")
+    assert normalize("Bībeles māksla (Ikonogrāfija)") != normalize("Bībeles māksla")
+
+    kind_44 = "Pirmā cikla profesionālā studiju programma pēc īsā vai pirmā cikla - 6. LKI (programma ar kodu 44)"
+    assert type_code(kind_44) == "44" and extra_level(kind_44) == "bachelor"
+    assert extra_level("Arodizglītība - 3. LKI (programma ar kodu 22)") is None
+    assert type_code("bez koda") is None
+
+    assert rtu_type_code("bcb-31000") == "42" and rtu_type_code("bbb-31000") == "43"
+    assert rtu_type_code("dmd-33000") == "45" and rtu_type_code("dgd-33000") == "47"
+    assert rtu_type_code("uiv-0j000-riga") is None, "неизвестная буква — подсказки нет"
+
+    codes = {"https://niid/3": "45", "https://niid/4": "47"}
+    assert find_match(index, "master", "Tiesību zinātne", codes, "47") == ("https://niid/4", "ok")
+    assert find_match(index, "master", "Tiesību zinātne", codes, "45") == ("https://niid/3", "ok")
+    assert find_match(index, "master", "Tiesību zinātne", codes, "51") == (None, "несколько в NIID"), "нужного типа нет — не угадываем"
+    assert find_match(index, "master", "Tiesību zinātne", codes, None) == (None, "несколько в NIID")
+    assert find_match(index, "master", "Tiesību zinātne", {"https://niid/3": "45", "https://niid/4": "45"}, "45") == (None, "несколько в NIID")
     print("самотест пройден")
 
 

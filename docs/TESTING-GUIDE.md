@@ -177,9 +177,10 @@ npm run dev
       квалификация одной строкой), DU (`/en/programmes/du/biology`), LKA,
       RISEBA, BSA, LBTU, RNU, RGSL и SSE Riga. У `/lv/programmes/riseba/architecture`
       есть только «Par programmu» (степень на сайте не названа), у
-      `/en/programmes/lka/theatre-directing` — только степень. У 25
-      несопоставленных программ (например, `/lv/programmes/rtu/hbe`) и у
-      JVLMA блоков нет — это ожидаемо. На `/en/…` названия остаются на латышском, и об этом
+      `/en/programmes/lka/theatre-directing` — только степень. У 9
+      программ, которых нет в NIID (например, `/lv/programmes/rtu/ikn-31000`),
+      и у JVLMA блоков нет — это ожидаемо. У `/lv/programmes/rtu/hbe` и
+      `/lv/programmes/rai/gtve-lv` блоки есть (привязаны к NIID вручную). На `/en/…` названия остаются на латышском, и об этом
       есть строка под блоком.
 - [ ] Блок «Что стало с выпускниками» — есть на карточке со свежими
       данными (например, `/lv/programmes/rgsl/law-and-business`: выпуск
