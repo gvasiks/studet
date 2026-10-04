@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import sys
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent))
@@ -11,6 +11,7 @@ from dotenv import load_dotenv
 import polite
 from catalog_diff import CONTENT_FIELDS, compute_diff, format_report, suspicious_names
 from db import get_service_client
+from db_retry import execute
 from scrape_scope import LOCAL_ONLY
 from sources import bsa, du, eka, ekra, jvlma, lbtu, lka, lma, lnaa, lu, lutera, niid_colleges, niid_universities, rai, rgsl, riseba, rnu, rsu, rtu_catalog, rtu_liepaja, sse_riga, tsi, turiba, venta, via
 
@@ -142,12 +143,8 @@ def main() -> None:
     # расписание. Прогон с --skip-local — полный: это всё, что расписание
     # GitHub вообще может собрать; за остальным следит
     # check_local_sources.py.
-    run_id = (
-        client.table("pipeline_run")
-        .insert({"started_at": now, "full_run": not only})
-        .execute()
-        .data[0]["id"]
-    )
+    _close_stale_runs(client)
+    run_id = execute(client.table("pipeline_run").insert({"started_at": now, "full_run": not only})).data[0]["id"]
 
     # Один упавший источник не должен останавливать остальные: ночной прогон
     # иначе теряет всё, что стоит после него в списке. Ошибки копятся и
@@ -182,27 +179,68 @@ def main() -> None:
             except CatalogCompletenessError as exc:
                 errors.append(str(exc))
                 print(f"ОШИБКА {exc}")
+            except Exception as exc:  # noqa: BLE001
+                # Сбой базы при записи этого вуза (после повторов в
+                # db_retry.execute) или любая другая неожиданность. Раньше
+                # такое исключение роняло весь прогон: вузы дальше по списку
+                # не собирались, запись о прогоне оставалась «идёт».
+                errors.append(f"{key}: запись в базу не удалась — {type(exc).__name__}: {exc}")
+                print(f"ОШИБКА {errors[-1][:300]}")
 
         print(polite.report_and_reset())
 
     finished_at = datetime.now(timezone.utc).isoformat()
     note = "; ".join(error[:200] for error in errors[:5]) or None
-    client.table("pipeline_run").update(
-        {
-            "finished_at": finished_at,
-            "status": "failed" if errors else "success",
-            "source_count": len(sources),
-            "programme_count": programme_count,
-            "error_count": len(errors),
-            "note": note,
-        }
-    ).eq("id", run_id).execute()
+    execute(
+        client.table("pipeline_run")
+        .update(
+            {
+                "finished_at": finished_at,
+                "status": "failed" if errors else "success",
+                "source_count": len(sources),
+                "programme_count": programme_count,
+                "error_count": len(errors),
+                "note": note,
+            }
+        )
+        .eq("id", run_id)
+    )
 
     if errors:
         print(f"\nИтого сбоев: {len(errors)}")
         for error in errors:
             print(f" - {error[:300]}")
         sys.exit(1)
+
+
+# Прогон идёт меньше часа; запись «идёт» старше этого — след прогона, который
+# убили (таймаут GitHub Actions, закрытое окно терминала, выключенный
+# компьютер) раньше, чем он успел записать итог.
+STALE_RUN_HOURS = 6
+
+
+def _close_stale_runs(client) -> None:  # type: ignore[no-untyped-def]
+    """Пометить давно зависшие записи «идёт» как сбойные.
+
+    Без этого pipeline_health показывал бы last_status='running' для прогона,
+    которого давно нет. Свежие записи не трогаются: это может быть прогон,
+    идущий прямо сейчас (расписание GitHub и локальный --local одновременно).
+    """
+    cutoff = (datetime.now(timezone.utc) - timedelta(hours=STALE_RUN_HOURS)).isoformat()
+    closed = execute(
+        client.table("pipeline_run")
+        .update(
+            {
+                "status": "failed",
+                "error_count": 1,
+                "note": f"прогон прерван: итог не записан за {STALE_RUN_HOURS} ч (закрыто следующим прогоном)",
+            }
+        )
+        .eq("status", "running")
+        .lt("started_at", cutoff)
+    ).data
+    if closed:
+        print(f"закрыто зависших записей о прогоне: {len(closed)}")
 
 
 def _check_and_save(client, now: str, key: str, university, programmes) -> int:  # type: ignore[no-untyped-def]
@@ -229,7 +267,7 @@ def _check_and_save(client, now: str, key: str, university, programmes) -> int: 
 
     uni_row = university.model_dump(exclude_none=True)
     uni_row["extracted_at"] = now
-    result = client.table("university").upsert(uni_row, on_conflict="slug").execute()
+    result = execute(client.table("university").upsert(uni_row, on_conflict="slug"))
     university_id = result.data[0]["id"]
 
     programme_rows = []
@@ -248,19 +286,17 @@ def _check_and_save(client, now: str, key: str, university, programmes) -> int: 
         # не молча оставить "Verified" висеть на уже неверных данных
         # (см. catalog_diff.py). Запрос перед апсертом, не после: изменение
         # должно попасть в ТУ ЖЕ запись, что мы вот-вот отправим.
-        existing = (
+        existing = execute(
             client.table("programme")
             .select("slug, verified_at, verified_by, " + ", ".join(CONTENT_FIELDS))
             .eq("university_id", university_id)
             .in_("slug", [row["slug"] for row in programme_rows])
-            .execute()
-            .data
-        )
+        ).data
         existing_by_slug = {row["slug"]: row for row in existing}
         diff = compute_diff(existing_by_slug, programme_rows)  # мутирует programme_rows при сбросе
         if diff.has_changes:
             print(format_report(diff, university.slug))
-        client.table("programme").upsert(programme_rows, on_conflict="university_id,slug").execute()
+        execute(client.table("programme").upsert(programme_rows, on_conflict="university_id,slug"))
 
     missing = _count_missed(client, university_id, key, {row["slug"] for row in programme_rows})
     print(f"{key}: upserted 1 university, {len(programme_rows)} programmes" + _missed_note(missing))
@@ -273,20 +309,19 @@ def _count_missed(client, university_id: str, key: str, seen_slugs: set[str]) ->
     сбойный прогон (сайт лёг, сборщик сломался) ничего не скрывает. Строки без
     source_key (записаны до миграции) считаются принадлежащими любому
     источнику вуза: это ровно те, что ни один источник не нашёл."""
-    owned = (
+    owned = execute(
         client.table("programme")
         .select("id,slug,name_lv,name_en,missed_runs")
         .eq("university_id", university_id)
         .or_(f"source_key.eq.{key},source_key.is.null")
-        .execute()
-        .data
-    )
+    ).data
     missing = [row for row in owned if row["slug"] not in seen_slugs]
     for row in missing:
         # source_key здесь не трогаем: строка без отметки может принадлежать
         # другому источнику этого же вуза (лиепайские программы РТУ до первого
         # прогона rtu_liepaja), и чужой прогон не должен её присваивать
-        client.table("programme").update({"missed_runs": row["missed_runs"] + 1}).eq("id", row["id"]).execute()
+        # значение готовое (не «+1» на стороне базы) — повтор запроса счётчик не удвоит
+        execute(client.table("programme").update({"missed_runs": row["missed_runs"] + 1}).eq("id", row["id"]))
         row["missed_runs"] += 1
     return missing
 

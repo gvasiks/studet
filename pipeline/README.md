@@ -29,6 +29,18 @@ py -m venv .venv
 ./.venv/Scripts/python.exe src/main.py
 ```
 
+**Сбои при сборе.** Один упавший источник не останавливает остальные —
+ни когда не ответил сайт вуза, ни когда не ответила база. Запросы к
+Supabase идут через `db_retry.execute`: временная ошибка (ответ 5xx,
+обрыв связи) повторяется до трёх раз с паузами 5 и 15 секунд. В конце
+прогона печатается список сбоев, код завершения ненулевой. Проверка без
+сети и базы:
+
+```
+./.venv/Scripts/python.exe src/db_retry.py --selftest
+./.venv/Scripts/python.exe src/main_selftest.py
+```
+
 ## Расписание
 
 `.github/workflows/scrape-catalog.yml` — по понедельникам в 01:00 UTC
