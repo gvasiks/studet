@@ -5,6 +5,7 @@ import { useState } from "react";
 import { Input } from "@heroui/react";
 import type { Locale } from "@/i18n/config";
 import type { Dictionary } from "@/i18n/dictionaries";
+import { parsePercent } from "@/lib/exam-input";
 import type { ExamLevel, ExamResult } from "@/lib/formula";
 import { matchProgrammes, matchRequirements, type MatchItem, type MatchStatus } from "@/lib/match";
 import type { MatchFormula, MatchRequirement, RequirementMatchItem } from "@/lib/match";
@@ -66,11 +67,14 @@ export function MatchForm({
     Object.fromEntries(subjects.map((subject) => [subject, { percent: "", level: "augstakais" as ExamLevel }])),
   );
 
+  // Разбор — общий с калькулятором (exam-input.ts): «72,5» и «72.5» — одно и
+  // то же, всё вне 0–100 — ошибка, которую видно под полем. Раньше такое
+  // значение молча отбрасывалось, и человек не понимал, почему предмет «не
+  // засчитан» (аудит 2026-10-04, пункт 2).
+  const parsed = Object.fromEntries(subjects.map((subject) => [subject, parsePercent(inputs[subject].percent)]));
   const exams: ExamResult[] = subjects.flatMap((subject) => {
-    const value = inputs[subject];
-    const percent = Number(value.percent);
-    if (value.percent === "" || Number.isNaN(percent) || percent < 0 || percent > 100) return [];
-    return [{ subject, percent, level: value.level }];
+    const value = parsed[subject];
+    return value.state === "ok" ? [{ subject, percent: value.value, level: inputs[subject].level }] : [];
   });
 
   // Без useMemo: формул десятки-сотни, счёт мгновенный, а зависимость от
@@ -108,6 +112,8 @@ export function MatchForm({
         <div className="mt-6 grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
           {subjects.map((subject) => {
             const filled = inputs[subject].percent !== "";
+            const invalid = parsed[subject].state === "invalid";
+            const errorId = `match-error-${subject}`;
             return (
               <div
                 key={subject}
@@ -120,12 +126,14 @@ export function MatchForm({
                 </span>
                 <div className="mt-2 flex items-center gap-2">
                   <Input
-                    type="number"
-                    min={0}
-                    max={100}
+                    type="text"
+                    inputMode="decimal"
+                    maxLength={6}
                     size="sm"
                     className="w-[5.5rem] shrink-0"
                     aria-label={`${subjectLabel(dict, subject)}, ${t.percentSuffix}`}
+                    aria-describedby={invalid ? errorId : undefined}
+                    isInvalid={invalid}
                     value={inputs[subject].percent}
                     onValueChange={(value) =>
                       setInputs((prev) => ({ ...prev, [subject]: { ...prev[subject], percent: value } }))
@@ -150,6 +158,11 @@ export function MatchForm({
                     ))}
                   </select>
                 </div>
+                {invalid && (
+                  <p id={errorId} className="mt-2 text-sm text-red-700">
+                    {dict.calculator.invalidPercent}
+                  </p>
+                )}
               </div>
             );
           })}

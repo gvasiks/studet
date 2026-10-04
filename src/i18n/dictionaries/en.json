@@ -284,6 +284,10 @@
     "title": "Competition score calculator",
     "notAvailable": "The competition-score calculation for this programme isn't published yet — either the formula hasn't been collected, or it's still awaiting review.",
     "totalLabel": "Competition score",
+    "invalidPercent": "Enter a number from 0 to 100.",
+    "invalidNumber": "Enter a number that is 0 or higher.",
+    "incomplete": "Still to enter: {list}.",
+    "fixInvalid": "Fix the marked fields to see the score.",
     "gateWarning": "The minimum threshold wasn't met in one or more subjects — under the admission rules you may not be eligible for this programme.",
     "disclaimer": "This is an estimate based on the formula we've collected, not an official result. The university makes the final decision.",
     "levels": {
@@ -603,6 +607,20 @@
         "source": "Cabinet Regulation No. 846, point 1.2"
       }
     ]
+  },
+  "system": {
+    "notFound": {
+      "title": "Page not found",
+      "text": "There is no such page here. The programme may no longer be offered, or the address was typed incorrectly.",
+      "catalog": "Browse the catalogue",
+      "home": "Back to the home page"
+    },
+    "error": {
+      "title": "The page could not be loaded",
+      "text": "Something went wrong while loading the data. The problem is on our side, not yours. Please try again in a moment.",
+      "retry": "Try again",
+      "catalog": "Browse the catalogue"
+    }
   },
   "privacy": {
     "title": "Privacy policy",

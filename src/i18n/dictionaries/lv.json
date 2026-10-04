@@ -284,6 +284,10 @@
     "title": "Konkursa punktu kalkulators",
     "notAvailable": "Konkursa punktu aprēķins šai programmai vēl nav publicēts — vai nu formula vēl nav savākta, vai tā gaida pārbaudi.",
     "totalLabel": "Konkursa punkti",
+    "invalidPercent": "Ievadi skaitli no 0 līdz 100.",
+    "invalidNumber": "Ievadi skaitli, kas nav mazāks par 0.",
+    "incomplete": "Vēl jāievada: {list}.",
+    "fixInvalid": "Izlabo atzīmētos laukus, lai redzētu punktus.",
     "gateWarning": "Nav sasniegts minimālais slieksnis vienā vai vairākos priekšmetos — pēc uzņemšanas noteikumiem uz šo programmu var nepretendēt.",
     "disclaimer": "Šis ir orientējošs aprēķins pēc mūsu ievāktās formulas, nevis oficiāls rezultāts. Galīgo lēmumu pieņem augstskola.",
     "levels": {
@@ -603,6 +607,20 @@
         "source": "MK noteikumi Nr. 846, 1.2. punkts"
       }
     ]
+  },
+  "system": {
+    "notFound": {
+      "title": "Lapa nav atrasta",
+      "text": "Šādas lapas šeit nav. Iespējams, programma vairs netiek piedāvāta vai adrese ir ievadīta kļūdaini.",
+      "catalog": "Skatīt katalogu",
+      "home": "Uz sākumlapu"
+    },
+    "error": {
+      "title": "Neizdevās ielādēt lapu",
+      "text": "Ielādējot datus, radās kļūda. Tā ir mūsu puses problēma, nevis tava. Pamēģini vēlreiz pēc brīža.",
+      "retry": "Mēģināt vēlreiz",
+      "catalog": "Skatīt katalogu"
+    }
   },
   "privacy": {
     "title": "Privātuma politika",

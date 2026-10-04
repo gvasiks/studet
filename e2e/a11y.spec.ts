@@ -9,7 +9,9 @@ import AxeBuilder from "@axe-core/playwright";
 // автоматизированное продолжение на каждый push.
 // /programmes/gfk/110 — программа из NIID: на ней есть блоки «Ko iegūsi» и
 // «Par programmu» (диплом и описание), которых нет у программ ЛУ.
-const ROUTES = ["", "/programmes", "/programmes/lu/economics", "/programmes/gfk/110", "/survey", "/match", "/rights", "/glossary", "/privacy", "/favorites"];
+// /programmes/lu/economics/calculator — калькулятор с формулой; /programmes/lu/nav-tadas — страница
+// «не найдено» (код ответа 404, но вёрстка своя — её тоже проверяем).
+const ROUTES = ["", "/programmes", "/programmes/lu/economics", "/programmes/lu/economics/calculator", "/programmes/gfk/110", "/programmes/lu/nav-tadas", "/survey", "/match", "/rights", "/glossary", "/privacy", "/favorites"];
 const LOCALES = ["lv", "en"] as const;
 
 for (const locale of LOCALES) {
@@ -28,7 +30,7 @@ for (const locale of LOCALES) {
 for (const locale of LOCALES) {
   test(`нет нарушений axe на /${locale}/match с введёнными экзаменами`, async ({ page }) => {
     await page.goto(`/${locale}/match`);
-    const inputs = page.locator('input[type="number"]');
+    const inputs = page.locator('input[inputmode="decimal"]');
     await inputs.nth(0).fill("80");
     await inputs.nth(1).fill("70");
     await inputs.nth(2).fill("60");
