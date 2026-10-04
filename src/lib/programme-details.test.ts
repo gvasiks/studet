@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { pickDetails, sourceHost } from "./programme-details";
+import { currentAccreditation, pickDetails, sourceHost } from "./programme-details";
 
 const NIID = {
   degree_awarded_lv: "Profesionālais bakalaurs mehatronikā",
@@ -70,5 +70,22 @@ describe("sourceHost", () => {
     expect(sourceHost("not a url")).toBeNull();
     expect(sourceHost(null)).toBeNull();
     expect(sourceHost(undefined)).toBeNull();
+  });
+});
+
+describe("currentAccreditation", () => {
+  it("дата сегодня или позже показывается как есть", () => {
+    expect(currentAccreditation("2027-04-22", "2026-10-04")).toBe("2027-04-22");
+    expect(currentAccreditation("2026-10-04", "2026-10-04")).toBe("2026-10-04");
+  });
+
+  it("дата в прошлом не показывается — источник устарел", () => {
+    expect(currentAccreditation("2026-03-31", "2026-10-04")).toBeNull();
+    expect(currentAccreditation("2026-10-03", "2026-10-04")).toBeNull();
+  });
+
+  it("нет даты — нечего показывать", () => {
+    expect(currentAccreditation(null, "2026-10-04")).toBeNull();
+    expect(currentAccreditation(undefined, "2026-10-04")).toBeNull();
   });
 });

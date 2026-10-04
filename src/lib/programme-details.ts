@@ -83,3 +83,16 @@ export function pickDetails(record: ProgrammeDetailsSource, locale: string): Pro
     extractedAt: record.details_extracted_at ?? null,
   };
 }
+
+// Срок аккредитации для показа на карточке. Дата в прошлом не показывается:
+// срок берётся автоматически из NIID и с сайтов вузов и может отставать от
+// новой аккредитации направления, а строка «Akreditēta līdz 31.03.2026.»
+// читается как «программа без аккредитации». Вуз не вправе набирать студентов
+// вне аккредитованного направления, так что прошедшая дата почти наверняка
+// значит «источник устарел», а не «аккредитации нет» (решение владельца
+// 2026-10-04; на тот день таких программ шесть, все у РТУ).
+// Обе даты — «ГГГГ-ММ-ДД», поэтому сравниваются как строки.
+export function currentAccreditation(validUntil: string | null | undefined, today: string): string | null {
+  if (!validUntil) return null;
+  return validUntil.slice(0, 10) >= today ? validUntil : null;
+}

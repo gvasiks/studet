@@ -12,7 +12,7 @@ import { matchRounds } from "@/lib/deadlines";
 import { getAdmissionType } from "@/lib/admission-type-queries";
 import { getProgrammeOutcome } from "@/lib/outcome-queries";
 import { areaCode } from "@/lib/fields";
-import { pickDetails } from "@/lib/programme-details";
+import { currentAccreditation, pickDetails } from "@/lib/programme-details";
 import { employmentPercent, interpolate, OUTCOMES_SOURCE_URL, pickOutcomes } from "@/lib/outcomes";
 import { BackButton } from "@/components/BackButton";
 import { FavoriteButton } from "@/components/FavoriteButton";
@@ -105,6 +105,8 @@ export default async function ProgrammePage({ params }: { params: Params }) {
 
   const name = localizedName(record, locale);
   const universityName = localizedName(record.university, locale);
+  // прошедшая дата не показывается — см. currentAccreditation
+  const accreditation = currentAccreditation(record.accreditation_valid_until, new Date().toISOString().slice(0, 10));
   const pageUrl = `${SITE_URL}/${locale}/programmes/${record.university.slug}/${record.slug}`;
 
   // Course + provider (CollegeOrUniversity) — ревью 2026-09, пункт 08.
@@ -181,11 +183,8 @@ export default async function ProgrammePage({ params }: { params: Params }) {
         {record.budget_places !== null && (
           <Fact label={dict.programme.budgetPlaces} value={String(record.budget_places)} />
         )}
-        {record.accreditation_valid_until && (
-          <Fact
-            label={dict.programme.accreditation}
-            value={new Date(record.accreditation_valid_until).toLocaleDateString(locale)}
-          />
+        {accreditation && (
+          <Fact label={dict.programme.accreditation} value={new Date(accreditation).toLocaleDateString(locale)} />
         )}
       </dl>
 
