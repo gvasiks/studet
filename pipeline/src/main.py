@@ -9,7 +9,7 @@ sys.path.insert(0, str(Path(__file__).parent))
 from dotenv import load_dotenv
 
 import polite
-from catalog_diff import CONTENT_FIELDS, compute_diff, format_report, suspicious_names
+from catalog_diff import CONTENT_FIELDS, compute_diff, fill_missing_keys, format_report, suspicious_names
 from db import get_service_client
 from db_retry import execute
 from scrape_scope import LOCAL_ONLY
@@ -296,6 +296,11 @@ def _check_and_save(client, now: str, key: str, university, programmes) -> int: 
         diff = compute_diff(existing_by_slug, programme_rows)  # мутирует programme_rows при сбросе
         if diff.has_changes:
             print(format_report(diff, university.slug))
+        # Строки пачки должны иметь один набор ключей: недостающий ключ
+        # PostgREST записал бы как NULL поверх значения в базе (см.
+        # catalog_diff.fill_missing_keys). После compute_diff — чтобы
+        # сравнение по-прежнему шло только по тому, что нашёл сборщик.
+        fill_missing_keys(programme_rows, existing_by_slug)
         execute(client.table("programme").upsert(programme_rows, on_conflict="university_id,slug"))
 
     missing = _count_missed(client, university_id, key, {row["slug"] for row in programme_rows})

@@ -4,7 +4,9 @@
 1. временный сбой базы (502) лечится повтором, и вуз записывается;
 2. постоянный сбой при записи одного вуза не роняет прогон: остальные вузы
    собираются, а запись о прогоне получает итог 'failed' — не остаётся «идёт»;
-3. источник, упавший при сборе, тоже не мешает остальным.
+3. источник, упавший при сборе, тоже не мешает остальным;
+4. поле, которое сборщик нашёл не у всех программ вуза, не обнуляется у
+   остальных: в базу уходят строки с одним набором ключей.
 
   python src/main_selftest.py
 """
@@ -68,6 +70,8 @@ class FakeClient:
         self.saved_universities: list[str] = []
         self.saved_programmes: list[str] = []
         self.run_updates: list[dict] = []
+        self.existing_programmes: list[dict] = []  # что «уже лежит» в таблице programme
+        self.upserted_rows: list[dict] = []
 
     def table(self, name: str) -> FakeQuery:
         return FakeQuery(self, name)
@@ -88,27 +92,35 @@ class FakeClient:
             return SimpleNamespace(data=[{"id": f"id-{slug}"}])
         if query.table == "programme" and query.operation == "upsert":
             self.saved_programmes += [row["slug"] for row in query.payload]
+            self.upserted_rows += query.payload
+        if query.table == "programme" and query.operation == "select":
+            return SimpleNamespace(data=self.existing_programmes)
         return SimpleNamespace(data=[])
 
 
-def fake_source(slug: str, broken: bool = False) -> SimpleNamespace:
-    university = UniversityDraft(
-        slug=slug, name_lv=f"Augstskola {slug}", kind="private", city="riga", source_url="https://example.lv"
-    )
-    programme = ProgrammeDraft(
-        slug=f"{slug}-programma",
+def fake_programme(slug: str, **extra) -> ProgrammeDraft:  # type: ignore[no-untyped-def]
+    return ProgrammeDraft(
+        slug=slug,
         name_lv="Programma",
         degree_level="bachelor",
         language_of_instruction="lv",
         study_mode="full_time",
         funding_type="paid",
         source_url="https://example.lv/programma",
+        **extra,
     )
+
+
+def fake_source(slug: str, broken: bool = False, programmes: list[ProgrammeDraft] | None = None) -> SimpleNamespace:
+    university = UniversityDraft(
+        slug=slug, name_lv=f"Augstskola {slug}", kind="private", city="riga", source_url="https://example.lv"
+    )
+    found = programmes or [fake_programme(f"{slug}-programma")]
 
     def scrape():  # type: ignore[no-untyped-def]
         if broken:
             raise RuntimeError("сайт не ответил")
-        return university, [programme]
+        return university, found
 
     return SimpleNamespace(__name__=f"sources.{slug}", scrape=scrape)
 
@@ -151,6 +163,28 @@ def selftest() -> None:
     assert run(client, [fake_source("a", broken=True), fake_source("c")]) == 1
     assert client.saved_universities == ["c"], client.saved_universities
     assert client.run_updates[-1]["status"] == "failed"
+
+    # 4) сборщик нашёл срок аккредитации только у первой программы; у второй
+    #    он уже лежит в базе (дописан другим скриптом) и подтверждение стоит.
+    #    В базу должны уйти строки с одним набором ключей, и значение второй
+    #    программы — то, что было в базе, а не пустота.
+    client = FakeClient({})
+    in_db = {
+        "slug": "d-2", "verified_at": "2026-09-02T00:00:00+00:00", "verified_by": "owner",
+        **{field: None for field in main.CONTENT_FIELDS},
+        "name_lv": "Programma", "degree_level": "bachelor", "language_of_instruction": "lv",
+        "study_mode": "full_time", "funding_type": "paid", "tuition_fee_currency": "EUR",
+        "source_url": "https://example.lv/programma", "accreditation_valid_until": "2027-08-05",
+    }
+    client.existing_programmes = [in_db]
+    source = fake_source(
+        "d", programmes=[fake_programme("d-1", accreditation_valid_until="2030-01-01"), fake_programme("d-2")]
+    )
+    assert run(client, [source]) == 0
+    first, second = client.upserted_rows
+    assert first.keys() == second.keys(), sorted(first.keys() ^ second.keys())
+    assert second["accreditation_valid_until"] == "2027-08-05", second["accreditation_valid_until"]
+    assert "verified_at" not in second, "подтверждение не сбрасывалось — ключа в записи нет вовсе"
 
     print("самотест пройден")
 

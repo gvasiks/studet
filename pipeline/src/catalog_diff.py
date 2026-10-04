@@ -123,6 +123,49 @@ def compute_diff(
     return result
 
 
+def fill_missing_keys(programme_rows: list[dict], existing_by_slug: dict[str, dict]) -> int:
+    """Привести строки одной пачки к одному набору ключей. Возвращает, сколько значений дописано.
+
+    Зачем. Все программы вуза уходят в базу одним upsert. Клиент supabase-py
+    передаёт PostgREST список колонок — объединение ключей ВСЕХ строк пачки, —
+    и ключ, которого в какой-то строке нет, записывается как NULL, затирая
+    то, что было в базе. Ключи же у строк разные: main.py убирает из строки
+    поля, которых сборщик не нашёл (exclude_none), а compute_diff добавляет
+    verified_at/verified_by только тем, у кого снимает подтверждение.
+    Последствия до исправления (2026-10-04):
+      - сборщик нашёл срок аккредитации у 12 программ Turība из 17 — у
+        остальных пяти значение, дописанное другим скриптом или руками в
+        Studio, стиралось каждым сбором (воспроизведено на живой базе);
+      - снятие подтверждения с одной программы сняло бы его со всех
+        подтверждённых программ вуза в той же пачке.
+
+    Недостающий ключ дописывается тем значением, что уже лежит в базе, —
+    то есть строка его «не трогает», как и обещает README. У новой программы
+    (в базе её нет) недостающее поле остаётся пустым, как и раньше.
+
+    existing_by_slug должен содержать все колонки, которые могут оказаться
+    недостающими (main.py запрашивает verified_at, verified_by и
+    CONTENT_FIELDS). Если нужной колонки в нём нет — исключение: лучше
+    сорвать запись вуза, чем молча обнулить поле.
+    """
+    all_keys: set[str] = set()
+    for row in programme_rows:
+        all_keys.update(row)
+
+    filled = 0
+    for row in programme_rows:
+        prior = existing_by_slug.get(row["slug"])
+        for key in sorted(all_keys - row.keys()):
+            if prior is not None and key not in prior:
+                raise KeyError(
+                    f"{row['slug']}: поля «{key}» нет в строке и нет среди прочитанных из базы — "
+                    "добавьте колонку в select перед upsert (main.py), иначе она обнулится"
+                )
+            row[key] = prior.get(key) if prior is not None else None
+            filled += 1
+    return filled
+
+
 def format_report(diff: CatalogDiff, university_slug: str) -> str:
     lines = []
     if diff.added:
@@ -221,6 +264,48 @@ def selftest() -> None:
     row5 = {"slug": "partial", "name_en": "P"}  # description_en отсутствует
     diff5 = compute_diff(existing5, [row5])
     assert not diff5.changed
+
+    # --- fill_missing_keys: пачка с разными ключами не обнуляет чужие поля ---
+    in_db = {
+        "a": {"slug": "a", "accreditation_valid_until": "2027-08-05", "tuition_fee_amount": 1500, "verified_at": "2026-09-01", "verified_by": "owner"},
+        "b": {"slug": "b", "accreditation_valid_until": "2027-08-05", "tuition_fee_amount": None, "verified_at": "2026-09-02", "verified_by": "owner"},
+    }
+    # сборщик нашёл срок аккредитации только у «a»; «b» дописана другим скриптом
+    rows = [
+        {"slug": "a", "accreditation_valid_until": "2027-08-05", "missed_runs": 0},
+        {"slug": "b", "missed_runs": 0},
+        {"slug": "new", "missed_runs": 0},
+    ]
+    assert fill_missing_keys(rows, in_db) == 2
+    assert rows[1]["accreditation_valid_until"] == "2027-08-05", "значение из базы сохранено, а не обнулено"
+    assert rows[2]["accreditation_valid_until"] is None, "у новой программы поле пустое"
+    assert {frozenset(row) for row in rows} == {frozenset({"slug", "accreditation_valid_until", "missed_runs"})}
+
+    # снятие подтверждения с одной программы не трогает подтверждение соседней
+    rows = [
+        {"slug": "a", "tuition_fee_amount": 1800.0},
+        {"slug": "b", "tuition_fee_amount": None},
+    ]
+    del rows[1]["tuition_fee_amount"]  # у «b» сборщик цену не нашёл — ключа нет
+    diff6 = compute_diff(in_db, rows)
+    assert diff6.reset_count == 1 and rows[0]["verified_at"] is None
+    fill_missing_keys(rows, in_db)
+    assert rows[1]["verified_at"] == "2026-09-02" and rows[1]["verified_by"] == "owner", "подтверждение «b» на месте"
+    assert rows[0]["verified_at"] is None and rows[0]["verified_by"] is None, "у «a» снято"
+    assert rows[1]["tuition_fee_amount"] is None, "в базе у «b» цены нет — её и не появилось"
+
+    # одинаковые ключи — дописывать нечего
+    rows = [{"slug": "a", "missed_runs": 0}, {"slug": "b", "missed_runs": 0}]
+    assert fill_missing_keys(rows, in_db) == 0
+
+    # колонка не была прочитана из базы — отказ, а не тихое обнуление
+    rows = [{"slug": "a", "budget_places": 10}, {"slug": "b"}]
+    try:
+        fill_missing_keys(rows, in_db)
+    except KeyError:
+        pass
+    else:
+        raise AssertionError("поле, которого нет в прочитанной строке, нельзя молча обнулить")
 
     print("самотест пройден")
 
