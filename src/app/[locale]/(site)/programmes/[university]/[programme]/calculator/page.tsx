@@ -6,7 +6,8 @@ import { getDictionary } from "@/i18n/dictionaries";
 import { getProgramme, localizedName } from "@/lib/catalog";
 import { getFormula, getLevelCoefficients } from "@/lib/formula-queries";
 import { getAdmissionType } from "@/lib/admission-type-queries";
-import { buildAlternates } from "@/lib/site";
+import { buildAlternates, SITE_URL } from "@/lib/site";
+import { ReportErrorLink } from "@/components/ReportErrorLink";
 import { CalculatorForm } from "./CalculatorForm";
 
 type Params = PageProps<"/[locale]/programmes/[university]/[programme]/calculator">["params"];
@@ -73,6 +74,15 @@ export default async function CalculatorPage({ params }: { params: Params }) {
           locale={locale}
         />
       )}
+
+      {/* В письмо подставляется только адрес страницы — введённые
+          результаты экзаменов браузер не покидают. */}
+      <ReportErrorLink
+        dict={dict}
+        programmeName={localizedName(record, locale)}
+        universityName={localizedName(record.university, locale)}
+        pageUrl={`${SITE_URL}/${locale}/programmes/${university}/${programmeSlug}/calculator`}
+      />
     </div>
     </main>
   );

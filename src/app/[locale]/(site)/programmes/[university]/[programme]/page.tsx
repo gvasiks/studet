@@ -16,6 +16,7 @@ import { pickDetails } from "@/lib/programme-details";
 import { employmentPercent, interpolate, OUTCOMES_SOURCE_URL, pickOutcomes } from "@/lib/outcomes";
 import { BackButton } from "@/components/BackButton";
 import { FavoriteButton } from "@/components/FavoriteButton";
+import { ReportErrorLink } from "@/components/ReportErrorLink";
 import { buildAlternates, SITE_URL } from "@/lib/site";
 
 type Params = PageProps<"/[locale]/programmes/[university]/[programme]">["params"];
@@ -353,6 +354,8 @@ export default async function ProgrammePage({ params }: { params: Params }) {
           </>
         )}
       </p>
+
+      <ReportErrorLink dict={dict} programmeName={name} universityName={universityName} pageUrl={pageUrl} />
     </div>
     </main>
   );

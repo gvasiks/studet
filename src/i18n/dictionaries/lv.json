@@ -156,6 +156,12 @@
     "main": "Galvenā navigācija",
     "footer": "Navigācija lapas apakšā"
   },
+  "report": {
+    "link": "Pamanīji kļūdu? Raksti mums",
+    "hint": "Atvērsies tava e-pasta programma; lapas adrese vēstulē jau būs ierakstīta.",
+    "subject": "Kļūda StudyPick: {programme} — {university}",
+    "body": "Lapa: {url}\n\nKas nav pareizi:\n\n\nKur redzama pareizā informācija (saite uz augstskolas lapu vai dokumentu):\n"
+  },
   "outcomes": {
     "title": "Kas noticis ar absolventiem",
     "scope": "{university} absolventi virzienā “{field}” (grupas kods {code}), {level}",
@@ -601,7 +607,7 @@
   "privacy": {
     "title": "Privātuma politika",
     "intro": "Kā šī vietne apstrādā personas datus: ko mēs uzglabājam, ko nē, un kādas ir tavas tiesības.",
-    "updated": "Redakcija: 2026. gada 20. septembris",
+    "updated": "Redakcija: 2026. gada 4. oktobris",
     "authorityLabel": "Datu valsts inspekcija (dvi.gov.lv)",
     "authorityUrl": "https://www.dvi.gov.lv",
     "sections": [
@@ -704,6 +710,15 @@
           "- saņemt datus pārnesamā formātā;",
           "- atsaukt piekrišanu jebkurā brīdī.",
           "Raksti uz {email} — atbildēsim viena mēneša laikā. Ja uzskati, ka tavas tiesības pārkāptas, vari iesniegt sūdzību Datu valsts inspekcijai (Elijas iela 17, Rīga, LV-1050)."
+        ]
+      },
+      {
+        "id": "contact",
+        "title": "Ja raksti mums",
+        "body": [
+          "Programmas lapā un kalkulatorā ir saite, ar kuru vari paziņot par kļūdu. Tā atver tavu e-pasta programmu — vēstuli tu nosūti pats, vietne neko nenosūta tavā vietā.",
+          "Ja mums raksti, mēs saņemam tavu e-pasta adresi un vēstules saturu. Mēs tos izmantojam tikai, lai pārbaudītu un izlabotu informāciju un tev atbildētu. Eksāmenu rezultātus vēstulē neraksti — tie mums nav vajadzīgi.",
+          "Pamats: mūsu leģitīmās intereses uzturēt vietnē pareizu informāciju (regulas 6. panta 1. punkta f) apakšpunkts). Saraksti izdzēšam ne vēlāk kā 12 mēnešus pēc pēdējās vēstules."
         ]
       },
       {

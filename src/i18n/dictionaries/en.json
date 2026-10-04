@@ -156,6 +156,12 @@
     "main": "Main navigation",
     "footer": "Footer navigation"
   },
+  "report": {
+    "link": "Spotted a mistake? Email us",
+    "hint": "Your e-mail app will open with the page address already filled in.",
+    "subject": "Mistake on StudyPick: {programme} — {university}",
+    "body": "Page: {url}\n\nWhat is wrong:\n\n\nWhere the correct information is (link to the university page or document):\n"
+  },
   "outcomes": {
     "title": "What happened to graduates",
     "scope": "{university} graduates in “{field}” (programme group {code}), {level}",
@@ -601,7 +607,7 @@
   "privacy": {
     "title": "Privacy policy",
     "intro": "How this site handles personal data: what we keep, what we don't, and what your rights are.",
-    "updated": "Version: 20 September 2026",
+    "updated": "Version: 4 October 2026",
     "authorityLabel": "Data State Inspectorate (dvi.gov.lv)",
     "authorityUrl": "https://www.dvi.gov.lv/en",
     "sections": [
@@ -704,6 +710,15 @@
           "- receive your data in a portable format;",
           "- withdraw consent at any time.",
           "Write to {email} — we will answer within one month. If you believe your rights have been violated, you can complain to the Data State Inspectorate (Elijas iela 17, Riga, LV-1050)."
+        ]
+      },
+      {
+        "id": "contact",
+        "title": "If you write to us",
+        "body": [
+          "The programme page and the calculator have a link for reporting a mistake. It opens your own e-mail app — you send the message yourself; the site sends nothing on your behalf.",
+          "If you write to us, we receive your e-mail address and the content of your message. We use them only to check and correct the information and to reply to you. Please do not include exam results — we do not need them.",
+          "Legal basis: our legitimate interest in keeping the information on the site correct (Article 6(1)(f)). We delete the correspondence no later than 12 months after the last message."
         ]
       },
       {
