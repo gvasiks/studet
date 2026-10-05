@@ -1,4 +1,4 @@
-import type { Locale } from "@/i18n/config";
+import type { Language } from "@/i18n/config";
 import type { ProgrammeWithUniversity } from "./catalog";
 import type { CatalogState, LevelKey } from "./catalog-query";
 import { LEVEL_KEYS } from "./catalog-query";
@@ -56,18 +56,18 @@ export function countByLevel(programmes: ProgrammeWithUniversity[]): Record<Leve
 export function sortProgrammes(
   programmes: ProgrammeWithUniversity[],
   sort: CatalogState["sort"],
-  locale: Locale,
+  language: Language,
 ): ProgrammeWithUniversity[] {
-  const collator = new Intl.Collator(locale, { sensitivity: "base", numeric: true });
+  const collator = new Intl.Collator(language, { sensitivity: "base", numeric: true });
   const byName = (a: ProgrammeWithUniversity, b: ProgrammeWithUniversity) =>
-    collator.compare(localizedName(a, locale), localizedName(b, locale));
+    collator.compare(localizedName(a, language), localizedName(b, language));
 
   const sorted = [...programmes];
   if (sort === "name_desc") return sorted.sort((a, b) => byName(b, a));
   if (sort === "university") {
     return sorted.sort(
       (a, b) =>
-        collator.compare(localizedName(a.university, locale), localizedName(b.university, locale)) || byName(a, b),
+        collator.compare(localizedName(a.university, language), localizedName(b.university, language)) || byName(a, b),
     );
   }
   return sorted.sort(byName);
@@ -90,14 +90,14 @@ export type CatalogView = {
 export function buildCatalogView(
   programmes: ProgrammeWithUniversity[],
   state: CatalogState,
-  locale: Locale,
+  language: Language,
 ): CatalogView {
   const limited =
     state.maxYears || state.maxFee ? programmes.filter((programme) => withinLimits(programme, state)) : programmes;
   const searched = state.q ? limited.filter((programme) => matchesQuery(programme, state.q)) : limited;
   const levelCounts = countByLevel(searched);
   const atLevel = state.level ? searched.filter((programme) => programme.degree_level === state.level) : searched;
-  const sorted = sortProgrammes(atLevel, state.sort, locale);
+  const sorted = sortProgrammes(atLevel, state.sort, language);
 
   return {
     matched: searched.length,

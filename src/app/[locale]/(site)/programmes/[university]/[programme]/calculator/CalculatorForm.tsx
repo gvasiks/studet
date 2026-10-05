@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from "react";
 import { Input, Radio, RadioGroup } from "@heroui/react";
-import type { Locale } from "@/i18n/config";
+import { languageOf, type Locale } from "@/i18n/config";
 import type { Dictionary } from "@/i18n/dictionaries";
 import { parseNonNegative, parsePercent } from "@/lib/exam-input";
 import {
@@ -218,7 +218,7 @@ export function CalculatorForm({
 
       <p className="mt-6 rounded-xl bg-amber-50 px-4 py-3 text-sm text-amber-900">
         {verifiedAt
-          ? `${dict.catalog.verifiedPrefix} ${new Date(verifiedAt).toLocaleDateString(locale)}`
+          ? `${dict.catalog.verifiedPrefix} ${new Date(verifiedAt).toLocaleDateString(languageOf(locale))}`
           : dict.catalog.unverifiedLabel}
         {sourceUrl && (
           <>

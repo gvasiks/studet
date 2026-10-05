@@ -1,0 +1,18 @@
+import { describe, expect, it } from "vitest";
+import { buildAlternates, SITE_URL } from "./site";
+
+describe("buildAlternates", () => {
+  it("canonical — текущий адрес, переводы — адреса той же страны по языку", () => {
+    const alternates = buildAlternates("/programmes/lu/economics", "en-lv");
+    expect(alternates.canonical).toBe(`${SITE_URL}/en-lv/programmes/lu/economics`);
+    expect(alternates.languages).toEqual({
+      lv: `${SITE_URL}/lv/programmes/lu/economics`,
+      en: `${SITE_URL}/en-lv/programmes/lu/economics`,
+      "x-default": `${SITE_URL}/lv/programmes/lu/economics`,
+    });
+  });
+
+  it("главная: пустой путь", () => {
+    expect(buildAlternates("", "lv").canonical).toBe(`${SITE_URL}/lv`);
+  });
+});

@@ -1,7 +1,7 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { isLocale } from "@/i18n/config";
+import { isLocale, languageOf } from "@/i18n/config";
 import { getDictionary } from "@/i18n/dictionaries";
 import { getMatchData } from "@/lib/match-queries";
 import { buildAlternates } from "@/lib/site";
@@ -29,7 +29,7 @@ export default async function MatchPage({ params }: PageProps<"/[locale]/match">
   if (!isLocale(locale)) notFound();
 
   const dict = await getDictionary(locale);
-  const { formulas, requirements, levelCoefficients, isFixture } = await getMatchData(locale);
+  const { formulas, requirements, levelCoefficients, isFixture } = await getMatchData(languageOf(locale));
 
   return (
     <main className="page-container py-8 sm:py-12">

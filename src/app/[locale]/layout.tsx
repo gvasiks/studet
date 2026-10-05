@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { Inter } from "next/font/google";
-import { isLocale, locales } from "@/i18n/config";
+import { isLocale, languageOf, locales } from "@/i18n/config";
 import { getDictionary } from "@/i18n/dictionaries";
 import { SITE_URL } from "@/lib/site";
 import { Providers } from "./providers";
@@ -44,7 +44,7 @@ export default async function LocaleLayout({
 
   return (
     <html
-      lang={locale}
+      lang={languageOf(locale)}
       className={`${inter.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col font-sans">

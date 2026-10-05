@@ -1,7 +1,7 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { isLocale } from "@/i18n/config";
+import { isLocale, languageOf } from "@/i18n/config";
 import { getDictionary } from "@/i18n/dictionaries";
 import { buildAlternates } from "@/lib/site";
 import { SourceLine } from "@/components/SourceLine";
@@ -27,7 +27,7 @@ export default async function GlossaryPage({ params }: PageProps<"/[locale]/glos
   if (!isLocale(locale)) notFound();
 
   const { glossary } = await getDictionary(locale);
-  const items = [...glossary.items].sort((a, b) => a.term.localeCompare(b.term, locale));
+  const items = [...glossary.items].sort((a, b) => a.term.localeCompare(b.term, languageOf(locale)));
 
   // Группировка по первой букве — заголовки-разделители внутри одной
   // карточки. Буквы берутся из самих терминов, поэтому это данные, а не
@@ -35,7 +35,7 @@ export default async function GlossaryPage({ params }: PageProps<"/[locale]/glos
   // указателя нет: владелец убрал его как лишний (2026-09-30).
   const groups: { letter: string; items: typeof items }[] = [];
   for (const item of items) {
-    const letter = item.term.charAt(0).toLocaleUpperCase(locale);
+    const letter = item.term.charAt(0).toLocaleUpperCase(languageOf(locale));
     const last = groups[groups.length - 1];
     if (last?.letter === letter) last.items.push(item);
     else groups.push({ letter, items: [item] });

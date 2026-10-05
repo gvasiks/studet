@@ -25,7 +25,7 @@ describe("pickDetails", () => {
   });
 
   it("латышские сведения из NIID показываются на обоих языках страницы, с lang=lv", () => {
-    for (const locale of ["lv", "en"]) {
+    for (const locale of ["lv", "en"] as const) {
       const details = pickDetails(NIID, locale);
       expect(details?.lang).toBe("lv");
       expect(details?.degree).toBe("Profesionālais bakalaurs mehatronikā");
@@ -36,7 +36,7 @@ describe("pickDetails", () => {
   });
 
   it("английские сведения ЛУ показываются на обоих языках страницы, с lang=en", () => {
-    for (const locale of ["lv", "en"]) {
+    for (const locale of ["lv", "en"] as const) {
       const details = pickDetails(LU, locale);
       expect(details?.lang).toBe("en");
       expect(details?.degree).toBe("Bachelor of Humanities in English and Language Studies");

@@ -58,7 +58,7 @@ Supabase Dashboard → Settings → API → Reset service_role key. После �
 
 ## 4. Если что-то выглядит сломанным — куда смотреть
 
-1. `/lv/verification` (или `/en/verification`) на живом сайте — дата
+1. `/lv/verification` (или `/en-lv/verification`) на живом сайте — дата
    последнего успешного полного сбора видна вверху страницы.
 2. GitHub → Actions — красные (упавшие) прогоны видны сразу в списке,
    у каждого есть лог.

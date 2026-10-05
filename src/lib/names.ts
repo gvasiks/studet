@@ -1,4 +1,4 @@
-import type { Locale } from "@/i18n/config";
+import type { Language } from "@/i18n/config";
 
 // Вынесено из catalog.ts в отдельный модуль без обращения к базе: так
 // эти функции (и всё, что на них опирается — вид каталога, поиск,
@@ -9,9 +9,9 @@ import type { Locale } from "@/i18n/config";
 // читает только английский раздел сайтов, поэтому падаем на то, что есть.
 export function localizedName(
   entity: { name_lv: string | null; name_en: string | null },
-  locale: Locale,
+  language: Language,
 ): string {
-  const primary = locale === "lv" ? entity.name_lv : entity.name_en;
+  const primary = language === "lv" ? entity.name_lv : entity.name_en;
   return primary ?? entity.name_en ?? entity.name_lv ?? "";
 }
 

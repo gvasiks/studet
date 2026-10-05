@@ -20,7 +20,11 @@ Next.js (App Router) · HeroUI v2 · Tailwind v4 · Supabase · TypeScript
 
 ## Многоязычность
 
-Маршруты `/lv` и `/en`. `/` редиректит на язык браузера через `src/proxy.ts`.
+Первый сегмент адреса — пара «язык + страна»: `/lv` (латышский, Латвия) и
+`/en-lv` (английский, Латвия); для Литвы запланированы `/lt` и `/en-lt`.
+Язык и страну из сегмента достают `languageOf()` и `countryOf()` из
+`src/i18n/config.ts`. `/` редиректит на язык браузера через `src/proxy.ts`,
+старый `/en/…` — на `/en-lv/…`.
 Тексты — в `src/i18n/dictionaries/*.json`, в коде строк нет.
 
 ## Supabase

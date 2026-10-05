@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { isLocale } from "@/i18n/config";
+import { isLocale, languageOf } from "@/i18n/config";
 import { isDocumentStale } from "@/lib/document-age";
 import { isPipelineStale } from "@/lib/pipeline-health";
 import { getPipelineHealth } from "@/lib/pipeline-health-queries";
@@ -107,7 +107,7 @@ export default async function VerificationPage({ params }: PageProps<"/[locale]/
         <ClockIcon size={14} className="shrink-0" />
         {pipeline.lastSuccessAt ? (
           <>
-            Pēdējā veiksmīgā savākšana: {new Date(pipeline.lastSuccessAt).toLocaleString(locale)}
+            Pēdējā veiksmīgā savākšana: {new Date(pipeline.lastSuccessAt).toLocaleString(languageOf(locale))}
             {pipelineStale && " — pagājuši vairāk par 9 dienām, pārbaudiet grafiku GitHub Actions"}
           </>
         ) : (
@@ -194,11 +194,11 @@ export default async function VerificationPage({ params }: PageProps<"/[locale]/
                         <p className="mt-1 flex flex-wrap items-center gap-x-2 gap-y-1 text-xs text-zinc-500">
                           {item.programmeName && <span>{item.universityName}</span>}
                           <span className="tabular-nums">
-                            {new Date(item.collectedAt).toLocaleDateString(locale)}
+                            {new Date(item.collectedAt).toLocaleDateString(languageOf(locale))}
                           </span>
                           {item.sourceDocDate && (
                             <span className="tabular-nums">
-                              {new Date(item.sourceDocDate).toLocaleDateString(locale)}
+                              {new Date(item.sourceDocDate).toLocaleDateString(languageOf(locale))}
                             </span>
                           )}
                         </p>
@@ -252,7 +252,7 @@ export default async function VerificationPage({ params }: PageProps<"/[locale]/
                 <p className="mt-1 flex flex-wrap items-center gap-x-2 gap-y-1 text-xs text-zinc-500">
                   <span>{item.universityName}</span>
                   {item.disputedAt && (
-                    <span className="tabular-nums">{new Date(item.disputedAt).toLocaleDateString(locale)}</span>
+                    <span className="tabular-nums">{new Date(item.disputedAt).toLocaleDateString(languageOf(locale))}</span>
                   )}
                 </p>
                 {/* disputed_reason больше не приходит через это (анонимно читаемое)

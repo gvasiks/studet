@@ -1,7 +1,7 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { isLocale } from "@/i18n/config";
+import { isLocale, languageOf } from "@/i18n/config";
 import { getDictionary } from "@/i18n/dictionaries";
 import { buildAlternates } from "@/lib/site";
 import { getApplicationRounds } from "@/lib/deadline-queries";
@@ -61,7 +61,7 @@ export default async function ProgrammesPage({
     getApplicationRounds(),
     getProgrammeIdsWithFormula(),
   ]);
-  const view = buildCatalogView(programmes, state, locale);
+  const view = buildCatalogView(programmes, state, languageOf(locale));
 
   return (
     <main className="page-container pb-16">
@@ -127,7 +127,7 @@ export default async function ProgrammesPage({
                       hasCalculator={calculatorIds.has(programme.id)}
                       deadline={
                         nextRound
-                          ? `${dict.programme.deadlinesCloses} ${new Date(nextRound.closesOn!).toLocaleDateString(locale)}`
+                          ? `${dict.programme.deadlinesCloses} ${new Date(nextRound.closesOn!).toLocaleDateString(languageOf(locale))}`
                           : null
                       }
                     />

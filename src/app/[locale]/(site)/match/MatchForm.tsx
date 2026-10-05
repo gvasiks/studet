@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useState } from "react";
 import { Input } from "@heroui/react";
-import type { Locale } from "@/i18n/config";
+import { languageOf, type Locale } from "@/i18n/config";
 import type { Dictionary } from "@/i18n/dictionaries";
 import { parsePercent } from "@/lib/exam-input";
 import type { ExamLevel, ExamResult } from "@/lib/formula";
@@ -410,7 +410,7 @@ function ResultRow({
           <p className="mt-3 flex flex-wrap items-center gap-x-2 gap-y-1 text-xs text-zinc-600">
             <CheckIcon size={13} className="shrink-0 text-emerald-600" />
             <span>
-              {dict.catalog.verifiedPrefix} {new Date(formula.verifiedAt).toLocaleDateString(locale)}
+              {dict.catalog.verifiedPrefix} {new Date(formula.verifiedAt).toLocaleDateString(languageOf(locale))}
             </span>
             {formula.sourceUrl && (
               <a
@@ -515,7 +515,7 @@ function RequirementRow({
       <p className="mt-2 flex flex-wrap items-center gap-x-2 gap-y-1 text-xs text-zinc-600">
         <CheckIcon size={13} className="shrink-0 text-emerald-600" />
         <span>
-          {dict.catalog.verifiedPrefix} {new Date(requirement.verifiedAt).toLocaleDateString(locale)}
+          {dict.catalog.verifiedPrefix} {new Date(requirement.verifiedAt).toLocaleDateString(languageOf(locale))}
         </span>
         {requirement.sourceUrl && (
           <a

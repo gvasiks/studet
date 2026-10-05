@@ -1,5 +1,5 @@
 import Link from "next/link";
-import type { Locale } from "@/i18n/config";
+import { languageOf, type Locale } from "@/i18n/config";
 import type { Dictionary } from "@/i18n/dictionaries";
 import { GraduationCapIcon } from "@/components/icons";
 import { FavoritesLink, HeaderNav } from "@/components/HeaderNav";
@@ -53,7 +53,7 @@ export function SiteHeader({ locale, dict, tone }: { locale: Locale; dict: Dicti
           страницах, а не молчит. Индексацию не закрываем (само по себе это
           не причина для noindex), просто не выдаём каталог и калькулятор за
           нечто большее, чем они есть сегодня. */}
-      {locale === "en" && (
+      {languageOf(locale) === "en" && (
         <div
           role="region"
           aria-label="Coverage notice"

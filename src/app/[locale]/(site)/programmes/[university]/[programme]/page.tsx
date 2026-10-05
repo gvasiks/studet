@@ -1,9 +1,8 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 import type { Dictionary } from "@/i18n/dictionaries";
-import type { Locale } from "@/i18n/config";
 import { notFound } from "next/navigation";
-import { isLocale } from "@/i18n/config";
+import { isLocale, languageOf, type Locale } from "@/i18n/config";
 import { getDictionary } from "@/i18n/dictionaries";
 import { enumLabel, getProgramme, localizedName, type Programme, type University } from "@/lib/catalog";
 import { getFormula } from "@/lib/formula-queries";
@@ -44,7 +43,7 @@ function buildDescription(
   dict: Dictionary,
   locale: Locale,
 ): string {
-  const universityName = localizedName(record.university, locale);
+  const universityName = localizedName(record.university, languageOf(locale));
   const degree = enumLabel(dict.catalog.degreeLevel, record.degree_level);
   const language = enumLabel(dict.catalog.language, record.language_of_instruction);
   const mode = enumLabel(dict.catalog.studyMode, record.study_mode);
@@ -63,8 +62,8 @@ function buildDescription(
 export async function generateMetadata({ params }: { params: Params }): Promise<Metadata> {
   const { locale, record } = await loadProgramme(params);
   const dict = await getDictionary(locale);
-  const name = localizedName(record, locale);
-  const universityName = localizedName(record.university, locale);
+  const name = localizedName(record, languageOf(locale));
+  const universityName = localizedName(record.university, languageOf(locale));
   const path = `/programmes/${record.university.slug}/${record.slug}`;
 
   return {
@@ -111,8 +110,9 @@ export default async function ProgrammePage({ params }: { params: Params }) {
     noCompetitiveScoreReason = dict.programme.selectionTypes[admissionType.selectionType];
   }
 
-  const name = localizedName(record, locale);
-  const universityName = localizedName(record.university, locale);
+  const language = languageOf(locale);
+  const name = localizedName(record, language);
+  const universityName = localizedName(record.university, language);
   // прошедшая дата не показывается — см. currentAccreditation
   const accreditation = currentAccreditation(record.accreditation_valid_until, new Date().toISOString().slice(0, 10));
   const pageUrl = `${SITE_URL}/${locale}/programmes/${record.university.slug}/${record.slug}`;
@@ -150,7 +150,7 @@ export default async function ProgrammePage({ params }: { params: Params }) {
   // Диплом и описание есть не у всех программ: у взятых из NIID и
   // найденных там по названию — латышские, у ЛУ — английские, у остальных
   // их нет вовсе (см. src/lib/programme-details.ts).
-  const details = pickDetails(record, locale);
+  const details = pickDetails(record, language);
 
   return (
     <main className="page-container py-8 sm:py-12">
@@ -192,7 +192,7 @@ export default async function ProgrammePage({ params }: { params: Params }) {
           <Fact label={dict.programme.budgetPlaces} value={String(record.budget_places)} />
         )}
         {accreditation && (
-          <Fact label={dict.programme.accreditation} value={new Date(accreditation).toLocaleDateString(locale)} />
+          <Fact label={dict.programme.accreditation} value={new Date(accreditation).toLocaleDateString(language)} />
         )}
       </dl>
 
@@ -210,13 +210,13 @@ export default async function ProgrammePage({ params }: { params: Params }) {
               <h2 className="text-xs uppercase tracking-wide text-zinc-500">{dict.programme.detailsTitle}</h2>
               <dl className="mt-3 grid grid-cols-1 gap-x-6 gap-y-4 sm:grid-cols-2" lang={details.lang}>
                 {details.degree && (
-                  <Fact label={dict.programme.degreeAwarded} value={details.degree} labelLang={locale} />
+                  <Fact label={dict.programme.degreeAwarded} value={details.degree} labelLang={language} />
                 )}
                 {details.qualification && (
-                  <Fact label={dict.programme.qualification} value={details.qualification} labelLang={locale} />
+                  <Fact label={dict.programme.qualification} value={details.qualification} labelLang={language} />
                 )}
                 {details.document && (
-                  <Fact label={dict.programme.diplomaDocument} value={details.document} labelLang={locale} />
+                  <Fact label={dict.programme.diplomaDocument} value={details.document} labelLang={language} />
                 )}
               </dl>
             </>
@@ -234,11 +234,11 @@ export default async function ProgrammePage({ params }: { params: Params }) {
           )}
 
           <p className="mt-4 text-xs leading-relaxed text-zinc-500">
-            {details.lang !== locale &&
+            {details.lang !== language &&
               `${details.lang === "lv" ? dict.programme.contentInLatvian : dict.programme.contentInEnglish} `}
             {interpolate(dict.programme.detailsSource, {
               source: details.sourceHost ?? "",
-              date: details.extractedAt ? new Date(details.extractedAt).toLocaleDateString(locale) : "",
+              date: details.extractedAt ? new Date(details.extractedAt).toLocaleDateString(language) : "",
             })}
             {details.sourceUrl && (
               <>
@@ -262,9 +262,9 @@ export default async function ProgrammePage({ params }: { params: Params }) {
                 {(round.opensOn || round.closesOn) && (
                   <>
                     {": "}
-                    {round.opensOn && `${dict.programme.deadlinesOpens} ${new Date(round.opensOn).toLocaleDateString(locale)}`}
+                    {round.opensOn && `${dict.programme.deadlinesOpens} ${new Date(round.opensOn).toLocaleDateString(language)}`}
                     {round.opensOn && round.closesOn && " "}
-                    {round.closesOn && `${dict.programme.deadlinesCloses} ${new Date(round.closesOn).toLocaleDateString(locale)}`}
+                    {round.closesOn && `${dict.programme.deadlinesCloses} ${new Date(round.closesOn).toLocaleDateString(language)}`}
                   </>
                 )}
               </li>
@@ -289,7 +289,7 @@ export default async function ProgrammePage({ params }: { params: Params }) {
           {/* Дата проверки и источник рядом с фактом — правило 5. */}
           <p className="mt-2 text-xs leading-relaxed text-zinc-500">
             {dict.programme.applyNote} {dict.catalog.verifiedPrefix}{" "}
-            {new Date(channel.verifiedAt).toLocaleDateString(locale)}.
+            {new Date(channel.verifiedAt).toLocaleDateString(language)}.
             {channelSourceUrl && (
               <>
                 {" "}
@@ -340,7 +340,7 @@ export default async function ProgrammePage({ params }: { params: Params }) {
                 {snapshot.medianIncomeEur !== null ? (
                   <p>
                     {interpolate(dict.outcomes.median, {
-                      amount: Math.round(snapshot.medianIncomeEur).toLocaleString(locale),
+                      amount: Math.round(snapshot.medianIncomeEur).toLocaleString(language),
                     })}
                   </p>
                 ) : (
@@ -372,7 +372,7 @@ export default async function ProgrammePage({ params }: { params: Params }) {
 
       <p className="mt-8 rounded-xl bg-amber-50 px-4 py-3 text-sm text-amber-900">
         {record.verified_at
-          ? `${dict.catalog.verifiedPrefix} ${new Date(record.verified_at).toLocaleDateString(locale)}`
+          ? `${dict.catalog.verifiedPrefix} ${new Date(record.verified_at).toLocaleDateString(language)}`
           : dict.catalog.unverifiedLabel}
         {record.source_url && (
           <>

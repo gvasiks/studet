@@ -12,7 +12,7 @@ import AxeBuilder from "@axe-core/playwright";
 // /programmes/lu/economics/calculator — калькулятор с формулой; /programmes/lu/nav-tadas — страница
 // «не найдено» (код ответа 404, но вёрстка своя — её тоже проверяем).
 const ROUTES = ["", "/programmes", "/programmes/lu/economics", "/programmes/lu/economics/calculator", "/programmes/gfk/110", "/programmes/lu/nav-tadas", "/survey", "/match", "/rights", "/glossary", "/privacy", "/favorites"];
-const LOCALES = ["lv", "en"] as const;
+const LOCALES = ["lv", "en-lv"] as const;
 
 for (const locale of LOCALES) {
   for (const route of ROUTES) {

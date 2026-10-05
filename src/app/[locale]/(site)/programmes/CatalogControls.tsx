@@ -1,5 +1,5 @@
 import Link from "next/link";
-import type { Locale } from "@/i18n/config";
+import { languageOf, type Locale } from "@/i18n/config";
 import type { Dictionary } from "@/i18n/dictionaries";
 import {
   ArrowRightIcon,
@@ -105,7 +105,7 @@ export function FilterSidebar({
   // По названию на языке страницы: база отдаёт по name_en, и на латышской
   // странице порядок выглядел случайным.
   const sortedUniversities = [...universities].sort((a, b) =>
-    localizedName(a, locale).localeCompare(localizedName(b, locale), locale),
+    localizedName(a, languageOf(locale)).localeCompare(localizedName(b, languageOf(locale)), languageOf(locale)),
   );
 
   return (
@@ -136,7 +136,7 @@ export function FilterSidebar({
           <option value="">{filters.anyUniversity}</option>
           {sortedUniversities.map((university) => (
             <option key={university.slug} value={university.slug}>
-              {localizedName(university, locale)} ({university.programmeCount})
+              {localizedName(university, languageOf(locale))} ({university.programmeCount})
             </option>
           ))}
         </SelectField>
@@ -320,7 +320,7 @@ export function LevelTabs({
     ...LEVEL_KEYS.map((key) => ({ key, label: dict.catalog.tabs[key], count: view.levelCounts[key] })),
   ];
   // Латышский: форма единственного числа у чисел на 1, кроме 11 (21, 31...)
-  const singular = locale === "lv" ? view.total % 10 === 1 && view.total % 100 !== 11 : view.total === 1;
+  const singular = languageOf(locale) === "lv" ? view.total % 10 === 1 && view.total % 100 !== 11 : view.total === 1;
   const [foundBefore, foundAfter] = (singular ? dict.catalog.foundOne : dict.catalog.found).split("{count}");
 
   return (

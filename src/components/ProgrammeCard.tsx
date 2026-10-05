@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 import Link from "next/link";
-import type { Locale } from "@/i18n/config";
+import { languageOf, type Locale } from "@/i18n/config";
 import type { Dictionary } from "@/i18n/dictionaries";
 import { ArrowRightIcon, BuildingIcon, CalendarIcon, ClockIcon, GlobeIcon, MapPinIcon } from "@/components/icons";
 import { FavoriteButton } from "@/components/FavoriteButton";
@@ -52,12 +52,12 @@ export function ProgrammeCard({
           href={programmeHref}
           className="after:absolute after:inset-0 after:rounded-3xl after:content-[''] focus-visible:outline-none focus-visible:after:outline-2 focus-visible:after:outline-brand"
         >
-          {localizedName(programme, locale)}
+          {localizedName(programme, languageOf(locale))}
         </Link>
       </h2>
       <p className="mt-1.5 flex items-start gap-1.5 text-[13px] leading-snug text-zinc-600">
         <BuildingIcon size={14} className="mt-0.5 shrink-0" />
-        {localizedName(programme.university, locale)}
+        {localizedName(programme.university, languageOf(locale))}
       </p>
 
       <div className="mt-auto pt-4">

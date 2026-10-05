@@ -1,3 +1,4 @@
+import type { Language } from "@/i18n/config";
 // Диплом, квалификация и описание программы — чистая логика выбора, без
 // обращения к базе (тот же приём, что outcomes.ts): её можно тестировать
 // отдельно.
@@ -54,7 +55,7 @@ export function sourceHost(url: string | null | undefined): string | null {
 // Латышский набор (NIID) и английский (ЛУ) на практике не пересекаются: у
 // программы есть один из них. Если когда-нибудь окажутся оба, берётся тот,
 // что на языке страницы.
-export function pickDetails(record: ProgrammeDetailsSource, locale: string): ProgrammeDetails | null {
+export function pickDetails(record: ProgrammeDetailsSource, language: Language): ProgrammeDetails | null {
   const latvian = {
     lang: "lv" as const,
     degree: record.degree_awarded_lv ?? null,
@@ -72,7 +73,7 @@ export function pickDetails(record: ProgrammeDetailsSource, locale: string): Pro
   const hasAny = (set: typeof latvian | typeof english) =>
     Boolean(set.degree || set.qualification || set.document || set.paragraphs.length > 0);
 
-  const preferred = locale === "en" ? [english, latvian] : [latvian, english];
+  const preferred = language === "en" ? [english, latvian] : [latvian, english];
   const chosen = preferred.find(hasAny);
   if (!chosen) return null;
 

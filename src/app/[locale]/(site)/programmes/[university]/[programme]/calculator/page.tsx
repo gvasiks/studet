@@ -1,7 +1,7 @@
 import { BackButton } from "@/components/BackButton";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { isLocale } from "@/i18n/config";
+import { isLocale, languageOf } from "@/i18n/config";
 import { getDictionary } from "@/i18n/dictionaries";
 import { getProgramme, localizedName } from "@/lib/catalog";
 import { getFormula, getLevelCoefficients } from "@/lib/formula-queries";
@@ -22,7 +22,7 @@ export async function generateMetadata({ params }: { params: Params }): Promise<
   const record = await getProgramme(university, programmeSlug);
   if (!record) notFound();
 
-  const name = localizedName(record, locale);
+  const name = localizedName(record, languageOf(locale));
   const path = `/programmes/${university}/${programmeSlug}/calculator`;
   return {
     title: { absolute: `${dict.calculator.title} — ${name}` },
@@ -58,7 +58,7 @@ export default async function CalculatorPage({ params }: { params: Params }) {
       <div className="surface mx-auto max-w-2xl p-6 sm:p-10">
       <BackButton fallbackHref={`/${locale}/programmes/${university}/${programmeSlug}`} label={dict.programme.back} />
 
-      <p className="mt-4 text-sm text-zinc-500">{localizedName(record, locale)}</p>
+      <p className="mt-4 text-sm text-zinc-500">{localizedName(record, languageOf(locale))}</p>
       <h1 className="mt-1 text-2xl font-bold tracking-tighter text-zinc-900">{dict.calculator.title}</h1>
 
       {!formula ? (
@@ -79,8 +79,8 @@ export default async function CalculatorPage({ params }: { params: Params }) {
           результаты экзаменов браузер не покидают. */}
       <ReportErrorLink
         dict={dict}
-        programmeName={localizedName(record, locale)}
-        universityName={localizedName(record.university, locale)}
+        programmeName={localizedName(record, languageOf(locale))}
+        universityName={localizedName(record.university, languageOf(locale))}
         pageUrl={`${SITE_URL}/${locale}/programmes/${university}/${programmeSlug}/calculator`}
       />
     </div>

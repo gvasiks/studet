@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import type { Locale } from "@/i18n/config";
+import { languageOf, type Locale } from "@/i18n/config";
 import type { Dictionary } from "@/i18n/dictionaries";
 import { enumLabel, getProgrammesByIds, localizedName, type ProgrammeWithUniversity } from "@/lib/catalog";
 import { matchRounds, type ApplicationRound } from "@/lib/deadlines";
@@ -152,7 +152,7 @@ export function FavoritesList({
               hasCalculator={calculatorSet.has(programme.id)}
               deadline={
                 nextRound
-                  ? `${dict.programme.deadlinesCloses} ${new Date(nextRound.closesOn!).toLocaleDateString(locale)}`
+                  ? `${dict.programme.deadlinesCloses} ${new Date(nextRound.closesOn!).toLocaleDateString(languageOf(locale))}`
                   : null
               }
               footer={
@@ -175,7 +175,7 @@ export function FavoritesList({
                     <CheckIcon size={13} />
                   </span>
                   {dict.favorites.compare}
-                  <span className="sr-only">: {localizedName(programme, locale)}</span>
+                  <span className="sr-only">: {localizedName(programme, languageOf(locale))}</span>
                 </label>
               }
             />
@@ -214,14 +214,14 @@ export function FavoritesList({
                             href={`/${locale}/programmes/${programme.university.slug}/${programme.slug}`}
                             className={`min-w-0 font-semibold leading-snug tracking-tight text-zinc-900 hover:text-brand ${FOCUS}`}
                           >
-                            {localizedName(programme, locale)}
+                            {localizedName(programme, languageOf(locale))}
                           </Link>
                           {/* Убирает только из сравнения — в списке программа
                               остаётся (из списка убирает звезда на карточке). */}
                           <button
                             type="button"
                             onClick={() => toggleCompare(programme.id)}
-                            aria-label={`${dict.favorites.removeFromCompare}: ${localizedName(programme, locale)}`}
+                            aria-label={`${dict.favorites.removeFromCompare}: ${localizedName(programme, languageOf(locale))}`}
                             title={dict.favorites.removeFromCompare}
                             className={`grid h-7 w-7 shrink-0 place-items-center rounded-lg text-zinc-500 transition-colors hover:bg-zinc-100 hover:text-zinc-700 ${FOCUS}`}
                           >
@@ -229,7 +229,7 @@ export function FavoritesList({
                           </button>
                         </div>
                         <p className="mt-1.5 text-xs font-normal leading-snug text-zinc-500">
-                          {localizedName(programme.university, locale)}
+                          {localizedName(programme.university, languageOf(locale))}
                         </p>
                       </th>
                     ))}

@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { locales, type Locale } from "@/i18n/config";
+import { countryOf, languageOf, localesOfCountry, type Locale } from "@/i18n/config";
 
 export type Tone = "light" | "dark";
 
@@ -10,6 +10,9 @@ export type Tone = "light" | "dark";
 // странице (та же programme/university slug работает под обоими локалями,
 // менять нужно только первый сегмент пути). Серверный компонент этого не
 // умеет без прокидывания текущего пути через каждую страницу.
+//
+// Переключает только между языками одной страны: у литовского каталога
+// нет латышской версии, и наоборот.
 //
 // Ссылки, а не кнопки: переключатель языка — это навигация (другой
 // адрес, другой индексируемый документ), не действие на странице.
@@ -23,7 +26,7 @@ export function LocaleSwitcher({ locale, tone = "light" }: { locale: Locale; ton
       aria-label="Language"
       className={`flex items-center rounded-full p-[3px] ${dark ? "bg-white/10" : "bg-zinc-200"}`}
     >
-      {locales.map((code) => {
+      {localesOfCountry(countryOf(locale)).map((code) => {
         const active = code === locale;
         return (
           <Link
@@ -36,7 +39,7 @@ export function LocaleSwitcher({ locale, tone = "light" }: { locale: Locale; ton
                 : `font-medium ${dark ? "text-slate-300 hover:text-white" : "text-zinc-600 hover:text-zinc-900"}`
             }`}
           >
-            {code.toUpperCase()}
+            {languageOf(code).toUpperCase()}
           </Link>
         );
       })}
