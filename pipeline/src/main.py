@@ -13,9 +13,15 @@ from catalog_diff import CONTENT_FIELDS, compute_diff, fill_missing_keys, format
 from db import get_service_client
 from db_retry import execute
 from scrape_scope import LOCAL_ONLY
-from sources import bsa, du, eka, ekra, jvlma, lbtu, lka, lma, lnaa, lu, lutera, niid_colleges, niid_universities, rai, rgsl, riseba, rnu, rsu, rtu_catalog, rtu_liepaja, sse_riga, tsi, turiba, venta, via
+from sources import bsa, du, eka, ekra, jvlma, lbtu, lka, lma, lnaa, lt_lamabpo, lu, lutera, niid_colleges, niid_universities, rai, rgsl, riseba, rnu, rsu, rtu_catalog, rtu_liepaja, sse_riga, tsi, turiba, venta, via
 
-SOURCES = [turiba, riseba, rtu_liepaja, tsi, bsa, sse_riga, rgsl, lu, venta, lbtu, du, eka, rnu, rtu_catalog, via, rsu, lka, lma, jvlma, rai, lnaa, lutera, ekra, niid_colleges, niid_universities]
+SOURCES = [turiba, riseba, rtu_liepaja, tsi, bsa, sse_riga, rgsl, lu, venta, lbtu, du, eka, rnu, rtu_catalog, via, rsu, lka, lma, jvlma, rai, lnaa, lutera, ekra, niid_colleges, niid_universities, lt_lamabpo]
+
+# Источники, которые запускаются только по имени: `python src/main.py lt_lamabpo`.
+# Литва ещё строится (docs/PLAN-LITHUANIA-2027.md): её сбор не должен попадать в
+# недельное расписание и не должен красить латвийский прогон, если реестр
+# Литвы не ответил. Когда Литва запустится — убрать отсюда.
+BY_NAME_ONLY = {"lt_lamabpo"}
 
 # Ревью 2026-09, пункт 05: конвейер должен падать, если число найденных
 # программ у источника резко просело — lu.py однажды тихо потерял целый
@@ -129,6 +135,7 @@ def main() -> None:
         s
         for s in SOURCES
         if (not only or _name(s) in only) and not (skip_local and _name(s) in LOCAL_ONLY)
+        and (_name(s) in only or _name(s) not in BY_NAME_ONLY)
     ]
 
     # План 2026-09-21, неделя 1, пункт 08: начало прогона фиксируется СРАЗУ,

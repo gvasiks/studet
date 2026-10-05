@@ -30,6 +30,7 @@ from dataclasses import dataclass, field
 # (служебные, конвейер трогает их каждый прогон намеренно).
 CONTENT_FIELDS = (
     "name_lv",
+    "name_lt",
     "name_en",
     "degree_level",
     "language_of_instruction",
@@ -42,7 +43,9 @@ CONTENT_FIELDS = (
     "duration_years",
     "accreditation_valid_until",
     "description_lv",
+    "description_lt",
     "description_en",
+    "degree_awarded_lt",
     "source_url",
 )
 
@@ -111,7 +114,7 @@ def compute_diff(
         was_verified = prior.get("verified_at") is not None
         change = ProgrammeChange(
             slug=slug,
-            name=row.get("name_en") or row.get("name_lv") or slug,
+            name=row.get("name_en") or row.get("name_lv") or row.get("name_lt") or slug,
             diffs=diffs,
             reset_verification=was_verified,
         )
@@ -192,7 +195,7 @@ def suspicious_names(programme_rows: list[dict]) -> list[str]:
     """
     bad: list[str] = []
     for row in programme_rows:
-        names = [row.get("name_lv"), row.get("name_en")]
+        names = [row.get("name_lv"), row.get("name_lt"), row.get("name_en")]
         present = [name.strip() for name in names if isinstance(name, str) and name.strip()]
         if not present or any(_WEB_ADDRESS.match(name) for name in present):
             bad.append(row.get("slug", "?"))
@@ -205,6 +208,8 @@ def selftest() -> None:
     assert suspicious_names([{"slug": "b", "name_lv": "rtu.lv"}]) == ["b"]
     assert suspicious_names([{"slug": "c", "name_lv": "  "}]) == ["c"], "пустое название — тоже мусор"
     assert suspicious_names([{"slug": "d"}]) == ["d"]
+    assert suspicious_names([{"slug": "e", "name_lt": "Teisė"}]) == [], "литовское название — тоже название"
+    assert suspicious_names([{"slug": "f", "name_lt": "www.vu.lt"}]) == ["f"]
     assert suspicious_names(
         [
             {"slug": "ok1", "name_lv": "Logopēdija"},

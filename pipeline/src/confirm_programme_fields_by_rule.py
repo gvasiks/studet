@@ -48,7 +48,10 @@ def main(apply: bool) -> None:
 
     programmes = (
         client.table("programme")
-        .select("id, slug, name_en, name_lv, degree_level, university:university_id(slug)")
+        # Только Латвия: разметка направлений идёт по латвийскому
+        # классификатору и латвийским данным о выпускниках.
+        .select("id, slug, name_en, name_lv, degree_level, university:university_id!inner(slug, country)")
+        .eq("university.country", "LV")
         .execute()
         .data
     )
