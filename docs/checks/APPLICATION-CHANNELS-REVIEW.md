@@ -9,10 +9,10 @@
 
 ## Итог сбора
 
-- Черновиков: **59** строк для **40** учреждений из 44.
-- Закрывают 80 из 86 пар «вуз, уровень» каталога — 851 программу из 899.
-- С дословной цитатой из источника: 36 строк; без цитаты: 23.
-- Не собрано: 5 случаев — см. раздел 4.
+- Черновиков: **64** строк для **43** учреждений из 44.
+- Закрывают 85 из 86 пар «вуз, уровень» каталога — 897 программ из 899.
+- С дословной цитатой из источника: 40 строк; без цитаты: 24.
+- Не собрано: Novikontas Jūras koledža (2 программы) — см. раздел 4.
 
 ## Что проверять в каждой строке
 
@@ -70,17 +70,20 @@
 | `rnu` | бакалавриат | https://latvija.gov.lv/Services/54419 | https://vienotauznemsana.lv/ | «Vienoto uzņemšanu rīkoja Ekonomikas un kultūras augstskola, Daugavpils Universitāte, Latvijas Biozinātņu un tehnoloģiju universitāte, Latvijas Universitāte, Rīgas Tehniskā universitāte, Rīgas Ziemeļvalstu augstskola, Ventspils Augstskola un Vidzemes Augstskola. […] Pieteikties elektroniski var […] vienotajā valsts pārvaldes pakalpojumu portāla e-pakalpojumā “Elektroniskā pieteikšanās studijām pamatstudiju programmās”. (otrais teikums — no vienotauznemsana.lv/daliba/ka-pieteikties/)» | У RNU есть и собственная форма apply.rnu.lv («Aizpildi RNU tiešsaistes pieteikuma formu») — проверить, что для бакалавриата верна единая подача. |
 | `rnu` | колледж | https://latvija.gov.lv/Services/54419 | https://vienotauznemsana.lv/ | «Vienoto uzņemšanu rīkoja Ekonomikas un kultūras augstskola, Daugavpils Universitāte, Latvijas Biozinātņu un tehnoloģiju universitāte, Latvijas Universitāte, Rīgas Tehniskā universitāte, Rīgas Ziemeļvalstu augstskola, Ventspils Augstskola un Vidzemes Augstskola. […] Pieteikties elektroniski var […] vienotajā valsts pārvaldes pakalpojumu portāla e-pakalpojumā “Elektroniskā pieteikšanās studijām pamatstudiju programmās”. (otrais teikums — no vienotauznemsana.lv/daliba/ka-pieteikties/)» | У RNU есть и собственная форма apply.rnu.lv («Aizpildi RNU tiešsaistes pieteikuma formu») — проверить, что для бакалавриата верна единая подача. |
 
-## 2. Подача в сам вуз — с цитатой (21 строк)
+## 2. Подача в сам вуз — с цитатой (25 строк)
 
 | Вуз | Уровень | Куда ведёт ссылка | Источник | Цитата из источника | Заметка |
 |---|---|---|---|---|---|
 | `rtu` | магистратура | https://www.rtu.lv/lv/studijas/uznemsana/pieteiksanas-magistra-limena-studijam | та же страница | «Dokumentu iesniegšana maksas studiju vietās otrā cikla augstākās izglītības (maģistra) studiju programmās norisinās elektroniski un klātienē RTU Uzņemšanas un servisa nodaļas darba laikā» |  |
 | `rtu` | докторантура | https://www.rtu.lv/lv/studijas/doktora-limena-studijas/uznemsana-doktora/uznemsanas-process | та же страница | «Piesakoties doktorantūras vakancei, gan pretendenti uz budžeta vietām, gan tie, kuri plāno studēt par fizisko un juridisko personu līdzekļiem, iesniedz visus nepieciešamos dokumentus […], nosūtot tos uz e‑pastu: doktorantura@rtu.lv.» |  |
 | `rnu` | все уровни | https://rnu.lv/uznemsana/pieteiksanas-kartiba/ | та же страница | «Aizpildi RNU tiešsaistes pieteikuma formu. […] Iesniedz dokumentus elektroniski vai klātienē atbilstoši Uzņemšanas komisijas norādījumiem.» |  |
+| `venta` | магистратура | https://www.venta.lv/pieteiksanas-magistra-studiju-programmam | та же страница | «sūtot elektroniski parakstītu pieteikumu uz e-pastu studijas@venta.lv vai papīrā pašrocīgi parakstītu pa pastu uz adresi Inženieru iela 101, Ventspils, LV-3601, adresējot to Ventspils Augstskolas Uzņemšanas komisijai.» | Страница «Kā pieteikties maģistra studijām?»; ссылка на неё — со страниц магистерских программ. |
 | `rsu` | бакалавриат | https://uznemsana.rsu.lv/ | https://www.rsu.lv/studiju-iespejas/uznemsana-pamatstudiju-programmas | «RSU e-Uzņemšanā ir iespējams pieteikties tikai ar Latvija.lv autorizācijas starpniecību.» | RSU нет в списке участников единой подачи 2026 года. |
 | `rsu` | колледж | https://uznemsana.rsu.lv/ | https://www.rsu.lv/studiju-iespejas/uznemsana-pamatstudiju-programmas | «RSU e-Uzņemšanā ir iespējams pieteikties tikai ar Latvija.lv autorizācijas starpniecību.» | RSU нет в списке участников единой подачи 2026 года. |
 | `rsu` | магистратура | https://uznemsana.rsu.lv/ | https://www.rsu.lv/uznemsana-magistra-studiju-programmas | «Pēc apstiprinājuma e-pasta saņemšanas tev ir jāatgriežas savā elektroniskajā pieteikumā (RSU e-Uzņemšanā) un no savas puses jāapstiprina pieteikums.» |  |
 | `rsu` | докторантура | https://uznemsana.rsu.lv/ | https://www.rsu.lv/uznemsana-doktorantura | «Elektroniskā pieteikšanās studijām 3.08.–25.09. plkst. 16» |  |
+| `lma` | магистратура | https://apply.lma.lv/ | та же страница | «Sveicam, Latvijas Mākslas akadēmijas elektroniskās reģistrēšanās sistēmā! […] Reģistrēšanās un pieteikšanās studijām Latvijas Mākslas akadēmijas maģistra programmā 2026./2027. studiju gadā no 1. aprīļa plkst.12:00 līdz 9. jūlija plkst. 23:59» | В меню lma.lv раздела приёма нет; сюда ведёт кнопка «PIETEIKTIES STUDIJĀM» со страниц специальностей. |
+| `lma` | бакалавриат | https://apply.lma.lv/ | та же страница | «Sveicam, Latvijas Mākslas akadēmijas elektroniskās reģistrēšanās sistēmā!» | Тексты на странице говорят о магистратуре. Что бакалавриат подаётся там же — НЕ подтверждено; проверить по правилам приёма бакалавриата на lma.lv. |
 | `lnaa` | все уровни | https://www.klustikaravirs.lv/pieteikties | https://www.naa.mil.lv/lv | «Latvijas pilsoņi no 18 gadiem var pieteikties dažādiem dienestiem un apmācībām, aizpildot pieteikuma anketu tiešsaistē.» | Ссылка «Piesakies» с главной страницы LNAA ведёт на klustikaravirs.lv; цитата — оттуда. |
 | `turiba` | все уровни | https://www.turiba.lv/lv/uznemsana | та же страница | «Aizpildi elektronisko pieteikšanās formu. […] Sagatavo iesniedzamos dokumentus un dodies uz augstskolu vai iesniedz tos attālināti, ja tev ir drošs elektroniskais paraksts.» |  |
 | `riseba` | все уровни | https://riseba.lv/nac-studet/ka-pieteikties-studijam/ | та же страница | «Pietiekties studijām var gan tiešsaistē, gan arī klātienē, ierodoties augstskolā.» |  |
@@ -95,8 +98,9 @@
 | `malnavas-koledza` | все уровни | https://malnavaskoledza.lv/lv/uznemsana-isa-cikla-profesionala-augstaka-izglitiba | та же страница | «Dokumentus var iesniegt klātienē, ierodoties LBTU Malnavas koledžas Studiju daļā, 63. kabinetā […] vai elektroniski, parakstītus ar drošu elektronisko parakstu, nosūtot uz e-pasta adresi» |  |
 | `rbk` | все уровни | https://www.rck.lv/augstaka-izglitiba/uznemsana/ | та же страница | «DOKUMENTU IESNIEGŠANA ELEKTRONISKI LĪDZ 2026. GADA 6.SEPTEMBRIM […] Piesakies studijām un iesniedz dokumentus šeit;» |  |
 | `rmenk` | все уровни | https://college.lv/uznemsanas-kartiba/ | та же страница | «Lai pieteiktos studijām reflektantam ir jāaizpilda elektroniskā pieteikuma forma pievienojot visus nepieciešamos dokumentus.» |  |
+| `vrsk` | все уровни | https://www.vrk.rs.gov.lv/lv/isa-cikla-profesionalas-augstakas-izglitibas-programma-robezapsardze | та же страница | «Uzņemšanas noteikumi pilna un nepilna laika studijām Valsts robežsardzes koledžā 2026.gadā» | Страница программы короткого цикла «Robežapsardze»; цитата — название документа с правилами приёма на ней. Порядок подачи — в самих правилах. |
 
-## 3. Подача в сам вуз — без цитаты (23 строк), проверить в первую очередь
+## 3. Подача в сам вуз — без цитаты (24 строк), проверить в первую очередь
 
 Страница приёма найдена по ссылке «Uzņemšana» (или «Apply») с главной
 страницы вуза, но фразы о том, как подавать документы, на ней автоматически
@@ -127,16 +131,13 @@
 | `skmk` | все уровни | https://rcmc.lv/studiju-programmas/pieteiksanas-studijam/ | та же страница | нет | Заголовок страницы — «Pieteikšanās studijām». |
 | `ucak` | все уровни | https://www.ucak.vugd.gov.lv/lv/uznemsana-studijam-0 | та же страница | нет | Заголовок страницы — «Uzņemšana studijām». |
 | `vpk` | все уровни | https://www.policijas.koledza.gov.lv/lv/uznemsanas-noteikumi-0 | та же страница | нет | На странице ссылка «elektroniskais pieteikums» (e-studijas.vp.gov.lv/uznemsana). |
+| `ljk` | все уровни | https://ljk.lv/uznemsana | та же страница | нет | На главной ljk.lv рядом — ссылка «UZŅEMŠANAS ANKETA» (registracija.ljk.lv). 2026-10-05 сайт сначала не отвечал (HTTP 522), потом открылся. |
 
 ## 4. Не собрано
 
 | Что | Почему |
 |---|---|
-| `ljk` | сайт ljk.lv не отвечал 2026-10-05 (HTTP 522) |
-| `novikonta` | адрес сайта в базе устарел (novikontas.org/college/lv отдаёт 404) |
-| `lma` | страница приёма на lma.lv по ссылкам с главной не нашлась |
-| `vrsk` | ссылка «Uzņemšana» на сайте ведёт на программу дальнейшего образования, а не на приём в колледж |
-| `venta (магистратура)` | страница приёма в магистратуру на venta.lv не нашлась; бакалавриат — единая подача |
+| `novikonta` | страницы колледжа на novikontas.org отдают 404 — и адрес из базы (/college/lv), и ссылка «Novikontas Academy» с главной страницы самого сайта, и /college/lv/ka_iestaties, которую показывает поиск |
 
 У этих программ блока «Kur pieteikties» не будет, пока запись не появится.
 

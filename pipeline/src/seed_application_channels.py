@@ -120,6 +120,19 @@ CHANNELS: list[tuple[str, list[str | None], dict]] = [
             excerpt="Aizpildi RNU tiešsaistes pieteikuma formu. […] Iesniedz dokumentus elektroniski vai klātienē atbilstoši Uzņemšanas komisijas norādījumiem.",
         ),
     ),
+    (
+        "venta",
+        ["master"],
+        own(
+            "https://www.venta.lv/pieteiksanas-magistra-studiju-programmam",
+            excerpt=(
+                "sūtot elektroniski parakstītu pieteikumu uz e-pastu studijas@venta.lv vai papīrā pašrocīgi parakstītu "
+                "pa pastu uz adresi Inženieru iela 101, Ventspils, LV-3601, adresējot to Ventspils Augstskolas "
+                "Uzņemšanas komisijai."
+            ),
+            note="Страница «Kā pieteikties maģistra studijām?»; ссылка на неё — со страниц магистерских программ.",
+        ),
+    ),
     # ---------- RSU: собственная система на всех уровнях ----------
     (
         "rsu",
@@ -151,6 +164,28 @@ CHANNELS: list[tuple[str, list[str | None], dict]] = [
     ),
     # ---------- академии и частные вузы ----------
     ("lka", [None], own("https://lka.edu.lv/lv/gribu-studet-akademija/")),
+    (
+        "lma",
+        ["master"],
+        own(
+            "https://apply.lma.lv/",
+            excerpt=(
+                "Sveicam, Latvijas Mākslas akadēmijas elektroniskās reģistrēšanās sistēmā! […] Reģistrēšanās un "
+                "pieteikšanās studijām Latvijas Mākslas akadēmijas maģistra programmā 2026./2027. studiju gadā no "
+                "1. aprīļa plkst.12:00 līdz 9. jūlija plkst. 23:59"
+            ),
+            note="В меню lma.lv раздела приёма нет; сюда ведёт кнопка «PIETEIKTIES STUDIJĀM» со страниц специальностей.",
+        ),
+    ),
+    (
+        "lma",
+        ["bachelor"],
+        own(
+            "https://apply.lma.lv/",
+            excerpt="Sveicam, Latvijas Mākslas akadēmijas elektroniskās reģistrēšanās sistēmā!",
+            note="Тексты на странице говорят о магистратуре. Что бакалавриат подаётся там же — НЕ подтверждено; проверить по правилам приёма бакалавриата на lma.lv.",
+        ),
+    ),
     ("jvlma", [None], own("https://www.jvlma.lv/studijas/uznemsana", note="На странице — ссылки на формы заявлений (Google Forms) и документы по уровням.")),
     (
         "lnaa",
@@ -276,15 +311,24 @@ CHANNELS: list[tuple[str, list[str | None], dict]] = [
     ("skmk", [None], own("https://rcmc.lv/studiju-programmas/pieteiksanas-studijam/", note="Заголовок страницы — «Pieteikšanās studijām».")),
     ("ucak", [None], own("https://www.ucak.vugd.gov.lv/lv/uznemsana-studijam-0", note="Заголовок страницы — «Uzņemšana studijām».")),
     ("vpk", [None], own("https://www.policijas.koledza.gov.lv/lv/uznemsanas-noteikumi-0", note="На странице ссылка «elektroniskais pieteikums» (e-studijas.vp.gov.lv/uznemsana).")),
+    ("ljk", [None], own("https://ljk.lv/uznemsana", note="На главной ljk.lv рядом — ссылка «UZŅEMŠANAS ANKETA» (registracija.ljk.lv). 2026-10-05 сайт сначала не отвечал (HTTP 522), потом открылся.")),
+    (
+        "vrsk",
+        [None],
+        own(
+            "https://www.vrk.rs.gov.lv/lv/isa-cikla-profesionalas-augstakas-izglitibas-programma-robezapsardze",
+            excerpt="Uzņemšanas noteikumi pilna un nepilna laika studijām Valsts robežsardzes koledžā 2026.gadā",
+            note="Страница программы короткого цикла «Robežapsardze»; цитата — название документа с правилами приёма на ней. Порядок подачи — в самих правилах.",
+        ),
+    ),
 ]
 
 # Для этих учреждений черновика нет — и почему. Попадает в отчёт --review.
 NOT_COLLECTED = {
-    "ljk": "сайт ljk.lv не отвечал 2026-10-05 (HTTP 522)",
-    "novikonta": "адрес сайта в базе устарел (novikontas.org/college/lv отдаёт 404)",
-    "lma": "страница приёма на lma.lv по ссылкам с главной не нашлась",
-    "vrsk": "ссылка «Uzņemšana» на сайте ведёт на программу дальнейшего образования, а не на приём в колледж",
-    "venta (магистратура)": "страница приёма в магистратуру на venta.lv не нашлась; бакалавриат — единая подача",
+    "novikonta": (
+        "страницы колледжа на novikontas.org отдают 404 — и адрес из базы (/college/lv), и ссылка «Novikontas "
+        "Academy» с главной страницы самого сайта, и /college/lv/ka_iestaties, которую показывает поиск"
+    ),
 }
 
 
