@@ -40,6 +40,9 @@ export function countryOf(locale: Locale): Country {
   return variants[locale].country;
 }
 
+// Страны, у которых есть хотя бы один адрес.
+export const countries: Country[] = [...new Set(locales.map((locale) => variants[locale].country))];
+
 // Все адреса одной страны — между ними работает переключатель языка, и
 // только они ссылаются друг на друга как переводы (hreflang).
 export function localesOfCountry(country: Country): Locale[] {

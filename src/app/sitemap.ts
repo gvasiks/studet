@@ -1,5 +1,5 @@
 import type { MetadataRoute } from "next";
-import { locales, type Locale } from "@/i18n/config";
+import { countries, locales, localesOfCountry, type Locale } from "@/i18n/config";
 import { listProgrammes } from "@/lib/catalog";
 import { buildAlternates, SITE_URL } from "@/lib/site";
 
@@ -8,9 +8,8 @@ import { buildAlternates, SITE_URL } from "@/lib/site";
 // /programmes (dynamic = "force-dynamic").
 export const dynamic = "force-dynamic";
 
-// Пока страна одна, каждая страница существует под всеми адресами из
-// locales. Когда появится Литва, список программ здесь надо будет делить
-// по стране вуза (фаза 2 литовского плана).
+// Общие страницы есть под каждым адресом из locales; карточка программы —
+// только под адресами своей страны.
 function entry(path: string, locale: Locale) {
   return {
     url: `${SITE_URL}/${locale}${path}`,
@@ -19,8 +18,6 @@ function entry(path: string, locale: Locale) {
 }
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const programmes = await listProgrammes();
-
   const staticPaths = ["", "/programmes", "/survey"];
   const staticEntries: MetadataRoute.Sitemap = staticPaths.flatMap((path) =>
     locales.map((locale) => entry(path, locale)),
@@ -30,10 +27,14 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // это вторичная, условная страница (видна только при подтверждённой
   // формуле, правило 6 CLAUDE.md), а не самостоятельная точка входа для
   // поиска. /favorites тоже нет — она noindex (у каждого посетителя своя).
-  const programmeEntries: MetadataRoute.Sitemap = programmes.flatMap((programme) => {
-    const path = `/programmes/${programme.university.slug}/${programme.slug}`;
-    return locales.map((locale) => entry(path, locale));
-  });
+  const programmeEntries: MetadataRoute.Sitemap = [];
+  for (const country of countries) {
+    const programmes = await listProgrammes(country);
+    for (const programme of programmes) {
+      const path = `/programmes/${programme.university.slug}/${programme.slug}`;
+      for (const locale of localesOfCountry(country)) programmeEntries.push(entry(path, locale));
+    }
+  }
 
   return [...staticEntries, ...programmeEntries];
 }

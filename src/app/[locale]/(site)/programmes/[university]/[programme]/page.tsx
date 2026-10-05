@@ -2,7 +2,7 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import type { Dictionary } from "@/i18n/dictionaries";
 import { notFound } from "next/navigation";
-import { isLocale, languageOf, type Locale } from "@/i18n/config";
+import { countryOf, isLocale, languageOf, type Locale } from "@/i18n/config";
 import { getDictionary } from "@/i18n/dictionaries";
 import { enumLabel, getProgramme, localizedName, type Programme, type University } from "@/lib/catalog";
 import { getFormula } from "@/lib/formula-queries";
@@ -28,7 +28,7 @@ async function loadProgramme(params: Params) {
   const { locale, university, programme } = await params;
   if (!isLocale(locale)) notFound();
 
-  const record = await getProgramme(university, programme);
+  const record = await getProgramme(countryOf(locale), university, programme);
   if (!record) notFound();
 
   return { locale, record };

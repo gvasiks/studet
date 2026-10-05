@@ -1,4 +1,5 @@
 import { cache } from "react";
+import type { Country } from "@/i18n/config";
 import { supabase } from "@/lib/supabase";
 import { fieldCodesForInterests, type InterestKey } from "@/lib/fields";
 
@@ -64,9 +65,17 @@ const CATALOG_LIST_COLUMNS =
 // реэкспорт, чтобы существующие импорты из "@/lib/catalog" не менялись.
 export { localizedName, enumLabel } from "@/lib/names";
 
-/** Сколько программ в каталоге всего — для бейджа в шапке страницы. */
-export const getProgrammeCount = cache(async (): Promise<number> => {
-  const { count, error } = await supabase.from("programme").select("id", { count: "exact", head: true });
+// Каждая функция ниже принимает страну первым параметром — обязательным,
+// чтобы новый запрос нельзя было написать «на все страны» по забывчивости.
+// Страна хранится у вуза (university.country), страница берёт её из адреса:
+// countryOf(locale), см. src/i18n/config.ts.
+
+/** Сколько программ в каталоге страны — для бейджа в шапке страницы. */
+export const getProgrammeCount = cache(async (country: Country): Promise<number> => {
+  const { count, error } = await supabase
+    .from("programme")
+    .select("id, university!inner(country)", { count: "exact", head: true })
+    .eq("university.country", country);
   if (error) throw error;
   return count ?? 0;
 });
@@ -88,7 +97,7 @@ export type ProgrammeFilters = {
 export const CITY_KEYS = ["riga", "daugavpils", "valmiera", "ventspils", "jelgava", "liepaja", "rezekne", "jurmala", "gulbene", "malnava"];
 
 export const listProgrammes = cache(
-  async (filters: ProgrammeFilters = {}): Promise<ProgrammeWithUniversity[]> => {
+  async (country: Country, filters: ProgrammeFilters = {}): Promise<ProgrammeWithUniversity[]> => {
     // university!inner — нужен, чтобы можно было фильтровать по
     // university.slug ниже (PostgREST требует inner-join для фильтрации
     // встроенного ресурса). У программы university_id обязателен, так что
@@ -106,7 +115,8 @@ export const listProgrammes = cache(
         interestCodes
           ? `${CATALOG_LIST_COLUMNS}, university!inner(slug, name_lv, name_en, city), programme_field!inner(field_code)`
           : `${CATALOG_LIST_COLUMNS}, university!inner(slug, name_lv, name_en, city)`,
-      );
+      )
+      .eq("university.country", country);
 
     if (interestCodes) {
       query = query.in("programme_field.field_code", interestCodes);
@@ -147,12 +157,15 @@ export const listProgrammes = cache(
 // Не обёрнута в cache() — та предназначена для дедупликации запросов внутри
 // одного серверного рендера (React Server Components), а этот вызов идёт
 // с клиента (страница /favorites читает список из localStorage браузера).
-export async function getProgrammesByIds(ids: string[]): Promise<ProgrammeWithUniversity[]> {
+// Список в браузере один на весь сайт, поэтому программы другой страны
+// здесь отсеиваются: под этим адресом у них нет страницы.
+export async function getProgrammesByIds(country: Country, ids: string[]): Promise<ProgrammeWithUniversity[]> {
   if (ids.length === 0) return [];
 
   const { data, error } = await supabase
     .from("programme")
     .select(`${CATALOG_LIST_COLUMNS}, university!inner(slug, name_lv, name_en, city)`)
+    .eq("university.country", country)
     .in("id", ids);
 
   if (error) throw error;
@@ -164,13 +177,14 @@ export type UniversityOption = Pick<University, "slug" | "name_lv" | "name_en"> 
   programmeCount: number;
 };
 
-export const listUniversities = cache(async (): Promise<UniversityOption[]> => {
+export const listUniversities = cache(async (country: Country): Promise<UniversityOption[]> => {
   // programme(count) — PostgREST считает встроенные строки сам, одним
   // запросом. RLS программы действует и здесь: скрытые программы
   // (missed_runs >= 2) в число не попадают, как и в сам каталог.
   const { data, error } = await supabase
     .from("university")
     .select("slug, name_lv, name_en, programme(count)")
+    .eq("country", country)
     .order("name_en");
 
   if (error) throw error;
@@ -186,6 +200,7 @@ export const listUniversities = cache(async (): Promise<UniversityOption[]> => {
 
 export const getProgramme = cache(
   async (
+    country: Country,
     universitySlug: string,
     programmeSlug: string,
   ): Promise<(Programme & { university: University }) | null> => {
@@ -198,6 +213,7 @@ export const getProgramme = cache(
     const { data, error } = await supabase
       .from("programme")
       .select("*, university!inner(*)")
+      .eq("university.country", country)
       .eq("university.slug", universitySlug)
       .eq("slug", programmeSlug)
       .maybeSingle();

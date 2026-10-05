@@ -1,7 +1,7 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { isLocale, languageOf } from "@/i18n/config";
+import { countryOf, isLocale, languageOf } from "@/i18n/config";
 import { getDictionary } from "@/i18n/dictionaries";
 import { buildAlternates } from "@/lib/site";
 import { getApplicationRounds } from "@/lib/deadline-queries";
@@ -48,7 +48,7 @@ export default async function ProgrammesPage({
   // по уже выбранному набору (каталог — сотни строк, не миллионы), иначе
   // счётчики табов пришлось бы получать отдельными запросами.
   const [programmes, universities, applicationRounds, calculatorIds] = await Promise.all([
-    listProgrammes({
+    listProgrammes(countryOf(locale), {
       budgetOnly: state.budgetOnly,
       cities: state.cities,
       interests: state.interests,
@@ -57,7 +57,7 @@ export default async function ProgrammesPage({
       university: state.university,
       kind: state.kind ?? undefined,
     }),
-    listUniversities(),
+    listUniversities(countryOf(locale)),
     getApplicationRounds(),
     getProgrammeIdsWithFormula(),
   ]);

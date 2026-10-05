@@ -1,5 +1,5 @@
 import { cache } from "react";
-import type { Language } from "@/i18n/config";
+import type { Country, Language } from "@/i18n/config";
 import { supabase } from "@/lib/supabase";
 import { localizedName } from "@/lib/names";
 import { getLevelCoefficients } from "@/lib/formula-queries";
@@ -32,7 +32,7 @@ function fixtureEnabled(): boolean {
 // — не защита, а пояснение того же условия. Программы, пропавшие с сайта
 // вуза (missed_runs >= 2), скрыты политикой таблицы programme. Только
 // вариант "ce": варианты для льготников и иностранцев — отдельная задача.
-export const getMatchData = cache(async (language: Language): Promise<MatchData> => {
+export const getMatchData = cache(async (language: Language, country: Country): Promise<MatchData> => {
   if (fixtureEnabled()) {
     return {
       formulas: FIXTURE_FORMULAS,
@@ -48,6 +48,7 @@ export const getMatchData = cache(async (language: Language): Promise<MatchData>
       "id, programme_id, valid_from, source_url, verified_at, programme!inner(slug, name_lv, name_en, university!inner(slug, name_lv, name_en))",
     )
     .eq("variant", "ce")
+    .eq("programme.university.country", country)
     .is("valid_to", null)
     .not("verified_at", "is", null)
     .order("valid_from", { ascending: false });
@@ -55,7 +56,7 @@ export const getMatchData = cache(async (language: Language): Promise<MatchData>
   if (error) throw error;
   if (!rows || rows.length === 0) {
     const [requirements, levelCoefficients] = await Promise.all([
-      getMatchRequirements(language, new Set()),
+      getMatchRequirements(language, country, new Set()),
       getLevelCoefficients(),
     ]);
     return { formulas: [], requirements, levelCoefficients, isFixture: false };
@@ -72,7 +73,7 @@ export const getMatchData = cache(async (language: Language): Promise<MatchData>
     supabase.from("formula_term").select("formula_id, kind, subject, coefficient, optional").in("formula_id", ids),
     supabase.from("formula_gate").select("formula_id, subject, min_percent").in("formula_id", ids),
     getLevelCoefficients(),
-    getMatchRequirements(language, programmeIdsWithFormula),
+    getMatchRequirements(language, country, programmeIdsWithFormula),
   ]);
   if (termsResult.error) throw termsResult.error;
   if (gatesResult.error) throw gatesResult.error;
@@ -124,7 +125,11 @@ export const getMatchData = cache(async (language: Language): Promise<MatchData>
 // запрос (PostgREST-эмбед по requirement_set_id), не отдельным запросом —
 // раньше было два последовательных круга до Supabase на каждый визит
 // /match, лишний вариант (ревью performance-tester, 2026-09-24).
-async function getMatchRequirements(language: Language, excludeProgrammeIds: Set<string>): Promise<MatchRequirement[]> {
+async function getMatchRequirements(
+  language: Language,
+  country: Country,
+  excludeProgrammeIds: Set<string>,
+): Promise<MatchRequirement[]> {
   const { data: sets, error } = await supabase
     .from("programme_requirement_set")
     .select(
@@ -132,6 +137,7 @@ async function getMatchRequirements(language: Language, excludeProgrammeIds: Set
         "programme!inner(slug, name_lv, name_en, university!inner(slug, name_lv, name_en)), " +
         "programme_requirement(subject, alternative_group)",
     )
+    .eq("programme.university.country", country)
     .not("verified_at", "is", null);
 
   if (error) throw error;

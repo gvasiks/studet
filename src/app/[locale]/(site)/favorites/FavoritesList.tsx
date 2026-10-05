@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { languageOf, type Locale } from "@/i18n/config";
+import { countryOf, languageOf, type Locale } from "@/i18n/config";
 import type { Dictionary } from "@/i18n/dictionaries";
 import { enumLabel, getProgrammesByIds, localizedName, type ProgrammeWithUniversity } from "@/lib/catalog";
 import { matchRounds, type ApplicationRound } from "@/lib/deadlines";
@@ -38,6 +38,7 @@ export function FavoritesList({
   const [programmes, setProgrammes] = useState<ProgrammeWithUniversity[] | null>(null);
   // null — человек ещё ничего не выбирал: сравниваем первые MAX_COMPARE.
   const [chosenIds, setChosenIds] = useState<string[] | null>(null);
+  const country = countryOf(locale);
 
   useEffect(() => {
     let cancelled = false;
@@ -48,7 +49,7 @@ export function FavoritesList({
         if (!cancelled) setProgrammes([]);
         return;
       }
-      const data = await getProgrammesByIds(ids);
+      const data = await getProgrammesByIds(country, ids);
       // База отдаёт в своём порядке — возвращаем порядок, в котором человек
       // добавлял программы: от него зависит, какие четыре сравниваются
       // по умолчанию.
@@ -62,7 +63,7 @@ export function FavoritesList({
       cancelled = true;
       unsubscribe();
     };
-  }, []);
+  }, [country]);
 
   if (programmes === null) return null;
 

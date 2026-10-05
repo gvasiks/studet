@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import {
+  countries,
   countryOf,
   defaultLocale,
   isLocale,
@@ -33,6 +34,10 @@ describe("адрес = язык + страна", () => {
     expect(localesOfCountry("LV")).toEqual(["lv", "en-lv"]);
     expect(nativeLocale("LV")).toBe("lv");
     expect(defaultLocale).toBe("lv");
+  });
+
+  it("список стран собирается из адресов", () => {
+    expect(countries).toEqual(["LV"]);
   });
 
   it("каждый адрес из списка описан", () => {

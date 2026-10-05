@@ -1,7 +1,7 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { isLocale } from "@/i18n/config";
+import { countryOf, isLocale, type Country } from "@/i18n/config";
 import { getDictionary } from "@/i18n/dictionaries";
 import { ArrowRightIcon } from "@/components/icons";
 import { getProgrammeCount, listUniversities } from "@/lib/catalog";
@@ -26,9 +26,9 @@ export async function generateMetadata({ params }: PageProps<"/[locale]">): Prom
 
 // Сбой базы не должен ронять сборку или главную страницу — просто
 // не показываем бейдж со счётчиками.
-async function loadStats(): Promise<{ programmes: number; universities: number } | null> {
+async function loadStats(country: Country): Promise<{ programmes: number; universities: number } | null> {
   try {
-    const [programmes, universities] = await Promise.all([getProgrammeCount(), listUniversities()]);
+    const [programmes, universities] = await Promise.all([getProgrammeCount(country), listUniversities(country)]);
     return { programmes, universities: universities.length };
   } catch {
     return null;
@@ -42,7 +42,7 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
   if (!isLocale(locale)) notFound();
 
   const dict = await getDictionary(locale);
-  const stats = await loadStats();
+  const stats = await loadStats(countryOf(locale));
   const sections = [
     { href: `/${locale}/match`, title: dict.nav.match, text: dict.home.matchText },
     { href: `/${locale}/glossary`, title: dict.nav.glossary, text: dict.home.glossaryText },
