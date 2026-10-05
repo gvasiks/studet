@@ -2,6 +2,7 @@ import { BackButton } from "@/components/BackButton";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { countryOf, isLocale, languageOf } from "@/i18n/config";
+import { hasFeature } from "@/lib/country";
 import { getDictionary } from "@/i18n/dictionaries";
 import { getProgramme, localizedName } from "@/lib/catalog";
 import { getFormula, getLevelCoefficients } from "@/lib/formula-queries";
@@ -17,6 +18,7 @@ export const dynamic = "force-dynamic";
 export async function generateMetadata({ params }: { params: Params }): Promise<Metadata> {
   const { locale, university, programme: programmeSlug } = await params;
   if (!isLocale(locale)) notFound();
+  if (!hasFeature(countryOf(locale), "calculator")) notFound();
 
   const dict = await getDictionary(locale);
   const record = await getProgramme(countryOf(locale), university, programmeSlug);
@@ -33,6 +35,7 @@ export async function generateMetadata({ params }: { params: Params }): Promise<
 export default async function CalculatorPage({ params }: { params: Params }) {
   const { locale, university, programme: programmeSlug } = await params;
   if (!isLocale(locale)) notFound();
+  if (!hasFeature(countryOf(locale), "calculator")) notFound();
 
   const dict = await getDictionary(locale);
   const record = await getProgramme(countryOf(locale), university, programmeSlug);

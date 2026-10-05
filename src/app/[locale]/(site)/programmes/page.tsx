@@ -2,6 +2,7 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { countryOf, isLocale, languageOf } from "@/i18n/config";
+import { hasFeature } from "@/lib/country";
 import { getDictionary } from "@/i18n/dictionaries";
 import { buildAlternates } from "@/lib/site";
 import { getApplicationRounds } from "@/lib/deadline-queries";
@@ -72,7 +73,7 @@ export default async function ProgrammesPage({
           </h1>
           <p className="mt-2.5 text-[17px] leading-relaxed text-zinc-600">{dict.catalog.subtitle}</p>
         </div>
-        <SurveyCard locale={locale} dict={dict} />
+        {hasFeature(countryOf(locale), "survey") && <SurveyCard locale={locale} dict={dict} />}
       </section>
 
       {/* Одна GET-форма на весь каталог (поиск + фильтры). Поля и карточки

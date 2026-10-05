@@ -25,7 +25,7 @@ describe("адрес = язык + страна", () => {
     expect(legacyLocales.en).toBe("en-lv");
   });
 
-  it("литовские адреса не открыты, пока нет литовского словаря", () => {
+  it("литовские адреса закрыты, пока не задан флаг предпросмотра", () => {
     expect(isLocale("lt")).toBe(false);
     expect(isLocale("en-lt")).toBe(false);
   });

@@ -1,0 +1,422 @@
+{
+  "meta": {
+    "title": "Pagalbininkas renkantis aukštąją mokyklą Lietuvoje"
+  },
+  "home": {
+    "title": "Kur aš iš tikrųjų galiu įstoti?",
+    "description": "Studijų programų katalogas vienoje vietoje: pirmosios pakopos ir vientisosios studijos, į kurias priimama per bendrąjį priėmimą.",
+    "catalogCta": "Peržiūrėti katalogą",
+    "surveyCta": "Užpildyti anketą",
+    "sectionsLabel": "Kiti skyriai",
+    "matchText": "Įveskite savo egzaminų rezultatus ir pamatykite, kurių programų konkursinį balą jau galima apskaičiuoti.",
+    "glossaryText": "Priėmimo taisyklių sąvokos paprastais žodžiais — prie kiekvienos nurodytas šaltinis.",
+    "rightsText": "Ką stojantiesiems garantuoja įstatymai: terminai, sutartys, rezultatai ir apeliacijos."
+  },
+  "coverage": {
+    "notice": "Kol kas čia yra tik Lietuvos bendrojo priėmimo programos vietos abiturientams. Informacijos užsienio stojantiesiems dar nėra."
+  },
+  "catalog": {
+    "title": "Studijų programų katalogas",
+    "subtitle": "Visos programos, kurias iki šiol surinkome.",
+    "empty": "Kol kas čia nieko nėra.",
+    "emptyFiltered": "Pagal šį filtrą nieko nerasta. Pabandykite išplėsti pasirinkimą.",
+    "years": "m.",
+    "degreeLevel": {
+      "college": "Koleginės studijos",
+      "bachelor": "Universitetinės bakalauro studijos",
+      "integrated": "Vientisosios studijos",
+      "master": "Magistrantūros studijos",
+      "doctoral": "Doktorantūros studijos",
+      "foundation": "Parengiamoji programa"
+    },
+    "studyMode": {
+      "full_time": "Nuolatinės studijos",
+      "part_time": "Ištęstinės studijos",
+      "distance": "Nuotolinės studijos"
+    },
+    "language": {
+      "lv": "Latvių",
+      "lt": "Lietuvių",
+      "en": "Anglų",
+      "ru": "Rusų"
+    },
+    "city": {
+      "riga": "Ryga",
+      "daugavpils": "Daugpilis",
+      "valmiera": "Valmiera",
+      "ventspils": "Ventspilis",
+      "jelgava": "Jelgava",
+      "liepaja": "Liepoja",
+      "rezekne": "Rėzeknė",
+      "jurmala": "Jūrmala",
+      "gulbene": "Gulbenė",
+      "malnava": "Malnava",
+      "vilnius": "Vilnius",
+      "kaunas": "Kaunas",
+      "klaipeda": "Klaipėda",
+      "siauliai": "Šiauliai",
+      "panevezys": "Panevėžys",
+      "utena": "Utena",
+      "alytus": "Alytus",
+      "telsiai": "Telšiai",
+      "marijampole": "Marijampolė",
+      "taurage": "Tauragė"
+    },
+    "funding": {
+      "budget": "Valstybės finansuojamos vietos",
+      "paid": "Mokamos studijos",
+      "both": "Valstybės finansuojamos ir mokamos vietos"
+    },
+    "verifiedPrefix": "Patikrinta",
+    "unverifiedLabel": "Surinkta automatiškai — pasitikrinkite aukštosios mokyklos svetainėje",
+    "sourceLinkLabel": "Oficialus šaltinis",
+    "surveyTeaser": "Nežinote, ką rinktis?",
+    "surveyCta": "Užpildyti anketą",
+    "heroBadge": "Programų: {programmes} · Aukštųjų mokyklų: {universities}",
+    "surveyCardText": "Užpildykite anketą — parinksime jums programas",
+    "surveyCardCta": "Pradėti",
+    "searchLabel": "Programų paieška",
+    "searchPlaceholder": "Ieškoti programos ar aukštosios mokyklos…",
+    "sortMenu": {
+      "label": "Rikiuoti",
+      "name": "A–Ž",
+      "name_desc": "Ž–A",
+      "university": "Pagal aukštąją mokyklą"
+    },
+    "tabs": {
+      "all": "Visos",
+      "bachelor": "Universitetinės",
+      "college": "Koleginės",
+      "integrated": "Vientisosios",
+      "master": "Magistrantūra",
+      "doctoral": "Doktorantūra"
+    },
+    "levelTabsLabel": "Studijų lygmuo",
+    "found": "Rasta programų: {count}",
+    "foundOne": "Rasta programų: {count}",
+    "shown": "Rodoma {shown} iš {total}",
+    "calculatorCta": "Skaičiuoti balą",
+    "showMore": "Rodyti daugiau",
+    "clear": "Išvalyti",
+    "openFilters": "Filtrai",
+    "filtersSummary": "Rodoma pagal filtrą:",
+    "clearFilters": "Išvalyti filtrą",
+    "filters": {
+      "title": "Filtrai",
+      "budgetOnlyHint": "Valstybės finansuojamos programos",
+      "university": "Aukštoji mokykla",
+      "anyUniversity": "Visos aukštosios mokyklos",
+      "city": "Miestas",
+      "language": "Studijų kalba",
+      "anyLanguage": "Bet kuri kalba",
+      "mode": "Studijų forma",
+      "anyMode": "Bet kuri forma",
+      "budgetOnly": "Tik valstybės finansuojamos vietos",
+      "interest": "Sritis",
+      "duration": "Studijų trukmė",
+      "anyDuration": "Bet kokia trukmė",
+      "durationUpTo": "Iki {years} m.",
+      "fee": "Kaina per metus",
+      "anyFee": "Bet kokia kaina",
+      "feeUpTo": "Iki {amount} EUR",
+      "feeHint": "Kainos surenkamos automatiškai — pasitikrinkite aukštosios mokyklos svetainėje. Programos, kurių kaina nenurodyta, lieka sąraše.",
+      "kind": "Steigėjas",
+      "anyKind": "Valstybinės ir nevalstybinės",
+      "kinds": {
+        "public": "Valstybinė",
+        "private": "Nevalstybinė"
+      },
+      "apply": "Filtruoti"
+    }
+  },
+  "programme": {
+    "back": "Atgal",
+    "detailsTitle": "Ką gausite baigę",
+    "degreeAwarded": "Laipsnis",
+    "qualification": "Profesinė kvalifikacija",
+    "diplomaDocument": "Išsilavinimo dokumentas",
+    "aboutTitle": "Apie programą",
+    "detailsSource": "Surinkta automatiškai iš {source}, {date} — pasitikrinkite aukštosios mokyklos svetainėje.",
+    "fullDescriptionLink": "Visas aprašymas: {source}",
+    "contentInLatvian": "Pavadinimai ir aprašymas pateikti latvių kalba, kaip paskelbė aukštoji mokykla.",
+    "contentInEnglish": "Pavadinimai ir aprašymas pateikti anglų kalba, kaip paskelbė aukštoji mokykla.",
+    "contentInLithuanian": "Pavadinimai ir aprašymas pateikti lietuvių kalba, kaip paskelbta valstybės registre.",
+    "degreeLevel": "Studijų lygmuo",
+    "language": "Studijų kalba",
+    "studyMode": "Studijų forma",
+    "tuitionFee": "Kaina per metus (ES/EEE)",
+    "duration": "Trukmė",
+    "city": "Miestas",
+    "funding": "Finansavimas",
+    "budgetPlaces": "Valstybės finansuojamos vietos",
+    "accreditation": "Akredituota iki",
+    "notFoundTitle": "Programa nerasta",
+    "applyTitle": "Kur teikti prašymą",
+    "applyTypes": {
+      "unified_portal": "Prašymai teikiami per bendrojo priėmimo sistemą — vienas prašymas į kelias aukštąsias mokyklas.",
+      "university": "Prašymas teikiamas tiesiogiai aukštajai mokyklai — tvarka aprašyta jos svetainėje."
+    },
+    "applyLink": "Atidaryti prašymų puslapį ({host})",
+    "applyNote": "Taikoma stojantiesiems, įgijusiems išsilavinimą Lietuvoje; užsienio stojantiesiems tvarka gali skirtis.",
+    "deadlinesTitle": "Prašymų teikimo terminai",
+    "deadlinesNotAvailable": "Šios programos priėmimo datos dar nepatvirtintos.",
+    "deadlinesOpens": "nuo",
+    "deadlinesCloses": "iki",
+    "selectionTypes": {
+      "entrance_exam": "Šioje aukštojoje mokykloje konkursinio balo nėra — priimama pagal stojamuosius egzaminus.",
+      "open_admission": "Šioje aukštojoje mokykloje konkursinio balo nėra — priimama pagal reikalavimų atitiktį, be konkurso.",
+      "interview": "Šioje aukštojoje mokykloje konkursinio balo nėra — sprendimas priimamas po pokalbio."
+    }
+  },
+  "nav": {
+    "catalog": "Katalogas",
+    "survey": "Anketa",
+    "match": "Kur galiu stoti",
+    "glossary": "Žodynėlis",
+    "rights": "Jūsų teisės",
+    "menu": "Meniu",
+    "main": "Pagrindinė navigacija",
+    "footer": "Poraštės navigacija"
+  },
+  "report": {
+    "link": "Pastebėjote klaidą? Parašykite mums",
+    "hint": "Atsidarys jūsų el. pašto programa, puslapio adresas jau bus įrašytas.",
+    "subject": "Klaida StudyPick: {programme} — {university}",
+    "body": "Puslapis: {url}\n\nKas neteisinga:\n\n\nKur yra teisinga informacija (nuoroda į aukštosios mokyklos puslapį ar dokumentą):\n"
+  },
+  "outcomes": {
+    "title": "Kas nutiko absolventams",
+    "scope": "{university} absolventai, sritis „{field}“ (programų grupė {code}), {level}",
+    "cohort": "{year} m. laida, {taxYear} m. duomenys",
+    "employed": "Dirbo {employed} iš {graduates} absolventų ({percent} %)",
+    "median": "Metinių pajamų mediana: {amount} EUR",
+    "incomeHidden": "Pajamos neskelbiamos — dirbančių absolventų mažiau nei 30 (duomenų apsauga).",
+    "caveat": "Tai visų šios aukštosios mokyklos šios srities ir šio lygmens absolventų duomenys, o ne konkrečios programos; net vienoje srityje skirtumai tarp absolventų dideli — vertinkite tai kaip orientyrą, ne pažadą.",
+    "source": "Šaltinis: absolventų stebėsenos duomenys",
+    "fieldAutomatic": "Šios programos sritis nustatyta automatiškai pagal pavadinimą, atskirai netikrinta.",
+    "levels": {
+      "college": "koleginės studijos",
+      "bachelor": "bakalauro studijos",
+      "master": "magistrantūra",
+      "doctoral": "doktorantūra"
+    }
+  },
+  "fields": {
+    "areas": {
+      "14": "Švietimas",
+      "21": "Menai",
+      "22": "Humanitariniai mokslai",
+      "31": "Socialiniai ir elgsenos mokslai",
+      "32": "Žurnalistika ir informacija",
+      "34": "Verslas ir administravimas",
+      "38": "Teisė",
+      "42": "Gyvybės mokslai",
+      "44": "Fiziniai mokslai",
+      "46": "Matematika ir statistika",
+      "48": "Kompiuterija",
+      "52": "Inžinerija",
+      "54": "Gamyba ir perdirbimas",
+      "58": "Architektūra ir statyba",
+      "62": "Žemės ūkis ir miškininkystė",
+      "64": "Veterinarija",
+      "72": "Sveikata",
+      "76": "Socialinės paslaugos",
+      "81": "Asmeninės paslaugos (turizmas, sportas)",
+      "84": "Transporto paslaugos",
+      "85": "Aplinkos apsauga",
+      "86": "Saugos paslaugos"
+    }
+  },
+  "survey": {
+    "title": "Kas jums tinka?",
+    "intro": "Keli trumpi klausimai. Niekas niekur neišsaugoma.",
+    "stepLabel": "Žingsnis",
+    "of": "iš",
+    "back": "Atgal",
+    "next": "Toliau",
+    "submit": "Rodyti programas",
+    "skipToSearch": "Jau žinau, ko ieškau",
+    "exams": {
+      "title": "Kuriuos valstybinius brandos egzaminus laikėte ar planuojate laikyti?",
+      "hint": "Šis atsakymas sąrašo kol kas nekeičia — konkursinio balo skaičiuoklė dar kuriama.",
+      "subjects": {
+        "mathematics": "Matematika",
+        "latvian": "Latvių kalba",
+        "english": "Anglų kalba",
+        "physics": "Fizika",
+        "chemistry": "Chemija",
+        "biology": "Biologija",
+        "history": "Istorija",
+        "literature": "Latvių literatūra",
+        "socialstudies": "Socialiniai mokslai",
+        "german": "Vokiečių kalba"
+      }
+    },
+    "interests": {
+      "title": "Kurios sritys jus domina?",
+      "hint": "Katalogas bus filtruojamas pagal sritį. Nieko nepažymėkite, jei norite matyti visas programas.",
+      "categories": {
+        "business": "Verslas ir ekonomika",
+        "it": "IT ir technologijos",
+        "law": "Teisė ir saugumas",
+        "health": "Sveikata ir socialinė priežiūra",
+        "engineering": "Inžinerija ir statyba",
+        "science": "Gamtos mokslai ir aplinka",
+        "humanities": "Humanitariniai mokslai ir komunikacija",
+        "arts": "Menai ir dizainas",
+        "society": "Psichologija, socialiniai mokslai ir švietimas",
+        "services": "Turizmas ir sportas"
+      }
+    },
+    "funding": {
+      "title": "Valstybės finansuojama vieta ar pasirengę mokėti?",
+      "budgetOnly": "Tik valstybės finansuojamos vietos",
+      "any": "Bet kuris variantas"
+    },
+    "city": {
+      "title": "Kuriame mieste norite studijuoti?",
+      "anywhere": "Galiu persikelti bet kur"
+    },
+    "level": {
+      "title": "Kokio lygmens studijų ieškote?",
+      "any": "Nesvarbu"
+    },
+    "duration": {
+      "title": "Kiek laiko esate pasirengę studijuoti?",
+      "any": "Nesvarbu"
+    },
+    "fee": {
+      "title": "Kiek galite mokėti per metus?",
+      "any": "Nesvarbu"
+    },
+    "kind": {
+      "title": "Valstybinė ar nevalstybinė aukštoji mokykla?",
+      "any": "Nesvarbu"
+    },
+    "language": {
+      "title": "Kuria kalba norite studijuoti?",
+      "any": "Nesvarbu"
+    },
+    "mode": {
+      "title": "Kokios studijų formos norite?",
+      "any": "Nesvarbu"
+    }
+  },
+  "calculator": {
+    "title": "Konkursinio balo skaičiuoklė",
+    "notAvailable": "Šios programos konkursinio balo skaičiavimas dar nepaskelbtas — formulė dar nesurinkta arba laukia patikros.",
+    "totalLabel": "Konkursinis balas",
+    "invalidPercent": "Įveskite skaičių nuo 0 iki 100.",
+    "invalidNumber": "Įveskite skaičių, ne mažesnį už 0.",
+    "incomplete": "Dar reikia įvesti: {list}.",
+    "fixInvalid": "Pataisykite pažymėtus laukus, kad pamatytumėte balą.",
+    "gateWarning": "Vieno ar kelių dalykų mažiausias slenkstis nepasiektas — pagal priėmimo taisykles į šią programą galite nebūti priimami.",
+    "disclaimer": "Tai įvertis pagal mūsų surinktą formulę, o ne oficialus rezultatas. Galutinį sprendimą priima aukštoji mokykla.",
+    "levels": {
+      "augstakais": "Aukščiausias lygis",
+      "optimalais": "Optimalus lygis",
+      "vispaarigais": "Bendrasis lygis"
+    },
+    "termKinds": {
+      "ce_average": "Visų egzaminų vidurkis, %",
+      "ce_average_leveled": "Visų egzaminų vidurkis, % (su lygio koeficientu)",
+      "certificate": "Atestato pažymys",
+      "entrance_exam": "Stojamasis egzaminas",
+      "entrance_exam_english_test": "Anglų kalbos mokėjimo testas",
+      "entrance_exam_interview": "Struktūruotas pokalbis",
+      "entrance_exam_math_test": "Matematikos stojamasis egzaminas",
+      "entrance_exam_art_test": "Vizualiųjų menų praktinis egzaminas",
+      "entrance_exam_osppp": "Profesinio tinkamumo testas OSPPP (0–10)",
+      "certificate_physics": "Fizikos metinis pažymys atestate (1–10)",
+      "certificate_geography": "Geografijos metinis pažymys atestate (1–10)"
+    }
+  },
+  "favorites": {
+    "navLink": "Mano sąrašas",
+    "add": "Įtraukti į mano sąrašą",
+    "remove": "Pašalinti iš mano sąrašo",
+    "title": "Mano sąrašas",
+    "subtitle": "Saugoma tik šioje naršyklėje — niekas niekur nesiunčiama; sąrašas išlieka, kol išvalysite naršyklės duomenis.",
+    "empty": "Kol kas nieko neišsaugota. Peržiūrėkite katalogą ir pažymėkite programas ★, kad galėtumėte jas čia palyginti.",
+    "removeFromCompare": "Pašalinti iš palyginimo",
+    "compare": "Lyginti",
+    "compareTitle": "Palyginimas",
+    "compareLimit": "Vienu metu galima lyginti iki {max} programų. Pasirinkta: {count} iš {max}.",
+    "compareEmpty": "Programų kortelėse pažymėkite „Lyginti“, kad pamatytumėte jas greta."
+  },
+  "footer": {
+    "disclaimer": "StudyPick yra nepriklausomas informacinis portalas, ne aukštoji mokykla ir ne valstybės institucija — su čia išvardytomis aukštosiomis mokyklomis mūsų nesieja jokios sutartys. Programų aprašymai, terminai, kainos ir konkursinio balo formulės paimti iš viešai prieinamų oficialių šaltinių ir gali būti pasenę ar netikslūs; kiekvienoje programos kortelėje nurodyta, ar faktą patikrino žmogus, ar jis surinktas automatiškai. Prieš priimdami sprendimą visada pasitikrinkite informaciją oficialioje aukštosios mokyklos svetainėje — galutinį sprendimą dėl priėmimo priima tik aukštoji mokykla."
+  },
+  "match": {
+    "title": "Kur galiu stoti?",
+    "intro": "Įveskite savo valstybinių brandos egzaminų rezultatus — parodysime, kurių programų konkursinį balą jau galima apskaičiuoti ir kurių egzaminų dar trūksta.",
+    "privacy": "Rezultatai skaičiuojami jūsų naršyklėje — jie nesiunčiami į serverį ir niekur nesaugomi.",
+    "examsHeading": "Jūsų egzaminai",
+    "examsHint": "Užpildykite tik tuos egzaminus, kuriuos laikėte. Kitus palikite tuščius.",
+    "percentSuffix": "%",
+    "levelLabel": "Lygis",
+    "emptyNoFormulas": "Konkursinio balo formulės šiuo metu tikrinamos. Kai jos bus patvirtintos, čia galėsite įvesti egzaminų rezultatus ir pamatyti, kur galite stoti. Kol kas peržiūrėkite programų katalogą.",
+    "emptyNoExams": "Įveskite bent vieną egzaminą, kad pamatytumėte rezultatus.",
+    "testData": "BANDOMIEJI DUOMENYS — išgalvotos programos ir formulės, matomos tik kūrimo režimu.",
+    "summary": "Galima apskaičiuoti: {computed} · Atitinka reikalavimus (be balo): {eligible} · Trūksta egzaminų: {missingExams} · Reikia papildomų duomenų: {missingExtras} · Slenkstis nepasiektas: {gateFailed}",
+    "notComparable": "Skirtingų aukštųjų mokyklų balai nepalyginami. Sąrašas nerikiuojamas pagal balą ir nežada priėmimo.",
+    "groups": {
+      "computed": "Balą galima apskaičiuoti",
+      "computedHint": "Įvesti visi formulei reikalingi egzaminai.",
+      "eligibleByRequirements": "Atitinka reikalavimus",
+      "eligibleByRequirementsHint": "Šių programų konkursinio balo formulė dar nepatvirtinta, bet turite visus reikalaujamus egzaminus — balo čia neskaičiuojame.",
+      "gateFailed": "Mažiausias slenkstis nepasiektas",
+      "gateFailedHint": "Pagal priėmimo taisykles į šias programas galite nebūti priimami.",
+      "missingExtras": "Reikia papildomų duomenų",
+      "missingExtrasHint": "Šioms programoms dar skaičiuojamas stojamasis egzaminas arba atestato pažymys — skaičiuokite juos programos skaičiuoklėje.",
+      "missingExams": "Trūksta egzaminų",
+      "missingExamsHint": "Į šių programų formulę įeina egzaminai, kurių neįvedėte."
+    },
+    "scoreLabel": "Konkursinis balas",
+    "missingPrefix": "Trūksta",
+    "extrasPrefix": "Dar reikia",
+    "gateFailedPrefix": "Slenkstis",
+    "openCalculator": "Atidaryti skaičiuoklę",
+    "openProgramme": "Programos puslapis",
+    "breakdown": "Iš ko susideda balas"
+  },
+  "rights": {
+    "title": "Jūsų teisės stojant į aukštąją mokyklą",
+    "intro": "",
+    "checkedNote": "",
+    "sourceLabel": "Šaltinis",
+    "sourcesTitle": "Šaltiniai",
+    "glossaryLink": "Nežinomi žodžiai? Žiūrėkite žodynėlį",
+    "items": [],
+    "sources": []
+  },
+  "glossary": {
+    "title": "Priėmimo žodynėlis",
+    "intro": "",
+    "sourceLabel": "Šaltinis",
+    "rightsLink": "Jūsų teisės stojant",
+    "items": []
+  },
+  "system": {
+    "notFound": {
+      "title": "Puslapis nerastas",
+      "text": "Tokio puslapio čia nėra. Galbūt programa nebesiūloma arba adresas įvestas neteisingai.",
+      "catalog": "Peržiūrėti katalogą",
+      "home": "Grįžti į pradžios puslapį"
+    },
+    "error": {
+      "title": "Puslapio nepavyko įkelti",
+      "text": "Įkeliant duomenis įvyko klaida. Problema mūsų pusėje, ne jūsų. Pabandykite dar kartą po kelių akimirkų.",
+      "retry": "Bandyti dar kartą",
+      "catalog": "Peržiūrėti katalogą"
+    }
+  },
+  "privacy": {
+    "title": "Privatumo politika",
+    "intro": "",
+    "updated": "",
+    "authorityLabel": "Valstybinė duomenų apsaugos inspekcija (vdai.lrv.lt)",
+    "authorityUrl": "https://vdai.lrv.lt",
+    "sections": []
+  }
+}

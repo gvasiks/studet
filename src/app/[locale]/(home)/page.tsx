@@ -2,6 +2,7 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { countryOf, isLocale, type Country } from "@/i18n/config";
+import { hasFeature } from "@/lib/country";
 import { getDictionary } from "@/i18n/dictionaries";
 import { ArrowRightIcon } from "@/components/icons";
 import { getProgrammeCount, listUniversities } from "@/lib/catalog";
@@ -42,12 +43,14 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
   if (!isLocale(locale)) notFound();
 
   const dict = await getDictionary(locale);
-  const stats = await loadStats(countryOf(locale));
+  const country = countryOf(locale);
+  const stats = await loadStats(country);
+  // Только разделы, которые у страны готовы (src/lib/country.ts).
   const sections = [
-    { href: `/${locale}/match`, title: dict.nav.match, text: dict.home.matchText },
-    { href: `/${locale}/glossary`, title: dict.nav.glossary, text: dict.home.glossaryText },
-    { href: `/${locale}/rights`, title: dict.nav.rights, text: dict.home.rightsText },
-  ];
+    { feature: "match" as const, href: `/${locale}/match`, title: dict.nav.match, text: dict.home.matchText },
+    { feature: "glossary" as const, href: `/${locale}/glossary`, title: dict.nav.glossary, text: dict.home.glossaryText },
+    { feature: "rights" as const, href: `/${locale}/rights`, title: dict.nav.rights, text: dict.home.rightsText },
+  ].filter((section) => hasFeature(country, section.feature));
 
   return (
     <main className="page-container relative z-10 flex flex-1 flex-col justify-center py-16">
@@ -70,35 +73,39 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
             {dict.home.catalogCta}
             <ArrowRightIcon />
           </Link>
-          <Link
-            href={`/${locale}/survey`}
-            className={`inline-flex h-11 items-center rounded-full border border-white/15 bg-white/5 px-6 text-sm font-medium text-white transition-colors hover:bg-white/10 ${FOCUS}`}
-          >
-            {dict.home.surveyCta}
-          </Link>
+          {hasFeature(country, "survey") && (
+            <Link
+              href={`/${locale}/survey`}
+              className={`inline-flex h-11 items-center rounded-full border border-white/15 bg-white/5 px-6 text-sm font-medium text-white transition-colors hover:bg-white/10 ${FOCUS}`}
+            >
+              {dict.home.surveyCta}
+            </Link>
+          )}
         </div>
       </div>
 
       {/* Остальные разделы — карточками под главными кнопками: без них
           «Kur varu iestāties», словарь и права были видны только из шапки. */}
-      <nav aria-label={dict.home.sectionsLabel} className="mt-14 max-w-4xl">
-        <ul className="grid gap-3 sm:grid-cols-3">
-          {sections.map((section) => (
-            <li key={section.href}>
-              <Link
-                href={section.href}
-                className={`group flex h-full flex-col rounded-2xl border border-white/10 bg-white/5 p-5 backdrop-blur transition-colors hover:bg-white/10 ${FOCUS}`}
-              >
-                <span className="flex items-center justify-between gap-2 text-[15px] font-semibold text-white">
-                  {section.title}
-                  <ArrowRightIcon size={15} className="shrink-0 text-slate-400 transition-colors group-hover:text-white" />
-                </span>
-                <span className="mt-1.5 text-[13px] leading-relaxed text-slate-300">{section.text}</span>
-              </Link>
-            </li>
-          ))}
-        </ul>
-      </nav>
+      {sections.length > 0 && (
+        <nav aria-label={dict.home.sectionsLabel} className="mt-14 max-w-4xl">
+          <ul className="grid gap-3 sm:grid-cols-3">
+            {sections.map((section) => (
+              <li key={section.href}>
+                <Link
+                  href={section.href}
+                  className={`group flex h-full flex-col rounded-2xl border border-white/10 bg-white/5 p-5 backdrop-blur transition-colors hover:bg-white/10 ${FOCUS}`}
+                >
+                  <span className="flex items-center justify-between gap-2 text-[15px] font-semibold text-white">
+                    {section.title}
+                    <ArrowRightIcon size={15} className="shrink-0 text-slate-400 transition-colors group-hover:text-white" />
+                  </span>
+                  <span className="mt-1.5 text-[13px] leading-relaxed text-slate-300">{section.text}</span>
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </nav>
+      )}
     </main>
   );
 }

@@ -4,9 +4,10 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import type { ReactNode } from "react";
 import { Button, Checkbox, CheckboxGroup, Radio, RadioGroup } from "@heroui/react";
-import type { Locale } from "@/i18n/config";
+import { countryOf, type Locale } from "@/i18n/config";
 import type { Dictionary } from "@/i18n/dictionaries";
-import { CITY_KEYS, enumLabel } from "@/lib/catalog";
+import { enumLabel } from "@/lib/catalog";
+import { countryProfile } from "@/lib/country";
 import { DURATION_LIMITS, FEE_LIMITS, UNIVERSITY_KINDS } from "@/lib/catalog-query";
 import { interpolate } from "@/lib/outcomes";
 import { ArrowRightIcon, CheckIcon, SearchIcon } from "@/components/icons";
@@ -316,7 +317,7 @@ export function SurveyWizard({ locale, dict }: { locale: Locale; dict: Dictionar
                 isDisabled={answers.anywhere}
                 onValueChange={(value) => setAnswers((a) => ({ ...a, cities: value }))}
               >
-                {CITY_KEYS.map((key) => (
+                {countryProfile(countryOf(locale)).cities.map((key) => (
                   <Checkbox key={key} value={key} classNames={TILE}>
                     {enumLabel(dict.catalog.city, key)}
                   </Checkbox>

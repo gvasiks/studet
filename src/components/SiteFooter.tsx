@@ -1,5 +1,6 @@
 import Link from "next/link";
-import type { Locale } from "@/i18n/config";
+import { countryOf, type Locale } from "@/i18n/config";
+import { hasFeature, type Feature } from "@/lib/country";
 import type { Dictionary } from "@/i18n/dictionaries";
 import { GraduationCapIcon, InfoIcon } from "@/components/icons";
 import type { Tone } from "@/components/LocaleSwitcher";
@@ -17,14 +18,17 @@ export function SiteFooter({ dict, locale, tone }: { dict: Dictionary; locale: L
     );
   }
 
-  const links = [
-    { href: `/${locale}/programmes`, label: dict.nav.catalog },
-    { href: `/${locale}/survey`, label: dict.nav.survey },
-    { href: `/${locale}/match`, label: dict.nav.match },
-    { href: `/${locale}/favorites`, label: dict.favorites.navLink },
-    { href: `/${locale}/glossary`, label: dict.nav.glossary },
-    { href: `/${locale}/rights`, label: dict.nav.rights },
+  const country = countryOf(locale);
+  // feature: null — раздел есть у каждой страны (src/lib/country.ts)
+  const allLinks: { href: string; label: string; feature: Feature | null }[] = [
+    { href: `/${locale}/programmes`, label: dict.nav.catalog, feature: null },
+    { href: `/${locale}/survey`, label: dict.nav.survey, feature: "survey" },
+    { href: `/${locale}/match`, label: dict.nav.match, feature: "match" },
+    { href: `/${locale}/favorites`, label: dict.favorites.navLink, feature: "favorites" },
+    { href: `/${locale}/glossary`, label: dict.nav.glossary, feature: "glossary" },
+    { href: `/${locale}/rights`, label: dict.nav.rights, feature: "rights" },
   ];
+  const links = allLinks.filter((link) => link.feature === null || hasFeature(country, link.feature));
 
   return (
     <footer className="relative z-10 mt-auto border-t border-white/10 bg-black/20">

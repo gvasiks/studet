@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { languageOf, type Locale } from "@/i18n/config";
+import { countryOf, languageOf, type Locale } from "@/i18n/config";
 import type { Dictionary } from "@/i18n/dictionaries";
 import {
   ArrowRightIcon,
@@ -9,12 +9,12 @@ import {
   SearchIcon,
   SortIcon,
 } from "@/components/icons";
-import { CITY_KEYS, enumLabel, localizedName, type UniversityOption } from "@/lib/catalog";
+import { enumLabel, localizedName, type UniversityOption } from "@/lib/catalog";
+import { countryProfile } from "@/lib/country";
 import {
   catalogQuery,
   DURATION_LIMITS,
   FEE_LIMITS,
-  LEVEL_KEYS,
   PAGE_SIZE,
   SORT_KEYS,
   UNIVERSITY_KINDS,
@@ -102,6 +102,7 @@ export function FilterSidebar({
   universities: UniversityOption[];
 }) {
   const filters = dict.catalog.filters;
+  const profile = countryProfile(countryOf(locale));
   // По названию на языке страницы: база отдаёт по name_en, и на латышской
   // странице порядок выглядел случайным.
   const sortedUniversities = [...universities].sort((a, b) =>
@@ -152,8 +153,11 @@ export function FilterSidebar({
 
         <SelectField label={filters.language} name="language" defaultValue={state.language ?? ""}>
           <option value="">{filters.anyLanguage}</option>
-          <option value="lv">{dict.catalog.language.lv}</option>
-          <option value="en">{dict.catalog.language.en}</option>
+          {profile.languages.map((language) => (
+            <option key={language} value={language}>
+              {enumLabel(dict.catalog.language, language)}
+            </option>
+          ))}
         </SelectField>
 
         <SelectField label={filters.mode} name="mode" defaultValue={state.mode ?? ""}>
@@ -189,7 +193,7 @@ export function FilterSidebar({
         <fieldset>
           <legend className="text-[13px] font-medium leading-4 text-zinc-700">{filters.city}</legend>
           <div className="mt-2.5 grid grid-cols-2 gap-x-3 gap-y-2.5">
-            {CITY_KEYS.map((city) => (
+            {profile.cities.map((city) => (
               <CheckboxOption
                 key={city}
                 name="city"
@@ -317,7 +321,7 @@ export function LevelTabs({
   const base = `/${locale}/programmes`;
   const tabs = [
     { key: null, label: dict.catalog.tabs.all, count: view.matched },
-    ...LEVEL_KEYS.map((key) => ({ key, label: dict.catalog.tabs[key], count: view.levelCounts[key] })),
+    ...countryProfile(countryOf(locale)).levels.map((key) => ({ key, label: dict.catalog.tabs[key], count: view.levelCounts[key] })),
   ];
   // Латышский: форма единственного числа у чисел на 1, кроме 11 (21, 31...)
   const singular = languageOf(locale) === "lv" ? view.total % 10 === 1 && view.total % 100 !== 11 : view.total === 1;

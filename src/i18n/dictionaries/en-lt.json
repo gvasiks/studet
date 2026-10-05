@@ -1,0 +1,28 @@
+{
+  "meta": {
+    "title": "University Choice Helper for Lithuania"
+  },
+  "home": {
+    "description": "A catalogue of study programmes in one place: first-cycle and integrated studies admitted through Lithuania's general admission."
+  },
+  "coverage": {
+    "notice": "This currently covers programmes in Lithuania's general admission for local school-leavers. Information for international applicants isn't built yet."
+  },
+  "rights": {
+    "intro": "",
+    "checkedNote": "",
+    "items": [],
+    "sources": []
+  },
+  "glossary": {
+    "intro": "",
+    "items": []
+  },
+  "privacy": {
+    "intro": "",
+    "updated": "",
+    "authorityLabel": "State Data Protection Inspectorate of Lithuania (vdai.lrv.lt)",
+    "authorityUrl": "https://vdai.lrv.lt/en/",
+    "sections": []
+  }
+}

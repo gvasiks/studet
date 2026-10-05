@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { isLocale } from "@/i18n/config";
+import { countryOf, isLocale } from "@/i18n/config";
+import { hasFeature } from "@/lib/country";
 import { getDictionary } from "@/i18n/dictionaries";
 import { buildAlternates } from "@/lib/site";
 import { fillPlaceholders, getPrivacyContact, groupBody } from "@/lib/privacy";
@@ -12,6 +13,7 @@ import { ArrowRightIcon, CalendarIcon } from "@/components/icons";
 export async function generateMetadata({ params }: PageProps<"/[locale]/privacy">): Promise<Metadata> {
   const { locale } = await params;
   if (!isLocale(locale)) notFound();
+  if (!hasFeature(countryOf(locale), "privacy")) notFound();
 
   const dict = await getDictionary(locale);
   return {
@@ -24,6 +26,7 @@ export async function generateMetadata({ params }: PageProps<"/[locale]/privacy"
 export default async function PrivacyPage({ params }: PageProps<"/[locale]/privacy">) {
   const { locale } = await params;
   if (!isLocale(locale)) notFound();
+  if (!hasFeature(countryOf(locale), "privacy")) notFound();
 
   const { privacy } = await getDictionary(locale);
   const contact = getPrivacyContact();

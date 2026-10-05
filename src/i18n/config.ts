@@ -3,28 +3,41 @@
 //
 //   /lv/…     латышский, каталог Латвии
 //   /en-lv/…  английский, каталог Латвии
-//   /lt/…     литовский, каталог Литвы      — включается в фазе 2
-//   /en-lt/…  английский, каталог Литвы     — включается в фазе 2
-//
-// Литовские варианты добавляются сюда вместе со словарём lt.json: открывать
-// адрес без переведённого интерфейса нельзя.
+//   /lt/…     литовский, каталог Литвы
+//   /en-lt/…  английский, каталог Литвы
 //
 // В коде сегмент по-прежнему называется locale (так называется папка
 // маршрутов). Когда нужен язык или страна — спрашивай languageOf() и
 // countryOf(), а не сравнивай сегмент со строкой.
-export const locales = ["lv", "en-lv"] as const;
+const allLocales = ["lv", "en-lv", "lt", "en-lt"] as const;
 
-export type Locale = (typeof locales)[number];
+export type Locale = (typeof allLocales)[number];
 
-export type Language = "lv" | "en";
+export type Language = "lv" | "en" | "lt";
 
 // ISO 3166-1 alpha-2, как в university.country.
-export type Country = "LV";
+export type Country = "LV" | "LT";
 
 const variants: Record<Locale, { language: Language; country: Country }> = {
   lv: { language: "lv", country: "LV" },
   "en-lv": { language: "en", country: "LV" },
+  lt: { language: "lt", country: "LT" },
+  "en-lt": { language: "en", country: "LT" },
 };
+
+// Страны, которые ещё строятся. Их адреса не существуют (404), их нет в
+// карте сайта и в переадресации по языку браузера — пока в окружении не
+// задано NEXT_PUBLIC_PREVIEW_COUNTRIES=1. Так недостроенная Литва не
+// выйдет наружу вместе с латвийским выпуском; локально флаг стоит в
+// .env.local. Перед запуском страны она убирается из этого списка.
+const previewCountries: Country[] = ["LT"];
+
+function isOpen(country: Country): boolean {
+  return !previewCountries.includes(country) || process.env.NEXT_PUBLIC_PREVIEW_COUNTRIES === "1";
+}
+
+// Адреса, которые существуют для посетителя.
+export const locales: readonly Locale[] = allLocales.filter((locale) => isOpen(variants[locale].country));
 
 export const defaultLocale: Locale = "lv";
 

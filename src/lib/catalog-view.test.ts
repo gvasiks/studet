@@ -53,7 +53,7 @@ describe("вид каталога", () => {
 
   it("считает табы по набору до выбора уровня — иначе остальные табы показывали бы нули", () => {
     const view = buildCatalogView(CATALOG, { ...state, level: "master" }, "en");
-    expect(view.levelCounts).toEqual({ bachelor: 2, master: 1, doctoral: 1, college: 0 });
+    expect(view.levelCounts).toEqual({ bachelor: 2, master: 1, doctoral: 1, college: 0, integrated: 0 });
     expect(view.total).toBe(1);
     expect(view.matched).toBe(4);
   });

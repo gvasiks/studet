@@ -1,7 +1,8 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { isLocale, languageOf } from "@/i18n/config";
+import { countryOf, isLocale, languageOf } from "@/i18n/config";
+import { hasFeature } from "@/lib/country";
 import { getDictionary } from "@/i18n/dictionaries";
 import { buildAlternates } from "@/lib/site";
 import { SourceLine } from "@/components/SourceLine";
@@ -13,6 +14,7 @@ import { ArrowRightIcon } from "@/components/icons";
 export async function generateMetadata({ params }: PageProps<"/[locale]/glossary">): Promise<Metadata> {
   const { locale } = await params;
   if (!isLocale(locale)) notFound();
+  if (!hasFeature(countryOf(locale), "glossary")) notFound();
 
   const dict = await getDictionary(locale);
   return {
@@ -25,6 +27,7 @@ export async function generateMetadata({ params }: PageProps<"/[locale]/glossary
 export default async function GlossaryPage({ params }: PageProps<"/[locale]/glossary">) {
   const { locale } = await params;
   if (!isLocale(locale)) notFound();
+  if (!hasFeature(countryOf(locale), "glossary")) notFound();
 
   const { glossary } = await getDictionary(locale);
   const items = [...glossary.items].sort((a, b) => a.term.localeCompare(b.term, languageOf(locale)));

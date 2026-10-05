@@ -26,7 +26,8 @@
       "bachelor": "Bachelor's studies",
       "master": "Master's studies",
       "doctoral": "Doctoral studies",
-      "foundation": "Foundation programme"
+      "foundation": "Foundation programme",
+      "integrated": "Integrated studies"
     },
     "studyMode": {
       "full_time": "Full-time",
@@ -35,7 +36,9 @@
     },
     "language": {
       "lv": "Latvian",
-      "en": "English"
+      "en": "English",
+      "lt": "Lithuanian",
+      "ru": "Russian"
     },
     "city": {
       "riga": "Riga",
@@ -47,7 +50,17 @@
       "rezekne": "Rēzekne",
       "jurmala": "Jūrmala",
       "gulbene": "Gulbene",
-      "malnava": "Malnava"
+      "malnava": "Malnava",
+      "vilnius": "Vilnius",
+      "kaunas": "Kaunas",
+      "klaipeda": "Klaipėda",
+      "siauliai": "Šiauliai",
+      "panevezys": "Panevėžys",
+      "utena": "Utena",
+      "alytus": "Alytus",
+      "telsiai": "Telšiai",
+      "marijampole": "Marijampolė",
+      "taurage": "Tauragė"
     },
     "funding": {
       "budget": "Budget places",
@@ -75,7 +88,8 @@
       "bachelor": "Bachelor's",
       "master": "Master's",
       "doctoral": "Doctoral",
-      "college": "College"
+      "college": "College",
+      "integrated": "Integrated"
     },
     "levelTabsLabel": "Study level",
     "found": "{count} programmes found",
@@ -126,6 +140,7 @@
     "fullDescriptionLink": "Full description: {source}",
     "contentInLatvian": "Names and the description are in Latvian, as published by the university.",
     "contentInEnglish": "Names and the description are in English, as published by the university.",
+    "contentInLithuanian": "Names and the description are in Lithuanian, as published in the state register.",
     "degreeLevel": "Degree level",
     "language": "Language of instruction",
     "studyMode": "Study mode",

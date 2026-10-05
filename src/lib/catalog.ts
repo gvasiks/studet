@@ -91,10 +91,8 @@ export type ProgrammeFilters = {
   kind?: string;
 };
 
-// Единственный список городов каталога — раньше дублировался в
-// SurveyWizard.tsx, из-за чего Rēzekne один раз добавили только в одном
-// месте. Здесь и в форме анкеты, и в фильтре на /programmes.
-export const CITY_KEYS = ["riga", "daugavpils", "valmiera", "ventspils", "jelgava", "liepaja", "rezekne", "jurmala", "gulbene", "malnava"];
+// Список городов каталога — в профиле страны (src/lib/country.ts): один
+// на форму анкеты и на фильтр /programmes.
 
 export const listProgrammes = cache(
   async (country: Country, filters: ProgrammeFilters = {}): Promise<ProgrammeWithUniversity[]> => {

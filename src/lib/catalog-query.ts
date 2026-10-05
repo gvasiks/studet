@@ -8,8 +8,10 @@ import { isInterestKey, type InterestKey } from "./fields";
 export const SORT_KEYS = ["name", "name_desc", "university"] as const;
 export type SortKey = (typeof SORT_KEYS)[number];
 
-export const LEVEL_KEYS = ["bachelor", "master", "doctoral", "college"] as const;
-export type LevelKey = (typeof LEVEL_KEYS)[number];
+// Список уровней — в country.ts: какие из них показываются вкладками,
+// зависит от страны.
+export { LEVEL_KEYS, type LevelKey } from "./country";
+import { LEVEL_KEYS, type LevelKey } from "./country";
 
 // Пороги «не дольше N лет» и «не дороже N евро в год» — вопросы анкеты и
 // фильтры каталога. Значения выбраны по данным каталога (2026-10-01): у

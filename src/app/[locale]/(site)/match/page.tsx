@@ -2,6 +2,7 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { countryOf, isLocale, languageOf } from "@/i18n/config";
+import { hasFeature } from "@/lib/country";
 import { getDictionary } from "@/i18n/dictionaries";
 import { getMatchData } from "@/lib/match-queries";
 import { buildAlternates } from "@/lib/site";
@@ -15,6 +16,7 @@ export const dynamic = "force-dynamic";
 export async function generateMetadata({ params }: PageProps<"/[locale]/match">): Promise<Metadata> {
   const { locale } = await params;
   if (!isLocale(locale)) notFound();
+  if (!hasFeature(countryOf(locale), "match")) notFound();
 
   const dict = await getDictionary(locale);
   return {
@@ -27,6 +29,7 @@ export async function generateMetadata({ params }: PageProps<"/[locale]/match">)
 export default async function MatchPage({ params }: PageProps<"/[locale]/match">) {
   const { locale } = await params;
   if (!isLocale(locale)) notFound();
+  if (!hasFeature(countryOf(locale), "match")) notFound();
 
   const dict = await getDictionary(locale);
   const { formulas, requirements, levelCoefficients, isFixture } = await getMatchData(languageOf(locale), countryOf(locale));

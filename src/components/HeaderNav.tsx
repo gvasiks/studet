@@ -3,7 +3,8 @@
 import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import type { Locale } from "@/i18n/config";
+import { countryOf, type Locale } from "@/i18n/config";
+import { hasFeature, type Feature } from "@/lib/country";
 import { getFavoriteIds, subscribeToFavorites } from "@/lib/favorites";
 import { MenuIcon, StarIcon, XIcon } from "@/components/icons";
 import type { Tone } from "@/components/LocaleSwitcher";
@@ -85,15 +86,19 @@ export function HeaderNav({
     };
   }, [open]);
 
-  const favoritesItem = { href: `/${locale}/favorites`, label: labels.favorites, badge: favoritesCount };
-  const menuItems = [
-    { href: `/${locale}/programmes`, label: labels.catalog, badge: 0 },
-    { href: `/${locale}/survey`, label: labels.survey, badge: 0 },
-    { href: `/${locale}/match`, label: labels.match, badge: 0 },
+  const favoritesItem = { href: `/${locale}/favorites`, label: labels.favorites, badge: favoritesCount, feature: "favorites" as Feature };
+  // feature: null — раздел есть у каждой страны; остальные показываются
+  // только там, где раздел готов (src/lib/country.ts).
+  const allItems: { href: string; label: string; badge: number; feature: Feature | null }[] = [
+    { href: `/${locale}/programmes`, label: labels.catalog, badge: 0, feature: null },
+    { href: `/${locale}/survey`, label: labels.survey, badge: 0, feature: "survey" },
+    { href: `/${locale}/match`, label: labels.match, badge: 0, feature: "match" },
     favoritesItem,
-    { href: `/${locale}/glossary`, label: labels.glossary, badge: 0 },
-    { href: `/${locale}/rights`, label: labels.rights, badge: 0 },
+    { href: `/${locale}/glossary`, label: labels.glossary, badge: 0, feature: "glossary" },
+    { href: `/${locale}/rights`, label: labels.rights, badge: 0, feature: "rights" },
   ];
+  const country = countryOf(locale);
+  const menuItems = allItems.filter((item) => item.feature === null || hasFeature(country, item.feature));
   // На главной от lg «Мой список» — отдельная кнопка справа (FavoritesLink),
   // в строке его нет. В выпадающем меню он есть всегда.
   const items = dark ? menuItems.filter((item) => item !== favoritesItem) : menuItems;

@@ -26,7 +26,8 @@
       "bachelor": "Bakalaura studijas",
       "master": "Maģistra studijas",
       "doctoral": "Doktora studijas",
-      "foundation": "Sagatavošanas programma"
+      "foundation": "Sagatavošanas programma",
+      "integrated": "Integrētās studijas"
     },
     "studyMode": {
       "full_time": "Pilna laika",
@@ -35,7 +36,9 @@
     },
     "language": {
       "lv": "latviešu",
-      "en": "angļu"
+      "en": "angļu",
+      "lt": "Lietuviešu",
+      "ru": "Krievu"
     },
     "city": {
       "riga": "Rīga",
@@ -47,7 +50,17 @@
       "rezekne": "Rēzekne",
       "jurmala": "Jūrmala",
       "gulbene": "Gulbene",
-      "malnava": "Malnava"
+      "malnava": "Malnava",
+      "vilnius": "Viļņa",
+      "kaunas": "Kauņa",
+      "klaipeda": "Klaipēda",
+      "siauliai": "Šauļi",
+      "panevezys": "Panevēža",
+      "utena": "Utena",
+      "alytus": "Alīta",
+      "telsiai": "Telši",
+      "marijampole": "Marijampole",
+      "taurage": "Taurage"
     },
     "funding": {
       "budget": "Budžeta vietas",
@@ -77,7 +90,8 @@
       "bachelor": "Bakalaurs",
       "master": "Maģistrs",
       "doctoral": "Doktors",
-      "college": "Koledža"
+      "college": "Koledža",
+      "integrated": "Integrētās"
     },
     "levelTabsLabel": "Studiju līmenis",
     "found": "Atrastas {count} programmas",
@@ -126,6 +140,7 @@
     "fullDescriptionLink": "Pilns apraksts: {source}",
     "contentInLatvian": "Nosaukumi un apraksts ir latviešu valodā — tā, kā tos publicējusi augstskola.",
     "contentInEnglish": "Nosaukumi un apraksts ir angļu valodā — tā, kā tos publicējusi augstskola.",
+    "contentInLithuanian": "Nosaukumi un apraksts ir lietuviešu valodā, kā publicēts valsts reģistrā.",
     "degreeLevel": "Studiju līmenis",
     "language": "Studiju valoda",
     "studyMode": "Studiju forma",
