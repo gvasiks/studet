@@ -6,7 +6,9 @@ import { fieldCodesForInterests, type InterestKey } from "@/lib/fields";
 export type University = {
   id: string;
   slug: string;
-  name_lv: string;
+  // Название на языке страны: name_lv у латвийских, name_lt у литовских.
+  name_lv: string | null;
+  name_lt: string | null;
   name_en: string | null;
   kind: string;
   city: string;
@@ -20,18 +22,22 @@ export type Programme = {
   university_id: string;
   slug: string;
   name_lv: string | null;
+  name_lt: string | null;
   name_en: string | null;
   degree_level: string;
   language_of_instruction: string;
   study_mode: string;
   city: string | null;
-  funding_type: string;
+  // null — источник не сообщает (литовские программы: бюджетные места
+  // делятся по направлениям, не по программам).
+  funding_type: string | null;
   tuition_fee_amount: number | null;
   tuition_fee_currency: string;
   budget_places: number | null;
   duration_years: number | null;
   accreditation_valid_until: string | null;
   description_lv: string | null;
+  description_lt: string | null;
   description_en: string | null;
   source_url: string | null;
   verified_at: string | null;
@@ -41,6 +47,8 @@ export type Programme = {
   degree_awarded_lv: string | null;
   // С английской страницы программы на lu.lv (enrich_lu_details.py).
   degree_awarded_en: string | null;
+  // Из карточки государственного реестра Литвы (pipeline/src/sources/lt_lamabpo.py).
+  degree_awarded_lt: string | null;
   qualification_lv: string | null;
   diploma_document_lv: string | null;
   details_source_url: string | null;
@@ -52,14 +60,21 @@ export type Programme = {
 // getProgramme ниже) — на 899 строках каталога это была самая тяжёлая
 // пара колонок в запросе без всякой пользы (ревью performance-tester,
 // 2026-09-24). CATALOG_LIST_COLUMNS ниже — та же мысль на уровне SQL.
-export type ProgrammeWithUniversity = Omit<Programme, "description_lv" | "description_en"> & {
-  university: Pick<University, "slug" | "name_lv" | "name_en" | "city">;
+export type ProgrammeWithUniversity = Omit<Programme, "description_lv" | "description_lt" | "description_en"> & {
+  university: Pick<University, "slug" | "name_lv" | "name_lt" | "name_en" | "city">;
 };
 
 const CATALOG_LIST_COLUMNS =
-  "id, university_id, slug, name_lv, name_en, degree_level, language_of_instruction, study_mode, " +
+  "id, university_id, slug, name_lv, name_lt, name_en, degree_level, language_of_instruction, study_mode, " +
   "city, funding_type, tuition_fee_amount, tuition_fee_currency, budget_places, duration_years, " +
   "accreditation_valid_until, source_url, verified_at";
+
+const UNIVERSITY_LIST_COLUMNS = "slug, name_lv, name_lt, name_en, city";
+
+// PostgREST отдаёт не больше 1000 строк за запрос и не сообщает, что
+// остальное отрезано. В литовском каталоге строк больше тысячи, поэтому
+// список читается страницами.
+const PAGE_ROWS = 1000;
 
 // Переехали в names.ts (без обращения к базе — тестируются отдельно);
 // реэкспорт, чтобы существующие импорты из "@/lib/catalog" не менялись.
@@ -107,48 +122,60 @@ export const listProgrammes = cache(
     // который человек опирается (блок с доходами требует verified_at).
     const interestCodes =
       filters.interests && filters.interests.length > 0 ? fieldCodesForInterests(filters.interests) : null;
-    let query = supabase
-      .from("programme")
-      .select(
-        interestCodes
-          ? `${CATALOG_LIST_COLUMNS}, university!inner(slug, name_lv, name_en, city), programme_field!inner(field_code)`
-          : `${CATALOG_LIST_COLUMNS}, university!inner(slug, name_lv, name_en, city)`,
-      )
-      .eq("university.country", country);
+    // Запрос собирается заново для каждой страницы: один и тот же объект
+    // запроса повторно не используется.
+    const buildQuery = () => {
+      let query = supabase
+        .from("programme")
+        .select(
+          interestCodes
+            ? `${CATALOG_LIST_COLUMNS}, university!inner(${UNIVERSITY_LIST_COLUMNS}), programme_field!inner(field_code)`
+            : `${CATALOG_LIST_COLUMNS}, university!inner(${UNIVERSITY_LIST_COLUMNS})`,
+        )
+        .eq("university.country", country);
 
-    if (interestCodes) {
-      query = query.in("programme_field.field_code", interestCodes);
-    }
-    if (filters.budgetOnly) {
-      query = query.in("funding_type", ["budget", "both"]);
-    }
-    // Фильтр смотрит только на programme.city, не на university.city — пока
-    // у всех наших записей город указан явно на уровне программы, этого
-    // достаточно. Если появятся программы без своего city, нужно будет
-    // учитывать город вуза как запасной вариант.
-    if (filters.cities && filters.cities.length > 0) {
-      query = query.in("city", filters.cities);
-    }
-    if (filters.language) {
-      query = query.eq("language_of_instruction", filters.language);
-    }
-    if (filters.mode) {
-      query = query.eq("study_mode", filters.mode);
-    }
-    if (filters.university) {
-      query = query.eq("university.slug", filters.university);
-    }
-    // Тот же inner-join, что и для university.slug: фильтр по полю вуза.
-    if (filters.kind) {
-      query = query.eq("university.kind", filters.kind);
-    }
+      if (interestCodes) {
+        query = query.in("programme_field.field_code", interestCodes);
+      }
+      if (filters.budgetOnly) {
+        query = query.in("funding_type", ["budget", "both"]);
+      }
+      // Фильтр смотрит только на programme.city, не на university.city — пока
+      // у всех наших записей город указан явно на уровне программы, этого
+      // достаточно. Если появятся программы без своего city, нужно будет
+      // учитывать город вуза как запасной вариант.
+      if (filters.cities && filters.cities.length > 0) {
+        query = query.in("city", filters.cities);
+      }
+      if (filters.language) {
+        query = query.eq("language_of_instruction", filters.language);
+      }
+      if (filters.mode) {
+        query = query.eq("study_mode", filters.mode);
+      }
+      if (filters.university) {
+        query = query.eq("university.slug", filters.university);
+      }
+      // Тот же inner-join, что и для university.slug: фильтр по полю вуза.
+      if (filters.kind) {
+        query = query.eq("university.kind", filters.kind);
+      }
 
-    const { data, error } = await query.order("degree_level").order("name_en");
+      // id — последним ключом: без однозначного порядка строка на границе
+      // страниц могла бы попасть в обе или ни в одну.
+      return query.order("degree_level").order("name_en").order("id");
+    };
 
-    if (error) throw error;
-    // Через unknown: строка select собирается условно, и разборщик типов
-    // supabase-js не может вывести форму строки из неё.
-    return data as unknown as ProgrammeWithUniversity[];
+    const rows: ProgrammeWithUniversity[] = [];
+    for (let from = 0; ; from += PAGE_ROWS) {
+      const { data, error } = await buildQuery().range(from, from + PAGE_ROWS - 1);
+      if (error) throw error;
+      // Через unknown: строка select собирается условно, и разборщик типов
+      // supabase-js не может вывести форму строки из неё.
+      rows.push(...(data as unknown as ProgrammeWithUniversity[]));
+      if (data.length < PAGE_ROWS) break;
+    }
+    return rows;
   },
 );
 
@@ -162,7 +189,7 @@ export async function getProgrammesByIds(country: Country, ids: string[]): Promi
 
   const { data, error } = await supabase
     .from("programme")
-    .select(`${CATALOG_LIST_COLUMNS}, university!inner(slug, name_lv, name_en, city)`)
+    .select(`${CATALOG_LIST_COLUMNS}, university!inner(${UNIVERSITY_LIST_COLUMNS})`)
     .eq("university.country", country)
     .in("id", ids);
 
@@ -170,7 +197,7 @@ export async function getProgrammesByIds(country: Country, ids: string[]): Promi
   return data as unknown as ProgrammeWithUniversity[];
 }
 
-export type UniversityOption = Pick<University, "slug" | "name_lv" | "name_en"> & {
+export type UniversityOption = Pick<University, "slug" | "name_lv" | "name_lt" | "name_en"> & {
   /** Сколько программ вуза видно в каталоге — для списка «Augstskola». */
   programmeCount: number;
 };
@@ -181,13 +208,13 @@ export const listUniversities = cache(async (country: Country): Promise<Universi
   // (missed_runs >= 2) в число не попадают, как и в сам каталог.
   const { data, error } = await supabase
     .from("university")
-    .select("slug, name_lv, name_en, programme(count)")
+    .select("slug, name_lv, name_lt, name_en, programme(count)")
     .eq("country", country)
     .order("name_en");
 
   if (error) throw error;
   // Через unknown: разборщик типов supabase-js не выводит форму count.
-  const rows = data as unknown as (Pick<University, "slug" | "name_lv" | "name_en"> & {
+  const rows = data as unknown as (Pick<University, "slug" | "name_lv" | "name_lt" | "name_en"> & {
     programme: { count: number }[];
   })[];
   return rows.map(({ programme, ...university }) => ({

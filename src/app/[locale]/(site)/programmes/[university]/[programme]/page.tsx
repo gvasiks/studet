@@ -39,7 +39,7 @@ async function loadProgramme(params: Params) {
 // программ (иначе никак), но содержание каждый раз собирается из того,
 // что реально известно об этой конкретной программе.
 function buildDescription(
-  record: Programme & { university: Pick<University, "name_lv" | "name_en"> },
+  record: Programme & { university: Pick<University, "name_lv" | "name_lt" | "name_en"> },
   dict: Dictionary,
   locale: Locale,
 ): string {
@@ -51,11 +51,11 @@ function buildDescription(
 
   const parts = [`${degree} — ${universityName}${city ? `, ${city}` : ""}.`];
   parts.push(`${dict.programme.language}: ${language}. ${dict.programme.studyMode}: ${mode}.`);
-  parts.push(
-    record.tuition_fee_amount !== null
-      ? `${dict.programme.tuitionFee}: ${record.tuition_fee_amount} ${record.tuition_fee_currency}.`
-      : `${enumLabel(dict.catalog.funding, record.funding_type)}.`,
-  );
+  if (record.tuition_fee_amount !== null) {
+    parts.push(`${dict.programme.tuitionFee}: ${record.tuition_fee_amount} ${record.tuition_fee_currency}.`);
+  } else if (record.funding_type) {
+    parts.push(`${enumLabel(dict.catalog.funding, record.funding_type)}.`);
+  }
   return parts.join(" ");
 }
 
@@ -181,7 +181,10 @@ export default async function ProgrammePage({ params }: { params: Params }) {
           <Fact label={dict.programme.duration} value={`${record.duration_years} ${dict.catalog.years}`} />
         )}
         {record.city && <Fact label={dict.programme.city} value={enumLabel(dict.catalog.city, record.city)} />}
-        <Fact label={dict.programme.funding} value={enumLabel(dict.catalog.funding, record.funding_type)} />
+        {/* Пусто — источник не сообщает (литовские программы); строку не показываем. */}
+        {record.funding_type && (
+          <Fact label={dict.programme.funding} value={enumLabel(dict.catalog.funding, record.funding_type)} />
+        )}
         {record.tuition_fee_amount !== null && (
           <Fact
             label={dict.programme.tuitionFee}
@@ -235,7 +238,13 @@ export default async function ProgrammePage({ params }: { params: Params }) {
 
           <p className="mt-4 text-xs leading-relaxed text-zinc-500">
             {details.lang !== language &&
-              `${details.lang === "lv" ? dict.programme.contentInLatvian : dict.programme.contentInEnglish} `}
+              `${
+                {
+                  lv: dict.programme.contentInLatvian,
+                  en: dict.programme.contentInEnglish,
+                  lt: dict.programme.contentInLithuanian,
+                }[details.lang]
+              } `}
             {interpolate(dict.programme.detailsSource, {
               source: details.sourceHost ?? "",
               date: details.extractedAt ? new Date(details.extractedAt).toLocaleDateString(language) : "",

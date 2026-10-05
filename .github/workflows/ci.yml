@@ -24,8 +24,12 @@ jobs:
       # NEXT_PUBLIC_* — publishable anon key, ограничения через RLS,
       # не service_role (CLAUDE.md, A02). Сборка требует их на этапе
       # build, не только runtime — без них src/lib/supabase.ts падает.
+      # NEXT_PUBLIC_PREVIEW_COUNTRIES — страны, которые ещё строятся (Литва):
+      # в проверочной сборке их адреса включены, чтобы аудит доступности
+      # видел и их. На рабочей выкладке переменная не задаётся.
       - run: npm run build
         env:
+          NEXT_PUBLIC_PREVIEW_COUNTRIES: "1"
           NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
           NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY }}
 
@@ -35,5 +39,6 @@ jobs:
       - run: npx playwright install --with-deps chromium
       - run: npm run test:a11y
         env:
+          NEXT_PUBLIC_PREVIEW_COUNTRIES: "1"
           NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
           NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY }}

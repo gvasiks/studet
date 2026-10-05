@@ -50,7 +50,7 @@ const profiles: Record<Country, CountryProfile> = {
     features: ["favorites"],
     levels: ["bachelor", "college", "integrated"],
     cities: ["vilnius", "kaunas", "klaipeda", "siauliai", "panevezys", "utena", "alytus", "telsiai", "marijampole", "taurage"],
-    languages: ["lt", "en"],
+    languages: ["lt", "en", "ru"],
     nativeLanguage: "lt",
   },
 };

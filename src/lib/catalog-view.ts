@@ -20,8 +20,10 @@ export function matchesQuery(programme: ProgrammeWithUniversity, query: string):
   const haystack = normalize(
     [
       programme.name_lv,
+      programme.name_lt,
       programme.name_en,
       programme.university.name_lv,
+      programme.university.name_lt,
       programme.university.name_en,
     ]
       .filter(Boolean)

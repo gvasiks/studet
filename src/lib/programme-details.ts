@@ -5,24 +5,28 @@ import type { Language } from "@/i18n/config";
 //
 // Сведения приходят из двух источников и на двух языках:
 //   NIID.lv — официальные латышские названия (pipeline/src/enrich_niid_details.py);
-//   lu.lv   — английские страницы программ ЛУ (pipeline/src/enrich_lu_details.py).
+//   lu.lv   — английские страницы программ ЛУ (pipeline/src/enrich_lu_details.py);
+//   aikos.smm.lt — государственный реестр Литвы, на литовском
+//             (pipeline/src/sources/lt_lamabpo.py).
 // Переводить название диплома сами мы не вправе, поэтому показываем то, что
 // есть, и помечаем язык: атрибутом lang (WCAG 3.1.2) и строкой для человека.
 
 export type ProgrammeDetailsSource = {
   degree_awarded_lv?: string | null;
   degree_awarded_en?: string | null;
+  degree_awarded_lt?: string | null;
   qualification_lv?: string | null;
   diploma_document_lv?: string | null;
   description_lv?: string | null;
   description_en?: string | null;
+  description_lt?: string | null;
   details_source_url?: string | null;
   details_extracted_at?: string | null;
 };
 
 export type ProgrammeDetails = {
   /** Язык показанных названий и описания. */
-  lang: "lv" | "en";
+  lang: Language;
   degree: string | null;
   qualification: string | null;
   document: string | null;
@@ -70,10 +74,20 @@ export function pickDetails(record: ProgrammeDetailsSource, language: Language):
     document: null,
     paragraphs: splitParagraphs(record.description_en),
   };
-  const hasAny = (set: typeof latvian | typeof english) =>
+  const lithuanian = {
+    lang: "lt" as const,
+    degree: record.degree_awarded_lt ?? null,
+    qualification: null,
+    document: null,
+    paragraphs: splitParagraphs(record.description_lt),
+  };
+  const hasAny = (set: typeof latvian | typeof english | typeof lithuanian) =>
     Boolean(set.degree || set.qualification || set.document || set.paragraphs.length > 0);
 
-  const preferred = language === "en" ? [english, latvian] : [latvian, english];
+  // Сначала набор на языке страницы, потом остальные: у программы на
+  // практике заполнен один.
+  const all = [latvian, lithuanian, english];
+  const preferred = [...all.filter((set) => set.lang === language), ...all.filter((set) => set.lang !== language)];
   const chosen = preferred.find(hasAny);
   if (!chosen) return null;
 

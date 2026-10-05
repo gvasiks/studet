@@ -114,7 +114,10 @@ export function FavoritesList({
       render: (p) => (p.duration_years !== null ? `${p.duration_years} ${dict.catalog.years}` : "—"),
     },
     { label: dict.programme.city, render: (p) => (p.city ? enumLabel(dict.catalog.city, p.city) : "—") },
-    { label: dict.programme.funding, render: (p) => enumLabel(dict.catalog.funding, p.funding_type) },
+    {
+      label: dict.programme.funding,
+      render: (p) => (p.funding_type ? enumLabel(dict.catalog.funding, p.funding_type) : "—"),
+    },
     {
       label: dict.programme.tuitionFee,
       render: (p) => (p.tuition_fee_amount !== null ? `${p.tuition_fee_amount} ${p.tuition_fee_currency}` : "—"),

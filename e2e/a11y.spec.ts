@@ -24,6 +24,29 @@ for (const locale of LOCALES) {
   }
 }
 
+// Литва (фаза 2 литовского плана): каталог и карточка на литовском и
+// английском. /lt/match — раздела у Литвы ещё нет, проверяется вёрстка
+// страницы «не найдено». Адреса существуют только при
+// NEXT_PUBLIC_PREVIEW_COUNTRIES=1 (локально — .env.local, в CI — ci.yml).
+const LT_ROUTES = [
+  "/lt",
+  "/lt/programmes",
+  "/lt/programmes/vu/medicina",
+  "/lt/favorites",
+  "/lt/match",
+  "/en-lt",
+  "/en-lt/programmes",
+  "/en-lt/programmes/vu/medicina",
+];
+
+for (const route of LT_ROUTES) {
+  test(`нет нарушений axe на ${route}`, async ({ page }) => {
+    await page.goto(route);
+    const results = await new AxeBuilder({ page }).analyze();
+    expect(results.violations, JSON.stringify(results.violations, null, 2)).toEqual([]);
+  });
+}
+
 // Блок результатов /match появляется только после ввода экзаменов — его не
 // видно на пустой странице, а вёрстка там самая сложная (счётчики в <dl>,
 // группы, раскрывающийся разбор балла).
