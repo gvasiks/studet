@@ -30,6 +30,7 @@ export async function generateMetadata({ params }: PageProps<"/[locale]/verifica
 const FACT_TYPE_LABEL: Record<VerificationQueueItem["factType"], string> = {
   formula: "Konkursa formula",
   application_round: "Pieteikšanās termiņš",
+  application_channel: "Pieteikšanās vieta",
   admission_type: "Uzņemšanas veids",
   programme_field: "Programmu virzieni",
   programme_requirement: "Nepieciešamie eksāmeni",
@@ -40,6 +41,7 @@ const FACT_TYPE_ORDER: VerificationQueueItem["factType"][] = [
   "formula",
   "programme_requirement",
   "application_round",
+  "application_channel",
   "admission_type",
   "programme_field",
 ];

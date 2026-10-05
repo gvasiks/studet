@@ -136,6 +136,14 @@
     "budgetPlaces": "Budžeta vietu skaits",
     "accreditation": "Akreditēta līdz",
     "notFoundTitle": "Programma nav atrasta",
+    "applyTitle": "Kur pieteikties",
+    "applyTypes": {
+      "unified_portal": "Pieteikšanās notiek vienotajā uzņemšanas sistēmā valsts pakalpojumu portālā.",
+      "university_system": "Pieteikšanās notiek pašas augstskolas sistēmā.",
+      "in_person": "Dokumenti jāiesniedz klātienē augstskolā."
+    },
+    "applyLink": "Atvērt pieteikšanās lapu ({host})",
+    "applyNote": "Attiecas uz reflektantiem ar Latvijā iegūtu izglītību; ārvalstu reflektantiem kārtība var atšķirties.",
     "deadlinesTitle": "Pieteikšanās termiņi",
     "deadlinesNotAvailable": "Uzņemšanas datumi šai programmai vēl nav apstiprināti.",
     "deadlinesOpens": "no",

@@ -3,7 +3,13 @@ import { supabase } from "@/lib/supabase";
 
 export type VerificationQueueItem = {
   factId: string;
-  factType: "formula" | "application_round" | "admission_type" | "programme_field" | "programme_requirement";
+  factType:
+    | "formula"
+    | "application_round"
+    | "application_channel"
+    | "admission_type"
+    | "programme_field"
+    | "programme_requirement";
   programmeId: string | null;
   programmeName: string | null;
   universitySlug: string;

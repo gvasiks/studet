@@ -136,6 +136,14 @@
     "budgetPlaces": "Budget places",
     "accreditation": "Accredited until",
     "notFoundTitle": "Programme not found",
+    "applyTitle": "Where to apply",
+    "applyTypes": {
+      "unified_portal": "Applications go through the unified admission system on the state services portal.",
+      "university_system": "You apply through the university's own system.",
+      "in_person": "Documents are submitted in person at the university."
+    },
+    "applyLink": "Open the application page ({host})",
+    "applyNote": "Applies to applicants with Latvian education; the procedure for international applicants may differ.",
     "deadlinesTitle": "Application windows",
     "deadlinesNotAvailable": "Admission dates for this programme aren't confirmed yet.",
     "deadlinesOpens": "from",

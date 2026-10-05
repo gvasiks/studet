@@ -10,9 +10,11 @@ import { getFormula } from "@/lib/formula-queries";
 import { getApplicationRounds } from "@/lib/deadline-queries";
 import { matchRounds } from "@/lib/deadlines";
 import { getAdmissionType } from "@/lib/admission-type-queries";
+import { httpUrl, matchChannel } from "@/lib/application-channel";
+import { getApplicationChannels } from "@/lib/application-channel-queries";
 import { getProgrammeOutcome } from "@/lib/outcome-queries";
 import { areaCode } from "@/lib/fields";
-import { currentAccreditation, pickDetails } from "@/lib/programme-details";
+import { currentAccreditation, pickDetails, sourceHost } from "@/lib/programme-details";
 import { employmentPercent, interpolate, OUTCOMES_SOURCE_URL, pickOutcomes } from "@/lib/outcomes";
 import { BackButton } from "@/components/BackButton";
 import { FavoriteButton } from "@/components/FavoriteButton";
@@ -77,12 +79,18 @@ export async function generateMetadata({ params }: { params: Params }): Promise<
 export default async function ProgrammePage({ params }: { params: Params }) {
   const { locale, record } = await loadProgramme(params);
   const dict = await getDictionary(locale);
-  const [formula, rounds, admissionType, outcome] = await Promise.all([
+  const [formula, rounds, admissionType, outcome, channels] = await Promise.all([
     getFormula(record.id),
     getApplicationRounds(),
     getAdmissionType(record.university_id),
     getProgrammeOutcome(record.id, record.university_id),
+    getApplicationChannels(record.university_id),
   ]);
+  // Где подать документы: только подтверждённая человеком запись вуза для
+  // этого уровня (или для всех уровней). Нет записи — блока нет.
+  const channel = matchChannel(channels, record.university_id, record.degree_level);
+  const channelUrl = httpUrl(channel?.url);
+  const channelSourceUrl = httpUrl(channel?.sourceUrl);
   // Блок "что стало с выпускниками" (пункт 14 ревью) — только при
   // подтверждённом направлении программы, см. outcome-queries.ts.
   const outcomeSnapshots = outcome ? pickOutcomes(outcome.rows, record.degree_level, new Date().getFullYear()) : [];
@@ -266,6 +274,33 @@ export default async function ProgrammePage({ params }: { params: Params }) {
           <p className="mt-2 text-zinc-500">{dict.programme.deadlinesNotAvailable}</p>
         )}
       </section>
+
+      {channel && (
+        <section className="mt-8">
+          <h2 className="text-xs uppercase tracking-wide text-zinc-500">{dict.programme.applyTitle}</h2>
+          <p className="mt-2 text-zinc-900">{dict.programme.applyTypes[channel.channelType]}</p>
+          {channelUrl && (
+            <p className="mt-2">
+              <a href={channelUrl} target="_blank" rel="noopener noreferrer" className="font-medium text-zinc-900 underline">
+                {interpolate(dict.programme.applyLink, { host: sourceHost(channelUrl) ?? "" })}
+              </a>
+            </p>
+          )}
+          {/* Дата проверки и источник рядом с фактом — правило 5. */}
+          <p className="mt-2 text-xs leading-relaxed text-zinc-500">
+            {dict.programme.applyNote} {dict.catalog.verifiedPrefix}{" "}
+            {new Date(channel.verifiedAt).toLocaleDateString(locale)}.
+            {channelSourceUrl && (
+              <>
+                {" "}
+                <a href={channelSourceUrl} target="_blank" rel="noopener noreferrer" className="underline">
+                  {dict.catalog.sourceLinkLabel}
+                </a>
+              </>
+            )}
+          </p>
+        </section>
+      )}
 
       {formula && (
         <Link
