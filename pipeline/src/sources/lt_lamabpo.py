@@ -167,8 +167,10 @@ def _after(lines: list[str], label: str) -> str | None:
 def parse_card(lines: list[str]) -> Card:
     card = Card()
     kind = _after(lines, "Studijų rūšis") or ""
-    programme_type = _after(lines, "Studijų programos tipas") or ""
-    if "Vientis" in programme_type:
+    # Цельные программы реестр отмечает в поле «ступень» ("Vientisosios
+    # studijos"), а не в поле «тип программы» — там у них то же "Pakopinės".
+    cycle = _after(lines, "Studijų pakopa") or ""
+    if "Vientis" in cycle:
         card.level = "integrated"
     elif "Kolegin" in kind:
         card.level = "college"
@@ -189,10 +191,47 @@ def parse_card(lines: list[str]) -> Card:
             mode = "full_time" if match.group(1) == "Nuolatinė" else "part_time"
             card.years[mode] = float(match.group(2).replace(",", "."))
 
-    annotation = _after(lines, "Studijų programos anotacija:")
-    if annotation and len(annotation) > 40:
-        card.description = annotation
+    card.description = _description(lines)
     return card
+
+
+_GOAL_LABEL = re.compile(r"Studijų programos tikslas\s*\(-ai\)\s*:\s*")
+# Подписи следующих частей карточки: если реестр отдал всё одной строкой,
+# описание обрывается на первой из них.
+_NEXT_PARTS = ("Studijų rezultatai:", "Sandara:", "Mokymo ir mokymosi veiklos:", "Studijų rezultatų vertinimo būdai:")
+MAX_DESCRIPTION = 1500
+
+
+def _description(lines: list[str]) -> str | None:
+    """Цель программы из раздела «Aprašymo santrauka». Раздел свободный:
+    цель стоит то после подписи на той же строке, то на следующей, то без
+    подписи сразу под заголовком раздела."""
+    try:
+        start = lines.index("Aprašymo santrauka")
+    except ValueError:
+        return None
+    section = [line for line in lines[start + 1:] if line]
+    text = None
+    for index, line in enumerate(section[:6]):
+        match = _GOAL_LABEL.search(line)
+        if match:
+            text = line[match.end():] or (section[index + 1] if index + 1 < len(section) else "")
+            break
+    if text is None and section:
+        first = section[0].removeprefix("Bendras apibūdinimas:").strip()
+        text = first if not first.endswith(":") else ""
+    for label in _NEXT_PARTS:
+        text = text.split(label)[0]
+    text = text.strip()
+    if len(text) > MAX_DESCRIPTION:
+        cut = text[:MAX_DESCRIPTION]
+        text = cut[: cut.rfind(". ") + 1] or cut
+    # Обрывок вместо описания: цель в реестре иногда разбита на пункты, и в
+    # первой строке остаётся «Parengti teisininkus, kurie». Законченный текст
+    # кончается точкой и не начинается с тире; иначе описания лучше не будет.
+    if len(text) <= 40 or text.startswith(("-", "–", "•")) or not text.endswith((".", "!", "?")):
+        return None
+    return text
 
 
 def row_language(entries: list[dict[str, str]], card: Card) -> str | None:
@@ -223,11 +262,27 @@ def parse_institution(lines: list[str]) -> Institution:
         institution.kind = "public"
     elif ownership.startswith("Nevalstybin"):
         institution.kind = "private"
-    institution.name_en = _after(lines, "Pavadinimas anglų kalba")
+    institution.name_en = clean_english_name(_after(lines, "Pavadinimas anglų kalba"))
     contacts = _after(lines, "Telefonai, faksas, internetinės svetainės ir elektroninio pašto adresai") or ""
-    site = re.search(r"https?://[^\s,]+", contacts)
-    institution.website = site.group(0) if site else None
+    site = re.search(r"https?://[^\s,]+|www\.[^\s,]+", contacts)
+    if site:
+        institution.website = site.group(0) if site.group(0).startswith("http") else f"http://{site.group(0)}"
     return institution
+
+
+def clean_english_name(raw: str | None) -> str | None:
+    """Английское название из реестра без правовой формы. У части колледжей
+    там стоит литовское название с припиской или одна приписка — тогда
+    английского названия нет вовсе: лучше показать литовское, чем
+    «Higher Education Institution»."""
+    if not raw:
+        return None
+    name = raw.replace('"', "").strip()
+    if " / " in name or name.lower() == "higher education institution":
+        return None
+    name = re.sub(r"^public institution\s+", "", name, flags=re.IGNORECASE)
+    name = re.sub(r",\s*(public institution|jsc)$", "", name, flags=re.IGNORECASE)
+    return name.strip() or None
 
 
 def group_rows(entries: list[dict[str, str]], cards: dict[str, Card]) -> dict[tuple, list[dict[str, str]]]:
@@ -414,17 +469,43 @@ def _selftest() -> None:
 
     card_lines = [
         "Studijų rūšis", "Universitetinės studijos", "Studijų programos tipas", "Pakopinės studijos",
-        "Programos vykdymo kalba", "anglų, lietuvių",
+        "Studijų pakopa", "Pirmosios pakopos studijos", "Programos vykdymo kalba", "anglų, lietuvių",
         "Suteikiamas kvalifikacinis laipsnis ir (arba) kvalifikacija", "Inžinerijos mokslų bakalauras",
         "Studijų apimtis kreditais ir forma (trukmė metais)", "240", "Ištęstinė, 6, Metais", "Nuolatinė, 4, Metais",
-        "Studijų programos anotacija:", "Absolventas turi fizinių, humanitarinių, socialinių, technologijos mokslų žinių.",
+        "Aprašymo santrauka", "Bendras apibūdinimas:", "Studijų programos tikslas (-ai):",
+        "Suteikti aviacijos inžinerijos žinias, išugdyti gebėjimus surasti ir taikyti naujus sprendimus.",
+        "Studijų rezultatai:", "Žinios ir jų taikymas:",
     ]
     card = parse_card(card_lines)
     assert card.level == "bachelor" and card.languages == ["en", "lt"], card
     assert card.degree == "Inžinerijos mokslų bakalauras" and card.years == {"part_time": 6.0, "full_time": 4.0}, card
-    assert card.description.startswith("Absolventas"), card.description
+    assert card.description.startswith("Suteikti aviacijos") and card.description.endswith("sprendimus."), card.description
     assert parse_card(["Studijų rūšis", "Koleginės studijos"]).level == "college"
-    assert parse_card(["Studijų rūšis", "Universitetinės studijos", "Studijų programos tipas", "Vientisosios studijos"]).level == "integrated"
+    integrated = ["Studijų rūšis", "Universitetinės studijos", "Studijų programos tipas", "Pakopinės studijos", "Studijų pakopa", "Vientisosios studijos"]
+    assert parse_card(integrated).level == "integrated"
+    # всё одной строкой: описание обрывается на следующей части карточки
+    inline = "Bendras apibūdinimas: Studijų programos tikslas(-ai): Rengti aukštos kvalifikacijos farmacijos specialistus visai šaliai. Studijų rezultatai: žinios."
+    assert _description(["Aprašymo santrauka", inline]) == "Rengti aukštos kvalifikacijos farmacijos specialistus visai šaliai."
+    # без подписи: текст сразу под заголовком раздела
+    plain = "Būsimieji teisės bakalaurai studijuoja filosofiją, logiką, teisės istoriją ir teisės teoriją."
+    assert _description(["Aprašymo santrauka", plain, "Grįžti atgal"]) == plain
+    assert _description(["Aprašymo santrauka", "Bendras apibūdinimas:", "Sandara:"]) is None
+    assert _description([]) is None
+    assert _description(["Aprašymo santrauka", "Studijų programos tikslas (-ai):", "Parengti kvalifikuotus teisininkus, kurie"]) is None
+    assert _description(["Aprašymo santrauka", "- programos turinys (pagrindiniai studijų dalykai ir praktika)."]) is None
+    long_text = "Sakinys apie programą. " * 100
+    assert len(_description(["Aprašymo santrauka", long_text])) <= MAX_DESCRIPTION
+    assert clean_english_name("Kauno kolegija / Higher Education Institution") is None
+    assert clean_english_name("Higher Education Institution") is None
+    assert clean_english_name('"ISM University of Management and Economics", JSC') == "ISM University of Management and Economics"
+    assert clean_english_name("Public Institution Vilnius Business College") == "Vilnius Business College"
+    assert clean_english_name("European Humanities University, Public Institution") == "European Humanities University"
+    assert clean_english_name("Vilnius University") == "Vilnius University"
+    without_scheme = parse_institution([
+        "Priklausomybė", "Valstybinė",
+        "Telefonai, faksas, internetinės svetainės ir elektroninio pašto adresai", "+370 5 2744949, www.vilniustech.lt, a@vilniustech.lt",
+    ])
+    assert without_scheme.website == "http://www.vilniustech.lt", without_scheme
     assert parse_card([]).level is None
 
     institution = parse_institution([
