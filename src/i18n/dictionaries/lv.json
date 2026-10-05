@@ -138,9 +138,8 @@
     "notFoundTitle": "Programma nav atrasta",
     "applyTitle": "Kur pieteikties",
     "applyTypes": {
-      "unified_portal": "Pieteikšanās notiek vienotajā uzņemšanas sistēmā valsts pakalpojumu portālā.",
-      "university_system": "Pieteikšanās notiek pašas augstskolas sistēmā.",
-      "in_person": "Dokumenti jāiesniedz klātienē augstskolā."
+      "unified_portal": "Pieteikšanās notiek vienotajā uzņemšanas sistēmā valsts pakalpojumu portālā — viens pieteikums vairākām augstskolām.",
+      "university": "Pieteikšanās notiek pašā augstskolā — kārtība aprakstīta tās mājaslapā."
     },
     "applyLink": "Atvērt pieteikšanās lapu ({host})",
     "applyNote": "Attiecas uz reflektantiem ar Latvijā iegūtu izglītību; ārvalstu reflektantiem kārtība var atšķirties.",

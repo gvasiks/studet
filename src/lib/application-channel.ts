@@ -8,7 +8,10 @@
 // человеком (правило 6 CLAUDE.md) — неподтверждённых этот код не видит
 // вовсе, их отсекает политика доступа в базе.
 
-export const CHANNEL_TYPES = ["unified_portal", "university_system", "in_person"] as const;
+// unified_portal — единая подача через государственный портал услуг;
+// university — подача в сам вуз (его система, почта или лично): порядок
+// описан на странице вуза, куда ведёт ссылка.
+export const CHANNEL_TYPES = ["unified_portal", "university"] as const;
 export type ChannelType = (typeof CHANNEL_TYPES)[number];
 
 export type ApplicationChannel = {
@@ -16,8 +19,8 @@ export type ApplicationChannel = {
   /** null — запись действует для всех уровней вуза. */
   degreeLevel: string | null;
   channelType: ChannelType;
-  /** Куда вести человека; у подачи «только лично» может отсутствовать. */
-  url: string | null;
+  /** Куда вести человека: услуга на портале либо страница вуза о подаче. */
+  url: string;
   sourceUrl: string;
   verifiedAt: string;
 };

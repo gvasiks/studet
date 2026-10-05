@@ -21,13 +21,17 @@ create table application_channel (
   id uuid primary key default gen_random_uuid(),
   university_id uuid not null references university (id) on delete cascade,
   degree_level text check (degree_level in ('college', 'bachelor', 'master', 'doctoral')),
-  -- unified_portal    — единая подача через портал latvija.gov.lv
-  -- university_system — электронная система или форма самого вуза
-  -- in_person         — только лично в вузе (url может вести на страницу
-  --                     с адресом и часами приёма, а может отсутствовать)
-  channel_type text not null check (channel_type in ('unified_portal', 'university_system', 'in_person')),
-  -- куда вести человека
-  url text,
+  -- unified_portal — единая подача через государственный портал услуг
+  --                  (одна заявка сразу в несколько вузов)
+  -- university     — подача в сам вуз: его электронная система, почта или
+  --                  лично. Способов у вузов много, и они меняются от уровня
+  --                  к уровню (магистратура РТУ — электронно или лично,
+  --                  докторантура — письмом), поэтому тип один, а порядок
+  --                  человек читает на странице вуза, куда ведёт url.
+  channel_type text not null check (channel_type in ('unified_portal', 'university')),
+  -- куда вести человека: услуга на портале либо страница вуза о подаче
+  -- документов на этот уровень
+  url text not null,
   -- страница вуза (или портала), где описан порядок подачи, и дословная
   -- цитата оттуда — чтобы проверяющий видел, на чём основан черновик
   source_url text not null,
@@ -36,7 +40,6 @@ create table application_channel (
   verified_by text,
   created_at timestamptz not null default now(),
   updated_at timestamptz not null default now(),
-  check (channel_type = 'in_person' or url is not null),
   -- одна запись на (вуз, уровень); «все уровни» (null) — тоже одна.
   -- nulls not distinct нужен и для upsert из seed_application_channels.py
   unique nulls not distinct (university_id, degree_level)

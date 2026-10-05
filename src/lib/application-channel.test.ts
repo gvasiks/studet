@@ -5,7 +5,7 @@ function channel(overrides: Partial<ApplicationChannel>): ApplicationChannel {
   return {
     universityId: "lu",
     degreeLevel: null,
-    channelType: "university_system",
+    channelType: "university",
     url: "https://example.lv/apply",
     sourceUrl: "https://example.lv/admission",
     verifiedAt: "2026-10-05T10:00:00+00:00",

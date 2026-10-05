@@ -138,9 +138,8 @@
     "notFoundTitle": "Programme not found",
     "applyTitle": "Where to apply",
     "applyTypes": {
-      "unified_portal": "Applications go through the unified admission system on the state services portal.",
-      "university_system": "You apply through the university's own system.",
-      "in_person": "Documents are submitted in person at the university."
+      "unified_portal": "Applications go through the unified admission system on the state services portal — one application for several universities.",
+      "university": "You apply directly to the university — the procedure is described on its website."
     },
     "applyLink": "Open the application page ({host})",
     "applyNote": "Applies to applicants with Latvian education; the procedure for international applicants may differ.",
