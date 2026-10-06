@@ -73,7 +73,7 @@ export default async function ProgrammesPage({
           </h1>
           <p className="mt-2.5 text-[17px] leading-relaxed text-zinc-600">{dict.catalog.subtitle}</p>
         </div>
-        {hasFeature(countryOf(locale), "survey") && <SurveyCard locale={locale} dict={dict} />}
+        {hasFeature(locale, "survey") && <SurveyCard locale={locale} dict={dict} />}
       </section>
 
       {/* Одна GET-форма на весь каталог (поиск + фильтры). Поля и карточки

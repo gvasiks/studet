@@ -1,7 +1,7 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { countryOf, isLocale } from "@/i18n/config";
+import { isLocale } from "@/i18n/config";
 import { hasFeature } from "@/lib/country";
 import { getDictionary } from "@/i18n/dictionaries";
 import { buildAlternates } from "@/lib/site";
@@ -14,7 +14,7 @@ import { ArrowRightIcon, ClipboardCheckIcon } from "@/components/icons";
 export async function generateMetadata({ params }: PageProps<"/[locale]/rights">): Promise<Metadata> {
   const { locale } = await params;
   if (!isLocale(locale)) notFound();
-  if (!hasFeature(countryOf(locale), "rights")) notFound();
+  if (!hasFeature(locale, "rights")) notFound();
 
   const dict = await getDictionary(locale);
   return {
@@ -27,7 +27,7 @@ export async function generateMetadata({ params }: PageProps<"/[locale]/rights">
 export default async function RightsPage({ params }: PageProps<"/[locale]/rights">) {
   const { locale } = await params;
   if (!isLocale(locale)) notFound();
-  if (!hasFeature(countryOf(locale), "rights")) notFound();
+  if (!hasFeature(locale, "rights")) notFound();
 
   const { rights } = await getDictionary(locale);
 

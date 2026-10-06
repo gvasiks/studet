@@ -97,8 +97,7 @@ export function HeaderNav({
     { href: `/${locale}/glossary`, label: labels.glossary, badge: 0, feature: "glossary" },
     { href: `/${locale}/rights`, label: labels.rights, badge: 0, feature: "rights" },
   ];
-  const country = countryOf(locale);
-  const menuItems = allItems.filter((item) => item.feature === null || hasFeature(country, item.feature));
+  const menuItems = allItems.filter((item) => item.feature === null || hasFeature(locale, item.feature));
   // На главной от lg «Мой список» — отдельная кнопка справа (FavoritesLink),
   // в строке его нет. В выпадающем меню он есть всегда.
   const items = dark ? menuItems.filter((item) => item !== favoritesItem) : menuItems;

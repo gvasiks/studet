@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { countryOf, isLocale } from "@/i18n/config";
+import { isLocale } from "@/i18n/config";
 import { hasFeature } from "@/lib/country";
 import { getDictionary } from "@/i18n/dictionaries";
 import { getApplicationRounds } from "@/lib/deadline-queries";
@@ -14,7 +14,7 @@ import { FavoritesList } from "./FavoritesList";
 export async function generateMetadata({ params }: PageProps<"/[locale]/favorites">): Promise<Metadata> {
   const { locale } = await params;
   if (!isLocale(locale)) notFound();
-  if (!hasFeature(countryOf(locale), "favorites")) notFound();
+  if (!hasFeature(locale, "favorites")) notFound();
 
   const dict = await getDictionary(locale);
   return {
@@ -42,7 +42,7 @@ async function loadCardData(): Promise<{ calculatorIds: string[]; applicationRou
 export default async function FavoritesPage({ params }: PageProps<"/[locale]/favorites">) {
   const { locale } = await params;
   if (!isLocale(locale)) notFound();
-  if (!hasFeature(countryOf(locale), "favorites")) notFound();
+  if (!hasFeature(locale, "favorites")) notFound();
 
   const dict = await getDictionary(locale);
   const { calculatorIds, applicationRounds } = await loadCardData();

@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { countryOf, languageOf, localesOfCountry, type Locale } from "@/i18n/config";
+import { countryOf, languageOf, languages, localesOfCountry, type Locale } from "@/i18n/config";
 
 export type Tone = "light" | "dark";
 
@@ -11,8 +11,10 @@ export type Tone = "light" | "dark";
 // менять нужно только первый сегмент пути). Серверный компонент этого не
 // умеет без прокидывания текущего пути через каждую страницу.
 //
-// Переключает только между языками одной страны: у литовского каталога
-// нет латышской версии, и наоборот.
+// Переключает язык интерфейса, страна каталога остаётся той же. Языки
+// стоят в одном порядке на всех страницах (languages в config.ts);
+// язык, адрес которого закрыт флагом предпросмотра, не показывается.
+// Страна выбирается отдельно, в подвале (CountrySwitcher).
 //
 // Ссылки, а не кнопки: переключатель языка — это навигация (другой
 // адрес, другой индексируемый документ), не действие на странице.
@@ -26,14 +28,18 @@ export function LocaleSwitcher({ locale, tone = "light" }: { locale: Locale; ton
       aria-label="Language"
       className={`flex items-center rounded-full p-[3px] ${dark ? "bg-white/10" : "bg-zinc-200"}`}
     >
-      {localesOfCountry(countryOf(locale)).map((code) => {
+      {/* Поля кнопок на узком экране уже (px-2.5): с тремя языками шапка
+          иначе не помещается в 320 px. */}
+      {[...localesOfCountry(countryOf(locale))]
+        .sort((a, b) => languages.indexOf(languageOf(a)) - languages.indexOf(languageOf(b)))
+        .map((code) => {
         const active = code === locale;
         return (
           <Link
             key={code}
             href={`/${code}${rest ? `/${rest}` : ""}`}
             aria-current={active ? "page" : undefined}
-            className={`inline-flex h-[30px] items-center rounded-full px-3.5 text-[13px] ${
+            className={`inline-flex h-[30px] items-center rounded-full px-2.5 text-[13px] sm:px-3.5 ${
               active
                 ? `bg-white font-semibold text-zinc-900 shadow-pill`
                 : `font-medium ${dark ? "text-slate-300 hover:text-white" : "text-zinc-600 hover:text-zinc-900"}`

@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { countryOf, type Locale } from "@/i18n/config";
+import type { Locale } from "@/i18n/config";
 import { hasFeature, type Feature } from "@/lib/country";
 import type { Dictionary } from "@/i18n/dictionaries";
 import { CountrySwitcher } from "@/components/CountrySwitcher";
@@ -20,7 +20,6 @@ export function SiteFooter({ dict, locale, tone }: { dict: Dictionary; locale: L
     );
   }
 
-  const country = countryOf(locale);
   // feature: null — раздел есть у каждой страны (src/lib/country.ts)
   const allLinks: { href: string; label: string; feature: Feature | null }[] = [
     { href: `/${locale}/programmes`, label: dict.nav.catalog, feature: null },
@@ -30,7 +29,7 @@ export function SiteFooter({ dict, locale, tone }: { dict: Dictionary; locale: L
     { href: `/${locale}/glossary`, label: dict.nav.glossary, feature: "glossary" },
     { href: `/${locale}/rights`, label: dict.nav.rights, feature: "rights" },
   ];
-  const links = allLinks.filter((link) => link.feature === null || hasFeature(country, link.feature));
+  const links = allLinks.filter((link) => link.feature === null || hasFeature(locale, link.feature));
 
   return (
     <footer className="relative z-10 mt-auto border-t border-white/10 bg-black/20">

@@ -18,7 +18,7 @@ export const dynamic = "force-dynamic";
 export async function generateMetadata({ params }: { params: Params }): Promise<Metadata> {
   const { locale, university, programme: programmeSlug } = await params;
   if (!isLocale(locale)) notFound();
-  if (!hasFeature(countryOf(locale), "calculator")) notFound();
+  if (!hasFeature(locale, "calculator")) notFound();
 
   const dict = await getDictionary(locale);
   const record = await getProgramme(countryOf(locale), university, programmeSlug);
@@ -35,7 +35,7 @@ export async function generateMetadata({ params }: { params: Params }): Promise<
 export default async function CalculatorPage({ params }: { params: Params }) {
   const { locale, university, programme: programmeSlug } = await params;
   if (!isLocale(locale)) notFound();
-  if (!hasFeature(countryOf(locale), "calculator")) notFound();
+  if (!hasFeature(locale, "calculator")) notFound();
 
   const dict = await getDictionary(locale);
   const record = await getProgramme(countryOf(locale), university, programmeSlug);

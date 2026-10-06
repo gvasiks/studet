@@ -7,6 +7,7 @@ import {
   languageOf,
   legacyLocales,
   localeFor,
+  localeForBrowser,
   locales,
   localesOfCountry,
   nativeLocale,
@@ -48,6 +49,27 @@ describe("адрес = язык + страна", () => {
     expect(localeFor("LV", "lv")).toBe("lv");
     // литовского в Латвии нет — открывается её основной язык
     expect(localeFor("LV", "lt")).toBe("lv");
+  });
+
+  it("у каждой страны три языка: свой без суффикса, остальные — «язык-страна»", () => {
+    expect([languageOf("lt-lv"), countryOf("lt-lv")]).toEqual(["lt", "LV"]);
+    expect([languageOf("lv-lt"), countryOf("lv-lt")]).toEqual(["lv", "LT"]);
+    expect([languageOf("en-lt"), countryOf("en-lt")]).toEqual(["en", "LT"]);
+    expect([languageOf("lt"), countryOf("lt")]).toEqual(["lt", "LT"]);
+  });
+
+  it("без флага предпросмотра закрыто всё литовское: и страна, и язык", () => {
+    for (const locale of ["lt", "en-lt", "lv-lt", "lt-lv"]) expect(isLocale(locale), locale).toBe(false);
+    expect(locales).toEqual(["lv", "en-lv"]);
+  });
+
+  it("по языку браузера: родной язык ведёт в свою страну, английский — в Латвию", () => {
+    expect(localeForBrowser("lv")).toBe("lv");
+    expect(localeForBrowser("en")).toBe("en-lv");
+    // литовский закрыт флагом — посетитель попадает на адрес по умолчанию
+    expect(localeForBrowser("lt")).toBe("lv");
+    expect(localeForBrowser("de")).toBe("lv");
+    expect(localeForBrowser("")).toBe("lv");
   });
 
   it("каждый адрес из списка описан", () => {

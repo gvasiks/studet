@@ -1,13 +1,11 @@
 import { NextResponse, type NextRequest } from "next/server";
-import { defaultLocale, languageOf, legacyLocales, locales, type Locale } from "@/i18n/config";
+import { legacyLocales, localeForBrowser, locales, type Locale } from "@/i18n/config";
 
-// Посетитель без сегмента в адресе попадает на версию на своём языке.
-// Страну по языку браузера не угадываем: пока она одна. Когда появится
-// Литва, сюда добавится литовский язык -> /lt (фаза 2 литовского плана).
+// Посетитель без сегмента в адресе попадает на версию на своём языке:
+// латышский — в Латвию, литовский — в Литву, остальные — см. localeForBrowser.
 function preferredLocale(request: NextRequest): Locale {
   const acceptLanguage = request.headers.get("accept-language") ?? "";
-  const preferred = acceptLanguage.split(",")[0]?.split("-")[0];
-  return locales.find((locale) => languageOf(locale) === preferred) ?? defaultLocale;
+  return localeForBrowser(acceptLanguage.split(",")[0]?.split("-")[0] ?? "");
 }
 
 export function proxy(request: NextRequest) {

@@ -5,16 +5,29 @@ import en from "../i18n/dictionaries/en.json";
 import lt from "../i18n/dictionaries/lt.json";
 
 describe("профиль страны", () => {
-  it("у Латвии есть все разделы", () => {
-    for (const feature of ["survey", "match", "calculator", "glossary", "rights", "privacy", "favorites"] as const) {
-      expect(hasFeature("LV", feature)).toBe(true);
+  it("у Латвии на латышском и английском есть все разделы", () => {
+    for (const locale of ["lv", "en-lv"] as const) {
+      for (const feature of ["survey", "match", "calculator", "glossary", "rights", "privacy", "favorites"] as const) {
+        expect(hasFeature(locale, feature), `${locale}: ${feature}`).toBe(true);
+      }
     }
   });
 
-  it("у Литвы на фазе 2 — только каталог и список; расчёта балла и права нет", () => {
-    expect(hasFeature("LT", "favorites")).toBe(true);
-    for (const feature of ["survey", "match", "calculator", "glossary", "rights", "privacy", "verification"] as const) {
-      expect(hasFeature("LT", feature)).toBe(false);
+  it("Латвия на литовском: разделы с данными есть, длинных текстов без перевода нет", () => {
+    for (const feature of ["survey", "match", "calculator", "favorites"] as const) {
+      expect(hasFeature("lt-lv", feature), feature).toBe(true);
+    }
+    for (const feature of ["glossary", "rights", "privacy", "verification"] as const) {
+      expect(hasFeature("lt-lv", feature), feature).toBe(false);
+    }
+  });
+
+  it("у Литвы на фазе 2 — только каталог и список, на любом из трёх языков", () => {
+    for (const locale of ["lt", "en-lt", "lv-lt"] as const) {
+      expect(hasFeature(locale, "favorites")).toBe(true);
+      for (const feature of ["survey", "match", "calculator", "glossary", "rights", "privacy", "verification"] as const) {
+        expect(hasFeature(locale, feature), `${locale}: ${feature}`).toBe(false);
+      }
     }
   });
 

@@ -1,0 +1,45 @@
+{
+  "meta": {
+    "title": "Palīgs augstskolas izvēlei Lietuvā"
+  },
+  "home": {
+    "description": "Studiju programmu katalogs vienuviet: pirmā cikla un integrētās studijas, kurās uzņem Lietuvas kopējā uzņemšanā."
+  },
+  "coverage": {
+    "notice": "Pagaidām šeit ir tikai Lietuvas kopējās uzņemšanas programmas vietējiem skolu absolventiem. Informācijas ārvalstu reflektantiem vēl nav."
+  },
+  "catalog": {
+    "degreeLevel": {
+      "college": "Koledžas studijas (profesionālais bakalaurs)",
+      "bachelor": "Universitātes bakalaura studijas"
+    },
+    "tabs": {
+      "bachelor": "Universitātes",
+      "college": "Koledžas"
+    },
+    "funding": {
+      "budget": "Valsts finansētas vietas",
+      "both": "Valsts finansētas un maksas vietas"
+    }
+  },
+  "programme": {
+    "applyNote": "Attiecas uz reflektantiem ar Lietuvā iegūtu izglītību; ārvalstu reflektantiem kārtība var atšķirties."
+  },
+  "rights": {
+    "intro": "",
+    "checkedNote": "",
+    "items": [],
+    "sources": []
+  },
+  "glossary": {
+    "intro": "",
+    "items": []
+  },
+  "privacy": {
+    "intro": "",
+    "updated": "",
+    "authorityLabel": "Lietuvas Valsts datu aizsardzības inspekcija (vdai.lrv.lt)",
+    "authorityUrl": "https://vdai.lrv.lt",
+    "sections": []
+  }
+}

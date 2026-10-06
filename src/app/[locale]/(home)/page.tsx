@@ -50,7 +50,7 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
     { feature: "match" as const, href: `/${locale}/match`, title: dict.nav.match, text: dict.home.matchText },
     { feature: "glossary" as const, href: `/${locale}/glossary`, title: dict.nav.glossary, text: dict.home.glossaryText },
     { feature: "rights" as const, href: `/${locale}/rights`, title: dict.nav.rights, text: dict.home.rightsText },
-  ].filter((section) => hasFeature(country, section.feature));
+  ].filter((section) => hasFeature(locale, section.feature));
 
   return (
     <main className="page-container relative z-10 flex flex-1 flex-col justify-center py-16">
@@ -73,7 +73,7 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
             {dict.home.catalogCta}
             <ArrowRightIcon />
           </Link>
-          {hasFeature(country, "survey") && (
+          {hasFeature(locale, "survey") && (
             <Link
               href={`/${locale}/survey`}
               className={`inline-flex h-11 items-center rounded-full border border-white/15 bg-white/5 px-6 text-sm font-medium text-white transition-colors hover:bg-white/10 ${FOCUS}`}

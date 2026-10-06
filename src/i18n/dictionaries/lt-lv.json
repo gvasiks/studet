@@ -1,0 +1,63 @@
+{
+  "meta": {
+    "title": "Pagalbininkas renkantis aukštąją mokyklą Latvijoje"
+  },
+  "home": {
+    "description": "Anketa, katalogas ir konkursinio balo skaičiuoklė vienoje vietoje — kol kas apima Latvijos priėmimo sistemą."
+  },
+  "coverage": {
+    "notice": "Kol kas čia aprašyta Latvijos priėmimo sistema vietos abiturientams. Informacijos užsienio stojantiesiems — visos išlaidos, dokumentų sąrašai, leidimai gyventi — dar nėra."
+  },
+  "catalog": {
+    "degreeLevel": {
+      "college": "Koledžo studijos",
+      "bachelor": "Bakalauro studijos"
+    },
+    "tabs": {
+      "bachelor": "Bakalauras",
+      "college": "Koledžas"
+    },
+    "funding": {
+      "budget": "Biudžetinės vietos",
+      "both": "Biudžetinės ir mokamos vietos"
+    },
+    "filters": {
+      "budgetOnlyHint": "Valstybės biudžeto finansuojamos programos",
+      "budgetOnly": "Tik biudžetinės vietos",
+      "anyKind": "Valstybinės ir privačios",
+      "kinds": {
+        "private": "Privati"
+      }
+    }
+  },
+  "programme": {
+    "budgetPlaces": "Biudžetinės vietos",
+    "applyTypes": {
+      "unified_portal": "Prašymai teikiami per vieningą priėmimo sistemą valstybės paslaugų portale — vienas prašymas į kelias aukštąsias mokyklas."
+    },
+    "applyNote": "Taikoma stojantiesiems, įgijusiems išsilavinimą Latvijoje; užsienio stojantiesiems tvarka gali skirtis."
+  },
+  "outcomes": {
+    "source": "Šaltinis: IZM/CSP aukštojo mokslo absolventų stebėsena"
+  },
+  "survey": {
+    "exams": {
+      "title": "Kuriuos centralizuotus egzaminus laikėte ar planuojate laikyti?"
+    },
+    "funding": {
+      "title": "Biudžetinė vieta ar pasirengę mokėti?",
+      "budgetOnly": "Tik biudžetinės vietos"
+    },
+    "kind": {
+      "title": "Valstybinė ar privati aukštoji mokykla?"
+    }
+  },
+  "match": {
+    "intro": "Įveskite savo centralizuotų egzaminų rezultatus — parodysime, kurių programų konkursinį balą jau galima apskaičiuoti ir kurių egzaminų dar trūksta.",
+    "notComparable": "Skirtingų aukštųjų mokyklų balai nepalyginami: kiekviena aukštoji mokykla turi savo skalę. Sąrašas nerikiuojamas pagal balą ir nežada priėmimo."
+  },
+  "privacy": {
+    "authorityLabel": "Latvijos duomenų valstybinė inspekcija (dvi.gov.lv)",
+    "authorityUrl": "https://www.dvi.gov.lv/en"
+  }
+}

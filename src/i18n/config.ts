@@ -1,19 +1,27 @@
-// Первый сегмент адреса — не просто язык, а пара «язык интерфейса + страна
-// каталога» (решение 2026-10-05, docs/PLAN-LITHUANIA-2027.md):
+// Первый сегмент адреса — пара «язык интерфейса + страна каталога».
+// Каталог каждой страны открывается на любом из трёх языков (решения
+// 2026-10-05 и 2026-10-06, docs/PLAN-LITHUANIA-2027.md):
 //
-//   /lv/…     латышский, каталог Латвии
-//   /en-lv/…  английский, каталог Латвии
-//   /lt/…     литовский, каталог Литвы
-//   /en-lt/…  английский, каталог Литвы
+//   /lv/…     латышский, каталог Латвии        /lt/…     литовский, каталог Литвы
+//   /en-lv/…  английский, каталог Латвии       /en-lt/…  английский, каталог Литвы
+//   /lt-lv/…  литовский, каталог Латвии        /lv-lt/…  латышский, каталог Литвы
+//
+// Правило записи: «язык-страна»; у языка самой страны суффикса нет.
 //
 // В коде сегмент по-прежнему называется locale (так называется папка
 // маршрутов). Когда нужен язык или страна — спрашивай languageOf() и
 // countryOf(), а не сравнивай сегмент со строкой.
-const allLocales = ["lv", "en-lv", "lt", "en-lt"] as const;
+//
+// Порядок важен: первым у страны стоит адрес на её языке (nativeLocale).
+const allLocales = ["lv", "en-lv", "lt-lv", "lt", "en-lt", "lv-lt"] as const;
 
 export type Locale = (typeof allLocales)[number];
 
-export type Language = "lv" | "en" | "lt";
+// В этом порядке языки стоят в переключателе в шапке — одинаково на всех
+// страницах.
+export const languages = ["lv", "lt", "en"] as const;
+
+export type Language = (typeof languages)[number];
 
 // ISO 3166-1 alpha-2, как в university.country.
 export type Country = "LV" | "LT";
@@ -21,23 +29,29 @@ export type Country = "LV" | "LT";
 const variants: Record<Locale, { language: Language; country: Country }> = {
   lv: { language: "lv", country: "LV" },
   "en-lv": { language: "en", country: "LV" },
+  "lt-lv": { language: "lt", country: "LV" },
   lt: { language: "lt", country: "LT" },
   "en-lt": { language: "en", country: "LT" },
+  "lv-lt": { language: "lv", country: "LT" },
 };
 
-// Страны, которые ещё строятся. Их адреса не существуют (404), их нет в
-// карте сайта и в переадресации по языку браузера — пока в окружении не
-// задано NEXT_PUBLIC_PREVIEW_COUNTRIES=1. Так недостроенная Литва не
-// выйдет наружу вместе с латвийским выпуском; локально флаг стоит в
-// .env.local. Перед запуском страны она убирается из этого списка.
+// Что ещё строится: Литва как страна и литовский как язык интерфейса. Их
+// адреса не существуют (404), их нет в карте сайта, в переключателях и в
+// переадресации по языку браузера — пока в окружении не задано
+// NEXT_PUBLIC_PREVIEW_COUNTRIES=1. Так недостроенное не выйдет наружу
+// вместе с латвийским выпуском; локально флаг стоит в .env.local. Перед
+// запуском Литвы оба списка очищаются.
 const previewCountries: Country[] = ["LT"];
+const previewLanguages: Language[] = ["lt"];
 
-function isOpen(country: Country): boolean {
-  return !previewCountries.includes(country) || process.env.NEXT_PUBLIC_PREVIEW_COUNTRIES === "1";
+function isOpen(locale: Locale): boolean {
+  if (process.env.NEXT_PUBLIC_PREVIEW_COUNTRIES === "1") return true;
+  const { language, country } = variants[locale];
+  return !previewCountries.includes(country) && !previewLanguages.includes(language);
 }
 
 // Адреса, которые существуют для посетителя.
-export const locales: readonly Locale[] = allLocales.filter((locale) => isOpen(variants[locale].country));
+export const locales: readonly Locale[] = allLocales.filter(isOpen);
 
 export const defaultLocale: Locale = "lv";
 
@@ -67,10 +81,19 @@ export function nativeLocale(country: Country): Locale {
   return localesOfCountry(country)[0];
 }
 
-// Адрес другой страны для посетителя, который читает на языке language:
-// тот же язык, если он у страны есть (английский), иначе её основной.
+// Адрес страны на языке language; если такого адреса нет (язык закрыт
+// флагом предпросмотра) — на её основном языке.
 export function localeFor(country: Country, language: Language): Locale {
   return localesOfCountry(country).find((locale) => variants[locale].language === language) ?? nativeLocale(country);
+}
+
+// Куда отправить посетителя без сегмента в адресе по языку его браузера.
+// Язык, родной для какой-то страны, ведёт в неё (литовский — в Литву, а не
+// в латвийский каталог на литовском); остальные (английский) — в первый
+// адрес на этом языке, то есть в Латвию.
+export function localeForBrowser(language: string): Locale {
+  const native = countries.map(nativeLocale).find((locale) => variants[locale].language === language);
+  return native ?? locales.find((locale) => variants[locale].language === language) ?? defaultLocale;
 }
 
 // До 2026-10 английская версия жила на /en. Старые ссылки (закладки,

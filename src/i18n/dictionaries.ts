@@ -4,9 +4,10 @@ import type lv from "@/i18n/dictionaries/lv.json";
 
 export type Dictionary = typeof lv;
 
-// Словарь выбирается по языку, а не по сегменту адреса. Латышский и
-// литовский словари написаны каждый для своей страны; английский —
-// общий, и у стран, кроме Латвии, поверх него накладывается файл отличий.
+// Словарь выбирается по языку, а не по сегменту адреса. Базовый словарь
+// каждого языка написан для одной страны: lv.json и en.json — для Латвии,
+// lt.json — для Литвы. Для другой страны поверх него накладывается файл
+// отличий.
 const dictionaries: Record<Language, () => Promise<Dictionary>> = {
   lv: () => import("@/i18n/dictionaries/lv.json").then((module) => module.default),
   en: () => import("@/i18n/dictionaries/en.json").then((module) => module.default),
@@ -17,6 +18,8 @@ const dictionaries: Record<Language, () => Promise<Dictionary>> = {
 // что именно покрыто, тексты о праве). Всё остальное берётся из en.json.
 const overrides: Partial<Record<Locale, () => Promise<unknown>>> = {
   "en-lt": () => import("@/i18n/dictionaries/en-lt.json").then((module) => module.default),
+  "lv-lt": () => import("@/i18n/dictionaries/lv-lt.json").then((module) => module.default),
+  "lt-lv": () => import("@/i18n/dictionaries/lt-lv.json").then((module) => module.default),
 };
 
 export async function getDictionary(locale: Locale): Promise<Dictionary> {

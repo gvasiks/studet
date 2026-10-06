@@ -18,12 +18,20 @@ export function SiteHeader({ locale, dict, tone }: { locale: Locale; dict: Dicti
           dark ? "relative z-30" : "sticky top-0 z-30 border-b border-black/5 bg-white/85 backdrop-blur"
         }
       >
-        <div className="page-container flex min-h-[72px] items-center gap-x-3 lg:gap-x-6">
+        {/* Узкий экран: три языка, логотип и меню со счётчиком должны
+            поместиться в 320 px без горизонтальной прокрутки (WCAG 1.4.10).
+            Поэтому промежутки там меньше, а название рядом со значком
+            появляется только от 360 px — имя сайта остаётся в aria-label. */}
+        <div className="page-container flex min-h-[72px] items-center gap-x-2 sm:gap-x-3 lg:gap-x-6">
           <Link href={`/${locale}`} className="flex items-center gap-2.5" aria-label={SITE_NAME}>
             <span className="grid h-8 w-8 place-items-center rounded-[10px] bg-brand text-white">
               <GraduationCapIcon size={18} />
             </span>
-            <span className={`text-lg font-bold tracking-tight ${dark ? "text-white" : "text-zinc-900"}`}>{SITE_NAME}</span>
+            <span
+              className={`hidden text-base font-bold tracking-tight min-[360px]:inline sm:text-lg ${dark ? "text-white" : "text-zinc-900"}`}
+            >
+              {SITE_NAME}
+            </span>
           </Link>
           {/* от lg — строка пунктов рядом с логотипом; уже — кнопка «Izvēlne»
               в самом конце строки, после переключателя языка */}

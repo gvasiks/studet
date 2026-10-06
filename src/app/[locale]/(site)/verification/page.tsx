@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { countryOf, isLocale, languageOf } from "@/i18n/config";
+import { isLocale, languageOf } from "@/i18n/config";
 import { hasFeature } from "@/lib/country";
 import { isDocumentStale } from "@/lib/document-age";
 import { isPipelineStale } from "@/lib/pipeline-health";
@@ -21,7 +21,7 @@ export const dynamic = "force-dynamic";
 export async function generateMetadata({ params }: PageProps<"/[locale]/verification">): Promise<Metadata> {
   const { locale } = await params;
   if (!isLocale(locale)) notFound();
-  if (!hasFeature(countryOf(locale), "verification")) notFound();
+  if (!hasFeature(locale, "verification")) notFound();
 
   return {
     title: "Verifikācijas rinda",
@@ -65,7 +65,7 @@ function getBlocker(item: VerificationQueueItem): { text: string; tone: "red" | 
 export default async function VerificationPage({ params }: PageProps<"/[locale]/verification">) {
   const { locale } = await params;
   if (!isLocale(locale)) notFound();
-  if (!hasFeature(countryOf(locale), "verification")) notFound();
+  if (!hasFeature(locale, "verification")) notFound();
 
   const [health, queue, pipeline] = await Promise.all([
     getVerificationHealth(),

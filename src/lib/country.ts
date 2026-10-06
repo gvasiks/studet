@@ -1,4 +1,4 @@
-import type { Country, Language } from "@/i18n/config";
+import { countryOf, languageOf, type Country, type Language, type Locale } from "@/i18n/config";
 
 // Всё, чем каталог одной страны отличается от другой, кроме самих данных:
 // какие разделы сайта для неё готовы и какие значения стоят в фильтрах.
@@ -59,6 +59,26 @@ export function countryProfile(country: Country): CountryProfile {
   return profiles[country];
 }
 
-export function hasFeature(country: Country, feature: Feature): boolean {
-  return profiles[country].features.includes(feature);
+// Разделы из длинных текстов написаны не на всех языках. Латвийские
+// словарь, права и политика конфиденциальности есть на латышском и
+// английском; на литовском их нет, пока нет перевода (фаза 5 литовского
+// плана). Страница проверки — внутренний инструмент на латышском.
+// Раздел, которого здесь нет, доступен на всех языках.
+const writtenIn: Record<Country, Partial<Record<Feature, readonly Language[]>>> = {
+  LV: {
+    glossary: ["lv", "en"],
+    rights: ["lv", "en"],
+    privacy: ["lv", "en"],
+    verification: ["lv", "en"],
+  },
+  LT: {},
+};
+
+// Раздел открыт под адресом, если он готов у страны и написан на языке
+// адреса. Иначе его страница отдаёт 404, а ссылка убирается из меню.
+export function hasFeature(locale: Locale, feature: Feature): boolean {
+  const country = countryOf(locale);
+  if (!profiles[country].features.includes(feature)) return false;
+  const languages = writtenIn[country][feature];
+  return languages === undefined || languages.includes(languageOf(locale));
 }
