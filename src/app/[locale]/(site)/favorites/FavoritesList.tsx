@@ -44,7 +44,7 @@ export function FavoritesList({
     let cancelled = false;
 
     async function load() {
-      const ids = getFavoriteIds();
+      const ids = getFavoriteIds(country);
       if (ids.length === 0) {
         if (!cancelled) setProgrammes([]);
         return;
@@ -240,7 +240,12 @@ export function FavoritesList({
                   </tr>
                 </thead>
                 <tbody>
-                  {rows.map((row) => (
+                  {/* Строка, в которой у всех сравниваемых программ прочерк,
+                      ничего не сравнивает — её не показываем (у литовских
+                      программ так выглядят финансирование, цена и места). */}
+                  {rows
+                    .filter((row) => compared.some((programme) => row.render(programme) !== "—"))
+                    .map((row) => (
                     <tr key={row.label} className="border-b border-zinc-100 last:border-b-0">
                       <th
                         scope="row"

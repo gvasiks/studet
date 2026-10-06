@@ -5,16 +5,24 @@
 // получить все карточки одним запросом by id, без сборки OR-фильтра по
 // парам (university slug, programme slug).
 
-const STORAGE_KEY = "studet:favorites";
+import type { Country } from "@/i18n/config";
+
+// Список свой у каждой страны: у программы одной страны нет страницы под
+// адресом другой, и общий список показывал бы на латвийских страницах
+// счётчик «2» при пустом списке. У Латвии ключ прежний, без суффикса, —
+// списки, сохранённые до появления второй страны, не теряются.
+function storageKey(country: Country): string {
+  return country === "LV" ? "studet:favorites" : `studet:favorites:${country.toLowerCase()}`;
+}
 // Свой event, а не "storage" — "storage" не срабатывает во вкладке,
 // которая сама изменила localStorage, только в остальных. Кнопки на одной
 // странице (список каталога) должны видеть изменения друг друга сразу.
 const CHANGE_EVENT = "studet:favorites-changed";
 
-function readIds(): string[] {
+function readIds(country: Country): string[] {
   if (typeof window === "undefined") return [];
   try {
-    const raw = window.localStorage.getItem(STORAGE_KEY);
+    const raw = window.localStorage.getItem(storageKey(country));
     if (!raw) return [];
     const parsed = JSON.parse(raw);
     return Array.isArray(parsed) ? parsed.filter((id): id is string => typeof id === "string") : [];
@@ -25,10 +33,10 @@ function readIds(): string[] {
   }
 }
 
-function writeIds(ids: string[]): void {
+function writeIds(country: Country, ids: string[]): void {
   if (typeof window === "undefined") return;
   try {
-    window.localStorage.setItem(STORAGE_KEY, JSON.stringify(ids));
+    window.localStorage.setItem(storageKey(country), JSON.stringify(ids));
   } catch {
     // Хранилище недоступно (приватный режим Safari и т.п.) — тихо
     // игнорируем, кнопка просто не запомнит выбор до перезагрузки.
@@ -36,22 +44,22 @@ function writeIds(ids: string[]): void {
   window.dispatchEvent(new Event(CHANGE_EVENT));
 }
 
-export function getFavoriteIds(): string[] {
-  return readIds();
+export function getFavoriteIds(country: Country): string[] {
+  return readIds(country);
 }
 
-export function isFavorite(programmeId: string): boolean {
-  return readIds().includes(programmeId);
+export function isFavorite(country: Country, programmeId: string): boolean {
+  return readIds(country).includes(programmeId);
 }
 
-export function toggleFavorite(programmeId: string): boolean {
-  const ids = readIds();
+export function toggleFavorite(country: Country, programmeId: string): boolean {
+  const ids = readIds(country);
   const index = ids.indexOf(programmeId);
   if (index === -1) {
-    writeIds([...ids, programmeId]);
+    writeIds(country, [...ids, programmeId]);
     return true;
   }
-  writeIds([...ids.slice(0, index), ...ids.slice(index + 1)]);
+  writeIds(country, [...ids.slice(0, index), ...ids.slice(index + 1)]);
   return false;
 }
 

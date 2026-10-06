@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 import Link from "next/link";
-import { languageOf, type Locale } from "@/i18n/config";
+import { countryOf, languageOf, type Locale } from "@/i18n/config";
 import type { Dictionary } from "@/i18n/dictionaries";
 import { ArrowRightIcon, BuildingIcon, CalendarIcon, ClockIcon, GlobeIcon, MapPinIcon } from "@/components/icons";
 import { FavoriteButton } from "@/components/FavoriteButton";
@@ -39,6 +39,7 @@ export function ProgrammeCard({
           {levelLabel}
         </span>
         <FavoriteButton
+          country={countryOf(locale)}
           programmeId={programme.id}
           addLabel={dict.favorites.add}
           removeLabel={dict.favorites.remove}
@@ -76,6 +77,12 @@ export function ProgrammeCard({
               {programme.duration_years} {dict.catalog.years}
             </Chip>
           )}
+          {/* Форма — только когда она не очная: заочный и дистанционный
+              варианты одной программы стоят в каталоге отдельными строками,
+              и без этой пометки их карточки выглядят одинаково. */}
+          {programme.study_mode !== "full_time" && (
+            <Chip>{enumLabel(dict.catalog.studyMode, programme.study_mode)}</Chip>
+          )}
           {deadline && <Chip icon={<CalendarIcon size={13} />}>{deadline}</Chip>}
         </div>
         {/* relative z-10 — над растянутой ссылкой карточки, как звезда.
@@ -96,7 +103,7 @@ export function ProgrammeCard({
   );
 }
 
-function Chip({ icon, children }: { icon: ReactNode; children: ReactNode }) {
+function Chip({ icon, children }: { icon?: ReactNode; children: ReactNode }) {
   return (
     <span className="inline-flex h-7 items-center gap-1.5 rounded-full bg-zinc-100 px-2.5 text-xs font-medium text-zinc-700">
       {icon}

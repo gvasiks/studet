@@ -1,16 +1,20 @@
 "use client";
 
 import { useSyncExternalStore } from "react";
+import type { Country } from "@/i18n/config";
 import { StarIcon } from "@/components/icons";
 import { isFavorite, subscribeToFavorites, toggleFavorite } from "@/lib/favorites";
 
 export function FavoriteButton({
+  country,
   programmeId,
   addLabel,
   removeLabel,
   size = 18,
   className,
 }: {
+  /** Страна каталога: список избранного у каждой страны свой. */
+  country: Country;
   programmeId: string;
   addLabel: string;
   removeLabel: string;
@@ -23,7 +27,7 @@ export function FavoriteButton({
   // не влияет на то, что видит поисковик или первый отрисованный экран.
   const favorited = useSyncExternalStore(
     subscribeToFavorites,
-    () => isFavorite(programmeId),
+    () => isFavorite(country, programmeId),
     () => false,
   );
 
@@ -33,7 +37,7 @@ export function FavoriteButton({
       aria-pressed={favorited}
       aria-label={favorited ? removeLabel : addLabel}
       title={favorited ? removeLabel : addLabel}
-      onClick={() => toggleFavorite(programmeId)}
+      onClick={() => toggleFavorite(country, programmeId)}
       // relative z-10: на карточке каталога вся площадь — растянутая
       // ссылка на программу, звезда должна оставаться над ней.
       className={`relative z-10 grid h-8 w-8 shrink-0 place-items-center rounded-full transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand ${

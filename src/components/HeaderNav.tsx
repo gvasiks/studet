@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { countryOf, type Locale } from "@/i18n/config";
+import { countryOf, type Country, type Locale } from "@/i18n/config";
 import { hasFeature, type Feature } from "@/lib/country";
 import { getFavoriteIds, subscribeToFavorites } from "@/lib/favorites";
 import { MenuIcon, StarIcon, XIcon } from "@/components/icons";
@@ -20,10 +20,10 @@ type Labels = {
   main: string;
 };
 
-function useFavoritesCount(): number {
+function useFavoritesCount(country: Country): number {
   return useSyncExternalStore(
     subscribeToFavorites,
-    () => getFavoriteIds().length,
+    () => getFavoriteIds(country).length,
     () => 0,
   );
 }
@@ -61,7 +61,7 @@ export function HeaderNav({
   className?: string;
 }) {
   const pathname = usePathname();
-  const favoritesCount = useFavoritesCount();
+  const favoritesCount = useFavoritesCount(countryOf(locale));
   const dark = tone === "dark";
   const [open, setOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
@@ -182,7 +182,7 @@ export function HeaderNav({
 }
 
 export function FavoritesLink({ locale, label }: { locale: Locale; label: string }) {
-  const count = useFavoritesCount();
+  const count = useFavoritesCount(countryOf(locale));
 
   return (
     <Link

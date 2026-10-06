@@ -162,6 +162,7 @@ export default async function ProgrammePage({ params }: { params: Params }) {
       <div className="flex items-start justify-between gap-3">
         <h1 className="mt-1 text-3xl font-bold tracking-tighter text-zinc-900">{name}</h1>
         <FavoriteButton
+          country={countryOf(locale)}
           programmeId={record.id}
           addLabel={dict.favorites.add}
           removeLabel={dict.favorites.remove}
