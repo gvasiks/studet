@@ -16,8 +16,14 @@ export type Feature =
   | "privacy"
   | "verification";
 
+// Фильтр каталога, для которого у страны может не быть данных. Город,
+// язык, форма обучения, вуз и длительность есть у всех.
+export type CatalogFilter = "interest" | "fee" | "budget";
+
 type CountryProfile = {
   features: readonly Feature[];
+  /** Фильтры каталога, под которые у страны есть данные. */
+  filters: readonly CatalogFilter[];
   /** Вкладки уровня в каталоге, в порядке показа. */
   levels: readonly LevelKey[];
   /** Города в фильтре; ключи — как в programme.city и в словаре catalog.city. */
@@ -26,6 +32,13 @@ type CountryProfile = {
   languages: readonly string[];
   /** Язык, на котором источники страны публикуют названия программ. */
   nativeLanguage: Language;
+  /**
+   * Общий приём страны: все программы каталога взяты из его списка и
+   * подаются через одну систему. url — куда вести человека, sourceUrl —
+   * список программ, из которого это следует. null — канал у каждого вуза
+   * свой и хранится в таблице application_channel.
+   */
+  generalAdmission: { url: string; sourceUrl: string } | null;
 };
 
 // Все уровни, которые вообще бывают в programme.degree_level. "integrated" —
@@ -37,21 +50,34 @@ export type LevelKey = (typeof LEVEL_KEYS)[number];
 const profiles: Record<Country, CountryProfile> = {
   LV: {
     features: ["favorites", "survey", "match", "calculator", "glossary", "rights", "privacy", "verification"],
+    filters: ["interest", "fee", "budget"],
     levels: ["bachelor", "master", "doctoral", "college"],
     cities: ["riga", "daugavpils", "valmiera", "ventspils", "jelgava", "liepaja", "rezekne", "jurmala", "gulbene", "malnava"],
     languages: ["lv", "en"],
     nativeLanguage: "lv",
+    generalAdmission: null,
   },
   // Литва: каталог, карточка, список избранного, расчёт балла и «куда я
   // прохожу» (фаза 3, 2026-10-06). Остальные разделы включаются по мере
   // готовности (docs/PLAN-LITHUANIA-2027.md): анкета — фаза 4, словарь,
   // права и политика конфиденциальности — фаза 5.
+  // Фильтров по плате и «только бюджет» нет: источник не сообщает ни цену,
+  // ни вид финансирования программы (бюджетные места в Литве делятся по
+  // направлениям, а не по программам).
   LT: {
     features: ["favorites", "calculator", "match"],
+    filters: [],
     levels: ["bachelor", "college", "integrated"],
     cities: ["vilnius", "kaunas", "klaipeda", "siauliai", "panevezys", "utena", "alytus", "telsiai", "marijampole", "taurage"],
     languages: ["lt", "en", "ru"],
     nativeLanguage: "lt",
+    // Ссылка на систему подачи у LAMA BPO привязана к году (…/bp2026/…),
+    // поэтому ведём на постоянную страницу о поступлении: вход в систему и
+    // порядок подачи — на ней.
+    generalAdmission: {
+      url: "https://lamabpo.lt/pirmosios-pakopos-ir-vientisosios-studijos/",
+      sourceUrl: "https://lamabpo.lt/pirmosios-pakopos-ir-vientisosios-studijos/programu-sarasas/",
+    },
   },
 };
 

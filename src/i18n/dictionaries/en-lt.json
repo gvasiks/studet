@@ -8,6 +8,12 @@
   "coverage": {
     "notice": "This currently covers programmes in Lithuania's general admission for local school-leavers. Information for international applicants isn't built yet."
   },
+  "programme": {
+    "applyTypes": {
+      "unified_portal": "The programme is on the general admission list: you apply in the LAMA BPO general admission system — one application for several institutions."
+    },
+    "applyNote": "Applies to applicants with Lithuanian education; the procedure for international applicants may differ."
+  },
   "match": {
     "intro": "Enter your state matura exam (VBE) results — we'll show the competition score for the programmes of Lithuania's general admission and which exams are still missing."
   },

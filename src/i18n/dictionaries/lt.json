@@ -153,7 +153,7 @@
     "notFoundTitle": "Programa nerasta",
     "applyTitle": "Kur teikti prašymą",
     "applyTypes": {
-      "unified_portal": "Prašymai teikiami per bendrojo priėmimo sistemą — vienas prašymas į kelias aukštąsias mokyklas.",
+      "unified_portal": "Programa yra bendrojo priėmimo sąraše: prašymas teikiamas LAMA BPO bendrojo priėmimo informacinėje sistemoje — vienas prašymas į kelias aukštąsias mokyklas.",
       "university": "Prašymas teikiamas tiesiogiai aukštajai mokyklai — tvarka aprašyta jos svetainėje."
     },
     "applyLink": "Atidaryti prašymų puslapį ({host})",

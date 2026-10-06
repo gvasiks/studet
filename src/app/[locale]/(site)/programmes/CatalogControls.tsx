@@ -178,17 +178,21 @@ export function FilterSidebar({
           ))}
         </SelectField>
 
-        <div>
-          <SelectField label={filters.fee} name="fee" defaultValue={state.maxFee ? String(state.maxFee) : ""}>
-            <option value="">{filters.anyFee}</option>
-            {FEE_LIMITS.map((amount) => (
-              <option key={amount} value={amount}>
-                {interpolate(filters.feeUpTo, { amount })}
-              </option>
-            ))}
-          </SelectField>
-          <p className="mt-1.5 text-xs leading-relaxed text-zinc-600">{filters.feeHint}</p>
-        </div>
+        {/* Плата, интересы и «только бюджет» — только там, где у страны есть
+            данные (профиль страны, src/lib/country.ts). */}
+        {profile.filters.includes("fee") && (
+          <div>
+            <SelectField label={filters.fee} name="fee" defaultValue={state.maxFee ? String(state.maxFee) : ""}>
+              <option value="">{filters.anyFee}</option>
+              {FEE_LIMITS.map((amount) => (
+                <option key={amount} value={amount}>
+                  {interpolate(filters.feeUpTo, { amount })}
+                </option>
+              ))}
+            </SelectField>
+            <p className="mt-1.5 text-xs leading-relaxed text-zinc-600">{filters.feeHint}</p>
+          </div>
+        )}
 
         <fieldset>
           <legend className="text-[13px] font-medium leading-4 text-zinc-700">{filters.city}</legend>
@@ -205,42 +209,46 @@ export function FilterSidebar({
           </div>
         </fieldset>
 
-        <fieldset>
-          <legend className="text-[13px] font-medium leading-4 text-zinc-700">{filters.interest}</legend>
-          <div className="mt-2.5 flex flex-wrap gap-2">
-            {INTEREST_KEYS.map((key) => (
-              <ChipOption
-                key={key}
-                name="interest"
-                value={key}
-                label={dict.survey.interests.categories[key]}
-                checked={state.interests.includes(key)}
-              />
-            ))}
-          </div>
-        </fieldset>
+        {profile.filters.includes("interest") && (
+          <fieldset>
+            <legend className="text-[13px] font-medium leading-4 text-zinc-700">{filters.interest}</legend>
+            <div className="mt-2.5 flex flex-wrap gap-2">
+              {INTEREST_KEYS.map((key) => (
+                <ChipOption
+                  key={key}
+                  name="interest"
+                  value={key}
+                  label={dict.survey.interests.categories[key]}
+                  checked={state.interests.includes(key)}
+                />
+              ))}
+            </div>
+          </fieldset>
+        )}
 
-        <div className="border-t border-zinc-200 pt-5">
-          <label className="flex cursor-pointer items-center justify-between gap-3">
-            <span>
-              <span className="block text-sm font-medium text-zinc-900">{filters.budgetOnly}</span>
-              <span className="block text-xs text-zinc-600">{filters.budgetOnlyHint}</span>
-            </span>
-            <input
-              type="checkbox"
-              role="switch"
-              name="budget"
-              value="1"
-              defaultChecked={state.budgetOnly}
-              className="peer sr-only"
-            />
-            {/* Дорожка zinc-500: выключенный переключатель на белом должен
-                читаться с контрастом 3:1, светлее нельзя. */}
-            <span
-              className={`relative h-[26px] w-11 shrink-0 rounded-full bg-zinc-500 transition-colors after:absolute after:left-[3px] after:top-[3px] after:h-5 after:w-5 after:rounded-full after:bg-white after:shadow after:transition-transform peer-checked:bg-brand peer-checked:after:translate-x-[18px] ${FOCUS_RING}`}
-            />
-          </label>
-        </div>
+        {profile.filters.includes("budget") && (
+          <div className="border-t border-zinc-200 pt-5">
+            <label className="flex cursor-pointer items-center justify-between gap-3">
+              <span>
+                <span className="block text-sm font-medium text-zinc-900">{filters.budgetOnly}</span>
+                <span className="block text-xs text-zinc-600">{filters.budgetOnlyHint}</span>
+              </span>
+              <input
+                type="checkbox"
+                role="switch"
+                name="budget"
+                value="1"
+                defaultChecked={state.budgetOnly}
+                className="peer sr-only"
+              />
+              {/* Дорожка zinc-500: выключенный переключатель на белом должен
+                  читаться с контрастом 3:1, светлее нельзя. */}
+              <span
+                className={`relative h-[26px] w-11 shrink-0 rounded-full bg-zinc-500 transition-colors after:absolute after:left-[3px] after:top-[3px] after:h-5 after:w-5 after:rounded-full after:bg-white after:shadow after:transition-transform peer-checked:bg-brand peer-checked:after:translate-x-[18px] ${FOCUS_RING}`}
+              />
+            </label>
+          </div>
+        )}
 
         {/* Сортировка и уровень при новом поиске не сбрасываются */}
         {state.sort !== "name" && <input type="hidden" name="sort" value={state.sort} />}

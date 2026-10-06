@@ -4,6 +4,7 @@ import type { Dictionary } from "@/i18n/dictionaries";
 import { notFound } from "next/navigation";
 import { countryOf, isLocale, languageOf, type Locale } from "@/i18n/config";
 import { getDictionary } from "@/i18n/dictionaries";
+import { countryProfile } from "@/lib/country";
 import { enumLabel, getProgramme, localizedName, type Programme, type University } from "@/lib/catalog";
 import { getFormula } from "@/lib/formula-queries";
 import { getLtFormula } from "@/lib/lt-score-queries";
@@ -96,6 +97,12 @@ export default async function ProgrammePage({ params }: { params: Params }) {
   const channel = matchChannel(channels, record.university_id, record.degree_level);
   const channelUrl = httpUrl(channel?.url);
   const channelSourceUrl = httpUrl(channel?.sourceUrl);
+  // У страны с общим приёмом (Литва) канал один на все программы каталога:
+  // каждая взята из списка общего приёма. Человек эту запись не
+  // подтверждает (отступление от правила 6 только для Литвы), поэтому под
+  // блоком — пометка об автоматическом извлечении, дата, когда программа
+  // была в списке, и ссылка на список. Без даты блока нет (правило 5).
+  const generalAdmission = record.details_extracted_at ? countryProfile(countryOf(locale)).generalAdmission : null;
   // Блок "что стало с выпускниками" (пункт 14 ревью) — только при
   // подтверждённом направлении программы, см. outcome-queries.ts.
   const outcomeSnapshots = outcome ? pickOutcomes(outcome.rows, record.degree_level, new Date().getFullYear()) : [];
@@ -314,6 +321,33 @@ export default async function ProgrammePage({ params }: { params: Params }) {
                 </a>
               </>
             )}
+          </p>
+        </section>
+      )}
+
+      {!channel && generalAdmission && (
+        <section className="mt-8">
+          <h2 className="text-xs uppercase tracking-wide text-zinc-500">{dict.programme.applyTitle}</h2>
+          <p className="mt-2 text-zinc-900">{dict.programme.applyTypes.unified_portal}</p>
+          <p className="mt-2">
+            <a
+              href={generalAdmission.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-medium text-zinc-900 underline"
+            >
+              {interpolate(dict.programme.applyLink, { host: sourceHost(generalAdmission.url) ?? "" })}
+            </a>
+          </p>
+          <p className="mt-2 text-xs leading-relaxed text-zinc-500">
+            {dict.programme.applyNote}{" "}
+            {interpolate(dict.programme.detailsSource, {
+              source: sourceHost(generalAdmission.sourceUrl) ?? "",
+              date: new Date(record.details_extracted_at!).toLocaleDateString(language),
+            })}{" "}
+            <a href={generalAdmission.sourceUrl} target="_blank" rel="noopener noreferrer" className="underline">
+              {dict.catalog.sourceLinkLabel}
+            </a>
           </p>
         </section>
       )}

@@ -11,7 +11,7 @@ export type SortKey = (typeof SORT_KEYS)[number];
 // Список уровней — в country.ts: какие из них показываются вкладками,
 // зависит от страны.
 export { LEVEL_KEYS, type LevelKey } from "./country";
-import { LEVEL_KEYS, type LevelKey } from "./country";
+import { LEVEL_KEYS, type CatalogFilter, type LevelKey } from "./country";
 
 // Пороги «не дольше N лет» и «не дороже N евро в год» — вопросы анкеты и
 // фильтры каталога. Значения выбраны по данным каталога (2026-10-01): у
@@ -93,6 +93,18 @@ export function parseCatalogState(sp: SearchParams): CatalogState {
     kind: (UNIVERSITY_KINDS as readonly string[]).includes(kind ?? "") ? (kind as UniversityKind) : null,
     maxYears: oneOf(DURATION_LIMITS, firstValue(sp.years)),
     maxFee: oneOf(FEE_LIMITS, firstValue(sp.fee)),
+  };
+}
+
+// Фильтр, под который у страны нет данных, сбрасывается: в форме его нет, а
+// ?budget=1, пришедший по старой или чужой ссылке, дал бы пустой каталог без
+// видимой причины и без переключателя, которым это можно снять.
+export function onlySupported(state: CatalogState, supported: readonly CatalogFilter[]): CatalogState {
+  return {
+    ...state,
+    interests: supported.includes("interest") ? state.interests : [],
+    maxFee: supported.includes("fee") ? state.maxFee : null,
+    budgetOnly: supported.includes("budget") && state.budgetOnly,
   };
 }
 

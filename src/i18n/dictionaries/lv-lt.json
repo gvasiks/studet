@@ -23,6 +23,9 @@
     }
   },
   "programme": {
+    "applyTypes": {
+      "unified_portal": "Programma ir kopējās uzņemšanas sarakstā: pieteikumu iesniedz LAMA BPO kopējās uzņemšanas sistēmā — viens pieteikums vairākām augstskolām."
+    },
     "applyNote": "Attiecas uz reflektantiem ar Lietuvā iegūtu izglītību; ārvalstu reflektantiem kārtība var atšķirties."
   },
   "match": {

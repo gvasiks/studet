@@ -2,14 +2,14 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { countryOf, isLocale, languageOf } from "@/i18n/config";
-import { hasFeature } from "@/lib/country";
+import { countryProfile, hasFeature } from "@/lib/country";
 import { getDictionary } from "@/i18n/dictionaries";
 import { buildAlternates } from "@/lib/site";
 import { getApplicationRounds } from "@/lib/deadline-queries";
 import { getCalculatorProgrammeIds } from "@/lib/calculator-ids";
 import { matchRounds } from "@/lib/deadlines";
 import { listProgrammes, listUniversities } from "@/lib/catalog";
-import { hasActiveFilters, parseCatalogState } from "@/lib/catalog-query";
+import { hasActiveFilters, onlySupported, parseCatalogState } from "@/lib/catalog-query";
 import { buildCatalogView } from "@/lib/catalog-view";
 import { CatalogForm } from "./CatalogForm";
 import { ProgrammeCard } from "@/components/ProgrammeCard";
@@ -41,7 +41,7 @@ export default async function ProgrammesPage({
   const { locale } = await params;
   if (!isLocale(locale)) notFound();
 
-  const state = parseCatalogState(await searchParams);
+  const state = onlySupported(parseCatalogState(await searchParams), countryProfile(countryOf(locale)).filters);
   const dict = await getDictionary(locale);
 
   // В базе — только то, что нельзя сделать быстрее в памяти: город, язык,

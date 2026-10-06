@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import type { ProgrammeWithUniversity } from "./catalog";
-import { catalogQuery, hasActiveFilters, PAGE_SIZE, parseCatalogState } from "./catalog-query";
+import { catalogQuery, hasActiveFilters, onlySupported, PAGE_SIZE, parseCatalogState } from "./catalog-query";
 import { buildCatalogView, matchesQuery, normalize } from "./catalog-view";
 
 const programme = (
@@ -172,5 +172,26 @@ describe("государственный или частный вуз", () => {
     const state = parseCatalogState({ kind: "private" });
     expect(catalogQuery(state)).toBe("?kind=private");
     expect(hasActiveFilters(state)).toBe(true);
+  });
+});
+
+describe("фильтры, под которые у страны нет данных", () => {
+  const state = parseCatalogState({ budget: "1", fee: "3000", interest: "it,law", city: "vilnius", q: "teise" });
+
+  it("страна со всеми фильтрами — состояние не меняется", () => {
+    expect(onlySupported(state, ["interest", "fee", "budget"])).toEqual(state);
+  });
+
+  it("страна без фильтров — плата, бюджет и интересы сброшены, остальное на месте", () => {
+    const limited = onlySupported(state, []);
+    expect(limited).toMatchObject({ budgetOnly: false, maxFee: null, interests: [], cities: ["vilnius"], q: "teise" });
+    // В ссылках «показать ещё» и сортировки сброшенных фильтров тоже нет.
+    expect(catalogQuery(limited)).toBe("?q=teise&city=vilnius");
+  });
+
+  it("каждый фильтр сбрасывается отдельно", () => {
+    expect(onlySupported(state, ["interest"])).toMatchObject({ budgetOnly: false, maxFee: null, interests: ["it", "law"] });
+    expect(onlySupported(state, ["fee"])).toMatchObject({ budgetOnly: false, maxFee: 3000, interests: [] });
+    expect(onlySupported(state, ["budget"])).toMatchObject({ budgetOnly: true, maxFee: null, interests: [] });
   });
 });
