@@ -355,6 +355,13 @@ def _institution(page: Page, card_url: str, name: str) -> Institution:
 
 
 def scrape_all() -> list[tuple[UniversityDraft, list[ProgrammeDraft]]]:
+    return build(*collect())
+
+
+def collect() -> tuple[list[dict[str, str]], dict[str, Card], dict[str, Institution]]:
+    """Прочитать оба источника: записи общего приёма, карточки программ и
+    карточки учреждений. Отдельно от build(), потому что записи и карточки
+    нужны ещё и загрузчику формул (lt_load_formulas.py)."""
     with sync_playwright() as p:
         browser = p.chromium.launch()
         page = browser.new_page()
@@ -377,7 +384,16 @@ def scrape_all() -> list[tuple[UniversityDraft, list[ProgrammeDraft]]]:
                     institutions[entry["f"]] = Institution()
         browser.close()
 
-    return build(entries, cards, institutions)
+    return entries, cards, institutions
+
+
+def catalog_rows(entries: list[dict[str, str]], cards: dict[str, Card]) -> dict[tuple[str, str], list[dict[str, str]]]:
+    """(код вуза, код программы) -> записи общего приёма, слитые в эту строку
+    каталога. Те же группировка и коды, что в build(): так строка приёма
+    привязывается к программе, которую записал сбор каталога."""
+    rows = group_rows(entries, cards)
+    slugs = assign_slugs(list(rows))
+    return {(university_slug(key[0]), slugs[key]): rows[key] for key in rows}
 
 
 def build(
@@ -543,6 +559,9 @@ def _selftest() -> None:
     assert programmes[0].duration_years == 4.0 and programmes[0].degree_level == "bachelor"
     assert programmes[0].name_lt == "Aviacijos inžinerija" and programmes[0].name_lv is None
     assert programmes[0].funding_type is None, "тип финансирования не угадывается"
+    by_row = catalog_rows(entries, cards)
+    assert sorted(by_row) == [("ktu", "aviacijos-inzinerija-en"), ("ktu", "aviacijos-inzinerija-lt"), ("lka-lt", "nacionalinis-saugumas")], sorted(by_row)
+    assert [entry["e"] for entry in by_row[("ktu", "aviacijos-inzinerija-lt")]] == ["177"]
     print("selftest: OK")
 
 
