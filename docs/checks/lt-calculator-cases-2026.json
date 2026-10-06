@@ -3,6 +3,14 @@
  "calculator_page": "https://lamabpo.lt/pirmosios-pakopos-ir-vientisosios-studijos/konkursinio-balo-skaiciuokle/",
  "prepared_at": "2026-10-06T17:43:32.638403+00:00",
  "note": "Оценки выдуманы; персональных данных нет. Поле official вписывает человек — см. pipeline/src/lt_check_calculator.py.",
+ "owner_check": {
+  "checked_on": "2026-10-06",
+  "cases_checked": 13,
+  "all_matched": true,
+  "case_ids": null,
+  "recorded_from": "Сообщение владельца: «Проверил выборочно 13 штук — все считает правильно». Номера случаев он не записывал, поэтому поле official у случаев не заполнено.",
+  "threshold_decision": "Порог сверки снижен с 30 до 13 случаев решением владельца 2026-10-06 («13 достаточно»)."
+ },
  "cases": [
   {
    "id": 1,

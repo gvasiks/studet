@@ -251,8 +251,13 @@ def main() -> None:
         print(f"\nслучаев: {len(cases)}. Файл не записан (добавьте --save).")
         return
 
+    # Запись владельца о проведённой сверке (owner_check) делается руками и
+    # при пересборке случаев не теряется.
+    owner_check = None
     if OUTPUT.exists():
-        cases = keep_official(cases, json.loads(OUTPUT.read_text(encoding="utf-8"))["cases"])
+        previous = json.loads(OUTPUT.read_text(encoding="utf-8"))
+        cases = keep_official(cases, previous["cases"])
+        owner_check = previous.get("owner_check")
     OUTPUT.write_text(
         json.dumps(
             {
@@ -260,6 +265,7 @@ def main() -> None:
                 "calculator_page": CALCULATOR_PAGE,
                 "prepared_at": datetime.now(timezone.utc).isoformat(),
                 "note": "Оценки выдуманы; персональных данных нет. Поле official вписывает человек — см. pipeline/src/lt_check_calculator.py.",
+                "owner_check": owner_check,
                 "cases": cases,
             },
             ensure_ascii=False,
