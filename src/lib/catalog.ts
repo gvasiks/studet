@@ -2,6 +2,7 @@ import { cache } from "react";
 import type { Country } from "@/i18n/config";
 import { supabase } from "@/lib/supabase";
 import { fieldCodesForInterests, type InterestKey } from "@/lib/fields";
+import { ltFieldCodesForInterests } from "@/lib/lt-fields";
 
 export type University = {
   id: string;
@@ -120,8 +121,11 @@ export const listProgrammes = cache(
     // программы без разметки выпали бы из обычного каталога. Неподтверждённая
     // разметка здесь допустима: это подсказка для поиска, а не факт, на
     // который человек опирается (блок с доходами требует verified_at).
-    const interestCodes =
-      filters.interests && filters.interests.length > 0 ? fieldCodesForInterests(filters.interests) : null;
+    // У Литвы направление лежит в своей таблице и со своими кодами
+    // (lt_programme_field, классификатор общего приёма) — см. lt-fields.ts.
+    const fieldTable = country === "LT" ? "lt_programme_field" : "programme_field";
+    const codesFor = country === "LT" ? ltFieldCodesForInterests : fieldCodesForInterests;
+    const interestCodes = filters.interests && filters.interests.length > 0 ? codesFor(filters.interests) : null;
     // Запрос собирается заново для каждой страницы: один и тот же объект
     // запроса повторно не используется.
     const buildQuery = () => {
@@ -129,13 +133,13 @@ export const listProgrammes = cache(
         .from("programme")
         .select(
           interestCodes
-            ? `${CATALOG_LIST_COLUMNS}, university!inner(${UNIVERSITY_LIST_COLUMNS}), programme_field!inner(field_code)`
+            ? `${CATALOG_LIST_COLUMNS}, university!inner(${UNIVERSITY_LIST_COLUMNS}), ${fieldTable}!inner(field_code)`
             : `${CATALOG_LIST_COLUMNS}, university!inner(${UNIVERSITY_LIST_COLUMNS})`,
         )
         .eq("university.country", country);
 
       if (interestCodes) {
-        query = query.in("programme_field.field_code", interestCodes);
+        query = query.in(`${fieldTable}.field_code`, interestCodes);
       }
       if (filters.budgetOnly) {
         query = query.in("funding_type", ["budget", "both"]);
