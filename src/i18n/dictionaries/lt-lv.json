@@ -301,7 +301,7 @@
   },
   "privacy": {
     "intro": "Kaip ši svetainė tvarko asmens duomenis: ką saugome, ko nesaugome ir kokios yra jūsų teisės. Šis tekstas — vertimas iš latvių kalbos; jei tekstai skiriasi, galioja tekstas latvių kalba.",
-    "updated": "Redakcija: 2026 m. spalio 4 d.",
+    "updated": "Redakcija: 2026 m. spalio 6 d.",
     "authorityLabel": "Latvijos duomenų valstybinė inspekcija (dvi.gov.lv)",
     "authorityUrl": "https://www.dvi.gov.lv/en",
     "sections": [
@@ -328,7 +328,7 @@
         "body": [
           "Kai atidarote puslapį, mūsų prieglobos paslaugų teikėjas automatiškai užfiksuoja techninius duomenis: jūsų IP adresą, laiką, prašomą adresą ir naršyklės tipą. Tai daroma tam, kad svetainė veiktų ir būtų saugi. Šių duomenų nenaudojame asmeniui nustatyti.",
           "Teisinis pagrindas: mūsų teisėtas interesas užtikrinti svetainės saugumą ir veikimą (Bendrojo duomenų apsaugos reglamento 6 straipsnio 1 dalies f punktas). Saugojimo laikotarpį nustato paslaugų teikėjas.",
-          "Pirmą kartą apsilankius kalbą parenkame pagal jūsų naršyklės kalbos nustatymą; tai nesaugoma."
+          "Pirmą kartą apsilankius kalbą (latvių, lietuvių arba anglų) parenkame pagal jūsų naršyklės kalbos nustatymą; tai nesaugoma."
         ]
       },
       {

@@ -12,7 +12,7 @@ import AxeBuilder from "@axe-core/playwright";
 // /programmes/lu/economics/calculator — калькулятор с формулой; /programmes/lu/nav-tadas — страница
 // «не найдено» (код ответа 404, но вёрстка своя — её тоже проверяем).
 const ROUTES = ["", "/programmes", "/programmes/lu/economics", "/programmes/lu/economics/calculator", "/programmes/gfk/110", "/programmes/lu/nav-tadas", "/survey", "/match", "/rights", "/glossary", "/privacy", "/favorites"];
-const LOCALES = ["lv", "en-lv"] as const;
+const LOCALES = ["lv", "en-lv", "lt-lv"] as const;
 
 for (const locale of LOCALES) {
   for (const route of ROUTES) {
@@ -37,18 +37,11 @@ const LT_ROUTES = [
   "/en-lt",
   "/en-lt/programmes",
   "/en-lt/programmes/vu/medicina",
-  // третий язык у каждой страны (решение 2026-10-06): Литва на латышском,
-  // Латвия на литовском, включая переведённые словарь, права и политику
+  // Литва на латышском (решение 2026-10-06). Латвия на литовском (/lt-lv)
+  // открыта без флага и проверяется выше вместе с остальными адресами Латвии.
   "/lv-lt",
   "/lv-lt/programmes",
   "/lv-lt/programmes/vu/medicina",
-  "/lt-lv",
-  "/lt-lv/programmes",
-  "/lt-lv/programmes/lu/economics",
-  "/lt-lv/match",
-  "/lt-lv/glossary",
-  "/lt-lv/rights",
-  "/lt-lv/privacy",
 ];
 
 for (const route of LT_ROUTES) {

@@ -8,6 +8,7 @@ describe("buildAlternates", () => {
     expect(alternates.languages).toEqual({
       lv: `${SITE_URL}/lv/programmes/lu/economics`,
       en: `${SITE_URL}/en-lv/programmes/lu/economics`,
+      lt: `${SITE_URL}/lt-lv/programmes/lu/economics`,
       "x-default": `${SITE_URL}/lv/programmes/lu/economics`,
     });
   });

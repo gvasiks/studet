@@ -652,7 +652,7 @@
   "privacy": {
     "title": "Privātuma politika",
     "intro": "Kā šī vietne apstrādā personas datus: ko mēs uzglabājam, ko nē, un kādas ir tavas tiesības.",
-    "updated": "Redakcija: 2026. gada 4. oktobris",
+    "updated": "Redakcija: 2026. gada 6. oktobris",
     "authorityLabel": "Datu valsts inspekcija (dvi.gov.lv)",
     "authorityUrl": "https://www.dvi.gov.lv",
     "sections": [
@@ -663,7 +663,7 @@
           "- Vietnei nav lietotāju kontu, un reģistrācija nav vajadzīga.",
           "- Eksāmenu rezultāti, ko ievadi kalkulatorā vai meklēšanā «Kur es varu iestāties?», tiek aprēķināti tavā pārlūkā. Tie netiek nosūtīti uz mūsu serveri un nekur netiek saglabāti.",
           "- Mēs neizmantojam sīkdatnes izsekošanai un nerādām reklāmu.",
-          "- Izlase (sirdiņas pie programmām) glabājas tikai tavā ierīcē."
+          "- Izlase (zvaigznītes pie programmām) glabājas tikai tavā ierīcē."
         ]
       },
       {
@@ -679,7 +679,7 @@
         "body": [
           "Kad atver lapu, hostinga pakalpojuma sniedzējs automātiski reģistrē tehniskos datus: IP adresi, laiku, pieprasīto adresi un pārlūka veidu. To dara, lai vietne darbotos un būtu droša. Mēs šos datus neizmantojam, lai kādu identificētu.",
           "Pamats: mūsu leģitīmās intereses nodrošināt vietnes drošību un darbību (Vispārīgās datu aizsardzības regulas 6. panta 1. punkta f) apakšpunkts). Glabāšanas termiņu nosaka pakalpojuma sniedzējs.",
-          "Valodu (latviešu vai angļu) pirmajā apmeklējumā izvēlamies pēc pārlūka valodas iestatījuma; tas netiek saglabāts."
+          "Valodu (latviešu, lietuviešu vai angļu) pirmajā apmeklējumā izvēlamies pēc pārlūka valodas iestatījuma; tas netiek saglabāts."
         ]
       },
       {
@@ -694,7 +694,7 @@
         "id": "favorites",
         "title": "Izlase",
         "body": [
-          "Programmu saraksts, ko atzīmē ar sirdiņu, glabājas tikai tavā pārlūkā (localStorage) un netiek nosūtīts mums. To var dzēst, iztīrot vietnes datus pārlūka iestatījumos. Šī glabāšana ir vajadzīga funkcijai, ko tu pats izvēlies izmantot."
+          "Programmu saraksts, ko atzīmē ar zvaigznīti, glabājas tikai tavā pārlūkā (localStorage) un netiek nosūtīts mums. To var dzēst, iztīrot vietnes datus pārlūka iestatījumos. Šī glabāšana ir vajadzīga funkcijai, ko tu pats izvēlies izmantot."
         ]
       },
       {
