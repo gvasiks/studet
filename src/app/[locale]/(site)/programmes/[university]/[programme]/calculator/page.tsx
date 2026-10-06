@@ -7,9 +7,11 @@ import { getDictionary } from "@/i18n/dictionaries";
 import { getProgramme, localizedName } from "@/lib/catalog";
 import { getFormula, getLevelCoefficients } from "@/lib/formula-queries";
 import { getAdmissionType } from "@/lib/admission-type-queries";
+import { getLtFormula } from "@/lib/lt-score-queries";
 import { buildAlternates, SITE_URL } from "@/lib/site";
 import { ReportErrorLink } from "@/components/ReportErrorLink";
 import { CalculatorForm } from "./CalculatorForm";
+import { LtCalculatorForm } from "./LtCalculatorForm";
 
 type Params = PageProps<"/[locale]/programmes/[university]/[programme]/calculator">["params"];
 
@@ -40,6 +42,39 @@ export default async function CalculatorPage({ params }: { params: Params }) {
   const dict = await getDictionary(locale);
   const record = await getProgramme(countryOf(locale), university, programmeSlug);
   if (!record) notFound();
+
+  // В Литве правило расчёта общее на страну, формулы лежат в своих
+  // таблицах и считаются своим вычислителем — отдельная ветка ниже.
+  if (countryOf(locale) === "LT") {
+    const ltFormula = await getLtFormula(record.id);
+    return (
+      <main className="page-container py-8 sm:py-12">
+        <div className="surface mx-auto max-w-2xl p-6 sm:p-10">
+          <BackButton fallbackHref={`/${locale}/programmes/${university}/${programmeSlug}`} label={dict.programme.back} />
+          <p className="mt-4 text-sm text-zinc-500">{localizedName(record, languageOf(locale))}</p>
+          <h1 className="mt-1 text-2xl font-bold tracking-tighter text-zinc-900">{dict.calculator.title}</h1>
+          {ltFormula ? (
+            <LtCalculatorForm
+              dict={dict}
+              locale={locale}
+              components={ltFormula.components}
+              admissionYear={ltFormula.admissionYear}
+              sourceUrl={ltFormula.sourceUrl}
+              checkedAt={ltFormula.checkedAt}
+            />
+          ) : (
+            <p className="mt-8 text-zinc-600">{dict.ltCalculator.notAvailable}</p>
+          )}
+          <ReportErrorLink
+            dict={dict}
+            programmeName={localizedName(record, languageOf(locale))}
+            universityName={localizedName(record.university, languageOf(locale))}
+            pageUrl={`${SITE_URL}/${locale}/programmes/${university}/${programmeSlug}/calculator`}
+          />
+        </div>
+      </main>
+    );
+  }
 
   const formula = await getFormula(record.id);
   const levelCoefficients = await getLevelCoefficients();

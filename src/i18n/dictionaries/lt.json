@@ -336,6 +336,43 @@
       "certificate_geography": "Geografijos metinis pažymys atestate (1–10)"
     }
   },
+  "ltCalculator": {
+    "intro": "Įveskite valstybinių brandos egzaminų (VBE) įvertinimus. Rodomi tik tie dalykai, kurie įskaitomi į šios programos konkursinį balą.",
+    "courseLabel": "Kursas",
+    "courseA": "A (išplėstinis)",
+    "courseB": "B (bendrasis)",
+    "invalid": "Įveskite skaičių nuo 30 iki 100.",
+    "totalLabel": "Pagrindinė konkursinio balo dalis",
+    "empty": "Įveskite bent vieną įvertinimą, kad pamatytumėte balą.",
+    "breakdownTitle": "Iš ko susideda balas",
+    "component": "{n} dedamoji",
+    "weight": "svertinis koeficientas {weight}",
+    "notUsed": "tinkamo įvertinimo nėra — 0",
+    "average": "vidurkis",
+    "extrasNote": "Papildomi balai (olimpiados, karo tarnyba ir kiti pasiekimai, iš viso iki 2,5 balo) čia neįskaičiuoti.",
+    "rulesNote": "Skaičiuojama pagal {year} m. priėmimo taisykles ir tik pagal tų metų valstybinius brandos egzaminus: metiniai pažymiai ir ankstesnių metų egzaminai neįskaitomi.",
+    "officialLink": "Oficiali LAMA BPO skaičiuoklė",
+    "checkedNote": "Formulė paimta iš oficialios skaičiuoklės duomenų automatiškai; skaičiavimas sutikrintas su ja {date}.",
+    "sourceLink": "Formulių šaltinis",
+    "decidedBy": "Tai įvertis, o ne oficialus rezultatas. Galutinį konkursinį balą apskaičiuoja bendrojo priėmimo sistema.",
+    "notAvailable": "Šios programos balo neskaičiuojame: jį lemia stojamasis egzaminas ar sporto pasiekimai arba skirtingoms specializacijoms taikomos skirtingos formulės. Naudokitės oficialia skaičiuokle.",
+    "subjects": {
+      "lithuanian": "Lietuvių kalba ir literatūra",
+      "mathematics": "Matematika",
+      "history": "Istorija",
+      "biology": "Biologija",
+      "chemistry": "Chemija",
+      "physics": "Fizika",
+      "geography": "Geografija",
+      "informatics": "Informatika",
+      "foreign_language": "Užsienio kalba",
+      "second_foreign_language": "Antroji užsienio kalba",
+      "minority_language": "Tautinės mažumos gimtoji kalba",
+      "economics": "Ekonomika ir verslumas",
+      "philosophy": "Filosofija",
+      "engineering": "Inžinerinės technologijos"
+    }
+  },
   "favorites": {
     "navLink": "Mano sąrašas",
     "add": "Įtraukti į mano sąrašą",

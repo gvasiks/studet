@@ -20,10 +20,11 @@ describe("профиль страны", () => {
     expect(hasFeature("lt-lv", "verification")).toBe(false);
   });
 
-  it("у Литвы на фазе 2 — только каталог и список, на любом из трёх языков", () => {
+  it("у Литвы — каталог, список и расчёт балла, на любом из трёх языков", () => {
     for (const locale of ["lt", "en-lt", "lv-lt"] as const) {
       expect(hasFeature(locale, "favorites")).toBe(true);
-      for (const feature of ["survey", "match", "calculator", "glossary", "rights", "privacy", "verification"] as const) {
+      expect(hasFeature(locale, "calculator")).toBe(true);
+      for (const feature of ["survey", "match", "glossary", "rights", "privacy", "verification"] as const) {
         expect(hasFeature(locale, feature), `${locale}: ${feature}`).toBe(false);
       }
     }

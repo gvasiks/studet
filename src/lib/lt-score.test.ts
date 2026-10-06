@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { examValue, ltScore, type LtFormula } from "./lt-score";
+import { examValue, ltInputSubjects, ltScore, type LtFormula } from "./lt-score";
 
 // Формулы — как в открытом файле официального калькулятора (2026 год).
 const ANY_THIRD = [
@@ -46,6 +46,27 @@ const PHILOLOGY: LtFormula = [
   { position: 3, weight: 0.2, mode: "one_of", subjects: ANY_THIRD.map((subject) => (subject === "foreign_language" ? "second_foreign_language" : subject)) },
   { position: 4, weight: 0.2, mode: "one_of", subjects: ["foreign_language"] },
 ];
+
+describe("ltInputSubjects", () => {
+  it("спрашивает только предметы формулы, литовский и математика первыми", () => {
+    expect(ltInputSubjects(PSYCHOLOGY).slice(0, 2)).toEqual(["lithuanian", "mathematics"]);
+    expect(ltInputSubjects(PSYCHOLOGY)).toContain("biology");
+  });
+
+  it("если формула называет иностранный язык — в форме оба поля", () => {
+    const subjects = ltInputSubjects(BUSINESS);
+    expect(subjects).toContain("foreign_language");
+    expect(subjects).toContain("second_foreign_language");
+  });
+
+  it("формула без иностранного языка его не спрашивает; оценку квалификации не спрашивает никогда", () => {
+    const formula: LtFormula = [
+      { position: 1, weight: 0.6, mode: "one_of", subjects: ["mathematics"] },
+      { position: 2, weight: 0.4, mode: "one_of", subjects: ["physics", "competence_assessment"] },
+    ];
+    expect(ltInputSubjects(formula)).toEqual(["mathematics", "physics"]);
+  });
+});
 
 describe("examValue", () => {
   it("делит оценку экзамена на десять", () => {

@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { isLocale } from "@/i18n/config";
+import { countryOf, isLocale, type Country } from "@/i18n/config";
 import { hasFeature } from "@/lib/country";
 import { getDictionary } from "@/i18n/dictionaries";
 import { getApplicationRounds } from "@/lib/deadline-queries";
 import type { ApplicationRound } from "@/lib/deadlines";
-import { getProgrammeIdsWithFormula } from "@/lib/formula-queries";
+import { getCalculatorProgrammeIds } from "@/lib/calculator-ids";
 import { FavoritesList } from "./FavoritesList";
 
 // noindex — страница у каждого посетителя своя (localStorage конкретного
@@ -30,9 +30,9 @@ export const revalidate = 3600;
 
 // Сбой базы не должен ронять страницу: карточки просто останутся без
 // кнопки калькулятора и без срока подачи.
-async function loadCardData(): Promise<{ calculatorIds: string[]; applicationRounds: ApplicationRound[] }> {
+async function loadCardData(country: Country): Promise<{ calculatorIds: string[]; applicationRounds: ApplicationRound[] }> {
   try {
-    const [ids, applicationRounds] = await Promise.all([getProgrammeIdsWithFormula(), getApplicationRounds()]);
+    const [ids, applicationRounds] = await Promise.all([getCalculatorProgrammeIds(country), getApplicationRounds()]);
     return { calculatorIds: [...ids], applicationRounds };
   } catch {
     return { calculatorIds: [], applicationRounds: [] };
@@ -45,7 +45,7 @@ export default async function FavoritesPage({ params }: PageProps<"/[locale]/fav
   if (!hasFeature(locale, "favorites")) notFound();
 
   const dict = await getDictionary(locale);
-  const { calculatorIds, applicationRounds } = await loadCardData();
+  const { calculatorIds, applicationRounds } = await loadCardData(countryOf(locale));
 
   return (
     // Заголовок — на сером фоне, как на /rights, /glossary и /survey;

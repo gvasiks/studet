@@ -336,6 +336,43 @@
       "certificate_geography": "Atestāta gada atzīme ģeogrāfijā (1–10)"
     }
   },
+  "ltCalculator": {
+    "intro": "Ievadi valsts brieduma eksāmenu (VBE) vērtējumus. Redzami tikai tie mācību priekšmeti, kurus ieskaita šīs programmas konkursa punktos.",
+    "courseLabel": "Kurss",
+    "courseA": "A (padziļinātais)",
+    "courseB": "B (vispārīgais)",
+    "invalid": "Ievadi skaitli no 30 līdz 100.",
+    "totalLabel": "Konkursa punktu pamatdaļa",
+    "empty": "Ievadi vismaz vienu vērtējumu, lai redzētu punktus.",
+    "breakdownTitle": "No kā veidojas punkti",
+    "component": "{n}. sastāvdaļa",
+    "weight": "svara koeficients {weight}",
+    "notUsed": "nav derīga vērtējuma — 0",
+    "average": "vidējais",
+    "extrasNote": "Papildu punkti (olimpiādes, militārais dienests un citi sasniegumi, kopā līdz 2,5) šeit nav ieskaitīti.",
+    "rulesNote": "Aprēķins pēc {year}. gada uzņemšanas noteikumiem un tikai pēc tā gada valsts brieduma eksāmeniem: gada atzīmes un iepriekšējo gadu eksāmeni netiek ieskaitīti.",
+    "officialLink": "Oficiālais LAMA BPO kalkulators",
+    "checkedNote": "Formula automātiski ņemta no oficiālā kalkulatora datiem; aprēķins ar to salīdzināts {date}.",
+    "sourceLink": "Formulu avots",
+    "decidedBy": "Tas ir aprēķins, nevis oficiāls rezultāts. Galīgos konkursa punktus aprēķina kopējās uzņemšanas sistēma.",
+    "notAvailable": "Šai programmai punktus neaprēķinām: tos nosaka iestājpārbaudījums vai sporta sasniegumi, vai arī dažādām specializācijām ir atšķirīgas formulas. Izmanto oficiālo kalkulatoru.",
+    "subjects": {
+      "lithuanian": "Lietuviešu valoda un literatūra",
+      "mathematics": "Matemātika",
+      "history": "Vēsture",
+      "biology": "Bioloģija",
+      "chemistry": "Ķīmija",
+      "physics": "Fizika",
+      "geography": "Ģeogrāfija",
+      "informatics": "Informātika",
+      "foreign_language": "Svešvaloda",
+      "second_foreign_language": "Otrā svešvaloda",
+      "minority_language": "Mazākumtautības dzimtā valoda",
+      "economics": "Ekonomika un uzņēmējdarbība",
+      "philosophy": "Filozofija",
+      "engineering": "Inženiertehnoloģijas"
+    }
+  },
   "favorites": {
     "navLink": "Mans saraksts",
     "add": "Pievienot manam sarakstam",

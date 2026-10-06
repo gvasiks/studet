@@ -46,14 +46,27 @@ const rows = data.cases.map((item) => {
 });
 
 const filled = data.cases.filter((item) => item.official !== null).length;
+// Запись о сверке, проведённой владельцем без привязки к строкам листа.
+const ownerCheck = data.owner_check
+  ? `## Проведённая сверка
+
+${data.owner_check.checked_on}: проверено **${data.owner_check.cases_checked}** случаев, ` +
+    `${data.owner_check.all_matched ? "все совпали" : "есть расхождения"}.
+
+${data.owner_check.recorded_from}
+
+${data.owner_check.threshold_decision}
+
+`
+  : "";
 const sheet = `# Литва: лист сверки с официальным калькулятором (${YEAR})
 
 Этот файл собирается скриптом \`scripts/lt-check-sheet.mjs\` — руками не править.
 Ответы вписываются в \`docs/checks/lt-calculator-cases-${YEAR}.json\`, поле \`official\`.
 
-Вписано ответов: **${filled} из ${data.cases.length}**.
+Вписано ответов по строкам: **${filled} из ${data.cases.length}**.
 
-## Зачем это нужно
+${ownerCheck}## Зачем это нужно
 
 Литовские формулы не подтверждает человек. Взамен наш расчёт обязан совпасть
 с официальным калькулятором LAMA BPO не меньше чем на 30 наборах оценок —

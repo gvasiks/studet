@@ -82,6 +82,29 @@ export const MIN_COUNTED_SCORE = 30;
 // введённых, но один и тот же язык дважды не считается.
 const FOREIGN_LANGUAGES = ["foreign_language", "second_foreign_language"];
 
+// В каком порядке предметы стоят в форме расчёта: сначала два обязательных
+// экзамена, потом остальные.
+const INPUT_ORDER = [
+  "lithuanian", "mathematics", "history", "foreign_language", "second_foreign_language",
+  "biology", "chemistry", "physics", "geography", "informatics", "economics", "philosophy",
+  "engineering", "minority_language",
+];
+
+/**
+ * Предметы, по которым у формулы есть смысл спрашивать оценку. Если формула
+ * называет хотя бы один иностранный язык, в форме стоят оба поля: подойти
+ * может любой из двух языков выпускника. Оценка профессиональной
+ * квалификации (competence_assessment) не спрашивается — этот расчёт её не
+ * учитывает.
+ */
+export function ltInputSubjects(formula: LtFormula): string[] {
+  const named = new Set(formula.flatMap((component) => component.subjects));
+  if (FOREIGN_LANGUAGES.some((language) => named.has(language))) {
+    for (const language of FOREIGN_LANGUAGES) named.add(language);
+  }
+  return INPUT_ORDER.filter((subject) => named.has(subject));
+}
+
 /** Значение одного экзамена по шкале до 10; null — не засчитывается. */
 export function examValue(subject: string, exam: LtExam | undefined): number | null {
   if (!exam || !Number.isFinite(exam.score)) return null;

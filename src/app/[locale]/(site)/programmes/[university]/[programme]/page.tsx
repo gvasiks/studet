@@ -6,6 +6,7 @@ import { countryOf, isLocale, languageOf, type Locale } from "@/i18n/config";
 import { getDictionary } from "@/i18n/dictionaries";
 import { enumLabel, getProgramme, localizedName, type Programme, type University } from "@/lib/catalog";
 import { getFormula } from "@/lib/formula-queries";
+import { getLtFormula } from "@/lib/lt-score-queries";
 import { getApplicationRounds } from "@/lib/deadline-queries";
 import { matchRounds } from "@/lib/deadlines";
 import { getAdmissionType } from "@/lib/admission-type-queries";
@@ -78,12 +79,17 @@ export async function generateMetadata({ params }: { params: Params }): Promise<
 export default async function ProgrammePage({ params }: { params: Params }) {
   const { locale, record } = await loadProgramme(params);
   const dict = await getDictionary(locale);
-  const [formula, rounds, admissionType, outcome, channels] = await Promise.all([
+  // Есть ли расчёт балла: у Латвии — подтверждённая формула программы, у
+  // Литвы — сверенная формула общего приёма (таблицы и правила разные).
+  const hasCalculatorPromise =
+    countryOf(locale) === "LT" ? getLtFormula(record.id).then(Boolean) : Promise.resolve(false);
+  const [formula, rounds, admissionType, outcome, channels, hasLtCalculator] = await Promise.all([
     getFormula(record.id),
     getApplicationRounds(),
     getAdmissionType(record.university_id),
     getProgrammeOutcome(record.id, record.university_id),
     getApplicationChannels(record.university_id),
+    hasCalculatorPromise,
   ]);
   // Где подать документы: только подтверждённая человеком запись вуза для
   // этого уровня (или для всех уровней). Нет записи — блока нет.
@@ -312,7 +318,7 @@ export default async function ProgrammePage({ params }: { params: Params }) {
         </section>
       )}
 
-      {formula && (
+      {(formula || hasLtCalculator) && (
         <Link
           href={`/${locale}/programmes/${record.university.slug}/${record.slug}/calculator`}
           className="mt-8 inline-block w-fit rounded-full bg-brand px-5 py-2.5 text-sm font-medium text-white hover:bg-brand-dark"

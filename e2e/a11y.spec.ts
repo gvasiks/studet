@@ -32,6 +32,9 @@ const LT_ROUTES = [
   "/lt",
   "/lt/programmes",
   "/lt/programmes/vu/medicina",
+  // расчёт балла: форма (медицина) и страница «расчёта нет» (предметная педагогика)
+  "/lt/programmes/vu/medicina/calculator",
+  "/lt/programmes/vu/dalyko-pedagogika/calculator",
   "/lt/favorites",
   "/lt/match",
   "/en-lt",

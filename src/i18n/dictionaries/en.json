@@ -336,6 +336,43 @@
       "certificate_geography": "School certificate annual mark in geography (1–10)"
     }
   },
+  "ltCalculator": {
+    "intro": "Enter your state matura exam (VBE) results. Only the subjects that count towards this programme's competition score are shown.",
+    "courseLabel": "Course",
+    "courseA": "A (extended)",
+    "courseB": "B (general)",
+    "invalid": "Enter a number from 30 to 100.",
+    "totalLabel": "Main part of the competition score",
+    "empty": "Enter at least one result to see the score.",
+    "breakdownTitle": "How the score adds up",
+    "component": "Component {n}",
+    "weight": "weight {weight}",
+    "notUsed": "no suitable result — 0",
+    "average": "average",
+    "extrasNote": "Additional points (olympiads, military service and other achievements, up to 2.5 in total) are not included here.",
+    "rulesNote": "Calculated under the {year} admission rules and only from that year's state matura exams: annual marks and exams from earlier years are not counted.",
+    "officialLink": "Official LAMA BPO calculator",
+    "checkedNote": "The formula is taken automatically from the official calculator's data; the calculation was checked against it on {date}.",
+    "sourceLink": "Source of the formulas",
+    "decidedBy": "This is an estimate, not an official result. The final competition score is calculated by the general admission system.",
+    "notAvailable": "We do not calculate a score for this programme: it depends on an entrance exam or sport achievements, or its specialisations use different formulas. Please use the official calculator.",
+    "subjects": {
+      "lithuanian": "Lithuanian language and literature",
+      "mathematics": "Mathematics",
+      "history": "History",
+      "biology": "Biology",
+      "chemistry": "Chemistry",
+      "physics": "Physics",
+      "geography": "Geography",
+      "informatics": "Informatics",
+      "foreign_language": "Foreign language",
+      "second_foreign_language": "Second foreign language",
+      "minority_language": "National minority native language",
+      "economics": "Economics and entrepreneurship",
+      "philosophy": "Philosophy",
+      "engineering": "Engineering technologies"
+    }
+  },
   "favorites": {
     "navLink": "My list",
     "add": "Add to my list",

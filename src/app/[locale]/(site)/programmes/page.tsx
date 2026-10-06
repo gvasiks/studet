@@ -6,7 +6,7 @@ import { hasFeature } from "@/lib/country";
 import { getDictionary } from "@/i18n/dictionaries";
 import { buildAlternates } from "@/lib/site";
 import { getApplicationRounds } from "@/lib/deadline-queries";
-import { getProgrammeIdsWithFormula } from "@/lib/formula-queries";
+import { getCalculatorProgrammeIds } from "@/lib/calculator-ids";
 import { matchRounds } from "@/lib/deadlines";
 import { listProgrammes, listUniversities } from "@/lib/catalog";
 import { hasActiveFilters, parseCatalogState } from "@/lib/catalog-query";
@@ -60,7 +60,7 @@ export default async function ProgrammesPage({
     }),
     listUniversities(countryOf(locale)),
     getApplicationRounds(),
-    getProgrammeIdsWithFormula(),
+    getCalculatorProgrammeIds(countryOf(locale)),
   ]);
   const view = buildCatalogView(programmes, state, languageOf(locale));
 
