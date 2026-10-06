@@ -352,12 +352,21 @@ npm run dev
 - [ ] `/lt/programmes` — вкладки «Universitetinės 488 · Koleginės 514 ·
       Vientisosios 18»; в фильтре литовские города и языки (литовский,
       английский, русский). В меню только «Katalogas» и «Mano sąrašas».
+- [ ] В фильтре `/lt/programmes` нет платы, «только бюджет» и (пока не
+      загружены направления) интересов — под них нет данных. Адрес
+      `/lt/programmes?budget=1&fee=3000` показывает полный каталог (1020), а
+      не пустой список. У `/lv/programmes` все три фильтра на месте.
 - [ ] Поиск «medicina» на вкладке «Vientisosios» — три программы (VU,
       LSMU, ветеринарная медицина LSMU).
 - [ ] Карточка `/lt/programmes/vu/medicina`: уровень, язык, форма, срок,
       город; блок «Ką gausite baigę» со степенью; описание с пометкой
       «Surinkta automatiškai iš aikos.smm.lt» и ссылкой. Строки о
       финансировании и цене нет — источники их не сообщают.
+- [ ] На той же карточке блок «Kur teikti prašymą» (с 2026-10-06): текст
+      про общий приём LAMA BPO, ссылка «Atidaryti prašymų puslapį
+      (lamabpo.lt)», под ними — «Surinkta automatiškai iš lamabpo.lt», дата и
+      ссылка «Oficialus šaltinis» на список программ. Слова «Pārbaudīts /
+      Patikrinta» в этом блоке нет: человек запись не подтверждал.
 - [ ] `/en-lt/programmes/vu/medicina` — интерфейс английский, названия и
       описание литовские, под ними строка «Names and the description are in
       Lithuanian…».
