@@ -20,10 +20,19 @@ export type Feature =
 // язык, форма обучения, вуз и длительность есть у всех.
 export type CatalogFilter = "interest" | "fee" | "budget";
 
+// Экран анкеты. На одном экране бывает два близких вопроса: уровень и
+// длительность, бюджет и плата, язык и форма обучения.
+export type SurveyStep = "exams" | "interests" | "levelDuration" | "fundingFee" | "city" | "languageMode" | "kind";
+
 type CountryProfile = {
   features: readonly Feature[];
   /** Фильтры каталога, под которые у страны есть данные. */
   filters: readonly CatalogFilter[];
+  /**
+   * Экраны анкеты в порядке показа. Вопроса, ответ на который каталог этой
+   * страны применить не может, в списке быть не должно (проверяется тестом).
+   */
+  surveySteps: readonly SurveyStep[];
   /** Вкладки уровня в каталоге, в порядке показа. */
   levels: readonly LevelKey[];
   /** Города в фильтре; ключи — как в programme.city и в словаре catalog.city. */
@@ -51,6 +60,7 @@ const profiles: Record<Country, CountryProfile> = {
   LV: {
     features: ["favorites", "survey", "match", "calculator", "glossary", "rights", "privacy", "verification"],
     filters: ["interest", "fee", "budget"],
+    surveySteps: ["exams", "interests", "levelDuration", "fundingFee", "city", "languageMode", "kind"],
     levels: ["bachelor", "master", "doctoral", "college"],
     cities: ["riga", "daugavpils", "valmiera", "ventspils", "jelgava", "liepaja", "rezekne", "jurmala", "gulbene", "malnava"],
     languages: ["lv", "en"],
@@ -67,6 +77,10 @@ const profiles: Record<Country, CountryProfile> = {
   LT: {
     features: ["favorites", "calculator", "match"],
     filters: [],
+    // Без экзаменов (вопрос ни на что не влияет, а оценки вводятся в «куда
+    // я прохожу») и без бюджета с платой (данных нет). Экран интересов
+    // добавится вместе с фильтром по интересам.
+    surveySteps: ["levelDuration", "city", "languageMode", "kind"],
     levels: ["bachelor", "college", "integrated"],
     cities: ["vilnius", "kaunas", "klaipeda", "siauliai", "panevezys", "utena", "alytus", "telsiai", "marijampole", "taurage"],
     languages: ["lt", "en", "ru"],
@@ -83,6 +97,11 @@ const profiles: Record<Country, CountryProfile> = {
 
 export function countryProfile(country: Country): CountryProfile {
   return profiles[country];
+}
+
+// Анкета — для выпускников школ: магистратура и докторантура им недоступны.
+export function schoolLeaverLevels(country: Country): LevelKey[] {
+  return profiles[country].levels.filter((level) => level !== "master" && level !== "doctoral");
 }
 
 // Разделы из длинных текстов могут быть написаны не на всех языках: тогда

@@ -7,17 +7,17 @@ import { Button, Checkbox, CheckboxGroup, Radio, RadioGroup } from "@heroui/reac
 import { countryOf, type Locale } from "@/i18n/config";
 import type { Dictionary } from "@/i18n/dictionaries";
 import { enumLabel } from "@/lib/catalog";
-import { countryProfile } from "@/lib/country";
+import { countryProfile, schoolLeaverLevels } from "@/lib/country";
 import { DURATION_LIMITS, FEE_LIMITS, UNIVERSITY_KINDS } from "@/lib/catalog-query";
 import { interpolate } from "@/lib/outcomes";
 import { ArrowRightIcon, CheckIcon, SearchIcon } from "@/components/icons";
 
 type Funding = "budget_only" | "any";
-type LanguageChoice = "lv" | "en" | "any";
+// "any" либо язык обучения из профиля страны.
+type LanguageChoice = string;
 type ModeChoice = "full_time" | "part_time" | "distance" | "any";
-// Анкета — для выпускников школ: магистратура и докторантура им недоступны,
-// поэтому из уровней здесь только бакалавриат и колледж.
-type LevelChoice = "bachelor" | "college" | "any";
+// "any" либо уровень для выпускников школ (schoolLeaverLevels в country.ts).
+type LevelChoice = string;
 // "any" либо порог из DURATION_LIMITS / FEE_LIMITS строкой (значение радио).
 type LimitChoice = string;
 // "any" либо значение из UNIVERSITY_KINDS.
@@ -52,8 +52,8 @@ const initialAnswers: Answers = {
 };
 
 // Шагов меньше, чем вопросов: близкие вопросы стоят на одном экране
-// (уровень + длительность, бюджет + плата, язык + форма).
-const STEP_COUNT = 7;
+// (уровень + длительность, бюджет + плата, язык + форма). Какие экраны
+// есть и в каком порядке — в профиле страны (surveySteps в country.ts).
 
 const FOCUS = "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand";
 
@@ -103,15 +103,21 @@ export function SurveyWizard({ locale, dict }: { locale: Locale; dict: Dictionar
   const router = useRouter();
   const [step, setStep] = useState(0);
   const [answers, setAnswers] = useState<Answers>(initialAnswers);
+  const profile = countryProfile(countryOf(locale));
+  const steps = profile.surveySteps;
+  const STEP_COUNT = steps.length;
+  // Экран, который сейчас показан.
+  const current = steps[step];
 
   function skipToSearch() {
     router.push(`/${locale}/programmes`);
   }
 
   function submit() {
-    // Экзамены (шаг 1) сознательно не попадают в URL — пока ни на что не
-    // влияют, см. подсказку под вопросом. Интересы (шаг 2) — влияют:
-    // каталог фильтрует по направлению программы (пункт 16 ревью).
+    // Экзамены сознательно не попадают в URL — пока ни на что не влияют,
+    // см. подсказку под вопросом. Интересы — влияют: каталог фильтрует по
+    // направлению программы (пункт 16 ревью). Вопросы, которых у страны
+    // нет, остаются с ответом «не важно» и в адрес не попадают.
     const params = new URLSearchParams();
     if (answers.interests.length > 0) params.set("interest", answers.interests.join(","));
     if (answers.level !== "any") params.set("level", answers.level);
@@ -197,7 +203,7 @@ export function SurveyWizard({ locale, dict }: { locale: Locale; dict: Dictionar
         </nav>
 
         <div className="surface mt-6 p-6 sm:p-10">
-          {step === 0 && (
+          {current === "exams" && (
             <StepShell title={dict.survey.exams.title} hint={dict.survey.exams.hint}>
               <CheckboxGroup
                 classNames={TILE_GRID}
@@ -213,7 +219,7 @@ export function SurveyWizard({ locale, dict }: { locale: Locale; dict: Dictionar
             </StepShell>
           )}
 
-          {step === 1 && (
+          {current === "interests" && (
             <StepShell title={dict.survey.interests.title} hint={dict.survey.interests.hint}>
               <CheckboxGroup
                 classNames={TILE_GRID}
@@ -229,7 +235,7 @@ export function SurveyWizard({ locale, dict }: { locale: Locale; dict: Dictionar
             </StepShell>
           )}
 
-          {step === 2 && (
+          {current === "levelDuration" && (
             <>
               <StepShell title={dict.survey.level.title}>
                 <RadioGroup
@@ -237,12 +243,11 @@ export function SurveyWizard({ locale, dict }: { locale: Locale; dict: Dictionar
                   value={answers.level}
                   onValueChange={(value) => setAnswers((a) => ({ ...a, level: value as LevelChoice }))}
                 >
-                  <Radio value="bachelor" classNames={TILE}>
-                    {dict.catalog.degreeLevel.bachelor}
-                  </Radio>
-                  <Radio value="college" classNames={TILE}>
-                    {dict.catalog.degreeLevel.college}
-                  </Radio>
+                  {schoolLeaverLevels(countryOf(locale)).map((level) => (
+                    <Radio key={level} value={level} classNames={TILE}>
+                      {enumLabel(dict.catalog.degreeLevel, level)}
+                    </Radio>
+                  ))}
                   <Radio value="any" classNames={TILE}>
                     {dict.survey.level.any}
                   </Radio>
@@ -269,7 +274,7 @@ export function SurveyWizard({ locale, dict }: { locale: Locale; dict: Dictionar
             </>
           )}
 
-          {step === 3 && (
+          {current === "fundingFee" && (
             <>
               <StepShell title={dict.survey.funding.title}>
                 <RadioGroup
@@ -309,7 +314,7 @@ export function SurveyWizard({ locale, dict }: { locale: Locale; dict: Dictionar
             </>
           )}
 
-          {step === 4 && (
+          {current === "city" && (
             <StepShell title={dict.survey.city.title}>
               <CheckboxGroup
                 classNames={TILE_GRID}
@@ -317,7 +322,7 @@ export function SurveyWizard({ locale, dict }: { locale: Locale; dict: Dictionar
                 isDisabled={answers.anywhere}
                 onValueChange={(value) => setAnswers((a) => ({ ...a, cities: value }))}
               >
-                {countryProfile(countryOf(locale)).cities.map((key) => (
+                {profile.cities.map((key) => (
                   <Checkbox key={key} value={key} classNames={TILE}>
                     {enumLabel(dict.catalog.city, key)}
                   </Checkbox>
@@ -338,7 +343,7 @@ export function SurveyWizard({ locale, dict }: { locale: Locale; dict: Dictionar
             </StepShell>
           )}
 
-          {step === 5 && (
+          {current === "languageMode" && (
             <>
               <StepShell title={dict.survey.language.title}>
                 <RadioGroup
@@ -346,12 +351,11 @@ export function SurveyWizard({ locale, dict }: { locale: Locale; dict: Dictionar
                   value={answers.language}
                   onValueChange={(value) => setAnswers((a) => ({ ...a, language: value as LanguageChoice }))}
                 >
-                  <Radio value="lv" classNames={TILE}>
-                    {dict.catalog.language.lv}
-                  </Radio>
-                  <Radio value="en" classNames={TILE}>
-                    {dict.catalog.language.en}
-                  </Radio>
+                  {profile.languages.map((key) => (
+                    <Radio key={key} value={key} classNames={TILE}>
+                      {enumLabel(dict.catalog.language, key)}
+                    </Radio>
+                  ))}
                   <Radio value="any" classNames={TILE}>
                     {dict.survey.language.any}
                   </Radio>
@@ -382,7 +386,7 @@ export function SurveyWizard({ locale, dict }: { locale: Locale; dict: Dictionar
             </>
           )}
 
-          {step === 6 && (
+          {current === "kind" && (
             <StepShell title={dict.survey.kind.title}>
               <RadioGroup
                 classNames={RADIO_GRID}

@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { countryProfile, hasFeature, LEVEL_KEYS } from "./country";
+import { countryProfile, hasFeature, LEVEL_KEYS, schoolLeaverLevels } from "./country";
 import lv from "../i18n/dictionaries/lv.json";
 import en from "../i18n/dictionaries/en.json";
 import lt from "../i18n/dictionaries/lt.json";
@@ -29,6 +29,25 @@ describe("профиль страны", () => {
         expect(hasFeature(locale, feature), `${locale}: ${feature}`).toBe(false);
       }
     }
+  });
+
+  // Анкета отправляет ответы в каталог параметрами фильтров. Если фильтра у
+  // страны нет, ответ пропал бы молча — вопрос тогда задавать нельзя.
+  it("анкета не спрашивает о том, что каталог страны применить не может", () => {
+    for (const country of ["LV", "LT"] as const) {
+      const { filters, surveySteps } = countryProfile(country);
+      if (surveySteps.includes("interests")) expect(filters, country).toContain("interest");
+      if (surveySteps.includes("fundingFee")) {
+        expect(filters, country).toContain("fee");
+        expect(filters, country).toContain("budget");
+      }
+      expect(new Set(surveySteps).size, country).toBe(surveySteps.length);
+    }
+  });
+
+  it("в анкете — только уровни для выпускников школ", () => {
+    expect(schoolLeaverLevels("LV")).toEqual(["bachelor", "college"]);
+    expect(schoolLeaverLevels("LT")).toEqual(["bachelor", "college", "integrated"]);
   });
 
   it("вкладки уровня страны — из общего списка уровней", () => {
