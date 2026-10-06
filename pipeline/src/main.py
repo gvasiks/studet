@@ -96,6 +96,39 @@ MIN_PROGRAMME_COUNT = {
     "sources.niid_universities:turiba": 17,
     "sources.niid_universities:riseba": 15,
     "sources.niid_universities:rsu": 9,
+    # Литва: снимок 2026-10-05 (28 учреждений, 1020 строк каталога). Порог —
+    # на учреждение. Срабатывает и тогда, когда реестр AIKOS отдал не все
+    # карточки: строка без уровня или языка в каталог не попадает, и число
+    # падает ниже порога. Список общего приёма обновляется раз в год —
+    # после обновления пороги пересматриваются вручную, как у латвийских.
+    "sources.lt_lamabpo:ehu": 14,
+    "sources.lt_lamabpo:ilk": 12,
+    "sources.lt_lamabpo:ism": 6,
+    "sources.lt_lamabpo:kk": 63,
+    "sources.lt_lamabpo:kok": 9,
+    "sources.lt_lamabpo:ksu": 13,
+    "sources.lt_lamabpo:ktu": 69,
+    "sources.lt_lamabpo:ku": 44,
+    "sources.lt_lamabpo:kvk": 34,
+    "sources.lt_lamabpo:lcc": 6,
+    "sources.lt_lamabpo:lik": 26,
+    "sources.lt_lamabpo:lka-lt": 2,
+    "sources.lt_lamabpo:lmta": 11,
+    "sources.lt_lamabpo:lsmu": 18,
+    "sources.lt_lamabpo:lsu": 11,
+    "sources.lt_lamabpo:ltvk": 78,
+    "sources.lt_lamabpo:mru": 34,
+    "sources.lt_lamabpo:pk": 19,
+    "sources.lt_lamabpo:smk": 92,
+    "sources.lt_lamabpo:svk": 32,
+    "sources.lt_lamabpo:uk": 22,
+    "sources.lt_lamabpo:vda": 30,
+    "sources.lt_lamabpo:vdk": 7,
+    "sources.lt_lamabpo:vdu": 71,
+    "sources.lt_lamabpo:vilnius-tech": 85,
+    "sources.lt_lamabpo:vk": 71,
+    "sources.lt_lamabpo:vu": 108,
+    "sources.lt_lamabpo:vvk": 33,
 }
 
 
