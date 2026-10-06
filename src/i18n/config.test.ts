@@ -6,6 +6,7 @@ import {
   isLocale,
   languageOf,
   legacyLocales,
+  localeFor,
   locales,
   localesOfCountry,
   nativeLocale,
@@ -38,6 +39,15 @@ describe("адрес = язык + страна", () => {
 
   it("список стран собирается из адресов", () => {
     expect(countries).toEqual(["LV"]);
+  });
+
+  it("в другую страну посетитель попадает на своём языке, если он там есть", () => {
+    // литовские адреса в тестах закрыты (нет флага предпросмотра), поэтому
+    // проверяется открытая страна: английский остаётся английским
+    expect(localeFor("LV", "en")).toBe("en-lv");
+    expect(localeFor("LV", "lv")).toBe("lv");
+    // литовского в Латвии нет — открывается её основной язык
+    expect(localeFor("LV", "lt")).toBe("lv");
   });
 
   it("каждый адрес из списка описан", () => {

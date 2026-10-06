@@ -176,7 +176,12 @@
     "rights": "Jūsų teisės",
     "menu": "Meniu",
     "main": "Pagrindinė navigacija",
-    "footer": "Poraštės navigacija"
+    "footer": "Poraštės navigacija",
+    "country": "Šalis"
+  },
+  "countries": {
+    "LV": "Latvija",
+    "LT": "Lietuva"
   },
   "report": {
     "link": "Pastebėjote klaidą? Parašykite mums",

@@ -176,7 +176,12 @@
     "rights": "Your rights",
     "menu": "Menu",
     "main": "Main navigation",
-    "footer": "Footer navigation"
+    "footer": "Footer navigation",
+    "country": "Country"
+  },
+  "countries": {
+    "LV": "Latvia",
+    "LT": "Lithuania"
   },
   "report": {
     "link": "Spotted a mistake? Email us",

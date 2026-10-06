@@ -67,6 +67,12 @@ export function nativeLocale(country: Country): Locale {
   return localesOfCountry(country)[0];
 }
 
+// Адрес другой страны для посетителя, который читает на языке language:
+// тот же язык, если он у страны есть (английский), иначе её основной.
+export function localeFor(country: Country, language: Language): Locale {
+  return localesOfCountry(country).find((locale) => variants[locale].language === language) ?? nativeLocale(country);
+}
+
 // До 2026-10 английская версия жила на /en. Старые ссылки (закладки,
 // разосланные тестировщикам адреса) переадресуются, см. src/proxy.ts.
 export const legacyLocales: Record<string, Locale> = { en: "en-lv" };

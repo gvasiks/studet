@@ -176,7 +176,12 @@
     "rights": "Tiesības",
     "menu": "Izvēlne",
     "main": "Galvenā navigācija",
-    "footer": "Navigācija lapas apakšā"
+    "footer": "Navigācija lapas apakšā",
+    "country": "Valsts"
+  },
+  "countries": {
+    "LV": "Latvija",
+    "LT": "Lietuva"
   },
   "report": {
     "link": "Pamanīji kļūdu? Raksti mums",

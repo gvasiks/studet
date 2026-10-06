@@ -2,6 +2,7 @@ import Link from "next/link";
 import { countryOf, type Locale } from "@/i18n/config";
 import { hasFeature, type Feature } from "@/lib/country";
 import type { Dictionary } from "@/i18n/dictionaries";
+import { CountrySwitcher } from "@/components/CountrySwitcher";
 import { GraduationCapIcon, InfoIcon } from "@/components/icons";
 import type { Tone } from "@/components/LocaleSwitcher";
 import { SITE_NAME } from "@/lib/site";
@@ -10,7 +11,8 @@ export function SiteFooter({ dict, locale, tone }: { dict: Dictionary; locale: L
   if (tone === "light") {
     return (
       <footer className="mt-auto border-t border-zinc-200">
-        <div className="page-container py-8">
+        <div className="page-container flex flex-col gap-4 py-8">
+          <CountrySwitcher locale={locale} dict={dict} tone="light" />
           {/* zinc-600, не 500: на сером фоне страницы (zinc-100) 500 не дотягивает до 4.5:1 */}
           <p className="text-xs leading-relaxed text-zinc-600">{dict.footer.disclaimer}</p>
         </div>
@@ -51,6 +53,9 @@ export function SiteFooter({ dict, locale, tone }: { dict: Dictionary; locale: L
               ))}
             </ul>
           </nav>
+          <div className="mt-3">
+            <CountrySwitcher locale={locale} dict={dict} tone="dark" />
+          </div>
         </div>
         <div className="flex items-start gap-3 rounded-2xl border border-white/10 bg-white/5 p-4">
           <InfoIcon size={16} className="mt-0.5 shrink-0 text-sky-400" />
