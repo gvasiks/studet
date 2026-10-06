@@ -361,8 +361,20 @@ npm run dev
 - [ ] `/en-lt/programmes/vu/medicina` — интерфейс английский, названия и
       описание литовские, под ними строка «Names and the description are in
       Lithuanian…».
-- [ ] `/lt/match`, `/lt/survey`, `/lt/glossary`, `/lt/rights`,
-      `/lt/privacy` — страница «Puslapis nerastas».
+- [ ] `/lt/survey`, `/lt/glossary`, `/lt/rights`, `/lt/privacy` — страница
+      «Puslapis nerastas».
+- [ ] «Куда я прохожу» (с 2026-10-06), `/lt/match`. Введите: Matematika 68
+      (A), Istorija 57, Biologija 71, Lietuvių kalba ir literatūra 86. Сверху
+      «…užpildytos: 817 · …trūksta egzaminų: 103» (на 2026-10-06), карточки
+      идут по убыванию балла, самая большая — **7,00**. У карточек блока
+      «Trūksta egzaminų» написано, какой составляющей нет.
+- [ ] Поиск «teise» находит программы с «teisė» в названии; счётчики сверху
+      пересчитываются.
+- [ ] «Iš ko susideda balas» раскрывает разбор; «Rodyti visas (N)» —
+      полный список программ карточки; ссылка ведёт на карточку программы.
+- [ ] Под результатами: дополнительные баллы не учтены, минимальные
+      требования со ссылкой на LAMA BPO, сколько программ без расчёта.
+      Нигде нет слов «проходишь», процентов или места в очереди.
 - [ ] Расчёт балла (с 2026-10-06). На карточке `/lt/programmes/vu/medicina`
       есть кнопка «Konkursinio balo skaičiuoklė». На странице расчёта
       введите: Biologija 90, Chemija 80, Matematika 60 (курс A), Fizika 70,
