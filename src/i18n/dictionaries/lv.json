@@ -373,6 +373,25 @@
       "engineering": "Inženiertehnoloģijas"
     }
   },
+  "ltMatch": {
+    "resultsHeading": "Rezultāti",
+    "courseHint": "Lietuviešu valodai un literatūrai un matemātikai atzīmē kursu: A — padziļinātais, B — vispārīgais.",
+    "summary": "Programmas, kurām aizpildītas visas punktu sastāvdaļas: {complete} · programmas, kurām trūkst eksāmenu: {partial}",
+    "sameScale": "Lietuvā konkursa punktus aprēķina pēc viena visai valstij kopīga noteikuma, tāpēc programmas sakārtotas pēc punktiem. Tā nav prognoze, vai tevi uzņems: tas atkarīgs no citu reflektantu punktiem, un to šeit nav.",
+    "searchLabel": "Meklēt programmu vai augstskolu",
+    "emptySearch": "Pēc šī meklējuma programmas nav atrastas.",
+    "completeTitle": "Punkti aprēķināti",
+    "completeHint": "Ir ievadīti visi eksāmeni, ko šīs programmas ieskaita.",
+    "partialTitle": "Trūkst eksāmenu",
+    "partialHint": "Vismaz vienai punktu sastāvdaļai nav derīga vērtējuma — tā ir nulle. Pie katras grupas rakstīts, kā trūkst.",
+    "programmes": "Programmas: {count}",
+    "missing": "Trūkst:",
+    "showAll": "Rādīt visas ({count})",
+    "showLess": "Rādīt mazāk",
+    "minimum": "Papildus konkursa punktiem ir minimālās prasības: triju valsts brieduma eksāmenu (lietuviešu valoda un literatūra, matemātika un viens pēc izvēles) vidējam vērtējumam jābūt vismaz 50, stājoties universitātēs, un 41 — koledžās (mākslas studijām ir izņēmumi). Katra augstskola nosaka arī savus mazākos konkursa punktus.",
+    "minimumSource": "LAMA BPO paziņojums",
+    "withoutCalculator": "Vēl {count} programmu šeit nav: to punktus nosaka iestājpārbaudījums vai sporta sasniegumi, vai arī to specializācijām ir atšķirīgas formulas."
+  },
   "favorites": {
     "navLink": "Mans saraksts",
     "add": "Pievienot manam sarakstam",

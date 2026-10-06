@@ -373,6 +373,25 @@
       "engineering": "Engineering technologies"
     }
   },
+  "ltMatch": {
+    "resultsHeading": "Results",
+    "courseHint": "For Lithuanian language and literature and for mathematics, mark the course: A — extended, B — general.",
+    "summary": "Programmes with every score component filled: {complete} · programmes missing exams: {partial}",
+    "sameScale": "In Lithuania the competition score follows one national rule, so the programmes are sorted by score. This is not a prediction of whether you will be admitted: that depends on other applicants' scores, which are not shown here.",
+    "searchLabel": "Search a programme or institution",
+    "emptySearch": "No programmes match this search.",
+    "completeTitle": "Score calculated",
+    "completeHint": "You have entered every exam these programmes count.",
+    "partialTitle": "Missing exams",
+    "partialHint": "At least one score component has no suitable result and counts as zero. Each group says what is missing.",
+    "programmes": "Programmes: {count}",
+    "missing": "Missing:",
+    "showAll": "Show all ({count})",
+    "showLess": "Show fewer",
+    "minimum": "Besides the competition score, minimum requirements apply: the average of three state matura exams (Lithuanian language and literature, mathematics and one of your choice) must be at least 50 for universities and 41 for colleges (arts programmes have exceptions). Each institution also sets its own minimum competition score.",
+    "minimumSource": "LAMA BPO announcement",
+    "withoutCalculator": "{count} more programmes are not listed here: their score depends on an entrance exam or sport achievements, or their specialisations use different formulas."
+  },
   "favorites": {
     "navLink": "My list",
     "add": "Add to my list",

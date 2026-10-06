@@ -25,6 +25,9 @@
   "programme": {
     "applyNote": "Attiecas uz reflektantiem ar Lietuvā iegūtu izglītību; ārvalstu reflektantiem kārtība var atšķirties."
   },
+  "match": {
+    "intro": "Ievadi savu valsts brieduma eksāmenu (VBE) vērtējumus — parādīsim konkursa punktus Lietuvas kopējās uzņemšanas programmām un to, kuru eksāmenu vēl trūkst."
+  },
   "rights": {
     "intro": "",
     "checkedNote": "",

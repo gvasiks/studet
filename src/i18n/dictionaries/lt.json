@@ -373,6 +373,25 @@
       "engineering": "Inžinerinės technologijos"
     }
   },
+  "ltMatch": {
+    "resultsHeading": "Rezultatai",
+    "courseHint": "Prie lietuvių kalbos ir literatūros bei matematikos pažymėkite kursą: A — išplėstinis, B — bendrasis.",
+    "summary": "Programų, kurių visos balo dedamosios užpildytos: {complete} · programų, kurioms trūksta egzaminų: {partial}",
+    "sameScale": "Lietuvoje konkursinis balas skaičiuojamas pagal vieną visai šaliai bendrą taisyklę, todėl programos surikiuotos pagal balą. Tai nėra prognozė, ar būsite priimti: tai priklauso nuo kitų stojančiųjų balų, o jų čia nėra.",
+    "searchLabel": "Ieškoti programos ar aukštosios mokyklos",
+    "emptySearch": "Pagal šią paiešką programų nerasta.",
+    "completeTitle": "Balas apskaičiuotas",
+    "completeHint": "Įvesti visi šių programų balui reikalingi egzaminai.",
+    "partialTitle": "Trūksta egzaminų",
+    "partialHint": "Bent vienai balo dedamajai tinkamo įvertinimo nėra — ji lygi nuliui. Prie kiekvienos grupės parašyta, ko trūksta.",
+    "programmes": "Programų: {count}",
+    "missing": "Trūksta:",
+    "showAll": "Rodyti visas ({count})",
+    "showLess": "Rodyti mažiau",
+    "minimum": "Be konkursinio balo, taikomi minimalūs reikalavimai: trijų valstybinių brandos egzaminų (lietuvių kalbos ir literatūros, matematikos ir vieno pasirinkto) įvertinimų vidurkis turi būti ne mažesnis kaip 50 stojant į universitetus ir 41 — į kolegijas (menų studijoms taikomos išimtys). Kiekviena aukštoji mokykla nustato ir savo mažiausią konkursinį balą.",
+    "minimumSource": "LAMA BPO pranešimas",
+    "withoutCalculator": "Dar {count} programų čia nėra: jų balą lemia stojamasis egzaminas ar sporto pasiekimai arba jų specializacijoms taikomos skirtingos formulės."
+  },
   "favorites": {
     "navLink": "Mano sąrašas",
     "add": "Įtraukti į mano sąrašą",

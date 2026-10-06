@@ -4,6 +4,7 @@ import { useMemo, useState } from "react";
 import { Input, Radio, RadioGroup } from "@heroui/react";
 import { languageOf, type Locale } from "@/i18n/config";
 import type { Dictionary } from "@/i18n/dictionaries";
+import { LtScoreBreakdown } from "@/components/LtScoreBreakdown";
 import { parsePercent } from "@/lib/exam-input";
 import { ltInputSubjects, ltScore, MIN_COUNTED_SCORE, type LtComponent, type LtExams } from "@/lib/lt-score";
 import { interpolate } from "@/lib/outcomes";
@@ -121,27 +122,9 @@ export function LtCalculatorForm({
             <p className="text-4xl font-bold tracking-tighter text-zinc-900">{number(result.total)}</p>
 
             <h2 className="mt-5 text-xs uppercase tracking-wide text-zinc-500">{text.breakdownTitle}</h2>
-            <dl className="mt-2 space-y-2 text-sm text-zinc-700">
-              {result.items.map((item) => {
-                const component = components.find((candidate) => candidate.position === item.position);
-                const used = item.used.map(label).join(", ");
-                return (
-                  <div key={item.position} className="flex flex-wrap justify-between gap-x-4">
-                    <dt>
-                      {interpolate(text.component, { n: String(item.position) })}
-                      {" · "}
-                      {interpolate(text.weight, { weight: item.weight.toLocaleString(language) })}
-                      <span className="block text-zinc-500">
-                        {item.value === null
-                          ? text.notUsed
-                          : `${used}${component?.mode === "average" ? ` (${text.average})` : ""} — ${number(item.value)}`}
-                      </span>
-                    </dt>
-                    <dd className="tabular-nums">{number(item.contribution)}</dd>
-                  </div>
-                );
-              })}
-            </dl>
+            <div className="mt-2">
+              <LtScoreBreakdown dict={dict} language={language} components={components} items={result.items} />
+            </div>
           </>
         ) : (
           <>

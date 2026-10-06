@@ -24,8 +24,8 @@ for (const locale of LOCALES) {
   }
 }
 
-// Литва (фаза 2 литовского плана): каталог и карточка на литовском и
-// английском. /lt/match — раздела у Литвы ещё нет, проверяется вёрстка
+// Литва: каталог, карточка, расчёт балла и «куда я прохожу» на литовском и
+// английском. /lt/survey — раздела у Литвы ещё нет, проверяется вёрстка
 // страницы «не найдено». Адреса существуют только при
 // NEXT_PUBLIC_PREVIEW_COUNTRIES=1 (локально — .env.local, в CI — ci.yml).
 const LT_ROUTES = [
@@ -37,6 +37,7 @@ const LT_ROUTES = [
   "/lt/programmes/vu/dalyko-pedagogika/calculator",
   "/lt/favorites",
   "/lt/match",
+  "/lt/survey",
   "/en-lt",
   "/en-lt/programmes",
   "/en-lt/programmes/vu/medicina",
@@ -66,6 +67,22 @@ for (const locale of LOCALES) {
     await inputs.nth(1).fill("70");
     await inputs.nth(2).fill("60");
     await page.locator("details summary").first().click();
+    const results = await new AxeBuilder({ page }).analyze();
+    expect(results.violations, JSON.stringify(results.violations, null, 2)).toEqual([]);
+  });
+}
+
+// То же для Литвы: карточки групп с баллом, раскрытый разбор и раскрытый
+// список программ. Форма другая (LtMatchForm), поэтому свой сценарий.
+for (const locale of ["lt", "en-lt"] as const) {
+  test(`нет нарушений axe на /${locale}/match с введёнными экзаменами`, async ({ page }) => {
+    await page.goto(`/${locale}/match`);
+    const inputs = page.locator('input[inputmode="decimal"]');
+    await inputs.nth(0).fill("80");
+    await inputs.nth(1).fill("70");
+    await inputs.nth(2).fill("60");
+    await page.locator("details summary").first().click();
+    await page.locator("button[aria-controls^='lt-match-programmes-']").first().click();
     const results = await new AxeBuilder({ page }).analyze();
     expect(results.violations, JSON.stringify(results.violations, null, 2)).toEqual([]);
   });

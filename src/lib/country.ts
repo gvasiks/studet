@@ -42,12 +42,12 @@ const profiles: Record<Country, CountryProfile> = {
     languages: ["lv", "en"],
     nativeLanguage: "lv",
   },
-  // Литва: каталог, карточка, список избранного и расчёт балла (фаза 3,
-  // 2026-10-06). Остальные разделы включаются по мере готовности
-  // (docs/PLAN-LITHUANIA-2027.md): «куда я прохожу» — дальше в фазе 3,
-  // анкета — фаза 4, словарь, права и политика конфиденциальности — фаза 5.
+  // Литва: каталог, карточка, список избранного, расчёт балла и «куда я
+  // прохожу» (фаза 3, 2026-10-06). Остальные разделы включаются по мере
+  // готовности (docs/PLAN-LITHUANIA-2027.md): анкета — фаза 4, словарь,
+  // права и политика конфиденциальности — фаза 5.
   LT: {
-    features: ["favorites", "calculator"],
+    features: ["favorites", "calculator", "match"],
     levels: ["bachelor", "college", "integrated"],
     cities: ["vilnius", "kaunas", "klaipeda", "siauliai", "panevezys", "utena", "alytus", "telsiai", "marijampole", "taurage"],
     languages: ["lt", "en", "ru"],
