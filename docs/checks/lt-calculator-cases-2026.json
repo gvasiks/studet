@@ -1,0 +1,2403 @@
+{
+ "admission_year": 2026,
+ "calculator_page": "https://lamabpo.lt/pirmosios-pakopos-ir-vientisosios-studijos/konkursinio-balo-skaiciuokle/",
+ "prepared_at": "2026-10-06T17:43:32.638403+00:00",
+ "note": "Оценки выдуманы; персональных данных нет. Поле official вписывает человек — см. pipeline/src/lt_check_calculator.py.",
+ "cases": [
+  {
+   "id": 1,
+   "note": "полный набор, расширенный курс",
+   "formula_number": "46",
+   "formula": [
+    {
+     "position": 1,
+     "weight": 0.4,
+     "mode": "one_of",
+     "subjects": [
+      "mathematics"
+     ]
+    },
+    {
+     "position": 2,
+     "weight": 0.2,
+     "mode": "one_of",
+     "subjects": [
+      "history",
+      "informatics",
+      "geography",
+      "foreign_language",
+      "economics"
+     ]
+    },
+    {
+     "position": 3,
+     "weight": 0.2,
+     "mode": "one_of",
+     "subjects": [
+      "biology",
+      "chemistry",
+      "physics",
+      "geography",
+      "informatics",
+      "history",
+      "foreign_language",
+      "minority_language",
+      "economics",
+      "philosophy",
+      "engineering"
+     ]
+    },
+    {
+     "position": 4,
+     "weight": 0.2,
+     "mode": "one_of",
+     "subjects": [
+      "lithuanian"
+     ]
+    }
+   ],
+   "institution": "KK",
+   "institution_name": "Kauno kolegija",
+   "program_id": "1009",
+   "program_name": "Apskaita",
+   "program_city": "Kaunas",
+   "program_form": "Nuolatinė (NL) · Mišri",
+   "exams": {
+    "mathematics": {
+     "score": 68,
+     "course": "A",
+     "page_name": "Matematika"
+    },
+    "history": {
+     "score": 57,
+     "page_name": "Istorija"
+    },
+    "biology": {
+     "score": 71,
+     "page_name": "Biologija"
+    },
+    "lithuanian": {
+     "score": 86,
+     "course": "A",
+     "page_name": "Lietuvių kalba ir literatūra"
+    }
+   },
+   "official": null
+  },
+  {
+   "id": 2,
+   "note": "математика по общему курсу (B)",
+   "formula_number": "46",
+   "formula": [
+    {
+     "position": 1,
+     "weight": 0.4,
+     "mode": "one_of",
+     "subjects": [
+      "mathematics"
+     ]
+    },
+    {
+     "position": 2,
+     "weight": 0.2,
+     "mode": "one_of",
+     "subjects": [
+      "history",
+      "informatics",
+      "geography",
+      "foreign_language",
+      "economics"
+     ]
+    },
+    {
+     "position": 3,
+     "weight": 0.2,
+     "mode": "one_of",
+     "subjects": [
+      "biology",
+      "chemistry",
+      "physics",
+      "geography",
+      "informatics",
+      "history",
+      "foreign_language",
+      "minority_language",
+      "economics",
+      "philosophy",
+      "engineering"
+     ]
+    },
+    {
+     "position": 4,
+     "weight": 0.2,
+     "mode": "one_of",
+     "subjects": [
+      "lithuanian"
+     ]
+    }
+   ],
+   "institution": "KK",
+   "institution_name": "Kauno kolegija",
+   "program_id": "1009",
+   "program_name": "Apskaita",
+   "program_city": "Kaunas",
+   "program_form": "Nuolatinė (NL) · Mišri",
+   "exams": {
+    "mathematics": {
+     "score": 68,
+     "course": "B",
+     "page_name": "Matematika"
+    },
+    "history": {
+     "score": 57,
+     "page_name": "Istorija"
+    },
+    "biology": {
+     "score": 71,
+     "page_name": "Biologija"
+    },
+    "lithuanian": {
+     "score": 86,
+     "course": "A",
+     "page_name": "Lietuvių kalba ir literatūra"
+    }
+   },
+   "official": null
+  },
+  {
+   "id": 3,
+   "note": "литовский по общему курсу (B)",
+   "formula_number": "46",
+   "formula": [
+    {
+     "position": 1,
+     "weight": 0.4,
+     "mode": "one_of",
+     "subjects": [
+      "mathematics"
+     ]
+    },
+    {
+     "position": 2,
+     "weight": 0.2,
+     "mode": "one_of",
+     "subjects": [
+      "history",
+      "informatics",
+      "geography",
+      "foreign_language",
+      "economics"
+     ]
+    },
+    {
+     "position": 3,
+     "weight": 0.2,
+     "mode": "one_of",
+     "subjects": [
+      "biology",
+      "chemistry",
+      "physics",
+      "geography",
+      "informatics",
+      "history",
+      "foreign_language",
+      "minority_language",
+      "economics",
+      "philosophy",
+      "engineering"
+     ]
+    },
+    {
+     "position": 4,
+     "weight": 0.2,
+     "mode": "one_of",
+     "subjects": [
+      "lithuanian"
+     ]
+    }
+   ],
+   "institution": "KK",
+   "institution_name": "Kauno kolegija",
+   "program_id": "1009",
+   "program_name": "Apskaita",
+   "program_city": "Kaunas",
+   "program_form": "Nuolatinė (NL) · Mišri",
+   "exams": {
+    "mathematics": {
+     "score": 68,
+     "course": "A",
+     "page_name": "Matematika"
+    },
+    "history": {
+     "score": 57,
+     "page_name": "Istorija"
+    },
+    "biology": {
+     "score": 71,
+     "page_name": "Biologija"
+    },
+    "lithuanian": {
+     "score": 86,
+     "course": "B",
+     "page_name": "Lietuvių kalba ir literatūra"
+    }
+   },
+   "official": null
+  },
+  {
+   "id": 4,
+   "note": "нет первого предмета",
+   "formula_number": "46",
+   "formula": [
+    {
+     "position": 1,
+     "weight": 0.4,
+     "mode": "one_of",
+     "subjects": [
+      "mathematics"
+     ]
+    },
+    {
+     "position": 2,
+     "weight": 0.2,
+     "mode": "one_of",
+     "subjects": [
+      "history",
+      "informatics",
+      "geography",
+      "foreign_language",
+      "economics"
+     ]
+    },
+    {
+     "position": 3,
+     "weight": 0.2,
+     "mode": "one_of",
+     "subjects": [
+      "biology",
+      "chemistry",
+      "physics",
+      "geography",
+      "informatics",
+      "history",
+      "foreign_language",
+      "minority_language",
+      "economics",
+      "philosophy",
+      "engineering"
+     ]
+    },
+    {
+     "position": 4,
+     "weight": 0.2,
+     "mode": "one_of",
+     "subjects": [
+      "lithuanian"
+     ]
+    }
+   ],
+   "institution": "KK",
+   "institution_name": "Kauno kolegija",
+   "program_id": "1009",
+   "program_name": "Apskaita",
+   "program_city": "Kaunas",
+   "program_form": "Nuolatinė (NL) · Mišri",
+   "exams": {
+    "history": {
+     "score": 57,
+     "page_name": "Istorija"
+    },
+    "biology": {
+     "score": 71,
+     "page_name": "Biologija"
+    },
+    "lithuanian": {
+     "score": 86,
+     "course": "A",
+     "page_name": "Lietuvių kalba ir literatūra"
+    }
+   },
+   "official": null
+  },
+  {
+   "id": 5,
+   "note": "два иностранных языка",
+   "formula_number": "46",
+   "formula": [
+    {
+     "position": 1,
+     "weight": 0.4,
+     "mode": "one_of",
+     "subjects": [
+      "mathematics"
+     ]
+    },
+    {
+     "position": 2,
+     "weight": 0.2,
+     "mode": "one_of",
+     "subjects": [
+      "history",
+      "informatics",
+      "geography",
+      "foreign_language",
+      "economics"
+     ]
+    },
+    {
+     "position": 3,
+     "weight": 0.2,
+     "mode": "one_of",
+     "subjects": [
+      "biology",
+      "chemistry",
+      "physics",
+      "geography",
+      "informatics",
+      "history",
+      "foreign_language",
+      "minority_language",
+      "economics",
+      "philosophy",
+      "engineering"
+     ]
+    },
+    {
+     "position": 4,
+     "weight": 0.2,
+     "mode": "one_of",
+     "subjects": [
+      "lithuanian"
+     ]
+    }
+   ],
+   "institution": "KK",
+   "institution_name": "Kauno kolegija",
+   "program_id": "1009",
+   "program_name": "Apskaita",
+   "program_city": "Kaunas",
+   "program_form": "Nuolatinė (NL) · Mišri",
+   "exams": {
+    "mathematics": {
+     "score": 62,
+     "course": "A",
+     "page_name": "Matematika"
+    },
+    "history": {
+     "score": 79,
+     "page_name": "Istorija"
+    },
+    "biology": {
+     "score": 43,
+     "page_name": "Biologija"
+    },
+    "lithuanian": {
+     "score": 94,
+     "course": "A",
+     "page_name": "Lietuvių kalba ir literatūra"
+    },
+    "second_foreign_language": {
+     "score": 91,
+     "page_name": "Vokiečių kalba"
+    }
+   },
+   "official": null
+  },
+  {
+   "id": 6,
+   "note": "все оценки 100",
+   "formula_number": "46",
+   "formula": [
+    {
+     "position": 1,
+     "weight": 0.4,
+     "mode": "one_of",
+     "subjects": [
+      "mathematics"
+     ]
+    },
+    {
+     "position": 2,
+     "weight": 0.2,
+     "mode": "one_of",
+     "subjects": [
+      "history",
+      "informatics",
+      "geography",
+      "foreign_language",
+      "economics"
+     ]
+    },
+    {
+     "position": 3,
+     "weight": 0.2,
+     "mode": "one_of",
+     "subjects": [
+      "biology",
+      "chemistry",
+      "physics",
+      "geography",
+      "informatics",
+      "history",
+      "foreign_language",
+      "minority_language",
+      "economics",
+      "philosophy",
+      "engineering"
+     ]
+    },
+    {
+     "position": 4,
+     "weight": 0.2,
+     "mode": "one_of",
+     "subjects": [
+      "lithuanian"
+     ]
+    }
+   ],
+   "institution": "KK",
+   "institution_name": "Kauno kolegija",
+   "program_id": "1009",
+   "program_name": "Apskaita",
+   "program_city": "Kaunas",
+   "program_form": "Nuolatinė (NL) · Mišri",
+   "exams": {
+    "mathematics": {
+     "score": 100,
+     "course": "A",
+     "page_name": "Matematika"
+    },
+    "history": {
+     "score": 100,
+     "page_name": "Istorija"
+    },
+    "biology": {
+     "score": 100,
+     "page_name": "Biologija"
+    },
+    "lithuanian": {
+     "score": 100,
+     "course": "A",
+     "page_name": "Lietuvių kalba ir literatūra"
+    }
+   },
+   "official": null
+  },
+  {
+   "id": 7,
+   "note": "все оценки 30 (нижняя граница)",
+   "formula_number": "46",
+   "formula": [
+    {
+     "position": 1,
+     "weight": 0.4,
+     "mode": "one_of",
+     "subjects": [
+      "mathematics"
+     ]
+    },
+    {
+     "position": 2,
+     "weight": 0.2,
+     "mode": "one_of",
+     "subjects": [
+      "history",
+      "informatics",
+      "geography",
+      "foreign_language",
+      "economics"
+     ]
+    },
+    {
+     "position": 3,
+     "weight": 0.2,
+     "mode": "one_of",
+     "subjects": [
+      "biology",
+      "chemistry",
+      "physics",
+      "geography",
+      "informatics",
+      "history",
+      "foreign_language",
+      "minority_language",
+      "economics",
+      "philosophy",
+      "engineering"
+     ]
+    },
+    {
+     "position": 4,
+     "weight": 0.2,
+     "mode": "one_of",
+     "subjects": [
+      "lithuanian"
+     ]
+    }
+   ],
+   "institution": "KK",
+   "institution_name": "Kauno kolegija",
+   "program_id": "1009",
+   "program_name": "Apskaita",
+   "program_city": "Kaunas",
+   "program_form": "Nuolatinė (NL) · Mišri",
+   "exams": {
+    "mathematics": {
+     "score": 30,
+     "course": "A",
+     "page_name": "Matematika"
+    },
+    "history": {
+     "score": 30,
+     "page_name": "Istorija"
+    },
+    "biology": {
+     "score": 30,
+     "page_name": "Biologija"
+    },
+    "lithuanian": {
+     "score": 30,
+     "course": "A",
+     "page_name": "Lietuvių kalba ir literatūra"
+    }
+   },
+   "official": null
+  },
+  {
+   "id": 8,
+   "note": "полный набор",
+   "formula_number": "53",
+   "formula": [
+    {
+     "position": 1,
+     "weight": 0.4,
+     "mode": "one_of",
+     "subjects": [
+      "mathematics"
+     ]
+    },
+    {
+     "position": 2,
+     "weight": 0.2,
+     "mode": "one_of",
+     "subjects": [
+      "physics",
+      "chemistry",
+      "informatics",
+      "biology",
+      "geography",
+      "engineering"
+     ]
+    },
+    {
+     "position": 3,
+     "weight": 0.2,
+     "mode": "one_of",
+     "subjects": [
+      "biology",
+      "chemistry",
+      "physics",
+      "geography",
+      "informatics",
+      "history",
+      "foreign_language",
+      "minority_language",
+      "economics",
+      "philosophy",
+      "engineering",
+      "competence_assessment"
+     ]
+    },
+    {
+     "position": 4,
+     "weight": 0.2,
+     "mode": "one_of",
+     "subjects": [
+      "lithuanian"
+     ]
+    }
+   ],
+   "institution": "KK",
+   "institution_name": "Kauno kolegija",
+   "program_id": "1012",
+   "program_name": "Automatika ir robotika",
+   "program_city": "Kaunas",
+   "program_form": "Nuolatinė (NL) · Mišri",
+   "exams": {
+    "mathematics": {
+     "score": 83,
+     "course": "A",
+     "page_name": "Matematika"
+    },
+    "physics": {
+     "score": 47,
+     "page_name": "Fizika"
+    },
+    "biology": {
+     "score": 95,
+     "page_name": "Biologija"
+    },
+    "lithuanian": {
+     "score": 61,
+     "course": "A",
+     "page_name": "Lietuvių kalba ir literatūra"
+    }
+   },
+   "official": null
+  },
+  {
+   "id": 9,
+   "note": "одна оценка в интервале 30–39",
+   "formula_number": "53",
+   "formula": [
+    {
+     "position": 1,
+     "weight": 0.4,
+     "mode": "one_of",
+     "subjects": [
+      "mathematics"
+     ]
+    },
+    {
+     "position": 2,
+     "weight": 0.2,
+     "mode": "one_of",
+     "subjects": [
+      "physics",
+      "chemistry",
+      "informatics",
+      "biology",
+      "geography",
+      "engineering"
+     ]
+    },
+    {
+     "position": 3,
+     "weight": 0.2,
+     "mode": "one_of",
+     "subjects": [
+      "biology",
+      "chemistry",
+      "physics",
+      "geography",
+      "informatics",
+      "history",
+      "foreign_language",
+      "minority_language",
+      "economics",
+      "philosophy",
+      "engineering",
+      "competence_assessment"
+     ]
+    },
+    {
+     "position": 4,
+     "weight": 0.2,
+     "mode": "one_of",
+     "subjects": [
+      "lithuanian"
+     ]
+    }
+   ],
+   "institution": "KK",
+   "institution_name": "Kauno kolegija",
+   "program_id": "1012",
+   "program_name": "Automatika ir robotika",
+   "program_city": "Kaunas",
+   "program_form": "Nuolatinė (NL) · Mišri",
+   "exams": {
+    "mathematics": {
+     "score": 83,
+     "course": "A",
+     "page_name": "Matematika"
+    },
+    "physics": {
+     "score": 37,
+     "page_name": "Fizika"
+    },
+    "biology": {
+     "score": 95,
+     "page_name": "Biologija"
+    },
+    "lithuanian": {
+     "score": 61,
+     "course": "A",
+     "page_name": "Lietuvių kalba ir literatūra"
+    }
+   },
+   "official": null
+  },
+  {
+   "id": 10,
+   "note": "полный набор",
+   "formula_number": "25",
+   "formula": [
+    {
+     "position": 1,
+     "weight": 0.4,
+     "mode": "one_of",
+     "subjects": [
+      "mathematics"
+     ]
+    },
+    {
+     "position": 2,
+     "weight": 0.2,
+     "mode": "one_of",
+     "subjects": [
+      "chemistry",
+      "physics",
+      "biology",
+      "informatics",
+      "geography",
+      "engineering"
+     ]
+    },
+    {
+     "position": 3,
+     "weight": 0.2,
+     "mode": "one_of",
+     "subjects": [
+      "biology",
+      "physics",
+      "chemistry",
+      "geography",
+      "informatics",
+      "history",
+      "foreign_language",
+      "minority_language",
+      "economics",
+      "philosophy",
+      "engineering",
+      "competence_assessment"
+     ]
+    },
+    {
+     "position": 4,
+     "weight": 0.2,
+     "mode": "one_of",
+     "subjects": [
+      "lithuanian"
+     ]
+    }
+   ],
+   "institution": "VDU",
+   "institution_name": "Vytauto Didžiojo universitetas",
+   "program_id": "54",
+   "program_name": "Biotechnologija",
+   "program_city": "Kaunas",
+   "program_form": "Nuolatinė (NL) · Dieninė",
+   "exams": {
+    "mathematics": {
+     "score": 55,
+     "course": "A",
+     "page_name": "Matematika"
+    },
+    "chemistry": {
+     "score": 66,
+     "page_name": "Chemija"
+    },
+    "biology": {
+     "score": 77,
+     "page_name": "Biologija"
+    },
+    "lithuanian": {
+     "score": 88,
+     "course": "A",
+     "page_name": "Lietuvių kalba ir literatūra"
+    }
+   },
+   "official": null
+  },
+  {
+   "id": 11,
+   "note": "математика B",
+   "formula_number": "8",
+   "formula": [
+    {
+     "position": 1,
+     "weight": 0.4,
+     "mode": "one_of",
+     "subjects": [
+      "mathematics"
+     ]
+    },
+    {
+     "position": 2,
+     "weight": 0.2,
+     "mode": "one_of",
+     "subjects": [
+      "history",
+      "informatics",
+      "geography",
+      "foreign_language",
+      "economics"
+     ]
+    },
+    {
+     "position": 3,
+     "weight": 0.2,
+     "mode": "one_of",
+     "subjects": [
+      "biology",
+      "chemistry",
+      "physics",
+      "geography",
+      "informatics",
+      "history",
+      "foreign_language",
+      "minority_language",
+      "economics",
+      "philosophy",
+      "engineering"
+     ]
+    },
+    {
+     "position": 4,
+     "weight": 0.2,
+     "mode": "one_of",
+     "subjects": [
+      "lithuanian"
+     ]
+    }
+   ],
+   "institution": "VDU",
+   "institution_name": "Vytauto Didžiojo universitetas",
+   "program_id": "49",
+   "program_name": "Apskaita ir finansai",
+   "program_city": "Kaunas",
+   "program_form": "Nuolatinė (NL) · Dieninė",
+   "exams": {
+    "mathematics": {
+     "score": 73,
+     "course": "B",
+     "page_name": "Matematika"
+    },
+    "history": {
+     "score": 49,
+     "page_name": "Istorija"
+    },
+    "biology": {
+     "score": 58,
+     "page_name": "Biologija"
+    },
+    "lithuanian": {
+     "score": 64,
+     "course": "A",
+     "page_name": "Lietuvių kalba ir literatūra"
+    }
+   },
+   "official": null
+  },
+  {
+   "id": 12,
+   "note": "полный набор",
+   "formula_number": "49",
+   "formula": [
+    {
+     "position": 1,
+     "weight": 0.4,
+     "mode": "one_of",
+     "subjects": [
+      "mathematics"
+     ]
+    },
+    {
+     "position": 2,
+     "weight": 0.2,
+     "mode": "one_of",
+     "subjects": [
+      "informatics",
+      "physics",
+      "biology",
+      "chemistry",
+      "geography",
+      "engineering"
+     ]
+    },
+    {
+     "position": 3,
+     "weight": 0.2,
+     "mode": "one_of",
+     "subjects": [
+      "biology",
+      "chemistry",
+      "physics",
+      "geography",
+      "informatics",
+      "history",
+      "foreign_language",
+      "minority_language",
+      "economics",
+      "philosophy",
+      "engineering",
+      "competence_assessment"
+     ]
+    },
+    {
+     "position": 4,
+     "weight": 0.2,
+     "mode": "one_of",
+     "subjects": [
+      "lithuanian"
+     ]
+    }
+   ],
+   "institution": "KK",
+   "institution_name": "Kauno kolegija",
+   "program_id": "1037",
+   "program_name": "Kibernetinės sistemos ir sauga",
+   "program_city": "Alytus",
+   "program_form": "Nuolatinė (NL) · Mišri",
+   "exams": {
+    "mathematics": {
+     "score": 91,
+     "course": "A",
+     "page_name": "Matematika"
+    },
+    "informatics": {
+     "score": 82,
+     "page_name": "Informatika"
+    },
+    "biology": {
+     "score": 73,
+     "page_name": "Biologija"
+    },
+    "lithuanian": {
+     "score": 64,
+     "course": "A",
+     "page_name": "Lietuvių kalba ir literatūra"
+    }
+   },
+   "official": null
+  },
+  {
+   "id": 13,
+   "note": "полный набор",
+   "formula_number": "52",
+   "formula": [
+    {
+     "position": 1,
+     "weight": 0.4,
+     "mode": "one_of",
+     "subjects": [
+      "biology"
+     ]
+    },
+    {
+     "position": 2,
+     "weight": 0.2,
+     "mode": "one_of",
+     "subjects": [
+      "chemistry",
+      "mathematics",
+      "informatics",
+      "physics",
+      "engineering"
+     ]
+    },
+    {
+     "position": 3,
+     "weight": 0.2,
+     "mode": "one_of",
+     "subjects": [
+      "chemistry",
+      "physics",
+      "geography",
+      "informatics",
+      "history",
+      "mathematics",
+      "foreign_language",
+      "minority_language",
+      "economics",
+      "philosophy",
+      "engineering"
+     ]
+    },
+    {
+     "position": 4,
+     "weight": 0.2,
+     "mode": "one_of",
+     "subjects": [
+      "lithuanian"
+     ]
+    }
+   ],
+   "institution": "KK",
+   "institution_name": "Kauno kolegija",
+   "program_id": "1006",
+   "program_name": "Akušerija",
+   "program_city": "Kaunas",
+   "program_form": "Nuolatinė (NL) · Mišri",
+   "exams": {
+    "biology": {
+     "score": 76,
+     "page_name": "Biologija"
+    },
+    "chemistry": {
+     "score": 59,
+     "page_name": "Chemija"
+    },
+    "physics": {
+     "score": 84,
+     "page_name": "Fizika"
+    },
+    "lithuanian": {
+     "score": 67,
+     "course": "A",
+     "page_name": "Lietuvių kalba ir literatūra"
+    }
+   },
+   "official": null
+  },
+  {
+   "id": 14,
+   "note": "нет второго предмета",
+   "formula_number": "52",
+   "formula": [
+    {
+     "position": 1,
+     "weight": 0.4,
+     "mode": "one_of",
+     "subjects": [
+      "biology"
+     ]
+    },
+    {
+     "position": 2,
+     "weight": 0.2,
+     "mode": "one_of",
+     "subjects": [
+      "chemistry",
+      "mathematics",
+      "informatics",
+      "physics",
+      "engineering"
+     ]
+    },
+    {
+     "position": 3,
+     "weight": 0.2,
+     "mode": "one_of",
+     "subjects": [
+      "chemistry",
+      "physics",
+      "geography",
+      "informatics",
+      "history",
+      "mathematics",
+      "foreign_language",
+      "minority_language",
+      "economics",
+      "philosophy",
+      "engineering"
+     ]
+    },
+    {
+     "position": 4,
+     "weight": 0.2,
+     "mode": "one_of",
+     "subjects": [
+      "lithuanian"
+     ]
+    }
+   ],
+   "institution": "KK",
+   "institution_name": "Kauno kolegija",
+   "program_id": "1006",
+   "program_name": "Akušerija",
+   "program_city": "Kaunas",
+   "program_form": "Nuolatinė (NL) · Mišri",
+   "exams": {
+    "biology": {
+     "score": 76,
+     "page_name": "Biologija"
+    },
+    "chemistry": {
+     "score": 84,
+     "page_name": "Chemija"
+    },
+    "lithuanian": {
+     "score": 67,
+     "course": "A",
+     "page_name": "Lietuvių kalba ir literatūra"
+    }
+   },
+   "official": null
+  },
+  {
+   "id": 15,
+   "note": "литовский первым, один иностранный",
+   "formula_number": "3",
+   "formula": [
+    {
+     "position": 1,
+     "weight": 0.4,
+     "mode": "one_of",
+     "subjects": [
+      "lithuanian"
+     ]
+    },
+    {
+     "position": 2,
+     "weight": 0.2,
+     "mode": "one_of",
+     "subjects": [
+      "history",
+      "geography",
+      "mathematics",
+      "informatics",
+      "second_foreign_language"
+     ]
+    },
+    {
+     "position": 3,
+     "weight": 0.2,
+     "mode": "one_of",
+     "subjects": [
+      "biology",
+      "chemistry",
+      "physics",
+      "geography",
+      "informatics",
+      "history",
+      "mathematics",
+      "second_foreign_language",
+      "minority_language",
+      "economics",
+      "philosophy",
+      "engineering"
+     ]
+    },
+    {
+     "position": 4,
+     "weight": 0.2,
+     "mode": "one_of",
+     "subjects": [
+      "foreign_language"
+     ]
+    }
+   ],
+   "institution": "VDU",
+   "institution_name": "Vytauto Didžiojo universitetas",
+   "program_id": "45",
+   "program_name": "Anglų filologija",
+   "program_city": "Kaunas",
+   "program_form": "Nuolatinė (NL) · Dieninė",
+   "exams": {
+    "lithuanian": {
+     "score": 81,
+     "course": "A",
+     "page_name": "Lietuvių kalba ir literatūra"
+    },
+    "history": {
+     "score": 63,
+     "page_name": "Istorija"
+    },
+    "biology": {
+     "score": 45,
+     "page_name": "Biologija"
+    },
+    "foreign_language": {
+     "score": 72,
+     "page_name": "Anglų kalba"
+    }
+   },
+   "official": null
+  },
+  {
+   "id": 16,
+   "note": "литовский первым, два иностранных",
+   "formula_number": "3",
+   "formula": [
+    {
+     "position": 1,
+     "weight": 0.4,
+     "mode": "one_of",
+     "subjects": [
+      "lithuanian"
+     ]
+    },
+    {
+     "position": 2,
+     "weight": 0.2,
+     "mode": "one_of",
+     "subjects": [
+      "history",
+      "geography",
+      "mathematics",
+      "informatics",
+      "second_foreign_language"
+     ]
+    },
+    {
+     "position": 3,
+     "weight": 0.2,
+     "mode": "one_of",
+     "subjects": [
+      "biology",
+      "chemistry",
+      "physics",
+      "geography",
+      "informatics",
+      "history",
+      "mathematics",
+      "second_foreign_language",
+      "minority_language",
+      "economics",
+      "philosophy",
+      "engineering"
+     ]
+    },
+    {
+     "position": 4,
+     "weight": 0.2,
+     "mode": "one_of",
+     "subjects": [
+      "foreign_language"
+     ]
+    }
+   ],
+   "institution": "VDU",
+   "institution_name": "Vytauto Didžiojo universitetas",
+   "program_id": "45",
+   "program_name": "Anglų filologija",
+   "program_city": "Kaunas",
+   "program_form": "Nuolatinė (NL) · Dieninė",
+   "exams": {
+    "lithuanian": {
+     "score": 81,
+     "course": "A",
+     "page_name": "Lietuvių kalba ir literatūra"
+    },
+    "history": {
+     "score": 63,
+     "page_name": "Istorija"
+    },
+    "biology": {
+     "score": 45,
+     "page_name": "Biologija"
+    },
+    "foreign_language": {
+     "score": 72,
+     "page_name": "Anglų kalba"
+    },
+    "second_foreign_language": {
+     "score": 88,
+     "page_name": "Vokiečių kalba"
+    }
+   },
+   "official": null
+  },
+  {
+   "id": 17,
+   "note": "литовский первым, по общему курсу",
+   "formula_number": "3",
+   "formula": [
+    {
+     "position": 1,
+     "weight": 0.4,
+     "mode": "one_of",
+     "subjects": [
+      "lithuanian"
+     ]
+    },
+    {
+     "position": 2,
+     "weight": 0.2,
+     "mode": "one_of",
+     "subjects": [
+      "history",
+      "geography",
+      "mathematics",
+      "informatics",
+      "second_foreign_language"
+     ]
+    },
+    {
+     "position": 3,
+     "weight": 0.2,
+     "mode": "one_of",
+     "subjects": [
+      "biology",
+      "chemistry",
+      "physics",
+      "geography",
+      "informatics",
+      "history",
+      "mathematics",
+      "second_foreign_language",
+      "minority_language",
+      "economics",
+      "philosophy",
+      "engineering"
+     ]
+    },
+    {
+     "position": 4,
+     "weight": 0.2,
+     "mode": "one_of",
+     "subjects": [
+      "foreign_language"
+     ]
+    }
+   ],
+   "institution": "VDU",
+   "institution_name": "Vytauto Didžiojo universitetas",
+   "program_id": "45",
+   "program_name": "Anglų filologija",
+   "program_city": "Kaunas",
+   "program_form": "Nuolatinė (NL) · Dieninė",
+   "exams": {
+    "lithuanian": {
+     "score": 81,
+     "course": "B",
+     "page_name": "Lietuvių kalba ir literatūra"
+    },
+    "history": {
+     "score": 63,
+     "page_name": "Istorija"
+    },
+    "biology": {
+     "score": 45,
+     "page_name": "Biologija"
+    },
+    "foreign_language": {
+     "score": 72,
+     "page_name": "Anglų kalba"
+    }
+   },
+   "official": null
+  },
+  {
+   "id": 18,
+   "note": "полный набор",
+   "formula_number": "15",
+   "formula": [
+    {
+     "position": 1,
+     "weight": 0.4,
+     "mode": "one_of",
+     "subjects": [
+      "mathematics"
+     ]
+    },
+    {
+     "position": 2,
+     "weight": 0.2,
+     "mode": "one_of",
+     "subjects": [
+      "informatics",
+      "physics",
+      "biology",
+      "chemistry",
+      "geography",
+      "engineering"
+     ]
+    },
+    {
+     "position": 3,
+     "weight": 0.2,
+     "mode": "one_of",
+     "subjects": [
+      "biology",
+      "chemistry",
+      "physics",
+      "geography",
+      "informatics",
+      "history",
+      "foreign_language",
+      "minority_language",
+      "economics",
+      "philosophy",
+      "engineering",
+      "competence_assessment"
+     ]
+    },
+    {
+     "position": 4,
+     "weight": 0.2,
+     "mode": "one_of",
+     "subjects": [
+      "lithuanian"
+     ]
+    }
+   ],
+   "institution": "VDU",
+   "institution_name": "Vytauto Didžiojo universitetas",
+   "program_id": "47",
+   "program_name": "Aplinkotyra ir aplinkos apsauga",
+   "program_city": "Kaunas",
+   "program_form": "Nuolatinė (NL) · Dieninė",
+   "exams": {
+    "mathematics": {
+     "score": 39,
+     "course": "A",
+     "page_name": "Matematika"
+    },
+    "informatics": {
+     "score": 51,
+     "page_name": "Informatika"
+    },
+    "biology": {
+     "score": 62,
+     "page_name": "Biologija"
+    },
+    "lithuanian": {
+     "score": 74,
+     "course": "A",
+     "page_name": "Lietuvių kalba ir literatūra"
+    }
+   },
+   "official": null
+  },
+  {
+   "id": 19,
+   "note": "полный набор",
+   "formula_number": "48",
+   "formula": [
+    {
+     "position": 1,
+     "weight": 0.4,
+     "mode": "one_of",
+     "subjects": [
+      "lithuanian"
+     ]
+    },
+    {
+     "position": 2,
+     "weight": 0.2,
+     "mode": "one_of",
+     "subjects": [
+      "history",
+      "mathematics",
+      "informatics",
+      "geography",
+      "philosophy"
+     ]
+    },
+    {
+     "position": 3,
+     "weight": 0.2,
+     "mode": "one_of",
+     "subjects": [
+      "biology",
+      "chemistry",
+      "physics",
+      "geography",
+      "informatics",
+      "mathematics",
+      "second_foreign_language",
+      "minority_language",
+      "economics",
+      "philosophy",
+      "engineering"
+     ]
+    },
+    {
+     "position": 4,
+     "weight": 0.2,
+     "mode": "one_of",
+     "subjects": [
+      "foreign_language"
+     ]
+    }
+   ],
+   "institution": "KK",
+   "institution_name": "Kauno kolegija",
+   "program_id": "1062",
+   "program_name": "Skaitmeninė ir kūrybinė komunikacija",
+   "program_city": "Kaunas",
+   "program_form": "Nuolatinė (NL) · Mišri",
+   "exams": {
+    "lithuanian": {
+     "score": 87,
+     "course": "A",
+     "page_name": "Lietuvių kalba ir literatūra"
+    },
+    "history": {
+     "score": 93,
+     "page_name": "Istorija"
+    },
+    "biology": {
+     "score": 41,
+     "page_name": "Biologija"
+    },
+    "foreign_language": {
+     "score": 56,
+     "page_name": "Anglų kalba"
+    }
+   },
+   "official": null
+  },
+  {
+   "id": 20,
+   "note": "история первой",
+   "formula_number": "12",
+   "formula": [
+    {
+     "position": 1,
+     "weight": 0.4,
+     "mode": "one_of",
+     "subjects": [
+      "history"
+     ]
+    },
+    {
+     "position": 2,
+     "weight": 0.2,
+     "mode": "one_of",
+     "subjects": [
+      "mathematics",
+      "informatics",
+      "geography",
+      "foreign_language",
+      "economics"
+     ]
+    },
+    {
+     "position": 3,
+     "weight": 0.2,
+     "mode": "one_of",
+     "subjects": [
+      "biology",
+      "chemistry",
+      "physics",
+      "geography",
+      "informatics",
+      "mathematics",
+      "foreign_language",
+      "minority_language",
+      "economics",
+      "philosophy",
+      "engineering"
+     ]
+    },
+    {
+     "position": 4,
+     "weight": 0.2,
+     "mode": "one_of",
+     "subjects": [
+      "lithuanian"
+     ]
+    }
+   ],
+   "institution": "VDU",
+   "institution_name": "Vytauto Didžiojo universitetas",
+   "program_id": "68",
+   "program_name": "Viešasis administravimas",
+   "program_city": "Kaunas",
+   "program_form": "Nuolatinė (NL) · Dieninė",
+   "exams": {
+    "history": {
+     "score": 69,
+     "page_name": "Istorija"
+    },
+    "mathematics": {
+     "score": 78,
+     "course": "A",
+     "page_name": "Matematika"
+    },
+    "biology": {
+     "score": 87,
+     "page_name": "Biologija"
+    },
+    "lithuanian": {
+     "score": 96,
+     "course": "A",
+     "page_name": "Lietuvių kalba ir literatūra"
+    }
+   },
+   "official": null
+  },
+  {
+   "id": 21,
+   "note": "полный набор",
+   "formula_number": "47",
+   "formula": [
+    {
+     "position": 1,
+     "weight": 0.4,
+     "mode": "one_of",
+     "subjects": [
+      "history"
+     ]
+    },
+    {
+     "position": 2,
+     "weight": 0.2,
+     "mode": "one_of",
+     "subjects": [
+      "mathematics",
+      "informatics",
+      "geography",
+      "foreign_language",
+      "economics"
+     ]
+    },
+    {
+     "position": 3,
+     "weight": 0.2,
+     "mode": "one_of",
+     "subjects": [
+      "biology",
+      "chemistry",
+      "physics",
+      "geography",
+      "informatics",
+      "mathematics",
+      "foreign_language",
+      "minority_language",
+      "economics",
+      "philosophy",
+      "engineering"
+     ]
+    },
+    {
+     "position": 4,
+     "weight": 0.2,
+     "mode": "one_of",
+     "subjects": [
+      "lithuanian"
+     ]
+    }
+   ],
+   "institution": "KK",
+   "institution_name": "Kauno kolegija",
+   "program_id": "1076",
+   "program_name": "Turizmo ir viešbučių vadyba",
+   "program_city": "Kaunas",
+   "program_form": "Nuolatinė (NL) · Mišri",
+   "exams": {
+    "history": {
+     "score": 44,
+     "page_name": "Istorija"
+    },
+    "mathematics": {
+     "score": 55,
+     "course": "A",
+     "page_name": "Matematika"
+    },
+    "biology": {
+     "score": 66,
+     "page_name": "Biologija"
+    },
+    "lithuanian": {
+     "score": 77,
+     "course": "A",
+     "page_name": "Lietuvių kalba ir literatūra"
+    }
+   },
+   "official": null
+  },
+  {
+   "id": 22,
+   "note": "полный набор",
+   "formula_number": "4",
+   "formula": [
+    {
+     "position": 1,
+     "weight": 0.4,
+     "mode": "one_of",
+     "subjects": [
+      "lithuanian"
+     ]
+    },
+    {
+     "position": 2,
+     "weight": 0.2,
+     "mode": "one_of",
+     "subjects": [
+      "history",
+      "geography",
+      "mathematics",
+      "informatics"
+     ]
+    },
+    {
+     "position": 3,
+     "weight": 0.2,
+     "mode": "one_of",
+     "subjects": [
+      "biology",
+      "chemistry",
+      "physics",
+      "geography",
+      "informatics",
+      "history",
+      "mathematics",
+      "second_foreign_language",
+      "minority_language",
+      "economics",
+      "philosophy",
+      "engineering"
+     ]
+    },
+    {
+     "position": 4,
+     "weight": 0.2,
+     "mode": "one_of",
+     "subjects": [
+      "foreign_language"
+     ]
+    }
+   ],
+   "institution": "VDU",
+   "institution_name": "Vytauto Didžiojo universitetas",
+   "program_id": "66",
+   "program_name": "Viešoji komunikacija",
+   "program_city": "Kaunas",
+   "program_form": "Nuolatinė (NL) · Dieninė",
+   "exams": {
+    "lithuanian": {
+     "score": 92,
+     "course": "A",
+     "page_name": "Lietuvių kalba ir literatūra"
+    },
+    "history": {
+     "score": 38,
+     "page_name": "Istorija"
+    },
+    "biology": {
+     "score": 65,
+     "page_name": "Biologija"
+    },
+    "foreign_language": {
+     "score": 70,
+     "page_name": "Anglų kalba"
+    }
+   },
+   "official": null
+  },
+  {
+   "id": 23,
+   "note": "литовский первым, история четвёртой",
+   "formula_number": "10",
+   "formula": [
+    {
+     "position": 1,
+     "weight": 0.4,
+     "mode": "one_of",
+     "subjects": [
+      "lithuanian"
+     ]
+    },
+    {
+     "position": 2,
+     "weight": 0.2,
+     "mode": "one_of",
+     "subjects": [
+      "mathematics",
+      "foreign_language",
+      "informatics",
+      "geography"
+     ]
+    },
+    {
+     "position": 3,
+     "weight": 0.2,
+     "mode": "one_of",
+     "subjects": [
+      "biology",
+      "chemistry",
+      "physics",
+      "geography",
+      "informatics",
+      "mathematics",
+      "foreign_language",
+      "minority_language",
+      "economics",
+      "philosophy",
+      "engineering"
+     ]
+    },
+    {
+     "position": 4,
+     "weight": 0.2,
+     "mode": "one_of",
+     "subjects": [
+      "history"
+     ]
+    }
+   ],
+   "institution": "VDU",
+   "institution_name": "Vytauto Didžiojo universitetas",
+   "program_id": "58",
+   "program_name": "Ikimokyklinė ir priešmokyklinė pedagogika",
+   "program_city": "Kaunas",
+   "program_form": "Nuolatinė (NL) · Dieninė",
+   "exams": {
+    "lithuanian": {
+     "score": 58,
+     "course": "A",
+     "page_name": "Lietuvių kalba ir literatūra"
+    },
+    "mathematics": {
+     "score": 67,
+     "course": "A",
+     "page_name": "Matematika"
+    },
+    "biology": {
+     "score": 76,
+     "page_name": "Biologija"
+    },
+    "history": {
+     "score": 85,
+     "page_name": "Istorija"
+    }
+   },
+   "official": null
+  },
+  {
+   "id": 24,
+   "note": "полный набор",
+   "formula_number": "21",
+   "formula": [
+    {
+     "position": 1,
+     "weight": 0.4,
+     "mode": "one_of",
+     "subjects": [
+      "biology"
+     ]
+    },
+    {
+     "position": 2,
+     "weight": 0.2,
+     "mode": "one_of",
+     "subjects": [
+      "chemistry",
+      "mathematics",
+      "physics"
+     ]
+    },
+    {
+     "position": 3,
+     "weight": 0.2,
+     "mode": "one_of",
+     "subjects": [
+      "chemistry",
+      "physics",
+      "geography",
+      "informatics",
+      "history",
+      "mathematics",
+      "foreign_language",
+      "minority_language",
+      "economics",
+      "philosophy",
+      "engineering"
+     ]
+    },
+    {
+     "position": 4,
+     "weight": 0.2,
+     "mode": "one_of",
+     "subjects": [
+      "lithuanian"
+     ]
+    }
+   ],
+   "institution": "VU",
+   "institution_name": "Vilniaus universitetas",
+   "program_id": "248",
+   "program_name": "Akušerija",
+   "program_city": "Vilnius",
+   "program_form": "Nuolatinė (NL) · Dieninė",
+   "exams": {
+    "biology": {
+     "score": 97,
+     "page_name": "Biologija"
+    },
+    "chemistry": {
+     "score": 89,
+     "page_name": "Chemija"
+    },
+    "physics": {
+     "score": 54,
+     "page_name": "Fizika"
+    },
+    "lithuanian": {
+     "score": 63,
+     "course": "A",
+     "page_name": "Lietuvių kalba ir literatūra"
+    }
+   },
+   "official": null
+  },
+  {
+   "id": 25,
+   "note": "нет третьего предмета",
+   "formula_number": "43",
+   "formula": [
+    {
+     "position": 1,
+     "weight": 0.4,
+     "mode": "one_of",
+     "subjects": [
+      "history"
+     ]
+    },
+    {
+     "position": 2,
+     "weight": 0.2,
+     "mode": "one_of",
+     "subjects": [
+      "mathematics",
+      "informatics",
+      "geography",
+      "foreign_language",
+      "philosophy"
+     ]
+    },
+    {
+     "position": 3,
+     "weight": 0.2,
+     "mode": "one_of",
+     "subjects": [
+      "biology",
+      "chemistry",
+      "physics",
+      "geography",
+      "informatics",
+      "mathematics",
+      "foreign_language",
+      "minority_language",
+      "economics",
+      "philosophy",
+      "engineering"
+     ]
+    },
+    {
+     "position": 4,
+     "weight": 0.2,
+     "mode": "one_of",
+     "subjects": [
+      "lithuanian"
+     ]
+    }
+   ],
+   "institution": "KK",
+   "institution_name": "Kauno kolegija",
+   "program_id": "1064",
+   "program_name": "Socialinis darbas",
+   "program_city": "Kaunas",
+   "program_form": "Nuolatinė (NL) · Mišri",
+   "exams": {
+    "history": {
+     "score": 75,
+     "page_name": "Istorija"
+    },
+    "mathematics": {
+     "score": 85,
+     "course": "A",
+     "page_name": "Matematika"
+    },
+    "lithuanian": {
+     "score": 95,
+     "course": "A",
+     "page_name": "Lietuvių kalba ir literatūra"
+    }
+   },
+   "official": null
+  },
+  {
+   "id": 26,
+   "note": "право: полный набор",
+   "formula_number": "42",
+   "formula": [
+    {
+     "position": 1,
+     "weight": 0.4,
+     "mode": "one_of",
+     "subjects": [
+      "history"
+     ]
+    },
+    {
+     "position": 2,
+     "weight": 0.2,
+     "mode": "one_of",
+     "subjects": [
+      "mathematics",
+      "informatics",
+      "foreign_language",
+      "philosophy"
+     ]
+    },
+    {
+     "position": 3,
+     "weight": 0.2,
+     "mode": "one_of",
+     "subjects": [
+      "biology",
+      "chemistry",
+      "physics",
+      "geography",
+      "informatics",
+      "mathematics",
+      "foreign_language",
+      "minority_language",
+      "economics",
+      "philosophy",
+      "engineering"
+     ]
+    },
+    {
+     "position": 4,
+     "weight": 0.2,
+     "mode": "one_of",
+     "subjects": [
+      "lithuanian"
+     ]
+    }
+   ],
+   "institution": "KK",
+   "institution_name": "Kauno kolegija",
+   "program_id": "1074",
+   "program_name": "Teisė",
+   "program_city": "Kaunas",
+   "program_form": "Nuolatinė (NL) · Mišri",
+   "exams": {
+    "history": {
+     "score": 61,
+     "page_name": "Istorija"
+    },
+    "mathematics": {
+     "score": 72,
+     "course": "A",
+     "page_name": "Matematika"
+    },
+    "biology": {
+     "score": 83,
+     "page_name": "Biologija"
+    },
+    "lithuanian": {
+     "score": 94,
+     "course": "A",
+     "page_name": "Lietuvių kalba ir literatūra"
+    }
+   },
+   "official": null
+  },
+  {
+   "id": 27,
+   "note": "медицина: среднее химии и математики",
+   "formula_number": "20",
+   "formula": [
+    {
+     "position": 1,
+     "weight": 0.4,
+     "mode": "one_of",
+     "subjects": [
+      "biology"
+     ]
+    },
+    {
+     "position": 2,
+     "weight": 0.2,
+     "mode": "average",
+     "subjects": [
+      "chemistry",
+      "mathematics"
+     ]
+    },
+    {
+     "position": 3,
+     "weight": 0.2,
+     "mode": "one_of",
+     "subjects": [
+      "physics",
+      "geography",
+      "informatics",
+      "history",
+      "foreign_language",
+      "minority_language",
+      "economics",
+      "philosophy",
+      "engineering"
+     ]
+    },
+    {
+     "position": 4,
+     "weight": 0.2,
+     "mode": "one_of",
+     "subjects": [
+      "lithuanian"
+     ]
+    }
+   ],
+   "institution": "VU",
+   "institution_name": "Vilniaus universitetas",
+   "program_id": "252",
+   "program_name": "Medicina",
+   "program_city": "Vilnius",
+   "program_form": "Nuolatinė (NL) · Dieninė",
+   "exams": {
+    "biology": {
+     "score": 90,
+     "page_name": "Biologija"
+    },
+    "chemistry": {
+     "score": 80,
+     "page_name": "Chemija"
+    },
+    "mathematics": {
+     "score": 60,
+     "course": "A",
+     "page_name": "Matematika"
+    },
+    "physics": {
+     "score": 70,
+     "page_name": "Fizika"
+    },
+    "lithuanian": {
+     "score": 50,
+     "course": "A",
+     "page_name": "Lietuvių kalba ir literatūra"
+    }
+   },
+   "official": null
+  },
+  {
+   "id": 28,
+   "note": "медицина: математика B в среднем",
+   "formula_number": "20",
+   "formula": [
+    {
+     "position": 1,
+     "weight": 0.4,
+     "mode": "one_of",
+     "subjects": [
+      "biology"
+     ]
+    },
+    {
+     "position": 2,
+     "weight": 0.2,
+     "mode": "average",
+     "subjects": [
+      "chemistry",
+      "mathematics"
+     ]
+    },
+    {
+     "position": 3,
+     "weight": 0.2,
+     "mode": "one_of",
+     "subjects": [
+      "physics",
+      "geography",
+      "informatics",
+      "history",
+      "foreign_language",
+      "minority_language",
+      "economics",
+      "philosophy",
+      "engineering"
+     ]
+    },
+    {
+     "position": 4,
+     "weight": 0.2,
+     "mode": "one_of",
+     "subjects": [
+      "lithuanian"
+     ]
+    }
+   ],
+   "institution": "VU",
+   "institution_name": "Vilniaus universitetas",
+   "program_id": "252",
+   "program_name": "Medicina",
+   "program_city": "Vilnius",
+   "program_form": "Nuolatinė (NL) · Dieninė",
+   "exams": {
+    "biology": {
+     "score": 90,
+     "page_name": "Biologija"
+    },
+    "chemistry": {
+     "score": 80,
+     "page_name": "Chemija"
+    },
+    "mathematics": {
+     "score": 60,
+     "course": "B",
+     "page_name": "Matematika"
+    },
+    "physics": {
+     "score": 70,
+     "page_name": "Fizika"
+    },
+    "lithuanian": {
+     "score": 50,
+     "course": "A",
+     "page_name": "Lietuvių kalba ir literatūra"
+    }
+   },
+   "official": null
+  },
+  {
+   "id": 29,
+   "note": "веса 0,4 · 0,1 · 0,3 · 0,2",
+   "formula_number": "54",
+   "formula": [
+    {
+     "position": 1,
+     "weight": 0.4,
+     "mode": "one_of",
+     "subjects": [
+      "mathematics"
+     ]
+    },
+    {
+     "position": 2,
+     "weight": 0.1,
+     "mode": "one_of",
+     "subjects": [
+      "chemistry",
+      "physics",
+      "biology",
+      "informatics",
+      "geography",
+      "engineering"
+     ]
+    },
+    {
+     "position": 3,
+     "weight": 0.3,
+     "mode": "one_of",
+     "subjects": [
+      "biology",
+      "chemistry",
+      "physics",
+      "geography",
+      "informatics",
+      "history",
+      "foreign_language",
+      "minority_language",
+      "economics",
+      "philosophy",
+      "engineering",
+      "competence_assessment"
+     ]
+    },
+    {
+     "position": 4,
+     "weight": 0.2,
+     "mode": "one_of",
+     "subjects": [
+      "lithuanian"
+     ]
+    }
+   ],
+   "institution": "VK",
+   "institution_name": "Vilniaus kolegija",
+   "program_id": "1023",
+   "program_name": "Maisto technologija",
+   "program_city": "Vilnius",
+   "program_form": "Nuolatinė (NL) · Sesijinė",
+   "exams": {
+    "mathematics": {
+     "score": 66,
+     "course": "A",
+     "page_name": "Matematika"
+    },
+    "chemistry": {
+     "score": 99,
+     "page_name": "Chemija"
+    },
+    "biology": {
+     "score": 33,
+     "page_name": "Biologija"
+    },
+    "lithuanian": {
+     "score": 77,
+     "course": "A",
+     "page_name": "Lietuvių kalba ir literatūra"
+    }
+   },
+   "official": null
+  },
+  {
+   "id": 30,
+   "note": "сельское хозяйство: веса 0,4 · 0,1 · 0,3 · 0,2",
+   "formula_number": "22",
+   "formula": [
+    {
+     "position": 1,
+     "weight": 0.4,
+     "mode": "one_of",
+     "subjects": [
+      "biology"
+     ]
+    },
+    {
+     "position": 2,
+     "weight": 0.1,
+     "mode": "one_of",
+     "subjects": [
+      "chemistry",
+      "mathematics",
+      "informatics",
+      "geography"
+     ]
+    },
+    {
+     "position": 3,
+     "weight": 0.3,
+     "mode": "one_of",
+     "subjects": [
+      "chemistry",
+      "physics",
+      "geography",
+      "informatics",
+      "history",
+      "mathematics",
+      "foreign_language",
+      "minority_language",
+      "economics",
+      "philosophy",
+      "engineering",
+      "competence_assessment"
+     ]
+    },
+    {
+     "position": 4,
+     "weight": 0.2,
+     "mode": "one_of",
+     "subjects": [
+      "lithuanian"
+     ]
+    }
+   ],
+   "institution": "VDU",
+   "institution_name": "Vytauto Didžiojo universitetas",
+   "program_id": "44",
+   "program_name": "Agronomija",
+   "program_city": "Kaunas",
+   "program_form": "Nuolatinė (NL) · Dieninė",
+   "exams": {
+    "biology": {
+     "score": 52,
+     "page_name": "Biologija"
+    },
+    "chemistry": {
+     "score": 64,
+     "page_name": "Chemija"
+    },
+    "physics": {
+     "score": 78,
+     "page_name": "Fizika"
+    },
+    "lithuanian": {
+     "score": 91,
+     "course": "A",
+     "page_name": "Lietuvių kalba ir literatūra"
+    }
+   },
+   "official": null
+  }
+ ]
+}
