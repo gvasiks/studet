@@ -13,13 +13,11 @@ describe("профиль страны", () => {
     }
   });
 
-  it("Латвия на литовском: разделы с данными есть, длинных текстов без перевода нет", () => {
-    for (const feature of ["survey", "match", "calculator", "favorites"] as const) {
+  it("Латвия на литовском: все разделы для посетителя есть, внутренней страницы проверки нет", () => {
+    for (const feature of ["survey", "match", "calculator", "favorites", "glossary", "rights", "privacy"] as const) {
       expect(hasFeature("lt-lv", feature), feature).toBe(true);
     }
-    for (const feature of ["glossary", "rights", "privacy", "verification"] as const) {
-      expect(hasFeature("lt-lv", feature), feature).toBe(false);
-    }
+    expect(hasFeature("lt-lv", "verification")).toBe(false);
   });
 
   it("у Литвы на фазе 2 — только каталог и список, на любом из трёх языков", () => {

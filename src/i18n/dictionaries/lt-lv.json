@@ -56,8 +56,379 @@
     "intro": "Įveskite savo centralizuotų egzaminų rezultatus — parodysime, kurių programų konkursinį balą jau galima apskaičiuoti ir kurių egzaminų dar trūksta.",
     "notComparable": "Skirtingų aukštųjų mokyklų balai nepalyginami: kiekviena aukštoji mokykla turi savo skalę. Sąrašas nerikiuojamas pagal balą ir nežada priėmimo."
   },
+  "rights": {
+    "intro": "Ką stojančiajam garantuoja Latvijos įstatymai ir Ministrų kabineto taisyklės: kada turi būti paskelbtos taisyklės, kada galima registruotis, kada pasirašoma sutartis, per kiek laiko turi būti paskelbti rezultatai ir kaip apskųsti sprendimą.",
+    "checkedNote": "Parengta pagal teisės aktų tekstus, kuriuos skaitėme svetainėje likumi.lv 2026 m. rugsėjo 20 d. (Ministrų kabineto taisyklės Nr. 846 — 2025-12-30 redakcija; Aukštųjų mokyklų įstatymas — galiojanti redakcija). Tai nėra teisinė konsultacija: lemia teisės aktų tekstai ir kiekvienos aukštosios mokyklos priėmimo taisyklės. Šis tekstas — vertimas iš latvių kalbos; jei tekstai skiriasi, vadovaukitės tekstu latvių kalba.",
+    "items": [
+      {
+        "id": "rules-published",
+        "title": "Taisyklės turi būti paskelbtos iki lapkričio 30 d.",
+        "text": "Kasmet iki lapkričio 30 d. aukštoji mokykla savo svetainėje turi paskelbti priėmimo reikalavimus ir registracijos bei priėmimo pradžios datą kitiems mokslo metams.",
+        "source": "Aukštųjų mokyklų įstatymas, 46 straipsnio 5 dalis; Ministrų kabineto taisyklės Nr. 846, 3 punktas"
+      },
+      {
+        "id": "rules-contents",
+        "title": "Kas turi būti taisyklėse",
+        "text": "Priėmimo taisyklėse turi būti nurodyta: kokio ankstesnio išsilavinimo reikia, kuriuos centralizuotus egzaminus reikia būti išlaikius, papildomi reikalavimai, kada prasideda registracija ir priėmimas, konkurso kriterijai ir jų svoris, kaip apskaičiuojamas rezultatas, konkurso terminas, abiejų šalių teisės ir pareigos, kaip gauti informaciją apie eigą ir kaip apskųsti sprendimus.",
+        "source": "Ministrų kabineto taisyklės Nr. 846, 13 punktas"
+      },
+      {
+        "id": "open-competition",
+        "title": "Atviras ir lygiateisis konkursas",
+        "text": "Priėmimas vyksta atviro ir lygiateisio konkurso tvarka pagal aukštosios mokyklos taisykles. Aukštoji mokykla negali niekam suteikti pranašumo, kuris prieštarautų jos pačios taisyklėms, įstatymui ar bendriesiems teisės principams.",
+        "source": "Ministrų kabineto taisyklės Nr. 846, 2 ir 8 punktai; Aukštųjų mokyklų įstatymas, 46 straipsnio 3 dalis"
+      },
+      {
+        "id": "register-before-exams",
+        "title": "Registruotis galima dar prieš centralizuotus egzaminus",
+        "text": "Aukštoji mokykla gali pradėti registraciją ir priėmimą dar prieš centralizuotų egzaminų laikymą. Registruojantis nereikia pateikti nei atestato, nei egzaminų sertifikatų.",
+        "source": "Aukštųjų mokyklų įstatymas, 46 straipsnio 5 ir 6¹ dalys; Ministrų kabineto taisyklės Nr. 846, 6¹ ir 6⁴ punktai (taikoma nuo 2026/27 mokslo metų)"
+      },
+      {
+        "id": "how-to-register",
+        "title": "Kaip galima registruotis",
+        "text": "Registruotis galima asmeniškai aukštojoje mokykloje (prašymas ir pasas arba asmens tapatybės kortelė) arba elektroniniu būdu — per www.latvija.lv arba aukštosios mokyklos informacinę sistemą su saugiu tapatybės patvirtinimu.",
+        "source": "Ministrų kabineto taisyklės Nr. 846, 6 punktas"
+      },
+      {
+        "id": "contract-timing",
+        "title": "Studijų sutartis — tik po dokumentų ir rezultatų",
+        "text": "Aukštoji mokykla gali pasirašyti studijų sutartį tik po to, kai pateikėte vidurinio išsilavinimo dokumentą ir egzaminų sertifikatus ir kai paskelbti konkurso rezultatai. Paskelbusi rezultatus aukštoji mokykla atsiunčia kvietimą pasirašyti sutartį; imatrikuliacija vyksta pasirašius sutartį.",
+        "source": "Aukštųjų mokyklų įstatymas, 46 straipsnio 6¹ ir 6² dalys; Ministrų kabineto taisyklės Nr. 846, 4 punktas"
+      },
+      {
+        "id": "results-in-three-days",
+        "title": "Rezultatai — per tris dienas",
+        "text": "Konkurso rezultatus nustato ir tvirtina priėmimo komisija. Jie turi būti paskelbti ne vėliau kaip per tris dienas nuo konkurso pabaigos.",
+        "source": "Ministrų kabineto taisyklės Nr. 846, 14 punktas"
+      },
+      {
+        "id": "written-refusal",
+        "title": "Galite prašyti atsisakymo raštu",
+        "text": "Jei aukštoji mokykla atsisako jus imatrikuliuoti, turite teisę reikalauti, kad sprendimas būtų pateiktas raštu (Administracinio proceso įstatymo nustatyta tvarka).",
+        "source": "Ministrų kabineto taisyklės Nr. 846, 16 punktas"
+      },
+      {
+        "id": "appeal",
+        "title": "Sprendimą galima apskųsti",
+        "text": "Priėmimo komisijos sprendimą dėl rezultatų galite ginčyti pateikdami prašymą aukštosios mokyklos rektoriui (koledže — direktoriui). Rektoriaus sprendimą galima apskųsti teismui Administracinio proceso įstatymo nustatyta tvarka. Skundų pateikimo terminai nustatyti pačios aukštosios mokyklos taisyklėse.",
+        "source": "Ministrų kabineto taisyklės Nr. 846, 17 punktas"
+      },
+      {
+        "id": "exam-levels",
+        "title": "Skirtingų lygių egzaminai palyginami",
+        "text": "Skirtingais lygiais laikytiems centralizuotiems egzaminams palyginti taikomi koeficientai: 0,75 — optimalaus lygio egzaminams ir 0,50 — bendrojo lygio egzaminams, lyginant su aukščiausiu lygiu. Pagal senąją sistemą (iki naujų vidurinio ugdymo standartų) laikytiems egzaminams taikomas koeficientas 0,75.",
+        "source": "Ministrų kabineto taisyklės Nr. 846, 10.1, 10.2 ir 20 punktai"
+      },
+      {
+        "id": "no-exam-groups",
+        "title": "Kam centralizuotų egzaminų laikyti nereikia",
+        "text": "Centralizuotų egzaminų gali nelaikyti asmenys, vidurinį išsilavinimą įgiję iki 2004 m., įgiję jį užsienyje, ir asmenys, turintys specialiųjų poreikių; matematikos egzamino gali nelaikyti ir tie, kurie vidurinį išsilavinimą įgijo iki 2008 m. imtinai. Kaip šie asmenys priimami, aukštoji mokykla nustato savo taisyklėse.",
+        "source": "Ministrų kabineto taisyklės Nr. 846, 12 punktas; Aukštųjų mokyklų įstatymas, 46 straipsnio 3 dalis"
+      },
+      {
+        "id": "extra-requirements",
+        "title": "Aukštoji mokykla gali nustatyti papildomų reikalavimų",
+        "text": "Aukštoji mokykla gali nustatyti papildomų reikalavimų — specialų ankstesnį išsilavinimą, tinkamumą ar pasirengimą — ir stojamuosius egzaminus jiems patikrinti. Jie turi būti nurodyti priėmimo taisyklėse.",
+        "source": "Aukštųjų mokyklų įstatymas, 46 straipsnio 4 dalis; Ministrų kabineto taisyklės Nr. 846, 5¹ ir 13.3 punktai"
+      },
+      {
+        "id": "education-abroad",
+        "title": "Jei išsilavinimą įgijote užsienyje",
+        "text": "Jei jūsų išsilavinimo dokumentas išduotas užsienyje, pridėkite Akademinės informacijos centro (arba įgaliotos aukštosios mokyklos) pažymą, kurį Latvijos dokumentą jis atitinka. Užsienietis taip pat turi pridėti studijų kalbos mokėjimo ne žemesniu kaip B2 lygiu įrodymą, jei netaikoma išimtis, ir aukštoji mokykla su juo surengia pokalbį.",
+        "source": "Ministrų kabineto taisyklės Nr. 846, 7, 7¹, 7² ir 13¹ punktai"
+      }
+    ],
+    "sources": [
+      {
+        "label": "2006 m. spalio 10 d. Ministrų kabineto taisyklės Nr. 846 „Dėl reikalavimų, kriterijų ir priėmimo į studijų programas tvarkos“ (MK noteikumi Nr. 846, latvių kalba)",
+        "url": "https://likumi.lv/ta/id/146637-noteikumi-par-prasibam-kriterijiem-un-kartibu-uznemsanai-studiju-programmas"
+      },
+      {
+        "label": "Aukštųjų mokyklų įstatymas (Augstskolu likums, latvių kalba), 46 straipsnis",
+        "url": "https://likumi.lv/ta/id/37967-augstskolu-likums"
+      }
+    ]
+  },
+  "glossary": {
+    "intro": "Žodžiai, kuriuos sutiksite Latvijos aukštųjų mokyklų priėmimo taisyklėse ir šioje svetainėje. Skliausteliuose — terminas latvių kalba, kaip jis rašomas dokumentuose. Apibrėžtys paimtos iš įstatymų ir aukštųjų mokyklų taisyklių; prie kiekvienos nurodytas šaltinis.",
+    "items": [
+      {
+        "id": "accredited-programme",
+        "term": "Akredituota studijų programa (akreditēta studiju programma)",
+        "definition": "Programa, kuri, vertinant jos studijų kryptį, pripažinta atitinkančia įstatymo reikalavimus.",
+        "source": "Aukštųjų mokyklų įstatymas, 1 straipsnio 1¹ punktas"
+      },
+      {
+        "id": "licensing",
+        "term": "Licencijavimas (licencēšana)",
+        "definition": "Teisės vykdyti konkrečią studijų programą suteikimas. Aukštoji mokykla gali priimti studentus į programą tik po to, kai ji licencijuota.",
+        "source": "Aukštųjų mokyklų įstatymas, 1 straipsnio 12 punktas ir 46 straipsnio 1 dalis"
+      },
+      {
+        "id": "applicant",
+        "term": "Stojantysis (reflektants)",
+        "definition": "Asmuo, pretenduojantis būti priimtas į studijų programą. Šis žodis vartojamas teisės aktuose ir priėmimo taisyklėse.",
+        "source": "Aukštųjų mokyklų įstatymas, 46 straipsnis; Ministrų kabineto taisyklės Nr. 846"
+      },
+      {
+        "id": "admission-rules",
+        "term": "Priėmimo taisyklės (uzņemšanas noteikumi)",
+        "definition": "Aukštosios mokyklos dokumentas, nustatantis priėmimo reikalavimus, konkurso kriterijus ir tvarką. Kitiems mokslo metams jis turi būti paskelbtas iki lapkričio 30 d.",
+        "source": "Ministrų kabineto taisyklės Nr. 846, 3 ir 13 punktai"
+      },
+      {
+        "id": "admission-committee",
+        "term": "Priėmimo komisija (uzņemšanas komisija)",
+        "definition": "Komisija, kurią aukštoji mokykla sudaro priėmimui vykdyti ir konkurso rezultatams nustatyti bei tvirtinti.",
+        "source": "Ministrų kabineto taisyklės Nr. 846, 5 ir 14 punktai"
+      },
+      {
+        "id": "competition",
+        "term": "Konkursas (konkurss)",
+        "definition": "Atvira ir lygiateisė atranka į studijų vietas pagal aukštosios mokyklos taisykles; jos tikslas — atrinkti programai tinkamiausius kandidatus.",
+        "source": "Ministrų kabineto taisyklės Nr. 846, 8 punktas"
+      },
+      {
+        "id": "ce",
+        "term": "Centralizuotas egzaminas (CE, centralizētais eksāmens)",
+        "definition": "Valstybinis egzaminas baigiant vidurinę mokyklą. Konkurse gali būti skaičiuojami matematikos, latvių kalbos ir užsienio kalbos CE bei kiti jūsų pasirinkti CE.",
+        "source": "Ministrų kabineto taisyklės Nr. 846, 9 ir 10 punktai"
+      },
+      {
+        "id": "level",
+        "term": "Mokymo turinio įsisavinimo lygis (mācību satura apguves līmenis)",
+        "definition": "Lygis, kuriuo laikytas CE: bendrasis, optimalus arba aukščiausias. Jį pasirenkate patys.",
+        "source": "Ministrų kabineto taisyklės Nr. 846, 10 punktas"
+      },
+      {
+        "id": "level-coefficient",
+        "term": "Lygio koeficientas (līmeņa koeficients)",
+        "definition": "Skaičius, iš kurio dauginamas CE rezultatas, kad būtų galima palyginti skirtingų lygių egzaminus: 1 — aukščiausiam, 0,75 — optimaliam, 0,50 — bendrajam lygiui.",
+        "source": "Ministrų kabineto taisyklės Nr. 846, 10.1 ir 10.2 punktai"
+      },
+      {
+        "id": "ce-percent",
+        "term": "Bendras CE įvertinimas procentais (CE kopvērtējums procentos)",
+        "definition": "CE rezultatas procentais, kaip nurodyta egzamino sertifikate. Aukštosios mokyklos šį skaičių daugina iš savo koeficientų.",
+        "source": "Aukštųjų mokyklų priėmimo taisyklės (pvz., LU, RTU)"
+      },
+      {
+        "id": "competition-score",
+        "term": "Konkursinis balas (konkursa punkti, rangs)",
+        "definition": "Skaičius, kurį aukštoji mokykla pagal savo taisyklę apskaičiuoja iš CE rezultatų ir kitų kriterijų. Skalės skiriasi (pvz., LU — 1000 balų, RSU — 100), todėl skirtingų aukštųjų mokyklų balų lyginti negalima.",
+        "source": "Ministrų kabineto taisyklės Nr. 846, 13.4 punktas; LU ir RSU priėmimo taisyklės"
+      },
+      {
+        "id": "annual-mark",
+        "term": "Metinis pažymys (gada atzīme)",
+        "definition": "Pažymys vidurinio išsilavinimo dokumente. Aukštosios mokyklos jį naudoja konkurse tiems, kurie nelaikė CE, pavyzdžiui, baigusiems mokyklą iki 2004 m.",
+        "source": "Ministrų kabineto taisyklės Nr. 846, 12 punktas; LU priėmimo taisyklės"
+      },
+      {
+        "id": "international-test",
+        "term": "Tarptautinės testavimo institucijos egzaminas (STIP)",
+        "definition": "Užsienio kalbos egzaminas, kuris taisyklėse nustatytais atvejais gali pakeisti užsienio kalbos CE.",
+        "source": "Ministrų kabineto taisyklės Nr. 846, 6¹ 1.2 papunktis"
+      },
+      {
+        "id": "additional-requirements",
+        "term": "Papildomi reikalavimai (papildu prasības)",
+        "definition": "Reikalavimai, kuriuos aukštoji mokykla nustato be CE, — pavyzdžiui, specialus ankstesnis išsilavinimas arba tinkamumas.",
+        "source": "Aukštųjų mokyklų įstatymas, 46 straipsnio 4 dalis"
+      },
+      {
+        "id": "entrance-test",
+        "term": "Stojamasis egzaminas (iestājpārbaudījums)",
+        "definition": "Patikrinimas, kurį aukštoji mokykla gali surengti, kad įsitikintų, jog atitinkate jos papildomus reikalavimus.",
+        "source": "Ministrų kabineto taisyklės Nr. 846, 5¹ punktas"
+      },
+      {
+        "id": "outside-competition",
+        "term": "Priėmimas be konkurso (ārpus konkursa)",
+        "definition": "Kai kurias asmenų grupes aukštosios mokyklos priima be konkurso — pavyzdžiui, olimpiadų prizininkus. Kurios tai grupės, nustatyta kiekvienos aukštosios mokyklos taisyklėse. Valstybinės aukštosios mokyklos be konkurso suteikia biudžetinę vietą asmenims, atlikusiems valstybės gynybos tarnybą.",
+        "source": "Ministrų kabineto taisyklės Nr. 846, 17¹ punktas; DU ir LBTU priėmimo taisyklės"
+      },
+      {
+        "id": "priorities",
+        "term": "Prioritetai (prioritātes)",
+        "definition": "Programos, kurias stojantysis prašyme išdėsto pagal pageidavimą. Rezultatas paskelbiamas tik dėl vienos programos — aukščiausio prioriteto, kuriame laimėtas konkursas; kitos nebesvarstomos.",
+        "source": "RSU ir DU priėmimo taisyklės"
+      },
+      {
+        "id": "budget-place",
+        "term": "Biudžetinė vieta (budžeta vieta)",
+        "definition": "Studijų vieta, kurioje studijos finansuojamos iš valstybės biudžeto.",
+        "source": "DU priėmimo taisyklės"
+      },
+      {
+        "id": "paid-place",
+        "term": "Mokama vieta (maksas vieta)",
+        "definition": "Studijų vieta, kurioje studijas finansuoja fizinis arba juridinis asmuo.",
+        "source": "DU priėmimo taisyklės"
+      },
+      {
+        "id": "study-contract",
+        "term": "Studijų sutartis (studiju līgums)",
+        "definition": "Rašytinė studento ir aukštosios mokyklos sutartis. Ji pasirašoma pateikus dokumentus ir paskelbus konkurso rezultatus.",
+        "source": "Aukštųjų mokyklų įstatymas, 46 straipsnio 2 ir 6¹ dalys"
+      },
+      {
+        "id": "matriculation",
+        "term": "Imatrikuliacija (imatrikulācija)",
+        "definition": "Asmens įrašymas į aukštosios mokyklos studentų sąrašą. Ji vyksta pasirašius studijų sutartį.",
+        "source": "Aukštųjų mokyklų įstatymas, 1 straipsnio 6 punktas ir 46 straipsnio 6² dalis"
+      },
+      {
+        "id": "credit-point",
+        "term": "Kreditas (kredītpunkts, KP)",
+        "definition": "Studijų krūvio vienetas. Nuolatinių studijų studentas per mokslo metus įgyja 60 kreditų; vienas kreditas atitinka 25–30 studijų darbo valandų.",
+        "source": "Aukštųjų mokyklų įstatymas, 1 straipsnio 8 punktas"
+      },
+      {
+        "id": "full-part-time",
+        "term": "Nuolatinės ir ištęstinės studijos (pilna laika, nepilna laika)",
+        "definition": "Nuolatinės studijos atitinka 60 kreditų per mokslo metus, ištęstinės — mažiau nei 60.",
+        "source": "Aukštųjų mokyklų įstatymas, 1 straipsnio 9 ir 10 punktai"
+      },
+      {
+        "id": "short-cycle-first-cycle",
+        "term": "Trumposios ir pirmosios pakopos programa (īsā cikla, pirmā cikla)",
+        "definition": "Programų tipai, į kuriuos galima stoti turint vidurinį išsilavinimą: trumposios pakopos profesinio aukštojo mokslo programos ir pirmosios pakopos aukštojo mokslo programos.",
+        "source": "Ministrų kabineto taisyklės Nr. 846, 1.2 punktas"
+      }
+    ]
+  },
   "privacy": {
+    "intro": "Kaip ši svetainė tvarko asmens duomenis: ką saugome, ko nesaugome ir kokios yra jūsų teisės. Šis tekstas — vertimas iš latvių kalbos; jei tekstai skiriasi, galioja tekstas latvių kalba.",
+    "updated": "Redakcija: 2026 m. spalio 4 d.",
     "authorityLabel": "Latvijos duomenų valstybinė inspekcija (dvi.gov.lv)",
-    "authorityUrl": "https://www.dvi.gov.lv/en"
+    "authorityUrl": "https://www.dvi.gov.lv/en",
+    "sections": [
+      {
+        "id": "summary",
+        "title": "Trumpai",
+        "body": [
+          "- Svetainėje nėra naudotojų paskyrų ir nereikia registruotis.",
+          "- Egzaminų rezultatai, kuriuos įvedate skaičiuoklėje arba skiltyje „Kur galiu stoti“, skaičiuojami jūsų naršyklėje. Jie nesiunčiami į mūsų serverį ir niekur nesaugomi.",
+          "- Nenaudojame sekimo slapukų ir nerodome reklamos.",
+          "- Jūsų sąrašas (žvaigždute pažymėtos programos) lieka tik jūsų įrenginyje."
+        ]
+      },
+      {
+        "id": "controller",
+        "title": "Kas atsakingas",
+        "body": [
+          "Duomenų valdytojas yra {controller}. Klausimais dėl asmens duomenų rašykite: {email}."
+        ]
+      },
+      {
+        "id": "visit",
+        "title": "Lankymasis svetainėje",
+        "body": [
+          "Kai atidarote puslapį, mūsų prieglobos paslaugų teikėjas automatiškai užfiksuoja techninius duomenis: jūsų IP adresą, laiką, prašomą adresą ir naršyklės tipą. Tai daroma tam, kad svetainė veiktų ir būtų saugi. Šių duomenų nenaudojame asmeniui nustatyti.",
+          "Teisinis pagrindas: mūsų teisėtas interesas užtikrinti svetainės saugumą ir veikimą (Bendrojo duomenų apsaugos reglamento 6 straipsnio 1 dalies f punktas). Saugojimo laikotarpį nustato paslaugų teikėjas.",
+          "Pirmą kartą apsilankius kalbą parenkame pagal jūsų naršyklės kalbos nustatymą; tai nesaugoma."
+        ]
+      },
+      {
+        "id": "survey",
+        "title": "Anketa ir skaičiuoklės",
+        "body": [
+          "- Egzaminų rezultatai skaičiuoklėje ir skiltyje „Kur galiu stoti“ skaičiuojami tik jūsų naršyklėje. Jie nesiunčiami į serverį, nesaugomi ir neįrašomi į puslapio adresą.",
+          "- Anketoje pasirinkti filtrai (dominanti sritis, miestas, studijų kalba ir forma, biudžetinės vietos) įrašomi į puslapio adresą, kad būtų galima parodyti programų sąrašą. Kartu su apsilankymu jie patenka į techninius žurnalus (žr. aukščiau), tačiau jų nesiejame su asmeniu. Anketos atsakymai apie egzaminus į serverį nesiunčiami."
+        ]
+      },
+      {
+        "id": "favorites",
+        "title": "Mano sąrašas",
+        "body": [
+          "Programų, kurias pažymite žvaigždute, sąrašas saugomas tik jūsų naršyklėje (localStorage) ir mums nesiunčiamas. Jį galite ištrinti išvalę svetainės duomenis naršyklės nustatymuose. Šis saugojimas reikalingas funkcijai, kuria naudotis pasirenkate patys."
+        ]
+      },
+      {
+        "id": "cookies",
+        "title": "Slapukai",
+        "body": [
+          "Slapukų sekimui nenaudojame. Svetainė jūsų naršyklėje saugo tik programų sąrašą (žr. aukščiau)."
+        ]
+      },
+      {
+        "id": "analytics",
+        "title": "Naudojimo statistika",
+        "body": [
+          "Kad suprastume, kurie puslapiai skaitomi ir kaip greitai jie įkeliami, naudojame „PostHog“ analitiką, kurios serveriai yra Europos Sąjungoje. Ji nustatyta taip:",
+          "- be slapukų ir be naršyklėje saugomų duomenų;",
+          "- be asmenų identifikavimo, be seansų įrašų ir be įvestų laukų turinio — egzaminų rezultatai į analitiką nepatenka niekada;",
+          "- IP adresai nesaugomi.",
+          "Teisinis pagrindas: mūsų teisėtas interesas tobulinti svetainę (6 straipsnio 1 dalies f punktas). Galite nesutikti — rašykite {email}."
+        ]
+      },
+      {
+        "id": "email",
+        "title": "Priminimai el. paštu",
+        "body": [
+          "Jei patys paprašote priminimo (pavyzdžiui, apie priėmimo pradžią arba pokyčius jūsų programų sąraše), saugome jūsų el. pašto adresą ir tai, apie ką norite būti informuoti. Naudojame juos tik tam, ko prašėte.",
+          "Teisinis pagrindas: jūsų sutikimas (6 straipsnio 1 dalies a punktas). Sutikimą galite atšaukti bet kada — nuoroda kiekviename laiške arba parašę {email}; atšaukimas neturi įtakos jau išsiųstiems laiškams.",
+          "Laiškus siunčia paslaugų teikėjas „Resend“. Adresą ištriname jums atšaukus sutikimą ir ne vėliau kaip po 12 mėnesių nuo paskutinio išsiųsto laiško."
+        ]
+      },
+      {
+        "id": "minors",
+        "title": "Moksleiviai ir jaunimas",
+        "body": [
+          "Svetainė daugiausia skirta moksleiviams ir jaunimui. Latvijoje vaikas gali duoti sutikimą informacinės visuomenės paslaugai nuo 13 metų; jaunesniam vaikui reikia vieno iš tėvų arba teisėto globėjo sutikimo (Fizinių asmenų duomenų tvarkymo įstatymo 33 straipsnis).",
+          "Egzaminų rezultatų, kuriuos įvedate svetainėje, nesaugome ir nesiunčiame."
+        ]
+      },
+      {
+        "id": "recipients",
+        "title": "Kam perduodame duomenis",
+        "body": [
+          "Duomenų neparduodame ir nerodome reklamos. Duomenis tvarko tik mūsų paslaugų teikėjai (duomenų tvarkytojai) ir tik mūsų pavedimu:",
+          "- prieglobos paslaugų teikėjas (svetainės veikimas);",
+          "- „Supabase“ (duomenų bazė, serveriai Europos Sąjungoje; el. pašto adresai, jei juos pateikiate);",
+          "- „PostHog“ (naudojimo statistika, serveriai Europos Sąjungoje);",
+          "- „Resend“ (el. laiškų siuntimas).",
+          "Jei paslaugų teikėjas perduoda duomenis už Europos ekonominės erdvės ribų, jis tai daro taikydamas Europos Komisijos patvirtintas apsaugos priemones, pavyzdžiui, standartines sutarčių sąlygas."
+        ]
+      },
+      {
+        "id": "rights",
+        "title": "Jūsų teisės",
+        "body": [
+          "Turite teisę:",
+          "- gauti informaciją apie savo duomenis ir susipažinti su jais;",
+          "- prašyti juos ištaisyti arba ištrinti;",
+          "- apriboti tvarkymą ir nesutikti su tvarkymu, grindžiamu teisėtais interesais;",
+          "- gauti savo duomenis perkeliamu formatu;",
+          "- bet kada atšaukti sutikimą.",
+          "Rašykite {email} — atsakysime per vieną mėnesį. Jei manote, kad jūsų teisės pažeistos, galite pateikti skundą Latvijos duomenų valstybinei inspekcijai (Datu valsts inspekcija, Elijas iela 17, Ryga, LV-1050)."
+        ]
+      },
+      {
+        "id": "contact",
+        "title": "Jei mums rašote",
+        "body": [
+          "Programos puslapyje ir skaičiuoklėje yra nuoroda pranešti apie klaidą. Ji atidaro jūsų pačių el. pašto programą — laišką išsiunčiate patys; svetainė jūsų vardu nieko nesiunčia.",
+          "Jei mums parašote, gauname jūsų el. pašto adresą ir laiško turinį. Naudojame juos tik informacijai patikrinti ir ištaisyti bei jums atsakyti. Prašome nenurodyti egzaminų rezultatų — mums jų nereikia.",
+          "Teisinis pagrindas: mūsų teisėtas interesas, kad informacija svetainėje būtų teisinga (6 straipsnio 1 dalies f punktas). Susirašinėjimą ištriname ne vėliau kaip po 12 mėnesių nuo paskutinio laiško."
+        ]
+      },
+      {
+        "id": "decisions",
+        "title": "Automatizuoti sprendimai",
+        "body": [
+          "Nepriimame automatizuotų sprendimų, kurie turėtų jums poveikį, ir neprofiliuojame. Skaičiavimai svetainėje yra orientaciniai; galutinį sprendimą dėl priėmimo priima aukštoji mokykla."
+        ]
+      },
+      {
+        "id": "changes",
+        "title": "Pakeitimai",
+        "body": [
+          "Jei politika keisis, atnaujinsime šį puslapį ir redakcijos datą."
+        ]
+      }
+    ]
   }
 }

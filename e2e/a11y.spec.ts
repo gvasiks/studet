@@ -38,7 +38,7 @@ const LT_ROUTES = [
   "/en-lt/programmes",
   "/en-lt/programmes/vu/medicina",
   // третий язык у каждой страны (решение 2026-10-06): Литва на латышском,
-  // Латвия на литовском; /lt-lv/glossary — раздел без перевода, «не найдено»
+  // Латвия на литовском, включая переведённые словарь, права и политику
   "/lv-lt",
   "/lv-lt/programmes",
   "/lv-lt/programmes/vu/medicina",
@@ -47,6 +47,8 @@ const LT_ROUTES = [
   "/lt-lv/programmes/lu/economics",
   "/lt-lv/match",
   "/lt-lv/glossary",
+  "/lt-lv/rights",
+  "/lt-lv/privacy",
 ];
 
 for (const route of LT_ROUTES) {
