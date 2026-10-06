@@ -363,6 +363,20 @@ npm run dev
       Lithuanian…».
 - [ ] `/lt/match`, `/lt/survey`, `/lt/glossary`, `/lt/rights`,
       `/lt/privacy` — страница «Puslapis nerastas».
+- [ ] Расчёт балла (с 2026-10-06). На карточке `/lt/programmes/vu/medicina`
+      есть кнопка «Konkursinio balo skaičiuoklė». На странице расчёта
+      введите: Biologija 90, Chemija 80, Matematika 60 (курс A), Fizika 70,
+      Lietuvių kalba ir literatūra 50 — итог **7,40**; переключите
+      математику на курс B — **7,22**. В разборе видно, что вторая
+      составляющая — среднее химии и математики.
+- [ ] Оценка 29 или 101 — ошибка под полем «Įveskite skaičių nuo 30 iki 100»,
+      итог не показывается.
+- [ ] Под расчётом: дополнительные баллы не учтены (ссылка на официальный
+      калькулятор), год правил, дата сверки, «это оценка, а не официальный
+      результат».
+- [ ] `/lt/programmes/vu/dalyko-pedagogika/calculator` и любая программа
+      искусств — «Šios programos balo neskaičiuojame…», формы нет; на
+      карточке такой программы кнопки расчёта нет.
 - [ ] `/lv/programmes/vu/medicina` — «Lapa nav atrasta»: литовской
       программы под латвийским адресом нет.
 - [ ] В подвале строка «Šalis: Latvija · Lietuva»; ссылка ведёт на главную
