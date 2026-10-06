@@ -85,9 +85,14 @@ def university_slug(code: str) -> str:
 
 
 def parse_programs(js_text: str) -> list[dict[str, str]]:
-    """Записи из `const programs = [{a:'…',b:'…'}, …]` — литерал JS, не JSON:
-    ключи без кавычек, строки в одинарных кавычках."""
-    start = js_text.index("[", js_text.index("const programs"))
+    return parse_array(js_text, "programs")
+
+
+def parse_array(js_text: str, name: str) -> list[dict[str, str]]:
+    """Записи из `const <name> = [{a:'…',b:'…'}, …]` — литерал JS, не JSON:
+    ключи без кавычек, строки в одинарных кавычках. Так устроены и список
+    программ, и таблица формул официального калькулятора."""
+    start = js_text.index("[", js_text.index(f"const {name}"))
     entries: list[dict[str, str]] = []
     buffer: list[str] = []
     in_string = False
