@@ -18,9 +18,9 @@ from sources import bsa, du, eka, ekra, jvlma, lbtu, lka, lma, lnaa, lt_lamabpo,
 SOURCES = [turiba, riseba, rtu_liepaja, tsi, bsa, sse_riga, rgsl, lu, venta, lbtu, du, eka, rnu, rtu_catalog, via, rsu, lka, lma, jvlma, rai, lnaa, lutera, ekra, niid_colleges, niid_universities, lt_lamabpo]
 
 # Источники, которые запускаются только по имени: `python src/main.py lt_lamabpo`.
-# Литва ещё строится (docs/PLAN-LITHUANIA-2027.md): её сбор не должен попадать в
-# недельное расписание и не должен красить латвийский прогон, если реестр
-# Литвы не ответил. Когда Литва запустится — убрать отсюда.
+# У Литвы своё расписание (.github/workflows/scrape-lithuania.yml): её сбор не
+# должен попадать в недельный латвийский прогон и красить его, если литовский
+# реестр не ответил. Остаётся здесь и после запуска Литвы.
 BY_NAME_ONLY = {"lt_lamabpo"}
 
 # Ревью 2026-09, пункт 05: конвейер должен падать, если число найденных

@@ -33,7 +33,7 @@ from collections import Counter, defaultdict
 from datetime import datetime, timezone
 from pathlib import Path
 
-from lt_formulas import COMPETITIONS_URL, Component, parse_formulas
+from lt_formulas import COMPETITIONS_URL, Component, parse_formulas, rules_year
 from sources.lt_lamabpo import PROGRAMS_URL, catalog_rows
 
 # Год приёма, правила которого сейчас лежат в файлах калькулятора. LAMA BPO
@@ -115,8 +115,29 @@ def summary(payload: dict) -> str:
     return "\n".join(lines)
 
 
-def apply(client, payload: dict, execute) -> None:  # type: ignore[no-untyped-def]
-    """Запись. Сервисный ключ — как у остального конвейера."""
+def year_problem(found: int | None, expected: int) -> str | None:
+    """Почему собранное нельзя записывать под годом ADMISSION_YEAR; None — можно.
+
+    Когда LAMA BPO заменит файлы калькулятора правилами следующего года,
+    загрузчик без этой проверки молча записал бы новые формулы под старым
+    годом — и они унаследовали бы отметку о сверке, которой у них нет."""
+    if found is None:
+        return (
+            "в файле калькулятора не найдена таблица уровней экзаменов по годам — "
+            "файл изменился, год правил определить нельзя"
+        )
+    if found != expected:
+        return (
+            f"файл калькулятора рассчитан на приём {found} года, а загрузчик настроен на {expected}. "
+            "Поменяйте ADMISSION_YEAR в lt_load_formulas.py и пересверьте расчёт с калькулятором вручную"
+        )
+    return None
+
+
+def apply(client, payload: dict, execute) -> list[str]:  # type: ignore[no-untyped-def]
+    """Запись. Сервисный ключ — как у остального конвейера. Возвращает
+    номера сверенных формул, у которых изменился состав: отметка о сверке
+    с них снята, расчёт по ним закрыт до новой ручной сверки."""
     now = datetime.now(timezone.utc).isoformat()
     year = payload["admission_year"]
 
@@ -211,6 +232,7 @@ def apply(client, payload: dict, execute) -> None:  # type: ignore[no-untyped-de
         print(f"строк приёма без программы в каталоге: {len(orphans)} ({len(unique)} программ) — сначала запустите сбор каталога")
         for name in unique[:10]:
             print(f"   {name}")
+    return sorted(reset)
 
 
 def _selftest() -> None:
@@ -267,6 +289,10 @@ def _selftest() -> None:
     assert not same_components([{**stored[0], "weight": "0.50"}, stored[1]], fresh), "другой вес — другой состав"
     assert not same_components([{**stored[0], "subjects": ["chemistry", "physics"]}, stored[1]], fresh), "порядок предметов значим"
     assert not same_components(stored[:1], fresh)
+
+    assert year_problem(ADMISSION_YEAR, ADMISSION_YEAR) is None
+    assert "Поменяйте ADMISSION_YEAR" in (year_problem(ADMISSION_YEAR + 1, ADMISSION_YEAR) or "")
+    assert "файл изменился" in (year_problem(None, ADMISSION_YEAR) or "")
     print("selftest: OK")
 
 
@@ -296,8 +322,14 @@ def main() -> None:
         with sync_playwright() as p:
             browser = p.chromium.launch()
             page = browser.new_page()
-            formulas = parse_formulas(page.goto(COMPETITIONS_URL, timeout=45000).text())
+            competitions_text = page.goto(COMPETITIONS_URL, timeout=45000).text()
             browser.close()
+        formulas = parse_formulas(competitions_text)
+        problem = year_problem(rules_year(competitions_text), ADMISSION_YEAR)
+        if problem:
+            # До записи: под чужим годом в базу не идёт ничего.
+            print(f"ОСТАНОВЛЕНО: {problem}.")
+            sys.exit(2)
         state_codes = {url: card.state_code for url, card in cards.items()}
         payload = build_payload(catalog_rows(entries, cards), formulas, state_codes)
         print(polite.report_and_reset())
@@ -318,7 +350,15 @@ def main() -> None:
     from db_retry import execute
 
     load_dotenv()
-    apply(get_service_client(), payload, execute)
+    reset = apply(get_service_client(), payload, execute)
+    if reset:
+        # Код 3 — чтобы запланированный прогон на GitHub упал и прислал письмо:
+        # расчёт по этим формулам уже закрыт, вернуть его может только человек.
+        print(
+            "\nНУЖНА РУЧНАЯ СВЕРКА: у формул " + ", ".join(reset) + " изменился состав. "
+            "Расчёт балла по ним закрыт. Порядок: pipeline/README.md, «Сверка с официальным калькулятором»."
+        )
+        sys.exit(3)
 
 
 if __name__ == "__main__":

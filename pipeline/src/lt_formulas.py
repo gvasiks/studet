@@ -118,7 +118,24 @@ def parse_formulas(js_text: str) -> dict[str, list[Component]]:
     return result
 
 
+_LEVEL_RANGE = re.compile(r"from:\s*(\d{4})\s*,\s*to:\s*(\d{4})")
+
+
+def rules_year(js_text: str) -> int | None:
+    """Год приёма, на который рассчитан файл калькулятора.
+
+    Явной строки «правила такого-то года» в файле нет. Есть таблица
+    уровней экзаменов по годам окончания школы — `{ from: 2025, to: 2026,
+    levels: [...] }`; её последний год и есть год приёма, для которого
+    калькулятор выложен. None — таблицы в файле нет (файл изменился)."""
+    years = [int(to) for _from, to in _LEVEL_RANGE.findall(js_text)]
+    return max(years) if years else None
+
+
 def _selftest() -> None:
+    assert rules_year('{ from: 2010, to: 2024, levels: ["M", "V"] }, { from: 2025, to: 2026, levels: ["VA", "VB"] }') == 2026
+    assert rules_year("{from:2025,to:2027,levels:[]}") == 2027
+    assert rules_year("const formulas = [];") is None
     assert parse_component_text("matematika") == ("one_of", ("mathematics",))
     assert parse_component_text("lietuvių kalba ir literatūra") == ("one_of", ("lithuanian",)), "«ir» внутри названия — не среднее"
     assert parse_component_text("chemija ir matematika") == ("average", ("chemistry", "mathematics"))

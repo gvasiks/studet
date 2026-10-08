@@ -1,0 +1,76 @@
+name: Scrape Lithuania
+
+# Литовские данные собираются отдельно от недельного латвийского сбора
+# (docs/PLAN-LITHUANIA-2027.md, фаза 6): сбой литовского реестра не должен
+# красить латвийский прогон, и наоборот. Источники меняются редко — список
+# программ раз в год (к 15 апреля), правила балла раз в год (к 1 декабря), —
+# поэтому обычный ритм — раз в месяц, а в сезон приёма (июнь–август) — раз
+# в неделю: вузы могут снимать программы с приёма до последних дней.
+#
+# НЕ ПРОВЕРЕНО (2026-10-08): отвечают ли aikos.smm.lt и lamabpo.lt серверу
+# GitHub. Латвийские rtu.lv и lma.lv не отвечают, и их собирают локально.
+# Первый прогон надо запустить вручную (Actions -> Scrape Lithuania -> Run
+# workflow) и посмотреть на результат. Если сайты не ответят — сбор идёт с
+# компьютера владельца теми же командами (pipeline/README.md), а о том, что
+# пора, напомнит сторож lithuania-health.yml.
+on:
+  schedule:
+    # 3-е число каждого месяца, 02:30 UTC — ночь, не понедельник латвийского
+    # сбора (01:00) и не 2-е число обхода NIID
+    - cron: "30 2 3 * *"
+    # каждый четверг в июне–августе — сезон приёма
+    - cron: "30 2 * 6-8 4"
+  workflow_dispatch: {}
+
+jobs:
+  scrape:
+    runs-on: ubuntu-latest
+    # реестр — 637 карточек с паузой 1,5 с: около 20 минут на обход
+    timeout-minutes: 90
+    defaults:
+      run:
+        working-directory: pipeline
+    env:
+      SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+      SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+      SCRAPER_CONTACT: ${{ vars.SCRAPER_CONTACT }}
+      # Каталог и формулы читают одни и те же карточки реестра: с кэшем
+      # второй шаг берёт их с диска, а не обходит реестр второй раз.
+      SCRAPE_CACHE: "1"
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+
+      - run: pip install -r requirements.txt
+      - run: playwright install --with-deps chromium
+
+      # 1. Каталог: программы и вузы.
+      - name: Каталог
+        run: python src/main.py lt_lamabpo
+
+      # 2. Строки приёма, государственные коды и формулы балла. Останавливается
+      #    с кодом 2, если файл калькулятора рассчитан на другой год приёма, и
+      #    с кодом 3, если у сверенной формулы изменился состав: в обоих
+      #    случаях нужен человек, письмо об упавшем прогоне — сигнал.
+      - name: Строки приёма и формулы
+        run: python src/lt_load_formulas.py --apply
+
+      # if: always() — направления и цифры не зависят от формул: сбой
+      # предыдущего шага не должен оставлять их без обновления.
+      - name: Направления программ
+        if: always()
+        run: python src/lt_load_fields.py --apply
+
+      # 3. Раз в месяц и при ручном запуске (не в недельных сезонных прогонах):
+      #    цифры прошлого приёма (76 МБ с data.gov.lt, читаются потоком) и
+      #    показатели выпускников (PDF лежит в репозитории).
+      - name: Цифры прошлого приёма
+        if: always() && (github.event_name == 'workflow_dispatch' || github.event.schedule == '30 2 3 * *')
+        run: python src/lt_load_admission_stats.py --apply
+
+      - name: Показатели выпускников
+        if: always() && (github.event_name == 'workflow_dispatch' || github.event.schedule == '30 2 3 * *')
+        run: python src/lt_load_field_outcomes.py --apply

@@ -1,0 +1,38 @@
+name: "Lithuania data health check"
+
+# Сторож литовских данных (docs/PLAN-LITHUANIA-2027.md, фаза 6). Сам ничего
+# не собирает: раз в день смотрит, когда обновлялись литовский каталог,
+# строки приёма с формулами и направления программ, и ПАДАЕТ, если что-то
+# из этого старше 45 дней (pipeline/src/check_lt_sources.py). Упавший
+# запланированный workflow GitHub присылает письмо — это и есть сигнал;
+# название workflow попадает в тему письма.
+#
+# Зачем отдельно от самого сбора: сбор может не просто упасть, а перестать
+# запускаться — GitHub отключает расписания в репозитории, где 60 дней не
+# было активности.
+on:
+  schedule:
+    # 06:45 UTC ежедневно — рядом с латвийскими сторожами (06:00 и 06:30)
+    - cron: "45 6 * * *"
+  workflow_dispatch: {}
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: pipeline
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+
+      # Только клиент базы, без Playwright — как у pipeline-health.yml
+      - run: pip install supabase~=2.31 python-dotenv~=1.2
+
+      - run: python src/check_lt_sources.py
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
