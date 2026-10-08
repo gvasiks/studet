@@ -20,12 +20,12 @@ describe("профиль страны", () => {
     expect(hasFeature("lt-lv", "verification")).toBe(false);
   });
 
-  it("у Литвы — каталог, список, расчёт балла и «куда я прохожу», на любом из трёх языков", () => {
+  it("у Литвы — каталог, список, анкета, расчёт балла и «куда я прохожу», на любом из трёх языков", () => {
     for (const locale of ["lt", "en-lt", "lv-lt"] as const) {
-      for (const feature of ["favorites", "calculator", "match"] as const) {
+      for (const feature of ["favorites", "survey", "calculator", "match"] as const) {
         expect(hasFeature(locale, feature), `${locale}: ${feature}`).toBe(true);
       }
-      for (const feature of ["survey", "glossary", "rights", "privacy", "verification"] as const) {
+      for (const feature of ["glossary", "rights", "privacy", "verification"] as const) {
         expect(hasFeature(locale, feature), `${locale}: ${feature}`).toBe(false);
       }
     }

@@ -24,9 +24,9 @@ for (const locale of LOCALES) {
   }
 }
 
-// Литва: каталог, карточка, расчёт балла и «куда я прохожу» на литовском и
-// английском. /lt/survey — раздела у Литвы ещё нет, проверяется вёрстка
-// страницы «не найдено». Адреса существуют только при
+// Литва: каталог, карточка, анкета, расчёт балла и «куда я прохожу».
+// /lt/glossary — раздела у Литвы ещё нет, проверяется вёрстка страницы
+// «не найдено». Адреса существуют только при
 // NEXT_PUBLIC_PREVIEW_COUNTRIES=1 (локально — .env.local, в CI — ci.yml).
 const LT_ROUTES = [
   "/lt",
@@ -38,6 +38,8 @@ const LT_ROUTES = [
   "/lt/favorites",
   "/lt/match",
   "/lt/survey",
+  "/lt/programmes?interest=it",
+  "/lt/glossary",
   "/en-lt",
   "/en-lt/programmes",
   "/en-lt/programmes/vu/medicina",

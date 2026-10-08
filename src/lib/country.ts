@@ -67,20 +67,19 @@ const profiles: Record<Country, CountryProfile> = {
     nativeLanguage: "lv",
     generalAdmission: null,
   },
-  // Литва: каталог, карточка, список избранного, расчёт балла и «куда я
-  // прохожу» (фаза 3, 2026-10-06). Остальные разделы включаются по мере
-  // готовности (docs/PLAN-LITHUANIA-2027.md): анкета — фаза 4, словарь,
-  // права и политика конфиденциальности — фаза 5.
+  // Литва: каталог, карточка, список избранного, расчёт балла, «куда я
+  // прохожу» (фаза 3) и анкета (фаза 4, 2026-10-08). Словарь, права и
+  // политика конфиденциальности — фаза 5 (docs/PLAN-LITHUANIA-2027.md).
   // Фильтров по плате и «только бюджет» нет: источник не сообщает ни цену,
   // ни вид финансирования программы (бюджетные места в Литве делятся по
-  // направлениям, а не по программам).
+  // направлениям, а не по программам). Интересы работают по направлению
+  // программы из списка общего приёма (src/lib/lt-fields.ts).
   LT: {
-    features: ["favorites", "calculator", "match"],
-    filters: [],
+    features: ["favorites", "survey", "calculator", "match"],
+    filters: ["interest"],
     // Без экзаменов (вопрос ни на что не влияет, а оценки вводятся в «куда
-    // я прохожу») и без бюджета с платой (данных нет). Экран интересов
-    // добавится вместе с фильтром по интересам.
-    surveySteps: ["levelDuration", "city", "languageMode", "kind"],
+    // я прохожу») и без бюджета с платой (данных нет).
+    surveySteps: ["interests", "levelDuration", "city", "languageMode", "kind"],
     levels: ["bachelor", "college", "integrated"],
     cities: ["vilnius", "kaunas", "klaipeda", "siauliai", "panevezys", "utena", "alytus", "telsiai", "marijampole", "taurage"],
     languages: ["lt", "en", "ru"],

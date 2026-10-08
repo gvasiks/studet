@@ -8,6 +8,7 @@ import { countryProfile } from "@/lib/country";
 import { enumLabel, getProgramme, localizedName, type Programme, type University } from "@/lib/catalog";
 import { getFormula } from "@/lib/formula-queries";
 import { getLtFormula } from "@/lib/lt-score-queries";
+import { getLtProgrammeField } from "@/lib/lt-field-queries";
 import { getApplicationRounds } from "@/lib/deadline-queries";
 import { matchRounds } from "@/lib/deadlines";
 import { getAdmissionType } from "@/lib/admission-type-queries";
@@ -84,13 +85,16 @@ export default async function ProgrammePage({ params }: { params: Params }) {
   // Литвы — сверенная формула общего приёма (таблицы и правила разные).
   const hasCalculatorPromise =
     countryOf(locale) === "LT" ? getLtFormula(record.id).then(Boolean) : Promise.resolve(false);
-  const [formula, rounds, admissionType, outcome, channels, hasLtCalculator] = await Promise.all([
+  // Направление по классификатору общего приёма — только у литовских программ.
+  const ltFieldPromise = countryOf(locale) === "LT" ? getLtProgrammeField(record.id) : Promise.resolve(null);
+  const [formula, rounds, admissionType, outcome, channels, hasLtCalculator, ltField] = await Promise.all([
     getFormula(record.id),
     getApplicationRounds(),
     getAdmissionType(record.university_id),
     getProgrammeOutcome(record.id, record.university_id),
     getApplicationChannels(record.university_id),
     hasCalculatorPromise,
+    ltFieldPromise,
   ]);
   // Где подать документы: только подтверждённая человеком запись вуза для
   // этого уровня (или для всех уровней). Нет записи — блока нет.
@@ -195,6 +199,15 @@ export default async function ProgrammePage({ params }: { params: Params }) {
           <Fact label={dict.programme.duration} value={`${record.duration_years} ${dict.catalog.years}`} />
         )}
         {record.city && <Fact label={dict.programme.city} value={enumLabel(dict.catalog.city, record.city)} />}
+        {/* Название направления — как в официальном списке, на литовском:
+            язык значения помечен (WCAG 3.1.2). */}
+        {ltField && (
+          <Fact
+            label={dict.programme.studyField}
+            value={`${ltField.fieldName} (${ltField.groupName})`}
+            valueLang="lt"
+          />
+        )}
         {/* Пусто — источник не сообщает (литовские программы); строку не показываем. */}
         {record.funding_type && (
           <Fact label={dict.programme.funding} value={enumLabel(dict.catalog.funding, record.funding_type)} />
@@ -447,13 +460,25 @@ export default async function ProgrammePage({ params }: { params: Params }) {
 
 // labelLang — когда значение на одном языке (lang у всего <dl>), а подпись
 // на языке страницы: блок с латышскими названиями диплома на /en.
-function Fact({ label, value, labelLang }: { label: string; value: string; labelLang?: string }) {
+function Fact({
+  label,
+  value,
+  labelLang,
+  valueLang,
+}: {
+  label: string;
+  value: string;
+  labelLang?: string;
+  valueLang?: string;
+}) {
   return (
     <div>
       <dt className="text-xs uppercase tracking-wide text-zinc-500" lang={labelLang}>
         {label}
       </dt>
-      <dd className="mt-1 text-zinc-900">{value}</dd>
+      <dd className="mt-1 text-zinc-900" lang={valueLang}>
+        {value}
+      </dd>
     </div>
   );
 }
