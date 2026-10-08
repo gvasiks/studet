@@ -9,6 +9,7 @@ import { enumLabel, getProgramme, localizedName, type Programme, type University
 import { getFormula } from "@/lib/formula-queries";
 import { getLtFormula } from "@/lib/lt-score-queries";
 import { getLtProgrammeField } from "@/lib/lt-field-queries";
+import { getLtAdmissionYear } from "@/lib/lt-admission-stat-queries";
 import { getApplicationRounds } from "@/lib/deadline-queries";
 import { matchRounds } from "@/lib/deadlines";
 import { getAdmissionType } from "@/lib/admission-type-queries";
@@ -20,6 +21,7 @@ import { currentAccreditation, pickDetails, sourceHost } from "@/lib/programme-d
 import { employmentPercent, interpolate, OUTCOMES_SOURCE_URL, pickOutcomes } from "@/lib/outcomes";
 import { BackButton } from "@/components/BackButton";
 import { FavoriteButton } from "@/components/FavoriteButton";
+import { LtAdmissionStats } from "@/components/LtAdmissionStats";
 import { ReportErrorLink } from "@/components/ReportErrorLink";
 import { buildAlternates, SITE_URL } from "@/lib/site";
 
@@ -87,7 +89,9 @@ export default async function ProgrammePage({ params }: { params: Params }) {
     countryOf(locale) === "LT" ? getLtFormula(record.id).then(Boolean) : Promise.resolve(false);
   // Направление по классификатору общего приёма — только у литовских программ.
   const ltFieldPromise = countryOf(locale) === "LT" ? getLtProgrammeField(record.id) : Promise.resolve(null);
-  const [formula, rounds, admissionType, outcome, channels, hasLtCalculator, ltField] = await Promise.all([
+  // Цифры прошлого приёма из открытого набора LAMA BPO — тоже только у Литвы.
+  const ltStatsPromise = countryOf(locale) === "LT" ? getLtAdmissionYear(record.id) : Promise.resolve(null);
+  const [formula, rounds, admissionType, outcome, channels, hasLtCalculator, ltField, ltStats] = await Promise.all([
     getFormula(record.id),
     getApplicationRounds(),
     getAdmissionType(record.university_id),
@@ -95,6 +99,7 @@ export default async function ProgrammePage({ params }: { params: Params }) {
     getApplicationChannels(record.university_id),
     hasCalculatorPromise,
     ltFieldPromise,
+    ltStatsPromise,
   ]);
   // Где подать документы: только подтверждённая человеком запись вуза для
   // этого уровня (или для всех уровней). Нет записи — блока нет.
@@ -364,6 +369,8 @@ export default async function ProgrammePage({ params }: { params: Params }) {
           </p>
         </section>
       )}
+
+      {ltStats && <LtAdmissionStats dict={dict} language={language} stats={ltStats} />}
 
       {(formula || hasLtCalculator) && (
         <Link
