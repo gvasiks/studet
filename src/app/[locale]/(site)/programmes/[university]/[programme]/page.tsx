@@ -10,6 +10,7 @@ import { getFormula } from "@/lib/formula-queries";
 import { getLtFormula } from "@/lib/lt-score-queries";
 import { getLtProgrammeField } from "@/lib/lt-field-queries";
 import { getLtAdmissionYear } from "@/lib/lt-admission-stat-queries";
+import { getLtFieldOutcome } from "@/lib/lt-field-outcome-queries";
 import { getApplicationRounds } from "@/lib/deadline-queries";
 import { matchRounds } from "@/lib/deadlines";
 import { getAdmissionType } from "@/lib/admission-type-queries";
@@ -22,6 +23,7 @@ import { employmentPercent, interpolate, OUTCOMES_SOURCE_URL, pickOutcomes } fro
 import { BackButton } from "@/components/BackButton";
 import { FavoriteButton } from "@/components/FavoriteButton";
 import { LtAdmissionStats } from "@/components/LtAdmissionStats";
+import { LtFieldOutcome } from "@/components/LtFieldOutcome";
 import { ReportErrorLink } from "@/components/ReportErrorLink";
 import { buildAlternates, SITE_URL } from "@/lib/site";
 
@@ -101,6 +103,9 @@ export default async function ProgrammePage({ params }: { params: Params }) {
     ltFieldPromise,
     ltStatsPromise,
   ]);
+  // Что стало с выпускниками: у Литвы — показатели направления на этой
+  // ступени по всей стране (у Латвии — блок ниже, по направлению в вузе).
+  const ltOutcome = ltField ? await getLtFieldOutcome(record.degree_level, ltField.fieldCode) : null;
   // Где подать документы: только подтверждённая человеком запись вуза для
   // этого уровня (или для всех уровней). Нет записи — блока нет.
   const channel = matchChannel(channels, record.university_id, record.degree_level);
@@ -371,6 +376,10 @@ export default async function ProgrammePage({ params }: { params: Params }) {
       )}
 
       {ltStats && <LtAdmissionStats dict={dict} language={language} stats={ltStats} />}
+
+      {ltOutcome && (
+        <LtFieldOutcome dict={dict} language={language} degreeLevel={record.degree_level} outcome={ltOutcome} />
+      )}
 
       {(formula || hasLtCalculator) && (
         <Link
