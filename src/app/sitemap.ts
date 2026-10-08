@@ -1,6 +1,7 @@
 import type { MetadataRoute } from "next";
 import { countries, locales, localesOfCountry, type Locale } from "@/i18n/config";
 import { listProgrammes } from "@/lib/catalog";
+import { hasFeature, type Feature } from "@/lib/country";
 import { buildAlternates, SITE_URL } from "@/lib/site";
 
 // Каталог обновляет Python-конвейер напрямую в базе — карта сайта должна
@@ -8,8 +9,20 @@ import { buildAlternates, SITE_URL } from "@/lib/site";
 // /programmes (dynamic = "force-dynamic").
 export const dynamic = "force-dynamic";
 
-// Общие страницы есть под каждым адресом из locales; карточка программы —
-// только под адресами своей страны.
+// Главная и каталог есть под каждым адресом из locales; остальные разделы —
+// только там, где они открыты у страны и написаны на языке адреса
+// (hasFeature): иначе карта сайта звала бы поисковик на страницу «не
+// найдено». Карточка программы — только под адресами своей страны.
+const SECTIONS: { path: string; feature?: Feature }[] = [
+  { path: "" },
+  { path: "/programmes" },
+  { path: "/survey", feature: "survey" },
+  { path: "/match", feature: "match" },
+  { path: "/glossary", feature: "glossary" },
+  { path: "/rights", feature: "rights" },
+  { path: "/privacy", feature: "privacy" },
+];
+
 function entry(path: string, locale: Locale) {
   return {
     url: `${SITE_URL}/${locale}${path}`,
@@ -18,9 +31,8 @@ function entry(path: string, locale: Locale) {
 }
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const staticPaths = ["", "/programmes", "/survey"];
-  const staticEntries: MetadataRoute.Sitemap = staticPaths.flatMap((path) =>
-    locales.map((locale) => entry(path, locale)),
+  const staticEntries: MetadataRoute.Sitemap = SECTIONS.flatMap(({ path, feature }) =>
+    locales.filter((locale) => !feature || hasFeature(locale, feature)).map((locale) => entry(path, locale)),
   );
 
   // Только карточки программ — калькулятор оставляем не в карте сайта:
