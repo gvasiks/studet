@@ -393,6 +393,21 @@
     "minimumSource": "LAMA BPO announcement",
     "withoutCalculator": "{count} more programmes are not listed here: their score depends on an entrance exam or sport achievements, or their specialisations use different formulas."
   },
+  "ltStats": {
+    "title": "Main admission in {year}: the numbers",
+    "funding": {
+      "state": "State-funded places",
+      "stipend": "Places with a study stipend",
+      "paid": "Non-state-funded (fee-paying) places"
+    },
+    "applications": "Applications",
+    "firstPriority": "Of these, first choice",
+    "invited": "Invited to study",
+    "signed": "Signed a contract",
+    "scope": "The numbers cover all study modes and languages of this programme in this city. An application here is one programme entered in an applicant's list; the same person may list the programme for both a state-funded and a fee-paying place.",
+    "caveat": "These are facts about a past admission, not an estimate of your chances. The dataset contains neither the number of places nor competition scores.",
+    "source": "Counted automatically from LAMA BPO open data ({date})."
+  },
   "favorites": {
     "navLink": "My list",
     "add": "Add to my list",

@@ -393,6 +393,21 @@
     "minimumSource": "LAMA BPO paziņojums",
     "withoutCalculator": "Vēl {count} programmu šeit nav: to punktus nosaka iestājpārbaudījums vai sporta sasniegumi, vai arī to specializācijām ir atšķirīgas formulas."
   },
+  "ltStats": {
+    "title": "{year}. gada pamatuzņemšanas skaitļi",
+    "funding": {
+      "state": "Valsts finansētas vietas",
+      "stipend": "Vietas ar studiju stipendiju",
+      "paid": "Valsts nefinansētas (maksas) vietas"
+    },
+    "applications": "Pieteikumi",
+    "firstPriority": "No tiem ar pirmo prioritāti",
+    "invited": "Uzaicināti studēt",
+    "signed": "Parakstīja līgumu",
+    "scope": "Skaitļi aptver visas šīs programmas studiju formas un valodas šajā pilsētā. Pieteikums šeit ir viena programma reflektanta sarakstā; viens cilvēks var norādīt programmu gan valsts finansētai, gan maksas vietai.",
+    "caveat": "Tie ir fakti par iepriekšējo uzņemšanu, nevis tavu izredžu vērtējums. Datu kopā nav ne vietu skaita, ne konkursa punktu.",
+    "source": "Saskaitīts automātiski no LAMA BPO atvērtajiem datiem ({date})."
+  },
   "favorites": {
     "navLink": "Mans saraksts",
     "add": "Pievienot manam sarakstam",

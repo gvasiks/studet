@@ -393,6 +393,21 @@
     "minimumSource": "LAMA BPO pranešimas",
     "withoutCalculator": "Dar {count} programų čia nėra: jų balą lemia stojamasis egzaminas ar sporto pasiekimai arba jų specializacijoms taikomos skirtingos formulės."
   },
+  "ltStats": {
+    "title": "{year} m. pagrindinio priėmimo skaičiai",
+    "funding": {
+      "state": "Valstybės finansuojamos vietos",
+      "stipend": "Vietos su studijų stipendija",
+      "paid": "Valstybės nefinansuojamos vietos"
+    },
+    "applications": "Pageidavimų",
+    "firstPriority": "Iš jų pirmuoju numeriu",
+    "invited": "Pakviesta studijuoti",
+    "signed": "Pasirašė sutartį",
+    "scope": "Skaičiai apima visas šios programos studijų formas ir kalbas šiame mieste. Pageidavimas — programa, įrašyta į stojančiojo prašymą; tas pats žmogus gali įrašyti programą ir į valstybės finansuojamą, ir į nefinansuojamą vietą.",
+    "caveat": "Tai praėjusio priėmimo faktai, o ne jūsų galimybių vertinimas. Šiame duomenų rinkinyje nėra nei vietų skaičiaus, nei konkursinių balų.",
+    "source": "Suskaičiuota automatiškai iš LAMA BPO atvirų duomenų ({date})."
+  },
   "favorites": {
     "navLink": "Mano sąrašas",
     "add": "Įtraukti į mano sąrašą",
