@@ -347,15 +347,26 @@ npm run dev
 сайте до запуска 1 июня 2027.
 
 - [ ] `/lt` — главная на литовском, счётчик «Programų: 1020 · Aukštųjų
-      mokyklų: 28» (на 2026-10-06). Кнопки анкеты и карточек «куда я
-      прохожу / словарь / права» нет — этих разделов у Литвы ещё нет.
+      mokyklų: 28» (на 2026-10-06). Есть кнопка анкеты и карточка «Kur galiu
+      stoti»; карточек словаря и прав нет — этих разделов у Литвы ещё нет.
 - [ ] `/lt/programmes` — вкладки «Universitetinės 488 · Koleginės 514 ·
       Vientisosios 18»; в фильтре литовские города и языки (литовский,
-      английский, русский). В меню только «Katalogas» и «Mano sąrašas».
-- [ ] В фильтре `/lt/programmes` нет платы, «только бюджет» и (пока не
-      загружены направления) интересов — под них нет данных. Адрес
-      `/lt/programmes?budget=1&fee=3000` показывает полный каталог (1020), а
-      не пустой список. У `/lv/programmes` все три фильтра на месте.
+      английский, русский). В меню «Katalogas», «Anketa», «Kur galiu stoti» и «Mano sąrašas».
+- [ ] В фильтре `/lt/programmes` нет платы и «только бюджет» — под них нет
+      данных. Адрес `/lt/programmes?budget=1&fee=3000` показывает полный
+      каталог (1020), а не пустой список. У `/lv/programmes` оба фильтра на
+      месте.
+- [ ] Фильтр «Sritys» в `/lt/programmes` (с 2026-10-08): «IT ir
+      technologijos» — 96 программ, «Teisė ir saugumas» — 38 (на
+      2026-10-08). Две категории вместе дают сумму: программа входит ровно
+      в одну категорию.
+- [ ] Анкета `/lt/survey` (с 2026-10-08): пять шагов — интересы; уровень
+      (три варианта и «Nesvarbu») и длительность; город; язык (литовский,
+      английский, русский) и форма; государственная или негосударственная
+      школа. Вопросов про экзамены, бюджет и плату нет. Отметьте «IT ir
+      technologijos», дойдите до конца — откроется
+      `/lt/programmes?interest=it` с 96 программами.
+- [ ] В меню и на главной `/lt` появилась ссылка на анкету.
 - [ ] Поиск «medicina» на вкладке «Vientisosios» — три программы (VU,
       LSMU, ветеринарная медицина LSMU).
 - [ ] Карточка `/lt/programmes/vu/medicina`: уровень, язык, форма, срок,
@@ -367,11 +378,14 @@ npm run dev
       (lamabpo.lt)», под ними — «Surinkta automatiškai iš lamabpo.lt», дата и
       ссылка «Oficialus šaltinis» на список программ. Слова «Pārbaudīts /
       Patikrinta» в этом блоке нет: человек запись не подтверждал.
+- [ ] Там же строка «Studijų kryptis: Medicina (Sveikatos mokslai)» (с
+      2026-10-08). На `/en-lt/…` подпись «Study field», значение остаётся
+      литовским.
 - [ ] `/en-lt/programmes/vu/medicina` — интерфейс английский, названия и
       описание литовские, под ними строка «Names and the description are in
       Lithuanian…».
-- [ ] `/lt/survey`, `/lt/glossary`, `/lt/rights`, `/lt/privacy` — страница
-      «Puslapis nerastas».
+- [ ] `/lt/glossary`, `/lt/rights`, `/lt/privacy` — страница «Puslapis
+      nerastas».
 - [ ] «Куда я прохожу» (с 2026-10-06), `/lt/match`. Введите: Matematika 68
       (A), Istorija 57, Biologija 71, Lietuvių kalba ir literatūra 86. Сверху
       «…užpildytos: 817 · …trūksta egzaminų: 103» (на 2026-10-06), карточки
