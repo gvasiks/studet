@@ -418,11 +418,13 @@ npm run dev
       латвийская; дата редакции 8 октября 2026. Вместо имени оператора и
       почты видны `[PRIVACY_CONTROLLER_NAME]` и `[PRIVACY_CONTACT_EMAIL]`,
       пока переменные не заданы.
-- [ ] В меню и на главной `/lt` есть ссылки на словарь и права; в подвале —
-      на политику.
+- [ ] В меню, в подвале и на главной `/lt` есть ссылки на словарь и права.
+      Ссылки на политику нигде нет — ни у Литвы, ни у Латвии: она
+      добавляется при публикации (`docs/PRIVACY-CHECKLIST.md`, раздел 4);
+      страница открывается только по прямому адресу.
 - [ ] `/sitemap.xml`: под `/lt`, `/en-lt`, `/lv-lt` есть `glossary`,
-      `rights`, `privacy`, `match`, `survey`; адреса `/…/verification` и
-      `/…/favorites` в карте нет.
+      `rights`, `match`, `survey`; адресов `/…/privacy`, `/…/verification`
+      и `/…/favorites` в карте нет.
 - [ ] «Куда я прохожу» (с 2026-10-06), `/lt/match`. Введите: Matematika 68
       (A), Istorija 57, Biologija 71, Lietuvių kalba ir literatūra 86. Сверху
       «…užpildytos: 817 · …trūksta egzaminų: 103» (на 2026-10-06), карточки
