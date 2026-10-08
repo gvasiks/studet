@@ -402,8 +402,27 @@ npm run dev
 - [ ] `/en-lt/programmes/vu/medicina` — интерфейс английский, названия и
       описание литовские, под ними строка «Names and the description are in
       Lithuanian…».
-- [ ] `/lt/glossary`, `/lt/rights`, `/lt/privacy` — страница «Puslapis
-      nerastas».
+- [ ] `/lt/verification` — страница «Puslapis nerastas» (внутренняя
+      страница есть только у Латвии).
+- [ ] Словарь `/lt/glossary` (с 2026-10-08): 25 терминов по алфавиту, под
+      каждым строка «Šaltinis» со статьёй закона или пунктом порядка LAMA
+      BPO. На `/en-lt/glossary` и `/lv-lt/glossary` термин стоит на языке
+      страницы, литовский — в скобках.
+- [ ] Права `/lt/rights`: 16 пунктов с оглавлением, под каждым источник; в
+      начале — что текст собран автоматически, юрист его не проверял и
+      числа из порядка 2026 года могут измениться; внизу две ссылки на
+      источники (закон на e-seimas.lrs.lt и PDF на lamabpo.lt) — обе
+      открываются.
+- [ ] Политика `/lt/privacy`: 14 разделов; в разделе про школьников — 14 лет
+      и закон Литвы; в «Jūsų teisės» — литовская инспекция (vdai.lrv.lt) и
+      латвийская; дата редакции 8 октября 2026. Вместо имени оператора и
+      почты видны `[PRIVACY_CONTROLLER_NAME]` и `[PRIVACY_CONTACT_EMAIL]`,
+      пока переменные не заданы.
+- [ ] В меню и на главной `/lt` есть ссылки на словарь и права; в подвале —
+      на политику.
+- [ ] `/sitemap.xml`: под `/lt`, `/en-lt`, `/lv-lt` есть `glossary`,
+      `rights`, `privacy`, `match`, `survey`; адреса `/…/verification` и
+      `/…/favorites` в карте нет.
 - [ ] «Куда я прохожу» (с 2026-10-06), `/lt/match`. Введите: Matematika 68
       (A), Istorija 57, Biologija 71, Lietuvių kalba ir literatūra 86. Сверху
       «…užpildytos: 817 · …trūksta egzaminų: 103» (на 2026-10-06), карточки
