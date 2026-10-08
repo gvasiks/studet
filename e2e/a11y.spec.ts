@@ -24,9 +24,10 @@ for (const locale of LOCALES) {
   }
 }
 
-// Литва: каталог, карточка, анкета, расчёт балла и «куда я прохожу».
-// /lt/glossary — раздела у Литвы ещё нет, проверяется вёрстка страницы
-// «не найдено». Адреса существуют только при
+// Литва: каталог, карточка, анкета, расчёт балла, «куда я прохожу»,
+// словарь, права и политика. /lt/verification — внутренней страницы у
+// Литвы нет, проверяется вёрстка страницы «не найдено». Адреса существуют
+// только при
 // NEXT_PUBLIC_PREVIEW_COUNTRIES=1 (локально — .env.local, в CI — ci.yml).
 const LT_ROUTES = [
   "/lt",
@@ -40,14 +41,23 @@ const LT_ROUTES = [
   "/lt/survey",
   "/lt/programmes?interest=it",
   "/lt/glossary",
+  "/lt/rights",
+  "/lt/privacy",
+  "/lt/verification",
   "/en-lt",
   "/en-lt/programmes",
   "/en-lt/programmes/vu/medicina",
+  "/en-lt/glossary",
+  "/en-lt/rights",
+  "/en-lt/privacy",
   // Литва на латышском (решение 2026-10-06). Латвия на литовском (/lt-lv)
   // открыта без флага и проверяется выше вместе с остальными адресами Латвии.
   "/lv-lt",
   "/lv-lt/programmes",
   "/lv-lt/programmes/vu/medicina",
+  "/lv-lt/glossary",
+  "/lv-lt/rights",
+  "/lv-lt/privacy",
 ];
 
 for (const route of LT_ROUTES) {

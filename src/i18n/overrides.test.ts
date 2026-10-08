@@ -51,6 +51,67 @@ describe("файлы отличий словарей", () => {
     });
   });
 
+  // Литовские словарь, права и политика написаны сразу на трёх языках
+  // (lt.json — литовский; английский и латышский — в файлах отличий).
+  describe("Литва: словарь, права и политика на трёх языках", () => {
+    const ids = (list: { id: string }[]) => list.map((entry) => entry.id);
+
+    it("на каждом языке один и тот же набор записей и те же ссылки на источники", () => {
+      for (const translated of [enLt, lvLt]) {
+        expect(ids(translated.glossary.items)).toEqual(ids(lt.glossary.items));
+        expect(ids(translated.rights.items)).toEqual(ids(lt.rights.items));
+        expect(ids(translated.privacy.sections)).toEqual(ids(lt.privacy.sections));
+        expect(translated.rights.sources.map((source) => source.url)).toEqual(lt.rights.sources.map((source) => source.url));
+      }
+    });
+
+    it("нет пустых записей и повторяющихся якорей", () => {
+      for (const dictionary of [lt, enLt, lvLt]) {
+        for (const item of dictionary.glossary.items) {
+          expect(item.term && item.definition && item.source, item.id).toBeTruthy();
+        }
+        for (const item of dictionary.rights.items) {
+          expect(item.title && item.text && item.source, item.id).toBeTruthy();
+        }
+        expect(new Set(ids(dictionary.glossary.items)).size).toBe(dictionary.glossary.items.length);
+        expect(new Set(ids(dictionary.rights.items)).size).toBe(dictionary.rights.items.length);
+        expect(dictionary.rights.checkedNote && dictionary.rights.intro && dictionary.glossary.intro).toBeTruthy();
+      }
+    });
+
+    // Политика у двух стран одна и та же, кроме трёх мест: какие фильтры
+    // анкеты попадают в адрес, возраст согласия и куда жаловаться. Если
+    // поправить латвийский текст и забыть литовский, тест это покажет.
+    it("политика отличается от латвийской на том же языке только в трёх разделах", () => {
+      const own = new Set(["survey", "minors", "rights"]);
+      const pairs = [
+        { lithuania: lt.privacy.sections, latvia: ltLv.privacy.sections },
+        { lithuania: enLt.privacy.sections, latvia: en.privacy.sections },
+        { lithuania: lvLt.privacy.sections, latvia: lv.privacy.sections },
+      ];
+      for (const { lithuania, latvia } of pairs) {
+        expect(ids(lithuania)).toEqual(ids(latvia));
+        lithuania.forEach((section, index) => {
+          if (own.has(section.id)) {
+            expect(section, section.id).not.toEqual(latvia[index]);
+            expect(section.body.length, section.id).toBe(latvia[index].body.length);
+          } else {
+            expect(section, section.id).toEqual(latvia[index]);
+          }
+        });
+      }
+    });
+
+    it("в литовской политике — литовский возраст согласия и литовский надзорный орган", () => {
+      for (const dictionary of [lt, enLt, lvLt]) {
+        const text = JSON.stringify(dictionary.privacy.sections);
+        expect(text).toContain("14");
+        expect(text).not.toMatch(/\b13\b/);
+        expect(text).toContain("vdai.lrv.lt");
+      }
+    });
+  });
+
   it("у базовых словарей один и тот же набор ключей", () => {
     // списки (items, sections) сравниваются как один ключ: их длина у стран разная
     expect(new Set(paths(lt))).toEqual(new Set(paths(lv)));

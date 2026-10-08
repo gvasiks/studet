@@ -18,20 +18,402 @@
     "intro": "Enter your state matura exam (VBE) results — we'll show the competition score for the programmes of Lithuania's general admission and which exams are still missing."
   },
   "rights": {
-    "intro": "",
-    "checkedNote": "",
-    "items": [],
-    "sources": []
+    "intro": "What Lithuanian law and the general admission procedure provide for an applicant: when requirements are published, how to submit and change an application, how to contest a mistake, when the contract is signed and what happens to state funding.",
+    "checkedNote": "Prepared automatically from the legal texts we read on 8 October 2026: the consolidated version of the Law on Science and Studies in force since 22 May 2026, and the LAMA BPO general admission procedure for 2026, approved on 17 April 2026. No lawyer has checked this text. The procedure for the 2027 admission has not been published yet, so numbers and deadlines taken from the 2026 procedure may change. This is not legal advice: the legal texts and each institution's admission rules are what count.",
+    "items": [
+      {
+        "id": "principles-published",
+        "title": "Score principles are published by 1 December",
+        "text": "Institutions publish the principles for building the competition score and other criteria every year by 1 December, at least 6 months before admission starts. They publish the minimum competition score by 1 June at the latest.",
+        "source": "Law on Science and Studies, Article 59(4)"
+      },
+      {
+        "id": "subjects-three-years",
+        "title": "Competition subjects are known three years ahead",
+        "text": "Institutions, having agreed it with the ministry, publish the list of competition subjects by study field no later than 3 years before 1 September of the year in question. The lists for 2027 are already on the LAMA BPO website.",
+        "source": "Law on Science and Studies, Article 59(2)"
+      },
+      {
+        "id": "who-can-apply",
+        "title": "Who can take part in the competition",
+        "text": "People with at least upper secondary education who have passed at least three state matura exams, with an average reaching the set level, are admitted to first-cycle and integrated studies by competition. These requirements do not apply, among others, to people educated under foreign or international programmes and to people exempted from matura exams.",
+        "source": "Law on Science and Studies, Article 59(1) and (2)"
+      },
+      {
+        "id": "no-fee",
+        "title": "No application fee in 2026",
+        "text": "There was no application fee in the 2026 general admission, and changing preferences was free too. Institutions may charge their own registration fee when the study contract is signed.",
+        "source": "LAMA BPO general admission procedure for 2026, points 10 and 70"
+      },
+      {
+        "id": "change-preferences",
+        "title": "You can change preferences until the deadline",
+        "text": "You can change the list of preferences and their order until the application period ends. The order decides where you are invited: you get only one invitation, so preferences must be listed from most to least wanted.",
+        "source": "LAMA BPO general admission procedure for 2026, points 23, 74 and 79"
+      },
+      {
+        "id": "check-score",
+        "title": "You can check your score and contest a mistake",
+        "text": "In BPIS you can check your competition score and the minimum score that applies to you for each preference. If you notice a mistake, you can file a written appeal with LAMA BPO no later than 24 hours before the final application deadline.",
+        "source": "LAMA BPO general admission procedure for 2026, point 64"
+      },
+      {
+        "id": "one-invitation",
+        "title": "One invitation and a deadline for the contract",
+        "text": "If you win the competition you get one invitation to take a study place; if not, a negative answer. The invited person must sign a study contract with the institution within the period stated in the invitation; if the contract is not signed in time, the invitation is cancelled.",
+        "source": "LAMA BPO general admission procedure for 2026, points 71 and 79"
+      },
+      {
+        "id": "additional-admission",
+        "title": "You can join the additional admission even if you skipped the main one",
+        "text": "People who did not register during the main admission can also take part in the additional admission. If you have already signed a contract for state-funded studies or received a study stipend, in the additional admission you can compete only for a non-state-funded place.",
+        "source": "LAMA BPO general admission procedure for 2026, point 81"
+      },
+      {
+        "id": "programme-withdrawn",
+        "title": "A programme can be withdrawn — you must be told",
+        "text": "An institution may withdraw a programme from the current year's admission, but no later than 3 days before the application period ends, so that applicants who chose it are informed and have time to choose other preferences. Admission to a state institution's programme does not take place if fewer people could be invited than the minimum number of places set by the minister.",
+        "source": "LAMA BPO general admission procedure for 2026, points 19 and 66"
+      },
+      {
+        "id": "results-published",
+        "title": "Admission results are made public",
+        "text": "Every year by 30 August institutions publish on their websites the results of admission to state-funded places by study programme, and by 1 October the results of admission to non-state-funded places. The ministry publishes the same information by institution and programme.",
+        "source": "Law on Science and Studies, Article 59(7)"
+      },
+      {
+        "id": "contract-and-price",
+        "title": "The study contract and the price",
+        "text": "The relationship between a student and the institution is formalised by a study contract; its standard terms are set by the minister. The tuition price must be stated in the institution's admission rules. The contract can be signed electronically or in person; you are advised to read its text before signing.",
+        "source": "Law on Science and Studies, Article 61(2), Article 83(1); LAMA BPO general admission procedure for 2026, points 68 and 69"
+      },
+      {
+        "id": "funding-kept",
+        "title": "State funding stays if you study well",
+        "text": "A student in a state-funded place keeps the funding if, after the assessment period set by the institution (no longer than a study year), they meet the criteria of studying well: no academic debts and an excellent or typical level of achievement. A student who does not meet them loses the funding and from then on pays the institution's tuition price; an exception is set out in Article 78(6) of the law.",
+        "source": "Law on Science and Studies, Article 78(4), (5) and (6)"
+      },
+      {
+        "id": "no-extra-payments",
+        "title": "No extra charges in a state-funded place",
+        "text": "People studying in state-funded places do not have to pay a state institution any charges directly related to delivering the study programme, except in the cases named in Article 80(3) of the law.",
+        "source": "Law on Science and Studies, Article 83(5)"
+      },
+      {
+        "id": "complaints",
+        "title": "A student's complaint is examined within 15 days",
+        "text": "Once you are a student, you can write to the head of the institution about a violation of your rights or legitimate interests: the head or authorised persons must examine the request or complaint within 15 calendar days and answer in writing. The institution also has a dispute resolution commission that settles disputes between students and the administration.",
+        "source": "Law on Science and Studies, Article 62(7) and (8)"
+      },
+      {
+        "id": "your-data",
+        "title": "Your data in the admission system",
+        "text": "On request, LAMA BPO or the institution must promptly tell you exactly which of your personal data are processed and for what purposes. If you ask for your data to be deleted, they must be deleted unless the purpose of processing or the law requires keeping them.",
+        "source": "LAMA BPO general admission procedure for 2026, points 96 and 97"
+      },
+      {
+        "id": "education-abroad",
+        "title": "If you were educated abroad",
+        "text": "If you obtained your education at a foreign institution or under an international organisation's programme, you need a document recognising it in Lithuania; recognition is carried out by the Centre for Quality Assessment in Higher Education (SKVC) or an institution entitled to do so. Upper secondary qualifications obtained in Latvia and Estonia since 2019 are recognised automatically. If the studies are in Lithuanian and you have not studied Lithuanian, you must pass a Lithuanian language test. Foreigners who are not entitled to state-funded places apply directly to the institution.",
+        "source": "LAMA BPO general admission procedure for 2026, points 24, 25 and 37"
+      }
+    ],
+    "sources": [
+      {
+        "label": "Law on Science and Studies of the Republic of Lithuania (No. XI-242), consolidated version (in Lithuanian)",
+        "url": "https://e-seimas.lrs.lt/portal/legalAct/lt/TAD/TAIS.343430/asr"
+      },
+      {
+        "label": "LAMA BPO: Procedure for general admission to short-cycle, first-cycle, integrated and professional studies at Lithuanian higher education institutions in 2026 (in Lithuanian)",
+        "url": "https://lamabpo.lt/wp-content/uploads/2026/04/Bendrojo-priemimo-i-Lietuvos-aukstuju-mokyklu-trumposios-pakopos-pirmosios-pakopos-vientisasias-ir-profesines-studijas-2026-metu-tvarkos-aprasas.pdf"
+      }
+    ]
   },
   "glossary": {
-    "intro": "",
-    "items": []
+    "intro": "Words you will meet in Lithuanian admission rules and on this site. In brackets is the Lithuanian term as written in the documents. Definitions come from the Law on Science and Studies and the LAMA BPO general admission procedure; each one names its source. Numbers marked 2026 come from the 2026 procedure; the 2027 procedure has not been published yet.",
+    "items": [
+      {
+        "id": "general-admission",
+        "term": "General admission (bendrasis priėmimas)",
+        "definition": "Centralised admission to short-cycle, first-cycle and integrated studies at Lithuanian universities and colleges. It runs through a dedicated state information system and is organised by LAMA BPO.",
+        "source": "Law on Science and Studies, Article 59(7); LAMA BPO general admission procedure for 2026, points 2 and 4"
+      },
+      {
+        "id": "lama-bpo",
+        "term": "LAMA BPO",
+        "definition": "The Association of Lithuanian Higher Education Institutions for Organising General Admission. It organises and runs admission, processes applicants' data, builds the competition queues and announces invitations to study.",
+        "source": "LAMA BPO general admission procedure for 2026, point 2"
+      },
+      {
+        "id": "bpis",
+        "term": "BPIS, the General Admission Information System (Bendrojo priėmimo informacinė sistema)",
+        "definition": "The system where an applicant registers, submits the application, and sees their data, competition score and invitation to study. You log in through lamabpo.lt.",
+        "source": "LAMA BPO general admission procedure for 2026, points 8 and 21"
+      },
+      {
+        "id": "application",
+        "term": "Application (prašymas priimti studijuoti)",
+        "definition": "The set of data in BPIS: the applicant's identity and contact details, education and other achievements, and the chosen preferences. Preferences can be changed until the application period ends.",
+        "source": "LAMA BPO general admission procedure for 2026, point 23"
+      },
+      {
+        "id": "preference",
+        "term": "Preference (pageidavimas)",
+        "definition": "A study programme at a particular institution chosen together with a type of funding: a state-funded place, a non-state-funded place with a study stipend, or a non-state-funded place. In 2026 the main admission allowed up to 9 preferences and the additional admission up to 6. Preferences are listed from most to least wanted.",
+        "source": "LAMA BPO general admission procedure for 2026, point 26"
+      },
+      {
+        "id": "state-exam",
+        "term": "State matura exam, VBE (valstybinis brandos egzaminas)",
+        "definition": "The exam taken at the end of upper secondary school. To enter first-cycle and integrated studies you must have passed at least three: Lithuanian language and literature, mathematics and one of your choice. For the arts group of study fields the mathematics exam is not required.",
+        "source": "Law on Science and Studies, Article 59(1)"
+      },
+      {
+        "id": "minimum-average",
+        "term": "Three-exam average requirement (trijų VBE vidurkis)",
+        "definition": "The average of the three required state matura exams must reach a set level: the basic level for university studies, the satisfactory level for college studies. In the 2026 admission, for school-leavers of 2025 and later this meant 50 points or more (university studies) and 41 points or more (college studies).",
+        "source": "Law on Science and Studies, Article 59(1); LAMA BPO general admission procedure for 2026, point 29"
+      },
+      {
+        "id": "competition-score",
+        "term": "Competition score (konkursinis balas)",
+        "definition": "The score by which applicants are ranked in the competition. It is calculated from matura exam results, school results and assessments of other special abilities. Institutions publish the principles for building the score every year by 1 December.",
+        "source": "Law on Science and Studies, Article 77(1), Article 59(4)"
+      },
+      {
+        "id": "extra-points",
+        "term": "Extra points (papildomi balai)",
+        "definition": "Points added to the competition score for additional achievements, for example prize places in international and national olympiads and competitions. In 2026 the total of extra points could not exceed 2.5.",
+        "source": "LAMA BPO general admission procedure for 2026, points 28 and 55"
+      },
+      {
+        "id": "minimum-score",
+        "term": "Minimum competition score (mažiausias stojamasis konkursinis balas)",
+        "definition": "The lowest competition score with which you can compete for a place at a particular institution. Each institution sets it itself and publishes it by 1 June at the latest; it may differ between institutions.",
+        "source": "Law on Science and Studies, Article 59(4); LAMA BPO general admission procedure for 2026, point 54"
+      },
+      {
+        "id": "competition-queue",
+        "term": "Competition queue, first and second (konkursinė eilė)",
+        "definition": "The ranking, by competition score, of applicants for state-funded places and study stipends. There are two queues: the first includes everyone who meets the admission requirements; the second includes those of them who meet an additional condition, for example having completed short-cycle studies or having practical work experience of the length set in the law.",
+        "source": "Law on Science and Studies, Article 77(1) and (1¹)"
+      },
+      {
+        "id": "state-funded-place",
+        "term": "State-funded place (valstybės finansuojama studijų vieta)",
+        "definition": "A study place where the state pays the tuition price. A person studying in such a place does not have to pay a state institution any charges directly related to delivering the study programme, except in cases named in the law.",
+        "source": "Law on Science and Studies, Article 77(1), Article 83(5)"
+      },
+      {
+        "id": "non-funded-place",
+        "term": "Non-state-funded place (valstybės nefinansuojama studijų vieta)",
+        "definition": "A study place where the student pays for the studies. The tuition price is set by the institution and stated in its admission rules.",
+        "source": "Law on Science and Studies, Article 83(1); LAMA BPO general admission procedure for 2026, point 6"
+      },
+      {
+        "id": "study-stipend",
+        "term": "Study stipend (studijų stipendija)",
+        "definition": "A stipend awarded to those with the highest competition scores who are admitted to non-state-funded places. It equals the normative tuition price (or the actual price, if that is lower) and is paid from the state budget for the period of study.",
+        "source": "Law on Science and Studies, Article 82(10)"
+      },
+      {
+        "id": "normative-price",
+        "term": "Normative tuition price (norminė studijų kaina)",
+        "definition": "The tuition price of a study field or group of programmes calculated under a procedure set by the Government. The Minister of Education, Science and Sport approves it every year by 31 January. If the institution's own price is higher, the state pays only the normative price.",
+        "source": "Law on Science and Studies, Article 83(4)"
+      },
+      {
+        "id": "invitation",
+        "term": "Invitation to study (kvietimas studijuoti)",
+        "definition": "An applicant who wins the competition receives one invitation to take a particular study place; one who does not receives a negative answer. The invited person must sign a study contract within the time stated in the invitation, otherwise the invitation is cancelled.",
+        "source": "LAMA BPO general admission procedure for 2026, points 71 and 79"
+      },
+      {
+        "id": "study-contract",
+        "term": "Study contract (studijų sutartis)",
+        "definition": "The contract that formalises the relationship between a student and the institution. Its standard terms are set by the minister. Once the contract is signed, the applicant is considered admitted.",
+        "source": "Law on Science and Studies, Article 61(2); LAMA BPO general admission procedure for 2026, point 70"
+      },
+      {
+        "id": "main-additional",
+        "term": "Main and additional admission (pagrindinis ir papildomas priėmimas)",
+        "definition": "General admission runs in stages. After the main admission, an additional admission is announced for the places left unfilled; in 2026 it ran in two stages.",
+        "source": "LAMA BPO general admission procedure for 2026, points 80 and 82"
+      },
+      {
+        "id": "direct-admission",
+        "term": "Direct admission (tiesioginis priėmimas)",
+        "definition": "Admission to non-state-funded places that an institution organises itself, outside the general admission competition. The institution enters the data of directly admitted persons into BPIS.",
+        "source": "LAMA BPO general admission procedure for 2026, point 86"
+      },
+      {
+        "id": "cycles",
+        "term": "Study cycles (studijų pakopos)",
+        "definition": "Cycle studies are short-cycle, first-cycle (leading to a professional bachelor's or bachelor's degree), second-cycle (master's degree) and third-cycle (doctoral degree).",
+        "source": "Law on Science and Studies, Article 52(2), (4) and (5)"
+      },
+      {
+        "id": "integrated",
+        "term": "Integrated studies (vientisosios studijos)",
+        "definition": "Studies that combine the first and second cycles: on completion you receive a master's degree straight away. The programme is 300 or 360 study credits. You enter them after upper secondary school.",
+        "source": "Law on Science and Studies, Article 52(7), Article 53(7), Article 59(1)"
+      },
+      {
+        "id": "university-college",
+        "term": "University and college studies (universitetinės ir koleginės studijos)",
+        "definition": "A university provides university-level higher education; first-cycle university studies lead to a bachelor's degree. A college (kolegija) provides college-level higher education based on applied research and professional practice; its studies lead to a professional bachelor's degree.",
+        "source": "Law on Science and Studies, Article 10(4), Article 11(1), Article 52(4)"
+      },
+      {
+        "id": "study-mode",
+        "term": "Full-time and part-time mode (nuolatinė ir ištęstinė forma)",
+        "definition": "Full-time studies normally amount to 60 credits a year (at least 45). Part-time studies may have fewer credits a year, but may not last more than one and a half times as long. Education obtained in either mode is equivalent.",
+        "source": "Law on Science and Studies, Article 53(3) and (4)"
+      },
+      {
+        "id": "credit",
+        "term": "Study credit (studijų kreditas)",
+        "definition": "The unit of study volume that measures the average workload a student needs to achieve the learning outcomes. A first-cycle programme may be 180, 210 or 240 credits.",
+        "source": "Law on Science and Studies, Article 4(23), Article 53(6)"
+      },
+      {
+        "id": "study-field",
+        "term": "Study field (studijų kryptis)",
+        "definition": "An academic, professional and research area united by a common concept, learning outcomes and ways of achieving them. Fields are joined into groups of fields; state-funded places are allocated and competition subjects are set by them.",
+        "source": "Law on Science and Studies, Article 4(24), Article 59(2), Article 77(3)"
+      }
+    ]
   },
   "privacy": {
-    "intro": "",
-    "updated": "",
+    "intro": "How this site handles personal data: what we keep, what we don't, and what your rights are.",
+    "updated": "Version: 8 October 2026",
     "authorityLabel": "State Data Protection Inspectorate of Lithuania (vdai.lrv.lt)",
     "authorityUrl": "https://vdai.lrv.lt/en/",
-    "sections": []
+    "sections": [
+      {
+        "id": "summary",
+        "title": "In short",
+        "body": [
+          "- The site has no user accounts and needs no registration.",
+          "- Exam results that you enter in the calculator or in “Where can I get in?” are calculated in your browser. They are not sent to our server and are not stored anywhere.",
+          "- We do not use tracking cookies and we show no advertising.",
+          "- Your favourites (the stars on programmes) stay on your device only."
+        ]
+      },
+      {
+        "id": "controller",
+        "title": "Who is responsible",
+        "body": [
+          "The data controller is {controller}. For questions about personal data write to: {email}."
+        ]
+      },
+      {
+        "id": "visit",
+        "title": "Visiting the site",
+        "body": [
+          "When you open a page, our hosting provider automatically records technical data: your IP address, the time, the requested address and the browser type. This is done so the site works and stays secure. We do not use this data to identify anyone.",
+          "Legal basis: our legitimate interest in keeping the site secure and running (General Data Protection Regulation, Article 6(1)(f)). The retention period is set by the provider.",
+          "On a first visit we pick the language (Latvian, Lithuanian or English) from your browser's language setting; this is not stored."
+        ]
+      },
+      {
+        "id": "survey",
+        "title": "The survey and calculators",
+        "body": [
+          "- Exam results in the calculator and in “Where can I get in?” are calculated only in your browser. They are not sent to a server, not stored and not put into the page address.",
+          "- The filters you choose in the survey (field of interest, level of study, city, language and mode of study) are put into the page address so the programme list can be shown. Together with the visit they end up in the technical logs (see above), but we do not link them to a person. Exam answers from the survey are not sent to the server."
+        ]
+      },
+      {
+        "id": "favorites",
+        "title": "Favourites",
+        "body": [
+          "The list of programmes you mark with a star is kept only in your browser (localStorage) and is not sent to us. You can delete it by clearing the site's data in your browser settings. This storage is needed for a feature you choose to use."
+        ]
+      },
+      {
+        "id": "cookies",
+        "title": "Cookies",
+        "body": [
+          "We do not use cookies for tracking. The site keeps only the favourites list in your browser (see above)."
+        ]
+      },
+      {
+        "id": "analytics",
+        "title": "Usage statistics",
+        "body": [
+          "To understand which pages are read and how fast they load, we use PostHog analytics with servers in the European Union. It is set up as follows:",
+          "- no cookies and no data kept in the browser;",
+          "- no identification of people, no session recordings and no content of entered fields — exam results never reach analytics;",
+          "- IP addresses are not stored.",
+          "Legal basis: our legitimate interest in improving the site (Article 6(1)(f)). You can object — write to {email}."
+        ]
+      },
+      {
+        "id": "email",
+        "title": "E-mail reminders",
+        "body": [
+          "If you ask for a reminder yourself (for example about the start of admission or changes in your programme list), we store your e-mail address and what you want to be told about. We use them only for what you asked.",
+          "Legal basis: your consent (Article 6(1)(a)). You can withdraw consent at any time with the link in every e-mail or by writing to {email}; withdrawal does not affect e-mails already sent.",
+          "E-mails are sent by the provider Resend. We delete the address after you withdraw consent and no later than 12 months after the last e-mail sent."
+        ]
+      },
+      {
+        "id": "minors",
+        "title": "School pupils and young people",
+        "body": [
+          "The site is mainly for school pupils and young people. In Lithuania a child can give consent to an information society service from the age of 14; for a younger child the consent of a parent or legal guardian is needed (Law on Legal Protection of Personal Data, Article 6; General Data Protection Regulation, Article 8).",
+          "We do not store or send the exam results you enter on the site."
+        ]
+      },
+      {
+        "id": "recipients",
+        "title": "Who we share data with",
+        "body": [
+          "We do not sell data and we show no advertising. Data is processed only by our service providers (processors), and only on our behalf:",
+          "- a hosting provider (running the site);",
+          "- Supabase (database with servers in the European Union; e-mail addresses, if you submit them);",
+          "- PostHog (usage statistics, servers in the European Union);",
+          "- Resend (sending e-mail).",
+          "If a provider transfers data outside the European Economic Area, it does so with safeguards approved by the European Commission, for example standard contractual clauses."
+        ]
+      },
+      {
+        "id": "rights",
+        "title": "Your rights",
+        "body": [
+          "You have the right to:",
+          "- be informed about your data and access it;",
+          "- ask for it to be corrected or deleted;",
+          "- restrict processing and object to processing based on legitimate interests;",
+          "- receive your data in a portable format;",
+          "- withdraw consent at any time.",
+          "Write to {email} — we will answer within one month. If you believe your rights have been violated, you can complain to the State Data Protection Inspectorate of Lithuania (vdai.lrv.lt) or to the supervisory authority of the controller's country, the Data State Inspectorate of Latvia (Elijas iela 17, Riga, LV-1050)."
+        ]
+      },
+      {
+        "id": "contact",
+        "title": "If you write to us",
+        "body": [
+          "The programme page and the calculator have a link for reporting a mistake. It opens your own e-mail app — you send the message yourself; the site sends nothing on your behalf.",
+          "If you write to us, we receive your e-mail address and the content of your message. We use them only to check and correct the information and to reply to you. Please do not include exam results — we do not need them.",
+          "Legal basis: our legitimate interest in keeping the information on the site correct (Article 6(1)(f)). We delete the correspondence no later than 12 months after the last message."
+        ]
+      },
+      {
+        "id": "decisions",
+        "title": "Automated decisions",
+        "body": [
+          "We do not make automated decisions that affect you and we do not profile. Calculations on the site are indicative; the final admission decision is made by the university."
+        ]
+      },
+      {
+        "id": "changes",
+        "title": "Changes",
+        "body": [
+          "If the policy changes we will update this page and the version date."
+        ]
+      }
+    ]
   }
 }

@@ -32,20 +32,402 @@
     "intro": "Ievadi savu valsts brieduma eksāmenu (VBE) vērtējumus — parādīsim konkursa punktus Lietuvas kopējās uzņemšanas programmām un to, kuru eksāmenu vēl trūkst."
   },
   "rights": {
-    "intro": "",
-    "checkedNote": "",
-    "items": [],
-    "sources": []
+    "intro": "Ko Lietuvas likumi un kopējās uzņemšanas kārtība paredz reflektantam: kad izziņo prasības, kā iesniegt un mainīt pieteikumu, kā apstrīdēt kļūdu, kad slēdz līgumu un kas notiek ar valsts finansējumu.",
+    "checkedNote": "Sagatavots automātiski pēc tiesību aktu tekstiem, ko lasījām 2026. gada 8. oktobrī: Zinātnes un studiju likuma konsolidētā redakcija, kas ir spēkā no 2026. gada 22. maija, un LAMA BPO 2026. gada kopējās uzņemšanas kārtība, apstiprināta 2026. gada 17. aprīlī. Jurists šo tekstu nav pārbaudījis. 2027. gada uzņemšanas kārtība vēl nav publicēta, tāpēc skaitļi un termiņi no 2026. gada kārtības var mainīties. Tas nav juridisks padoms: noteicošie ir tiesību aktu teksti un katras augstskolas uzņemšanas noteikumi.",
+    "items": [
+      {
+        "id": "principles-published",
+        "title": "Punktu veidošanas principus izziņo līdz 1. decembrim",
+        "text": "Konkursa punktu veidošanas principus un citus kritērijus augstskolas izziņo katru gadu līdz 1. decembrim, ne vēlāk kā 6 mēnešus pirms uzņemšanas sākuma. Zemākos konkursa punktus tās izziņo ne vēlāk kā līdz 1. jūnijam.",
+        "source": "Zinātnes un studiju likums, 59. panta 4. daļa"
+      },
+      {
+        "id": "subjects-three-years",
+        "title": "Konkursa priekšmeti zināmi trīs gadus iepriekš",
+        "text": "Konkursa mācību priekšmetu sarakstu pa studiju virzieniem augstskolas, saskaņojot ar ministriju, izziņo ne vēlāk kā 3 gadus pirms attiecīgā gada 1. septembra. 2027. gada saraksti jau ir publicēti LAMA BPO vietnē.",
+        "source": "Zinātnes un studiju likums, 59. panta 2. daļa"
+      },
+      {
+        "id": "who-can-apply",
+        "title": "Kas var piedalīties konkursā",
+        "text": "Pirmā cikla un integrētajās studijās konkursa kārtībā uzņem personas, kurām ir vismaz vidējā izglītība un nokārtoti vismaz trīs valsts brieduma eksāmeni, kuru vidējais vērtējums sasniedz noteikto līmeni. Šīs prasības cita starpā neattiecas uz personām, kas izglītību ieguvušas pēc ārvalstu vai starptautisku organizāciju programmām, un uz personām, kas atbrīvotas no brieduma eksāmeniem.",
+        "source": "Zinātnes un studiju likums, 59. panta 1. un 2. daļa"
+      },
+      {
+        "id": "no-fee",
+        "title": "2026. gadā iestāšanās maksas nebija",
+        "text": "2026. gada kopējā uzņemšanā iestāšanās maksas nebija, nebija jāmaksā arī par vēlmju maiņu. Augstskolas, slēdzot studiju līgumu, var iekasēt pašu noteiktu reģistrācijas maksu.",
+        "source": "LAMA BPO 2026. gada kopējās uzņemšanas kārtība, 10. un 70. punkts"
+      },
+      {
+        "id": "change-preferences",
+        "title": "Vēlmes var mainīt līdz termiņa beigām",
+        "text": "Vēlmju sarakstu un to secību vari mainīt līdz noteiktajām pieteikumu iesniegšanas beigām. No secības atkarīgs, kur tevi uzaicinās: saņem tikai vienu uzaicinājumu, tāpēc vēlmes jāsakārto no visvairāk līdz vismazāk vēlamajai.",
+        "source": "LAMA BPO 2026. gada kopējās uzņemšanas kārtība, 23., 74. un 79. punkts"
+      },
+      {
+        "id": "check-score",
+        "title": "Savus punktus var pārbaudīt un apstrīdēt kļūdu",
+        "text": "BPIS vari pārbaudīt savus konkursa punktus un tev piemērojamos zemākos konkursa punktus katrai vēlmei. Ja pamani kļūdu, vari rakstiski iesniegt apelāciju LAMA BPO ne vēlāk kā 24 stundas pirms galīgā pieteikumu iesniegšanas termiņa.",
+        "source": "LAMA BPO 2026. gada kopējās uzņemšanas kārtība, 64. punkts"
+      },
+      {
+        "id": "one-invitation",
+        "title": "Viens uzaicinājums un termiņš līgumam",
+        "text": "Uzvarot konkursā, saņem vienu uzaicinājumu ieņemt studiju vietu, pretējā gadījumā — noraidošu atbildi. Uzaicinātajam uzaicinājumā norādītajā laikā jānoslēdz studiju līgums ar augstskolu; ja līgums laikā nav noslēgts, uzaicinājumu anulē.",
+        "source": "LAMA BPO 2026. gada kopējās uzņemšanas kārtība, 71. un 79. punkts"
+      },
+      {
+        "id": "additional-admission",
+        "title": "Papilduzņemšanā var piedalīties arī tad, ja nepiedalījies pamatuzņemšanā",
+        "text": "Papilduzņemšanā var piedalīties arī tie, kas pamatuzņemšanas laikā nebija reģistrējušies. Ja jau esi noslēdzis līgumu par valsts finansētām studijām vai saņēmis studiju stipendiju, papilduzņemšanā vari pretendēt tikai uz valsts nefinansētu vietu.",
+        "source": "LAMA BPO 2026. gada kopējās uzņemšanas kārtība, 81. punkts"
+      },
+      {
+        "id": "programme-withdrawn",
+        "title": "Programmu var izņemt — par to jāpaziņo",
+        "text": "Augstskola var izņemt programmu no kārtējā gada uzņemšanas, bet ne vēlāk kā 3 dienas pirms pieteikumu iesniegšanas beigām, lai reflektanti, kas to izvēlējušies, tiktu informēti un paspētu izvēlēties citas vēlmes. Valsts augstskolas programmā uzņemšana nenotiek, ja uzaicināmo personu ir mazāk par ministra noteikto minimālo vietu skaitu.",
+        "source": "LAMA BPO 2026. gada kopējās uzņemšanas kārtība, 19. un 66. punkts"
+      },
+      {
+        "id": "results-published",
+        "title": "Uzņemšanas rezultātus publisko",
+        "text": "Katru gadu līdz 30. augustam augstskolas savās vietnēs publicē uzņemšanas rezultātus valsts finansētās vietās pa studiju programmām, bet līdz 1. oktobrim — valsts nefinansētās vietās. Tādu pašu informāciju pa augstskolām un programmām publicē ministrija.",
+        "source": "Zinātnes un studiju likums, 59. panta 7. daļa"
+      },
+      {
+        "id": "contract-and-price",
+        "title": "Studiju līgums un maksa",
+        "text": "Studenta un augstskolas attiecības noformē ar studiju līgumu; tā standarta nosacījumus nosaka ministrs. Studiju maksai jābūt norādītai augstskolas uzņemšanas noteikumos. Līgumu var noslēgt elektroniski vai klātienē; pirms parakstīšanas ieteicams iepazīties ar tā tekstu.",
+        "source": "Zinātnes un studiju likums, 61. panta 2. daļa, 83. panta 1. daļa; LAMA BPO 2026. gada kopējās uzņemšanas kārtība, 68. un 69. punkts"
+      },
+      {
+        "id": "funding-kept",
+        "title": "Valsts finansējums saglabājas, ja labi mācies",
+        "text": "Studentam valsts finansētā vietā finansējums saglabājas, ja pēc augstskolas noteiktā vērtēšanas perioda (ne ilgāka par studiju gadu) viņš atbilst labu sekmju kritērijiem: nav akadēmisko parādu un sasniegts teicams vai tipisks sasniegumu līmenis. Students, kas tiem neatbilst, finansējumu zaudē un turpmāk maksā augstskolas noteikto studiju maksu; izņēmums noteikts likuma 78. panta 6. daļā.",
+        "source": "Zinātnes un studiju likums, 78. panta 4., 5. un 6. daļa"
+      },
+      {
+        "id": "no-extra-payments",
+        "title": "Valsts finansētā vietā papildu iemaksu nav",
+        "text": "Personām, kas studē valsts finansētās vietās, valsts augstskolai nav jāmaksā nekādas ar studiju programmas īstenošanu tieši saistītas iemaksas, izņemot likuma 80. panta 3. daļā norādītos gadījumus.",
+        "source": "Zinātnes un studiju likums, 83. panta 5. daļa"
+      },
+      {
+        "id": "complaints",
+        "title": "Studenta sūdzību izskata 15 dienās",
+        "text": "Kad esi kļuvis par studentu, par savu tiesību vai likumīgo interešu pārkāpumu vari rakstiski vērsties pie augstskolas vadītāja: viņam vai viņa pilnvarotām personām 15 kalendāro dienu laikā iesniegums vai sūdzība jāizskata un rakstiski jāatbild. Augstskolā darbojas arī strīdu izskatīšanas komisija, kas risina studentu un administrācijas strīdus.",
+        "source": "Zinātnes un studiju likums, 62. panta 7. un 8. daļa"
+      },
+      {
+        "id": "your-data",
+        "title": "Tavi dati uzņemšanas sistēmā",
+        "text": "Pēc pieprasījuma LAMA BPO vai augstskolai nekavējoties jāsniedz precīza informācija, kādi tavi personas dati un kādiem mērķiem tiek apstrādāti. Ja lūdz datus dzēst, tie jādzēš, ja to glabāšanu neprasa apstrādes mērķis vai spēkā esošie tiesību akti.",
+        "source": "LAMA BPO 2026. gada kopējās uzņemšanas kārtība, 96. un 97. punkts"
+      },
+      {
+        "id": "education-abroad",
+        "title": "Ja izglītību esi ieguvis ārvalstīs",
+        "text": "Ja izglītību esi ieguvis ārvalsts iestādē vai pēc starptautiskas organizācijas programmas, vajadzīgs dokuments par tās akadēmisko atzīšanu Lietuvā; atzīšanu veic Studiju kvalitātes novērtēšanas centrs (SKVC) vai augstskola, kurai ir šādas tiesības. Kopš 2019. gada Latvijā un Igaunijā iegūtus vidējās izglītības dokumentus (Latvijā — Atestāts par vispārējo vidējo izglītību vai Diploms par profesionālo vidējo izglītību) atzīst automātiski. Ja studijas notiks lietuviešu valodā un lietuviešu valodu neesi mācījies, jānokārto lietuviešu valodas ieskaite. Ārzemnieki, kuriem nav tiesību uz valsts finansētām vietām, par uzņemšanu vēršas tieši augstskolā.",
+        "source": "LAMA BPO 2026. gada kopējās uzņemšanas kārtība, 24., 25. un 37. punkts"
+      }
+    ],
+    "sources": [
+      {
+        "label": "Lietuvas Republikas Zinātnes un studiju likums (Nr. XI-242), konsolidētā redakcija (lietuviešu valodā)",
+        "url": "https://e-seimas.lrs.lt/portal/legalAct/lt/TAD/TAIS.343430/asr"
+      },
+      {
+        "label": "LAMA BPO: 2026. gada kopējās uzņemšanas kārtība Lietuvas augstskolu īsā cikla, pirmā cikla, integrētajās un profesionālajās studijās (lietuviešu valodā)",
+        "url": "https://lamabpo.lt/wp-content/uploads/2026/04/Bendrojo-priemimo-i-Lietuvos-aukstuju-mokyklu-trumposios-pakopos-pirmosios-pakopos-vientisasias-ir-profesines-studijas-2026-metu-tvarkos-aprasas.pdf"
+      }
+    ]
   },
   "glossary": {
-    "intro": "",
-    "items": []
+    "intro": "Vārdi, ko sastapsi Lietuvas augstskolu uzņemšanas noteikumos un šajā vietnē. Iekavās — termins lietuviešu valodā, kā to raksta dokumentos. Definīcijas ņemtas no Zinātnes un studiju likuma un LAMA BPO kopējās uzņemšanas kārtības; pie katras norādīts avots. Skaitļi ar norādi uz 2026. gadu ir no 2026. gada kārtības; 2027. gada kārtība vēl nav publicēta.",
+    "items": [
+      {
+        "id": "general-admission",
+        "term": "Kopējā uzņemšana (bendrasis priėmimas)",
+        "definition": "Centralizēta uzņemšana Lietuvas universitāšu un koledžu īsā cikla, pirmā cikla un integrētajās studijās. Tā notiek šim nolūkam paredzētā valsts informācijas sistēmā; to organizē LAMA BPO.",
+        "source": "Zinātnes un studiju likums, 59. panta 7. daļa; LAMA BPO 2026. gada kopējās uzņemšanas kārtība, 2. un 4. punkts"
+      },
+      {
+        "id": "lama-bpo",
+        "term": "LAMA BPO",
+        "definition": "Lietuvas augstskolu asociācija kopējās uzņemšanas organizēšanai. Tā organizē un īsteno uzņemšanu, apstrādā reflektantu datus, veido konkursa rindas un izziņo uzaicinājumus studēt.",
+        "source": "LAMA BPO 2026. gada kopējās uzņemšanas kārtība, 2. punkts"
+      },
+      {
+        "id": "bpis",
+        "term": "BPIS, Kopējās uzņemšanas informācijas sistēma (Bendrojo priėmimo informacinė sistema)",
+        "definition": "Sistēma, kurā reflektants reģistrējas, iesniedz pieteikumu, redz savus datus, konkursa punktus un uzaicinājumu studēt. Pieslēdzas caur lamabpo.lt.",
+        "source": "LAMA BPO 2026. gada kopējās uzņemšanas kārtība, 8. un 21. punkts"
+      },
+      {
+        "id": "application",
+        "term": "Pieteikums (prašymas priimti studijuoti)",
+        "definition": "Datu kopums BPIS: reflektanta personas dati un kontaktinformācija, dati par izglītību un citiem sasniegumiem, kā arī izvēlētās vēlmes. Vēlmes var mainīt līdz pieteikumu iesniegšanas beigām.",
+        "source": "LAMA BPO 2026. gada kopējās uzņemšanas kārtība, 23. punkts"
+      },
+      {
+        "id": "preference",
+        "term": "Vēlme (pageidavimas)",
+        "definition": "Konkrētas augstskolas studiju programma, izvēlēta kopā ar finansējuma veidu: valsts finansēta vieta, valsts nefinansēta vieta ar studiju stipendiju vai valsts nefinansēta vieta. 2026. gada pamatuzņemšanā varēja norādīt līdz 9 vēlmēm, papilduzņemšanā — līdz 6. Vēlmes sakārto no visvairāk līdz vismazāk vēlamajai.",
+        "source": "LAMA BPO 2026. gada kopējās uzņemšanas kārtība, 26. punkts"
+      },
+      {
+        "id": "state-exam",
+        "term": "Valsts brieduma eksāmens, VBE (valstybinis brandos egzaminas)",
+        "definition": "Eksāmens, ko kārto, beidzot vidusskolu. Lai iestātos pirmā cikla un integrētajās studijās, jābūt nokārtotiem vismaz trim: lietuviešu valodā un literatūrā, matemātikā un vienam pēc izvēles. Stājoties mākslas studiju virzienu grupā, matemātikas eksāmens nav obligāts.",
+        "source": "Zinātnes un studiju likums, 59. panta 1. daļa"
+      },
+      {
+        "id": "minimum-average",
+        "term": "Triju VBE vidējā vērtējuma prasība (trijų VBE vidurkis)",
+        "definition": "Triju obligāto valsts brieduma eksāmenu vidējam vērtējumam jāsasniedz noteikts līmenis: pamata — stājoties universitātes studijās, apmierinošs — koledžas studijās. 2026. gada uzņemšanā 2025. gada un vēlāku gadu absolventiem tas bija no 50 punktiem (universitātes studijas) un no 41 punkta (koledžas studijas).",
+        "source": "Zinātnes un studiju likums, 59. panta 1. daļa; LAMA BPO 2026. gada kopējās uzņemšanas kārtība, 29. punkts"
+      },
+      {
+        "id": "competition-score",
+        "term": "Konkursa punkti (konkursinis balas)",
+        "definition": "Punkti, pēc kuriem reflektantus sarindo konkursā. Tos aprēķina no brieduma eksāmenu, mācību un citu īpašo spēju vērtējuma rezultātiem. Konkursa punktu veidošanas principus augstskolas izziņo katru gadu līdz 1. decembrim.",
+        "source": "Zinātnes un studiju likums, 77. panta 1. daļa, 59. panta 4. daļa"
+      },
+      {
+        "id": "extra-points",
+        "term": "Papildu punkti (papildomi balai)",
+        "definition": "Punkti, ko pieskaita konkursa punktiem par papildu sasniegumiem, piemēram, godalgotām vietām starptautiskās un valsts olimpiādēs un konkursos. 2026. gadā papildu punktu kopsumma nevarēja pārsniegt 2,5.",
+        "source": "LAMA BPO 2026. gada kopējās uzņemšanas kārtība, 28. un 55. punkts"
+      },
+      {
+        "id": "minimum-score",
+        "term": "Zemākie konkursa punkti (mažiausias stojamasis konkursinis balas)",
+        "definition": "Zemākie konkursa punkti, ar kuriem var pretendēt uz studijām konkrētā augstskolā. Katra augstskola tos nosaka pati un izziņo ne vēlāk kā līdz 1. jūnijam; dažādās augstskolās tie var atšķirties.",
+        "source": "Zinātnes un studiju likums, 59. panta 4. daļa; LAMA BPO 2026. gada kopējās uzņemšanas kārtība, 54. punkts"
+      },
+      {
+        "id": "competition-queue",
+        "term": "Konkursa rinda, pirmā un otrā (konkursinė eilė)",
+        "definition": "Reflektantu rinda uz valsts finansētām vietām un studiju stipendijām pēc konkursa punktiem. Rindas ir divas: pirmajā iekļūst visi, kas atbilst uzņemšanas prasībām; otrajā — tie no viņiem, kas atbilst papildu nosacījumam, piemēram, ir beiguši īsā cikla studijas vai viņiem ir likumā noteikta ilguma praktiskās darbības pieredze.",
+        "source": "Zinātnes un studiju likums, 77. panta 1. un 1.¹ daļa"
+      },
+      {
+        "id": "state-funded-place",
+        "term": "Valsts finansēta studiju vieta (valstybės finansuojama studijų vieta)",
+        "definition": "Studiju vieta, kurā studiju maksu sedz valsts. Šādā vietā studējošajam valsts augstskolai nav jāmaksā nekādas ar studiju programmas īstenošanu tieši saistītas iemaksas, izņemot likumā norādītos gadījumus.",
+        "source": "Zinātnes un studiju likums, 77. panta 1. daļa, 83. panta 5. daļa"
+      },
+      {
+        "id": "non-funded-place",
+        "term": "Valsts nefinansēta studiju vieta (valstybės nefinansuojama studijų vieta)",
+        "definition": "Studiju vieta, kurā par studijām maksā pats students. Studiju maksu nosaka augstskola un norāda to savos uzņemšanas noteikumos.",
+        "source": "Zinātnes un studiju likums, 83. panta 1. daļa; LAMA BPO 2026. gada kopējās uzņemšanas kārtība, 6. punkts"
+      },
+      {
+        "id": "study-stipend",
+        "term": "Studiju stipendija (studijų stipendija)",
+        "definition": "Stipendija, ko piešķir personām ar augstākajiem konkursa punktiem, kuras uzņemtas valsts nefinansētās vietās. Tās apmērs ir normatīvā studiju maksa (vai faktiskā studiju maksa, ja tā ir mazāka), un to piešķir uz studiju laiku no valsts budžeta līdzekļiem.",
+        "source": "Zinātnes un studiju likums, 82. panta 10. daļa"
+      },
+      {
+        "id": "normative-price",
+        "term": "Normatīvā studiju maksa (norminė studijų kaina)",
+        "definition": "Valdības noteiktā kārtībā aprēķināta studiju virziena vai programmu grupas studiju maksa. Katru gadu līdz 31. janvārim to apstiprina izglītības, zinātnes un sporta ministrs. Ja augstskolas noteiktā maksa ir lielāka, valsts sedz tikai normatīvo maksu.",
+        "source": "Zinātnes un studiju likums, 83. panta 4. daļa"
+      },
+      {
+        "id": "invitation",
+        "term": "Uzaicinājums studēt (kvietimas studijuoti)",
+        "definition": "Reflektants, kas uzvarējis konkursā, saņem vienu uzaicinājumu ieņemt konkrētu studiju vietu; pārējie — noraidošu atbildi. Uzaicinātajam uzaicinājumā norādītajā laikā jānoslēdz studiju līgums, citādi uzaicinājumu anulē.",
+        "source": "LAMA BPO 2026. gada kopējās uzņemšanas kārtība, 71. un 79. punkts"
+      },
+      {
+        "id": "study-contract",
+        "term": "Studiju līgums (studijų sutartis)",
+        "definition": "Līgums, ar kuru noformē studenta un augstskolas attiecības. Tā standarta nosacījumus nosaka ministrs. Pēc līguma noslēgšanas uzskata, ka reflektants ir uzņemts augstskolā.",
+        "source": "Zinātnes un studiju likums, 61. panta 2. daļa; LAMA BPO 2026. gada kopējās uzņemšanas kārtība, 70. punkts"
+      },
+      {
+        "id": "main-additional",
+        "term": "Pamatuzņemšana un papilduzņemšana (pagrindinis ir papildomas priėmimas)",
+        "definition": "Kopējā uzņemšana notiek posmos. Pēc pamatuzņemšanas uz studiju vietām, kas palikušas brīvas, izsludina papilduzņemšanu; 2026. gadā tā notika divos posmos.",
+        "source": "LAMA BPO 2026. gada kopējās uzņemšanas kārtība, 80. un 82. punkts"
+      },
+      {
+        "id": "direct-admission",
+        "term": "Tiešā uzņemšana (tiesioginis priėmimas)",
+        "definition": "Uzņemšana valsts nefinansētās studiju vietās, ko augstskola organizē pati, ārpus kopējās uzņemšanas konkursa. Tieši uzņemto personu datus augstskola ievada BPIS.",
+        "source": "LAMA BPO 2026. gada kopējās uzņemšanas kārtība, 86. punkts"
+      },
+      {
+        "id": "cycles",
+        "term": "Studiju cikli (studijų pakopos)",
+        "definition": "Studijas pa cikliem ir īsā cikla, pirmā cikla (pēc tām piešķir profesionālā bakalaura vai bakalaura grādu), otrā cikla (maģistra grāds) un trešā cikla (doktora grāds).",
+        "source": "Zinātnes un studiju likums, 52. panta 2., 4. un 5. daļa"
+      },
+      {
+        "id": "integrated",
+        "term": "Integrētās studijas (vientisosios studijos)",
+        "definition": "Studijas, kas apvieno pirmo un otro ciklu: tās beidzot, uzreiz piešķir maģistra grādu. Programmas apjoms — 300 vai 360 studiju kredītpunkti. Tajās iestājas pēc vidusskolas.",
+        "source": "Zinātnes un studiju likums, 52. panta 7. daļa, 53. panta 7. daļa, 59. panta 1. daļa"
+      },
+      {
+        "id": "university-college",
+        "term": "Universitātes un koledžas studijas (universitetinės ir koleginės studijos)",
+        "definition": "Universitātē iegūst augstāko universitātes izglītību; pēc pirmā cikla universitātes studijām piešķir bakalaura grādu. Koledžā (kolegija) iegūst augstāko koledžas izglītību, kas balstīta lietišķajos pētījumos un profesionālajā praksē; pēc studijām piešķir profesionālā bakalaura grādu.",
+        "source": "Zinātnes un studiju likums, 10. panta 4. daļa, 11. panta 1. daļa, 52. panta 4. daļa"
+      },
+      {
+        "id": "study-mode",
+        "term": "Pilna un nepilna laika studijas (nuolatinė ir ištęstinė forma)",
+        "definition": "Pilna laika studiju parastais apjoms ir 60 kredītpunkti gadā (ne mazāk par 45). Nepilna laika studiju gada apjoms var būt mazāks, taču to ilgums nedrīkst būt vairāk nekā pusotru reizi garāks. Abās formās iegūtā izglītība ir līdzvērtīga.",
+        "source": "Zinātnes un studiju likums, 53. panta 3. un 4. daļa"
+      },
+      {
+        "id": "credit",
+        "term": "Studiju kredītpunkts (studijų kreditas)",
+        "definition": "Studiju apjoma vienība, ar ko mēra studējošā vidējo darba slodzi, kas vajadzīga studiju rezultātu sasniegšanai. Pirmā cikla programmas apjoms var būt 180, 210 vai 240 kredītpunkti.",
+        "source": "Zinātnes un studiju likums, 4. panta 23. daļa, 53. panta 6. daļa"
+      },
+      {
+        "id": "study-field",
+        "term": "Studiju virziens (studijų kryptis)",
+        "definition": "Akadēmiska, profesionāla un pētniecības joma, ko vieno kopīga izpratne, studiju rezultāti un to sasniegšanas veidi. Virzienus apvieno virzienu grupās; pēc tām sadala valsts finansētās vietas un nosaka konkursa mācību priekšmetus.",
+        "source": "Zinātnes un studiju likums, 4. panta 24. daļa, 59. panta 2. daļa, 77. panta 3. daļa"
+      }
+    ]
   },
   "privacy": {
-    "intro": "",
-    "updated": "",
+    "intro": "Kā šī vietne apstrādā personas datus: ko mēs uzglabājam, ko nē, un kādas ir tavas tiesības.",
+    "updated": "Redakcija: 2026. gada 8. oktobris",
     "authorityLabel": "Lietuvas Valsts datu aizsardzības inspekcija (vdai.lrv.lt)",
     "authorityUrl": "https://vdai.lrv.lt",
-    "sections": []
+    "sections": [
+      {
+        "id": "summary",
+        "title": "Īsumā",
+        "body": [
+          "- Vietnei nav lietotāju kontu, un reģistrācija nav vajadzīga.",
+          "- Eksāmenu rezultāti, ko ievadi kalkulatorā vai meklēšanā «Kur es varu iestāties?», tiek aprēķināti tavā pārlūkā. Tie netiek nosūtīti uz mūsu serveri un nekur netiek saglabāti.",
+          "- Mēs neizmantojam sīkdatnes izsekošanai un nerādām reklāmu.",
+          "- Izlase (zvaigznītes pie programmām) glabājas tikai tavā ierīcē."
+        ]
+      },
+      {
+        "id": "controller",
+        "title": "Kas ir pārzinis",
+        "body": [
+          "Personas datu pārzinis ir {controller}. Jautājumos par personas datiem raksti: {email}."
+        ]
+      },
+      {
+        "id": "visit",
+        "title": "Vietnes apmeklējums",
+        "body": [
+          "Kad atver lapu, hostinga pakalpojuma sniedzējs automātiski reģistrē tehniskos datus: IP adresi, laiku, pieprasīto adresi un pārlūka veidu. To dara, lai vietne darbotos un būtu droša. Mēs šos datus neizmantojam, lai kādu identificētu.",
+          "Pamats: mūsu leģitīmās intereses nodrošināt vietnes drošību un darbību (Vispārīgās datu aizsardzības regulas 6. panta 1. punkta f) apakšpunkts). Glabāšanas termiņu nosaka pakalpojuma sniedzējs.",
+          "Valodu (latviešu, lietuviešu vai angļu) pirmajā apmeklējumā izvēlamies pēc pārlūka valodas iestatījuma; tas netiek saglabāts."
+        ]
+      },
+      {
+        "id": "survey",
+        "title": "Aptauja un kalkulatori",
+        "body": [
+          "- Eksāmenu rezultāti kalkulatorā un meklēšanā «Kur es varu iestāties?» tiek aprēķināti tikai tavā pārlūkā. Tie netiek sūtīti uz serveri, netiek saglabāti un netiek ielikti lapas adresē.",
+          "- Aptaujā izvēlētie filtri (interešu joma, studiju līmenis, pilsēta, studiju valoda un forma) tiek ielikti lapas adresē, lai varētu parādīt programmu sarakstu. Līdz ar apmeklējumu tie nonāk tehniskajos žurnālos (skat. iepriekš), bet mēs tos nesaistām ar personu. Eksāmenu atbildes aptaujā uz serveri netiek nosūtītas."
+        ]
+      },
+      {
+        "id": "favorites",
+        "title": "Izlase",
+        "body": [
+          "Programmu saraksts, ko atzīmē ar zvaigznīti, glabājas tikai tavā pārlūkā (localStorage) un netiek nosūtīts mums. To var dzēst, iztīrot vietnes datus pārlūka iestatījumos. Šī glabāšana ir vajadzīga funkcijai, ko tu pats izvēlies izmantot."
+        ]
+      },
+      {
+        "id": "cookies",
+        "title": "Sīkdatnes",
+        "body": [
+          "Mēs neizmantojam sīkdatnes izsekošanai. Vietne pārlūkā glabā tikai izlases sarakstu (skat. iepriekš)."
+        ]
+      },
+      {
+        "id": "analytics",
+        "title": "Vietnes lietošanas statistika",
+        "body": [
+          "Lai saprastu, kuras lapas tiek lasītas un cik ātri tās ielādējas, mēs izmantojam PostHog analītiku ar serveriem Eiropas Savienībā. Tā ir iestatīta šādi:",
+          "- bez sīkdatnēm un bez datu glabāšanas pārlūkā;",
+          "- bez cilvēka identificēšanas, bez sesiju ierakstiem un bez ievadīto lauku satura — eksāmenu rezultāti analītikā nenonāk;",
+          "- IP adrese netiek glabāta.",
+          "Pamats: mūsu leģitīmās intereses uzlabot vietni (regulas 6. panta 1. punkta f) apakšpunkts). Tu vari iebilst — raksti uz {email}."
+        ]
+      },
+      {
+        "id": "email",
+        "title": "E-pasta atgādinājumi",
+        "body": [
+          "Ja pats pieprasi atgādinājumu (piemēram, par uzņemšanas sākumu vai izmaiņām tavā programmu sarakstā), mēs uzglabājam tavu e-pasta adresi un to, par ko vēlies saņemt ziņas. Mēs tos izmantojam tikai tam, ko tu pieprasīji.",
+          "Pamats: tava piekrišana (regulas 6. panta 1. punkta a) apakšpunkts). Piekrišanu vari atsaukt jebkurā brīdī ar saiti katrā e-pastā vai rakstot uz {email}; atsaukums neietekmē iepriekšējo e-pastu likumību.",
+          "E-pastus sūta pakalpojuma sniedzējs Resend. Adresi izdzēšam pēc piekrišanas atsaukšanas un ne vēlāk kā 12 mēnešus pēc pēdējā nosūtītā e-pasta."
+        ]
+      },
+      {
+        "id": "minors",
+        "title": "Skolēni un jaunieši",
+        "body": [
+          "Vietnes auditorija galvenokārt ir skolēni un jaunieši. Lietuvā bērns pats var dot piekrišanu informācijas sabiedrības pakalpojumam no 14 gadu vecuma; jaunākam bērnam vajadzīga vecāka vai likumiskā aizbildņa piekrišana (Lietuvas Personas datu tiesiskās aizsardzības likuma 6. pants; Vispārīgās datu aizsardzības regulas 8. pants).",
+          "Eksāmenu rezultātus, ko ievadi vietnē, mēs neuzglabājam un nenosūtām."
+        ]
+      },
+      {
+        "id": "recipients",
+        "title": "Kam mēs datus nododam",
+        "body": [
+          "Mēs nepārdodam datus un nerādām reklāmu. Datus apstrādā tikai mūsu pakalpojumu sniedzēji (apstrādātāji), un tikai mūsu uzdevumā:",
+          "- hostinga pakalpojuma sniedzējs (vietnes darbība);",
+          "- Supabase (datubāze ar serveriem Eiropas Savienībā; e-pasta adreses, ja tu tās iesniedz);",
+          "- PostHog (lietošanas statistika, serveri Eiropas Savienībā);",
+          "- Resend (e-pastu nosūtīšana).",
+          "Ja pakalpojuma sniedzējs datus nodod ārpus Eiropas Ekonomikas zonas, tas notiek ar Eiropas Komisijas apstiprinātiem aizsardzības mehānismiem, piemēram, standarta līguma klauzulām."
+        ]
+      },
+      {
+        "id": "rights",
+        "title": "Tavas tiesības",
+        "body": [
+          "Tev ir tiesības:",
+          "- saņemt informāciju par saviem datiem un piekļūt tiem;",
+          "- prasīt datu labošanu vai dzēšanu;",
+          "- ierobežot apstrādi un iebilst pret apstrādi, kas balstīta uz leģitīmajām interesēm;",
+          "- saņemt datus pārnesamā formātā;",
+          "- atsaukt piekrišanu jebkurā brīdī.",
+          "Raksti uz {email} — atbildēsim viena mēneša laikā. Ja uzskati, ka tavas tiesības pārkāptas, vari iesniegt sūdzību Lietuvas Valsts datu aizsardzības inspekcijai (vdai.lrv.lt) vai pārziņa valsts uzraudzības iestādei — Datu valsts inspekcijai (Elijas iela 17, Rīga, LV-1050)."
+        ]
+      },
+      {
+        "id": "contact",
+        "title": "Ja raksti mums",
+        "body": [
+          "Programmas lapā un kalkulatorā ir saite, ar kuru vari paziņot par kļūdu. Tā atver tavu e-pasta programmu — vēstuli tu nosūti pats, vietne neko nenosūta tavā vietā.",
+          "Ja mums raksti, mēs saņemam tavu e-pasta adresi un vēstules saturu. Mēs tos izmantojam tikai, lai pārbaudītu un izlabotu informāciju un tev atbildētu. Eksāmenu rezultātus vēstulē neraksti — tie mums nav vajadzīgi.",
+          "Pamats: mūsu leģitīmās intereses uzturēt vietnē pareizu informāciju (regulas 6. panta 1. punkta f) apakšpunkts). Saraksti izdzēšam ne vēlāk kā 12 mēnešus pēc pēdējās vēstules."
+        ]
+      },
+      {
+        "id": "decisions",
+        "title": "Automatizēti lēmumi",
+        "body": [
+          "Mēs nepieņemam automatizētus lēmumus, kas tevi ietekmē, un neveicam profilēšanu. Aprēķini vietnē ir orientējoši; galīgo lēmumu par uzņemšanu pieņem augstskola."
+        ]
+      },
+      {
+        "id": "changes",
+        "title": "Izmaiņas",
+        "body": [
+          "Ja politika mainās, mēs atjaunināsim šo lapu un redakcijas datumu."
+        ]
+      }
+    ]
   }
 }

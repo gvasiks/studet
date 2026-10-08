@@ -472,20 +472,277 @@
   },
   "rights": {
     "title": "Jūsų teisės stojant į aukštąją mokyklą",
-    "intro": "",
-    "checkedNote": "",
+    "intro": "Ką Lietuvos įstatymai ir bendrojo priėmimo tvarka numato stojančiajam: kada skelbiami reikalavimai, kaip teikti ir keisti prašymą, kaip užginčyti klaidą, kada sudaroma sutartis ir kas nutinka su valstybės finansavimu.",
+    "checkedNote": "Parengta automatiškai pagal teisės aktų tekstus, kuriuos skaitėme 2026 m. spalio 8 d.: Mokslo ir studijų įstatymo suvestinę redakciją, galiojančią nuo 2026 m. gegužės 22 d., ir LAMA BPO bendrojo priėmimo 2026 m. tvarkos aprašą, patvirtintą 2026 m. balandžio 17 d. Teisininkas šio teksto netikrino. 2027 m. priėmimo tvarka dar nepaskelbta, todėl skaičiai ir terminai iš 2026 m. tvarkos gali pasikeisti. Tai nėra teisinė konsultacija: lemia teisės aktų tekstai ir kiekvienos aukštosios mokyklos priėmimo taisyklės.",
     "sourceLabel": "Šaltinis",
     "sourcesTitle": "Šaltiniai",
     "glossaryLink": "Nežinomi žodžiai? Žiūrėkite žodynėlį",
-    "items": [],
-    "sources": []
+    "items": [
+      {
+        "id": "principles-published",
+        "title": "Balo sudarymo principai skelbiami iki gruodžio 1 d.",
+        "text": "Konkursinio balo sudarymo principus ir kitus kriterijus aukštosios mokyklos skelbia kiekvienais metais iki gruodžio 1 d., likus ne mažiau kaip 6 mėnesiams iki priėmimo pradžios. Mažiausią stojamąjį konkursinį balą jos skelbia ne vėliau kaip iki birželio 1 d.",
+        "source": "Mokslo ir studijų įstatymas, 59 str. 4 d."
+      },
+      {
+        "id": "subjects-three-years",
+        "title": "Konkursiniai dalykai žinomi prieš trejus metus",
+        "text": "Konkursinių mokomųjų dalykų sąrašą pagal studijų kryptis aukštosios mokyklos, suderinusios su ministerija, paskelbia ne vėliau kaip prieš 3 metus iki atitinkamų metų rugsėjo 1 d. 2027 metų sąrašai jau paskelbti LAMA BPO svetainėje.",
+        "source": "Mokslo ir studijų įstatymas, 59 str. 2 d."
+      },
+      {
+        "id": "who-can-apply",
+        "title": "Kas gali dalyvauti konkurse",
+        "text": "Į pirmosios pakopos ir vientisąsias studijas konkurso būdu priimami asmenys, turintys ne žemesnį kaip vidurinį išsilavinimą ir išlaikę ne mažiau kaip tris valstybinius brandos egzaminus, kurių įvertinimų vidurkis siekia nustatytą lygį. Šie reikalavimai netaikomi, be kita ko, asmenims, įgijusiems išsilavinimą pagal užsienio valstybių ar tarptautinių organizacijų programas, ir asmenims, atleistiems nuo brandos egzaminų.",
+        "source": "Mokslo ir studijų įstatymas, 59 str. 1 ir 2 d."
+      },
+      {
+        "id": "no-fee",
+        "title": "2026 m. stojamosios įmokos nebuvo",
+        "text": "2026 m. bendrajame priėmime stojamosios įmokos nebuvo, mokėti nereikėjo ir už pageidavimų koregavimą. Aukštosios mokyklos, sudarydamos studijų sutartį, gali imti savo nustatytą registracijos mokestį.",
+        "source": "LAMA BPO 2026 m. bendrojo priėmimo tvarkos aprašas, 10 ir 70 p."
+      },
+      {
+        "id": "change-preferences",
+        "title": "Pageidavimus galima keisti iki termino pabaigos",
+        "text": "Pageidavimų sąrašą ir jų eiliškumą galite keisti iki nustatytos prašymų teikimo pabaigos. Nuo eiliškumo priklauso, kur būsite pakviesti: gaunamas tik vienas kvietimas, todėl pageidavimus reikia išdėstyti nuo labiausiai iki mažiausiai norimo.",
+        "source": "LAMA BPO 2026 m. bendrojo priėmimo tvarkos aprašas, 23, 74 ir 79 p."
+      },
+      {
+        "id": "check-score",
+        "title": "Savo balą galima pasitikrinti ir užginčyti klaidą",
+        "text": "BPIS galite pasitikrinti savo konkursinį balą ir jums taikomą mažiausią konkursinį balą pagal kiekvieną pageidavimą. Pastebėję klaidą, galite raštu pateikti apeliaciją LAMA BPO ne vėliau kaip likus 24 valandoms iki galutinio prašymų pateikimo termino.",
+        "source": "LAMA BPO 2026 m. bendrojo priėmimo tvarkos aprašas, 64 p."
+      },
+      {
+        "id": "one-invitation",
+        "title": "Vienas kvietimas ir terminas sutarčiai",
+        "text": "Laimėjus konkursą pateikiamas vienas kvietimas užimti studijų vietą, nelaimėjus — neigiamas atsakymas. Pakviestasis turi kvietime nurodytu laikotarpiu sudaryti studijų sutartį su aukštąja mokykla; nesudarius sutarties per nurodytą laiką kvietimas anuliuojamas.",
+        "source": "LAMA BPO 2026 m. bendrojo priėmimo tvarkos aprašas, 71 ir 79 p."
+      },
+      {
+        "id": "additional-admission",
+        "title": "Papildomame priėmime galima dalyvauti ir nedalyvavus pagrindiniame",
+        "text": "Papildomame priėmime gali dalyvauti ir tie, kurie pagrindinio priėmimo metu nebuvo užsiregistravę. Jei jau sudarėte valstybės finansuojamų studijų sutartį arba gavote studijų stipendiją, papildomame priėmime galite pretenduoti tik į valstybės nefinansuojamą vietą.",
+        "source": "LAMA BPO 2026 m. bendrojo priėmimo tvarkos aprašas, 81 p."
+      },
+      {
+        "id": "programme-withdrawn",
+        "title": "Programa gali būti išbraukta — apie tai turi būti pranešta",
+        "text": "Aukštoji mokykla gali išbraukti programą iš einamųjų metų priėmimo, bet ne vėliau kaip likus 3 dienoms iki prašymų teikimo pabaigos, kad ją pasirinkę stojantieji būtų informuoti ir suspėtų pasirinkti kitus pageidavimus. Į valstybinės aukštosios mokyklos programą priėmimas nevykdomas, jei galimų pakviesti asmenų yra mažiau už ministro nustatytą minimalų vietų skaičių.",
+        "source": "LAMA BPO 2026 m. bendrojo priėmimo tvarkos aprašas, 19 ir 66 p."
+      },
+      {
+        "id": "results-published",
+        "title": "Priėmimo rezultatai skelbiami viešai",
+        "text": "Kiekvienais metais iki rugpjūčio 30 d. aukštosios mokyklos savo svetainėse skelbia priėmimo į valstybės finansuojamas vietas rezultatus pagal studijų programas, o iki spalio 1 d. — priėmimo į valstybės nefinansuojamas vietas rezultatus. Tokią pat informaciją pagal aukštąsias mokyklas ir programas skelbia ministerija.",
+        "source": "Mokslo ir studijų įstatymas, 59 str. 7 d."
+      },
+      {
+        "id": "contract-and-price",
+        "title": "Studijų sutartis ir kaina",
+        "text": "Studento ir aukštosios mokyklos santykiai įforminami studijų sutartimi; standartines jos sąlygas nustato ministras. Studijų kaina turi būti nurodyta aukštosios mokyklos priėmimo taisyklėse. Sutartį galima sudaryti elektronine forma arba atvykus; prieš pasirašant rekomenduojama susipažinti su jos tekstu.",
+        "source": "Mokslo ir studijų įstatymas, 61 str. 2 d., 83 str. 1 d.; LAMA BPO 2026 m. bendrojo priėmimo tvarkos aprašas, 68 ir 69 p."
+      },
+      {
+        "id": "funding-kept",
+        "title": "Valstybės finansavimas išlieka gerai mokantis",
+        "text": "Valstybės finansuojamoje vietoje studijuojančiam studentui finansavimas išlieka, jei po aukštosios mokyklos nustatyto vertinamojo laikotarpio (ne ilgesnio kaip studijų metai) jis atitinka gero mokymosi kriterijus: neturi akademinių skolų ir pasiekė puikų arba tipinį pasiekimų lygmenį. Neatitikęs šių kriterijų studentas finansavimo netenka ir toliau moka aukštosios mokyklos nustatytą studijų kainą; išimtis nustatyta įstatymo 78 straipsnio 6 dalyje.",
+        "source": "Mokslo ir studijų įstatymas, 78 str. 4, 5 ir 6 d."
+      },
+      {
+        "id": "no-extra-payments",
+        "title": "Valstybės finansuojamoje vietoje papildomų įmokų nėra",
+        "text": "Asmenys, studijuojantys valstybės finansuojamose vietose, valstybinei aukštajai mokyklai neturi mokėti jokių tiesiogiai su studijų programos įgyvendinimu susijusių įmokų, išskyrus įstatymo 80 straipsnio 3 dalyje nurodytus atvejus.",
+        "source": "Mokslo ir studijų įstatymas, 83 str. 5 d."
+      },
+      {
+        "id": "complaints",
+        "title": "Studento skundas išnagrinėjamas per 15 dienų",
+        "text": "Tapę studentu, dėl savo teisių ar teisėtų interesų pažeidimo galite raštu kreiptis į aukštosios mokyklos vadovą: jis arba jo įgalioti asmenys privalo per 15 kalendorinių dienų prašymą ar skundą išnagrinėti ir atsakyti raštu. Aukštojoje mokykloje taip pat veikia ginčų nagrinėjimo komisija, sprendžianti studentų ir administracijos ginčus.",
+        "source": "Mokslo ir studijų įstatymas, 62 str. 7 ir 8 d."
+      },
+      {
+        "id": "your-data",
+        "title": "Jūsų duomenys priėmimo sistemoje",
+        "text": "Paprašius LAMA BPO arba aukštoji mokykla turi nedelsdama suteikti tikslią informaciją, kokie jūsų asmens duomenys ir kokiais tikslais tvarkomi. Paprašius duomenis panaikinti, jie turi būti panaikinti, jei jų saugoti nereikalauja tvarkymo tikslas ar galiojantys teisės aktai.",
+        "source": "LAMA BPO 2026 m. bendrojo priėmimo tvarkos aprašas, 96 ir 97 p."
+      },
+      {
+        "id": "education-abroad",
+        "title": "Jei išsilavinimą įgijote užsienyje",
+        "text": "Įgiję išsilavinimą užsienio šalies institucijoje arba pagal tarptautinės organizacijos programą, turite turėti jo akademinio pripažinimo Lietuvoje dokumentą; pripažinimą atlieka Studijų kokybės vertinimo centras arba tokią teisę turinti aukštoji mokykla. Nuo 2019 m. Latvijoje ir Estijoje įgyti vidurinio išsilavinimo dokumentai pripažįstami automatiškai. Jei studijos vyks lietuvių kalba, o lietuvių kalbos nesimokėte, reikia išlaikyti lietuvių kalbos įskaitą. Užsieniečiai, neturintys teisės į valstybės finansuojamas vietas, dėl priėmimo kreipiasi tiesiogiai į aukštąją mokyklą.",
+        "source": "LAMA BPO 2026 m. bendrojo priėmimo tvarkos aprašas, 24, 25 ir 37 p."
+      }
+    ],
+    "sources": [
+      {
+        "label": "Lietuvos Respublikos mokslo ir studijų įstatymas (Nr. XI-242), suvestinė redakcija",
+        "url": "https://e-seimas.lrs.lt/portal/legalAct/lt/TAD/TAIS.343430/asr"
+      },
+      {
+        "label": "LAMA BPO: Bendrojo priėmimo į Lietuvos aukštųjų mokyklų trumposios pakopos, pirmosios pakopos, vientisąsias ir profesines studijas 2026 metų tvarkos aprašas",
+        "url": "https://lamabpo.lt/wp-content/uploads/2026/04/Bendrojo-priemimo-i-Lietuvos-aukstuju-mokyklu-trumposios-pakopos-pirmosios-pakopos-vientisasias-ir-profesines-studijas-2026-metu-tvarkos-aprasas.pdf"
+      }
+    ]
   },
   "glossary": {
     "title": "Priėmimo žodynėlis",
-    "intro": "",
+    "intro": "Žodžiai, kuriuos sutiksite priėmimo taisyklėse ir šioje svetainėje. Apibrėžtys paimtos iš Mokslo ir studijų įstatymo ir LAMA BPO bendrojo priėmimo tvarkos; prie kiekvienos nurodytas šaltinis. Skaičiai su 2026 m. nuoroda — iš 2026 m. priėmimo tvarkos; 2027 m. tvarka dar nepaskelbta.",
     "sourceLabel": "Šaltinis",
     "rightsLink": "Jūsų teisės stojant",
-    "items": []
+    "items": [
+      {
+        "id": "general-admission",
+        "term": "Bendrasis priėmimas",
+        "definition": "Centralizuotas priėmimas į Lietuvos universitetų ir kolegijų trumposios pakopos, pirmosios pakopos ir vientisąsias studijas. Vykdomas per tam skirtą valstybės informacinę sistemą; organizuoja LAMA BPO.",
+        "source": "Mokslo ir studijų įstatymas, 59 str. 7 d.; LAMA BPO 2026 m. bendrojo priėmimo tvarkos aprašas, 2 ir 4 p."
+      },
+      {
+        "id": "lama-bpo",
+        "term": "LAMA BPO",
+        "definition": "Lietuvos aukštųjų mokyklų asociacija bendrajam priėmimui organizuoti. Ji organizuoja ir vykdo priėmimą, tvarko stojančiųjų duomenis, sudaro konkursines eiles ir skelbia kvietimus studijuoti.",
+        "source": "LAMA BPO 2026 m. bendrojo priėmimo tvarkos aprašas, 2 p."
+      },
+      {
+        "id": "bpis",
+        "term": "BPIS (Bendrojo priėmimo informacinė sistema)",
+        "definition": "Sistema, kurioje stojantysis registruojasi, teikia prašymą priimti studijuoti, mato savo duomenis, konkursinį balą ir kvietimą studijuoti. Prisijungiama per lamabpo.lt.",
+        "source": "LAMA BPO 2026 m. bendrojo priėmimo tvarkos aprašas, 8 ir 21 p."
+      },
+      {
+        "id": "application",
+        "term": "Prašymas priimti studijuoti",
+        "definition": "Duomenų visuma BPIS: stojančiojo asmens ir kontaktiniai duomenys, išsilavinimo ir kitų pasiekimų duomenys bei pasirinkti pageidavimai. Pageidavimus galima keisti iki prašymų teikimo pabaigos.",
+        "source": "LAMA BPO 2026 m. bendrojo priėmimo tvarkos aprašas, 23 p."
+      },
+      {
+        "id": "preference",
+        "term": "Pageidavimas",
+        "definition": "Konkrečios aukštosios mokyklos studijų programa, pasirinkta kartu su finansavimo pobūdžiu: valstybės finansuojama vieta, valstybės nefinansuojama vieta su studijų stipendija arba valstybės nefinansuojama vieta. 2026 m. pagrindiniame priėmime buvo galima nurodyti iki 9 pageidavimų, papildomame — iki 6. Pageidavimai išdėstomi nuo labiausiai iki mažiausiai norimo.",
+        "source": "LAMA BPO 2026 m. bendrojo priėmimo tvarkos aprašas, 26 p."
+      },
+      {
+        "id": "state-exam",
+        "term": "Valstybinis brandos egzaminas (VBE)",
+        "definition": "Egzaminas, laikomas baigiant vidurinę mokyklą. Stojant į pirmosios pakopos ir vientisąsias studijas reikia būti išlaikius ne mažiau kaip tris: lietuvių kalbos ir literatūros, matematikos ir vieną pasirinktą. Stojant į menų studijų krypčių grupę matematikos egzamino išlaikyti nebūtina.",
+        "source": "Mokslo ir studijų įstatymas, 59 str. 1 d."
+      },
+      {
+        "id": "minimum-average",
+        "term": "Trijų VBE vidurkio reikalavimas",
+        "definition": "Trijų privalomų valstybinių brandos egzaminų įvertinimų vidurkis turi siekti nustatytą lygį: pagrindinį — stojant į universitetines studijas, patenkinamą — į kolegines. 2026 m. priėmime 2025 m. ir vėlesnių metų abiturientams tai buvo nuo 50 balų (universitetinės studijos) ir nuo 41 balo (koleginės studijos).",
+        "source": "Mokslo ir studijų įstatymas, 59 str. 1 d.; LAMA BPO 2026 m. bendrojo priėmimo tvarkos aprašas, 29 p."
+      },
+      {
+        "id": "competition-score",
+        "term": "Konkursinis balas",
+        "definition": "Balas, pagal kurį stojantieji rikiuojami konkurse. Jis skaičiuojamas iš brandos egzaminų, mokymosi ir kitų specialiųjų gebėjimų įvertinimo rezultatų. Konkursinio balo sudarymo principus aukštosios mokyklos skelbia kiekvienais metais iki gruodžio 1 d.",
+        "source": "Mokslo ir studijų įstatymas, 77 str. 1 d., 59 str. 4 d."
+      },
+      {
+        "id": "extra-points",
+        "term": "Papildomi balai",
+        "definition": "Balai, pridedami prie konkursinio balo už papildomus pasiekimus, pavyzdžiui, tarptautinių ir šalies olimpiadų bei konkursų prizines vietas. 2026 m. bendra papildomų balų suma negalėjo viršyti 2,5.",
+        "source": "LAMA BPO 2026 m. bendrojo priėmimo tvarkos aprašas, 28 ir 55 p."
+      },
+      {
+        "id": "minimum-score",
+        "term": "Mažiausias stojamasis konkursinis balas",
+        "definition": "Žemiausias konkursinis balas, su kuriuo galima pretenduoti į studijas konkrečioje aukštojoje mokykloje. Jį kiekviena aukštoji mokykla nustato pati ir skelbia ne vėliau kaip iki birželio 1 d.; skirtingose mokyklose jis gali būti skirtingas.",
+        "source": "Mokslo ir studijų įstatymas, 59 str. 4 d.; LAMA BPO 2026 m. bendrojo priėmimo tvarkos aprašas, 54 p."
+      },
+      {
+        "id": "competition-queue",
+        "term": "Konkursinė eilė (pirmoji ir antroji)",
+        "definition": "Stojančiųjų į valstybės finansuojamas vietas ir pretenduojančių į studijų stipendijas eilė pagal konkursinį balą. Eilės yra dvi: į pirmąją patenka visi, atitinkantys priėmimo reikalavimus; į antrąją — tie iš jų, kurie atitinka papildomą sąlygą, pavyzdžiui, yra baigę trumposios pakopos studijas arba turi įstatyme nurodytos trukmės praktinės veiklos patirtį.",
+        "source": "Mokslo ir studijų įstatymas, 77 str. 1 ir 1¹ d."
+      },
+      {
+        "id": "state-funded-place",
+        "term": "Valstybės finansuojama studijų vieta",
+        "definition": "Studijų vieta, kurioje studijų kainą apmoka valstybė. Tokioje vietoje studijuojantis asmuo valstybinei aukštajai mokyklai neturi mokėti jokių tiesiogiai su studijų programos įgyvendinimu susijusių įmokų, išskyrus įstatyme nurodytus atvejus.",
+        "source": "Mokslo ir studijų įstatymas, 77 str. 1 d., 83 str. 5 d."
+      },
+      {
+        "id": "non-funded-place",
+        "term": "Valstybės nefinansuojama studijų vieta",
+        "definition": "Studijų vieta, kurioje už studijas moka pats studentas. Studijų kainą nustato aukštoji mokykla ir nurodo ją savo priėmimo taisyklėse.",
+        "source": "Mokslo ir studijų įstatymas, 83 str. 1 d.; LAMA BPO 2026 m. bendrojo priėmimo tvarkos aprašas, 6 p."
+      },
+      {
+        "id": "study-stipend",
+        "term": "Studijų stipendija",
+        "definition": "Stipendija, skiriama aukščiausius konkursinius balus surinkusiems asmenims, priimtiems į valstybės nefinansuojamas vietas. Ji yra norminės studijų kainos dydžio (arba studijų kainos dydžio, jei ši mažesnė) ir skiriama studijų laikotarpiui iš valstybės biudžeto lėšų.",
+        "source": "Mokslo ir studijų įstatymas, 82 str. 10 d."
+      },
+      {
+        "id": "normative-price",
+        "term": "Norminė studijų kaina",
+        "definition": "Vyriausybės nustatyta tvarka apskaičiuojama studijų krypties arba studijų programų grupės studijų kaina. Kiekvienais metais iki sausio 31 d. ją tvirtina švietimo, mokslo ir sporto ministras. Jei aukštosios mokyklos nustatyta kaina didesnė, valstybė apmoka tik norminę kainą.",
+        "source": "Mokslo ir studijų įstatymas, 83 str. 4 d."
+      },
+      {
+        "id": "invitation",
+        "term": "Kvietimas studijuoti",
+        "definition": "Konkursą laimėjusiam stojančiajam pateikiamas vienas kvietimas užimti konkrečią studijų vietą; nelaimėjusiam — neigiamas atsakymas. Pakviestasis per kvietime nurodytą laiką turi sudaryti studijų sutartį, kitaip kvietimas anuliuojamas.",
+        "source": "LAMA BPO 2026 m. bendrojo priėmimo tvarkos aprašas, 71 ir 79 p."
+      },
+      {
+        "id": "study-contract",
+        "term": "Studijų sutartis",
+        "definition": "Sutartis, kuria įforminami studento ir aukštosios mokyklos santykiai. Standartines jos sąlygas nustato ministras. Sudarius sutartį laikoma, kad stojantysis priimtas į aukštąją mokyklą.",
+        "source": "Mokslo ir studijų įstatymas, 61 str. 2 d.; LAMA BPO 2026 m. bendrojo priėmimo tvarkos aprašas, 70 p."
+      },
+      {
+        "id": "main-additional",
+        "term": "Pagrindinis ir papildomas priėmimas",
+        "definition": "Bendrasis priėmimas vyksta etapais. Po pagrindinio priėmimo į studijų vietas, kurios liko neužimtos, skelbiamas papildomas priėmimas; 2026 m. jis vyko dviem etapais.",
+        "source": "LAMA BPO 2026 m. bendrojo priėmimo tvarkos aprašas, 80 ir 82 p."
+      },
+      {
+        "id": "direct-admission",
+        "term": "Tiesioginis priėmimas",
+        "definition": "Priėmimas į valstybės nefinansuojamas studijų vietas, kurį aukštoji mokykla organizuoja pati, ne per bendrojo priėmimo konkursą. Tiesiogiai priimtų asmenų duomenis aukštoji mokykla įkelia į BPIS.",
+        "source": "LAMA BPO 2026 m. bendrojo priėmimo tvarkos aprašas, 86 p."
+      },
+      {
+        "id": "cycles",
+        "term": "Studijų pakopos",
+        "definition": "Pakopinės studijos būna trumposios pakopos, pirmosios pakopos (jas baigus suteikiamas profesinio bakalauro arba bakalauro laipsnis), antrosios pakopos (magistro laipsnis) ir trečiosios pakopos (daktaro laipsnis).",
+        "source": "Mokslo ir studijų įstatymas, 52 str. 2, 4 ir 5 d."
+      },
+      {
+        "id": "integrated",
+        "term": "Vientisosios studijos",
+        "definition": "Studijos, apimančios pirmąją ir antrąją pakopas: baigus iš karto suteikiamas magistro laipsnis. Programos apimtis — 300 arba 360 studijų kreditų. Į jas stojama baigus vidurinę mokyklą.",
+        "source": "Mokslo ir studijų įstatymas, 52 str. 7 d., 53 str. 7 d., 59 str. 1 d."
+      },
+      {
+        "id": "university-college",
+        "term": "Universitetinės ir koleginės studijos",
+        "definition": "Universitete teikiamas aukštasis universitetinis išsilavinimas; baigus pirmosios pakopos universitetines studijas suteikiamas bakalauro laipsnis. Kolegijoje teikiamas aukštasis koleginis išsilavinimas, grindžiamas taikomaisiais tyrimais ir profesine praktika; baigus suteikiamas profesinio bakalauro laipsnis.",
+        "source": "Mokslo ir studijų įstatymas, 10 str. 4 d., 11 str. 1 d., 52 str. 4 d."
+      },
+      {
+        "id": "study-mode",
+        "term": "Nuolatinė ir ištęstinė studijų forma",
+        "definition": "Nuolatinės formos studijų įprastinė apimtis — 60 kreditų per metus (ne mažiau kaip 45). Ištęstinės formos studijų metinė apimtis gali būti mažesnė, bet jų trukmė negali būti daugiau kaip pusantro karto ilgesnė. Baigus skirtingų formų studijas įgytas išsilavinimas yra lygiavertis.",
+        "source": "Mokslo ir studijų įstatymas, 53 str. 3 ir 4 d."
+      },
+      {
+        "id": "credit",
+        "term": "Studijų kreditas",
+        "definition": "Studijų apimties vienetas, kuriuo skaičiuojamas vidutinis studijuojančiojo darbo krūvis, reikalingas studijų rezultatams pasiekti. Pirmosios pakopos programos apimtis gali būti 180, 210 arba 240 kreditų.",
+        "source": "Mokslo ir studijų įstatymas, 4 str. 23 d., 53 str. 6 d."
+      },
+      {
+        "id": "study-field",
+        "term": "Studijų kryptis",
+        "definition": "Akademinis, profesinis ir tyrimų laukas, kurį vienija bendra samprata, studijų rezultatai ir jų pasiekimo būdai. Kryptys jungiamos į krypčių grupes; pagal jas skirstomos valstybės finansuojamos vietos ir nustatomi konkursiniai dalykai.",
+        "source": "Mokslo ir studijų įstatymas, 4 str. 24 d., 59 str. 2 d., 77 str. 3 d."
+      }
+    ]
   },
   "system": {
     "notFound": {
@@ -503,10 +760,135 @@
   },
   "privacy": {
     "title": "Privatumo politika",
-    "intro": "",
-    "updated": "",
+    "intro": "Kaip ši svetainė tvarko asmens duomenis: ką saugome, ko nesaugome ir kokios yra jūsų teisės.",
+    "updated": "Redakcija: 2026 m. spalio 8 d.",
     "authorityLabel": "Valstybinė duomenų apsaugos inspekcija (vdai.lrv.lt)",
     "authorityUrl": "https://vdai.lrv.lt",
-    "sections": []
+    "sections": [
+      {
+        "id": "summary",
+        "title": "Trumpai",
+        "body": [
+          "- Svetainėje nėra naudotojų paskyrų ir nereikia registruotis.",
+          "- Egzaminų rezultatai, kuriuos įvedate skaičiuoklėje arba skiltyje „Kur galiu stoti“, skaičiuojami jūsų naršyklėje. Jie nesiunčiami į mūsų serverį ir niekur nesaugomi.",
+          "- Nenaudojame sekimo slapukų ir nerodome reklamos.",
+          "- Jūsų sąrašas (žvaigždute pažymėtos programos) lieka tik jūsų įrenginyje."
+        ]
+      },
+      {
+        "id": "controller",
+        "title": "Kas atsakingas",
+        "body": [
+          "Duomenų valdytojas yra {controller}. Klausimais dėl asmens duomenų rašykite: {email}."
+        ]
+      },
+      {
+        "id": "visit",
+        "title": "Lankymasis svetainėje",
+        "body": [
+          "Kai atidarote puslapį, mūsų prieglobos paslaugų teikėjas automatiškai užfiksuoja techninius duomenis: jūsų IP adresą, laiką, prašomą adresą ir naršyklės tipą. Tai daroma tam, kad svetainė veiktų ir būtų saugi. Šių duomenų nenaudojame asmeniui nustatyti.",
+          "Teisinis pagrindas: mūsų teisėtas interesas užtikrinti svetainės saugumą ir veikimą (Bendrojo duomenų apsaugos reglamento 6 straipsnio 1 dalies f punktas). Saugojimo laikotarpį nustato paslaugų teikėjas.",
+          "Pirmą kartą apsilankius kalbą (latvių, lietuvių arba anglų) parenkame pagal jūsų naršyklės kalbos nustatymą; tai nesaugoma."
+        ]
+      },
+      {
+        "id": "survey",
+        "title": "Anketa ir skaičiuoklės",
+        "body": [
+          "- Egzaminų rezultatai skaičiuoklėje ir skiltyje „Kur galiu stoti“ skaičiuojami tik jūsų naršyklėje. Jie nesiunčiami į serverį, nesaugomi ir neįrašomi į puslapio adresą.",
+          "- Anketoje pasirinkti filtrai (dominanti sritis, studijų lygmuo, miestas, studijų kalba ir forma) įrašomi į puslapio adresą, kad būtų galima parodyti programų sąrašą. Kartu su apsilankymu jie patenka į techninius žurnalus (žr. aukščiau), tačiau jų nesiejame su asmeniu. Anketos atsakymai apie egzaminus į serverį nesiunčiami."
+        ]
+      },
+      {
+        "id": "favorites",
+        "title": "Mano sąrašas",
+        "body": [
+          "Programų, kurias pažymite žvaigždute, sąrašas saugomas tik jūsų naršyklėje (localStorage) ir mums nesiunčiamas. Jį galite ištrinti išvalę svetainės duomenis naršyklės nustatymuose. Šis saugojimas reikalingas funkcijai, kuria naudotis pasirenkate patys."
+        ]
+      },
+      {
+        "id": "cookies",
+        "title": "Slapukai",
+        "body": [
+          "Slapukų sekimui nenaudojame. Svetainė jūsų naršyklėje saugo tik programų sąrašą (žr. aukščiau)."
+        ]
+      },
+      {
+        "id": "analytics",
+        "title": "Naudojimo statistika",
+        "body": [
+          "Kad suprastume, kurie puslapiai skaitomi ir kaip greitai jie įkeliami, naudojame „PostHog“ analitiką, kurios serveriai yra Europos Sąjungoje. Ji nustatyta taip:",
+          "- be slapukų ir be naršyklėje saugomų duomenų;",
+          "- be asmenų identifikavimo, be seansų įrašų ir be įvestų laukų turinio — egzaminų rezultatai į analitiką nepatenka niekada;",
+          "- IP adresai nesaugomi.",
+          "Teisinis pagrindas: mūsų teisėtas interesas tobulinti svetainę (6 straipsnio 1 dalies f punktas). Galite nesutikti — rašykite {email}."
+        ]
+      },
+      {
+        "id": "email",
+        "title": "Priminimai el. paštu",
+        "body": [
+          "Jei patys paprašote priminimo (pavyzdžiui, apie priėmimo pradžią arba pokyčius jūsų programų sąraše), saugome jūsų el. pašto adresą ir tai, apie ką norite būti informuoti. Naudojame juos tik tam, ko prašėte.",
+          "Teisinis pagrindas: jūsų sutikimas (6 straipsnio 1 dalies a punktas). Sutikimą galite atšaukti bet kada — nuoroda kiekviename laiške arba parašę {email}; atšaukimas neturi įtakos jau išsiųstiems laiškams.",
+          "Laiškus siunčia paslaugų teikėjas „Resend“. Adresą ištriname jums atšaukus sutikimą ir ne vėliau kaip po 12 mėnesių nuo paskutinio išsiųsto laiško."
+        ]
+      },
+      {
+        "id": "minors",
+        "title": "Moksleiviai ir jaunimas",
+        "body": [
+          "Svetainė daugiausia skirta moksleiviams ir jaunimui. Lietuvoje vaikas pats gali duoti sutikimą informacinės visuomenės paslaugai nuo 14 metų; jaunesniam vaikui reikia vieno iš tėvų arba teisėto globėjo sutikimo (Asmens duomenų teisinės apsaugos įstatymo 6 straipsnis; Bendrojo duomenų apsaugos reglamento 8 straipsnis).",
+          "Egzaminų rezultatų, kuriuos įvedate svetainėje, nesaugome ir nesiunčiame."
+        ]
+      },
+      {
+        "id": "recipients",
+        "title": "Kam perduodame duomenis",
+        "body": [
+          "Duomenų neparduodame ir nerodome reklamos. Duomenis tvarko tik mūsų paslaugų teikėjai (duomenų tvarkytojai) ir tik mūsų pavedimu:",
+          "- prieglobos paslaugų teikėjas (svetainės veikimas);",
+          "- „Supabase“ (duomenų bazė, serveriai Europos Sąjungoje; el. pašto adresai, jei juos pateikiate);",
+          "- „PostHog“ (naudojimo statistika, serveriai Europos Sąjungoje);",
+          "- „Resend“ (el. laiškų siuntimas).",
+          "Jei paslaugų teikėjas perduoda duomenis už Europos ekonominės erdvės ribų, jis tai daro taikydamas Europos Komisijos patvirtintas apsaugos priemones, pavyzdžiui, standartines sutarčių sąlygas."
+        ]
+      },
+      {
+        "id": "rights",
+        "title": "Jūsų teisės",
+        "body": [
+          "Turite teisę:",
+          "- gauti informaciją apie savo duomenis ir susipažinti su jais;",
+          "- prašyti juos ištaisyti arba ištrinti;",
+          "- apriboti tvarkymą ir nesutikti su tvarkymu, grindžiamu teisėtais interesais;",
+          "- gauti savo duomenis perkeliamu formatu;",
+          "- bet kada atšaukti sutikimą.",
+          "Rašykite {email} — atsakysime per vieną mėnesį. Jei manote, kad jūsų teisės pažeistos, galite pateikti skundą Valstybinei duomenų apsaugos inspekcijai (vdai.lrv.lt) arba duomenų valdytojo šalies priežiūros institucijai — Latvijos duomenų valstybinei inspekcijai (Datu valsts inspekcija, Elijas iela 17, Ryga, LV-1050)."
+        ]
+      },
+      {
+        "id": "contact",
+        "title": "Jei mums rašote",
+        "body": [
+          "Programos puslapyje ir skaičiuoklėje yra nuoroda pranešti apie klaidą. Ji atidaro jūsų pačių el. pašto programą — laišką išsiunčiate patys; svetainė jūsų vardu nieko nesiunčia.",
+          "Jei mums parašote, gauname jūsų el. pašto adresą ir laiško turinį. Naudojame juos tik informacijai patikrinti ir ištaisyti bei jums atsakyti. Prašome nenurodyti egzaminų rezultatų — mums jų nereikia.",
+          "Teisinis pagrindas: mūsų teisėtas interesas, kad informacija svetainėje būtų teisinga (6 straipsnio 1 dalies f punktas). Susirašinėjimą ištriname ne vėliau kaip po 12 mėnesių nuo paskutinio laiško."
+        ]
+      },
+      {
+        "id": "decisions",
+        "title": "Automatizuoti sprendimai",
+        "body": [
+          "Nepriimame automatizuotų sprendimų, kurie turėtų jums poveikį, ir neprofiliuojame. Skaičiavimai svetainėje yra orientaciniai; galutinį sprendimą dėl priėmimo priima aukštoji mokykla."
+        ]
+      },
+      {
+        "id": "changes",
+        "title": "Pakeitimai",
+        "body": [
+          "Jei politika keisis, atnaujinsime šį puslapį ir redakcijos datą."
+        ]
+      }
+    ]
   }
 }
