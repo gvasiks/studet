@@ -158,6 +158,9 @@ class Card:
     years: dict[str, float] = field(default_factory=dict)  # 'full_time' / 'part_time' -> лет
     description: str | None = None
     institution_link: str | None = None
+    # Государственный код программы («6011GX004»): по нему программа
+    # находится в открытых данных о приёме (data.gov.lt, набор 2914).
+    state_code: str | None = None
 
 
 def _after(lines: list[str], label: str) -> str | None:
@@ -169,8 +172,13 @@ def _after(lines: list[str], label: str) -> str | None:
     return None
 
 
+STATE_CODE = re.compile(r"[0-9A-Z]{9}")
+
+
 def parse_card(lines: list[str]) -> Card:
     card = Card()
+    code = _after(lines, "Valstybinis kodas") or ""
+    card.state_code = code if STATE_CODE.fullmatch(code) else None
     kind = _after(lines, "Studijų rūšis") or ""
     # Цельные программы реестр отмечает в поле «ступень» ("Vientisosios
     # studijos"), а не в поле «тип программы» — там у них то же "Pakopinės".
@@ -528,6 +536,9 @@ def _selftest() -> None:
     ])
     assert without_scheme.website == "http://www.vilniustech.lt", without_scheme
     assert parse_card([]).level is None
+    assert parse_card(["Valstybinis kodas", "6011GX004"]).state_code == "6011GX004"
+    assert parse_card(["Valstybinis kodas", "Studijų rūšis"]).state_code is None, "следующая подпись — не код"
+    assert parse_card([]).state_code is None
 
     institution = parse_institution([
         "Pavadinimas anglų kalba", "Kaunas University of Technology", "Priklausomybė", "Valstybinė",

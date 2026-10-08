@@ -43,9 +43,15 @@ ADMISSION_YEAR = 2026
 
 
 def build_payload(
-    rows: dict[tuple[str, str], list[dict[str, str]]], formulas: dict[str, list[Component]]
+    rows: dict[tuple[str, str], list[dict[str, str]]],
+    formulas: dict[str, list[Component]],
+    state_codes: dict[str, str | None] | None = None,
 ) -> dict:
-    """Чистая функция: из разобранных файлов — то, что уйдёт в базу."""
+    """Чистая функция: из разобранных файлов — то, что уйдёт в базу.
+
+    state_codes — государственный код программы по адресу её карточки в
+    реестре (поле j строки приёма)."""
+    state_codes = state_codes or {}
     units = []
     for (university_slug, programme_slug), entries in rows.items():
         for entry in entries:
@@ -58,6 +64,7 @@ def build_payload(
                     "study_form": entry.get("o") or None,
                     "schedule": entry.get("n") or None,
                     "note": entry.get("y") or None,
+                    "state_code": state_codes.get(entry.get("j", "")),
                 }
             )
     used = {unit["formula_number"] for unit in units}
@@ -100,7 +107,8 @@ def summary(payload: dict) -> str:
     lines = [
         f"год приёма: {payload['admission_year']}",
         f"формул в файле: {len(payload['formulas'])} | используются строками приёма: {len(used)}",
-        f"строк приёма: {len(units)} | программ каталога: {len(by_programme)}",
+        f"строк приёма: {len(units)} | программ каталога: {len(by_programme)}"
+        f" | строк с государственным кодом: {sum(1 for unit in units if unit.get('state_code'))}",
         f"программ, у строк которых разные формулы (расчёт для них не показывается): {len(mixed)}",
     ]
     lines += [f"   {university}/{programme}: формулы {sorted(by_programme[(university, programme)])}" for university, programme in mixed[:10]]
@@ -173,6 +181,8 @@ def apply(client, payload: dict, execute) -> None:  # type: ignore[no-untyped-de
                 "study_form": unit["study_form"],
                 "schedule": unit["schedule"],
                 "note": unit["note"],
+                # .get: файл, собранный до появления кода, его не содержит
+                "state_code": unit.get("state_code"),
                 "source_url": PROGRAMS_URL,
                 "extracted_at": now,
             }
@@ -206,8 +216,8 @@ def apply(client, payload: dict, execute) -> None:  # type: ignore[no-untyped-de
 def _selftest() -> None:
     rows = {
         ("ktu", "aviacijos-inzinerija-lt"): [
-            {"e": "177", "p": "53", "o": "Nuolatinė (NL)", "n": "Dieninė", "y": "LIETUVIŲ K."},
-            {"e": "179", "p": "53", "o": "Nuolatinė (NL)", "n": "Sesijinė", "y": ""},
+            {"e": "177", "p": "53", "o": "Nuolatinė (NL)", "n": "Dieninė", "y": "LIETUVIŲ K.", "j": "card-1"},
+            {"e": "179", "p": "53", "o": "Nuolatinė (NL)", "n": "Sesijinė", "y": "", "j": "card-1"},
         ],
         ("vu", "lietuviu-filologija"): [
             {"e": "368", "p": "3", "o": "Nuolatinė (NL)", "n": "Dieninė", "y": "a"},
@@ -220,13 +230,15 @@ def _selftest() -> None:
         "4": [Component(1, 1.0, "one_of", ("lithuanian",))],
         "99": [Component(1, 1.0, "one_of", ("history",))],
     }
-    payload = build_payload(rows, formulas)
+    payload = build_payload(rows, formulas, {"card-1": "6121EX001"})
     assert payload["admission_year"] == ADMISSION_YEAR
     assert len(payload["units"]) == 4 and len(payload["formulas"]) == 4
     assert payload["units"][1] == {
         "lamabpo_id": "179", "university_slug": "ktu", "programme_slug": "aviacijos-inzinerija-lt",
         "formula_number": "53", "study_form": "Nuolatinė (NL)", "schedule": "Sesijinė", "note": None,
+        "state_code": "6121EX001",
     }, payload["units"][1]
+    assert payload["units"][2]["state_code"] is None, "карточки нет — кода нет"
     assert payload["formulas"]["53"][1] == {"position": 2, "weight": 0.6, "mode": "one_of", "subjects": ["physics", "chemistry"]}
     text = summary(payload)
     assert "программ, у строк которых разные формулы (расчёт для них не показывается): 1" in text, text
@@ -286,7 +298,8 @@ def main() -> None:
             page = browser.new_page()
             formulas = parse_formulas(page.goto(COMPETITIONS_URL, timeout=45000).text())
             browser.close()
-        payload = build_payload(catalog_rows(entries, cards), formulas)
+        state_codes = {url: card.state_code for url, card in cards.items()}
+        payload = build_payload(catalog_rows(entries, cards), formulas, state_codes)
         print(polite.report_and_reset())
         save_path = option("--save-payload")
         if save_path:
