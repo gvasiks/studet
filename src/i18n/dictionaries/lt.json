@@ -408,6 +408,19 @@
     "caveat": "Tai praėjusio priėmimo faktai, o ne jūsų galimybių vertinimas. Šiame duomenų rinkinyje nėra nei vietų skaičiaus, nei konkursinių balų.",
     "source": "Suskaičiuota automatiškai iš LAMA BPO atvirų duomenų ({date})."
   },
+  "ltOutcomes": {
+    "scope": "Visos Lietuvos {level} absolventai, {from}–{to} m. laidos, praėjus 12 mėnesių po baigimo. Studijų kryptis:",
+    "levels": {
+      "bachelor": "universitetų pirmosios pakopos",
+      "college": "kolegijų",
+      "integrated": "vientisųjų studijų"
+    },
+    "employed": "Dirbo (pagal sutartį arba savarankiškai): {percent} %",
+    "qualified": "Dirbo darbą, kuriam reikia aukštojo mokslo kvalifikacijos: {percent} %",
+    "income": "Vidutinės pajamos: {percent} % visų šios pakopos absolventų vidurkio (šaltinyje vidurkis — {average} EUR)",
+    "caveat": "Tai visos šalies šios krypties absolventų, netęsusių studijų, duomenys (medicinos — visų absolventų), o ne konkrečios programos ar aukštosios mokyklos. Dalys skaičiuojamos nuo tų, kurie turėjo dirbti; absolventų skaičius šaltinyje nenurodytas. Vertinkite tai kaip orientyrą, ne pažadą.",
+    "source": "Šaltinis: Švietimo, mokslo ir sporto ministerijos informacija prie Vyriausybės nutarimo projekto, NŠA duomenys ({date}). Surinkta automatiškai."
+  },
   "favorites": {
     "navLink": "Mano sąrašas",
     "add": "Įtraukti į mano sąrašą",

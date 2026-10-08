@@ -408,6 +408,19 @@
     "caveat": "These are facts about a past admission, not an estimate of your chances. The dataset contains neither the number of places nor competition scores.",
     "source": "Counted automatically from LAMA BPO open data ({date})."
   },
+  "ltOutcomes": {
+    "scope": "Graduates of {level} across Lithuania, classes of {from}–{to}, 12 months after graduation. Study field:",
+    "levels": {
+      "bachelor": "university first-cycle studies",
+      "college": "college studies",
+      "integrated": "integrated studies"
+    },
+    "employed": "Working (employed or self-employed): {percent}%",
+    "qualified": "Working in a job that requires a higher-education qualification: {percent}%",
+    "income": "Average income: {percent}% of the average for all graduates of this level (the source gives the average as {average} EUR)",
+    "caveat": "These figures cover graduates of this field across the whole country who did not continue studying (for medicine, all graduates) — not this particular programme or institution. Shares are counted from those expected to work; the source does not give the number of graduates. Treat it as a reference point, not a promise.",
+    "source": "Source: information from the Ministry of Education, Science and Sport accompanying a draft government resolution, NŠA data ({date}). Extracted automatically."
+  },
   "favorites": {
     "navLink": "My list",
     "add": "Add to my list",

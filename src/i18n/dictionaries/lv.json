@@ -408,6 +408,19 @@
     "caveat": "Tie ir fakti par iepriekšējo uzņemšanu, nevis tavu izredžu vērtējums. Datu kopā nav ne vietu skaita, ne konkursa punktu.",
     "source": "Saskaitīts automātiski no LAMA BPO atvērtajiem datiem ({date})."
   },
+  "ltOutcomes": {
+    "scope": "Visas Lietuvas {level} absolventi, {from}.–{to}. gada izlaidumi, 12 mēnešus pēc absolvēšanas. Studiju virziens:",
+    "levels": {
+      "bachelor": "universitāšu pirmā cikla studiju",
+      "college": "koledžu studiju",
+      "integrated": "integrēto studiju"
+    },
+    "employed": "Strādāja (algotu darbu vai kā pašnodarbinātie): {percent} %",
+    "qualified": "Strādāja darbu, kam nepieciešama augstākās izglītības kvalifikācija: {percent} %",
+    "income": "Vidējie ienākumi: {percent} % no visu šī līmeņa absolventu vidējā (avotā vidējais — {average} EUR)",
+    "caveat": "Tie ir visas valsts šī virziena absolventu dati — to, kuri neturpināja studijas (medicīnā — visu absolventu), nevis konkrētās programmas vai augstskolas. Daļas rēķinātas no tiem, kuriem bija jāstrādā; absolventu skaits avotā nav norādīts. Vērtē to kā orientieri, nevis solījumu.",
+    "source": "Avots: Lietuvas Izglītības, zinātnes un sporta ministrijas informācija pie valdības lēmuma projekta, NŠA dati ({date}). Iegūts automātiski."
+  },
   "favorites": {
     "navLink": "Mans saraksts",
     "add": "Pievienot manam sarakstam",
