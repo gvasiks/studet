@@ -54,10 +54,10 @@ Supabase идут через `db_retry.execute`: временная ошибка
 `SUPABASE_SERVICE_ROLE_KEY` — сделать самостоятельно, сервисный ключ через
 чат передавать не стоит второй раз. Плюс **переменную** (не секрет)
 `SCRAPER_CONTACT` — публичный контакт для User-Agent. Выбран 2026-10-09:
-`studypickeu@gmail.com`. В `pipeline/.env` он записан; **в переменные
-репозитория на GitHub его должен внести владелец** (Settings → Secrets and
-variables → Actions → вкладка Variables → New repository variable). Пока
-переменной нет, сборщики на GitHub ходят без контакта в подписи.
+`studypickeu@gmail.com`. Он записан в `pipeline/.env` и, со слов владельца
+(2026-10-09), в переменных репозитория на GitHub (Settings → Secrets and
+variables → Actions → вкладка Variables). Проверить просто: в журнале
+любого прогона сборщика не должно быть строки «SCRAPER_CONTACT не задан».
 
 ## Диплом и описание программы (NIID)
 
