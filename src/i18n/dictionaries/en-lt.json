@@ -286,7 +286,7 @@
   },
   "privacy": {
     "intro": "How this site handles personal data: what we keep, what we don't, and what your rights are.",
-    "updated": "Version: 8 October 2026",
+    "updated": "Version: 9 October 2026",
     "authorityLabel": "State Data Protection Inspectorate of Lithuania (vdai.lrv.lt)",
     "authorityUrl": "https://vdai.lrv.lt/en/",
     "sections": [
@@ -374,6 +374,7 @@
           "- a hosting provider (running the site);",
           "- Supabase (database with servers in the European Union; e-mail addresses, if you submit them);",
           "- PostHog (usage statistics, servers in the European Union);",
+          "- Google (e-mail: if you write to us, the correspondence is kept in a Gmail mailbox);",
           "- Resend (sending e-mail).",
           "If a provider transfers data outside the European Economic Area, it does so with safeguards approved by the European Commission, for example standard contractual clauses."
         ]

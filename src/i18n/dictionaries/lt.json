@@ -761,7 +761,7 @@
   "privacy": {
     "title": "Privatumo politika",
     "intro": "Kaip ši svetainė tvarko asmens duomenis: ką saugome, ko nesaugome ir kokios yra jūsų teisės.",
-    "updated": "Redakcija: 2026 m. spalio 8 d.",
+    "updated": "Redakcija: 2026 m. spalio 9 d.",
     "authorityLabel": "Valstybinė duomenų apsaugos inspekcija (vdai.lrv.lt)",
     "authorityUrl": "https://vdai.lrv.lt",
     "sections": [
@@ -849,6 +849,7 @@
           "- prieglobos paslaugų teikėjas (svetainės veikimas);",
           "- „Supabase“ (duomenų bazė, serveriai Europos Sąjungoje; el. pašto adresai, jei juos pateikiate);",
           "- „PostHog“ (naudojimo statistika, serveriai Europos Sąjungoje);",
+          "- „Google“ (el. paštas: jei mums rašote, susirašinėjimas saugomas „Gmail“ pašto dėžutėje);",
           "- „Resend“ (el. laiškų siuntimas).",
           "Jei paslaugų teikėjas perduoda duomenis už Europos ekonominės erdvės ribų, jis tai daro taikydamas Europos Komisijos patvirtintas apsaugos priemones, pavyzdžiui, standartines sutarčių sąlygas."
         ]

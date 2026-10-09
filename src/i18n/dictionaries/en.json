@@ -737,7 +737,7 @@
   "privacy": {
     "title": "Privacy policy",
     "intro": "How this site handles personal data: what we keep, what we don't, and what your rights are.",
-    "updated": "Version: 6 October 2026",
+    "updated": "Version: 9 October 2026",
     "authorityLabel": "Data State Inspectorate (dvi.gov.lv)",
     "authorityUrl": "https://www.dvi.gov.lv/en",
     "sections": [
@@ -825,6 +825,7 @@
           "- a hosting provider (running the site);",
           "- Supabase (database with servers in the European Union; e-mail addresses, if you submit them);",
           "- PostHog (usage statistics, servers in the European Union);",
+          "- Google (e-mail: if you write to us, the correspondence is kept in a Gmail mailbox);",
           "- Resend (sending e-mail).",
           "If a provider transfers data outside the European Economic Area, it does so with safeguards approved by the European Commission, for example standard contractual clauses."
         ]

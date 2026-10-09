@@ -301,7 +301,7 @@
   },
   "privacy": {
     "intro": "Kaip ši svetainė tvarko asmens duomenis: ką saugome, ko nesaugome ir kokios yra jūsų teisės. Šis tekstas — vertimas iš latvių kalbos; jei tekstai skiriasi, galioja tekstas latvių kalba.",
-    "updated": "Redakcija: 2026 m. spalio 6 d.",
+    "updated": "Redakcija: 2026 m. spalio 9 d.",
     "authorityLabel": "Latvijos duomenų valstybinė inspekcija (dvi.gov.lv)",
     "authorityUrl": "https://www.dvi.gov.lv/en",
     "sections": [
@@ -389,6 +389,7 @@
           "- prieglobos paslaugų teikėjas (svetainės veikimas);",
           "- „Supabase“ (duomenų bazė, serveriai Europos Sąjungoje; el. pašto adresai, jei juos pateikiate);",
           "- „PostHog“ (naudojimo statistika, serveriai Europos Sąjungoje);",
+          "- „Google“ (el. paštas: jei mums rašote, susirašinėjimas saugomas „Gmail“ pašto dėžutėje);",
           "- „Resend“ (el. laiškų siuntimas).",
           "Jei paslaugų teikėjas perduoda duomenis už Europos ekonominės erdvės ribų, jis tai daro taikydamas Europos Komisijos patvirtintas apsaugos priemones, pavyzdžiui, standartines sutarčių sąlygas."
         ]

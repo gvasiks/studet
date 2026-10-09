@@ -53,7 +53,11 @@ Supabase идут через `db_retry.execute`: временная ошибка
 репозитория (Settings → Secrets → Actions) те же `SUPABASE_URL` и
 `SUPABASE_SERVICE_ROLE_KEY` — сделать самостоятельно, сервисный ключ через
 чат передавать не стоит второй раз. Плюс **переменную** (не секрет)
-`SCRAPER_CONTACT` — публичный контакт для User-Agent.
+`SCRAPER_CONTACT` — публичный контакт для User-Agent. Выбран 2026-10-09:
+`studypickeu@gmail.com`. В `pipeline/.env` он записан; **в переменные
+репозитория на GitHub его должен внести владелец** (Settings → Secrets and
+variables → Actions → вкладка Variables → New repository variable). Пока
+переменной нет, сборщики на GitHub ходят без контакта в подписи.
 
 ## Диплом и описание программы (NIID)
 

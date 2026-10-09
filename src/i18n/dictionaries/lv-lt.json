@@ -300,7 +300,7 @@
   },
   "privacy": {
     "intro": "Kā šī vietne apstrādā personas datus: ko mēs uzglabājam, ko nē, un kādas ir tavas tiesības.",
-    "updated": "Redakcija: 2026. gada 8. oktobris",
+    "updated": "Redakcija: 2026. gada 9. oktobris",
     "authorityLabel": "Lietuvas Valsts datu aizsardzības inspekcija (vdai.lrv.lt)",
     "authorityUrl": "https://vdai.lrv.lt",
     "sections": [
@@ -388,6 +388,7 @@
           "- hostinga pakalpojuma sniedzējs (vietnes darbība);",
           "- Supabase (datubāze ar serveriem Eiropas Savienībā; e-pasta adreses, ja tu tās iesniedz);",
           "- PostHog (lietošanas statistika, serveri Eiropas Savienībā);",
+          "- Google (e-pasts: ja mums raksti, sarakste glabājas Gmail pastkastē);",
           "- Resend (e-pastu nosūtīšana).",
           "Ja pakalpojuma sniedzējs datus nodod ārpus Eiropas Ekonomikas zonas, tas notiek ar Eiropas Komisijas apstiprinātiem aizsardzības mehānismiem, piemēram, standarta līguma klauzulām."
         ]
