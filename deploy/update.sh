@@ -29,6 +29,16 @@ runuser -u studypick -- bash -c "
   export PATH='$NODE_BIN':\$PATH
   git pull --ff-only
   set -a; . '$ENV_FILE'; set +a
+  # Адрес базы и ключ проверяются до сборки: с неверным адресом сборка
+  # падает через несколько минут с малопонятным сообщением (так было при
+  # первой выкладке 2026-10-09).
+  case \"\${NEXT_PUBLIC_SUPABASE_URL:-}\" in
+    https://*) ;;
+    *) echo 'Остановлено: NEXT_PUBLIC_SUPABASE_URL в $ENV_FILE должен начинаться с https:// (без кавычек и пробелов).' >&2; exit 1 ;;
+  esac
+  if [ -z \"\${NEXT_PUBLIC_SUPABASE_ANON_KEY:-}\" ]; then
+    echo 'Остановлено: в $ENV_FILE не задан NEXT_PUBLIC_SUPABASE_ANON_KEY.' >&2; exit 1
+  fi
   npm ci
   npm run build
 "
