@@ -4,6 +4,7 @@ import { Inter } from "next/font/google";
 import { isLocale, languageOf, locales } from "@/i18n/config";
 import { getDictionary } from "@/i18n/dictionaries";
 import { SITE_URL } from "@/lib/site";
+import { Analytics } from "@/components/Analytics";
 import { Providers } from "./providers";
 import "../globals.css";
 
@@ -49,6 +50,8 @@ export default async function LocaleLayout({
     >
       <body className="min-h-full flex flex-col font-sans">
         <Providers>{children}</Providers>
+        {/* Счётчик посещений: ничего не рисует, считает только на рабочем сайте */}
+        <Analytics />
       </body>
     </html>
   );
