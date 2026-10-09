@@ -33,6 +33,7 @@ import csv
 import io
 import sys
 import time
+import urllib.error
 import urllib.request
 import urllib.robotparser
 from collections import Counter
@@ -214,13 +215,54 @@ def _selftest() -> None:
     ), skipped
     for r in rows:
         assert set(r) == {"programme_id", "funding", "applications", "first_priority", "invited", "signed"}, "в базу идут только суммы"
+
+    resource = "https://data.gov.lt/datasets/2914/versions/729/dynamic-resource/Programa/csv/download/"
+    allowed = robots_from("User-agent: *\nCrawl-delay: 5\nDisallow: /login\nDisallow: /datasets/stats\n")
+    assert allowed.can_fetch("StudyPick", resource) and allowed.crawl_delay("StudyPick") == 5
+    assert not allowed.can_fetch("StudyPick", "https://data.gov.lt/datasets/stats/x")
+    assert robots_from(None).can_fetch("StudyPick", resource), "robots.txt не получен — ограничений нет"
+    assert not robots_from("User-agent: *\nDisallow: /\n").can_fetch("StudyPick", resource), "настоящий запрет остаётся запретом"
     print("selftest: OK")
+
+
+ROBOTS_URL = "https://data.gov.lt/robots.txt"
+
+REFUSED = (
+    "data.gov.lt отказал этому компьютеру (ответ {status} на {url}). Так было на сервере GitHub "
+    "2026-10-09; с компьютера в Риге портал отвечает. Набор обновляется раз в год — запустите "
+    "загрузчик у себя: .venv\\Scripts\\python.exe src\\lt_load_admission_stats.py --apply"
+)
+
+
+def robots_from(body: str | None) -> urllib.robotparser.RobotFileParser:
+    """Правила обхода из текста robots.txt. None — файл получить не удалось
+    (ответ 4xx): по RFC 9309 это значит «ограничений нет», так же считает и
+    polite.py. Стандартный RobotFileParser.read() при 401/403 запрещает
+    ВСЁ — из-за этого отказ портала выглядел как запрет в robots.txt."""
+    parser = urllib.robotparser.RobotFileParser()
+    parser.parse((body or "").splitlines())
+    return parser
+
+
+def _read_robots(agent: str) -> urllib.robotparser.RobotFileParser:
+    try:
+        request = urllib.request.Request(ROBOTS_URL, headers={"User-Agent": agent})
+        return robots_from(urllib.request.urlopen(request, timeout=30).read().decode("utf-8", "replace"))
+    except urllib.error.HTTPError as error:
+        print(f"robots.txt портала не получен (ответ {error.code}) — считаем, что ограничений нет")
+        return robots_from(None)
 
 
 def _open(url: str, agent: str, robots: urllib.robotparser.RobotFileParser):  # type: ignore[no-untyped-def]
     if not robots.can_fetch(agent, url):
         raise RuntimeError(f"robots.txt запрещает {url}")
-    return urllib.request.urlopen(urllib.request.Request(url, headers={"User-Agent": agent}), timeout=180)
+    try:
+        return urllib.request.urlopen(urllib.request.Request(url, headers={"User-Agent": agent}), timeout=180)
+    except urllib.error.HTTPError as error:
+        if error.code in (401, 403, 429):
+            print(REFUSED.format(status=error.code, url=url))
+            sys.exit(1)
+        raise
 
 
 def _csv_rows(response) -> csv.DictReader:  # type: ignore[no-untyped-def]
@@ -242,8 +284,7 @@ def main() -> None:
 
     load_dotenv()
     agent = polite.user_agent()
-    robots = urllib.robotparser.RobotFileParser("https://data.gov.lt/robots.txt")
-    robots.read()
+    robots = _read_robots(agent)
     # Пауза между запросами к порталу — как просит его robots.txt.
     pause = float(robots.crawl_delay(agent) or 5)
 

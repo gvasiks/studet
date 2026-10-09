@@ -42,6 +42,7 @@ from __future__ import annotations
 
 import re
 import sys
+import time
 import unicodedata
 from collections import Counter, defaultdict
 from dataclasses import dataclass, field
@@ -52,6 +53,7 @@ if __name__ == "__main__":
     sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 from playwright.sync_api import Page, sync_playwright
+from playwright.sync_api import TimeoutError as PlaywrightTimeout
 
 from models import ProgrammeDraft, UniversityDraft
 
@@ -337,8 +339,32 @@ def assign_slugs(keys: list[tuple]) -> dict[tuple, str]:
 _LINES_JS = "() => document.body.innerText.split('\\n').map(line => line.trim())"
 
 
+# Паузы перед второй и третьей попыткой открыть страницу, секунды.
+GOTO_PAUSES = (15, 45)
+
+
+def _goto(page: Page, url: str, pauses: tuple[int, ...] = GOTO_PAUSES) -> None:
+    """Открыть страницу реестра; если она не ответила вовремя — подождать и
+    попробовать ещё раз.
+
+    В реестре больше шестисот карточек, обход идёт полчаса. На первом
+    прогоне с сервера GitHub (2026-10-09) одна карточка из первых трёхсот
+    не ответила за 45 секунд — и весь сбор упал, хотя остальные читались
+    нормально. Если страница не отвечает и с третьей попытки, ошибка
+    уходит наверх, как раньше: реестр действительно недоступен."""
+    for pause in (*pauses, None):
+        try:
+            page.goto(url, wait_until="domcontentloaded", timeout=45000)
+            return
+        except PlaywrightTimeout:
+            if pause is None:
+                raise
+            print(f"lt_lamabpo: страница не ответила за 45 с, повтор через {pause} с — {url}")
+            time.sleep(pause)
+
+
 def _lines(page: Page, url: str, marker: str) -> list[str]:
-    page.goto(url, wait_until="domcontentloaded", timeout=45000)
+    _goto(page, url)
     try:
         page.get_by_text(marker, exact=True).first.wait_for(timeout=15000)
     except Exception:  # noqa: BLE001 — карточка без этого поля: разбираем, что есть
@@ -349,10 +375,10 @@ def _lines(page: Page, url: str, marker: str) -> list[str]:
 def _institution(page: Page, card_url: str, name: str) -> Institution:
     """С карточки программы — на список учреждений, которые её ведут, оттуда
     на карточку учреждения. Прямого адреса по названию у реестра нет."""
-    page.goto(card_url, wait_until="domcontentloaded", timeout=45000)
+    _goto(page, card_url)
     link = page.locator("a", has_text="Institucijos, teikiančios šią programą").first
     link.wait_for(timeout=15000)
-    page.goto(link.get_attribute("href"), wait_until="domcontentloaded", timeout=45000)
+    _goto(page, link.get_attribute("href"))
     anchors = page.locator("a[href*='o=INST']")
     anchors.first.wait_for(timeout=15000)
     hrefs = {anchors.nth(i).inner_text().strip(): anchors.nth(i).get_attribute("href") for i in range(anchors.count())}
