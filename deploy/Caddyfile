@@ -1,0 +1,24 @@
+# Веб-сервер Caddy: принимает запросы из интернета, сам получает и
+# продлевает сертификат HTTPS и передаёт запросы сайту на 127.0.0.1:3000.
+# Положить в /etc/caddy/Caddyfile (deploy/README.md, шаг 6).
+#
+# Сертификат Caddy получит, только когда домен уже указывает на этот сервер.
+
+www.studypick.eu {
+	redir https://studypick.eu{uri} permanent
+}
+
+studypick.eu {
+	encode zstd gzip
+	reverse_proxy 127.0.0.1:3000
+
+	# Пароль на время закрытой выкладки. Чтобы включить: получить строку
+	# командой `caddy hash-password`, подставить её вместо ХЕШ, убрать три
+	# решётки ниже и выполнить `systemctl reload caddy`. В день запуска —
+	# вернуть решётки. (В Caddy 2.6 из Ubuntu директива пишется слитно:
+	# basicauth.)
+	#
+	# basicauth {
+	# 	studypick ХЕШ
+	# }
+}

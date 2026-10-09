@@ -1,0 +1,31 @@
+# Служба сайта: запускает его при старте сервера и поднимает после сбоя.
+# Положить в /etc/systemd/system/studypick.service (deploy/README.md, шаг 5).
+
+[Unit]
+Description=StudyPick website (Next.js)
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+# Отдельный пользователь без прав администратора: если сайт взломают,
+# до остального сервера (и до телеграм-бота) оттуда не дотянуться.
+User=studypick
+Group=studypick
+WorkingDirectory=/srv/studypick/app
+EnvironmentFile=/etc/studypick/env
+Environment=NODE_ENV=production
+# Свой Node.js 24 в /opt/node24: системный Node.js на сервере не трогаем,
+# им пользуется бот. Слушаем только 127.0.0.1 — наружу сайт отдаёт Caddy.
+ExecStart=/opt/node24/bin/node /srv/studypick/app/node_modules/next/dist/bin/next start -H 127.0.0.1 -p 3000
+Restart=on-failure
+RestartSec=5
+
+# Ограничения: службе не нужны новые права, чужие домашние папки и запись
+# в системные каталоги.
+NoNewPrivileges=true
+ProtectSystem=full
+ProtectHome=true
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target
