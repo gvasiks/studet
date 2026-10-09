@@ -46,7 +46,7 @@
 | Конвейер данных | Python: Playwright + pydantic | задачи по расписанию в GitHub Actions |
 | Платежи | Stripe Payment Links | только с выпуска 4 |
 | Почта | Resend | напоминания про январь и июль |
-| Аналитика | PostHog | воронка + реальные Core Web Vitals |
+| Аналитика | PostHog (ЕС), без их библиотеки | счётчик посещений подключён 2026-10-09 своим кодом (`src/lib/analytics.ts`); события и Core Web Vitals — позже, см. `docs/ANALYTICS-PLAN.md` |
 
 ## Жёсткие правила архитектуры
 
