@@ -32,6 +32,18 @@ if (process.env.NEXT_PUBLIC_POSTHOG_KEY) {
   }
 }
 
+// Закрытая выкладка (SITE_CLOSED=1): сайт проверяет сам владелец, посетителей
+// ещё нет. Счётчик посещений считал бы его собственные заходы — ключ аналитики
+// задаётся только при открытии сайта.
+if (process.env.SITE_CLOSED === "1" && process.env.NEXT_PUBLIC_POSTHOG_KEY) {
+  console.error(
+    "Сборка остановлена: SITE_CLOSED=1 и NEXT_PUBLIC_POSTHOG_KEY заданы одновременно. " +
+      "Пока сайт закрыт, счётчик посещений не включают: уберите ключ или откройте сайт. " +
+      "См. deploy/README.md, раздел «День запуска».",
+  );
+  process.exit(1);
+}
+
 if (process.env.PRIVACY_ENFORCE === "1") {
   const missing = ["PRIVACY_CONTROLLER_NAME", "PRIVACY_CONTACT_EMAIL"].filter(
     (name) => !process.env[name],

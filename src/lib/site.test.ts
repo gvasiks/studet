@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { buildAlternates, SITE_URL } from "./site";
+import { buildAlternates, isSiteClosed, SITE_URL } from "./site";
 
 describe("buildAlternates", () => {
   it("canonical — текущий адрес, переводы — адреса той же страны по языку", () => {
@@ -15,5 +15,14 @@ describe("buildAlternates", () => {
 
   it("главная: пустой путь", () => {
     expect(buildAlternates("", "lv").canonical).toBe(`${SITE_URL}/lv`);
+  });
+});
+
+describe("закрытая выкладка", () => {
+  it("закрыт только при SITE_CLOSED=1; без переменной сайт открыт", () => {
+    expect(isSiteClosed({ SITE_CLOSED: "1" })).toBe(true);
+    expect(isSiteClosed({})).toBe(false);
+    expect(isSiteClosed({ SITE_CLOSED: "0" })).toBe(false);
+    expect(isSiteClosed({ SITE_CLOSED: "true" })).toBe(false);
   });
 });

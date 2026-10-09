@@ -12,6 +12,16 @@ export const SITE_NAME = "StudyPick";
 // NEXT_PUBLIC_SITE_URL (см. .env.local.example).
 export const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://studypick.eu";
 
+// Закрытая выкладка: сайт уже стоит на настоящем домене, но до запуска
+// поисковикам его показывать рано (данные не все подтверждены, тексты не
+// вычитаны). SITE_CLOSED=1 в настройках сервера запрещает обход в
+// robots.txt и ставит noindex на каждую страницу; в день запуска
+// переменная убирается, сайт пересобирается. Читается и при сборке, и при
+// работе — на сервере у них один файл настроек (deploy/README.md).
+export function isSiteClosed(env: Record<string, string | undefined> = process.env): boolean {
+  return env.SITE_CLOSED === "1";
+}
+
 // path — без первого сегмента, начинается с "/" или пустой для главной,
 // например "/programmes" или "/programmes/lu/economics".
 //
