@@ -37,6 +37,10 @@ akadēmija, тоже в составе РТУ), добавлен в словар
 container)`, что и в rtu_liepaja.py). Цена и бюджетные места — прямо
 из таблицы реестра: первая из трёх колонок цены (очное обучение,
 ЕС/Латвия).
+
+Язык на карточке бывает двойным («Latviešu, Angļu», больше половины
+программ) — тогда программа пишется двумя записями, латышской и
+английской; правила — в rtu_languages.py.
 """
 
 from __future__ import annotations
@@ -47,6 +51,7 @@ from urllib.parse import urljoin
 from playwright.sync_api import Page, sync_playwright
 
 from models import ProgrammeDraft, UniversityDraft
+from rtu_languages import extract_languages, language_variants
 from sources import rtu_liepaja
 
 REGISTRY_URL = "https://www.rtu.lv/lv/studijas/visas-studiju-programmas"
@@ -167,36 +172,30 @@ def _is_legacy(row: dict) -> bool:
     return len(row["venues"]) == 1 and row["venues"][0] in ("Rīga", "Rēzekne")
 
 
-def _extract_language(text: str) -> str | None:
-    """Язык из поля «Īstenošanas valoda». Пусто — поля нет или в нём
-    незнакомое значение: «латышский» вместо этого не подставляем (до
-    2026-10-10 подставляли, и сбой чтения выглядел как факт)."""
-    lowered = text.lower()
-    if "angļu" in lowered:
-        return "en"
-    if "latvie" in lowered:
-        return "lv"
-    return None
+def _scrape_detail(page: Page, url: str) -> tuple[float | None, list[str]]:
+    """Срок и языки с карточки программы. Один повтор при сбое: сайт РТУ
+    изредка отвечает дольше таймаута. Не вышло и со второго раза — срок
+    пустой, список языков пустой: запись (main.py) оставит у программы
+    прежние значения, а новую программу без языка не запишет. «Латышский»
+    вместо непрочитанного не подставляем (до 2026-10-10 подставляли, и сбой
+    чтения выглядел как факт).
 
-
-def _scrape_detail(page: Page, url: str) -> tuple[float | None, str | None]:
-    """Срок и язык с карточки программы. Один повтор при сбое: сайт РТУ
-    изредка отвечает дольше таймаута. Не вышло и со второго раза — срок и
-    язык пустые: запись (main.py) оставит у программы прежние значения, а
-    новую программу без языка не запишет."""
+    Следствие для двуязычной программы: в прогон со сбоем её английская
+    запись не попадает и получает пропуск (missed_runs); после двух
+    пропусков подряд она скрывается и возвращается при первом удачном сборе."""
     for attempt in (1, 2):
         try:
             page.goto(url, wait_until="domcontentloaded")
             facts = _facts(page)
             duration = _parse_years(facts.get("studiju ilgums", ""))
-            language = _extract_language(facts.get("īstenošanas valoda", ""))
-            if language is None:
+            languages = extract_languages(facts.get("īstenošanas valoda", ""))
+            if not languages:
                 print(f"rtu_catalog: язык не распознан на {url}: «{facts.get('īstenošanas valoda', '')}»")
-            return duration, language
+            return duration, languages
         except Exception as exc:  # noqa: BLE001
             if attempt == 2:
                 print(f"rtu_catalog: не прочиталась {url}: {type(exc).__name__}; срок и язык не прочитаны")
-    return None, None
+    return None, []
 
 
 def scrape() -> tuple[UniversityDraft, list[ProgrammeDraft]]:
@@ -238,24 +237,24 @@ def scrape() -> tuple[UniversityDraft, list[ProgrammeDraft]]:
             base_slug = f"{code}-{department}".lower() if department else code.lower()
             legacy = _is_legacy(row)
             registry_budget = _parse_budget(row["budget"])
-            duration_years, language = _scrape_detail(page, url)  # одна карточка на все города
+            duration_years, languages = _scrape_detail(page, url)  # одна карточка на все города
 
             for city in fresh:
-                programmes.append(
-                    ProgrammeDraft(
-                        slug=base_slug if legacy else f"{base_slug}-{city}",
-                        name_lv=row["name"],
-                        degree_level=_map_level(row["level"]),
-                        language_of_instruction=language,
-                        study_mode="full_time",
-                        city=city,
-                        funding_type="both" if registry_budget else "paid",
-                        tuition_fee_amount=_parse_price(row["price"]),
-                        budget_places=None if shared else registry_budget,
-                        duration_years=duration_years,
-                        source_url=url,
-                    )
+                draft = ProgrammeDraft(
+                    slug=base_slug if legacy else f"{base_slug}-{city}",
+                    name_lv=row["name"],
+                    degree_level=_map_level(row["level"]),
+                    study_mode="full_time",
+                    city=city,
+                    funding_type="both" if registry_budget else "paid",
+                    tuition_fee_amount=_parse_price(row["price"]),
+                    budget_places=None if shared else registry_budget,
+                    duration_years=duration_years,
+                    source_url=url,
                 )
+                # одна запись на язык: у двуязычной программы — латышская
+                # (с этим слагом и этими данными) и английская (слаг «…-en»)
+                programmes.extend(language_variants(draft, languages))
 
         browser.close()
 

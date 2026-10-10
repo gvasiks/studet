@@ -31,6 +31,7 @@ import re
 from playwright.sync_api import Page, sync_playwright
 
 from models import ProgrammeDraft, UniversityDraft
+from rtu_languages import extract_languages, language_variants
 
 BASE_URL = "https://www.rtu.lv/lv/studijas/visas-studiju-programmas/atvert"
 
@@ -81,17 +82,6 @@ def _parse_years(text: str) -> float | None:
     return float(match.group(1)) if match else None
 
 
-def _extract_language(text: str) -> str | None:
-    """Пусто — поля нет или значение незнакомое; «латышский» по умолчанию
-    не подставляем (см. rtu_catalog._extract_language)."""
-    lowered = text.lower()
-    if "angļu" in lowered:
-        return "en"
-    if "latvie" in lowered:
-        return "lv"
-    return None
-
-
 def _extract_mode(text: str) -> str:
     lowered = text.lower()
     if "nepilna" in lowered:
@@ -99,18 +89,17 @@ def _extract_mode(text: str) -> str:
     return "full_time"
 
 
-def _scrape_programme(page: Page, code: str, degree_level: str) -> ProgrammeDraft:
+def _scrape_programme(page: Page, code: str, degree_level: str) -> list[ProgrammeDraft]:
     url = f"{BASE_URL}/{code}?department=0L000&type=P"
     page.goto(url, wait_until="domcontentloaded")
 
     name_lv = page.locator("h1").first.inner_text().strip()
     facts = _facts(page)
 
-    return ProgrammeDraft(
+    draft = ProgrammeDraft(
         slug=code.lower(),
         name_lv=name_lv,
         degree_level=degree_level,
-        language_of_instruction=_extract_language(facts.get("īstenošanas valoda", "")),
         study_mode=_extract_mode(facts.get("īstenošanas forma", "")),
         city="liepaja",
         funding_type="both",  # есть и бюджетные, и платные места — см. budget_places
@@ -119,6 +108,9 @@ def _scrape_programme(page: Page, code: str, degree_level: str) -> ProgrammeDraf
         duration_years=_parse_years(facts.get("studiju ilgums", "")),
         source_url=url,
     )
+    # Сейчас все три программы только на латышском (проверено 2026-10-10).
+    # Если карточка станет двуязычной — две записи, как в rtu_catalog.py.
+    return language_variants(draft, extract_languages(facts.get("īstenošanas valoda", "")))
 
 
 def scrape() -> tuple[UniversityDraft, list[ProgrammeDraft]]:
@@ -128,7 +120,7 @@ def scrape() -> tuple[UniversityDraft, list[ProgrammeDraft]]:
         page = browser.new_page()
 
         for code, degree_level in PROGRAMMES.items():
-            programmes.append(_scrape_programme(page, code, degree_level))
+            programmes.extend(_scrape_programme(page, code, degree_level))
 
         browser.close()
 
