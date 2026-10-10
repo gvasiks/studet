@@ -95,7 +95,20 @@ def _discover(page: Page) -> list[tuple[str, str]]:
     return [found[key] for key in sorted(found)]
 
 
-def _scrape_programme(page: Page, level: str, url: str) -> ProgrammeDraft | None:
+def languages_from(text: str) -> list[str]:
+    """Языки из поля «Language of study»: «Latvian» → ['lv'], «latvian,
+    english» → ['en', 'lv']. Пустой список — поля нет или значение незнакомое.
+
+    Английский первым: это английский раздел сайта, запись со слагом страницы
+    — английская (так она и лежала в базе), латышский поток получает запись
+    «…-lv» — как у Turība, BSA и TSI (решение владельца 2026-10-10). На эту
+    дату двуязычная программа одна: профессиональная докторантура по искусству.
+    """
+    lowered = text.lower()
+    return [code for code, word in (("en", "english"), ("lv", "latvian")) if word in lowered]
+
+
+def _scrape_programme(page: Page, level: str, url: str) -> list[ProgrammeDraft]:
     page.goto(url, wait_until="domcontentloaded")
     page.wait_for_timeout(600)
     body = page.locator("body").inner_text()
@@ -103,23 +116,32 @@ def _scrape_programme(page: Page, level: str, url: str) -> ProgrammeDraft | None
 
     duration_text = facts.get("Duration of studies", "")
     if not duration_text:
-        return None
+        return []
 
     h1 = page.locator("h1").first
     name = h1.inner_text().strip() if h1.count() > 0 else ""
-    language = "en" if "english" in facts.get("Language of study", "").lower() else "lv"
+    slug = url.rstrip("/").rsplit("/", 1)[-1]
+    # У трёх программ из пятнадцати поля языка на странице нет (обзор
+    # 2026-10-10). Для них по-прежнему пишется «латышский» — это допущение, а
+    # не факт с сайта; владелец решил искать язык таких программ в NIID, до
+    # тех пор допущение остаётся, иначе новые программы LKA не записывались бы.
+    languages = languages_from(facts.get("Language of study", "")) or ["lv"]
 
-    return ProgrammeDraft(
-        slug=url.rstrip("/").rsplit("/", 1)[-1],
-        name_en=name or None,
-        degree_level=level,
-        language_of_instruction=language,
-        study_mode=_study_mode(body),
-        city=UNIVERSITY.city,
-        funding_type="paid",
-        duration_years=_parse_years(duration_text),
-        source_url=url,
-    )
+    return [
+        ProgrammeDraft(
+            # первая запись — со слагом страницы, вторая (латышский поток) — «…-lv»
+            slug=slug if index == 0 else f"{slug}-{language}",
+            name_en=name or None,
+            degree_level=level,
+            language_of_instruction=language,
+            study_mode=_study_mode(body),
+            city=UNIVERSITY.city,
+            funding_type="paid",
+            duration_years=_parse_years(duration_text),
+            source_url=url,
+        )
+        for index, language in enumerate(languages)
+    ]
 
 
 def scrape() -> tuple[UniversityDraft, list[ProgrammeDraft]]:
@@ -129,9 +151,7 @@ def scrape() -> tuple[UniversityDraft, list[ProgrammeDraft]]:
         page = browser.new_page()
 
         for level, url in _discover(page):
-            programme = _scrape_programme(page, level, url)
-            if programme is not None:
-                programmes.append(programme)
+            programmes.extend(_scrape_programme(page, level, url))
 
         browser.close()
 
