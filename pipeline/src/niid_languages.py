@@ -27,7 +27,13 @@ docs/checks/NIID-LANGUAGE-REVIEW.md.
   каталоге стоял латышский, NIID называет только английский. Она записана в
   DECIDED ниже — отдельно от KNOWN, потому что с NIID не совпадает намеренно.
 
-Программа этих пяти вузов, которой нет ни в таблице, ни с языком на сайте,
+Шестой сборщик — lnaa (добавлен в тот же день). На сайте академии язык не
+назван ни у одной программы, сборщик писал всем «латышский»; сверка с NIID
+показала, что магистратура «Militārā vadība un drošība» — английская. Теперь
+язык всех шести программ LNAA берётся отсюда (решение владельца 2026-10-10:
+английский, одной записью).
+
+Программа этих вузов, которой нет ни в таблице, ни с языком на сайте,
 получает пустой язык: main.py оставит у неё прежний, а новую не запишет —
 тогда её надо найти в NIID и дописать сюда.
 
@@ -48,6 +54,7 @@ PROVIDERS = {
     "lka": "Latvijas Kultūras akadēmija",
     "tsi": "Transporta un sakaru institūts",
     "venta": "Ventspils Augstskola",
+    "lnaa": "Latvijas Nacionālā aizsardzības akadēmija",
 }
 
 # сборщик -> слаг программы -> (номер записи NIID, языки; первый сохраняет слаг)
@@ -91,6 +98,14 @@ KNOWN: dict[str, dict[str, tuple[str, tuple[str, ...]]]] = {
         "uznemejdarbibas-vadiba": ("584", ("lv",)),  # Uzņēmējdarbības vadība — latviešu (LV)
         "tulkosana-un-terminologija": ("28502", ("lv",)),  # Tulkošana un terminoloģija — latviešu (LV)
         "elektronika-magistrs": ("27060", ("lv",)),  # Elektronika — latviešu (LV)
+    },
+    "lnaa": {
+        "gaisa-speku-militara-vadiba": ("4551", ("lv",)),  # Gaisa spēku militārā vadība — latviešu (LV)
+        "juras-speku-militara-vadiba": ("4552", ("lv",)),  # Jūras spēku militārā vadība — latviešu (LV)
+        "komandejosa-sastava-virsnieks": ("292", ("lv",)),  # Komandējošā sastāva virsnieks — latviešu (LV)
+        "sauszemes-speku-militara-vadiba": ("4553", ("lv",)),  # Sauszemes spēku militārā vadība — latviešu (LV)
+        "praktiska-militara-vadiba": ("28339", ("lv",)),  # Praktiskā militārā vadība — latviešu (LV)
+        "militara-vadiba-un-drosiba": ("22083", ("en",)),  # Militārā vadība un drošība — angļu (EN)
     },
 }
 
@@ -195,7 +210,8 @@ def selftest() -> None:
             assert languages and set(languages) <= {"lv", "en"} and len(set(languages)) == len(languages), (source, slug)
     total = sum(len(programmes) for programmes in KNOWN.values())
     two = sum(1 for programmes in KNOWN.values() for _, languages in programmes.values() if len(languages) == 2)
-    assert (total, two) == (30, 15), (total, two)
+    assert (total, two) == (36, 15), (total, two)
+    assert languages_for("lnaa", "militara-vadiba-un-drosiba", []) == ["en"]
     print("самотест пройден")
 
 

@@ -13,7 +13,11 @@ Academy) — naa.mil.lv/lv/studijas.
 
 Все шесть программ на странице названы "valsts apmaksātās" (оплачены
 государством) — funding_type='budget'; число мест не публикуется.
-Обучение по-латышски (язык программы нигде не указан — предположение).
+Язык программы на странице не указан. До 2026-10-10 всем писался
+«латышский» (предположение); теперь язык берётся из NIID
+(niid_languages.py) — там магистратура «Militārā vadība un drošība»
+английская, остальные пять программ латышские. Программа, которой в таблице
+нет, получит пустой язык и не запишется, пока её туда не добавят.
 """
 
 from __future__ import annotations
@@ -22,6 +26,7 @@ import re
 
 from playwright.sync_api import Page, sync_playwright
 
+import niid_languages
 from models import ProgrammeDraft, UniversityDraft
 
 BASE_URL = "https://www.naa.mil.lv"
@@ -91,10 +96,10 @@ def scrape() -> tuple[UniversityDraft, list[ProgrammeDraft]]:
 
     programmes = [
         ProgrammeDraft(
-            slug=_slugify(title),
+            slug=record_slug,
             name_lv=_title_case(title),
             degree_level=KNOWN_PROGRAMMES[title][0],
-            language_of_instruction="lv",
+            language_of_instruction=language,
             study_mode="full_time",
             city=UNIVERSITY.city,
             funding_type="budget",
@@ -102,5 +107,8 @@ def scrape() -> tuple[UniversityDraft, list[ProgrammeDraft]]:
             source_url=STUDIES_URL,
         )
         for title in titles
+        for record_slug, language in niid_languages.records(
+            _slugify(title), niid_languages.languages_for("lnaa", _slugify(title), [])
+        )
     ]
     return UNIVERSITY, programmes
