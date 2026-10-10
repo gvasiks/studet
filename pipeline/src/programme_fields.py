@@ -80,7 +80,10 @@ RULES: list[tuple[str, list[str]]] = [
     (r"geomatic|ģeomātik", ["582", "443"]),
     (r"real estate|nekustam", ["345", "582"]),
     (r"mašīnu un aparātu", ["521"]),
-    (r"būves inform|inženiersistēm|būvniecīb|construction|building|būvuzņēm|transportbūv|siltuma, gāzes|heating|(?<![a-zāčēģīķļņšūž])ēku", ["582"]),
+    # "civil engineering" и "heat, gas" — английские названия тех же программ,
+    # что "būvniecība" и "siltuma, gāzes un ūdens tehnoloģija": добавлены
+    # 2026-10-10 для английского реестра РТУ, код тот же.
+    (r"būves inform|inženiersistēm|būvniecīb|construction|civil engineering|building|būvuzņēm|transportbūv|siltuma, gāzes|heat, gas|heating|(?<![a-zāčēģīķļņšūž])ēku", ["582"]),
     # --- искусство и дизайн
     (r"audiovisual|film|audiovizuāl|new media|jauno mediju", ["213", "214"]),
     (r"radošās industrijas|creative industries", ["345", "214"]),
@@ -151,7 +154,9 @@ RULES: list[tuple[str, list[str]]] = [
     (r"computer engineering|smart electronic|viedās elektronisk|electronic|elektronik|telecommunication|telekomunik|adaptron|robot|mechatronic|mehatronik|telematic|telemātik", ["523", "522", "481"]),
     (r"computer science|datorzinātn|information technolog|informācijas tehnolo[gģ]|informātik|informatics|software|datorsistēm|computer systems|data analytics|viedās datortehnolo[gģ]|savstarpēji saistītu sistēmu|information systems|informācijas sistēm|it project|biznesa informātika|sociotehnisk", ["481", "483", "484"]),
     # --- энергетика, материалы, машиностроение
-    (r"electric|elektriskās iekārt|elektroenerģ|elektrotehnolo[gģ]|energy|enerģ", ["522"]),
+    # "power system" — английское название "viedā elektroenerģētika" (РТУ,
+    # "Smart Power Systems"), добавлено 2026-10-10.
+    (r"electric|elektriskās iekārt|elektroenerģ|elektrotehnolo[gģ]|power system|energy|enerģ", ["522"]),
     (r"materiālzinātne un nanotehnolo[gģ]|nanotechn|materials science", ["524", "442", "543"]),
     (r"šķiedru|fibre|fiber|textile", ["542", "543"]),
     (r"materiālu inženierija|materials engineering", ["543", "524"]),

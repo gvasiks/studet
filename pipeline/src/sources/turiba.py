@@ -42,7 +42,19 @@ UNIVERSITY = UniversityDraft(
     source_url=BASE_URL,
 )
 
-LANGUAGE_MAP = {"english": "en", "latvian": "lv"}
+def languages_from(text: str) -> list[str]:
+    """Языки из поля «Study language»: «English» → ['en'], «Latvian» → ['lv'],
+    «Latvian or English» → ['en', 'lv']. Пусто — поля нет или значение
+    незнакомое: язык не подставляется (до 2026-10-10 подставлялся английский).
+
+    Английский первым: это английский раздел сайта, и запись со слагом
+    страницы — английская. Латышский поток, если он на странице назван,
+    получает отдельную запись со слагом «…-lv» — как у BSA и TSI. На
+    2026-10-10 такая страница одна: магистратура «Information Technology»,
+    где требования к поступающим расписаны для обоих потоков отдельно.
+    """
+    lowered = text.lower()
+    return [code for code, word in (("en", "english"), ("lv", "latvian")) if word in lowered]
 
 
 def _parse_years(text: str) -> float | None:
@@ -60,7 +72,7 @@ def _parse_accreditation(body_text: str) -> date | None:
         return None
 
 
-def _scrape_detail(page: Page, url: str, degree_level: str) -> ProgrammeDraft:
+def _scrape_detail(page: Page, url: str, degree_level: str) -> list[ProgrammeDraft]:
     page.goto(url, wait_until="domcontentloaded")
     slug = url.rstrip("/").rsplit("/", 1)[-1]
     name_en = page.locator("h1.b1-title").first.inner_text().strip()
@@ -75,20 +87,25 @@ def _scrape_detail(page: Page, url: str, degree_level: str) -> ProgrammeDraft:
 
     body_text = page.locator("body").inner_text()
 
-    return ProgrammeDraft(
-        slug=slug,
-        name_en=name_en,
-        degree_level=degree_level,
-        # Без значения по умолчанию: поля нет или в нём незнакомое слово —
-        # язык остаётся пустым (до 2026-10-10 подставлялся английский).
-        language_of_instruction=LANGUAGE_MAP.get(facts.get("study language", "").lower()),
-        study_mode="distance" if "e-studies" in slug else "full_time",
-        city=UNIVERSITY.city,
-        funding_type="paid",
-        duration_years=_parse_years(facts.get("duration", "")),
-        accreditation_valid_until=_parse_accreditation(body_text),
-        source_url=url,
-    )
+    languages = languages_from(facts.get("study language", ""))
+    if not languages:
+        print(f"turiba: язык не распознан на {url}: «{facts.get('study language', '')}»")
+    return [
+        ProgrammeDraft(
+            # первая запись — со слагом страницы, вторая (латышский поток) — «…-lv»
+            slug=slug if index == 0 else f"{slug}-{language}",
+            name_en=name_en,
+            degree_level=degree_level,
+            language_of_instruction=language,
+            study_mode="distance" if "e-studies" in slug else "full_time",
+            city=UNIVERSITY.city,
+            funding_type="paid",
+            duration_years=_parse_years(facts.get("duration", "")),
+            accreditation_valid_until=_parse_accreditation(body_text),
+            source_url=url,
+        )
+        for index, language in enumerate(languages or [None])
+    ]
 
 
 def scrape() -> tuple[UniversityDraft, list[ProgrammeDraft]]:
@@ -108,7 +125,7 @@ def scrape() -> tuple[UniversityDraft, list[ProgrammeDraft]]:
             detail_hrefs = sorted(h for h in hrefs if h.rstrip("/") not in excluded)
 
             for href in detail_hrefs:
-                programmes.append(_scrape_detail(page, href, degree_level))
+                programmes.extend(_scrape_detail(page, href, degree_level))
 
         browser.close()
 
