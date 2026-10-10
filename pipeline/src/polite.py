@@ -112,6 +112,13 @@ def _cached(url: str) -> bool:
     return meta.exists() and body.exists() and time.time() - meta.stat().st_mtime < CACHE_TTL_SECONDS
 
 
+def forget(url: str) -> None:
+    """Убрать страницу из кэша: сборщик увидел, что она пришла неполной, и
+    хочет запросить её заново, а не получить ту же копию с диска."""
+    for path in _cache_paths(url):
+        path.unlink(missing_ok=True)
+
+
 def _wait_turn(url: str) -> None:
     """Проверка robots.txt и пауза перед переходом на страницу."""
     if _cached(url):
@@ -145,6 +152,11 @@ def _route_handler(route: Route) -> None:
             route.fulfill(status=meta["status"], headers=meta["headers"], body=body_path.read_bytes())
             return
         response = route.fetch()
+        if response.status >= 400:
+            # Ответ с ошибкой не запоминаем: иначе повторный запрос той же
+            # страницы получил бы из кэша ту же ошибку.
+            route.fulfill(response=response)
+            return
         CACHE_DIR.mkdir(exist_ok=True)
         body_path.write_bytes(response.body())
         content_type = response.headers.get("content-type", "text/html; charset=utf-8")

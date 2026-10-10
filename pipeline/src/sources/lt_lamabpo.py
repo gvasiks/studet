@@ -363,13 +363,32 @@ def _goto(page: Page, url: str, pauses: tuple[int, ...] = GOTO_PAUSES) -> None:
             time.sleep(pause)
 
 
-def _lines(page: Page, url: str, marker: str) -> list[str]:
-    _goto(page, url)
-    try:
-        page.get_by_text(marker, exact=True).first.wait_for(timeout=15000)
-    except Exception:  # noqa: BLE001 — карточка без этого поля: разбираем, что есть
-        pass
-    return page.evaluate(_LINES_JS)
+def _lines(page: Page, url: str, marker: str, pauses: tuple[int, ...] = GOTO_PAUSES) -> list[str]:
+    """Строки карточки реестра. marker — подпись, которая есть на каждой
+    целой карточке («Valstybinis kodas» у программы).
+
+    Если подписи нет, страница пришла неполной: так было на сервере GitHub
+    2026-10-10 — около тридцати карточек из шестисот открылись пустыми,
+    программы без уровня и языка были пропущены, и сбор остановила проверка
+    числа программ. Такую страницу запрашиваем заново (убрав её из кэша —
+    иначе получили бы ту же копию). Не помогло и с третьего раза — отдаём,
+    что есть: программа будет пропущена с сообщением, а проверка числа
+    программ не даст записать неполный каталог."""
+    import polite
+
+    for pause in (*pauses, None):
+        _goto(page, url)
+        try:
+            page.get_by_text(marker, exact=True).first.wait_for(timeout=15000)
+            return page.evaluate(_LINES_JS)
+        except Exception:  # noqa: BLE001 — подписи нет: страница неполная или у карточки нет этого поля
+            if pause is None:
+                print(f"lt_lamabpo: подписи «{marker}» нет и после повторов — {url}")
+                return page.evaluate(_LINES_JS)
+            print(f"lt_lamabpo: страница пришла без «{marker}», повтор через {pause} с — {url}")
+            polite.forget(url)
+            time.sleep(pause)
+    return []  # сюда не доходим: цикл всегда заканчивается возвратом
 
 
 def _institution(page: Page, card_url: str, name: str) -> Institution:
