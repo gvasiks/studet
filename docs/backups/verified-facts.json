@@ -6040,6 +6040,16 @@
       "verified_by": "Gvasiks (подтверждение по правилу, решение владельца 2026-10-01; правила и выборка — docs/checks/PROGRAMME-FIELD-REVIEW.md)"
     },
     {
+      "field_code": "214",
+      "programme_name": "Pakalpojumu dizaina stratēģijas un inovācijas",
+      "programme_slug": "niid-26489",
+      "source": "name-rules",
+      "university_slug": "lma",
+      "verification_method": "rule",
+      "verified_at": "2026-10-10T18:16:47.601292+00:00",
+      "verified_by": "Gvasiks (подтверждение по правилу, решение владельца 2026-10-10 для записей, добавленных после 2026-10-01; правила и выборка — docs/checks/PROGRAMME-FIELD-REVIEW.md)"
+    },
+    {
       "field_code": "211",
       "programme_name": null,
       "programme_slug": "painting-bachelor",
@@ -11898,6 +11908,16 @@
       "verification_method": "rule",
       "verified_at": "2026-10-01T16:39:15.266533+00:00",
       "verified_by": "Gvasiks (подтверждение по правилу, решение владельца 2026-10-01; правила и выборка — docs/checks/PROGRAMME-FIELD-REVIEW.md)"
+    },
+    {
+      "field_code": "345",
+      "programme_name": "Uzņēmējdarbības vadība",
+      "programme_slug": "niid-669",
+      "source": "name-rules",
+      "university_slug": "sse-riga",
+      "verification_method": "rule",
+      "verified_at": "2026-10-10T18:16:47.601292+00:00",
+      "verified_by": "Gvasiks (подтверждение по правилу, решение владельца 2026-10-10 для записей, добавленных после 2026-10-01; правила и выборка — docs/checks/PROGRAMME-FIELD-REVIEW.md)"
     },
     {
       "field_code": "525",
