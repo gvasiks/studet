@@ -29,6 +29,17 @@ AUDIT-COMPLETENESS.md, инструмент audit_completeness.py) насчит�
 Что НЕ берётся: записи без степени высшего образования (в докторантуре
 NIID лежит и "Rezidentūra" — резидентура, у нас такого уровня нет).
 
+LMA и SSE Riga добавлены 2026-10-10 — сверка языка с NIID
+(docs/checks/NIID-LANGUAGE-REVIEW.md) показала, что в каталоге нет
+докторантуры LMA (две программы «Mākslas»), её английской магистратуры
+«Pakalpojumu dizaina stratēģijas un inovācijas» и магистратуры SSE Riga.
+
+JVLMA сюда НЕ добавлена, хотя в NIID у неё 25 записей против наших 7: NIID
+считает отдельными программами специализации («Akadēmiskā mūzika
+(instrumentālā mūzika)», «Diriģēšana», «Džeza mūzika»…), а сайт академии
+объединяет их в «Music and Performing Arts». Это разная дробность, а не
+пропуск — то же решение, что принято выше для докторантуры RSU.
+
 Когда NIID добавит программу, которая уже есть у нас под другим именем,
 она появится второй раз — тогда её название надо внести в COVERED
 (audit_completeness.py покажет расхождение по числам).
@@ -42,7 +53,7 @@ from urllib.parse import urljoin
 from playwright.sync_api import sync_playwright
 
 from models import ProgrammeDraft, UniversityDraft
-from sources import du, lbtu, niid_colleges as base, riseba, rsu, turiba
+from sources import du, lbtu, lma, niid_colleges as base, riseba, rsu, sse_riga, turiba
 from sources.via import _extract_languages, _programme_id
 
 BASE_URL = base.BASE_URL
@@ -153,6 +164,39 @@ TARGETS = [
                 ("master", "Rūpnieciskā farmācija"),
             }
         ),
+    ),
+    Target(
+        university=lma.UNIVERSITY,
+        provider="Latvijas Mākslas akadēmija",
+        # Бакалавриат совпал с NIID (17 против 17), его не трогаем
+        levels=("8", "9"),
+        covered=frozenset(
+            {
+                # четырнадцать магистратур собственного сборщика lma.py; ещё
+                # четыре его магистратуры (Curatorial studies, Motion. Image.
+                # Sound, POST, Restoration) в NIID не значатся
+                ("master", "Funkcionālais dizains"),
+                ("master", "Glezniecība"),
+                ("master", "Grafika"),
+                ("master", "Keramika"),
+                ("master", "Mākslas vēsture un teorija"),
+                ("master", "Metāla dizains"),
+                ("master", "Modes dizains"),
+                ("master", "Scenogrāfija"),
+                ("master", "Stikla māksla"),
+                ("master", "Tekstils"),
+                ("master", "Tēlniecība"),
+                ("master", "Vides māksla"),
+                ("master", "Vizuālā komunikācija"),
+                ("master", "Zīmēšana"),
+            }
+        ),
+    ),
+    Target(
+        university=sse_riga.UNIVERSITY,
+        provider="Rīgas Ekonomikas augstskola",
+        levels=("8",),  # бакалавриат собирает sse_riga.py
+        covered=frozenset(),
     ),
 ]
 

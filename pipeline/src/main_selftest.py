@@ -216,6 +216,18 @@ def selftest() -> None:
     assert run(client, [source]) == 0
     assert client.saved_universities == ["f"] and client.upserted_rows == []
 
+    # 7) цена из NIID: тысячи через пробел не обрезаются до последних трёх цифр
+    from sources.niid_colleges import _fee_and_funding
+
+    assert _fee_and_funding("37 000 EUR - visa programma (18 500 EUR gadā) (2026./27.)") == (18500.0, "paid")
+    assert _fee_and_funding("7000 EUR gadā (2026./27.)") == (7000.0, "paid")
+    assert _fee_and_funding("Valsts budžets vai par maksu: 7000 EUR gadā (2026./27.)") == (7000.0, "both")
+    assert _fee_and_funding("Budžets vai par maksu: 820 EUR gadā (2026./27.)") == (820.0, "both")
+    assert _fee_and_funding("1 220,50 EUR gadā") == (1220.5, "paid")
+    assert _fee_and_funding("2\u00a0500 EUR gadā") == (2500.0, "paid"), "неразрывный пробел — тот же разделитель"
+    assert _fee_and_funding("600 EUR semestrī") == (None, "paid"), "цена не за год не берётся"
+    assert _fee_and_funding("Valsts budžets") == (None, "budget")
+
     print("самотест пройден")
 
 

@@ -171,9 +171,12 @@ def _fee_and_funding(fee_text: str) -> tuple[float | None, str]:
     lowered = fee_text.lower()
     has_budget = "budžet" in lowered
     # цена берётся только если она явно за год: "1220 EUR gadā". Цена за
-    # семестр/месяц/кредитпункт молча превратилась бы в неверную годовую
-    per_year = re.search(r"(\d+(?:[.,]\d+)?)\s*EUR\s*gadā", fee_text)
-    fee = float(per_year.group(1).replace(",", ".")) if per_year else None
+    # семестр/месяц/кредитпункт молча превратилась бы в неверную годовую.
+    # Тысячи бывают отделены пробелом: "18 500 EUR gadā". До 2026-10-10
+    # выражение брало из такой записи только "500" (найдено на магистратуре
+    # SSE Riga до записи в базу; в каталоге таких цен не оказалось).
+    per_year = re.search(r"(\d{1,3}(?:[ \u00a0]\d{3})+|\d+)(?:[.,]\d+)?\s*EUR\s*gadā", fee_text)
+    fee = float(re.sub(r"[ \u00a0]", "", per_year.group(0).split("EUR")[0]).replace(",", ".")) if per_year else None
     if has_budget and fee is None and "eur" not in lowered:
         return None, "budget"
     if has_budget:

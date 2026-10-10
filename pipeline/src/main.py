@@ -107,6 +107,10 @@ MIN_PROGRAMME_COUNT = {
     "sources.niid_universities:turiba": 17,
     "sources.niid_universities:riseba": 15,
     "sources.niid_universities:rsu": 9,
+    # 2026-10-10: докторантура и английская магистратура LMA (три программы,
+    # одна из них на двух языках — четыре записи), магистратура SSE Riga
+    "sources.niid_universities:lma": 4,
+    "sources.niid_universities:sse-riga": 1,
     # Литва: снимок 2026-10-05 (28 учреждений, 1020 строк каталога). Порог —
     # на учреждение. Срабатывает и тогда, когда реестр AIKOS отдал не все
     # карточки: строка без уровня или языка в каталог не попадает, и число
