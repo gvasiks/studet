@@ -9522,12 +9522,32 @@
     {
       "field_code": "581",
       "programme_name": "Arhitektūra",
+      "programme_slug": "ada-01t00-en",
+      "source": "name-rules",
+      "university_slug": "rtu",
+      "verification_method": "rule",
+      "verified_at": "2026-10-10T15:22:17.401231+00:00",
+      "verified_by": "Gvasiks (подтверждение по правилу, решение владельца 2026-10-10 для записей, добавленных после 2026-10-01; правила и выборка — docs/checks/PROGRAMME-FIELD-REVIEW.md)"
+    },
+    {
+      "field_code": "581",
+      "programme_name": "Arhitektūra",
       "programme_slug": "aga-01t00",
       "source": "name-rules",
       "university_slug": "rtu",
       "verification_method": "rule",
       "verified_at": "2026-10-01T16:39:15.266533+00:00",
       "verified_by": "Gvasiks (подтверждение по правилу, решение владельца 2026-10-01; правила и выборка — docs/checks/PROGRAMME-FIELD-REVIEW.md)"
+    },
+    {
+      "field_code": "581",
+      "programme_name": "Arhitektūra",
+      "programme_slug": "aga-01t00-en",
+      "source": "name-rules",
+      "university_slug": "rtu",
+      "verification_method": "rule",
+      "verified_at": "2026-10-10T15:22:17.401231+00:00",
+      "verified_by": "Gvasiks (подтверждение по правилу, решение владельца 2026-10-10 для записей, добавленных после 2026-10-01; правила и выборка — docs/checks/PROGRAMME-FIELD-REVIEW.md)"
     },
     {
       "field_code": "582",
@@ -9601,6 +9621,16 @@
     },
     {
       "field_code": "582",
+      "programme_name": "Būvniecība",
+      "programme_slug": "bdb-31000-en",
+      "source": "name-rules",
+      "university_slug": "rtu",
+      "verification_method": "rule",
+      "verified_at": "2026-10-10T15:22:17.401231+00:00",
+      "verified_by": "Gvasiks (подтверждение по правилу, решение владельца 2026-10-10 для записей, добавленных после 2026-10-01; правила и выборка — docs/checks/PROGRAMME-FIELD-REVIEW.md)"
+    },
+    {
+      "field_code": "582",
       "programme_name": "Siltuma, gāzes un ūdens tehnoloģija",
       "programme_slug": "bds-31000",
       "source": "name-rules",
@@ -9611,6 +9641,16 @@
     },
     {
       "field_code": "582",
+      "programme_name": "Siltuma, gāzes un ūdens tehnoloģija",
+      "programme_slug": "bds-31000-en",
+      "source": "name-rules",
+      "university_slug": "rtu",
+      "verification_method": "rule",
+      "verified_at": "2026-10-10T15:22:17.401231+00:00",
+      "verified_by": "Gvasiks (подтверждение по правилу, решение владельца 2026-10-10 для записей, добавленных после 2026-10-01; правила и выборка — docs/checks/PROGRAMME-FIELD-REVIEW.md)"
+    },
+    {
+      "field_code": "582",
       "programme_name": "Būvniecība",
       "programme_slug": "bgb-31000",
       "source": "name-rules",
@@ -9618,6 +9658,16 @@
       "verification_method": "rule",
       "verified_at": "2026-10-01T16:39:15.266533+00:00",
       "verified_by": "Gvasiks (подтверждение по правилу, решение владельца 2026-10-01; правила и выборка — docs/checks/PROGRAMME-FIELD-REVIEW.md)"
+    },
+    {
+      "field_code": "582",
+      "programme_name": "Būvniecība",
+      "programme_slug": "bgb-31000-en",
+      "source": "name-rules",
+      "university_slug": "rtu",
+      "verification_method": "rule",
+      "verified_at": "2026-10-10T15:22:17.401231+00:00",
+      "verified_by": "Gvasiks (подтверждение по правилу, решение владельца 2026-10-10 для записей, добавленных после 2026-10-01; правила и выборка — docs/checks/PROGRAMME-FIELD-REVIEW.md)"
     },
     {
       "field_code": "582",
@@ -9691,6 +9741,16 @@
     },
     {
       "field_code": "345",
+      "programme_name": "Loģistika un piegādes ķēdes drošība",
+      "programme_slug": "cgh-22000-en",
+      "source": "name-rules",
+      "university_slug": "rtu",
+      "verification_method": "rule",
+      "verified_at": "2026-10-10T15:22:17.401231+00:00",
+      "verified_by": "Gvasiks (подтверждение по правилу, решение владельца 2026-10-10 для записей, добавленных после 2026-10-01; правила и выборка — docs/checks/PROGRAMME-FIELD-REVIEW.md)"
+    },
+    {
+      "field_code": "345",
       "programme_name": "Loģistika",
       "programme_slug": "ckg-22000",
       "source": "name-rules",
@@ -9712,6 +9772,16 @@
     {
       "field_code": "481",
       "programme_name": "Datorsistēmas",
+      "programme_slug": "dbd-33000-liepaja-en",
+      "source": "name-rules",
+      "university_slug": "rtu",
+      "verification_method": "rule",
+      "verified_at": "2026-10-10T15:22:17.401231+00:00",
+      "verified_by": "Gvasiks (подтверждение по правилу, решение владельца 2026-10-10 для записей, добавленных после 2026-10-01; правила и выборка — docs/checks/PROGRAMME-FIELD-REVIEW.md)"
+    },
+    {
+      "field_code": "481",
+      "programme_name": "Datorsistēmas",
       "programme_slug": "dbd-33000-rezekne",
       "source": "name-rules",
       "university_slug": "rtu",
@@ -9722,12 +9792,32 @@
     {
       "field_code": "481",
       "programme_name": "Datorsistēmas",
+      "programme_slug": "dbd-33000-rezekne-en",
+      "source": "name-rules",
+      "university_slug": "rtu",
+      "verification_method": "rule",
+      "verified_at": "2026-10-10T15:22:17.401231+00:00",
+      "verified_by": "Gvasiks (подтверждение по правилу, решение владельца 2026-10-10 для записей, добавленных после 2026-10-01; правила и выборка — docs/checks/PROGRAMME-FIELD-REVIEW.md)"
+    },
+    {
+      "field_code": "481",
+      "programme_name": "Datorsistēmas",
       "programme_slug": "dbd-33000-riga",
       "source": "name-rules",
       "university_slug": "rtu",
       "verification_method": "rule",
       "verified_at": "2026-10-01T16:39:15.266533+00:00",
       "verified_by": "Gvasiks (подтверждение по правилу, решение владельца 2026-10-01; правила и выборка — docs/checks/PROGRAMME-FIELD-REVIEW.md)"
+    },
+    {
+      "field_code": "481",
+      "programme_name": "Datorsistēmas",
+      "programme_slug": "dbd-33000-riga-en",
+      "source": "name-rules",
+      "university_slug": "rtu",
+      "verification_method": "rule",
+      "verified_at": "2026-10-10T15:22:17.401231+00:00",
+      "verified_by": "Gvasiks (подтверждение по правилу, решение владельца 2026-10-10 для записей, добавленных после 2026-10-01; правила и выборка — docs/checks/PROGRAMME-FIELD-REVIEW.md)"
     },
     {
       "field_code": "481",
@@ -9811,6 +9901,16 @@
     },
     {
       "field_code": "481",
+      "programme_name": "Datorzinātne un informācijas tehnoloģija",
+      "programme_slug": "ddc-33000-en",
+      "source": "name-rules",
+      "university_slug": "rtu",
+      "verification_method": "rule",
+      "verified_at": "2026-10-10T15:22:17.401231+00:00",
+      "verified_by": "Gvasiks (подтверждение по правилу, решение владельца 2026-10-10 для записей, добавленных после 2026-10-01; правила и выборка — docs/checks/PROGRAMME-FIELD-REVIEW.md)"
+    },
+    {
+      "field_code": "481",
       "programme_name": "Datorsistēmas",
       "programme_slug": "dgd-33000",
       "source": "name-rules",
@@ -9841,6 +9941,16 @@
     },
     {
       "field_code": "481",
+      "programme_name": "Informācijas tehnoloģijas",
+      "programme_slug": "dgx-0l000-liepaja-en",
+      "source": "name-rules",
+      "university_slug": "rtu",
+      "verification_method": "rule",
+      "verified_at": "2026-10-10T15:22:17.401231+00:00",
+      "verified_by": "Gvasiks (подтверждение по правилу, решение владельца 2026-10-10 для записей, добавленных после 2026-10-01; правила и выборка — docs/checks/PROGRAMME-FIELD-REVIEW.md)"
+    },
+    {
+      "field_code": "481",
       "programme_name": "Programmēšana",
       "programme_slug": "dku-0r000",
       "source": "name-rules",
@@ -9861,6 +9971,16 @@
     },
     {
       "field_code": "481",
+      "programme_name": "Biznesa informātika",
+      "programme_slug": "dmb-33000-en",
+      "source": "name-rules",
+      "university_slug": "rtu",
+      "verification_method": "rule",
+      "verified_at": "2026-10-10T15:22:17.401231+00:00",
+      "verified_by": "Gvasiks (подтверждение по правилу, решение владельца 2026-10-10 для записей, добавленных после 2026-10-01; правила и выборка — docs/checks/PROGRAMME-FIELD-REVIEW.md)"
+    },
+    {
+      "field_code": "481",
       "programme_name": "Datorsistēmas",
       "programme_slug": "dmd-33000",
       "source": "name-rules",
@@ -9868,6 +9988,16 @@
       "verification_method": "rule",
       "verified_at": "2026-10-01T16:39:15.266533+00:00",
       "verified_by": "Gvasiks (подтверждение по правилу, решение владельца 2026-10-01; правила и выборка — docs/checks/PROGRAMME-FIELD-REVIEW.md)"
+    },
+    {
+      "field_code": "481",
+      "programme_name": "Datorsistēmas",
+      "programme_slug": "dmd-33000-en",
+      "source": "name-rules",
+      "university_slug": "rtu",
+      "verification_method": "rule",
+      "verified_at": "2026-10-10T15:22:17.401231+00:00",
+      "verified_by": "Gvasiks (подтверждение по правилу, решение владельца 2026-10-10 для записей, добавленных после 2026-10-01; правила и выборка — docs/checks/PROGRAMME-FIELD-REVIEW.md)"
     },
     {
       "field_code": "481",
@@ -9890,6 +10020,16 @@
       "verified_by": "Gvasiks (подтверждение по правилу, решение владельца 2026-10-01; правила и выборка — docs/checks/PROGRAMME-FIELD-REVIEW.md)"
     },
     {
+      "field_code": "481",
+      "programme_name": "Kiberdrošības inženierija",
+      "programme_slug": "dmk-33000-en",
+      "source": "name-rules",
+      "university_slug": "rtu",
+      "verification_method": "rule",
+      "verified_at": "2026-10-10T15:22:17.401231+00:00",
+      "verified_by": "Gvasiks (подтверждение по правилу, решение владельца 2026-10-10 для записей, добавленных после 2026-10-01; правила и выборка — docs/checks/PROGRAMME-FIELD-REVIEW.md)"
+    },
+    {
       "field_code": "345",
       "programme_name": "Loģistikas sistēmu un piegādes ķēdes vadība",
       "programme_slug": "dml-33000",
@@ -9900,6 +10040,16 @@
       "verified_by": "Gvasiks (подтверждение по правилу, решение владельца 2026-10-01; правила и выборка — docs/checks/PROGRAMME-FIELD-REVIEW.md)"
     },
     {
+      "field_code": "345",
+      "programme_name": "Loģistikas sistēmu un piegādes ķēdes vadība",
+      "programme_slug": "dml-33000-en",
+      "source": "name-rules",
+      "university_slug": "rtu",
+      "verification_method": "rule",
+      "verified_at": "2026-10-10T15:22:17.401231+00:00",
+      "verified_by": "Gvasiks (подтверждение по правилу, решение владельца 2026-10-10 для записей, добавленных после 2026-10-01; правила и выборка — docs/checks/PROGRAMME-FIELD-REVIEW.md)"
+    },
+    {
       "field_code": "460",
       "programme_name": "Finanšu inženiermatemātika",
       "programme_slug": "dmn-33000",
@@ -9908,6 +10058,16 @@
       "verification_method": "rule",
       "verified_at": "2026-10-01T16:39:15.266533+00:00",
       "verified_by": "Gvasiks (подтверждение по правилу, решение владельца 2026-10-01; правила и выборка — docs/checks/PROGRAMME-FIELD-REVIEW.md)"
+    },
+    {
+      "field_code": "460",
+      "programme_name": "Finanšu inženiermatemātika",
+      "programme_slug": "dmn-33000-en",
+      "source": "name-rules",
+      "university_slug": "rtu",
+      "verification_method": "rule",
+      "verified_at": "2026-10-10T15:22:17.401231+00:00",
+      "verified_by": "Gvasiks (подтверждение по правилу, решение владельца 2026-10-10 для записей, добавленных после 2026-10-01; правила и выборка — docs/checks/PROGRAMME-FIELD-REVIEW.md)"
     },
     {
       "field_code": "481",
@@ -9940,6 +10100,16 @@
       "verified_by": "Gvasiks (подтверждение по правилу, решение владельца 2026-10-01; правила и выборка — docs/checks/PROGRAMME-FIELD-REVIEW.md)"
     },
     {
+      "field_code": "523",
+      "programme_name": "Telekomunikāciju tehnoloģijas un datu pārraides inženierija",
+      "programme_slug": "ebg-33000-en",
+      "source": "name-rules",
+      "university_slug": "rtu",
+      "verification_method": "rule",
+      "verified_at": "2026-10-10T15:22:17.401231+00:00",
+      "verified_by": "Gvasiks (подтверждение по правилу, решение владельца 2026-10-10 для записей, добавленных после 2026-10-01; правила и выборка — docs/checks/PROGRAMME-FIELD-REVIEW.md)"
+    },
+    {
       "field_code": "850",
       "programme_name": "Vides inženierija",
       "programme_slug": "ebi-32000",
@@ -9950,6 +10120,16 @@
       "verified_by": "Gvasiks (подтверждение по правилу, решение владельца 2026-10-01; правила и выборка — docs/checks/PROGRAMME-FIELD-REVIEW.md)"
     },
     {
+      "field_code": "850",
+      "programme_name": "Vides inženierija",
+      "programme_slug": "ebi-32000-en",
+      "source": "name-rules",
+      "university_slug": "rtu",
+      "verification_method": "rule",
+      "verified_at": "2026-10-10T15:22:17.401231+00:00",
+      "verified_by": "Gvasiks (подтверждение по правилу, решение владельца 2026-10-10 для записей, добавленных после 2026-10-01; правила и выборка — docs/checks/PROGRAMME-FIELD-REVIEW.md)"
+    },
+    {
       "field_code": "523",
       "programme_name": "Adaptronika",
       "programme_slug": "eca-33000",
@@ -9958,6 +10138,16 @@
       "verification_method": "rule",
       "verified_at": "2026-10-01T16:39:15.266533+00:00",
       "verified_by": "Gvasiks (подтверждение по правилу, решение владельца 2026-10-01; правила и выборка — docs/checks/PROGRAMME-FIELD-REVIEW.md)"
+    },
+    {
+      "field_code": "523",
+      "programme_name": "Adaptronika",
+      "programme_slug": "eca-33000-en",
+      "source": "name-rules",
+      "university_slug": "rtu",
+      "verification_method": "rule",
+      "verified_at": "2026-10-10T15:22:17.401231+00:00",
+      "verified_by": "Gvasiks (подтверждение по правилу, решение владельца 2026-10-10 для записей, добавленных после 2026-10-01; правила и выборка — docs/checks/PROGRAMME-FIELD-REVIEW.md)"
     },
     {
       "field_code": "522",
@@ -9990,6 +10180,16 @@
       "verified_by": "Gvasiks (подтверждение по правилу, решение владельца 2026-10-01; правила и выборка — docs/checks/PROGRAMME-FIELD-REVIEW.md)"
     },
     {
+      "field_code": "522",
+      "programme_name": "Viedā elektroenerģētika",
+      "programme_slug": "ecr-33000-en",
+      "source": "name-rules",
+      "university_slug": "rtu",
+      "verification_method": "rule",
+      "verified_at": "2026-10-10T15:22:17.401231+00:00",
+      "verified_by": "Gvasiks (подтверждение по правилу, решение владельца 2026-10-10 для записей, добавленных после 2026-10-01; правила и выборка — docs/checks/PROGRAMME-FIELD-REVIEW.md)"
+    },
+    {
       "field_code": "523",
       "programme_name": "Telemātika un transporta elektroniskās sistēmas",
       "programme_slug": "ecs-33000",
@@ -9998,6 +10198,16 @@
       "verification_method": "rule",
       "verified_at": "2026-10-01T16:39:15.266533+00:00",
       "verified_by": "Gvasiks (подтверждение по правилу, решение владельца 2026-10-01; правила и выборка — docs/checks/PROGRAMME-FIELD-REVIEW.md)"
+    },
+    {
+      "field_code": "523",
+      "programme_name": "Telemātika un transporta elektroniskās sistēmas",
+      "programme_slug": "ecs-33000-en",
+      "source": "name-rules",
+      "university_slug": "rtu",
+      "verification_method": "rule",
+      "verified_at": "2026-10-10T15:22:17.401231+00:00",
+      "verified_by": "Gvasiks (подтверждение по правилу, решение владельца 2026-10-10 для записей, добавленных после 2026-10-01; правила и выборка — docs/checks/PROGRAMME-FIELD-REVIEW.md)"
     },
     {
       "field_code": "523",
@@ -10011,6 +10221,16 @@
     },
     {
       "field_code": "523",
+      "programme_name": "Viedās elektroniskās sistēmas",
+      "programme_slug": "ecv-33000-en",
+      "source": "name-rules",
+      "university_slug": "rtu",
+      "verification_method": "rule",
+      "verified_at": "2026-10-10T15:22:17.401231+00:00",
+      "verified_by": "Gvasiks (подтверждение по правилу, решение владельца 2026-10-10 для записей, добавленных после 2026-10-01; правила и выборка — docs/checks/PROGRAMME-FIELD-REVIEW.md)"
+    },
+    {
+      "field_code": "523",
       "programme_name": "Telekomunikācijas",
       "programme_slug": "edc-33000",
       "source": "name-rules",
@@ -10018,6 +10238,16 @@
       "verification_method": "rule",
       "verified_at": "2026-10-01T16:39:15.266533+00:00",
       "verified_by": "Gvasiks (подтверждение по правилу, решение владельца 2026-10-01; правила и выборка — docs/checks/PROGRAMME-FIELD-REVIEW.md)"
+    },
+    {
+      "field_code": "523",
+      "programme_name": "Telekomunikācijas",
+      "programme_slug": "edc-33000-en",
+      "source": "name-rules",
+      "university_slug": "rtu",
+      "verification_method": "rule",
+      "verified_at": "2026-10-10T15:22:17.401231+00:00",
+      "verified_by": "Gvasiks (подтверждение по правилу, решение владельца 2026-10-10 для записей, добавленных после 2026-10-01; правила и выборка — docs/checks/PROGRAMME-FIELD-REVIEW.md)"
     },
     {
       "field_code": "481",
@@ -10040,6 +10270,16 @@
       "verified_by": "Gvasiks (подтверждение по правилу, решение владельца 2026-10-01; правила и выборка — docs/checks/PROGRAMME-FIELD-REVIEW.md)"
     },
     {
+      "field_code": "481",
+      "programme_name": "E-studiju tehnoloģijas un pārvaldība",
+      "programme_slug": "ede-33000-en",
+      "source": "name-rules",
+      "university_slug": "rtu",
+      "verification_method": "rule",
+      "verified_at": "2026-10-10T15:22:17.401231+00:00",
+      "verified_by": "Gvasiks (подтверждение по правилу, решение владельца 2026-10-10 для записей, добавленных после 2026-10-01; правила и выборка — docs/checks/PROGRAMME-FIELD-REVIEW.md)"
+    },
+    {
       "field_code": "850",
       "programme_name": "Vides inženierija",
       "programme_slug": "edi-32000",
@@ -10050,6 +10290,16 @@
       "verified_by": "Gvasiks (подтверждение по правилу, решение владельца 2026-10-01; правила и выборка — docs/checks/PROGRAMME-FIELD-REVIEW.md)"
     },
     {
+      "field_code": "850",
+      "programme_name": "Vides inženierija",
+      "programme_slug": "edi-32000-en",
+      "source": "name-rules",
+      "university_slug": "rtu",
+      "verification_method": "rule",
+      "verified_at": "2026-10-10T15:22:17.401231+00:00",
+      "verified_by": "Gvasiks (подтверждение по правилу, решение владельца 2026-10-10 для записей, добавленных после 2026-10-01; правила и выборка — docs/checks/PROGRAMME-FIELD-REVIEW.md)"
+    },
+    {
       "field_code": "523",
       "programme_name": "Elektronika",
       "programme_slug": "edj-33000",
@@ -10058,6 +10308,16 @@
       "verification_method": "rule",
       "verified_at": "2026-10-01T16:39:15.266533+00:00",
       "verified_by": "Gvasiks (подтверждение по правилу, решение владельца 2026-10-01; правила и выборка — docs/checks/PROGRAMME-FIELD-REVIEW.md)"
+    },
+    {
+      "field_code": "523",
+      "programme_name": "Elektronika",
+      "programme_slug": "edj-33000-en",
+      "source": "name-rules",
+      "university_slug": "rtu",
+      "verification_method": "rule",
+      "verified_at": "2026-10-10T15:22:17.401231+00:00",
+      "verified_by": "Gvasiks (подтверждение по правилу, решение владельца 2026-10-10 для записей, добавленных после 2026-10-01; правила и выборка — docs/checks/PROGRAMME-FIELD-REVIEW.md)"
     },
     {
       "field_code": "522",
@@ -10071,6 +10331,16 @@
     },
     {
       "field_code": "522",
+      "programme_name": "Elektrotehnoloģiju datorvadība",
+      "programme_slug": "edo-33000-en",
+      "source": "name-rules",
+      "university_slug": "rtu",
+      "verification_method": "rule",
+      "verified_at": "2026-10-10T15:22:17.401231+00:00",
+      "verified_by": "Gvasiks (подтверждение по правилу, решение владельца 2026-10-10 для записей, добавленных после 2026-10-01; правила и выборка — docs/checks/PROGRAMME-FIELD-REVIEW.md)"
+    },
+    {
+      "field_code": "522",
       "programme_name": "Viedā elektroenerģētika",
       "programme_slug": "edr-33000",
       "source": "name-rules",
@@ -10078,6 +10348,16 @@
       "verification_method": "rule",
       "verified_at": "2026-10-01T16:39:15.266533+00:00",
       "verified_by": "Gvasiks (подтверждение по правилу, решение владельца 2026-10-01; правила и выборка — docs/checks/PROGRAMME-FIELD-REVIEW.md)"
+    },
+    {
+      "field_code": "522",
+      "programme_name": "Viedā elektroenerģētika",
+      "programme_slug": "edr-33000-en",
+      "source": "name-rules",
+      "university_slug": "rtu",
+      "verification_method": "rule",
+      "verified_at": "2026-10-10T15:22:17.401231+00:00",
+      "verified_by": "Gvasiks (подтверждение по правилу, решение владельца 2026-10-10 для записей, добавленных после 2026-10-01; правила и выборка — docs/checks/PROGRAMME-FIELD-REVIEW.md)"
     },
     {
       "field_code": "523",
@@ -10088,6 +10368,16 @@
       "verification_method": "rule",
       "verified_at": "2026-10-01T16:39:15.266533+00:00",
       "verified_by": "Gvasiks (подтверждение по правилу, решение владельца 2026-10-01; правила и выборка — docs/checks/PROGRAMME-FIELD-REVIEW.md)"
+    },
+    {
+      "field_code": "523",
+      "programme_name": "Adaptronika",
+      "programme_slug": "ega-33000-en",
+      "source": "name-rules",
+      "university_slug": "rtu",
+      "verification_method": "rule",
+      "verified_at": "2026-10-10T15:22:17.401231+00:00",
+      "verified_by": "Gvasiks (подтверждение по правилу, решение владельца 2026-10-10 для записей, добавленных после 2026-10-01; правила и выборка — docs/checks/PROGRAMME-FIELD-REVIEW.md)"
     },
     {
       "field_code": "522",
@@ -10101,6 +10391,16 @@
     },
     {
       "field_code": "522",
+      "programme_name": "Elektrotehnoloģiju datorvadība",
+      "programme_slug": "ego-33000-en",
+      "source": "name-rules",
+      "university_slug": "rtu",
+      "verification_method": "rule",
+      "verified_at": "2026-10-10T15:22:17.401231+00:00",
+      "verified_by": "Gvasiks (подтверждение по правилу, решение владельца 2026-10-10 для записей, добавленных после 2026-10-01; правила и выборка — docs/checks/PROGRAMME-FIELD-REVIEW.md)"
+    },
+    {
+      "field_code": "522",
       "programme_name": "Viedā elektroenerģētika",
       "programme_slug": "egr-33000",
       "source": "name-rules",
@@ -10108,6 +10408,16 @@
       "verification_method": "rule",
       "verified_at": "2026-10-01T16:39:15.266533+00:00",
       "verified_by": "Gvasiks (подтверждение по правилу, решение владельца 2026-10-01; правила и выборка — docs/checks/PROGRAMME-FIELD-REVIEW.md)"
+    },
+    {
+      "field_code": "522",
+      "programme_name": "Viedā elektroenerģētika",
+      "programme_slug": "egr-33000-en",
+      "source": "name-rules",
+      "university_slug": "rtu",
+      "verification_method": "rule",
+      "verified_at": "2026-10-10T15:22:17.401231+00:00",
+      "verified_by": "Gvasiks (подтверждение по правилу, решение владельца 2026-10-10 для записей, добавленных после 2026-10-01; правила и выборка — docs/checks/PROGRAMME-FIELD-REVIEW.md)"
     },
     {
       "field_code": "523",
@@ -10121,6 +10431,16 @@
     },
     {
       "field_code": "523",
+      "programme_name": "Telemātika un transporta elektroniskās sistēmas",
+      "programme_slug": "egs-33000-en",
+      "source": "name-rules",
+      "university_slug": "rtu",
+      "verification_method": "rule",
+      "verified_at": "2026-10-10T15:22:17.401231+00:00",
+      "verified_by": "Gvasiks (подтверждение по правилу, решение владельца 2026-10-10 для записей, добавленных после 2026-10-01; правила и выборка — docs/checks/PROGRAMME-FIELD-REVIEW.md)"
+    },
+    {
+      "field_code": "523",
       "programme_name": "Viedās elektroniskās sistēmas",
       "programme_slug": "egv-33000",
       "source": "name-rules",
@@ -10128,6 +10448,16 @@
       "verification_method": "rule",
       "verified_at": "2026-10-01T16:39:15.266533+00:00",
       "verified_by": "Gvasiks (подтверждение по правилу, решение владельца 2026-10-01; правила и выборка — docs/checks/PROGRAMME-FIELD-REVIEW.md)"
+    },
+    {
+      "field_code": "523",
+      "programme_name": "Viedās elektroniskās sistēmas",
+      "programme_slug": "egv-33000-en",
+      "source": "name-rules",
+      "university_slug": "rtu",
+      "verification_method": "rule",
+      "verified_at": "2026-10-10T15:22:17.401231+00:00",
+      "verified_by": "Gvasiks (подтверждение по правилу, решение владельца 2026-10-10 для записей, добавленных после 2026-10-01; правила и выборка — docs/checks/PROGRAMME-FIELD-REVIEW.md)"
     },
     {
       "field_code": "523",
@@ -10140,6 +10470,16 @@
       "verified_by": "Gvasiks (подтверждение по правилу, решение владельца 2026-10-01; правила и выборка — docs/checks/PROGRAMME-FIELD-REVIEW.md)"
     },
     {
+      "field_code": "523",
+      "programme_name": "Telekomunikāciju tehnoloģijas un tīklu pārvaldība",
+      "programme_slug": "emh-33000-en",
+      "source": "name-rules",
+      "university_slug": "rtu",
+      "verification_method": "rule",
+      "verified_at": "2026-10-10T15:22:17.401231+00:00",
+      "verified_by": "Gvasiks (подтверждение по правилу, решение владельца 2026-10-10 для записей, добавленных после 2026-10-01; правила и выборка — docs/checks/PROGRAMME-FIELD-REVIEW.md)"
+    },
+    {
       "field_code": "850",
       "programme_name": "Vides inženierija",
       "programme_slug": "emi-32000",
@@ -10150,6 +10490,16 @@
       "verified_by": "Gvasiks (подтверждение по правилу, решение владельца 2026-10-01; правила и выборка — docs/checks/PROGRAMME-FIELD-REVIEW.md)"
     },
     {
+      "field_code": "850",
+      "programme_name": "Vides inženierija",
+      "programme_slug": "emi-32000-en",
+      "source": "name-rules",
+      "university_slug": "rtu",
+      "verification_method": "rule",
+      "verified_at": "2026-10-10T15:22:17.401231+00:00",
+      "verified_by": "Gvasiks (подтверждение по правилу, решение владельца 2026-10-10 для записей, добавленных после 2026-10-01; правила и выборка — docs/checks/PROGRAMME-FIELD-REVIEW.md)"
+    },
+    {
       "field_code": "441",
       "programme_name": "Daļiņu fizika un paātrinātāju tehnoloģijas",
       "programme_slug": "fdd-32000",
@@ -10158,6 +10508,16 @@
       "verification_method": "rule",
       "verified_at": "2026-10-01T16:39:15.266533+00:00",
       "verified_by": "Gvasiks (подтверждение по правилу, решение владельца 2026-10-01; правила и выборка — docs/checks/PROGRAMME-FIELD-REVIEW.md)"
+    },
+    {
+      "field_code": "441",
+      "programme_name": "Daļiņu fizika un paātrinātāju tehnoloģijas",
+      "programme_slug": "fdd-32000-en",
+      "source": "name-rules",
+      "university_slug": "rtu",
+      "verification_method": "rule",
+      "verified_at": "2026-10-10T15:22:17.401231+00:00",
+      "verified_by": "Gvasiks (подтверждение по правилу, решение владельца 2026-10-10 для записей, добавленных после 2026-10-01; правила и выборка — docs/checks/PROGRAMME-FIELD-REVIEW.md)"
     },
     {
       "field_code": "726",
@@ -10232,12 +10592,32 @@
     {
       "field_code": "142",
       "programme_name": "Izglītības zinātnes",
+      "programme_slug": "gdi-0r000-en",
+      "source": "name-rules",
+      "university_slug": "rtu",
+      "verification_method": "rule",
+      "verified_at": "2026-10-10T15:22:17.401231+00:00",
+      "verified_by": "Gvasiks (подтверждение по правилу, решение владельца 2026-10-10 для записей, добавленных после 2026-10-01; правила и выборка — docs/checks/PROGRAMME-FIELD-REVIEW.md)"
+    },
+    {
+      "field_code": "142",
+      "programme_name": "Izglītības zinātnes",
       "programme_slug": "gdi-0r000-liepaja",
       "source": "name-rules",
       "university_slug": "rtu",
       "verification_method": "rule",
       "verified_at": "2026-10-01T16:39:15.266533+00:00",
       "verified_by": "Gvasiks (подтверждение по правилу, решение владельца 2026-10-01; правила и выборка — docs/checks/PROGRAMME-FIELD-REVIEW.md)"
+    },
+    {
+      "field_code": "142",
+      "programme_name": "Izglītības zinātnes",
+      "programme_slug": "gdi-0r000-liepaja-en",
+      "source": "name-rules",
+      "university_slug": "rtu",
+      "verification_method": "rule",
+      "verified_at": "2026-10-10T15:22:17.401231+00:00",
+      "verified_by": "Gvasiks (подтверждение по правилу, решение владельца 2026-10-10 для записей, добавленных после 2026-10-01; правила и выборка — docs/checks/PROGRAMME-FIELD-REVIEW.md)"
     },
     {
       "field_code": "141",
@@ -10272,12 +10652,32 @@
     {
       "field_code": "142",
       "programme_name": "Izglītības zinātnes",
+      "programme_slug": "gmi-0l000-liepaja-en",
+      "source": "name-rules",
+      "university_slug": "rtu",
+      "verification_method": "rule",
+      "verified_at": "2026-10-10T15:22:17.401231+00:00",
+      "verified_by": "Gvasiks (подтверждение по правилу, решение владельца 2026-10-10 для записей, добавленных после 2026-10-01; правила и выборка — docs/checks/PROGRAMME-FIELD-REVIEW.md)"
+    },
+    {
+      "field_code": "142",
+      "programme_name": "Izglītības zinātnes",
       "programme_slug": "gmi-0l000-rezekne",
       "source": "name-rules",
       "university_slug": "rtu",
       "verification_method": "rule",
       "verified_at": "2026-10-01T16:39:15.266533+00:00",
       "verified_by": "Gvasiks (подтверждение по правилу, решение владельца 2026-10-01; правила и выборка — docs/checks/PROGRAMME-FIELD-REVIEW.md)"
+    },
+    {
+      "field_code": "142",
+      "programme_name": "Izglītības zinātnes",
+      "programme_slug": "gmi-0l000-rezekne-en",
+      "source": "name-rules",
+      "university_slug": "rtu",
+      "verification_method": "rule",
+      "verified_at": "2026-10-10T15:22:17.401231+00:00",
+      "verified_by": "Gvasiks (подтверждение по правилу, решение владельца 2026-10-10 для записей, добавленных после 2026-10-01; правила и выборка — docs/checks/PROGRAMME-FIELD-REVIEW.md)"
     },
     {
       "field_code": "141",
@@ -10331,6 +10731,16 @@
     },
     {
       "field_code": "222",
+      "programme_name": "Valodu un literatūras studijas",
+      "programme_slug": "hdv-0l000-liepaja-en",
+      "source": "name-rules",
+      "university_slug": "rtu",
+      "verification_method": "rule",
+      "verified_at": "2026-10-10T15:22:17.401231+00:00",
+      "verified_by": "Gvasiks (подтверждение по правилу, решение владельца 2026-10-10 для записей, добавленных после 2026-10-01; правила и выборка — docs/checks/PROGRAMME-FIELD-REVIEW.md)"
+    },
+    {
+      "field_code": "222",
       "programme_name": "Tehniskā tulkošana un terminoloģija",
       "programme_slug": "hgg-33000",
       "source": "name-rules",
@@ -10348,6 +10758,16 @@
       "verification_method": "rule",
       "verified_at": "2026-10-01T16:39:15.266533+00:00",
       "verified_by": "Gvasiks (подтверждение по правилу, решение владельца 2026-10-01; правила и выборка — docs/checks/PROGRAMME-FIELD-REVIEW.md)"
+    },
+    {
+      "field_code": "222",
+      "programme_name": "Digitālās humanitārās zinātnes",
+      "programme_slug": "hmd-33000-en",
+      "source": "name-rules",
+      "university_slug": "rtu",
+      "verification_method": "rule",
+      "verified_at": "2026-10-10T15:22:17.401231+00:00",
+      "verified_by": "Gvasiks (подтверждение по правилу, решение владельца 2026-10-10 для записей, добавленных после 2026-10-01; правила и выборка — docs/checks/PROGRAMME-FIELD-REVIEW.md)"
     },
     {
       "field_code": "222",
@@ -10431,6 +10851,16 @@
     },
     {
       "field_code": "345",
+      "programme_name": "Muitas un nodokļu administrēšana",
+      "programme_slug": "icm-22000-en",
+      "source": "name-rules",
+      "university_slug": "rtu",
+      "verification_method": "rule",
+      "verified_at": "2026-10-10T15:22:17.401231+00:00",
+      "verified_by": "Gvasiks (подтверждение по правилу, решение владельца 2026-10-10 для записей, добавленных после 2026-10-01; правила и выборка — docs/checks/PROGRAMME-FIELD-REVIEW.md)"
+    },
+    {
+      "field_code": "345",
       "programme_name": "Nekustamā īpašuma pārvaldība",
       "programme_slug": "icn-31000",
       "source": "name-rules",
@@ -10462,12 +10892,32 @@
     {
       "field_code": "345",
       "programme_name": "Uzņēmējdarbība un vadīšana",
+      "programme_slug": "icu-22000-liepaja-en",
+      "source": "name-rules",
+      "university_slug": "rtu",
+      "verification_method": "rule",
+      "verified_at": "2026-10-10T15:22:17.401231+00:00",
+      "verified_by": "Gvasiks (подтверждение по правилу, решение владельца 2026-10-10 для записей, добавленных после 2026-10-01; правила и выборка — docs/checks/PROGRAMME-FIELD-REVIEW.md)"
+    },
+    {
+      "field_code": "345",
+      "programme_name": "Uzņēmējdarbība un vadīšana",
       "programme_slug": "icu-22000-riga",
       "source": "name-rules",
       "university_slug": "rtu",
       "verification_method": "rule",
       "verified_at": "2026-10-01T16:39:15.266533+00:00",
       "verified_by": "Gvasiks (подтверждение по правилу, решение владельца 2026-10-01; правила и выборка — docs/checks/PROGRAMME-FIELD-REVIEW.md)"
+    },
+    {
+      "field_code": "345",
+      "programme_name": "Uzņēmējdarbība un vadīšana",
+      "programme_slug": "icu-22000-riga-en",
+      "source": "name-rules",
+      "university_slug": "rtu",
+      "verification_method": "rule",
+      "verified_at": "2026-10-10T15:22:17.401231+00:00",
+      "verified_by": "Gvasiks (подтверждение по правилу, решение владельца 2026-10-10 для записей, добавленных после 2026-10-01; правила и выборка — docs/checks/PROGRAMME-FIELD-REVIEW.md)"
     },
     {
       "field_code": "345",
@@ -10478,6 +10928,16 @@
       "verification_method": "rule",
       "verified_at": "2026-10-01T16:39:15.266533+00:00",
       "verified_by": "Gvasiks (подтверждение по правилу, решение владельца 2026-10-01; правила и выборка — docs/checks/PROGRAMME-FIELD-REVIEW.md)"
+    },
+    {
+      "field_code": "345",
+      "programme_name": "Vadībzinātne un ekonomika",
+      "programme_slug": "idu-22000-en",
+      "source": "name-rules",
+      "university_slug": "rtu",
+      "verification_method": "rule",
+      "verified_at": "2026-10-10T15:22:17.401231+00:00",
+      "verified_by": "Gvasiks (подтверждение по правилу, решение владельца 2026-10-10 для записей, добавленных после 2026-10-01; правила и выборка — docs/checks/PROGRAMME-FIELD-REVIEW.md)"
     },
     {
       "field_code": "862",
@@ -10501,6 +10961,16 @@
     },
     {
       "field_code": "345",
+      "programme_name": "Inovācijas un uzņēmējdarbība",
+      "programme_slug": "igi-22000-en",
+      "source": "name-rules",
+      "university_slug": "rtu",
+      "verification_method": "rule",
+      "verified_at": "2026-10-10T15:22:17.401231+00:00",
+      "verified_by": "Gvasiks (подтверждение по правилу, решение владельца 2026-10-10 для записей, добавленных после 2026-10-01; правила и выборка — docs/checks/PROGRAMME-FIELD-REVIEW.md)"
+    },
+    {
+      "field_code": "345",
       "programme_name": "Visaptverošā kvalitātes vadība",
       "programme_slug": "igk-22000",
       "source": "name-rules",
@@ -10518,6 +10988,16 @@
       "verification_method": "rule",
       "verified_at": "2026-10-01T16:39:15.266533+00:00",
       "verified_by": "Gvasiks (подтверждение по правилу, решение владельца 2026-10-01; правила и выборка — docs/checks/PROGRAMME-FIELD-REVIEW.md)"
+    },
+    {
+      "field_code": "345",
+      "programme_name": "Muitas un nodokļu administrēšana",
+      "programme_slug": "igm-22000-en",
+      "source": "name-rules",
+      "university_slug": "rtu",
+      "verification_method": "rule",
+      "verified_at": "2026-10-10T15:22:17.401231+00:00",
+      "verified_by": "Gvasiks (подтверждение по правилу, решение владельца 2026-10-10 для записей, добавленных после 2026-10-01; правила и выборка — docs/checks/PROGRAMME-FIELD-REVIEW.md)"
     },
     {
       "field_code": "345",
@@ -10541,6 +11021,16 @@
     },
     {
       "field_code": "345",
+      "programme_name": "Uzņēmumu un organizāciju vadīšana",
+      "programme_slug": "igv-02c60-en",
+      "source": "name-rules",
+      "university_slug": "rtu",
+      "verification_method": "rule",
+      "verified_at": "2026-10-10T15:22:17.401231+00:00",
+      "verified_by": "Gvasiks (подтверждение по правилу, решение владельца 2026-10-10 для записей, добавленных после 2026-10-01; правила и выборка — docs/checks/PROGRAMME-FIELD-REVIEW.md)"
+    },
+    {
+      "field_code": "345",
       "programme_name": "Būvuzņēmējdarbības un nekustamā īpašuma vadīšana",
       "programme_slug": "igw-31000",
       "source": "name-rules",
@@ -10548,6 +11038,16 @@
       "verification_method": "rule",
       "verified_at": "2026-10-01T16:39:15.266533+00:00",
       "verified_by": "Gvasiks (подтверждение по правилу, решение владельца 2026-10-01; правила и выборка — docs/checks/PROGRAMME-FIELD-REVIEW.md)"
+    },
+    {
+      "field_code": "345",
+      "programme_name": "Būvuzņēmējdarbības un nekustamā īpašuma vadīšana",
+      "programme_slug": "igw-31000-en",
+      "source": "name-rules",
+      "university_slug": "rtu",
+      "verification_method": "rule",
+      "verified_at": "2026-10-10T15:22:17.401231+00:00",
+      "verified_by": "Gvasiks (подтверждение по правилу, решение владельца 2026-10-10 для записей, добавленных после 2026-10-01; правила и выборка — docs/checks/PROGRAMME-FIELD-REVIEW.md)"
     },
     {
       "field_code": "861",
@@ -10601,6 +11101,16 @@
     },
     {
       "field_code": "345",
+      "programme_name": "Biznesa vadība",
+      "programme_slug": "jba-0r000-en",
+      "source": "name-rules",
+      "university_slug": "rtu",
+      "verification_method": "rule",
+      "verified_at": "2026-10-10T15:22:17.401231+00:00",
+      "verified_by": "Gvasiks (подтверждение по правилу, решение владельца 2026-10-10 для записей, добавленных после 2026-10-01; правила и выборка — docs/checks/PROGRAMME-FIELD-REVIEW.md)"
+    },
+    {
+      "field_code": "345",
       "programme_name": "Uzņēmējdarbība",
       "programme_slug": "jcd-0r000",
       "source": "name-rules",
@@ -10608,6 +11118,16 @@
       "verification_method": "rule",
       "verified_at": "2026-10-01T16:39:15.266533+00:00",
       "verified_by": "Gvasiks (подтверждение по правилу, решение владельца 2026-10-01; правила и выборка — docs/checks/PROGRAMME-FIELD-REVIEW.md)"
+    },
+    {
+      "field_code": "345",
+      "programme_name": "Uzņēmējdarbība",
+      "programme_slug": "jcd-0r000-en",
+      "source": "name-rules",
+      "university_slug": "rtu",
+      "verification_method": "rule",
+      "verified_at": "2026-10-10T15:22:17.401231+00:00",
+      "verified_by": "Gvasiks (подтверждение по правилу, решение владельца 2026-10-10 для записей, добавленных после 2026-10-01; правила и выборка — docs/checks/PROGRAMME-FIELD-REVIEW.md)"
     },
     {
       "field_code": "861",
@@ -10631,6 +11151,16 @@
     },
     {
       "field_code": "345",
+      "programme_name": "Pilsētu un reģionu teritoriālās attīstības inženierija",
+      "programme_slug": "jgu-22000-en",
+      "source": "name-rules",
+      "university_slug": "rtu",
+      "verification_method": "rule",
+      "verified_at": "2026-10-10T15:22:17.401231+00:00",
+      "verified_by": "Gvasiks (подтверждение по правилу, решение владельца 2026-10-10 для записей, добавленных после 2026-10-01; правила и выборка — docs/checks/PROGRAMME-FIELD-REVIEW.md)"
+    },
+    {
+      "field_code": "345",
       "programme_name": "Vadības zinības",
       "programme_slug": "jgy-0l000-liepaja",
       "source": "name-rules",
@@ -10648,6 +11178,16 @@
       "verification_method": "rule",
       "verified_at": "2026-10-01T16:39:15.266533+00:00",
       "verified_by": "Gvasiks (подтверждение по правилу, решение владельца 2026-10-01; правила и выборка — docs/checks/PROGRAMME-FIELD-REVIEW.md)"
+    },
+    {
+      "field_code": "345",
+      "programme_name": "Vadības zinātne",
+      "programme_slug": "jmb-0r000-en",
+      "source": "name-rules",
+      "university_slug": "rtu",
+      "verification_method": "rule",
+      "verified_at": "2026-10-10T15:22:17.401231+00:00",
+      "verified_by": "Gvasiks (подтверждение по правилу, решение владельца 2026-10-10 для записей, добавленных после 2026-10-01; правила и выборка — docs/checks/PROGRAMME-FIELD-REVIEW.md)"
     },
     {
       "field_code": "861",
@@ -10670,6 +11210,16 @@
       "verified_by": "Gvasiks (подтверждение по правилу, решение владельца 2026-10-01; правила и выборка — docs/checks/PROGRAMME-FIELD-REVIEW.md)"
     },
     {
+      "field_code": "345",
+      "programme_name": "Radošās industrijas un izaugsmes menedžments",
+      "programme_slug": "jmz-22000-en",
+      "source": "name-rules",
+      "university_slug": "rtu",
+      "verification_method": "rule",
+      "verified_at": "2026-10-10T15:22:17.401231+00:00",
+      "verified_by": "Gvasiks (подтверждение по правилу, решение владельца 2026-10-10 для записей, добавленных после 2026-10-01; правила и выборка — docs/checks/PROGRAMME-FIELD-REVIEW.md)"
+    },
+    {
       "field_code": "524",
       "programme_name": "Ķīmija un ķīmijas tehnoloģija",
       "programme_slug": "kbm-32000",
@@ -10678,6 +11228,16 @@
       "verification_method": "rule",
       "verified_at": "2026-10-01T16:39:15.266533+00:00",
       "verified_by": "Gvasiks (подтверждение по правилу, решение владельца 2026-10-01; правила и выборка — docs/checks/PROGRAMME-FIELD-REVIEW.md)"
+    },
+    {
+      "field_code": "524",
+      "programme_name": "Ķīmija un ķīmijas tehnoloģija",
+      "programme_slug": "kbm-32000-en",
+      "source": "name-rules",
+      "university_slug": "rtu",
+      "verification_method": "rule",
+      "verified_at": "2026-10-10T15:22:17.401231+00:00",
+      "verified_by": "Gvasiks (подтверждение по правилу, решение владельца 2026-10-10 для записей, добавленных после 2026-10-01; правила и выборка — docs/checks/PROGRAMME-FIELD-REVIEW.md)"
     },
     {
       "field_code": "524",
@@ -10691,6 +11251,16 @@
     },
     {
       "field_code": "524",
+      "programme_name": "Ķīmija, materiālzinātne un tehnoloģijas",
+      "programme_slug": "kdi-32000-en",
+      "source": "name-rules",
+      "university_slug": "rtu",
+      "verification_method": "rule",
+      "verified_at": "2026-10-10T15:22:17.401231+00:00",
+      "verified_by": "Gvasiks (подтверждение по правилу, решение владельца 2026-10-10 для записей, добавленных после 2026-10-01; правила и выборка — docs/checks/PROGRAMME-FIELD-REVIEW.md)"
+    },
+    {
+      "field_code": "524",
       "programme_name": "Ķīmija un ķīmijas tehnoloģija",
       "programme_slug": "kmm-32000",
       "source": "name-rules",
@@ -10701,6 +11271,16 @@
     },
     {
       "field_code": "524",
+      "programme_name": "Ķīmija un ķīmijas tehnoloģija",
+      "programme_slug": "kmm-32000-en",
+      "source": "name-rules",
+      "university_slug": "rtu",
+      "verification_method": "rule",
+      "verified_at": "2026-10-10T15:22:17.401231+00:00",
+      "verified_by": "Gvasiks (подтверждение по правилу, решение владельца 2026-10-10 для записей, добавленных после 2026-10-01; правила и выборка — docs/checks/PROGRAMME-FIELD-REVIEW.md)"
+    },
+    {
+      "field_code": "524",
       "programme_name": "Rūpnieciskā un vides biotehnoloģija",
       "programme_slug": "kmr-32000",
       "source": "name-rules",
@@ -10708,6 +11288,16 @@
       "verification_method": "rule",
       "verified_at": "2026-10-01T16:39:15.266533+00:00",
       "verified_by": "Gvasiks (подтверждение по правилу, решение владельца 2026-10-01; правила и выборка — docs/checks/PROGRAMME-FIELD-REVIEW.md)"
+    },
+    {
+      "field_code": "524",
+      "programme_name": "Rūpnieciskā un vides biotehnoloģija",
+      "programme_slug": "kmr-32000-en",
+      "source": "name-rules",
+      "university_slug": "rtu",
+      "verification_method": "rule",
+      "verified_at": "2026-10-10T15:22:17.401231+00:00",
+      "verified_by": "Gvasiks (подтверждение по правилу, решение владельца 2026-10-10 для записей, добавленных после 2026-10-01; правила и выборка — docs/checks/PROGRAMME-FIELD-REVIEW.md)"
     },
     {
       "field_code": "380",
@@ -10750,6 +11340,16 @@
       "verified_by": "Gvasiks (подтверждение по правилу, решение владельца 2026-10-01; правила и выборка — docs/checks/PROGRAMME-FIELD-REVIEW.md)"
     },
     {
+      "field_code": "521",
+      "programme_name": "Inženiertehnika, mehānika un mašīnbūve",
+      "programme_slug": "mbm-31000-en",
+      "source": "name-rules",
+      "university_slug": "rtu",
+      "verification_method": "rule",
+      "verified_at": "2026-10-10T15:22:17.401231+00:00",
+      "verified_by": "Gvasiks (подтверждение по правилу, решение владельца 2026-10-10 для записей, добавленных после 2026-10-01; правила и выборка — docs/checks/PROGRAMME-FIELD-REVIEW.md)"
+    },
+    {
       "field_code": "525",
       "programme_name": "Aeronautikas un transporta sistēmu inženierija",
       "programme_slug": "mbs-31000",
@@ -10761,6 +11361,16 @@
     },
     {
       "field_code": "525",
+      "programme_name": "Aeronautikas un transporta sistēmu inženierija",
+      "programme_slug": "mbs-31000-en",
+      "source": "name-rules",
+      "university_slug": "rtu",
+      "verification_method": "rule",
+      "verified_at": "2026-10-10T15:22:17.401231+00:00",
+      "verified_by": "Gvasiks (подтверждение по правилу, решение владельца 2026-10-10 для записей, добавленных после 2026-10-01; правила и выборка — docs/checks/PROGRAMME-FIELD-REVIEW.md)"
+    },
+    {
+      "field_code": "525",
       "programme_name": "Aviācijas transports",
       "programme_slug": "mca-31000",
       "source": "name-rules",
@@ -10768,6 +11378,16 @@
       "verification_method": "rule",
       "verified_at": "2026-10-01T16:39:15.266533+00:00",
       "verified_by": "Gvasiks (подтверждение по правилу, решение владельца 2026-10-01; правила и выборка — docs/checks/PROGRAMME-FIELD-REVIEW.md)"
+    },
+    {
+      "field_code": "525",
+      "programme_name": "Aviācijas transports",
+      "programme_slug": "mca-31000-en",
+      "source": "name-rules",
+      "university_slug": "rtu",
+      "verification_method": "rule",
+      "verified_at": "2026-10-10T15:22:17.401231+00:00",
+      "verified_by": "Gvasiks (подтверждение по правилу, решение владельца 2026-10-10 для записей, добавленных после 2026-10-01; правила и выборка — docs/checks/PROGRAMME-FIELD-REVIEW.md)"
     },
     {
       "field_code": "523",
@@ -10810,6 +11430,26 @@
       "verified_by": "Gvasiks (подтверждение по правилу, решение владельца 2026-10-01; правила и выборка — docs/checks/PROGRAMME-FIELD-REVIEW.md)"
     },
     {
+      "field_code": "529",
+      "programme_name": "Medicīnas inženierija un fizika",
+      "programme_slug": "mcf-31000-en",
+      "source": "name-rules",
+      "university_slug": "rtu",
+      "verification_method": "rule",
+      "verified_at": "2026-10-10T15:22:17.401231+00:00",
+      "verified_by": "Gvasiks (подтверждение по правилу, решение владельца 2026-10-10 для записей, добавленных после 2026-10-01; правила и выборка — docs/checks/PROGRAMME-FIELD-REVIEW.md)"
+    },
+    {
+      "field_code": "522",
+      "programme_name": "Siltumenerģētika un siltumtehnika",
+      "programme_slug": "mcg-31000",
+      "source": "name-rules",
+      "university_slug": "rtu",
+      "verification_method": "rule",
+      "verified_at": "2026-10-10T15:22:17.401231+00:00",
+      "verified_by": "Gvasiks (подтверждение по правилу, решение владельца 2026-10-10 для записей, добавленных после 2026-10-01; правила и выборка — docs/checks/PROGRAMME-FIELD-REVIEW.md)"
+    },
+    {
       "field_code": "521",
       "programme_name": "Mašīnu un aparātu būvniecība",
       "programme_slug": "mcn-31000",
@@ -10850,6 +11490,16 @@
       "verified_by": "Gvasiks (подтверждение по правилу, решение владельца 2026-10-01; правила и выборка — docs/checks/PROGRAMME-FIELD-REVIEW.md)"
     },
     {
+      "field_code": "521",
+      "programme_name": "Mašīnbūve un mehānika",
+      "programme_slug": "mdc-31000-en",
+      "source": "name-rules",
+      "university_slug": "rtu",
+      "verification_method": "rule",
+      "verified_at": "2026-10-10T15:22:17.401231+00:00",
+      "verified_by": "Gvasiks (подтверждение по правилу, решение владельца 2026-10-10 для записей, добавленных после 2026-10-01; правила и выборка — docs/checks/PROGRAMME-FIELD-REVIEW.md)"
+    },
+    {
       "field_code": "840",
       "programme_name": "Transports",
       "programme_slug": "mdt-31000",
@@ -10860,6 +11510,16 @@
       "verified_by": "Gvasiks (подтверждение по правилу, решение владельца 2026-10-01; правила и выборка — docs/checks/PROGRAMME-FIELD-REVIEW.md)"
     },
     {
+      "field_code": "840",
+      "programme_name": "Transports",
+      "programme_slug": "mdt-31000-en",
+      "source": "name-rules",
+      "university_slug": "rtu",
+      "verification_method": "rule",
+      "verified_at": "2026-10-10T15:22:17.401231+00:00",
+      "verified_by": "Gvasiks (подтверждение по правилу, решение владельца 2026-10-10 для записей, добавленных после 2026-10-01; правила и выборка — docs/checks/PROGRAMME-FIELD-REVIEW.md)"
+    },
+    {
       "field_code": "529",
       "programme_name": "Medicīnas inženierija un fizika",
       "programme_slug": "mgf-31000",
@@ -10868,6 +11528,16 @@
       "verification_method": "rule",
       "verified_at": "2026-10-01T16:39:15.266533+00:00",
       "verified_by": "Gvasiks (подтверждение по правилу, решение владельца 2026-10-01; правила и выборка — docs/checks/PROGRAMME-FIELD-REVIEW.md)"
+    },
+    {
+      "field_code": "529",
+      "programme_name": "Medicīnas inženierija un fizika",
+      "programme_slug": "mgf-31000-en",
+      "source": "name-rules",
+      "university_slug": "rtu",
+      "verification_method": "rule",
+      "verified_at": "2026-10-10T15:22:17.401231+00:00",
+      "verified_by": "Gvasiks (подтверждение по правилу, решение владельца 2026-10-10 для записей, добавленных после 2026-10-01; правила и выборка — docs/checks/PROGRAMME-FIELD-REVIEW.md)"
     },
     {
       "field_code": "525",
@@ -10890,6 +11560,16 @@
       "verified_by": "Gvasiks (подтверждение по правилу, решение владельца 2026-10-01; правила и выборка — docs/checks/PROGRAMME-FIELD-REVIEW.md)"
     },
     {
+      "field_code": "525",
+      "programme_name": "Aviācijas transports",
+      "programme_slug": "mma-31000-en",
+      "source": "name-rules",
+      "university_slug": "rtu",
+      "verification_method": "rule",
+      "verified_at": "2026-10-10T15:22:17.401231+00:00",
+      "verified_by": "Gvasiks (подтверждение по правилу, решение владельца 2026-10-10 для записей, добавленных после 2026-10-01; правила и выборка — docs/checks/PROGRAMME-FIELD-REVIEW.md)"
+    },
+    {
       "field_code": "521",
       "programme_name": "Inženiertehnika, mehānika un mašīnbūve",
       "programme_slug": "mmm-31000",
@@ -10900,6 +11580,16 @@
       "verified_by": "Gvasiks (подтверждение по правилу, решение владельца 2026-10-01; правила и выборка — docs/checks/PROGRAMME-FIELD-REVIEW.md)"
     },
     {
+      "field_code": "521",
+      "programme_name": "Inženiertehnika, mehānika un mašīnbūve",
+      "programme_slug": "mmm-31000-en",
+      "source": "name-rules",
+      "university_slug": "rtu",
+      "verification_method": "rule",
+      "verified_at": "2026-10-10T15:22:17.401231+00:00",
+      "verified_by": "Gvasiks (подтверждение по правилу, решение владельца 2026-10-10 для записей, добавленных после 2026-10-01; правила и выборка — docs/checks/PROGRAMME-FIELD-REVIEW.md)"
+    },
+    {
       "field_code": "525",
       "programme_name": "Aerokosmisko sistēmu inženierija",
       "programme_slug": "mmo-31000",
@@ -10908,6 +11598,16 @@
       "verification_method": "rule",
       "verified_at": "2026-10-01T16:39:15.266533+00:00",
       "verified_by": "Gvasiks (подтверждение по правилу, решение владельца 2026-10-01; правила и выборка — docs/checks/PROGRAMME-FIELD-REVIEW.md)"
+    },
+    {
+      "field_code": "525",
+      "programme_name": "Aerokosmisko sistēmu inženierija",
+      "programme_slug": "mmo-31000-en",
+      "source": "name-rules",
+      "university_slug": "rtu",
+      "verification_method": "rule",
+      "verified_at": "2026-10-10T15:22:17.401231+00:00",
+      "verified_by": "Gvasiks (подтверждение по правилу, решение владельца 2026-10-10 для записей, добавленных после 2026-10-01; правила и выборка — docs/checks/PROGRAMME-FIELD-REVIEW.md)"
     },
     {
       "field_code": "521",
@@ -10921,6 +11621,16 @@
     },
     {
       "field_code": "521",
+      "programme_name": "Ražošanas tehnoloģija",
+      "programme_slug": "mmr-31000-en",
+      "source": "name-rules",
+      "university_slug": "rtu",
+      "verification_method": "rule",
+      "verified_at": "2026-10-10T15:22:17.401231+00:00",
+      "verified_by": "Gvasiks (подтверждение по правилу, решение владельца 2026-10-10 для записей, добавленных после 2026-10-01; правила и выборка — docs/checks/PROGRAMME-FIELD-REVIEW.md)"
+    },
+    {
+      "field_code": "521",
       "programme_name": "Lāzertehnoloģijas",
       "programme_slug": "ndl-0r000",
       "source": "name-rules",
@@ -10928,6 +11638,16 @@
       "verification_method": "rule",
       "verified_at": "2026-10-01T16:39:15.266533+00:00",
       "verified_by": "Gvasiks (подтверждение по правилу, решение владельца 2026-10-01; правила и выборка — docs/checks/PROGRAMME-FIELD-REVIEW.md)"
+    },
+    {
+      "field_code": "521",
+      "programme_name": "Lāzertehnoloģijas",
+      "programme_slug": "ndl-0r000-en",
+      "source": "name-rules",
+      "university_slug": "rtu",
+      "verification_method": "rule",
+      "verified_at": "2026-10-10T15:22:17.401231+00:00",
+      "verified_by": "Gvasiks (подтверждение по правилу, решение владельца 2026-10-10 для записей, добавленных после 2026-10-01; правила и выборка — docs/checks/PROGRAMME-FIELD-REVIEW.md)"
     },
     {
       "field_code": "521",
@@ -10950,6 +11670,16 @@
       "verified_by": "Gvasiks (подтверждение по правилу, решение владельца 2026-10-01; правила и выборка — docs/checks/PROGRAMME-FIELD-REVIEW.md)"
     },
     {
+      "field_code": "521",
+      "programme_name": "Lāzertehnoloģijas",
+      "programme_slug": "nml-0r000-en",
+      "source": "name-rules",
+      "university_slug": "rtu",
+      "verification_method": "rule",
+      "verified_at": "2026-10-10T15:22:17.401231+00:00",
+      "verified_by": "Gvasiks (подтверждение по правилу, решение владельца 2026-10-10 для записей, добавленных после 2026-10-01; правила и выборка — docs/checks/PROGRAMME-FIELD-REVIEW.md)"
+    },
+    {
       "field_code": "526",
       "programme_name": "Industriālā inženierija un vadība",
       "programme_slug": "nmz-22000",
@@ -10958,6 +11688,16 @@
       "verification_method": "rule",
       "verified_at": "2026-10-01T16:39:15.266533+00:00",
       "verified_by": "Gvasiks (подтверждение по правилу, решение владельца 2026-10-01; правила и выборка — docs/checks/PROGRAMME-FIELD-REVIEW.md)"
+    },
+    {
+      "field_code": "526",
+      "programme_name": "Industriālā inženierija un vadība",
+      "programme_slug": "nmz-22000-en",
+      "source": "name-rules",
+      "university_slug": "rtu",
+      "verification_method": "rule",
+      "verified_at": "2026-10-10T15:22:17.401231+00:00",
+      "verified_by": "Gvasiks (подтверждение по правилу, решение владельца 2026-10-10 для записей, добавленных после 2026-10-01; правила и выборка — docs/checks/PROGRAMME-FIELD-REVIEW.md)"
     },
     {
       "field_code": "541",
@@ -11031,6 +11771,16 @@
     },
     {
       "field_code": "840",
+      "programme_name": "Jūras transports - kuģa elektroautomātika",
+      "programme_slug": "uce-0j000-riga-en",
+      "source": "name-rules",
+      "university_slug": "rtu",
+      "verification_method": "rule",
+      "verified_at": "2026-10-10T15:22:17.401231+00:00",
+      "verified_by": "Gvasiks (подтверждение по правилу, решение владельца 2026-10-10 для записей, добавленных после 2026-10-01; правила и выборка — docs/checks/PROGRAMME-FIELD-REVIEW.md)"
+    },
+    {
+      "field_code": "840",
       "programme_name": "Jūras transports - kuģa mehānika",
       "programme_slug": "ucn-0j000-riga",
       "source": "name-rules",
@@ -11038,6 +11788,16 @@
       "verification_method": "rule",
       "verified_at": "2026-10-01T16:39:15.266533+00:00",
       "verified_by": "Gvasiks (подтверждение по правилу, решение владельца 2026-10-01; правила и выборка — docs/checks/PROGRAMME-FIELD-REVIEW.md)"
+    },
+    {
+      "field_code": "840",
+      "programme_name": "Jūras transports - kuģa mehānika",
+      "programme_slug": "ucn-0j000-riga-en",
+      "source": "name-rules",
+      "university_slug": "rtu",
+      "verification_method": "rule",
+      "verified_at": "2026-10-10T15:22:17.401231+00:00",
+      "verified_by": "Gvasiks (подтверждение по правилу, решение владельца 2026-10-10 для записей, добавленных после 2026-10-01; правила и выборка — docs/checks/PROGRAMME-FIELD-REVIEW.md)"
     },
     {
       "field_code": "840",
@@ -11051,6 +11811,16 @@
     },
     {
       "field_code": "840",
+      "programme_name": "Jūras transports - kuģa vadīšana",
+      "programme_slug": "ucz-0j000-riga-en",
+      "source": "name-rules",
+      "university_slug": "rtu",
+      "verification_method": "rule",
+      "verified_at": "2026-10-10T15:22:17.401231+00:00",
+      "verified_by": "Gvasiks (подтверждение по правилу, решение владельца 2026-10-10 для записей, добавленных после 2026-10-01; правила и выборка — docs/checks/PROGRAMME-FIELD-REVIEW.md)"
+    },
+    {
+      "field_code": "840",
       "programme_name": "Jūras transports",
       "programme_slug": "ugt-0j000-riga",
       "source": "name-rules",
@@ -11058,6 +11828,16 @@
       "verification_method": "rule",
       "verified_at": "2026-10-01T16:39:15.266533+00:00",
       "verified_by": "Gvasiks (подтверждение по правилу, решение владельца 2026-10-01; правила и выборка — docs/checks/PROGRAMME-FIELD-REVIEW.md)"
+    },
+    {
+      "field_code": "840",
+      "programme_name": "Jūras transports",
+      "programme_slug": "ugt-0j000-riga-en",
+      "source": "name-rules",
+      "university_slug": "rtu",
+      "verification_method": "rule",
+      "verified_at": "2026-10-10T15:22:17.401231+00:00",
+      "verified_by": "Gvasiks (подтверждение по правилу, решение владельца 2026-10-10 для записей, добавленных после 2026-10-01; правила и выборка — docs/checks/PROGRAMME-FIELD-REVIEW.md)"
     },
     {
       "field_code": "345",
@@ -11090,6 +11870,16 @@
       "verified_by": "Gvasiks (подтверждение по правилу, решение владельца 2026-10-01; правила и выборка — docs/checks/PROGRAMME-FIELD-REVIEW.md)"
     },
     {
+      "field_code": "524",
+      "programme_name": "Materiālu inženierija",
+      "programme_slug": "wbn-32000-en",
+      "source": "name-rules",
+      "university_slug": "rtu",
+      "verification_method": "rule",
+      "verified_at": "2026-10-10T15:22:17.401231+00:00",
+      "verified_by": "Gvasiks (подтверждение по правилу, решение владельца 2026-10-10 для записей, добавленных после 2026-10-01; правила и выборка — docs/checks/PROGRAMME-FIELD-REVIEW.md)"
+    },
+    {
       "field_code": "542",
       "programme_name": "Materiālu tehnoloģija un dizains",
       "programme_slug": "wch-01t00",
@@ -11120,6 +11910,16 @@
       "verified_by": "Gvasiks (подтверждение по правилу, решение владельца 2026-10-01; правила и выборка — docs/checks/PROGRAMME-FIELD-REVIEW.md)"
     },
     {
+      "field_code": "542",
+      "programme_name": "Šķiedru materiālu zinātne",
+      "programme_slug": "wds-01t00-en",
+      "source": "name-rules",
+      "university_slug": "rtu",
+      "verification_method": "rule",
+      "verified_at": "2026-10-10T15:22:17.401231+00:00",
+      "verified_by": "Gvasiks (подтверждение по правилу, решение владельца 2026-10-10 для записей, добавленных после 2026-10-01; правила и выборка — docs/checks/PROGRAMME-FIELD-REVIEW.md)"
+    },
+    {
       "field_code": "521",
       "programme_name": "Dizaina inženierija",
       "programme_slug": "wgt-01t00",
@@ -11130,6 +11930,16 @@
       "verified_by": "Gvasiks (подтверждение по правилу, решение владельца 2026-10-01; правила и выборка — docs/checks/PROGRAMME-FIELD-REVIEW.md)"
     },
     {
+      "field_code": "521",
+      "programme_name": "Dizaina inženierija",
+      "programme_slug": "wgt-01t00-en",
+      "source": "name-rules",
+      "university_slug": "rtu",
+      "verification_method": "rule",
+      "verified_at": "2026-10-10T15:22:17.401231+00:00",
+      "verified_by": "Gvasiks (подтверждение по правилу, решение владельца 2026-10-10 для записей, добавленных после 2026-10-01; правила и выборка — docs/checks/PROGRAMME-FIELD-REVIEW.md)"
+    },
+    {
       "field_code": "524",
       "programme_name": "Materiālzinātne un nanotehnoloģijas",
       "programme_slug": "wmm-32000",
@@ -11138,6 +11948,16 @@
       "verification_method": "rule",
       "verified_at": "2026-10-01T16:39:15.266533+00:00",
       "verified_by": "Gvasiks (подтверждение по правилу, решение владельца 2026-10-01; правила и выборка — docs/checks/PROGRAMME-FIELD-REVIEW.md)"
+    },
+    {
+      "field_code": "524",
+      "programme_name": "Materiālzinātne un nanotehnoloģijas",
+      "programme_slug": "wmm-32000-en",
+      "source": "name-rules",
+      "university_slug": "rtu",
+      "verification_method": "rule",
+      "verified_at": "2026-10-10T15:22:17.401231+00:00",
+      "verified_by": "Gvasiks (подтверждение по правилу, решение владельца 2026-10-10 для записей, добавленных после 2026-10-01; правила и выборка — docs/checks/PROGRAMME-FIELD-REVIEW.md)"
     },
     {
       "field_code": "345",
