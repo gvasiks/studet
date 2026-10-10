@@ -26,6 +26,8 @@ CLAUDE.md: «автоматика ничего не додумывает») уп
 | LBTU | — | — | — | — | — |
 | DU | — | — | — | — | — |
 | Ventspils | — | — | — | — | — |
+| RNU (язык обучения) | — | — | — | — | — |
+| TSI (язык обучения) | — | — | — | — | — |
 
 **Ответ вуза приравнивается к источнику фактов** (правило 5 CLAUDE.md) наравне
 с утверждённым PDF: сохраните его текст (письмо целиком, со всеми
@@ -299,6 +301,83 @@ maksimāli iespējamo rezultātu līdz 110 punktiem 100 punktu skalā.
 Vai P4 tiešām summējas virs pārējiem locekļiem (t.i., fizikas CE dod
 papildu punktus bez maksimuma), vai tas kādā gadījumā aizstāj kādu no
 pārējiem locekļiem?
+
+Būsim pateicīgi par precizējumu.
+
+Ar cieņu,
+<vārds, uzvārds>
+```
+
+### RNU — язык обучения
+
+Не про формулу, а про каталог. Добавлено 2026-10-10 после сверки с NIID
+(`docs/checks/NIID-LANGUAGE-REVIEW.md`).
+
+**Адрес:** уточнить на [rnu.lv](https://rnu.lv) — приёмная комиссия.
+
+**Зачем.** На английских страницах шести программ RNU язык обучения не указан;
+в NIID у всех шести стоит «latviešu/angļu (LV/EN)». По решению владельца каждая
+записана в каталог двумя записями, латышской и английской, — с оговоркой, что
+два языка в реестре значат «разрешено вести», а не «идёт набор». Ответ вуза
+эту оговорку снимает: поток, на который не набирают, убирается одной строкой
+в `pipeline/src/niid_languages.py`.
+
+```
+Kam: <adrese>
+Tēma: Jautājums par studiju valodu sešās studiju programmās
+
+Labdien!
+
+Veidojam bezmaksas informatīvu portālu Latvijas skolu absolventiem par
+uzņemšanu augstskolās. Jūsu mājaslapas angļu valodas sadaļā šādām programmām
+studiju valoda nav norādīta, savukārt NIID.lv tām norādīts "latviešu/angļu
+(LV/EN)":
+
+- Informācijas sistēmas (bakalaura studijas);
+- Uzņēmējdarbības vadība (bakalaura studijas);
+- Uzņēmējdarbības vadība tūrismā (bakalaura studijas);
+- Tūrisma pakalpojumu organizēšana (īsā cikla studijas);
+- Uzņēmējdarbības vadība (maģistra studijas);
+- Datorsistēmas (maģistra studijas).
+
+1. Vai 2027./2028. akadēmiskajā gadā katrā no šīm programmām notiek uzņemšana
+   gan studijām latviešu valodā, gan studijām angļu valodā?
+
+2. Ja kādā programmā uzņemšana notiek tikai vienā valodā — kurā?
+
+Būsim pateicīgi par precizējumu — tas ļaus mums pareizi parādīt studiju
+valodu Jūsu programmām.
+
+Ar cieņu,
+<vārds, uzvārds>
+```
+
+### TSI — язык обучения
+
+Тот же вопрос, три программы. Добавлено 2026-10-10.
+
+**Адрес:** уточнить на [tsi.lv](https://tsi.lv) — приёмная комиссия.
+
+**Зачем.** У трёх программ TSI блок языка на странице пустой; в NIID у всех
+трёх «latviešu/angļu (LV/EN)». В каталоге каждая записана двумя записями;
+английская была и раньше, латышская добавлена по NIID.
+
+```
+Kam: <adrese>
+Tēma: Jautājums par studiju valodu trīs studiju programmās
+
+Labdien!
+
+Veidojam bezmaksas informatīvu portālu Latvijas skolu absolventiem par
+uzņemšanu augstskolās. Jūsu mājaslapā šādām programmām studiju valoda nav
+norādīta, savukārt NIID.lv tām norādīts "latviešu/angļu (LV/EN)":
+
+- Intelektisks transports un viedā loģistika (maģistra studijas);
+- Telemātika un loģistika (doktora studijas);
+- Digitālā ekonomika un uzņēmējdarbība (doktora studijas).
+
+1. Vai 2027./2028. akadēmiskajā gadā šajās programmās notiek uzņemšana arī
+   studijām latviešu valodā, vai tikai angļu valodā?
 
 Būsim pateicīgi par precizējumu.
 
