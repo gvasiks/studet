@@ -141,6 +141,7 @@ def main(apply: bool, everything: bool, limit: int | None) -> None:
 
     import polite
     from db import get_service_client
+    from db_retry import execute
 
     load_dotenv()
     polite.install()
@@ -211,7 +212,7 @@ def main(apply: bool, everything: bool, limit: int | None) -> None:
                 update: dict[str, object] = dict(details)
                 update["details_source_url"] = row["source_url"]
                 update["details_extracted_at"] = now.isoformat()
-                client.table("programme").update(update).eq("id", row["id"]).execute()
+                execute(client.table("programme").update(update).eq("id", row["id"]))  # с повтором при сбое базы
                 written += 1
         browser.close()
 

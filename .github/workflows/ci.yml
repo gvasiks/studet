@@ -5,6 +5,11 @@ on:
     branches: [master]
   pull_request:
 
+# Права токена GitHub заданы явно: без этой строки они зависят от настроек
+# репозитория и могут оказаться шире нужного (аудит 2026-10-04).
+permissions:
+  contents: read
+
 jobs:
   build-lint-test:
     runs-on: ubuntu-latest

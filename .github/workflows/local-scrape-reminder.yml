@@ -16,6 +16,11 @@ on:
     - cron: "30 6 * * *"
   workflow_dispatch: {}
 
+# Права токена GitHub заданы явно: без этой строки они зависят от настроек
+# репозитория и могут оказаться шире нужного (аудит 2026-10-04).
+permissions:
+  contents: read
+
 jobs:
   check:
     runs-on: ubuntu-latest

@@ -50,7 +50,10 @@ NIID_PROGRAMME_PATH = "niid.lv/niid_search/program/"
 
 # Сколько дней сведения считаются свежими: при обычном запуске страница
 # перечитывается, только если прошло больше.
-REFRESH_AFTER_DAYS = 30
+# 25, а не 30: скрипт идёт раз в месяц, 2-го числа. При пороге 30 страница,
+# прочитанная 2 ноября, 2 декабря ещё «свежая» (прошло ровно 30 дней), и
+# обновление выходило раз в два месяца (аудит 2026-10-04).
+REFRESH_AFTER_DAYS = 25
 
 # Сколько знаков описания сохраняется (см. пояснение в начале файла).
 DESCRIPTION_LIMIT = 600
@@ -151,6 +154,7 @@ def main(apply: bool, everything: bool, limit: int | None) -> None:
 
     import polite
     from db import fetch_all, get_service_client
+    from db_retry import execute
 
     load_dotenv()
     polite.install()  # честный User-Agent и пауза из robots.txt (у niid.lv — 10 с)
@@ -235,7 +239,9 @@ def main(apply: bool, everything: bool, limit: int | None) -> None:
                 update["details_source_url"] = url
                 update["details_extracted_at"] = now.isoformat()
                 ids = [row["id"] for row in by_url[url]]
-                client.table("programme").update(update).in_("id", ids).execute()
+                # с повтором при временном сбое базы: без него один ответ 502
+                # обрывал обход на середине (аудит 2026-10-04)
+                execute(client.table("programme").update(update).in_("id", ids))
                 written += len(ids)
         browser.close()
 

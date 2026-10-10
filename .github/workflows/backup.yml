@@ -28,6 +28,11 @@ on:
     - cron: "0 3 * * 1"
   workflow_dispatch: {}
 
+# Права токена GitHub заданы явно: без этой строки они зависят от настроек
+# репозитория и могут оказаться шире нужного (аудит 2026-10-04).
+permissions:
+  contents: read
+
 jobs:
   snapshot-verified:
     runs-on: ubuntu-latest
@@ -61,9 +66,14 @@ jobs:
   full-dump:
     runs-on: ubuntu-latest
     steps:
+      # Секрет передаётся переменной окружения, а не подставляется в текст
+      # команды: подстановка `${{ secrets… }}` вписывает значение прямо в
+      # скрипт шага (аудит 2026-10-04).
       - name: Проверить наличие секрета SUPABASE_DB_URL
+        env:
+          SUPABASE_DB_URL: ${{ secrets.SUPABASE_DB_URL }}
         run: |
-          if [ -z "${{ secrets.SUPABASE_DB_URL }}" ]; then
+          if [ -z "$SUPABASE_DB_URL" ]; then
             echo "::error::SUPABASE_DB_URL не задан (Settings -> Secrets and variables -> Actions)."
             echo "Формат: строка подключения Postgres из дэшборда Supabase — Settings -> Database ->"
             echo "Connection string (Session pooler или Direct connection), с паролем внутри."
@@ -79,8 +89,10 @@ jobs:
       # (auth, storage, realtime), к которым у сервисного ключа нет прав
       # на дамп и которые нам не принадлежат
       - name: pg_dump схемы public
+        env:
+          SUPABASE_DB_URL: ${{ secrets.SUPABASE_DB_URL }}
         run: |
-          pg_dump "${{ secrets.SUPABASE_DB_URL }}" \
+          pg_dump "$SUPABASE_DB_URL" \
             --schema=public --no-owner --no-privileges --format=custom \
             --file=studet-public-schema.dump
 

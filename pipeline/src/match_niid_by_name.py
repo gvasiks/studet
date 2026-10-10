@@ -159,6 +159,7 @@ def main(apply: bool) -> None:
 
     import polite
     from db import fetch_all, get_service_client
+    from db_retry import execute
     from sources import niid_colleges as base
 
     load_dotenv()
@@ -245,7 +246,8 @@ def main(apply: bool) -> None:
                 for programme, url in matched:
                     ids_by_url[url].append(programme["id"])
                 for url, ids in ids_by_url.items():
-                    client.table("programme").update({"details_source_url": url}).in_("id", ids).execute()
+                    # с повтором при временном сбое базы
+                    execute(client.table("programme").update({"details_source_url": url}).in_("id", ids))
             total_matched += len(matched)
 
         browser.close()

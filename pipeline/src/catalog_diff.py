@@ -215,19 +215,33 @@ def format_report(diff: CatalogDiff, university_slug: str) -> str:
 _WEB_ADDRESS = re.compile(r"^(?:https?://|www\.)\S*$|^[\w-]+(?:\.[\w-]+)*\.[a-z]{2,}$", re.IGNORECASE)
 
 
+# От скольких программ одинаковое название у всех считается заглушкой.
+SAME_NAME_MIN_PROGRAMMES = 5
+
+
 def suspicious_names(programme_rows: list[dict]) -> list[str]:
-    """Слаги программ, у которых название похоже на адрес сайта или пусто.
+    """Слаги программ, у которых название похоже на адрес сайта или пусто,
+    либо все программы источника, если название у них у всех одно и то же.
 
     Чистая функция; main.py отказывается записывать источник, если список
     не пуст: лучше оставить прошлонедельные данные, чем заменить название
     программы мусором.
     """
     bad: list[str] = []
+    titles: list[tuple[str, ...]] = []
     for row in programme_rows:
         names = [row.get("name_lv"), row.get("name_lt"), row.get("name_en")]
         present = [name.strip() for name in names if isinstance(name, str) and name.strip()]
+        titles.append(tuple(present))
         if not present or any(_WEB_ADDRESS.match(name) for name in present):
             bad.append(row.get("slug", "?"))
+    # Заглушка бывает и без адреса в заголовке: «Access denied» или «Just a
+    # moment…» у КАЖДОЙ программы. Одинаковое название у всех программ
+    # источника — тот же признак (аудит 2026-10-04). От пяти программ:
+    # у вуза с двумя-тремя программами совпадение названий бывает настоящим
+    # (одна программа на двух языках или уровнях).
+    if not bad and len(programme_rows) >= SAME_NAME_MIN_PROGRAMMES and len(set(titles)) == 1:
+        return [row.get("slug", "?") for row in programme_rows]
     return bad
 
 
@@ -248,6 +262,17 @@ def selftest() -> None:
             {"slug": "ok5", "name_en": "Industry 4.0"},
         ]
     ) == [], "обычные названия с точками и дефисами не трогаем"
+
+    # одно название у всех программ источника — заглушка
+    denied = [{"slug": f"p{n}", "name_en": "Access denied"} for n in range(5)]
+    assert suspicious_names(denied) == ["p0", "p1", "p2", "p3", "p4"]
+    assert suspicious_names(denied[:4]) == [], "у маленького источника совпадение названий допустимо"
+    mixed = denied[:4] + [{"slug": "p4", "name_en": "Law"}]
+    assert suspicious_names(mixed) == [], "хотя бы одно другое название — не заглушка"
+    twins = [{"slug": f"t{n}", "name_en": "Computer Science"} for n in range(2)] + [
+        {"slug": f"o{n}", "name_en": f"Programme {n}"} for n in range(5)
+    ]
+    assert suspicious_names(twins) == [], "программа на двух языках среди прочих — не заглушка"
 
     # добавленная программа — просто в список added, не трогаем verified_at
     added_row = {"slug": "new-programme", "name_en": "New", "tuition_fee_amount": 1500.0}

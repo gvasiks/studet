@@ -569,6 +569,7 @@ def main(apply: bool, everything: bool, limit: int | None, only: set[str], skip_
 
     import polite
     from db import fetch_all, get_service_client
+    from db_retry import execute
 
     load_dotenv()
     polite.install()
@@ -639,7 +640,7 @@ def main(apply: bool, everything: bool, limit: int | None, only: set[str], skip_
                         update["accreditation_valid_until"] = accreditation
                     update["details_source_url"] = url
                     update["details_extracted_at"] = now.isoformat()
-                    client.table("programme").update(update).eq("id", row["id"]).execute()
+                    execute(client.table("programme").update(update).eq("id", row["id"]))  # с повтором при сбое базы
                     written += 1
         browser.close()
 

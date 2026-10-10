@@ -13,6 +13,19 @@ on:
     - cron: "30 2 2 * *"
   workflow_dispatch: {}
 
+# Недельный сбор каталога и месячное обогащение пишут в одни и те же строки
+# programme. 2-е число иногда выпадает на понедельник (2026-11-02,
+# 2027-08-02), и тогда они шли бы одновременно. Общая группа ставит второй
+# в очередь; cancel-in-progress: false — идущий прогон не прерывается.
+concurrency:
+  group: latvian-catalog-writes
+  cancel-in-progress: false
+
+# Права токена GitHub заданы явно: без этой строки они зависят от настроек
+# репозитория и могут оказаться шире нужного (аудит 2026-10-04).
+permissions:
+  contents: read
+
 jobs:
   enrich:
     runs-on: ubuntu-latest
@@ -39,7 +52,10 @@ jobs:
           SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
           SCRAPER_CONTACT: ${{ vars.SCRAPER_CONTACT }}
 
-      - run: python src/enrich_niid_details.py --apply
+      # if: always() — сбой поиска страниц выше не должен отменять чтение
+      # уже известных (аудит 2026-10-04).
+      - if: always()
+        run: python src/enrich_niid_details.py --apply
         env:
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
           SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
