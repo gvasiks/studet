@@ -18,10 +18,10 @@ from sources import bsa, du, eka, ekra, jvlma, lbtu, lka, lma, lnaa, lt_lamabpo,
 SOURCES = [turiba, riseba, rtu_liepaja, tsi, bsa, sse_riga, rgsl, lu, venta, lbtu, du, eka, rnu, rtu_catalog, via, rsu, lka, lma, jvlma, rai, lnaa, lutera, ekra, niid_colleges, niid_universities, lt_lamabpo]
 
 # Источники, которые запускаются только по имени: `python src/main.py lt_lamabpo`.
-# Литву владелец собирает со своего компьютера отдельной командой
-# (pipeline/src/lt_refresh.py): её сбор не должен попадать в недельный
-# латвийский прогон и красить его, если литовский реестр не ответил. Остаётся
-# здесь и после запуска Литвы.
+# У Литвы своё расписание (.github/workflows/scrape-lithuania.yml) и своя
+# команда для сбора с компьютера владельца (pipeline/src/lt_refresh.py): её
+# сбор не должен попадать в недельный латвийский прогон и красить его, если
+# литовский реестр не ответил. Остаётся здесь и после запуска Литвы.
 BY_NAME_ONLY = {"lt_lamabpo"}
 
 # Ревью 2026-09, пункт 05: конвейер должен падать, если число найденных
