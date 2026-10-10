@@ -20,9 +20,9 @@ from catalog_diff import (
 from db import get_service_client
 from db_retry import execute
 from scrape_scope import LOCAL_ONLY
-from sources import bsa, du, eka, ekra, jvlma, lbtu, lka, lma, lnaa, lt_lamabpo, lu, lutera, niid_colleges, niid_universities, rai, rgsl, riseba, rnu, rsu, rtu_catalog, rtu_liepaja, sse_riga, tsi, turiba, venta, via
+from sources import bsa, du, eka, ekra, jvlma, lbtu, lka, lma, lnaa, lt_lamabpo, lu, lutera, niid_colleges, niid_universities, rai, rgsl, riseba, rnu, rsu, rtu_catalog, rtu_english, rtu_liepaja, sse_riga, tsi, turiba, venta, via
 
-SOURCES = [turiba, riseba, rtu_liepaja, tsi, bsa, sse_riga, rgsl, lu, venta, lbtu, du, eka, rnu, rtu_catalog, via, rsu, lka, lma, jvlma, rai, lnaa, lutera, ekra, niid_colleges, niid_universities, lt_lamabpo]
+SOURCES = [turiba, riseba, rtu_liepaja, tsi, bsa, sse_riga, rgsl, lu, venta, lbtu, du, eka, rnu, rtu_catalog, rtu_english, via, rsu, lka, lma, jvlma, rai, lnaa, lutera, ekra, niid_colleges, niid_universities, lt_lamabpo]
 
 # Источники, которые запускаются только по имени: `python src/main.py lt_lamabpo`.
 # У Литвы своё расписание (.github/workflows/scrape-lithuania.yml) и своя
@@ -63,11 +63,10 @@ MIN_PROGRAMME_COUNT = {
     "sources.rnu": 8,
     # 2026-09-20: 124 -> 163. Раньше терялись программы в нескольких городах, только
     # в Лиепае и морские (Jūras akadēmija) — см. docstring rtu_catalog.py
-    # 2026-10-10: 163 -> 237. Двуязычная программа теперь пишется двумя записями
-    # (rtu_languages.py): найдено 247, из них 83 английские. Порог ниже
-    # найденного на 10, а не на 1: английская запись появляется только при
-    # прочитанной карточке, и пара таймаутов сайта не должна срывать весь сбор.
-    "sources.rtu_catalog": 237,
+    "sources.rtu_catalog": 163,
+    # 2026-10-10: английский реестр РТУ, найдено 55. Порог ниже на 5: реестр
+    # небольшой, РТУ меняет его каждый год.
+    "sources.rtu_english": 50,
     "sources.via": 21,
     "sources.rsu": 58,
     "sources.lka": 15,
