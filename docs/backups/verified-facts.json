@@ -5760,6 +5760,16 @@
       "verified_by": "Gvasiks (подтверждение по правилу, решение владельца 2026-10-01; правила и выборка — docs/checks/PROGRAMME-FIELD-REVIEW.md)"
     },
     {
+      "field_code": "213",
+      "programme_name": null,
+      "programme_slug": "professional-doctoral-study-programme-in-arts-arts-sub-programme-audiovisual-arts-theatre-and-contemporary-dance-lv",
+      "source": "name-rules",
+      "university_slug": "lka",
+      "verification_method": "rule",
+      "verified_at": "2026-10-10T17:01:06.473235+00:00",
+      "verified_by": "Gvasiks (подтверждение по правилу, решение владельца 2026-10-10 для записей, добавленных после 2026-10-01; правила и выборка — docs/checks/PROGRAMME-FIELD-REVIEW.md)"
+    },
+    {
       "field_code": "314",
       "programme_name": null,
       "programme_slug": "sociology-and-management-of-culture",

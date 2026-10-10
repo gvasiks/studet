@@ -65,3 +65,11 @@ jobs:
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
           SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
           SCRAPER_CONTACT: ${{ vars.SCRAPER_CONTACT }}
+
+      # Таблица языков из NIID (src/niid_languages.py) — снимок, поэтому раз в
+      # месяц сверяется с NIID. В базу шаг не пишет; расхождение его роняет —
+      # это сигнал поправить таблицу.
+      - if: always()
+        run: python src/niid_languages.py --check
+        env:
+          SCRAPER_CONTACT: ${{ vars.SCRAPER_CONTACT }}

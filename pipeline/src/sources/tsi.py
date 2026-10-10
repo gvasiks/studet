@@ -24,6 +24,7 @@ import re
 
 from playwright.sync_api import Page, sync_playwright
 
+import niid_languages
 from models import ProgrammeDraft, UniversityDraft
 
 LISTING_URL = "https://tsi.lv/study_programmes/"
@@ -91,7 +92,9 @@ def _extract_languages(text: str) -> list[str]:
         languages.append("en")
     if "latvian" in lowered:
         languages.append("lv")
-    return languages or ["en"]
+    # пустой список — язык на странице не назван (до 2026-10-10 вместо этого
+    # подставлялся «английский»)
+    return languages
 
 
 def _first_mode_and_duration(study_form_text: str) -> tuple[str, float | None]:
@@ -119,12 +122,19 @@ def _scrape_programme(page: Page, url: str, degree_level: str) -> list[Programme
     mode, duration_years = _first_mode_and_duration(study_form_block)
 
     slug_base = url.rstrip("/").rsplit("/", 1)[-1]
-    languages = _extract_languages(language_block)
-    multiple = len(languages) > 1
+    # Язык на странице есть у большинства программ; у трёх (обзор
+    # 2026-10-10) блок пустой — для них язык берётся из NIID
+    # (niid_languages.py), первый язык сохраняет слаг страницы. Нет ни там,
+    # ни там — одна запись без языка.
+    stated = _extract_languages(language_block)
+    if slug_base in niid_languages.KNOWN["tsi"] or not stated:
+        variants = niid_languages.records(slug_base, niid_languages.languages_for("tsi", slug_base, stated))
+    else:
+        variants = [(f"{slug_base}-{language}" if len(stated) > 1 else slug_base, language) for language in stated]
 
     return [
         ProgrammeDraft(
-            slug=f"{slug_base}-{language}" if multiple else slug_base,
+            slug=record_slug,
             name_en=name_en,
             degree_level=degree_level,
             language_of_instruction=language,
@@ -134,7 +144,7 @@ def _scrape_programme(page: Page, url: str, degree_level: str) -> list[Programme
             duration_years=duration_years,
             source_url=url,
         )
-        for language in languages
+        for record_slug, language in variants
     ]
 
 

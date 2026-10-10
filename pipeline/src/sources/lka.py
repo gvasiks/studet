@@ -24,6 +24,7 @@ import re
 
 from playwright.sync_api import Page, sync_playwright
 
+import niid_languages
 from models import ProgrammeDraft, UniversityDraft
 
 BASE_URL = "https://lka.edu.lv"
@@ -122,15 +123,16 @@ def _scrape_programme(page: Page, level: str, url: str) -> list[ProgrammeDraft]:
     name = h1.inner_text().strip() if h1.count() > 0 else ""
     slug = url.rstrip("/").rsplit("/", 1)[-1]
     # У трёх программ из пятнадцати поля языка на странице нет (обзор
-    # 2026-10-10). Для них по-прежнему пишется «латышский» — это допущение, а
-    # не факт с сайта; владелец решил искать язык таких программ в NIID, до
-    # тех пор допущение остаётся, иначе новые программы LKA не записывались бы.
-    languages = languages_from(facts.get("Language of study", "")) or ["lv"]
+    # 2026-10-10) — их язык берётся из NIID (niid_languages.py); оттуда же
+    # второй язык у программы, где страница называет один, а NIID два.
+    # Раньше вместо отсутствующего поля подставлялся «латышский». Нет ни на
+    # странице, ни в таблице — одна запись без языка.
+    languages = niid_languages.languages_for("lka", slug, languages_from(facts.get("Language of study", "")))
 
     return [
         ProgrammeDraft(
-            # первая запись — со слагом страницы, вторая (латышский поток) — «…-lv»
-            slug=slug if index == 0 else f"{slug}-{language}",
+            # первая запись — со слагом страницы, вторая — «слаг-язык»
+            slug=record_slug,
             name_en=name or None,
             degree_level=level,
             language_of_instruction=language,
@@ -140,7 +142,7 @@ def _scrape_programme(page: Page, level: str, url: str) -> list[ProgrammeDraft]:
             duration_years=_parse_years(duration_text),
             source_url=url,
         )
-        for index, language in enumerate(languages)
+        for record_slug, language in niid_languages.records(slug, languages)
     ]
 
 

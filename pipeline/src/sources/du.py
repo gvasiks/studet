@@ -30,6 +30,7 @@ import re
 
 from playwright.sync_api import Page, sync_playwright
 
+import niid_languages
 from models import ProgrammeDraft, UniversityDraft
 
 LISTING_URL = "https://du.lv/en/studies/study-programmes/academic-bachelors-study-programmes/"
@@ -88,11 +89,10 @@ def _extract_mode(text: str) -> str:
 
 
 def _extract_languages(text: str) -> list[str]:
-    if not text:
-        return ["lv"]
+    """Языки, названные на странице; пустой список — поле пустое или
+    незнакомое (до 2026-10-10 вместо этого подставлялся «латышский»)."""
     lowered = text.lower()
-    languages = [lang for lang, key in (("lv", "latvian"), ("en", "english")) if key in lowered]
-    return languages or ["lv"]
+    return [lang for lang, key in (("lv", "latvian"), ("en", "english")) if key in lowered]
 
 
 def _scrape_programme(page: Page, url: str) -> list[ProgrammeDraft]:
@@ -108,12 +108,19 @@ def _scrape_programme(page: Page, url: str) -> list[ProgrammeDraft]:
     base_slug = url.rstrip("/").rsplit("/", 1)[-1]
 
     mode_text = _find(facts, "Forms of the Programme Implementation", "Study type and form")
-    languages = _extract_languages(facts.get("Language", ""))
-    multiple = len(languages) > 1
+    # Язык на странице есть у одной программы из девяти (обзор 2026-10-10):
+    # у неё названы оба языка, и слаги обеих записей идут с окончанием языка.
+    # У остальных язык берётся из NIID (niid_languages.py): первый язык
+    # сохраняет слаг страницы. Нет ни там, ни там — одна запись без языка.
+    stated = _extract_languages(facts.get("Language", ""))
+    if base_slug in niid_languages.KNOWN["du"] or not stated:
+        variants = niid_languages.records(base_slug, niid_languages.languages_for("du", base_slug, stated))
+    else:
+        variants = [(f"{base_slug}-{language}" if len(stated) > 1 else base_slug, language) for language in stated]
 
     return [
         ProgrammeDraft(
-            slug=f"{base_slug}-{language}" if multiple else base_slug,
+            slug=record_slug,
             name_en=name_en,
             degree_level="bachelor",
             language_of_instruction=language,
@@ -123,7 +130,7 @@ def _scrape_programme(page: Page, url: str) -> list[ProgrammeDraft]:
             duration_years=_parse_years(duration_text),
             source_url=url,
         )
-        for language in languages
+        for record_slug, language in variants
     ]
 
 

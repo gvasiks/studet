@@ -29,6 +29,7 @@ from urllib.parse import urljoin
 
 from playwright.sync_api import Page, sync_playwright
 
+import niid_languages
 from models import ProgrammeDraft, UniversityDraft
 
 FEES_URL = "https://venta.lv/nac-studet"
@@ -68,8 +69,16 @@ def _clean_name(name: str) -> str:
     return re.sub(r"\s*\([^)]*\)\s*", " ", name).strip().rstrip("*").strip()
 
 
-def _extract_language(name: str) -> str:
-    return "en" if "angļu valodā" in name.lower() else "lv"
+def _extract_language(name: str) -> str | None:
+    """Язык, если он назван в самом названии строки («… (angļu valodā)»,
+    «… latviešu valodā»). Иначе пусто: до 2026-10-10 здесь подставлялся
+    «латышский», теперь язык таких программ берётся из NIID (niid_languages.py)."""
+    lowered = name.lower()
+    if "angļu valodā" in lowered:
+        return "en"
+    if "latviešu valodā" in lowered:
+        return "lv"
+    return None
 
 
 def _extract_mode(name: str) -> str:
@@ -100,28 +109,35 @@ def _rows_to_programmes(rows: list[dict], degree_level_for) -> list[ProgrammeDra
     programmes = []
     for row in rows:
         duration_text, budget_text, _paid_text, fee_text = row["values"]
-        language = _extract_language(row["name"])
+        named = _extract_language(row["name"])
         mode = _extract_mode(row["name"])
         budget_places = _parse_int(budget_text)
 
         base_slug = row["href"].rstrip("/").rsplit("/", 1)[-1]
-        slug = f"{base_slug}-{language}-{mode}" if href_counts[row["href"]] > 1 else base_slug
+        slug = f"{base_slug}-{named}-{mode}" if href_counts[row["href"]] > 1 else base_slug
+        languages = niid_languages.languages_for("venta", slug, [named] if named else [])
 
-        programmes.append(
-            ProgrammeDraft(
-                slug=slug,
-                name_lv=_clean_name(row["name"]),
-                degree_level=degree_level_for(row["name"]),
-                language_of_instruction=language,
-                study_mode=mode,
-                city=UNIVERSITY.city,
-                funding_type="both" if budget_places else "paid",
-                tuition_fee_amount=_parse_int(fee_text),
-                budget_places=budget_places,
-                duration_years=_parse_years(duration_text),
-                source_url=urljoin(FEES_URL, row["href"]),
+        for index, (record_slug, language) in enumerate(niid_languages.records(slug, languages)):
+            # Первая запись — строка таблицы вуза как она есть. Вторая — язык,
+            # который называет только NIID: цена, бюджетные места и вид
+            # финансирования в строке таблицы относятся к первой, поэтому у
+            # второй они пустые (правило 5 CLAUDE.md: нет факта без источника).
+            first = index == 0
+            programmes.append(
+                ProgrammeDraft(
+                    slug=record_slug,
+                    name_lv=_clean_name(row["name"]),
+                    degree_level=degree_level_for(row["name"]),
+                    language_of_instruction=language,
+                    study_mode=mode,
+                    city=UNIVERSITY.city,
+                    funding_type=("both" if budget_places else "paid") if first else None,
+                    tuition_fee_amount=_parse_int(fee_text) if first else None,
+                    budget_places=budget_places if first else None,
+                    duration_years=_parse_years(duration_text),
+                    source_url=urljoin(FEES_URL, row["href"]),
+                )
             )
-        )
     return programmes
 
 

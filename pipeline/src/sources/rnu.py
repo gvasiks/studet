@@ -27,6 +27,7 @@ from urllib.parse import urljoin
 
 from playwright.sync_api import Page, sync_playwright
 
+import niid_languages
 from models import ProgrammeDraft, UniversityDraft
 
 LISTING_URL = "https://rnu.lv/en/studies/study-programs/"
@@ -101,16 +102,16 @@ def _fee_for(degree_level: str, duration_years: float | None) -> float:
     return 2700.0
 
 
-def _scrape_programme(page: Page, url: str, degree_level: str) -> ProgrammeDraft | None:
+def _scrape_programme(page: Page, url: str, degree_level: str) -> list[ProgrammeDraft]:
     page.goto(url, wait_until="domcontentloaded")
     main = page.locator("main").first
     if main.count() == 0:
-        return None
+        return []
 
     text = main.inner_text()
     duration_text = _extract_field(text, "Duration of Studies:", "Duration of study:")
     if not duration_text:
-        return None
+        return []
 
     h1 = page.locator("h1").first
     name_en = h1.inner_text().strip() if h1.count() > 0 else ""
@@ -119,21 +120,29 @@ def _scrape_programme(page: Page, url: str, degree_level: str) -> ProgrammeDraft
     # уровня всегда, не только при обнаруженной коллизии.
     slug = f"{url.rstrip('/').rsplit('/', 1)[-1]}-{degree_level}"
 
-    language_text = _extract_field(text, "Language:")
+    language_text = _extract_field(text, "Language:").lower()
     duration_years = _parse_years(duration_text)
+    # Поле «Language:» есть у двух страниц из восьми (обзор 2026-10-10); у
+    # остальных язык берётся из NIID (niid_languages.py). Раньше вместо него
+    # подставлялся «латышский». Нет ни там, ни там — язык пустой.
+    stated = [code for code, word in (("lv", "latvian"), ("en", "english")) if word in language_text]
+    languages = niid_languages.languages_for("rnu", slug, stated)
 
-    return ProgrammeDraft(
-        slug=slug,
-        name_en=name_en,
-        degree_level=degree_level,
-        language_of_instruction="en" if "english" in language_text.lower() else "lv",
-        study_mode="full_time",
-        city=UNIVERSITY.city,
-        funding_type="paid",
-        tuition_fee_amount=_fee_for(degree_level, duration_years),
-        duration_years=duration_years,
-        source_url=url,
-    )
+    return [
+        ProgrammeDraft(
+            slug=record_slug,
+            name_en=name_en,
+            degree_level=degree_level,
+            language_of_instruction=language,
+            study_mode="full_time",
+            city=UNIVERSITY.city,
+            funding_type="paid",
+            tuition_fee_amount=_fee_for(degree_level, duration_years),
+            duration_years=duration_years,
+            source_url=url,
+        )
+        for record_slug, language in niid_languages.records(slug, languages)
+    ]
 
 
 def scrape() -> tuple[UniversityDraft, list[ProgrammeDraft]]:
@@ -143,9 +152,7 @@ def scrape() -> tuple[UniversityDraft, list[ProgrammeDraft]]:
         page = browser.new_page()
 
         for url, degree_level in _discover_links(page):
-            programme = _scrape_programme(page, url, degree_level)
-            if programme:
-                programmes.append(programme)
+            programmes.extend(_scrape_programme(page, url, degree_level))
 
         browser.close()
 
