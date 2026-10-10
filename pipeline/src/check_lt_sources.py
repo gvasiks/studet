@@ -1,7 +1,7 @@
 """Сторож литовских данных: давно ли они обновлялись.
 
-Литовские сборщики идут отдельно от недельного латвийского сбора
-(.github/workflows/scrape-lithuania.yml). Этот скрипт ничего не собирает —
+Литовские данные собирает владелец со своего компьютера (lt_refresh.py):
+реестр серверу GitHub отвечает ненадёжно. Этот скрипт ничего не собирает —
 он смотрит, когда в последний раз обновлялись три вещи, от которых зависят
 литовские страницы, и падает, если какая-то из них старше
 LT_MAX_STALE_DAYS:
@@ -27,16 +27,12 @@ from __future__ import annotations
 import sys
 from datetime import datetime, timedelta, timezone
 
-# Сбор по расписанию — раз в месяц; полтора месяца без обновления значит,
-# что расписание остановилось или сбор падает.
+# Источники меняются редко (список программ и правила балла — раз в год),
+# обновлять достаточно раз в месяц; полтора месяца — время напомнить.
 LT_MAX_STALE_DAYS = 45
 
-# Что проверяем: подпись для сообщения и команда, которая это обновляет.
-COMMANDS = {
-    "каталог": "src\\main.py lt_lamabpo",
-    "строки приёма и формулы": "src\\lt_load_formulas.py --apply",
-    "направления программ": "src\\lt_load_fields.py --apply",
-}
+# Чем обновить всё сразу — на компьютере владельца, в папке pipeline.
+REFRESH_COMMAND = ".venv\\Scripts\\python.exe src\\lt_refresh.py"
 
 
 def days_since(extracted_at: str | None, now: datetime) -> int | None:
@@ -90,13 +86,12 @@ def check() -> None:
     lines, stale = report(latest, datetime.now(timezone.utc))
     print("\n".join(lines))
     if stale:
-        commands = "\n".join(f"    .venv\\Scripts\\python.exe {COMMANDS[name]}" for name in stale)
         print(
-            f"\nЛИТОВСКИЕ ДАННЫЕ УСТАРЕЛИ: {', '.join(stale)} не обновлялись дольше {LT_MAX_STALE_DAYS} дней.\n"
-            "Сначала посмотрите, почему не прошёл запланированный сбор (GitHub -> Actions -> «Scrape Lithuania»).\n"
-            "Если сайты не отвечают серверу GitHub — на своём компьютере, в папке pipeline, по порядку:\n\n"
-            f"{commands}\n\n"
-            "Подробности — pipeline/README.md, раздел «Литва: расписание и сторож»."
+            f"\nПОРА ОБНОВИТЬ ЛИТОВСКИЕ ДАННЫЕ: {', '.join(stale)} не обновлялись дольше {LT_MAX_STALE_DAYS} дней.\n"
+            "Литва собирается с вашего компьютера (реестр серверу GitHub отвечает ненадёжно).\n"
+            "В папке pipeline:\n\n"
+            f"    {REFRESH_COMMAND}\n\n"
+            "Занимает около 25 минут. Подробности — pipeline/README.md, раздел «Литва: сбор и сторож»."
         )
         sys.exit(1)
     print("OK: литовские данные свежие")
@@ -113,7 +108,7 @@ def selftest() -> None:
     lines, stale = report({"каталог": "2026-11-30T12:00:00+00:00", "направления программ": None}, now)
     assert stale == ["направления программ"], stale
     assert lines[0].endswith("(1 дн. назад)") and "ни разу" in lines[1], lines
-    assert set(COMMANDS) == {"каталог", "строки приёма и формулы", "направления программ"}
+    assert REFRESH_COMMAND.endswith("lt_refresh.py")
     print("самотест пройден")
 
 

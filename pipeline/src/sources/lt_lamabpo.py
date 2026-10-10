@@ -342,6 +342,28 @@ _LINES_JS = "() => document.body.innerText.split('\\n').map(line => line.trim())
 # Паузы перед второй и третьей попыткой открыть страницу, секунды.
 GOTO_PAUSES = (15, 45)
 
+# Сколько повторных запросов допускается за один обход реестра. Повторы
+# спасают от случайного сбоя на одной-двух карточках; если их нужно больше,
+# реестр отвечает плохо в целом, и продолжать значит часами ждать впустую
+# (прогон на GitHub 2026-10-10 не уложился в два с половиной часа).
+MAX_RETRIES = 30
+_retries = 0
+
+
+class RegistryUnstable(RuntimeError):
+    """Реестр AIKOS отвечает слишком плохо, чтобы продолжать обход."""
+
+
+def _count_retry() -> None:
+    global _retries
+    _retries += 1
+    if _retries > MAX_RETRIES:
+        raise RegistryUnstable(
+            f"реестр aikos.smm.lt отвечает нестабильно: за один обход понадобилось больше {MAX_RETRIES} "
+            "повторных запросов. Сбор остановлен, в базу ничего не записано. С сервера GitHub так бывает "
+            "часто — запустите сбор со своего компьютера: .venv\\Scripts\\python.exe src\\lt_refresh.py"
+        )
+
 
 def _goto(page: Page, url: str, pauses: tuple[int, ...] = GOTO_PAUSES) -> None:
     """Открыть страницу реестра; если она не ответила вовремя — подождать и
@@ -360,6 +382,7 @@ def _goto(page: Page, url: str, pauses: tuple[int, ...] = GOTO_PAUSES) -> None:
             if pause is None:
                 raise
             print(f"lt_lamabpo: страница не ответила за 45 с, повтор через {pause} с — {url}")
+            _count_retry()
             time.sleep(pause)
 
 
@@ -386,6 +409,7 @@ def _lines(page: Page, url: str, marker: str, pauses: tuple[int, ...] = GOTO_PAU
                 print(f"lt_lamabpo: подписи «{marker}» нет и после повторов — {url}")
                 return page.evaluate(_LINES_JS)
             print(f"lt_lamabpo: страница пришла без «{marker}», повтор через {pause} с — {url}")
+            _count_retry()
             polite.forget(url)
             time.sleep(pause)
     return []  # сюда не доходим: цикл всегда заканчивается возвратом
@@ -415,6 +439,8 @@ def collect() -> tuple[list[dict[str, str]], dict[str, Card], dict[str, Institut
     """Прочитать оба источника: записи общего приёма, карточки программ и
     карточки учреждений. Отдельно от build(), потому что записи и карточки
     нужны ещё и загрузчику формул (lt_load_formulas.py)."""
+    global _retries
+    _retries = 0  # счёт повторов — на один обход
     with sync_playwright() as p:
         browser = p.chromium.launch()
         page = browser.new_page()
