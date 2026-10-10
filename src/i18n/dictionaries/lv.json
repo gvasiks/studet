@@ -105,7 +105,7 @@
       "title": "Filtri",
       "country": "Studiju valsts",
       "allCountries": "Abas valstis",
-      "droppedFiltersHint": "Filtru pēc studiju maksas un budžeta vietām šeit nav: Lietuvas programmām šādu datu nav.",
+      "droppedFiltersHint": "Filtri pēc studiju maksas un budžeta vietām ir tikai Latvijas sarakstā: Lietuvas programmām šādu datu nav.",
       "budgetOnlyHint": "Valsts finansētās programmas",
       "university": "Universitāte",
       "anyUniversity": "Visas universitātes",

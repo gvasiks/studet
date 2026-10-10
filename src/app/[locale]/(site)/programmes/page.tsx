@@ -1,7 +1,7 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { countryOf, isLocale, languageOf } from "@/i18n/config";
+import { countries, countryOf, isLocale, languageOf } from "@/i18n/config";
 import { catalogProfile, countryProfile, hasFeature } from "@/lib/country";
 import { getDictionary } from "@/i18n/dictionaries";
 import { buildAlternates } from "@/lib/site";
@@ -41,18 +41,21 @@ export default async function ProgrammesPage({
   const { locale } = await params;
   if (!isLocale(locale)) notFound();
 
-  // Фильтр «Страна»: по умолчанию каталог показывает страну своего раздела,
-  // но можно выбрать другую открытую страну или общий список (решение
-  // владельца 2026-10-10). Разделы сайта при этом остаются по странам:
-  // карточка ведёт на страницу программы в разделе её страны.
+  // Фильтр «Страна»: по умолчанию каталог показывает общий список всех
+  // открытых стран, можно выбрать одну (решения владельца 2026-10-10).
+  // Разделы сайта при этом остаются по странам: карточка ведёт на страницу
+  // программы в разделе её страны.
   const own = countryOf(locale);
   const parsed = parseCatalogState(await searchParams);
   const shown = countriesShown(parsed, own);
   const profile = catalogProfile(shown);
   const state = onlySupported(parsed, profile.filters);
-  // Фильтры по плате и бюджету есть у страны раздела, но пропали из-за
-  // выбора стран — об этом говорит строка под фильтром «Страна».
-  const filtersDropped = countryProfile(own).filters.some((filter) => !profile.filters.includes(filter));
+  // У какой-то из открытых стран есть фильтры (плата, только бюджет),
+  // которых в этом списке нет, — об этом говорит строка под фильтром
+  // «Страна»: чтобы ими пользоваться, нужно выбрать эту страну.
+  const filtersDropped = countries.some((country) =>
+    countryProfile(country).filters.some((filter) => !profile.filters.includes(filter)),
+  );
   const dict = await getDictionary(locale);
 
   // В базе — только то, что нельзя сделать быстрее в памяти: город, язык,

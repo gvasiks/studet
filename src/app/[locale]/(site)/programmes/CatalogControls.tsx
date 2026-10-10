@@ -12,7 +12,6 @@ import {
 import { enumLabel, localizedName, type UniversityOption } from "@/lib/catalog";
 import type { CatalogProfile, LevelKey } from "@/lib/country";
 import {
-  ALL_COUNTRIES,
   catalogQuery,
   DURATION_LIMITS,
   FEE_LIMITS,
@@ -149,24 +148,17 @@ export function FilterSidebar({
         </div>
 
         {/* Страна — только когда открыто больше одной: до запуска Литвы
-            посетитель этого фильтра не видит. Пустое значение — страна
-            раздела, так что обычные адреса каталога остаются прежними. */}
+            посетитель этого фильтра не видит. Пустое значение — общий список
+            всех открытых стран, он и показан по умолчанию. */}
         {countries.length > 1 && (
           <div>
-            <SelectField
-              label={filters.country}
-              name="country"
-              defaultValue={state.countryChoice === own ? "" : (state.countryChoice ?? "")}
-            >
-              <option value="">{dict.countries[own]}</option>
-              {countries
-                .filter((country) => country !== own)
-                .map((country) => (
-                  <option key={country} value={country}>
-                    {dict.countries[country]}
-                  </option>
-                ))}
-              <option value={ALL_COUNTRIES}>{filters.allCountries}</option>
+            <SelectField label={filters.country} name="country" defaultValue={state.countryChoice ?? ""}>
+              <option value="">{filters.allCountries}</option>
+              {[own, ...countries.filter((country) => country !== own)].map((country) => (
+                <option key={country} value={country}>
+                  {dict.countries[country]}
+                </option>
+              ))}
             </SelectField>
             {filtersDropped && <p className="mt-1.5 text-xs leading-relaxed text-zinc-600">{filters.droppedFiltersHint}</p>}
           </div>

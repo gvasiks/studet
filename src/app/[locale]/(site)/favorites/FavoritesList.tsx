@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { countryOf, languageOf, type Locale } from "@/i18n/config";
+import { countries, countryOf, languageOf, type Locale } from "@/i18n/config";
 import type { Dictionary } from "@/i18n/dictionaries";
 import { enumLabel, getProgrammesByIds, localizedName, type ProgrammeWithUniversity } from "@/lib/catalog";
 import { matchRounds, type ApplicationRound } from "@/lib/deadlines";
@@ -44,17 +44,25 @@ export function FavoritesList({
     let cancelled = false;
 
     async function load() {
-      const ids = getFavoriteIds(country);
-      if (ids.length === 0) {
+      // Список общий для всех открытых стран; страна раздела идёт первой.
+      // Хранится он по странам, поэтому и запрашивается по странам.
+      const groups = [country, ...countries.filter((other) => other !== country)]
+        .map((group) => ({ country: group, ids: getFavoriteIds(group) }))
+        .filter((group) => group.ids.length > 0);
+      if (groups.length === 0) {
         if (!cancelled) setProgrammes([]);
         return;
       }
-      const data = await getProgrammesByIds(country, ids);
-      // База отдаёт в своём порядке — возвращаем порядок, в котором человек
-      // добавлял программы: от него зависит, какие четыре сравниваются
-      // по умолчанию.
-      data.sort((a, b) => ids.indexOf(a.id) - ids.indexOf(b.id));
-      if (!cancelled) setProgrammes(data);
+      const lists = await Promise.all(
+        groups.map(async (group) => {
+          const data = await getProgrammesByIds(group.country, group.ids);
+          // База отдаёт в своём порядке — возвращаем порядок, в котором
+          // человек добавлял программы: от него зависит, какие четыре
+          // сравниваются по умолчанию.
+          return data.sort((a, b) => group.ids.indexOf(a.id) - group.ids.indexOf(b.id));
+        }),
+      );
+      if (!cancelled) setProgrammes(lists.flat());
     }
 
     load();
@@ -153,6 +161,7 @@ export function FavoritesList({
               locale={locale}
               dict={dict}
               programme={programme}
+              showCountry={countries.length > 1}
               hasCalculator={calculatorSet.has(programme.id)}
               deadline={
                 nextRound

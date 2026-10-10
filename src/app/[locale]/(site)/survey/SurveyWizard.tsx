@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import type { ReactNode } from "react";
 import { Button, Checkbox, CheckboxGroup, Radio, RadioGroup } from "@heroui/react";
-import { countryOf, type Locale } from "@/i18n/config";
+import { countries, countryOf, type Locale } from "@/i18n/config";
 import type { Dictionary } from "@/i18n/dictionaries";
 import { enumLabel } from "@/lib/catalog";
 import { countryProfile, schoolLeaverLevels } from "@/lib/country";
@@ -119,6 +119,11 @@ export function SurveyWizard({ locale, dict }: { locale: Locale; dict: Dictionar
     // направлению программы (пункт 16 ревью). Вопросы, которых у страны
     // нет, остаются с ответом «не важно» и в адрес не попадают.
     const params = new URLSearchParams();
+    // Анкета задаёт вопросы одной страны (её города, плата, бюджет), а
+    // каталог по умолчанию показывает общий список, где фильтров по плате и
+    // бюджету нет. Поэтому ответы ведут в каталог этой страны. Пока открыта
+    // одна страна, параметр не нужен: общий список и есть её каталог.
+    if (countries.length > 1) params.set("country", countryOf(locale));
     if (answers.interests.length > 0) params.set("interest", answers.interests.join(","));
     if (answers.level !== "any") params.set("level", answers.level);
     if (answers.maxYears !== "any") params.set("years", answers.maxYears);

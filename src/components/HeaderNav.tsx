@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { countryOf, type Country, type Locale } from "@/i18n/config";
+import { countries, type Locale } from "@/i18n/config";
 import { hasFeature, type Feature } from "@/lib/country";
 import { getFavoriteIds, subscribeToFavorites } from "@/lib/favorites";
 import { MenuIcon, StarIcon, XIcon } from "@/components/icons";
@@ -20,10 +20,12 @@ type Labels = {
   main: string;
 };
 
-function useFavoritesCount(country: Country): number {
+// Сколько программ в «Моём списке» — по всем открытым странам: страница
+// списка показывает их вместе (см. src/lib/favorites.ts).
+function useFavoritesCount(): number {
   return useSyncExternalStore(
     subscribeToFavorites,
-    () => getFavoriteIds(country).length,
+    () => countries.reduce((total, country) => total + getFavoriteIds(country).length, 0),
     () => 0,
   );
 }
@@ -61,7 +63,7 @@ export function HeaderNav({
   className?: string;
 }) {
   const pathname = usePathname();
-  const favoritesCount = useFavoritesCount(countryOf(locale));
+  const favoritesCount = useFavoritesCount();
   const dark = tone === "dark";
   const [open, setOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
@@ -181,7 +183,7 @@ export function HeaderNav({
 }
 
 export function FavoritesLink({ locale, label }: { locale: Locale; label: string }) {
-  const count = useFavoritesCount(countryOf(locale));
+  const count = useFavoritesCount();
 
   return (
     <Link

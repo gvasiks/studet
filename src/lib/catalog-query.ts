@@ -33,11 +33,11 @@ export const PAGE_SIZE = 12;
 // каталог с рендером всех карточек разом.
 const MAX_LIMIT = 600;
 
-// Какие страны показывает каталог. По умолчанию (null) — страна раздела, в
-// котором открыта страница: так все прежние адреса значат то же, что раньше.
-// "all" — общий список всех открытых стран; код страны — только она.
-export const ALL_COUNTRIES = "all";
-export type CountryChoice = Country | typeof ALL_COUNTRIES | null;
+// Какие страны показывает каталог. По умолчанию (null) — общий список всех
+// открытых стран (решение владельца 2026-10-10); код страны — только она.
+// Пока открыта одна страна (Латвия до запуска Литвы), общий список и есть
+// её каталог — для посетителя ничего не меняется.
+export type CountryChoice = Country | null;
 
 export type CatalogState = {
   /** Выбор в фильтре «Страна»; какие страны это значит — countriesShown(). */
@@ -82,7 +82,9 @@ function oneOf<T extends number>(allowed: readonly T[], value: string | undefine
   return (allowed as readonly number[]).includes(parsed) ? (parsed as T) : null;
 }
 
-export function parseCatalogState(sp: SearchParams): CatalogState {
+// open — открытые страны; параметр нужен только тестам, чтобы проверить
+// поведение с двумя странами без флага предпросмотра.
+export function parseCatalogState(sp: SearchParams, open: readonly Country[] = countries): CatalogState {
   const sort = firstValue(sp.sort);
   const level = firstValue(sp.level);
   const limit = Number(firstValue(sp.limit));
@@ -92,11 +94,8 @@ export function parseCatalogState(sp: SearchParams): CatalogState {
 
   return {
     // Страна, которая ещё не открыта посетителям (Литва до запуска), в адресе
-    // не принимается: её нет в списке countries.
-    countryChoice:
-      country === ALL_COUNTRIES || (countries as readonly string[]).includes(country ?? "")
-        ? (country as CountryChoice)
-        : null,
+    // не принимается. Всё остальное, включая прежнее «all», — общий список.
+    countryChoice: (open as readonly string[]).includes(country ?? "") ? (country as Country) : null,
     q: (firstValue(sp.q) ?? "").trim().slice(0, 100),
     sort: (SORT_KEYS as readonly string[]).includes(sort ?? "") ? (sort as SortKey) : "name",
     level: (LEVEL_KEYS as readonly string[]).includes(level ?? "") ? (level as LevelKey) : null,
@@ -115,10 +114,9 @@ export function parseCatalogState(sp: SearchParams): CatalogState {
 
 // Страны, программы которых показывает каталог при этом состоянии. Страна
 // раздела идёт первой: с неё начинаются списки городов и языков в фильтрах.
-export function countriesShown(state: CatalogState, own: Country): Country[] {
-  if (state.countryChoice === null) return [own];
-  if (state.countryChoice === ALL_COUNTRIES) return [own, ...countries.filter((country) => country !== own)];
-  return [state.countryChoice];
+export function countriesShown(state: CatalogState, own: Country, open: readonly Country[] = countries): Country[] {
+  if (state.countryChoice !== null) return [state.countryChoice];
+  return [own, ...open.filter((country) => country !== own)];
 }
 
 // Фильтр, под который у страны нет данных, сбрасывается: в форме его нет, а

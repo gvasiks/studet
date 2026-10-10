@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { countryOf, isLocale, type Country } from "@/i18n/config";
+import { countries, isLocale } from "@/i18n/config";
 import { hasFeature } from "@/lib/country";
 import { getDictionary } from "@/i18n/dictionaries";
 import { getApplicationRounds } from "@/lib/deadline-queries";
@@ -30,10 +30,14 @@ export const revalidate = 3600;
 
 // Сбой базы не должен ронять страницу: карточки просто останутся без
 // кнопки калькулятора и без срока подачи.
-async function loadCardData(country: Country): Promise<{ calculatorIds: string[]; applicationRounds: ApplicationRound[] }> {
+async function loadCardData(): Promise<{ calculatorIds: string[]; applicationRounds: ApplicationRound[] }> {
   try {
-    const [ids, applicationRounds] = await Promise.all([getCalculatorProgrammeIds(country), getApplicationRounds()]);
-    return { calculatorIds: [...ids], applicationRounds };
+    // Список общий для всех открытых стран — и кнопка расчёта нужна программам каждой.
+    const [idSets, applicationRounds] = await Promise.all([
+      Promise.all(countries.map((country) => getCalculatorProgrammeIds(country))),
+      getApplicationRounds(),
+    ]);
+    return { calculatorIds: idSets.flatMap((ids) => [...ids]), applicationRounds };
   } catch {
     return { calculatorIds: [], applicationRounds: [] };
   }
@@ -45,7 +49,7 @@ export default async function FavoritesPage({ params }: PageProps<"/[locale]/fav
   if (!hasFeature(locale, "favorites")) notFound();
 
   const dict = await getDictionary(locale);
-  const { calculatorIds, applicationRounds } = await loadCardData(countryOf(locale));
+  const { calculatorIds, applicationRounds } = await loadCardData();
 
   return (
     // Заголовок — на сером фоне, как на /rights, /glossary и /survey;

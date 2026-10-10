@@ -204,38 +204,40 @@ describe("фильтры, под которые у страны нет данн�
 });
 
 describe("фильтр «Страна»", () => {
-  it("по умолчанию — страна раздела, и в адрес ничего не добавляется", () => {
-    const state = parseCatalogState({});
+  const BOTH = ["LV", "LT"] as const;
+
+  it("по умолчанию — общий список открытых стран, страна раздела первой, в адресе ничего нет", () => {
+    const state = parseCatalogState({}, BOTH);
     expect(state.countryChoice).toBeNull();
-    expect(countriesShown(state, "LV")).toEqual(["LV"]);
+    expect(countriesShown(state, "LV", BOTH)).toEqual(["LV", "LT"]);
+    expect(countriesShown(state, "LT", BOTH)).toEqual(["LT", "LV"]);
     expect(catalogQuery(state)).toBe("");
     expect(hasActiveFilters(state)).toBe(false);
   });
 
-  it("общий список сохраняется в ссылках сортировки и «показать ещё» и считается фильтром", () => {
-    const state = parseCatalogState({ country: "all", q: "law" });
-    expect(state.countryChoice).toBe("all");
-    expect(catalogQuery(state)).toBe("?country=all&q=law");
-    expect(catalogQuery(state, { sort: "university" })).toBe("?country=all&q=law&sort=university");
-    expect(hasActiveFilters(parseCatalogState({ country: "all" }))).toBe(true);
+  it("выбранная страна показывается одна, сохраняется в ссылках и считается фильтром", () => {
+    const state = parseCatalogState({ country: "LT", q: "teise" }, BOTH);
+    expect(state.countryChoice).toBe("LT");
+    expect(countriesShown(state, "LV", BOTH)).toEqual(["LT"]);
+    expect(catalogQuery(state)).toBe("?country=LT&q=teise");
+    expect(catalogQuery(state, { sort: "university" })).toBe("?country=LT&q=teise&sort=university");
+    expect(hasActiveFilters(parseCatalogState({ country: "LV" }, BOTH))).toBe(true);
   });
 
-  // В тестах флаг предпросмотра не задан, поэтому Литва закрыта — как для
-  // посетителя до её запуска.
-  it("страна, которая ещё не открыта, из адреса не принимается и в общий список не попадает", () => {
+  it("прежнее «all» и мусор в адресе — это общий список, а не ошибка", () => {
+    for (const country of ["all", "EE", ""]) {
+      expect(parseCatalogState({ country }, BOTH).countryChoice, country).toBeNull();
+    }
+    expect(parseCatalogState({ country: ["LT", "LV"] }, BOTH).countryChoice).toBe("LT");
+  });
+
+  // Без второго параметра берутся открытые страны сайта. В тестах флаг
+  // предпросмотра не задан, поэтому Литва закрыта — как для посетителя до её
+  // запуска: общий список и есть каталог Латвии.
+  it("пока открыта одна страна, для посетителя ничего не меняется", () => {
+    expect(countriesShown(parseCatalogState({}), "LV")).toEqual(["LV"]);
     expect(parseCatalogState({ country: "LT" }).countryChoice).toBeNull();
     expect(countriesShown(parseCatalogState({ country: "LT" }), "LV")).toEqual(["LV"]);
-    expect(countriesShown(parseCatalogState({ country: "all" }), "LV")).toEqual(["LV"]);
-  });
-
-  it("мусор в адресе — это страна раздела, а не ошибка", () => {
-    expect(parseCatalogState({ country: "EE" }).countryChoice).toBeNull();
-    expect(parseCatalogState({ country: ["all", "LV"] }).countryChoice).toBe("all");
-  });
-
-  it("открытая страна принимается и показывается одна", () => {
-    const state = parseCatalogState({ country: "LV" });
-    expect(state.countryChoice).toBe("LV");
-    expect(countriesShown(state, "LV")).toEqual(["LV"]);
+    expect(parseCatalogState({ country: "LV" }).countryChoice).toBe("LV");
   });
 });
