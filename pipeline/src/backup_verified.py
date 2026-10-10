@@ -27,28 +27,34 @@ from pathlib import Path
 
 from dotenv import load_dotenv
 
-from db import get_service_client
+from db import fetch_all, get_service_client
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
 OUT_PATH = REPO_ROOT / "docs" / "backups" / "verified-facts.json"
 
 
 def _formulas(client) -> list[dict]:  # type: ignore[no-untyped-def]
-    rows = (
-        client.table("formula")
+    rows = fetch_all(
+        lambda: client.table("formula")
         .select(
             "id, variant, valid_from, valid_to, source_url, source_doc, source_doc_number, "
-            "source_doc_date, source_copy_path, source_copy_sha256, source_excerpt, "
+            "source_doc_date, source_copy_path, source_copy_sha256, source_copy_fetched_on, source_excerpt, "
             "verified_at, verified_by, "
             "programme!inner(slug, name_lv, university!inner(slug))"
         )
         .not_.is_("verified_at", "null")
-        .execute()
-        .data
+        .order("id")
     )
     ids = [row["id"] for row in rows]
-    terms = client.table("formula_term").select("*").in_("formula_id", ids).execute().data if ids else []
-    gates = client.table("formula_gate").select("*").in_("formula_id", ids).execute().data if ids else []
+    # Слагаемых у формулы несколько, так что их больше тысячи раньше, чем
+    # самих формул. Пачками по 100 формул: длинный список id не влезает в
+    # адрес запроса.
+    terms: list[dict] = []
+    gates: list[dict] = []
+    for start in range(0, len(ids), 100):
+        chunk = ids[start : start + 100]
+        terms += fetch_all(lambda: client.table("formula_term").select("*").in_("formula_id", chunk).order("id"))
+        gates += fetch_all(lambda: client.table("formula_gate").select("*").in_("formula_id", chunk).order("id"))
     terms_by_formula: dict[str, list[dict]] = {}
     for term in terms:
         terms_by_formula.setdefault(term["formula_id"], []).append(
@@ -81,6 +87,7 @@ def _formulas(client) -> list[dict]:  # type: ignore[no-untyped-def]
                 "source_doc_date": row["source_doc_date"],
                 "source_copy_path": row["source_copy_path"],
                 "source_copy_sha256": row["source_copy_sha256"],
+                "source_copy_fetched_on": row["source_copy_fetched_on"],
                 "source_excerpt": row["source_excerpt"],
                 "verified_at": row["verified_at"],
                 "verified_by": row["verified_by"],
@@ -142,12 +149,16 @@ def _admission_types(client) -> list[dict]:  # type: ignore[no-untyped-def]
 
 
 def _programme_fields(client) -> list[dict]:  # type: ignore[no-untyped-def]
-    rows = (
-        client.table("programme_field")
-        .select("field_code, source, verified_at, verified_by, programme!inner(slug, name_lv, university!inner(slug))")
+    # Страницами: подтверждённых направлений 892 (2026-10-10) — вплотную к
+    # пределу в 1000 строк, за которым снимок молча стал бы неполным.
+    rows = fetch_all(
+        lambda: client.table("programme_field")
+        .select(
+            "field_code, source, verified_at, verified_by, verification_method, "
+            "programme!inner(slug, name_lv, university!inner(slug))"
+        )
         .not_.is_("verified_at", "null")
-        .execute()
-        .data
+        .order("programme_id")
     )
     out = [
         {
@@ -158,6 +169,10 @@ def _programme_fields(client) -> list[dict]:  # type: ignore[no-untyped-def]
             "source": row["source"],
             "verified_at": row["verified_at"],
             "verified_by": row["verified_by"],
+            # Без способа подтверждения база подтверждённую запись не примет
+            # (ограничение programme_field_verified_needs_method) — без этого
+            # поля восстановление падало на первой же строке.
+            "verification_method": row["verification_method"],
         }
         for row in rows
     ]

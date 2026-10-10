@@ -49,7 +49,7 @@ from pathlib import Path
 
 from dotenv import load_dotenv
 
-from db import get_service_client
+from db import PAGE_ROWS, fetch_all, get_service_client
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
 SNAPSHOT_PATH = REPO_ROOT / "docs" / "backups" / "verified-facts.json"
@@ -66,7 +66,11 @@ def _university_ids(client) -> dict[str, str]:  # type: ignore[no-untyped-def]
 
 def _programme_lookup(client, university_ids: dict[str, str]) -> dict[tuple[str, str], dict]:  # type: ignore[no-untyped-def]
     slug_by_uid = {v: k for k, v in university_ids.items()}
-    rows = client.table("programme").select("id, slug, name_lv, university_id").execute().data
+    # Страницами: программ в каталоге больше тысячи (с Литвой — 1919), а
+    # одним запросом база отдаёт только первую тысячу. Без этого часть
+    # подтверждённых фактов числилась «программы нет в каталоге», хотя
+    # программа на месте (замечено 2026-10-10 на четырёх формулах).
+    rows = fetch_all(lambda: client.table("programme").select("id, slug, name_lv, university_id").order("id"))
     out: dict[tuple[str, str], dict] = {}
     for row in rows:
         uni_slug = slug_by_uid.get(row["university_id"])
@@ -130,6 +134,10 @@ def restore_formulas(
             "verified_at": row["verified_at"],
             "verified_by": row["verified_by"],
         }
+        # Снимки до 2026-10-10 этой даты не хранили: ключа нет — не пишем
+        # вовсе, чтобы на живой базе не стереть уже стоящее значение.
+        if "source_copy_fetched_on" in row:
+            payload["source_copy_fetched_on"] = row["source_copy_fetched_on"]
         formula_id = (
             client.table("formula").upsert(payload, on_conflict="programme_id,variant,valid_from").execute().data[0]["id"]
         )
@@ -184,11 +192,20 @@ def restore_admission_types(
 
 def restore_programme_fields(
     client, rows: list[dict], programme_lookup: dict[tuple[str, str], dict], apply: bool  # type: ignore[no-untyped-def]
-) -> tuple[int, list[str], list[str]]:
+) -> tuple[int, list[str], list[str], int]:
+    """Последнее число — сколько записей нельзя восстановить, потому что в
+    снимке нет способа подтверждения (verification_method). База без него
+    подтверждённую запись не принимает, а придумывать его нельзя: «по
+    правилу» и «вручную» — разные решения человека. Такие записи
+    пропускаются и в сухом прогоне, и с --apply."""
     restored = 0
     missing = []
     collisions = []
+    without_method = 0
     for row in rows:
+        if not row.get("verification_method"):
+            without_method += 1
+            continue
         key = (row["university_slug"], row["programme_slug"])
         programme_id, collision = _resolve_programme(programme_lookup, key, row.get("programme_name"))
         if collision:
@@ -206,9 +223,10 @@ def restore_programme_fields(
             "source": row["source"],
             "verified_at": row["verified_at"],
             "verified_by": row["verified_by"],
+            "verification_method": row["verification_method"],
         }
         client.table("programme_field").upsert(payload, on_conflict="programme_id").execute()
-    return restored, missing, collisions
+    return restored, missing, collisions, without_method
 
 
 def main(apply: bool) -> None:
@@ -222,7 +240,7 @@ def main(apply: bool) -> None:
     f_restored, f_missing, f_collisions = restore_formulas(client, snapshot["formulas"], programme_lookup, apply)
     ar_restored, ar_missing = restore_application_rounds(client, snapshot["application_rounds"], university_ids, apply)
     at_restored, at_missing = restore_admission_types(client, snapshot["admission_types"], university_ids, apply)
-    pf_restored, pf_missing, pf_collisions = restore_programme_fields(
+    pf_restored, pf_missing, pf_collisions, pf_without_method = restore_programme_fields(
         client, snapshot["programme_fields"], programme_lookup, apply
     )
 
@@ -231,6 +249,14 @@ def main(apply: bool) -> None:
     print(f"сроки подачи: {verb} {ar_restored} из {len(snapshot['application_rounds'])}")
     print(f"типы отбора: {verb} {at_restored} из {len(snapshot['admission_types'])}")
     print(f"направления программ: {verb} {pf_restored} из {len(snapshot['programme_fields'])}")
+
+    if pf_without_method:
+        print(
+            f"\nНЕ ВОССТАНОВЛЕНО: у {pf_without_method} направлений в снимке нет способа подтверждения "
+            "(снимок сделан до 2026-10-10).\nБаза такую запись не примет. Если база цела — пересоздайте снимок: "
+            "python src/backup_verified.py.\nЕсли базы уже нет — способ придётся вписать в снимок вручную "
+            "(verification_method: \"rule\" или \"manual\"), см. поле verified_by каждой записи."
+        )
 
     missing = f_missing + ar_missing + at_missing + pf_missing
     if missing:
@@ -377,6 +403,39 @@ def selftest() -> None:
     assert restored_ar == 1
     assert client.store["application_round"][0]["university_id"] == "uni-1"
     assert "university_slug" not in client.store["application_round"][0]
+
+    # Формула: дата снятия копии пишется, только если снимок её хранит.
+    assert "source_copy_fetched_on" not in client.store["formula"][0]
+
+    # Направление: способ подтверждения доходит до базы; запись без него
+    # (старый снимок) не пишется вовсе и считается отдельно.
+    field = {
+        "university_slug": "lu", "programme_slug": "sociology", "programme_name": "Socioloģija",
+        "field_code": "0314", "source": "name_rule",
+        "verified_at": "2026-10-01T00:00:00Z", "verified_by": "owner",
+    }
+    restored_pf, missing_pf, collisions_pf, without_method = restore_programme_fields(
+        client, [{**field, "verification_method": "rule"}, field], programme_lookup, apply=True
+    )
+    assert (restored_pf, missing_pf, collisions_pf, without_method) == (1, [], [], 1)
+    assert len(client.store["programme_field"]) == 1
+    assert client.store["programme_field"][0]["verification_method"] == "rule"
+
+    # Чтение страницами: 1005 строк приходят двумя запросами и все доходят.
+    class FakeQuery:
+        calls: list[tuple[int, int]] = []
+
+        def range(self, start, end):  # type: ignore[no-untyped-def]
+            FakeQuery.calls.append((start, end))
+            self._slice = list(range(1005))[start : end + 1]
+            return self
+
+        def execute(self):  # type: ignore[no-untyped-def]
+            return type("Result", (), {"data": [{"id": n} for n in self._slice]})()
+
+    fetched = fetch_all(FakeQuery)
+    assert [row["id"] for row in fetched] == list(range(1005))
+    assert FakeQuery.calls == [(0, PAGE_ROWS - 1), (PAGE_ROWS, 2 * PAGE_ROWS - 1)], FakeQuery.calls
 
     print("самотест пройден")
 
