@@ -150,7 +150,7 @@ def main(apply: bool, everything: bool, limit: int | None) -> None:
     from playwright.sync_api import sync_playwright
 
     import polite
-    from db import get_service_client
+    from db import fetch_all, get_service_client
 
     load_dotenv()
     polite.install()  # честный User-Agent и пауза из robots.txt (у niid.lv — 10 с)
@@ -163,12 +163,11 @@ def main(apply: bool, everything: bool, limit: int | None) -> None:
     #                        NIID нашёл match_niid_by_name.py по названию.
     pattern = f"*{NIID_PROGRAMME_PATH}*"
     try:
-        rows = (
-            client.table("programme")
+        rows = fetch_all(
+            lambda: client.table("programme")
             .select("id, slug, name_lv, source_url, details_source_url, details_extracted_at")
             .or_(f"source_url.like.{pattern},details_source_url.like.{pattern}")
-            .execute()
-            .data
+            .order("id")
         )
     except Exception as exc:  # noqa: BLE001
         # Колонки появляются миграцией 20261003120000_programme_details.sql,

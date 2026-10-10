@@ -568,7 +568,7 @@ def main(apply: bool, everything: bool, limit: int | None, only: set[str], skip_
     from playwright.sync_api import sync_playwright
 
     import polite
-    from db import get_service_client
+    from db import fetch_all, get_service_client
 
     load_dotenv()
     polite.install()
@@ -580,12 +580,11 @@ def main(apply: bool, everything: bool, limit: int | None, only: set[str], skip_
         for key, (name, _) in PARSERS.items()
         if (not only or name in only) and not (skip_local and name in LOCAL_ONLY)
     ]
-    rows = (
-        client.table("programme")
+    rows = fetch_all(
+        lambda: client.table("programme")
         .select("id, slug, degree_level, source_url, source_key, details_extracted_at")
         .in_("source_key", keys)
-        .execute()
-        .data
+        .order("id")
     )
     # одна страница может описывать несколько программ (LMA: бакалавриат и
     # магистратура специализации) — открываем её один раз

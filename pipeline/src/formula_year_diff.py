@@ -127,25 +127,36 @@ def format_report(diffs: list[ProgrammeDiff]) -> str:
 def main() -> None:
     from dotenv import load_dotenv
 
-    from db import get_service_client
+    from db import fetch_all, get_service_client
 
     load_dotenv()
     client = get_service_client()
 
-    rows = (
-        client.table("formula")
+    # Страницами (db.fetch_all). id — вторым ключом порядка: у формул одного
+    # года valid_from одинаковый, а порядок между страницами должен быть однозначным.
+    rows = fetch_all(
+        lambda: client.table("formula")
         .select("id, programme_id, valid_from, programme!inner(name_lv, name_en)")
         .eq("variant", "ce")
         .order("valid_from")
-        .execute()
-        .data
+        .order("id")
     )
     for row in rows:
         programme = row.pop("programme")
         row["programme_name"] = programme.get("name_en") or programme.get("name_lv") or row["programme_id"]
 
     ids = [row["id"] for row in rows]
-    terms = client.table("formula_term").select("formula_id, kind, subject, coefficient").in_("formula_id", ids).execute().data if ids else []
+    # Пачками по 100 формул: длинный список id не влезает в адрес запроса,
+    # а слагаемых (432 на 2026-10-10) больше тысячи станет раньше, чем формул.
+    terms: list[dict] = []
+    for start in range(0, len(ids), 100):
+        chunk = ids[start : start + 100]
+        terms += fetch_all(
+            lambda: client.table("formula_term")
+            .select("id, formula_id, kind, subject, coefficient")
+            .in_("formula_id", chunk)
+            .order("id")
+        )
     terms_by_formula: dict[str, list[dict]] = {}
     for term in terms:
         terms_by_formula.setdefault(term["formula_id"], []).append(term)

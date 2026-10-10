@@ -392,14 +392,26 @@ def review() -> None:
 def main(apply: bool) -> None:
     from dotenv import load_dotenv
 
-    from db import get_service_client
+    from db import fetch_all, get_service_client
     from db_retry import execute
 
     load_dotenv()
     client = get_service_client()
 
     universities = {row["slug"]: row["id"] for row in execute(client.table("university").select("id, slug")).data}
-    programmes = execute(client.table("programme").select("university_id, degree_level").limit(2000)).data
+    # Страницами: программ в каталоге больше тысячи (1976 на 2026-10-10), а
+    # .limit(2000) не помогал — предел в 1000 строк стоит на сервере. Скрипт
+    # видел только часть программ и мог счесть, что у вуза нет программ
+    # нужного уровня.
+    # Только Латвия: в Литве подача идёт через общий приём LAMA BPO
+    # (country.ts, generalAdmission), записей application_channel у неё нет,
+    # и её вузы попадали бы в отчёт «без черновика».
+    programmes = fetch_all(
+        lambda: client.table("programme")
+        .select("id, university_id, degree_level, university:university_id!inner(country)")
+        .eq("university.country", "LV")
+        .order("id")
+    )
     offered = {(row["university_id"], row["degree_level"]) for row in programmes}
     existing = {
         (row["university_id"], row["degree_level"]): row

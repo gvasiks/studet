@@ -28,7 +28,7 @@ from datetime import datetime, timezone
 
 from dotenv import load_dotenv
 
-from db import get_service_client
+from db import fetch_all, get_service_client
 from graduate_outcomes import download_csv, parse_outcomes
 from programme_fields import candidates_for, choose_field, groups_with_data
 
@@ -55,18 +55,24 @@ def main(apply: bool) -> None:
     client = get_service_client()
     data = groups_with_data(parse_outcomes(download_csv()))
 
-    programmes = (
-        client.table("programme")
+    # Страницами (db.fetch_all): программ Латвии 956 на 2026-10-10 — вплотную
+    # к пределу в 1000 строк за запрос, после которого лишние молча терялись бы.
+    programmes = fetch_all(
+        lambda: client.table("programme")
         # Только Латвия: разметка направлений идёт по латвийскому
         # классификатору и латвийским данным о выпускниках.
         .select("id, slug, name_en, name_lv, degree_level, university:university_id!inner(slug, country)")
         .eq("university.country", "LV")
-        .execute()
-        .data
+        .order("id")
     )
     already = {
         row["programme_id"]
-        for row in client.table("programme_field").select("programme_id").not_.is_("verified_at", "null").execute().data
+        for row in fetch_all(
+            lambda: client.table("programme_field")
+            .select("programme_id")
+            .not_.is_("verified_at", "null")
+            .order("programme_id")
+        )
     }
 
     to_confirm: list[str] = []  # programme_id

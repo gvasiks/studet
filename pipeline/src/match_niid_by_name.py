@@ -158,20 +158,19 @@ def main(apply: bool) -> None:
     from playwright.sync_api import sync_playwright
 
     import polite
-    from db import get_service_client
+    from db import fetch_all, get_service_client
     from sources import niid_colleges as base
 
     load_dotenv()
     polite.install()
     client = get_service_client()
 
-    rows = (
-        client.table("programme")
+    rows = fetch_all(
+        lambda: client.table("programme")
         .select("id, slug, name_lv, degree_level, source_url, details_source_url, university:university_id(slug, name_lv)")
         .not_.is_("name_lv", "null")
         .is_("details_source_url", "null")
-        .execute()
-        .data
+        .order("id")
     )
     # программы, чей источник и так NIID, enrich_niid_details.py берёт сам
     rows = [row for row in rows if "niid.lv" not in (row["source_url"] or "")]
