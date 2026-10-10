@@ -300,7 +300,7 @@
   },
   "privacy": {
     "intro": "Kā šī vietne apstrādā personas datus: ko mēs uzglabājam, ko nē, un kādas ir tavas tiesības.",
-    "updated": "Redakcija: 2026. gada 9. oktobris",
+    "updated": "Redakcija: 2026. gada 10. oktobris",
     "authorityLabel": "Lietuvas Valsts datu aizsardzības inspekcija (vdai.lrv.lt)",
     "authorityUrl": "https://vdai.lrv.lt",
     "sections": [
@@ -342,7 +342,8 @@
         "id": "favorites",
         "title": "Izlase",
         "body": [
-          "Programmu saraksts, ko atzīmē ar zvaigznīti, glabājas tikai tavā pārlūkā (localStorage) un netiek nosūtīts mums. To var dzēst, iztīrot vietnes datus pārlūka iestatījumos. Šī glabāšana ir vajadzīga funkcijai, ko tu pats izvēlies izmantot."
+          "Programmu saraksts, ko atzīmē ar zvaigznīti, glabājas tikai tavā pārlūkā (localStorage). To var dzēst, iztīrot vietnes datus pārlūka iestatījumos. Šī glabāšana ir vajadzīga funkcijai, ko tu pats izvēlies izmantot.",
+          "Kad atver izlasi, pārlūks pieprasa šo programmu datus no mūsu datubāzes (Supabase). Pieprasījumā ir programmu identifikatori; tāpat kā jebkurš apmeklējums, tas nonāk pakalpojuma sniedzēja tehniskajos žurnālos. Mēs sarakstu neglabājam un nesaistām to ar personu."
         ]
       },
       {

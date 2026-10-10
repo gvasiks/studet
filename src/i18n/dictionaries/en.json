@@ -426,7 +426,7 @@
     "add": "Add to my list",
     "remove": "Remove from my list",
     "title": "My list",
-    "subtitle": "Saved only in this browser — nothing is sent anywhere, and it stays until you clear your browser data.",
+    "subtitle": "The list is kept only in this browser — we don't store it. It stays until you clear your browser data.",
     "empty": "Nothing saved yet. Browse the catalogue and mark programmes with ★ to compare them here.",
     "removeFromCompare": "Remove from comparison",
     "compare": "Compare",
@@ -737,7 +737,7 @@
   "privacy": {
     "title": "Privacy policy",
     "intro": "How this site handles personal data: what we keep, what we don't, and what your rights are.",
-    "updated": "Version: 9 October 2026",
+    "updated": "Version: 10 October 2026",
     "authorityLabel": "Data State Inspectorate (dvi.gov.lv)",
     "authorityUrl": "https://www.dvi.gov.lv/en",
     "sections": [
@@ -748,7 +748,7 @@
           "- The site has no user accounts and needs no registration.",
           "- Exam results that you enter in the calculator or in “Where can I get in?” are calculated in your browser. They are not sent to our server and are not stored anywhere.",
           "- We do not use tracking cookies and we show no advertising.",
-          "- Your favourites (the stars on programmes) stay on your device only."
+          "- Your favourites (the stars on programmes) are stored on your device only."
         ]
       },
       {
@@ -779,7 +779,8 @@
         "id": "favorites",
         "title": "Favourites",
         "body": [
-          "The list of programmes you mark with a star is kept only in your browser (localStorage) and is not sent to us. You can delete it by clearing the site's data in your browser settings. This storage is needed for a feature you choose to use."
+          "The list of programmes you mark with a star is kept only in your browser (localStorage). You can delete it by clearing the site's data in your browser settings. This storage is needed for a feature you choose to use.",
+          "When you open the list, your browser requests the data of those programmes from our database (Supabase). The request contains the programmes' identifiers; like any visit, it ends up in the provider's technical logs. We do not store the list and do not link it to a person."
         ]
       },
       {

@@ -426,7 +426,7 @@
     "add": "Pievienot manam sarakstam",
     "remove": "Noņemt no saraksta",
     "title": "Mans saraksts",
-    "subtitle": "Saglabāts tikai šajā pārlūkā — nekur netiek nosūtīts un nepazūd pēc lapas aizvēršanas, kamēr nenotīri pārlūka datus.",
+    "subtitle": "Saraksts glabājas tikai šajā pārlūkā — mēs to neglabājam. Tas saglabājas, kamēr nenotīri pārlūka datus.",
     "empty": "Vēl nekas nav saglabāts. Pārlūko katalogu un atzīmē programmas ar ★, lai tās salīdzinātu šeit.",
     "removeFromCompare": "Noņemt no salīdzinājuma",
     "compare": "Salīdzināt",
@@ -737,7 +737,7 @@
   "privacy": {
     "title": "Privātuma politika",
     "intro": "Kā šī vietne apstrādā personas datus: ko mēs uzglabājam, ko nē, un kādas ir tavas tiesības.",
-    "updated": "Redakcija: 2026. gada 9. oktobris",
+    "updated": "Redakcija: 2026. gada 10. oktobris",
     "authorityLabel": "Datu valsts inspekcija (dvi.gov.lv)",
     "authorityUrl": "https://www.dvi.gov.lv",
     "sections": [
@@ -779,7 +779,8 @@
         "id": "favorites",
         "title": "Izlase",
         "body": [
-          "Programmu saraksts, ko atzīmē ar zvaigznīti, glabājas tikai tavā pārlūkā (localStorage) un netiek nosūtīts mums. To var dzēst, iztīrot vietnes datus pārlūka iestatījumos. Šī glabāšana ir vajadzīga funkcijai, ko tu pats izvēlies izmantot."
+          "Programmu saraksts, ko atzīmē ar zvaigznīti, glabājas tikai tavā pārlūkā (localStorage). To var dzēst, iztīrot vietnes datus pārlūka iestatījumos. Šī glabāšana ir vajadzīga funkcijai, ko tu pats izvēlies izmantot.",
+          "Kad atver izlasi, pārlūks pieprasa šo programmu datus no mūsu datubāzes (Supabase). Pieprasījumā ir programmu identifikatori; tāpat kā jebkurš apmeklējums, tas nonāk pakalpojuma sniedzēja tehniskajos žurnālos. Mēs sarakstu neglabājam un nesaistām to ar personu."
         ]
       },
       {

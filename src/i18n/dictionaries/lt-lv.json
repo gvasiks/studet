@@ -301,7 +301,7 @@
   },
   "privacy": {
     "intro": "Kaip ši svetainė tvarko asmens duomenis: ką saugome, ko nesaugome ir kokios yra jūsų teisės. Šis tekstas — vertimas iš latvių kalbos; jei tekstai skiriasi, galioja tekstas latvių kalba.",
-    "updated": "Redakcija: 2026 m. spalio 9 d.",
+    "updated": "Redakcija: 2026 m. spalio 10 d.",
     "authorityLabel": "Latvijos duomenų valstybinė inspekcija (dvi.gov.lv)",
     "authorityUrl": "https://www.dvi.gov.lv/en",
     "sections": [
@@ -312,7 +312,7 @@
           "- Svetainėje nėra naudotojų paskyrų ir nereikia registruotis.",
           "- Egzaminų rezultatai, kuriuos įvedate skaičiuoklėje arba skiltyje „Kur galiu stoti“, skaičiuojami jūsų naršyklėje. Jie nesiunčiami į mūsų serverį ir niekur nesaugomi.",
           "- Nenaudojame sekimo slapukų ir nerodome reklamos.",
-          "- Jūsų sąrašas (žvaigždute pažymėtos programos) lieka tik jūsų įrenginyje."
+          "- Jūsų sąrašas (žvaigždute pažymėtos programos) saugomas tik jūsų įrenginyje."
         ]
       },
       {
@@ -343,7 +343,8 @@
         "id": "favorites",
         "title": "Mano sąrašas",
         "body": [
-          "Programų, kurias pažymite žvaigždute, sąrašas saugomas tik jūsų naršyklėje (localStorage) ir mums nesiunčiamas. Jį galite ištrinti išvalę svetainės duomenis naršyklės nustatymuose. Šis saugojimas reikalingas funkcijai, kuria naudotis pasirenkate patys."
+          "Programų, kurias pažymite žvaigždute, sąrašas saugomas tik jūsų naršyklėje (localStorage). Jį galite ištrinti išvalę svetainės duomenis naršyklės nustatymuose. Šis saugojimas reikalingas funkcijai, kuria naudotis pasirenkate patys.",
+          "Kai atidarote sąrašą, naršyklė paprašo šių programų duomenų iš mūsų duomenų bazės (Supabase). Užklausoje yra programų identifikatoriai; kaip ir bet kuris apsilankymas, ji patenka į paslaugų teikėjo techninius žurnalus. Sąrašo nesaugome ir nesiejame jo su asmeniu."
         ]
       },
       {
