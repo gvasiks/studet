@@ -17,6 +17,13 @@ null`) записями в docs/backups/verified-facts.json — файл КОМ�
 seed-скриптов и так снова генерируют свои id при каждом запуске), а
 устойчивые слаги: university_slug + programme_slug. Так снимок можно
 свериться глазами в PR-диффе, а не только машиной.
+
+Что в снимке: формулы, сроки подачи, типы отбора, направления программ,
+требования к поступающим и каналы подачи (два последних — с 2026-10-10).
+Чего в снимке НЕТ: пометок verified_at у самих программ и вузов (цена,
+бюджетные места) и у коэффициентов уровня — подтверждённых записей там
+пока нет (проверено 2026-10-10). Когда появятся — дописать сюда и в
+restore_verified.py, иначе эти подтверждения копия не сохранит.
 """
 
 from __future__ import annotations
@@ -179,12 +186,101 @@ def _programme_fields(client) -> list[dict]:  # type: ignore[no-untyped-def]
     return sorted(out, key=lambda r: (r["university_slug"], r["programme_slug"]))
 
 
+# Протокол источника — одни и те же колонки у формулы и у набора требований.
+_PROTOCOL_COLUMNS = (
+    "source_url",
+    "source_doc",
+    "source_doc_number",
+    "source_doc_date",
+    "source_copy_path",
+    "source_copy_sha256",
+    "source_copy_fetched_on",
+    "source_excerpt",
+)
+
+
+def _requirement_sets(client) -> list[dict]:  # type: ignore[no-untyped-def]
+    rows = fetch_all(
+        lambda: client.table("programme_requirement_set")
+        .select(
+            "id, " + ", ".join(_PROTOCOL_COLUMNS) + ", verified_at, verified_by, "
+            "programme!inner(slug, name_lv, university!inner(slug))"
+        )
+        .not_.is_("verified_at", "null")
+        .order("id")
+    )
+    ids = [row["id"] for row in rows]
+    requirements: dict[str, list[dict]] = {}
+    for start in range(0, len(ids), 100):
+        chunk = ids[start : start + 100]
+        for item in fetch_all(
+            lambda: client.table("programme_requirement").select("*").in_("requirement_set_id", chunk).order("id")
+        ):
+            requirements.setdefault(item["requirement_set_id"], []).append(
+                {
+                    "subject": item["subject"],
+                    "min_level": item["min_level"],
+                    "alternative_group": item["alternative_group"],
+                    "note": item["note"],
+                }
+            )
+
+    out = []
+    for row in rows:
+        programme = row["programme"]
+        out.append(
+            {
+                "university_slug": programme["university"]["slug"],
+                "programme_slug": programme["slug"],
+                # как у формулы: по имени restore_verified.py замечает, что слаг
+                # стал указывать на другую программу
+                "programme_name": programme.get("name_lv"),
+                **{column: row[column] for column in _PROTOCOL_COLUMNS},
+                "verified_at": row["verified_at"],
+                "verified_by": row["verified_by"],
+                "requirements": sorted(
+                    requirements.get(row["id"], []), key=lambda r: (r["alternative_group"] or "", r["subject"])
+                ),
+            }
+        )
+    return sorted(out, key=lambda r: (r["university_slug"], r["programme_slug"]))
+
+
+def _application_channels(client) -> list[dict]:  # type: ignore[no-untyped-def]
+    rows = fetch_all(
+        lambda: client.table("application_channel")
+        .select(
+            "degree_level, channel_type, url, source_url, source_excerpt, verified_at, verified_by, "
+            "university!inner(slug)"
+        )
+        .not_.is_("verified_at", "null")
+        .order("id")
+    )
+    out = [
+        {
+            "university_slug": row["university"]["slug"],
+            # null — запись на все уровни вуза
+            "degree_level": row["degree_level"],
+            "channel_type": row["channel_type"],
+            "url": row["url"],
+            "source_url": row["source_url"],
+            "source_excerpt": row["source_excerpt"],
+            "verified_at": row["verified_at"],
+            "verified_by": row["verified_by"],
+        }
+        for row in rows
+    ]
+    return sorted(out, key=lambda r: (r["university_slug"], r["degree_level"] or ""))
+
+
 def build_snapshot(client) -> dict:  # type: ignore[no-untyped-def]
     return {
         "formulas": _formulas(client),
         "application_rounds": _application_rounds(client),
         "admission_types": _admission_types(client),
         "programme_fields": _programme_fields(client),
+        "requirement_sets": _requirement_sets(client),
+        "application_channels": _application_channels(client),
     }
 
 

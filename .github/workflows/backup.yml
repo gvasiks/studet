@@ -6,8 +6,9 @@ name: Backup
 # копий. Два независимых слоя:
 #
 # 1. snapshot-verified — узкий JSON только с ПОДТВЕРЖДЁННЫМИ фактами
-#    (formula/application_round/university_admission_type/programme_field
-#    с verified_at) коммитится прямо в репозиторий: подтверждения живут
+#    (formula/application_round/university_admission_type/programme_field/
+#    programme_requirement_set/application_channel с verified_at)
+#    коммитится прямо в репозиторий: подтверждения живут
 #    в истории git и переживают полную потерю базы без какого-либо
 #    восстановления БД вообще (pipeline/src/backup_verified.py).
 # 2. full-dump — полный дамп схемы public (весь каталог, включая ещё не

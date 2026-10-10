@@ -1,5 +1,6 @@
 {
   "admission_types": [],
+  "application_channels": [],
   "application_rounds": [],
   "formulas": [
     {
@@ -12248,5 +12249,6 @@
       "verified_at": "2026-10-01T16:39:15.266533+00:00",
       "verified_by": "Gvasiks (подтверждение по правилу, решение владельца 2026-10-01; правила и выборка — docs/checks/PROGRAMME-FIELD-REVIEW.md)"
     }
-  ]
+  ],
+  "requirement_sets": []
 }

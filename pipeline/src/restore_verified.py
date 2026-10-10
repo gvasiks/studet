@@ -229,6 +229,57 @@ def restore_programme_fields(
     return restored, missing, collisions, without_method
 
 
+def restore_requirement_sets(
+    client, rows: list[dict], programme_lookup: dict[tuple[str, str], dict], apply: bool  # type: ignore[no-untyped-def]
+) -> tuple[int, list[str], list[str]]:
+    restored = 0
+    missing = []
+    collisions = []
+    for row in rows:
+        key = (row["university_slug"], row["programme_slug"])
+        programme_id, collision = _resolve_programme(programme_lookup, key, row.get("programme_name"))
+        if collision:
+            collisions.append(f"requirement_set {collision}")
+            continue
+        if programme_id is None:
+            missing.append(f"requirement_set {key[0]}/{key[1]}: программы нет в текущем каталоге")
+            continue
+        restored += 1
+        if not apply:
+            continue
+        skip = {"university_slug", "programme_slug", "programme_name", "requirements"}
+        payload = {"programme_id": programme_id, **{k: v for k, v in row.items() if k not in skip}}
+        set_id = client.table("programme_requirement_set").upsert(payload, on_conflict="programme_id").execute().data[0]["id"]
+        # У строк требований нет своего естественного ключа — как у слагаемых
+        # формулы: сносим и вставляем заново.
+        client.table("programme_requirement").delete().eq("requirement_set_id", set_id).execute()
+        if row["requirements"]:
+            client.table("programme_requirement").insert(
+                [{**item, "requirement_set_id": set_id} for item in row["requirements"]]
+            ).execute()
+    return restored, missing, collisions
+
+
+def restore_application_channels(
+    client, rows: list[dict], university_ids: dict[str, str], apply: bool  # type: ignore[no-untyped-def]
+) -> tuple[int, list[str]]:
+    restored = 0
+    missing = []
+    for row in rows:
+        university_id = university_ids.get(row["university_slug"])
+        if university_id is None:
+            missing.append(
+                f"application_channel {row['university_slug']}/{row['degree_level'] or 'все уровни'}: вуза нет в каталоге"
+            )
+            continue
+        restored += 1
+        if not apply:
+            continue
+        payload = {"university_id": university_id, **{k: v for k, v in row.items() if k != "university_slug"}}
+        client.table("application_channel").upsert(payload, on_conflict="university_id,degree_level").execute()
+    return restored, missing
+
+
 def main(apply: bool) -> None:
     load_dotenv()
     client = get_service_client()
@@ -243,12 +294,19 @@ def main(apply: bool) -> None:
     pf_restored, pf_missing, pf_collisions, pf_without_method = restore_programme_fields(
         client, snapshot["programme_fields"], programme_lookup, apply
     )
+    # .get: в снимках до 2026-10-10 этих двух разделов нет.
+    requirement_sets = snapshot.get("requirement_sets", [])
+    application_channels = snapshot.get("application_channels", [])
+    rs_restored, rs_missing, rs_collisions = restore_requirement_sets(client, requirement_sets, programme_lookup, apply)
+    ac_restored, ac_missing = restore_application_channels(client, application_channels, university_ids, apply)
 
     verb = "восстановлено" if apply else "было бы восстановлено (сухой прогон, для записи запустите с --apply)"
     print(f"формулы: {verb} {f_restored} из {len(snapshot['formulas'])}")
     print(f"сроки подачи: {verb} {ar_restored} из {len(snapshot['application_rounds'])}")
     print(f"типы отбора: {verb} {at_restored} из {len(snapshot['admission_types'])}")
     print(f"направления программ: {verb} {pf_restored} из {len(snapshot['programme_fields'])}")
+    print(f"требования к поступающим: {verb} {rs_restored} из {len(requirement_sets)}")
+    print(f"каналы подачи: {verb} {ac_restored} из {len(application_channels)}")
 
     if pf_without_method:
         print(
@@ -258,13 +316,13 @@ def main(apply: bool) -> None:
             "(verification_method: \"rule\" или \"manual\"), см. поле verified_by каждой записи."
         )
 
-    missing = f_missing + ar_missing + at_missing + pf_missing
+    missing = f_missing + ar_missing + at_missing + pf_missing + rs_missing + ac_missing
     if missing:
         print(f"\nне нашлось в текущем каталоге ({len(missing)}):")
         for line in missing:
             print(f"  {line}")
 
-    collisions = f_collisions + pf_collisions
+    collisions = f_collisions + pf_collisions + rs_collisions
     if collisions:
         print(f"\nПОХОЖЕ НА ПЕРЕСЛАГОВАНИЕ, НЕ ВОССТАНОВЛЕНО АВТОМАТИЧЕСКИ ({len(collisions)}):")
         for line in collisions:
@@ -420,6 +478,54 @@ def selftest() -> None:
     assert (restored_pf, missing_pf, collisions_pf, without_method) == (1, [], [], 1)
     assert len(client.store["programme_field"]) == 1
     assert client.store["programme_field"][0]["verification_method"] == "rule"
+
+    # Требования: заголовок набора и его строки; служебные ключи снимка в
+    # базу не уходят.
+    restored_rs, missing_rs, collisions_rs = restore_requirement_sets(
+        client,
+        [
+            {
+                "university_slug": "lu", "programme_slug": "sociology", "programme_name": "Socioloģija",
+                "source_url": "https://example.com", "source_doc": "doc", "source_doc_number": "1",
+                "source_doc_date": "2026-01-01", "source_copy_path": "p", "source_copy_sha256": "a" * 64,
+                "source_copy_fetched_on": "2026-09-20", "source_excerpt": "excerpt",
+                "verified_at": "2026-10-25T00:00:00Z", "verified_by": "owner",
+                "requirements": [
+                    {"subject": "physics", "min_level": None, "alternative_group": "A", "note": None},
+                    {"subject": "chemistry", "min_level": None, "alternative_group": "A", "note": None},
+                ],
+            },
+            {"university_slug": "lu", "programme_slug": "does-not-exist", "programme_name": "X", "requirements": []},
+        ],
+        programme_lookup,
+        apply=True,
+    )
+    assert (restored_rs, collisions_rs) == (1, []) and len(missing_rs) == 1, (restored_rs, missing_rs, collisions_rs)
+    saved_set = client.store["programme_requirement_set"][0]
+    assert saved_set["programme_id"] == "prog-1" and saved_set["verified_at"] == "2026-10-25T00:00:00Z"
+    assert not {"university_slug", "programme_slug", "programme_name", "requirements"} & set(saved_set)
+    saved_rows = client.store["programme_requirement_children"]
+    assert [r["subject"] for r in saved_rows] == ["physics", "chemistry"]
+    assert all(r["requirement_set_id"] == "fake-id" for r in saved_rows)
+
+    # Канал подачи: запись на все уровни вуза (degree_level пустой) доходит как есть.
+    restored_ac, missing_ac = restore_application_channels(
+        client,
+        [
+            {"university_slug": "lu", "degree_level": None, "channel_type": "unified_portal",
+             "url": "https://example.com/apply", "source_url": "https://example.com", "source_excerpt": None,
+             "verified_at": "2026-12-01T00:00:00Z", "verified_by": "owner"},
+            {"university_slug": "nope", "degree_level": "master", "channel_type": "university",
+             "url": "https://example.com", "source_url": "https://example.com", "source_excerpt": None,
+             "verified_at": "2026-12-01T00:00:00Z", "verified_by": "owner"},
+        ],
+        university_ids,
+        apply=True,
+    )
+    assert restored_ac == 1 and len(missing_ac) == 1 and "nope/master" in missing_ac[0], missing_ac
+    saved_channel = client.store["application_channel"][0]
+    assert saved_channel["university_id"] == "uni-1" and saved_channel["degree_level"] is None
+    assert "university_slug" not in saved_channel
 
     # Чтение страницами: 1005 строк приходят двумя запросами и все доходят.
     class FakeQuery:
