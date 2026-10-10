@@ -167,22 +167,36 @@ def _is_legacy(row: dict) -> bool:
     return len(row["venues"]) == 1 and row["venues"][0] in ("Rīga", "Rēzekne")
 
 
-def _scrape_detail(page: Page, url: str) -> tuple[float | None, str]:
+def _extract_language(text: str) -> str | None:
+    """Язык из поля «Īstenošanas valoda». Пусто — поля нет или в нём
+    незнакомое значение: «латышский» вместо этого не подставляем (до
+    2026-10-10 подставляли, и сбой чтения выглядел как факт)."""
+    lowered = text.lower()
+    if "angļu" in lowered:
+        return "en"
+    if "latvie" in lowered:
+        return "lv"
+    return None
+
+
+def _scrape_detail(page: Page, url: str) -> tuple[float | None, str | None]:
     """Срок и язык с карточки программы. Один повтор при сбое: сайт РТУ
-    изредка отвечает дольше таймаута. Не вышло и со второго раза — срок
-    пустой, язык латышский (предположение), и об этом пишется в журнал:
-    раньше это проглатывалось молча."""
+    изредка отвечает дольше таймаута. Не вышло и со второго раза — срок и
+    язык пустые: запись (main.py) оставит у программы прежние значения, а
+    новую программу без языка не запишет."""
     for attempt in (1, 2):
         try:
             page.goto(url, wait_until="domcontentloaded")
             facts = _facts(page)
             duration = _parse_years(facts.get("studiju ilgums", ""))
-            language = "en" if "angļu" in facts.get("īstenošanas valoda", "").lower() else "lv"
+            language = _extract_language(facts.get("īstenošanas valoda", ""))
+            if language is None:
+                print(f"rtu_catalog: язык не распознан на {url}: «{facts.get('īstenošanas valoda', '')}»")
             return duration, language
         except Exception as exc:  # noqa: BLE001
             if attempt == 2:
-                print(f"rtu_catalog: не прочиталась {url}: {type(exc).__name__}; срок пуст, язык lv (предположение)")
-    return None, "lv"
+                print(f"rtu_catalog: не прочиталась {url}: {type(exc).__name__}; срок и язык не прочитаны")
+    return None, None
 
 
 def scrape() -> tuple[UniversityDraft, list[ProgrammeDraft]]:

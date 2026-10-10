@@ -81,8 +81,15 @@ def _parse_years(text: str) -> float | None:
     return float(match.group(1)) if match else None
 
 
-def _extract_language(text: str) -> str:
-    return "en" if "angļu" in text.lower() else "lv"
+def _extract_language(text: str) -> str | None:
+    """Пусто — поля нет или значение незнакомое; «латышский» по умолчанию
+    не подставляем (см. rtu_catalog._extract_language)."""
+    lowered = text.lower()
+    if "angļu" in lowered:
+        return "en"
+    if "latvie" in lowered:
+        return "lv"
+    return None
 
 
 def _extract_mode(text: str) -> str:

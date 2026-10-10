@@ -9,7 +9,14 @@ sys.path.insert(0, str(Path(__file__).parent))
 from dotenv import load_dotenv
 
 import polite
-from catalog_diff import CONTENT_FIELDS, compute_diff, fill_missing_keys, format_report, suspicious_names
+from catalog_diff import (
+    CONTENT_FIELDS,
+    compute_diff,
+    drop_new_without,
+    fill_missing_keys,
+    format_report,
+    suspicious_names,
+)
 from db import get_service_client
 from db_retry import execute
 from scrape_scope import LOCAL_ONLY
@@ -334,6 +341,17 @@ def _check_and_save(client, now: str, key: str, university, programmes) -> int: 
             .in_("slug", [row["slug"] for row in programme_rows])
         ).data
         existing_by_slug = {row["slug"]: row for row in existing}
+        # Язык обучения сборщик мог не прочитать (страница не открылась,
+        # значение не распознано) — тогда поля в строке нет. Догадку вместо
+        # него не пишем: у программы из базы остаётся прежний язык, новая
+        # программа без языка в этот раз не записывается.
+        programme_rows, kept, dropped = drop_new_without(programme_rows, existing_by_slug, "language_of_instruction")
+        if kept or dropped:
+            print(
+                f"  {university.slug}: язык обучения не прочитан у {len(kept) + len(dropped)} программ"
+                + (f"; оставлен прежний — {', '.join(kept[:5])}{' …' if len(kept) > 5 else ''}" if kept else "")
+                + (f"; новые НЕ ЗАПИСАНЫ — {', '.join(dropped[:5])}{' …' if len(dropped) > 5 else ''}" if dropped else "")
+            )
         diff = compute_diff(existing_by_slug, programme_rows)  # мутирует programme_rows при сбросе
         if diff.has_changes:
             print(format_report(diff, university.slug))
@@ -342,6 +360,9 @@ def _check_and_save(client, now: str, key: str, university, programmes) -> int: 
         # catalog_diff.fill_missing_keys). После compute_diff — чтобы
         # сравнение по-прежнему шло только по тому, что нашёл сборщик.
         fill_missing_keys(programme_rows, existing_by_slug)
+    # Отдельная проверка, а не продолжение блока выше: после отсева новых
+    # программ без языка строк могло не остаться вовсе.
+    if programme_rows:
         execute(client.table("programme").upsert(programme_rows, on_conflict="university_id,slug"))
 
     missing = _count_missed(client, university_id, key, {row["slug"] for row in programme_rows})

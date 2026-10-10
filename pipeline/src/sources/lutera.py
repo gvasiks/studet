@@ -75,7 +75,10 @@ def _parse_section(section: str) -> ProgrammeDraft | None:
         slug=f"{_slugify(name)}-{level}",
         name_lv=name,
         degree_level=level,
-        language_of_instruction=LANGUAGES.get(language.group(1).lower(), "lv") if language else "lv",
+        # Без значения по умолчанию: строки «Mācību valoda» нет или в ней
+        # незнакомое слово — язык остаётся пустым (до 2026-10-10
+        # подставлялся латышский).
+        language_of_instruction=LANGUAGES.get(language.group(1).lower()) if language else None,
         study_mode="part_time" if re.search(r"Nepilna laika", section) else "full_time",
         city=UNIVERSITY.city,
         funding_type="paid",

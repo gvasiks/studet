@@ -79,7 +79,9 @@ def _scrape_detail(page: Page, url: str, degree_level: str) -> ProgrammeDraft:
         slug=slug,
         name_en=name_en,
         degree_level=degree_level,
-        language_of_instruction=LANGUAGE_MAP.get(facts.get("study language", "").lower(), "en"),
+        # Без значения по умолчанию: поля нет или в нём незнакомое слово —
+        # язык остаётся пустым (до 2026-10-10 подставлялся английский).
+        language_of_instruction=LANGUAGE_MAP.get(facts.get("study language", "").lower()),
         study_mode="distance" if "e-studies" in slug else "full_time",
         city=UNIVERSITY.city,
         funding_type="paid",

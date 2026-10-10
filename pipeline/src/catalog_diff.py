@@ -169,6 +169,35 @@ def fill_missing_keys(programme_rows: list[dict], existing_by_slug: dict[str, di
     return filled
 
 
+def drop_new_without(
+    programme_rows: list[dict], existing_by_slug: dict[str, dict], column: str
+) -> tuple[list[dict], list[str], list[str]]:
+    """Что делать со строками, в которых сборщик не прочитал обязательное поле.
+
+    Возвращает (строки к записи, слаги оставленных, слаги пропущенных).
+
+    - Программа уже есть в базе — строка остаётся: fill_missing_keys допишет
+      прежнее значение, то есть поле не меняется и подтверждение не снимается.
+    - Программы в базе нет — строка убирается: колонка обязательная, и одна
+      такая строка сорвала бы запись всего вуза. Программа появится при
+      следующем сборе, когда поле прочитается.
+
+    Чистая функция; main.py печатает оба списка, чтобы пропуск был виден.
+    """
+    rows: list[dict] = []
+    kept: list[str] = []
+    dropped: list[str] = []
+    for row in programme_rows:
+        if row.get(column) is not None:
+            rows.append(row)
+        elif row["slug"] in existing_by_slug:
+            rows.append(row)
+            kept.append(row["slug"])
+        else:
+            dropped.append(row["slug"])
+    return rows, kept, dropped
+
+
 def format_report(diff: CatalogDiff, university_slug: str) -> str:
     lines = []
     if diff.added:
@@ -302,6 +331,29 @@ def selftest() -> None:
     # одинаковые ключи — дописывать нечего
     rows = [{"slug": "a", "missed_runs": 0}, {"slug": "b", "missed_runs": 0}]
     assert fill_missing_keys(rows, in_db) == 0
+
+    # --- drop_new_without: язык не прочитан ---
+    rows = [
+        {"slug": "a", "language_of_instruction": "en"},
+        {"slug": "b"},  # есть в базе, язык не прочитан — остаётся с прежним
+        {"slug": "new-ok", "language_of_instruction": "lv"},
+        {"slug": "new-unknown"},  # в базе нет, языка нет — не пишем
+    ]
+    in_db_language = {
+        "a": {"slug": "a", "language_of_instruction": "lv", "verified_at": None, "verified_by": None},
+        "b": {"slug": "b", "language_of_instruction": "en", "verified_at": "2026-09-02", "verified_by": "owner"},
+    }
+    to_write, kept, dropped = drop_new_without(rows, in_db_language, "language_of_instruction")
+    assert [row["slug"] for row in to_write] == ["a", "b", "new-ok"]
+    assert (kept, dropped) == (["b"], ["new-unknown"])
+    diff7 = compute_diff(in_db_language, to_write)
+    assert [change.slug for change in diff7.changed] == ["a"] and diff7.reset_count == 0
+    fill_missing_keys(to_write, in_db_language)
+    assert to_write[1]["language_of_instruction"] == "en", "прежний язык сохранён"
+    assert "verified_at" not in to_write[1], "подтверждение не трогаем: ключа в строке нет вовсе"
+    # язык не прочитан ни у кого: существующие остаются, новые не пишутся
+    to_write, kept, dropped = drop_new_without([{"slug": "a"}, {"slug": "zzz"}], in_db_language, "language_of_instruction")
+    assert ([row["slug"] for row in to_write], kept, dropped) == (["a"], ["a"], ["zzz"])
 
     # колонка не была прочитана из базы — отказ, а не тихое обнуление
     rows = [{"slug": "a", "budget_places": 10}, {"slug": "b"}]

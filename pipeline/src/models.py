@@ -30,7 +30,13 @@ class ProgrammeDraft(BaseModel):
     name_lt: str | None = None
     name_en: str | None = None
     degree_level: str
-    language_of_instruction: str  # 'lv' | 'en'
+    # 'lv' | 'en' (у Литвы ещё 'lt', 'ru'…). Пусто — сборщик не смог
+    # прочитать язык: страница не открылась или значение не распознано.
+    # Подставлять вместо этого «скорее всего латышский» нельзя — язык
+    # обучения из тех фактов, что подтверждает человек (правило 6
+    # CLAUDE.md). Что с пустым значением делает запись — см.
+    # catalog_diff.drop_new_without.
+    language_of_instruction: str | None = None
     study_mode: str  # 'full_time' | 'part_time' | 'distance'
     city: str | None = None
     # 'budget' | 'paid' | 'both'. Пусто — только там, где источник этого не

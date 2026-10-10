@@ -99,16 +99,17 @@ class FakeClient:
 
 
 def fake_programme(slug: str, **extra) -> ProgrammeDraft:  # type: ignore[no-untyped-def]
-    return ProgrammeDraft(
-        slug=slug,
-        name_lv="Programma",
-        degree_level="bachelor",
-        language_of_instruction="lv",
-        study_mode="full_time",
-        funding_type="paid",
-        source_url="https://example.lv/programma",
-        **extra,
-    )
+    fields = {
+        "slug": slug,
+        "name_lv": "Programma",
+        "degree_level": "bachelor",
+        "language_of_instruction": "lv",
+        "study_mode": "full_time",
+        "funding_type": "paid",
+        "source_url": "https://example.lv/programma",
+        **extra,  # может заменить любое поле выше, например language_of_instruction=None
+    }
+    return ProgrammeDraft(**fields)
 
 
 def fake_source(slug: str, broken: bool = False, programmes: list[ProgrammeDraft] | None = None) -> SimpleNamespace:
@@ -185,6 +186,35 @@ def selftest() -> None:
     assert first.keys() == second.keys(), sorted(first.keys() ^ second.keys())
     assert second["accreditation_valid_until"] == "2027-08-05", second["accreditation_valid_until"]
     assert "verified_at" not in second, "подтверждение не сбрасывалось — ключа в записи нет вовсе"
+
+    # 5) сборщик не прочитал язык обучения у трёх программ. У той, что уже
+    #    лежит в базе с английским, язык остаётся английским и подтверждение
+    #    на месте; две новые без языка не записываются; программа с
+    #    прочитанным языком пишется как обычно.
+    client = FakeClient({})
+    client.existing_programmes = [{**in_db, "slug": "e-known", "language_of_instruction": "en"}]
+    source = fake_source(
+        "e",
+        programmes=[
+            fake_programme("e-known", language_of_instruction=None),
+            fake_programme("e-new-1", language_of_instruction=None),
+            fake_programme("e-new-2", language_of_instruction=None),
+            fake_programme("e-read"),
+        ],
+    )
+    assert run(client, [source]) == 0
+    by_slug = {row["slug"]: row for row in client.upserted_rows}
+    assert sorted(by_slug) == ["e-known", "e-read"], sorted(by_slug)
+    assert by_slug["e-known"]["language_of_instruction"] == "en", by_slug["e-known"]
+    assert by_slug["e-read"]["language_of_instruction"] == "lv"
+    assert "verified_at" not in by_slug["e-known"], "нечитаемый язык подтверждение не снимает"
+
+    # 6) язык не прочитан ни у одной программы, и все они новые: записывать
+    #    нечего, но прогон не падает — вуз сохранён, программ ноль.
+    client = FakeClient({})
+    source = fake_source("f", programmes=[fake_programme("f-1", language_of_instruction=None)])
+    assert run(client, [source]) == 0
+    assert client.saved_universities == ["f"] and client.upserted_rows == []
 
     print("самотест пройден")
 
