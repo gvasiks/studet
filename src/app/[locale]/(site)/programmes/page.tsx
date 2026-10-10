@@ -2,14 +2,14 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { countryOf, isLocale, languageOf } from "@/i18n/config";
-import { countryProfile, hasFeature } from "@/lib/country";
+import { catalogProfile, countryProfile, hasFeature } from "@/lib/country";
 import { getDictionary } from "@/i18n/dictionaries";
 import { buildAlternates } from "@/lib/site";
 import { getApplicationRounds } from "@/lib/deadline-queries";
 import { getCalculatorProgrammeIds } from "@/lib/calculator-ids";
 import { matchRounds } from "@/lib/deadlines";
 import { listProgrammes, listUniversities } from "@/lib/catalog";
-import { hasActiveFilters, onlySupported, parseCatalogState } from "@/lib/catalog-query";
+import { countriesShown, hasActiveFilters, onlySupported, parseCatalogState } from "@/lib/catalog-query";
 import { buildCatalogView } from "@/lib/catalog-view";
 import { CatalogForm } from "./CatalogForm";
 import { ProgrammeCard } from "@/components/ProgrammeCard";
@@ -41,27 +41,45 @@ export default async function ProgrammesPage({
   const { locale } = await params;
   if (!isLocale(locale)) notFound();
 
-  const state = onlySupported(parseCatalogState(await searchParams), countryProfile(countryOf(locale)).filters);
+  // Фильтр «Страна»: по умолчанию каталог показывает страну своего раздела,
+  // но можно выбрать другую открытую страну или общий список (решение
+  // владельца 2026-10-10). Разделы сайта при этом остаются по странам:
+  // карточка ведёт на страницу программы в разделе её страны.
+  const own = countryOf(locale);
+  const parsed = parseCatalogState(await searchParams);
+  const shown = countriesShown(parsed, own);
+  const profile = catalogProfile(shown);
+  const state = onlySupported(parsed, profile.filters);
+  // Фильтры по плате и бюджету есть у страны раздела, но пропали из-за
+  // выбора стран — об этом говорит строка под фильтром «Страна».
+  const filtersDropped = countryProfile(own).filters.some((filter) => !profile.filters.includes(filter));
   const dict = await getDictionary(locale);
 
   // В базе — только то, что нельзя сделать быстрее в памяти: город, язык,
   // направление... Поиск, уровень, сортировка и "показать ещё" считаются
   // по уже выбранному набору (каталог — сотни строк, не миллионы), иначе
   // счётчики табов пришлось бы получать отдельными запросами.
-  const [programmes, universities, applicationRounds, calculatorIds] = await Promise.all([
-    listProgrammes(countryOf(locale), {
-      budgetOnly: state.budgetOnly,
-      cities: state.cities,
-      interests: state.interests,
-      language: state.language,
-      mode: state.mode,
-      university: state.university,
-      kind: state.kind ?? undefined,
-    }),
-    listUniversities(countryOf(locale)),
+  // Запросы идут по каждой стране отдельно и одновременно: у стран разные
+  // таблицы направлений и формул, а фильтр по городу или вузу одной страны у
+  // другой просто ничего не находит.
+  const filters = {
+    budgetOnly: state.budgetOnly,
+    cities: state.cities,
+    interests: state.interests,
+    language: state.language,
+    mode: state.mode,
+    university: state.university,
+    kind: state.kind ?? undefined,
+  };
+  const [programmeLists, universityLists, applicationRounds, calculatorIdSets] = await Promise.all([
+    Promise.all(shown.map((country) => listProgrammes(country, filters))),
+    Promise.all(shown.map((country) => listUniversities(country))),
     getApplicationRounds(),
-    getCalculatorProgrammeIds(countryOf(locale)),
+    Promise.all(shown.map((country) => getCalculatorProgrammeIds(country))),
   ]);
+  const programmes = programmeLists.flat();
+  const universityGroups = shown.map((country, index) => ({ country, universities: universityLists[index] }));
+  const calculatorIds = new Set(calculatorIdSets.flatMap((ids) => [...ids]));
   const view = buildCatalogView(programmes, state, languageOf(locale));
 
   return (
@@ -85,12 +103,19 @@ export default async function ProgrammesPage({
         className="grid gap-4 lg:grid-cols-[300px_minmax(0,1fr)] lg:gap-8"
       >
         <div className="space-y-4 lg:space-y-0">
-          <FilterSidebar locale={locale} dict={dict} state={state} universities={universities} />
+          <FilterSidebar
+            locale={locale}
+            dict={dict}
+            state={state}
+            profile={profile}
+            universityGroups={universityGroups}
+            filtersDropped={filtersDropped}
+          />
         </div>
 
         <div className="min-w-0 space-y-5">
           <SearchAndSort locale={locale} dict={dict} state={state} />
-          <LevelTabs locale={locale} dict={dict} state={state} view={view} />
+          <LevelTabs locale={locale} dict={dict} state={state} view={view} levels={profile.levels} />
 
           {view.visible.length === 0 ? (
             <div className="surface p-10 text-center">
@@ -125,6 +150,7 @@ export default async function ProgrammesPage({
                       locale={locale}
                       dict={dict}
                       programme={programme}
+                      showCountry={shown.length > 1}
                       hasCalculator={calculatorIds.has(programme.id)}
                       deadline={
                         nextRound

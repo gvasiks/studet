@@ -1,6 +1,13 @@
 import { describe, expect, it } from "vitest";
 import type { ProgrammeWithUniversity } from "./catalog";
-import { catalogQuery, hasActiveFilters, onlySupported, PAGE_SIZE, parseCatalogState } from "./catalog-query";
+import {
+  catalogQuery,
+  countriesShown,
+  hasActiveFilters,
+  onlySupported,
+  PAGE_SIZE,
+  parseCatalogState,
+} from "./catalog-query";
 import { buildCatalogView, matchesQuery, normalize } from "./catalog-view";
 
 const programme = (
@@ -193,5 +200,42 @@ describe("фильтры, под которые у страны нет данн�
     expect(onlySupported(state, ["interest"])).toMatchObject({ budgetOnly: false, maxFee: null, interests: ["it", "law"] });
     expect(onlySupported(state, ["fee"])).toMatchObject({ budgetOnly: false, maxFee: 3000, interests: [] });
     expect(onlySupported(state, ["budget"])).toMatchObject({ budgetOnly: true, maxFee: null, interests: [] });
+  });
+});
+
+describe("фильтр «Страна»", () => {
+  it("по умолчанию — страна раздела, и в адрес ничего не добавляется", () => {
+    const state = parseCatalogState({});
+    expect(state.countryChoice).toBeNull();
+    expect(countriesShown(state, "LV")).toEqual(["LV"]);
+    expect(catalogQuery(state)).toBe("");
+    expect(hasActiveFilters(state)).toBe(false);
+  });
+
+  it("общий список сохраняется в ссылках сортировки и «показать ещё» и считается фильтром", () => {
+    const state = parseCatalogState({ country: "all", q: "law" });
+    expect(state.countryChoice).toBe("all");
+    expect(catalogQuery(state)).toBe("?country=all&q=law");
+    expect(catalogQuery(state, { sort: "university" })).toBe("?country=all&q=law&sort=university");
+    expect(hasActiveFilters(parseCatalogState({ country: "all" }))).toBe(true);
+  });
+
+  // В тестах флаг предпросмотра не задан, поэтому Литва закрыта — как для
+  // посетителя до её запуска.
+  it("страна, которая ещё не открыта, из адреса не принимается и в общий список не попадает", () => {
+    expect(parseCatalogState({ country: "LT" }).countryChoice).toBeNull();
+    expect(countriesShown(parseCatalogState({ country: "LT" }), "LV")).toEqual(["LV"]);
+    expect(countriesShown(parseCatalogState({ country: "all" }), "LV")).toEqual(["LV"]);
+  });
+
+  it("мусор в адресе — это страна раздела, а не ошибка", () => {
+    expect(parseCatalogState({ country: "EE" }).countryChoice).toBeNull();
+    expect(parseCatalogState({ country: ["all", "LV"] }).countryChoice).toBe("all");
+  });
+
+  it("открытая страна принимается и показывается одна", () => {
+    const state = parseCatalogState({ country: "LV" });
+    expect(state.countryChoice).toBe("LV");
+    expect(countriesShown(state, "LV")).toEqual(["LV"]);
   });
 });

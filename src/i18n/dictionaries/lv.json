@@ -37,8 +37,8 @@
     "language": {
       "lv": "latviešu",
       "en": "angļu",
-      "lt": "Lietuviešu",
-      "ru": "Krievu"
+      "lt": "lietuviešu",
+      "ru": "krievu"
     },
     "city": {
       "riga": "Rīga",
@@ -103,6 +103,9 @@
     "openFilters": "Filtri",
     "filters": {
       "title": "Filtri",
+      "country": "Studiju valsts",
+      "allCountries": "Abas valstis",
+      "droppedFiltersHint": "Filtru pēc studiju maksas un budžeta vietām šeit nav: Lietuvas programmām šādu datu nav.",
       "budgetOnlyHint": "Valsts finansētās programmas",
       "university": "Universitāte",
       "anyUniversity": "Visas universitātes",

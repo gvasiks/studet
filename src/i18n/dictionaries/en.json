@@ -103,6 +103,9 @@
     "clearFilters": "Clear filter",
     "filters": {
       "title": "Filters",
+      "country": "Country",
+      "allCountries": "Both countries",
+      "droppedFiltersHint": "The filters by fee and state-funded places are not available here: we have no such data for Lithuanian programmes.",
       "budgetOnlyHint": "State-funded programmes",
       "university": "University",
       "anyUniversity": "All universities",

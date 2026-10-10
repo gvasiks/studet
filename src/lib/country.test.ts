@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { countryProfile, hasFeature, LEVEL_KEYS, schoolLeaverLevels } from "./country";
+import { catalogProfile, countryProfile, hasFeature, LEVEL_KEYS, schoolLeaverLevels } from "./country";
 import lv from "../i18n/dictionaries/lv.json";
 import en from "../i18n/dictionaries/en.json";
 import lt from "../i18n/dictionaries/lt.json";
@@ -67,5 +67,33 @@ describe("профиль страны", () => {
         }
       }
     }
+  });
+});
+
+describe("фильтры общего списка двух стран", () => {
+  it("одна страна — её собственные фильтры, уровни и города", () => {
+    for (const country of ["LV", "LT"] as const) {
+      const single = catalogProfile([country]);
+      const own = countryProfile(country);
+      expect(single.filters, country).toEqual(["interest", "fee", "budget"].filter((f) => (own.filters as readonly string[]).includes(f)));
+      expect(single.levels, country).toEqual(LEVEL_KEYS.filter((level) => own.levels.includes(level)));
+      expect(single.languages, country).toEqual([...own.languages]);
+      expect(single.citiesByCountry, country).toEqual([{ country, cities: own.cities }]);
+    }
+  });
+
+  // «Только бюджет» и «не дороже» по общему списку молча убрали бы все
+  // литовские программы: у них вид финансирования и цена не известны вовсе.
+  it("обе страны: остаётся только фильтр, под который данные есть у обеих", () => {
+    expect(catalogProfile(["LV", "LT"]).filters).toEqual(["interest"]);
+  });
+
+  it("обе страны: уровни и языки объединяются, города остаются по странам в порядке выбора", () => {
+    const both = catalogProfile(["LV", "LT"]);
+    expect(both.levels).toEqual(["bachelor", "master", "doctoral", "college", "integrated"]);
+    expect(both.languages).toEqual(["lv", "en", "lt", "ru"]);
+    expect(both.citiesByCountry.map((group) => group.country)).toEqual(["LV", "LT"]);
+    expect(catalogProfile(["LT", "LV"]).languages).toEqual(["lt", "en", "ru", "lv"]);
+    expect(catalogProfile(["LT", "LV"]).citiesByCountry[0].cities).toContain("vilnius");
   });
 });

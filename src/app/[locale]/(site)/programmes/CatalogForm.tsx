@@ -6,6 +6,10 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 // Сколько ждать после последней буквы в поиске, прежде чем обновить список.
 const SEARCH_DELAY_MS = 400;
 
+// Фильтры, значения которых принадлежат одной стране; при смене страны
+// они сбрасываются.
+const COUNTRY_BOUND_FIELDS = ["city", "university"];
+
 // Обёртка формы каталога. Сами поля по-прежнему рисует сервер
 // (CatalogControls.tsx), здесь только два поведения:
 //
@@ -34,11 +38,12 @@ export function CatalogForm({
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
-  function apply() {
+  function apply(skip: readonly string[] = []) {
     const form = formRef.current;
     if (!form) return;
     const params = new URLSearchParams();
     for (const [name, value] of new FormData(form)) {
+      if (skip.includes(name)) continue;
       // Пустые значения («любой вуз», пустой поиск) в адрес не пишем —
       // так же, как catalogQuery() в lib/catalog-query.ts.
       if (typeof value === "string" && value.trim() !== "") params.append(name, value.trim());
@@ -55,6 +60,10 @@ export function CatalogForm({
     if (searchTimer.current) clearTimeout(searchTimer.current);
     if (target.type === "search") {
       searchTimer.current = setTimeout(apply, SEARCH_DELAY_MS);
+    } else if (target.name === "country") {
+      // Города и вузы у каждой страны свои: отмеченная «Rīga» при переходе на
+      // Литву дала бы пустой список без видимой причины.
+      apply(COUNTRY_BOUND_FIELDS);
     } else {
       apply();
     }

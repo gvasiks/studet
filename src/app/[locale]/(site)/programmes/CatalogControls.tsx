@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { countryOf, languageOf, type Locale } from "@/i18n/config";
+import { countries, countryOf, languageOf, type Country, type Locale } from "@/i18n/config";
 import type { Dictionary } from "@/i18n/dictionaries";
 import {
   ArrowRightIcon,
@@ -10,8 +10,9 @@ import {
   SortIcon,
 } from "@/components/icons";
 import { enumLabel, localizedName, type UniversityOption } from "@/lib/catalog";
-import { countryProfile } from "@/lib/country";
+import type { CatalogProfile, LevelKey } from "@/lib/country";
 import {
+  ALL_COUNTRIES,
   catalogQuery,
   DURATION_LIMITS,
   FEE_LIMITS,
@@ -94,19 +95,33 @@ export function FilterSidebar({
   locale,
   dict,
   state,
-  universities,
+  profile,
+  universityGroups,
+  filtersDropped,
 }: {
   locale: Locale;
   dict: Dictionary;
   state: CatalogState;
-  universities: UniversityOption[];
+  /** Фильтры, уровни, языки и города для выбранных стран. */
+  profile: CatalogProfile;
+  /** Вузы выбранных стран; страна раздела — первой. */
+  universityGroups: { country: Country; universities: UniversityOption[] }[];
+  /** Из-за выбора стран пропали фильтры, которые есть у страны раздела. */
+  filtersDropped: boolean;
 }) {
   const filters = dict.catalog.filters;
-  const profile = countryProfile(countryOf(locale));
+  const own = countryOf(locale);
+  const several = universityGroups.length > 1;
   // По названию на языке страницы: база отдаёт по name_en, и на латышской
   // странице порядок выглядел случайным.
-  const sortedUniversities = [...universities].sort((a, b) =>
-    localizedName(a, languageOf(locale)).localeCompare(localizedName(b, languageOf(locale)), languageOf(locale)),
+  const sorted = (universities: UniversityOption[]) =>
+    [...universities].sort((a, b) =>
+      localizedName(a, languageOf(locale)).localeCompare(localizedName(b, languageOf(locale)), languageOf(locale)),
+    );
+  const universityOption = (university: UniversityOption) => (
+    <option key={university.slug} value={university.slug}>
+      {localizedName(university, languageOf(locale))} ({university.programmeCount})
+    </option>
   );
 
   return (
@@ -133,13 +148,39 @@ export function FilterSidebar({
           </Link>
         </div>
 
+        {/* Страна — только когда открыто больше одной: до запуска Литвы
+            посетитель этого фильтра не видит. Пустое значение — страна
+            раздела, так что обычные адреса каталога остаются прежними. */}
+        {countries.length > 1 && (
+          <div>
+            <SelectField
+              label={filters.country}
+              name="country"
+              defaultValue={state.countryChoice === own ? "" : (state.countryChoice ?? "")}
+            >
+              <option value="">{dict.countries[own]}</option>
+              {countries
+                .filter((country) => country !== own)
+                .map((country) => (
+                  <option key={country} value={country}>
+                    {dict.countries[country]}
+                  </option>
+                ))}
+              <option value={ALL_COUNTRIES}>{filters.allCountries}</option>
+            </SelectField>
+            {filtersDropped && <p className="mt-1.5 text-xs leading-relaxed text-zinc-600">{filters.droppedFiltersHint}</p>}
+          </div>
+        )}
+
         <SelectField label={filters.university} name="university" defaultValue={state.university ?? ""}>
           <option value="">{filters.anyUniversity}</option>
-          {sortedUniversities.map((university) => (
-            <option key={university.slug} value={university.slug}>
-              {localizedName(university, languageOf(locale))} ({university.programmeCount})
-            </option>
-          ))}
+          {several
+            ? universityGroups.map((group) => (
+                <optgroup key={group.country} label={dict.countries[group.country]}>
+                  {sorted(group.universities).map(universityOption)}
+                </optgroup>
+              ))
+            : sorted(universityGroups[0].universities).map(universityOption)}
         </SelectField>
 
         <SelectField label={filters.kind} name="kind" defaultValue={state.kind ?? ""}>
@@ -196,17 +237,27 @@ export function FilterSidebar({
 
         <fieldset>
           <legend className="text-[13px] font-medium leading-4 text-zinc-700">{filters.city}</legend>
-          <div className="mt-2.5 grid grid-cols-2 gap-x-3 gap-y-2.5">
-            {profile.cities.map((city) => (
-              <CheckboxOption
-                key={city}
-                name="city"
-                value={city}
-                label={enumLabel(dict.catalog.city, city)}
-                checked={state.cities.includes(city)}
-              />
-            ))}
-          </div>
+          {profile.citiesByCountry.map((group) => (
+            <div key={group.country}>
+              {/* В общем списке города идут по странам с подписью страны. */}
+              {several && (
+                <p className="mt-3 text-xs font-semibold uppercase tracking-wide text-zinc-600">
+                  {dict.countries[group.country]}
+                </p>
+              )}
+              <div className="mt-2.5 grid grid-cols-2 gap-x-3 gap-y-2.5">
+                {group.cities.map((city) => (
+                  <CheckboxOption
+                    key={city}
+                    name="city"
+                    value={city}
+                    label={enumLabel(dict.catalog.city, city)}
+                    checked={state.cities.includes(city)}
+                  />
+                ))}
+              </div>
+            </div>
+          ))}
         </fieldset>
 
         {profile.filters.includes("interest") && (
@@ -320,16 +371,19 @@ export function LevelTabs({
   dict,
   state,
   view,
+  levels,
 }: {
   locale: Locale;
   dict: Dictionary;
   state: CatalogState;
   view: CatalogView;
+  /** Вкладки уровня для выбранных стран (catalogProfile). */
+  levels: LevelKey[];
 }) {
   const base = `/${locale}/programmes`;
   const tabs = [
     { key: null, label: dict.catalog.tabs.all, count: view.matched },
-    ...countryProfile(countryOf(locale)).levels.map((key) => ({ key, label: dict.catalog.tabs[key], count: view.levelCounts[key] })),
+    ...levels.map((key) => ({ key, label: dict.catalog.tabs[key], count: view.levelCounts[key] })),
   ];
   // Латышский: форма единственного числа у чисел на 1, кроме 11 (21, 31...)
   const singular = languageOf(locale) === "lv" ? view.total % 10 === 1 && view.total % 100 !== 11 : view.total === 1;

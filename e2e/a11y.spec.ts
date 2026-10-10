@@ -58,6 +58,12 @@ const LT_ROUTES = [
   "/lv-lt/glossary",
   "/lv-lt/rights",
   "/lv-lt/privacy",
+  // Фильтр «Страна» в каталоге (2026-10-10): общий список двух стран — города
+  // двумя группами, вузы группами, метка страны на карточке — и чужая страна
+  // в разделе своей. Фильтр виден, только когда открыто больше одной страны.
+  "/lv/programmes?country=all",
+  "/lt/programmes?country=all",
+  "/en-lv/programmes?country=LT",
 ];
 
 for (const route of LT_ROUTES) {

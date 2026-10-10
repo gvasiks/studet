@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 import Link from "next/link";
-import { countryOf, languageOf, type Locale } from "@/i18n/config";
+import { countryOf, languageOf, localeFor, type Locale } from "@/i18n/config";
 import type { Dictionary } from "@/i18n/dictionaries";
 import { ArrowRightIcon, BuildingIcon, CalendarIcon, ClockIcon, GlobeIcon, MapPinIcon } from "@/components/icons";
 import { FavoriteButton } from "@/components/FavoriteButton";
@@ -16,6 +16,7 @@ export function ProgrammeCard({
   programme,
   deadline,
   hasCalculator,
+  showCountry = false,
   footer,
 }: {
   locale: Locale;
@@ -24,10 +25,16 @@ export function ProgrammeCard({
   deadline: string | null;
   /** Есть действующая подтверждённая формула — можно посчитать балл. */
   hasCalculator: boolean;
+  /** Показать страну программы — в общем списке двух стран. */
+  showCountry?: boolean;
   /** Необязательный блок внизу карточки (галочка «сравнить» в «Моём списке»). */
   footer?: ReactNode;
 }) {
-  const programmeHref = `/${locale}/programmes/${programme.university.slug}/${programme.slug}`;
+  // Страница программы лежит в разделе её страны: в общем списке литовская
+  // программа на латышской странице ведёт в /lv-lt/…, а не в /lv/….
+  // «Мой список» у каждой страны тоже свой — звезда кладёт программу в него.
+  const country = programme.university.country ?? countryOf(locale);
+  const programmeHref = `/${localeFor(country, languageOf(locale))}/programmes/${programme.university.slug}/${programme.slug}`;
   const levelLabel = programme.degree_level in dict.catalog.tabs
     ? dict.catalog.tabs[programme.degree_level as keyof typeof dict.catalog.tabs]
     : enumLabel(dict.catalog.degreeLevel, programme.degree_level);
@@ -39,7 +46,7 @@ export function ProgrammeCard({
           {levelLabel}
         </span>
         <FavoriteButton
-          country={countryOf(locale)}
+          country={country}
           programmeId={programme.id}
           addLabel={dict.favorites.add}
           removeLabel={dict.favorites.remove}
@@ -63,6 +70,7 @@ export function ProgrammeCard({
 
       <div className="mt-auto pt-4">
         <div className="flex flex-wrap gap-2 border-t border-zinc-100 pt-4">
+          {showCountry && <Chip>{dict.countries[country]}</Chip>}
           <Chip icon={<GlobeIcon size={13} />}>
             {enumLabel(dict.catalog.language, programme.language_of_instruction)}
           </Chip>

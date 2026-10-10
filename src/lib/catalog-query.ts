@@ -1,3 +1,4 @@
+import { countries, type Country } from "@/i18n/config";
 import { isInterestKey, type InterestKey } from "./fields";
 
 // Состояние страницы каталога целиком живёт в URL: поиск, сортировка,
@@ -32,7 +33,15 @@ export const PAGE_SIZE = 12;
 // каталог с рендером всех карточек разом.
 const MAX_LIMIT = 600;
 
+// Какие страны показывает каталог. По умолчанию (null) — страна раздела, в
+// котором открыта страница: так все прежние адреса значат то же, что раньше.
+// "all" — общий список всех открытых стран; код страны — только она.
+export const ALL_COUNTRIES = "all";
+export type CountryChoice = Country | typeof ALL_COUNTRIES | null;
+
 export type CatalogState = {
+  /** Выбор в фильтре «Страна»; какие страны это значит — countriesShown(). */
+  countryChoice: CountryChoice;
   q: string;
   sort: SortKey;
   level: LevelKey | null;
@@ -79,7 +88,15 @@ export function parseCatalogState(sp: SearchParams): CatalogState {
   const limit = Number(firstValue(sp.limit));
   const kind = firstValue(sp.kind);
 
+  const country = firstValue(sp.country);
+
   return {
+    // Страна, которая ещё не открыта посетителям (Литва до запуска), в адресе
+    // не принимается: её нет в списке countries.
+    countryChoice:
+      country === ALL_COUNTRIES || (countries as readonly string[]).includes(country ?? "")
+        ? (country as CountryChoice)
+        : null,
     q: (firstValue(sp.q) ?? "").trim().slice(0, 100),
     sort: (SORT_KEYS as readonly string[]).includes(sort ?? "") ? (sort as SortKey) : "name",
     level: (LEVEL_KEYS as readonly string[]).includes(level ?? "") ? (level as LevelKey) : null,
@@ -94,6 +111,14 @@ export function parseCatalogState(sp: SearchParams): CatalogState {
     maxYears: oneOf(DURATION_LIMITS, firstValue(sp.years)),
     maxFee: oneOf(FEE_LIMITS, firstValue(sp.fee)),
   };
+}
+
+// Страны, программы которых показывает каталог при этом состоянии. Страна
+// раздела идёт первой: с неё начинаются списки городов и языков в фильтрах.
+export function countriesShown(state: CatalogState, own: Country): Country[] {
+  if (state.countryChoice === null) return [own];
+  if (state.countryChoice === ALL_COUNTRIES) return [own, ...countries.filter((country) => country !== own)];
+  return [state.countryChoice];
 }
 
 // Фильтр, под который у страны нет данных, сбрасывается: в форме его нет, а
@@ -114,6 +139,7 @@ export function catalogQuery(state: CatalogState, overrides: Partial<CatalogStat
   const next = { ...state, ...overrides };
   const params = new URLSearchParams();
 
+  if (next.countryChoice) params.set("country", next.countryChoice);
   if (next.q) params.set("q", next.q);
   if (next.sort !== "name") params.set("sort", next.sort);
   if (next.level) params.set("level", next.level);
@@ -135,7 +161,8 @@ export function catalogQuery(state: CatalogState, overrides: Partial<CatalogStat
 /** Есть ли что сбрасывать кнопкой "Notīrīt": сортировка и число карточек — не фильтры. */
 export function hasActiveFilters(state: CatalogState): boolean {
   return Boolean(
-    state.q ||
+    state.countryChoice ||
+      state.q ||
       state.level ||
       state.cities.length ||
       state.interests.length ||

@@ -98,6 +98,31 @@ export function countryProfile(country: Country): CountryProfile {
   return profiles[country];
 }
 
+// Фильтры каталога, когда в одном списке программы нескольких стран.
+// - Фильтр «по данным» (интересы, плата, только бюджет) остаётся, только если
+//   данные есть у КАЖДОЙ выбранной страны: «только бюджет» по списку двух
+//   стран молча убрал бы все литовские программы, у которых вид
+//   финансирования не известен вовсе.
+// - Уровни и языки — объединение; города остаются по странам, чтобы в форме
+//   их можно было подписать.
+export type CatalogProfile = {
+  filters: CatalogFilter[];
+  levels: LevelKey[];
+  languages: string[];
+  citiesByCountry: { country: Country; cities: readonly string[] }[];
+};
+
+export function catalogProfile(shown: readonly Country[]): CatalogProfile {
+  const list = shown.map((country) => profiles[country]);
+  const allFilters: CatalogFilter[] = ["interest", "fee", "budget"];
+  return {
+    filters: allFilters.filter((filter) => list.every((profile) => profile.filters.includes(filter))),
+    levels: LEVEL_KEYS.filter((level) => list.some((profile) => profile.levels.includes(level))),
+    languages: [...new Set(list.flatMap((profile) => profile.languages))],
+    citiesByCountry: shown.map((country) => ({ country, cities: profiles[country].cities })),
+  };
+}
+
 // Анкета — для выпускников школ: магистратура и докторантура им недоступны.
 export function schoolLeaverLevels(country: Country): LevelKey[] {
   return profiles[country].levels.filter((level) => level !== "master" && level !== "doctoral");

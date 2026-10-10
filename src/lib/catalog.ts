@@ -13,6 +13,9 @@ export type University = {
   name_en: string | null;
   kind: string;
   city: string;
+  // ISO 3166-1 alpha-2. В общем списке двух стран по ней карточка узнаёт, в
+  // каком разделе сайта лежит страница программы.
+  country: Country;
   website_url: string | null;
   source_url: string | null;
   verified_at: string | null;
@@ -62,7 +65,7 @@ export type Programme = {
 // пара колонок в запросе без всякой пользы (ревью performance-tester,
 // 2026-09-24). CATALOG_LIST_COLUMNS ниже — та же мысль на уровне SQL.
 export type ProgrammeWithUniversity = Omit<Programme, "description_lv" | "description_lt" | "description_en"> & {
-  university: Pick<University, "slug" | "name_lv" | "name_lt" | "name_en" | "city">;
+  university: Pick<University, "slug" | "name_lv" | "name_lt" | "name_en" | "city" | "country">;
 };
 
 const CATALOG_LIST_COLUMNS =
@@ -70,7 +73,7 @@ const CATALOG_LIST_COLUMNS =
   "city, funding_type, tuition_fee_amount, tuition_fee_currency, budget_places, duration_years, " +
   "accreditation_valid_until, source_url, verified_at";
 
-const UNIVERSITY_LIST_COLUMNS = "slug, name_lv, name_lt, name_en, city";
+const UNIVERSITY_LIST_COLUMNS = "slug, name_lv, name_lt, name_en, city, country";
 
 // PostgREST отдаёт не больше 1000 строк за запрос и не сообщает, что
 // остальное отрезано. В литовском каталоге строк больше тысячи, поэтому
