@@ -129,7 +129,13 @@ def _scrape_programme(page: Page, slug: str) -> list[ProgrammeDraft]:
     info = _general_info(page)
     duration_years = _parse_years(info.get("duration", ""))
 
-    variants = _parse_eu_tuition_variants(info.get("tuition fee per year", ""))
+    # Подпись поля меняется от года к году: «Tuition fee per year», а с
+    # октября 2026 — «Tuition fee per year (for the 2026/2027 academic
+    # year)». Точное совпадение ключа после этой смены перестало находить
+    # стоимость, и вместо 13 записей с вариантами получалось 6 без них
+    # (замечено 2026-10-10). Поэтому берётся поле, чья подпись начинается так.
+    fee_text = next((value for key, value in info.items() if key.startswith("tuition fee per year")), "")
+    variants = _parse_eu_tuition_variants(fee_text)
     if not variants:
         # Не удалось разобрать тарифы построчно — берём язык/форму верхнего
         # уровня без цены, лучше неполная запись, чем никакой.
