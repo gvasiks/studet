@@ -209,11 +209,14 @@ def _parse_facts(text: str) -> dict[str, str]:
     return facts
 
 
-def _language_from(text: str) -> str:
+def _language_from(text: str) -> str | None:
+    """Названы оба языка — берётся первый («Latvian, English» — латышская
+    программа). Не назван ни один — пусто, а не «латышский» (до 2026-10-10
+    подставлялся)."""
     lowered = text.lower()
     english, latvian = lowered.find("english"), lowered.find("latvian")
     if english == -1:
-        return "lv"
+        return "lv" if latvian != -1 else None
     return "en" if latvian == -1 or english < latvian else "lv"
 
 

@@ -102,7 +102,12 @@ def _scrape_programme(page: Page, url: str, degree_level: str) -> ProgrammeDraft
         slug=slug,
         name_en=name_en,
         degree_level=degree_level,
-        language_of_instruction="en" if "english" in language_text.lower() else "lv",
+        # Нет ни «English», ни «Latvian» — язык пустой, а не «латышский»
+        # (до 2026-10-10 подставлялся; main.py оставит у программы прежний
+        # язык, а новую программу без языка не запишет).
+        language_of_instruction=(
+            "en" if "english" in language_text.lower() else "lv" if "latvian" in language_text.lower() else None
+        ),
         study_mode=_extract_mode(duration_text),
         city=UNIVERSITY.city,
         funding_type="paid",  # бюджетные места не публикуются на этих страницах

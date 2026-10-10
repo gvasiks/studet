@@ -134,7 +134,8 @@ def _scrape_programme(page: Page, slug: str) -> list[ProgrammeDraft]:
         # Не удалось разобрать тарифы построчно — берём язык/форму верхнего
         # уровня без цены, лучше неполная запись, чем никакой.
         mode = _extract_mode(info.get("type", "")) or "full_time"
-        language = _extract_language(info.get("language", "")) or "en"
+        # язык не распознан — пусто, а не «английский» (до 2026-10-10 подставлялся)
+        language = _extract_language(info.get("language", ""))
         variants = [(mode, language, None)]
 
     multiple = len(variants) > 1

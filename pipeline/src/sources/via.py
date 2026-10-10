@@ -101,10 +101,12 @@ def _map_level(programme_type: str) -> str:
     return "bachelor"
 
 
-def _extract_languages(value: str) -> list[str]:
+def _extract_languages(value: str) -> list[str | None]:
     lowered = value.lower()
     languages = [lang for lang, key in (("lv", "latvie"), ("en", "angļu")) if key in lowered]
-    return languages or ["lv"]
+    # Язык не распознан — одна запись без языка, а не «латышский» (до
+    # 2026-10-10 подставлялся).
+    return languages or [None]
 
 
 def _parse_years(value: str) -> float | None:

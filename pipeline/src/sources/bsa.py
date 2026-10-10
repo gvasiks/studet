@@ -71,14 +71,16 @@ def _parse_years(text: str) -> float | None:
     return float(match.group(1).replace(",", ".")) if match else None
 
 
-def _extract_languages(text: str) -> list[str]:
+def _extract_languages(text: str) -> list[str | None]:
     lowered = text.lower()
-    languages = []
+    languages: list[str | None] = []
     if "english" in lowered:
         languages.append("en")
     if "latvian" in lowered:
         languages.append("lv")
-    return languages or ["en"]
+    # Язык не распознан — одна запись без языка, а не «английский» (до
+    # 2026-10-10 подставлялся).
+    return languages or [None]
 
 
 def _extract_mode(text: str) -> str:

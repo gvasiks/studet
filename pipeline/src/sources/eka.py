@@ -73,10 +73,12 @@ def _extract_field(text: str, label: str) -> str:
     return text[start:end].strip()
 
 
-def _extract_languages(text: str) -> list[str]:
+def _extract_languages(text: str) -> list[str | None]:
     lowered = text.lower()
     languages = [lang for lang, key in (("en", "english"), ("lv", "latvian")) if key in lowered]
-    return languages or ["lv"]
+    # Язык не распознан — одна запись без языка, а не «латышский» (до
+    # 2026-10-10 подставлялся).
+    return languages or [None]
 
 
 def _scrape_programme(

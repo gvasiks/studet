@@ -153,7 +153,9 @@ def _scrape_programme(page: Page, url: str) -> ProgrammeDraft | None:
         return None
 
     language_text = (_find(r"Language:\s*([^\n]+)", fact) or "").lower()
-    language = "en" if "english" in language_text else "lv"
+    # Нет ни «English», ни «Latvian» — язык пустой, а не «латышский» (до
+    # 2026-10-10 подставлялся).
+    language = "en" if "english" in language_text else "lv" if "latvian" in language_text else None
 
     level_line = next(
         (line for line in fact.split("\n") if re.search(r"study programme|bachelor|master|cikla", line, re.I)),
