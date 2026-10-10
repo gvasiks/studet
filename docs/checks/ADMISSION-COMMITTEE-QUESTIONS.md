@@ -145,13 +145,21 @@ Ar cieņu,
 programmās 2026./2027. akadēmiskajā gadā», 31.1. punkts (RTU Senāta
 24.11.2025. protokollēmums Nr. 697, `docs/source-documents/rtu/uznemsanas-noteikumi-pamatstudijas-2026-27.html`).
 
-Два независимых вопроса — по формуле и по данным каталога; можно отправить
-одним письмом или сразу двумя, если у РТУ разные адреса для методических и
-технических вопросов.
+Четыре вопроса: первый — по формуле, остальные — по данным каталога; можно
+отправить одним письмом или двумя, если у РТУ разные адреса для методических
+и технических вопросов.
+
+Вопросы 3 и 4 добавлены 2026-10-10. При сборе каталога выяснилось, что два
+официальных реестра РТУ расходятся: на латышской карточке язык у 78 программ
+из 150 стоит «Latviešu, Angļu», а в английском реестре для поступающих
+программ всего 55. Сейчас каталог берёт латышские программы из латышского
+реестра, английские — из английского (`pipeline/src/rtu_languages.py`), и
+несколько программ стоят в нём дважды. Цены и названия в вопросе 4 сверены с
+обоими реестрами 2026-10-10 — перед отправкой проверьте, что они не изменились.
 
 ```
 Kam: <adrese>
-Tēma: Jautājumi par konkursa vērtējuma aprēķinu un studiju virzieniem pamatstudiju programmās
+Tēma: Jautājumi par konkursa vērtējuma aprēķinu, studiju virzieniem un studiju valodu
 
 Labdien!
 
@@ -168,6 +176,22 @@ akadēmiskajam gadam teksta, 31.1. punkta, taču mums nav skaidrs:
    (piemēram, "Informācijas tehnoloģija, datortehnika, elektronika,
    telekomunikācijas, datorvadība un datorzinātne")? Reģistrā
    (rtu.lv/lv/studijas/visas-studiju-programmas) šī piesaiste nav norādīta.
+
+3. Programmas kartītē laukā "Īstenošanas valoda" daudzām programmām norādīts
+   "Latviešu, Angļu" — piemēram, bakalaura programmai "Ķīmija un ķīmijas
+   tehnoloģija" (KBM). Taču angļu valodas reģistrā
+   (rtu.lv/en/studies/all-study-programmes) šādas bakalaura programmas nav.
+   Vai "Angļu" šajā laukā nozīmē, ka programmā šobrīd notiek uzņemšana
+   studijām angļu valodā, vai tikai to, ka programmu ir atļauts īstenot arī
+   angļu valodā? Vai par uzņemšanu studijām angļu valodā var paļauties uz
+   angļu valodas reģistru?
+
+4. Vai latviešu reģistra programma "Būvniecība (angļu valodā)" (BBB, maksa
+   gadā € 3 500) un angļu reģistra programma "Civil Engineering" (bakalaura
+   studijas, € 4 030 gadā ES valstu pilsoņiem) ir viena un tā pati programma?
+   Tāds pats jautājums par "Finanšu pārvaldības informācijas sistēmas" (DCP,
+   € 3 480) un "Finance management information systems" (€ 3 500). Ja
+   programmas ir vienas un tās pašas — no kā atkarīga maksas atšķirība?
 
 Būsim pateicīgi par precizējumu.
 
