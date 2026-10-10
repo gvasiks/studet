@@ -44,6 +44,26 @@ if (process.env.SITE_CLOSED === "1" && process.env.NEXT_PUBLIC_POSTHOG_KEY) {
   process.exit(1);
 }
 
+// Литва до своего запуска видна на рабочем сервере только пока сайт закрыт
+// (решение владельца 2026-10-10: показать её за паролем). Если в день
+// открытия убрать SITE_CLOSED и забыть про флаг предпросмотра, недостроенная
+// страна вышла бы к посетителям и в поиск — сборка этого не пропускает.
+// PRIVACY_ENFORCE=1 здесь — признак рабочего сервера: в проверочной сборке
+// на GitHub и на компьютере владельца флаг предпросмотра стоит без него.
+if (
+  process.env.PRIVACY_ENFORCE === "1" &&
+  process.env.NEXT_PUBLIC_PREVIEW_COUNTRIES === "1" &&
+  process.env.SITE_CLOSED !== "1"
+) {
+  console.error(
+    "Сборка остановлена: NEXT_PUBLIC_PREVIEW_COUNTRIES=1 задан на открытом сайте (SITE_CLOSED не равен 1). " +
+      "Флаг показывает страну, которая ещё не запущена, и допустим только на закрытой выкладке. " +
+      "Уберите его из /etc/studypick/env; когда страна запускается, её убирают из previewCountries " +
+      "в src/i18n/config.ts. См. deploy/README.md, раздел «День запуска».",
+  );
+  process.exit(1);
+}
+
 if (process.env.PRIVACY_ENFORCE === "1") {
   const missing = ["PRIVACY_CONTROLLER_NAME", "PRIVACY_CONTACT_EMAIL"].filter(
     (name) => !process.env[name],
