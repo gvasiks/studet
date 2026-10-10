@@ -9750,6 +9750,26 @@
       "verified_by": "Gvasiks (подтверждение по правилу, решение владельца 2026-10-10 для записей, добавленных после 2026-10-01; правила и выборка — docs/checks/PROGRAMME-FIELD-REVIEW.md)"
     },
     {
+      "field_code": "582",
+      "programme_name": null,
+      "programme_slug": "civil-engineering-134",
+      "source": "name-rules",
+      "university_slug": "rtu",
+      "verification_method": "rule",
+      "verified_at": "2026-10-10T16:37:47.645459+00:00",
+      "verified_by": "Gvasiks (подтверждение по правилу, решение владельца 2026-10-10 для записей, добавленных после 2026-10-01; правила и выборка — docs/checks/PROGRAMME-FIELD-REVIEW.md)"
+    },
+    {
+      "field_code": "582",
+      "programme_name": null,
+      "programme_slug": "civil-engineering-188",
+      "source": "name-rules",
+      "university_slug": "rtu",
+      "verification_method": "rule",
+      "verified_at": "2026-10-10T16:37:47.645459+00:00",
+      "verified_by": "Gvasiks (подтверждение по правилу, решение владельца 2026-10-10 для записей, добавленных после 2026-10-01; правила и выборка — docs/checks/PROGRAMME-FIELD-REVIEW.md)"
+    },
+    {
       "field_code": "345",
       "programme_name": "Loģistika",
       "programme_slug": "ckg-22000",
@@ -10618,6 +10638,16 @@
       "verification_method": "rule",
       "verified_at": "2026-10-01T16:39:15.266533+00:00",
       "verified_by": "Gvasiks (подтверждение по правилу, решение владельца 2026-10-01; правила и выборка — docs/checks/PROGRAMME-FIELD-REVIEW.md)"
+    },
+    {
+      "field_code": "582",
+      "programme_name": null,
+      "programme_slug": "heat-gas-and-water-technology-135",
+      "source": "name-rules",
+      "university_slug": "rtu",
+      "verification_method": "rule",
+      "verified_at": "2026-10-10T16:37:47.645459+00:00",
+      "verified_by": "Gvasiks (подтверждение по правилу, решение владельца 2026-10-10 для записей, добавленных после 2026-10-01; правила и выборка — docs/checks/PROGRAMME-FIELD-REVIEW.md)"
     },
     {
       "field_code": "222",
@@ -11490,6 +11520,16 @@
       "verified_by": "Gvasiks (подтверждение по правилу, решение владельца 2026-10-10 для записей, добавленных после 2026-10-01; правила и выборка — docs/checks/PROGRAMME-FIELD-REVIEW.md)"
     },
     {
+      "field_code": "522",
+      "programme_name": null,
+      "programme_slug": "smart-power-systems-207",
+      "source": "name-rules",
+      "university_slug": "rtu",
+      "verification_method": "rule",
+      "verified_at": "2026-10-10T16:37:47.645459+00:00",
+      "verified_by": "Gvasiks (подтверждение по правилу, решение владельца 2026-10-10 для записей, добавленных после 2026-10-01; правила и выборка — docs/checks/PROGRAMME-FIELD-REVIEW.md)"
+    },
+    {
       "field_code": "523",
       "programme_name": null,
       "programme_slug": "telecommunication-77",
@@ -12148,6 +12188,16 @@
       "verification_method": "rule",
       "verified_at": "2026-10-01T16:39:15.266533+00:00",
       "verified_by": "Gvasiks (подтверждение по правилу, решение владельца 2026-10-01; правила и выборка — docs/checks/PROGRAMME-FIELD-REVIEW.md)"
+    },
+    {
+      "field_code": "481",
+      "programme_name": null,
+      "programme_slug": "information-technology-lv",
+      "source": "name-rules",
+      "university_slug": "turiba",
+      "verification_method": "rule",
+      "verified_at": "2026-10-10T16:37:47.645459+00:00",
+      "verified_by": "Gvasiks (подтверждение по правилу, решение владельца 2026-10-10 для записей, добавленных после 2026-10-01; правила и выборка — docs/checks/PROGRAMME-FIELD-REVIEW.md)"
     },
     {
       "field_code": "321",
