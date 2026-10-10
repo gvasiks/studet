@@ -19,10 +19,13 @@ docs/checks/NIID-LANGUAGE-REVIEW.md.
 программу разрешено вести на двух языках, но не обязательно, что набор идёт
 на обоих. У РТУ это различие оказалось существенным (rtu_languages.py).
 
-В таблице НЕТ двух программ, у которых NIID и сайт вуза расходятся:
-«Environmental Science» у DU (сайт называет оба языка, NIID — латышский) и
-«Digitālā kultūra un tekstveide» у Ventspils (NIID — только английский).
-Их решает человек.
+Две программы, у которых NIID и сайт вуза расходятся, решил владелец
+(2026-10-10): обе идут двумя записями.
+- «Environmental Science» у DU: сайт называет оба языка, NIID — только
+  латышский. Сборщик du.py и так пишет две записи по сайту, в таблицах её нет.
+- «Digitālā kultūra un tekstveide» у Ventspils: на сайте язык не назван, в
+  каталоге стоял латышский, NIID называет только английский. Она записана в
+  DECIDED ниже — отдельно от KNOWN, потому что с NIID не совпадает намеренно.
 
 Программа этих пяти вузов, которой нет ни в таблице, ни с языком на сайте,
 получает пустой язык: main.py оставит у неё прежний, а новую не запишет —
@@ -92,6 +95,20 @@ KNOWN: dict[str, dict[str, tuple[str, tuple[str, ...]]]] = {
 }
 
 
+# Решения владельца, которые с NIID НЕ совпадают: слаг -> (номер записи NIID,
+# языки, основание). Сверка (--check) такие записи не считает расхождением, а
+# только печатает, что сейчас говорит NIID.
+DECIDED: dict[str, dict[str, tuple[str, tuple[str, ...], str]]] = {
+    "venta": {
+        "digitala-kultura-un-tekstveide": (
+            "28569",
+            ("lv", "en"),
+            "решение владельца 2026-10-10: в каталоге стоял латышский, NIID называет только английский — две записи",
+        ),
+    },
+}
+
+
 def languages_from_niid_text(text: str) -> list[str]:
     """«latviešu/angļu (LV/EN)» -> ['lv', 'en']; «angļu (EN)» -> ['en']."""
     lowered = text.lower()
@@ -99,9 +116,10 @@ def languages_from_niid_text(text: str) -> list[str]:
 
 
 def languages_for(source: str, slug: str, stated: list[str]) -> list[str]:
-    """Языки программы: из таблицы NIID, если программа в ней есть, иначе те,
-    что назвал сайт вуза (stated). Пустой список — язык неизвестен."""
-    entry = KNOWN.get(source, {}).get(slug)
+    """Языки программы: по решению владельца (DECIDED) или из таблицы NIID
+    (KNOWN), если программа там есть, иначе те, что назвал сайт вуза (stated).
+    Пустой список — язык неизвестен."""
+    entry = DECIDED.get(source, {}).get(slug) or KNOWN.get(source, {}).get(slug)
     return list(entry[1]) if entry else stated
 
 
@@ -138,6 +156,8 @@ def check() -> None:
                     problems.append(f"{source}/{slug}: записи NIID {niid_id} больше нет в списке учреждения")
                 elif sorted(languages_from_niid_text(in_niid[niid_id])) != sorted(languages):
                     problems.append(f"{source}/{slug}: в таблице {list(languages)}, в NIID «{in_niid[niid_id]}» (запись {niid_id})")
+            for slug, (niid_id, languages, reason) in DECIDED.get(source, {}).items():
+                print(f"{source}/{slug}: по решению {list(languages)}, в NIID «{in_niid.get(niid_id, 'записи нет')}» — {reason}")
             print(f"{source}: сверено {len(KNOWN[source])} программ", flush=True)
         browser.close()
     if problems:
@@ -161,6 +181,10 @@ def selftest() -> None:
     assert languages_for("rnu", "нет-такой", []) == [], "вне таблицы и без языка на сайте — пусто"
     some_slug, (_niid_id, some_languages) = next(iter(KNOWN["rnu"].items()))
     assert languages_for("rnu", some_slug, []) == list(some_languages)
+
+    assert languages_for("venta", "digitala-kultura-un-tekstveide", []) == ["lv", "en"], "решение владельца"
+    for source, programmes in DECIDED.items():
+        assert source in PROVIDERS and not set(programmes) & set(KNOWN[source]), "программа либо в KNOWN, либо в DECIDED"
 
     assert set(KNOWN) == set(PROVIDERS)
     for source, programmes in KNOWN.items():

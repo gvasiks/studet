@@ -3730,6 +3730,16 @@
       "verified_by": "Gvasiks (подтверждение по правилу, решение владельца 2026-10-01; правила и выборка — docs/checks/PROGRAMME-FIELD-REVIEW.md)"
     },
     {
+      "field_code": "227",
+      "programme_name": null,
+      "programme_slug": "eastern-european-cultural-and-business-relations-en",
+      "source": "name-rules",
+      "university_slug": "du",
+      "verification_method": "rule",
+      "verified_at": "2026-10-10T17:45:19.691808+00:00",
+      "verified_by": "Gvasiks (подтверждение по правилу, решение владельца 2026-10-10 для записей, добавленных после 2026-10-01; правила и выборка — docs/checks/PROGRAMME-FIELD-REVIEW.md)"
+    },
+    {
       "field_code": "850",
       "programme_name": null,
       "programme_slug": "environmental-science-en",
@@ -3768,6 +3778,16 @@
       "verification_method": "rule",
       "verified_at": "2026-10-01T16:39:15.266533+00:00",
       "verified_by": "Gvasiks (подтверждение по правилу, решение владельца 2026-10-01; правила и выборка — docs/checks/PROGRAMME-FIELD-REVIEW.md)"
+    },
+    {
+      "field_code": "227",
+      "programme_name": null,
+      "programme_slug": "language-and-culture-studies-en",
+      "source": "name-rules",
+      "university_slug": "du",
+      "verification_method": "rule",
+      "verified_at": "2026-10-10T17:45:19.691808+00:00",
+      "verified_by": "Gvasiks (подтверждение по правилу, решение владельца 2026-10-10 для записей, добавленных после 2026-10-01; правила и выборка — docs/checks/PROGRAMME-FIELD-REVIEW.md)"
     },
     {
       "field_code": "211",
@@ -5718,6 +5738,16 @@
       "verification_method": "rule",
       "verified_at": "2026-10-01T16:39:15.266533+00:00",
       "verified_by": "Gvasiks (подтверждение по правилу, решение владельца 2026-10-01; правила и выборка — docs/checks/PROGRAMME-FIELD-REVIEW.md)"
+    },
+    {
+      "field_code": "345",
+      "programme_name": null,
+      "programme_slug": "creative-industries-and-growth-management-en",
+      "source": "name-rules",
+      "university_slug": "lka",
+      "verification_method": "rule",
+      "verified_at": "2026-10-10T17:45:19.691808+00:00",
+      "verified_by": "Gvasiks (подтверждение по правилу, решение владельца 2026-10-10 для записей, добавленных после 2026-10-01; правила и выборка — docs/checks/PROGRAMME-FIELD-REVIEW.md)"
     },
     {
       "field_code": "345",
@@ -8690,6 +8720,16 @@
       "verified_by": "Gvasiks (подтверждение по правилу, решение владельца 2026-10-01; правила и выборка — docs/checks/PROGRAMME-FIELD-REVIEW.md)"
     },
     {
+      "field_code": "345",
+      "programme_name": null,
+      "programme_slug": "business-administration-bachelor-en",
+      "source": "name-rules",
+      "university_slug": "rnu",
+      "verification_method": "rule",
+      "verified_at": "2026-10-10T17:45:19.691808+00:00",
+      "verified_by": "Gvasiks (подтверждение по правилу, решение владельца 2026-10-10 для записей, добавленных после 2026-10-01; правила и выборка — docs/checks/PROGRAMME-FIELD-REVIEW.md)"
+    },
+    {
       "field_code": "812",
       "programme_name": null,
       "programme_slug": "business-administration-in-tourism-bachelor",
@@ -8700,6 +8740,16 @@
       "verified_by": "Gvasiks (подтверждение по правилу, решение владельца 2026-10-01; правила и выборка — docs/checks/PROGRAMME-FIELD-REVIEW.md)"
     },
     {
+      "field_code": "812",
+      "programme_name": null,
+      "programme_slug": "business-administration-in-tourism-bachelor-en",
+      "source": "name-rules",
+      "university_slug": "rnu",
+      "verification_method": "rule",
+      "verified_at": "2026-10-10T17:45:19.691808+00:00",
+      "verified_by": "Gvasiks (подтверждение по правилу, решение владельца 2026-10-10 для записей, добавленных после 2026-10-01; правила и выборка — docs/checks/PROGRAMME-FIELD-REVIEW.md)"
+    },
+    {
       "field_code": "345",
       "programme_name": null,
       "programme_slug": "business-administration-master",
@@ -8708,6 +8758,16 @@
       "verification_method": "rule",
       "verified_at": "2026-10-01T16:39:15.266533+00:00",
       "verified_by": "Gvasiks (подтверждение по правилу, решение владельца 2026-10-01; правила и выборка — docs/checks/PROGRAMME-FIELD-REVIEW.md)"
+    },
+    {
+      "field_code": "345",
+      "programme_name": null,
+      "programme_slug": "business-administration-master-en",
+      "source": "name-rules",
+      "university_slug": "rnu",
+      "verification_method": "rule",
+      "verified_at": "2026-10-10T17:45:19.691808+00:00",
+      "verified_by": "Gvasiks (подтверждение по правилу, решение владельца 2026-10-10 для записей, добавленных после 2026-10-01; правила и выборка — docs/checks/PROGRAMME-FIELD-REVIEW.md)"
     },
     {
       "field_code": "481",
@@ -8722,12 +8782,32 @@
     {
       "field_code": "481",
       "programme_name": null,
+      "programme_slug": "computer-systems-master-en",
+      "source": "name-rules",
+      "university_slug": "rnu",
+      "verification_method": "rule",
+      "verified_at": "2026-10-10T17:45:19.691808+00:00",
+      "verified_by": "Gvasiks (подтверждение по правилу, решение владельца 2026-10-10 для записей, добавленных после 2026-10-01; правила и выборка — docs/checks/PROGRAMME-FIELD-REVIEW.md)"
+    },
+    {
+      "field_code": "481",
+      "programme_name": null,
       "programme_slug": "information-systems-bachelor",
       "source": "name-rules",
       "university_slug": "rnu",
       "verification_method": "rule",
       "verified_at": "2026-10-01T16:39:15.266533+00:00",
       "verified_by": "Gvasiks (подтверждение по правилу, решение владельца 2026-10-01; правила и выборка — docs/checks/PROGRAMME-FIELD-REVIEW.md)"
+    },
+    {
+      "field_code": "481",
+      "programme_name": null,
+      "programme_slug": "information-systems-bachelor-en",
+      "source": "name-rules",
+      "university_slug": "rnu",
+      "verification_method": "rule",
+      "verified_at": "2026-10-10T17:45:19.691808+00:00",
+      "verified_by": "Gvasiks (подтверждение по правилу, решение владельца 2026-10-10 для записей, добавленных после 2026-10-01; правила и выборка — docs/checks/PROGRAMME-FIELD-REVIEW.md)"
     },
     {
       "field_code": "313",
@@ -8758,6 +8838,16 @@
       "verification_method": "rule",
       "verified_at": "2026-10-01T16:39:15.266533+00:00",
       "verified_by": "Gvasiks (подтверждение по правилу, решение владельца 2026-10-01; правила и выборка — docs/checks/PROGRAMME-FIELD-REVIEW.md)"
+    },
+    {
+      "field_code": "811",
+      "programme_name": null,
+      "programme_slug": "tourism-service-organisation-college-en",
+      "source": "name-rules",
+      "university_slug": "rnu",
+      "verification_method": "rule",
+      "verified_at": "2026-10-10T17:45:19.691808+00:00",
+      "verified_by": "Gvasiks (подтверждение по правилу, решение владельца 2026-10-10 для записей, добавленных после 2026-10-01; правила и выборка — docs/checks/PROGRAMME-FIELD-REVIEW.md)"
     },
     {
       "field_code": "211",
@@ -11970,6 +12060,16 @@
       "verified_by": "Gvasiks (подтверждение по правилу, решение владельца 2026-10-01; правила и выборка — docs/checks/PROGRAMME-FIELD-REVIEW.md)"
     },
     {
+      "field_code": "311",
+      "programme_name": null,
+      "programme_slug": "digital-economy-and-business-lv",
+      "source": "name-rules",
+      "university_slug": "tsi",
+      "verification_method": "rule",
+      "verified_at": "2026-10-10T17:45:19.691808+00:00",
+      "verified_by": "Gvasiks (подтверждение по правилу, решение владельца 2026-10-10 для записей, добавленных после 2026-10-01; правила и выборка — docs/checks/PROGRAMME-FIELD-REVIEW.md)"
+    },
+    {
       "field_code": "840",
       "programme_name": null,
       "programme_slug": "double-degree-in-aviation-management-and-sustainability-professional-masters-programme",
@@ -12070,6 +12170,16 @@
       "verified_by": "Gvasiks (подтверждение по правилу, решение владельца 2026-10-01; правила и выборка — docs/checks/PROGRAMME-FIELD-REVIEW.md)"
     },
     {
+      "field_code": "523",
+      "programme_name": null,
+      "programme_slug": "telematics-and-logistics-lv",
+      "source": "name-rules",
+      "university_slug": "tsi",
+      "verification_method": "rule",
+      "verified_at": "2026-10-10T17:45:19.691808+00:00",
+      "verified_by": "Gvasiks (подтверждение по правилу, решение владельца 2026-10-10 для записей, добавленных после 2026-10-01; правила и выборка — docs/checks/PROGRAMME-FIELD-REVIEW.md)"
+    },
+    {
       "field_code": "840",
       "programme_name": null,
       "programme_slug": "transport-and-business-logistics-en",
@@ -12098,6 +12208,16 @@
       "verification_method": "rule",
       "verified_at": "2026-10-01T16:39:15.266533+00:00",
       "verified_by": "Gvasiks (подтверждение по правилу, решение владельца 2026-10-01; правила и выборка — docs/checks/PROGRAMME-FIELD-REVIEW.md)"
+    },
+    {
+      "field_code": "840",
+      "programme_name": null,
+      "programme_slug": "transport-and-logistics-lv",
+      "source": "name-rules",
+      "university_slug": "tsi",
+      "verification_method": "rule",
+      "verified_at": "2026-10-10T17:45:19.691808+00:00",
+      "verified_by": "Gvasiks (подтверждение по правилу, решение владельца 2026-10-10 для записей, добавленных после 2026-10-01; правила и выборка — docs/checks/PROGRAMME-FIELD-REVIEW.md)"
     },
     {
       "field_code": "815",
@@ -12482,12 +12602,32 @@
     {
       "field_code": "481",
       "programme_name": "Datorzinātnes",
+      "programme_slug": "datorzinatnes-bakalaurs-en",
+      "source": "name-rules",
+      "university_slug": "venta",
+      "verification_method": "rule",
+      "verified_at": "2026-10-10T17:45:19.691808+00:00",
+      "verified_by": "Gvasiks (подтверждение по правилу, решение владельца 2026-10-10 для записей, добавленных после 2026-10-01; правила и выборка — docs/checks/PROGRAMME-FIELD-REVIEW.md)"
+    },
+    {
+      "field_code": "481",
+      "programme_name": "Datorzinātnes",
       "programme_slug": "datorzinatnes-magistrs",
       "source": "name-rules",
       "university_slug": "venta",
       "verification_method": "rule",
       "verified_at": "2026-10-01T16:39:15.266533+00:00",
       "verified_by": "Gvasiks (подтверждение по правилу, решение владельца 2026-10-01; правила и выборка — docs/checks/PROGRAMME-FIELD-REVIEW.md)"
+    },
+    {
+      "field_code": "481",
+      "programme_name": "Datorzinātnes",
+      "programme_slug": "datorzinatnes-magistrs-en",
+      "source": "name-rules",
+      "university_slug": "venta",
+      "verification_method": "rule",
+      "verified_at": "2026-10-10T17:45:19.691808+00:00",
+      "verified_by": "Gvasiks (подтверждение по правилу, решение владельца 2026-10-10 для записей, добавленных после 2026-10-01; правила и выборка — docs/checks/PROGRAMME-FIELD-REVIEW.md)"
     },
     {
       "field_code": "222",
@@ -12498,6 +12638,16 @@
       "verification_method": "rule",
       "verified_at": "2026-10-01T16:39:15.266533+00:00",
       "verified_by": "Gvasiks (подтверждение по правилу, решение владельца 2026-10-01; правила и выборка — docs/checks/PROGRAMME-FIELD-REVIEW.md)"
+    },
+    {
+      "field_code": "222",
+      "programme_name": "Digitālā kultūra un tekstveide",
+      "programme_slug": "digitala-kultura-un-tekstveide-en",
+      "source": "name-rules",
+      "university_slug": "venta",
+      "verification_method": "rule",
+      "verified_at": "2026-10-10T17:45:19.691808+00:00",
+      "verified_by": "Gvasiks (подтверждение по правилу, решение владельца 2026-10-10 для записей, добавленных после 2026-10-01; правила и выборка — docs/checks/PROGRAMME-FIELD-REVIEW.md)"
     },
     {
       "field_code": "523",
@@ -12588,6 +12738,16 @@
       "verification_method": "rule",
       "verified_at": "2026-10-01T16:39:15.266533+00:00",
       "verified_by": "Gvasiks (подтверждение по правилу, решение владельца 2026-10-01; правила и выборка — docs/checks/PROGRAMME-FIELD-REVIEW.md)"
+    },
+    {
+      "field_code": "227",
+      "programme_name": "Valodas, saziņa un kultūrvide",
+      "programme_slug": "valodas-sazina-un-kulturvide-en",
+      "source": "name-rules",
+      "university_slug": "venta",
+      "verification_method": "rule",
+      "verified_at": "2026-10-10T17:45:19.691808+00:00",
+      "verified_by": "Gvasiks (подтверждение по правилу, решение владельца 2026-10-10 для записей, добавленных после 2026-10-01; правила и выборка — docs/checks/PROGRAMME-FIELD-REVIEW.md)"
     },
     {
       "field_code": "481",
