@@ -1,6 +1,7 @@
 import { cache } from "react";
 import { supabase } from "@/lib/supabase";
 import type { ApplicationRound } from "@/lib/deadlines";
+import { remember } from "@/lib/server-memo";
 
 // Гейт на verified_at в самом запросе — тот же паттерн, что и
 // getFormula() в formula-queries.ts. Дублируется RLS-политикой
@@ -27,3 +28,12 @@ export const getApplicationRounds = cache(async (): Promise<ApplicationRound[]> 
     sourceUrl: row.source_url,
   }));
 });
+
+// Те же сроки для карточек каталога и «моего списка» — из памяти сервера
+// (server-memo.ts): чип «до …» на карточке нужен при каждом показе списка, а
+// сроки меняются раз в год. Страница самой программы зовёт
+// getApplicationRounds() напрямую: подтверждённый срок виден на ней сразу, на
+// карточках — в течение пяти минут. Массив общий для всех запросов, не менять.
+export function getApplicationRoundsForCards(): Promise<ApplicationRound[]> {
+  return remember("application-rounds", 5 * 60 * 1000, () => getApplicationRounds());
+}

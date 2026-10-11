@@ -3,7 +3,7 @@ import { notFound } from "next/navigation";
 import { countries, isLocale } from "@/i18n/config";
 import { hasFeature } from "@/lib/country";
 import { getDictionary } from "@/i18n/dictionaries";
-import { getApplicationRounds } from "@/lib/deadline-queries";
+import { getApplicationRoundsForCards } from "@/lib/deadline-queries";
 import type { ApplicationRound } from "@/lib/deadlines";
 import { getCalculatorProgrammeIds } from "@/lib/calculator-ids";
 import { FavoritesList } from "./FavoritesList";
@@ -35,7 +35,7 @@ async function loadCardData(): Promise<{ calculatorIds: string[]; applicationRou
     // Список общий для всех открытых стран — и кнопка расчёта нужна программам каждой.
     const [idSets, applicationRounds] = await Promise.all([
       Promise.all(countries.map((country) => getCalculatorProgrammeIds(country))),
-      getApplicationRounds(),
+      getApplicationRoundsForCards(),
     ]);
     return { calculatorIds: idSets.flatMap((ids) => [...ids]), applicationRounds };
   } catch {

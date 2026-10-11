@@ -5,7 +5,7 @@ import { countries, countryOf, isLocale, languageOf } from "@/i18n/config";
 import { catalogProfile, countryProfile, hasFeature } from "@/lib/country";
 import { getDictionary } from "@/i18n/dictionaries";
 import { buildAlternates } from "@/lib/site";
-import { getApplicationRounds } from "@/lib/deadline-queries";
+import { getApplicationRoundsForCards } from "@/lib/deadline-queries";
 import { getCalculatorProgrammeIds } from "@/lib/calculator-ids";
 import { matchRounds } from "@/lib/deadlines";
 import { listProgrammes, listUniversities } from "@/lib/catalog";
@@ -16,7 +16,10 @@ import { ProgrammeCard } from "@/components/ProgrammeCard";
 import { FilterSidebar, LevelTabs, LoadMore, SearchAndSort, SurveyCard } from "./CatalogControls";
 
 // Каталог обновляет Python-конвейер напрямую в базе, мимо Next.js —
-// без этого страница закаменеет на состоянии последней сборки.
+// без этого страница закаменеет на состоянии последней сборки. Сами данные
+// при этом берутся из памяти сервера и обновляются раз в пять минут
+// (src/lib/server-memo.ts): страница собирается на каждый запрос, но базу
+// на каждый щелчок по фильтру не трогает.
 export const dynamic = "force-dynamic";
 
 // canonical — всегда на страницу без параметров фильтра, независимо от
@@ -58,10 +61,9 @@ export default async function ProgrammesPage({
   );
   const dict = await getDictionary(locale);
 
-  // В базе — только то, что нельзя сделать быстрее в памяти: город, язык,
-  // направление... Поиск, уровень, сортировка и "показать ещё" считаются
-  // по уже выбранному набору (каталог — сотни строк, не миллионы), иначе
-  // счётчики табов пришлось бы получать отдельными запросами.
+  // Все фильтры считаются в памяти по списку программ страны, который
+  // сервер держит у себя (listProgrammes в src/lib/catalog.ts): каталог —
+  // тысячи строк, не миллионы, а счётчики вкладок получаются тем же проходом.
   // Запросы идут по каждой стране отдельно и одновременно: у стран разные
   // таблицы направлений и формул, а фильтр по городу или вузу одной страны у
   // другой просто ничего не находит.
@@ -77,7 +79,7 @@ export default async function ProgrammesPage({
   const [programmeLists, universityLists, applicationRounds, calculatorIdSets] = await Promise.all([
     Promise.all(shown.map((country) => listProgrammes(country, filters))),
     Promise.all(shown.map((country) => listUniversities(country))),
-    getApplicationRounds(),
+    getApplicationRoundsForCards(),
     Promise.all(shown.map((country) => getCalculatorProgrammeIds(country))),
   ]);
   const programmes = programmeLists.flat();

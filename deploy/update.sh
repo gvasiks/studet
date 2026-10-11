@@ -49,6 +49,11 @@ systemctl restart studypick
 for attempt in $(seq 1 30); do
   code=$(curl -s -o /dev/null -w '%{http_code}' http://127.0.0.1:3000/lv || true)
   if [ "$code" = "200" ]; then
+    # Каталог держит список программ в памяти и после перезапуска она пуста:
+    # первый посетитель ждал бы, пока список скачается из базы. Этот запрос
+    # скачивает его заранее. Не получилось — не беда, список скачается при
+    # первом заходе.
+    curl -s -o /dev/null --max-time 20 http://127.0.0.1:3000/lv/programmes || true
     echo "Готово: сайт отвечает (версия $(runuser -u studypick -- git -C "$APP" log -1 --format='%h %s'))."
     exit 0
   fi

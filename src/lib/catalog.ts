@@ -1,8 +1,10 @@
 import { cache } from "react";
 import type { Country } from "@/i18n/config";
 import { supabase } from "@/lib/supabase";
+import { filterProgrammes } from "@/lib/catalog-filter";
 import { fieldCodesForInterests, type InterestKey } from "@/lib/fields";
 import { ltFieldCodesForInterests } from "@/lib/lt-fields";
+import { remember } from "@/lib/server-memo";
 
 export type University = {
   id: string;
@@ -65,7 +67,7 @@ export type Programme = {
 // пара колонок в запросе без всякой пользы (ревью performance-tester,
 // 2026-09-24). CATALOG_LIST_COLUMNS ниже — та же мысль на уровне SQL.
 export type ProgrammeWithUniversity = Omit<Programme, "description_lv" | "description_lt" | "description_en"> & {
-  university: Pick<University, "slug" | "name_lv" | "name_lt" | "name_en" | "city" | "country">;
+  university: Pick<University, "slug" | "name_lv" | "name_lt" | "name_en" | "kind" | "city" | "country">;
 };
 
 const CATALOG_LIST_COLUMNS =
@@ -73,7 +75,15 @@ const CATALOG_LIST_COLUMNS =
   "city, funding_type, tuition_fee_amount, tuition_fee_currency, budget_places, duration_years, " +
   "accreditation_valid_until, source_url, verified_at";
 
-const UNIVERSITY_LIST_COLUMNS = "slug, name_lv, name_lt, name_en, city, country";
+// kind — для фильтра «государственный или частный»: он применяется к списку
+// в памяти, а не в запросе.
+const UNIVERSITY_LIST_COLUMNS = "slug, name_lv, name_lt, name_en, kind, city, country";
+
+// Сколько список программ, вузов и направлений живёт в памяти сервера
+// (server-memo.ts). Каталог обновляется сбором раз в неделю, так что пять
+// минут задержки после сбора или подтверждения в Studio не заметны, а
+// страница перестаёт скачивать весь список на каждый щелчок по фильтру.
+const CATALOG_MEMORY_MS = 5 * 60 * 1000;
 
 // PostgREST отдаёт не больше 1000 строк за запрос и не сообщает, что
 // остальное отрезано. В литовском каталоге строк больше тысячи, поэтому
@@ -90,14 +100,9 @@ export { localizedName, enumLabel } from "@/lib/names";
 // countryOf(locale), см. src/i18n/config.ts.
 
 /** Сколько программ в каталоге страны — для бейджа в шапке страницы. */
-export const getProgrammeCount = cache(async (country: Country): Promise<number> => {
-  const { count, error } = await supabase
-    .from("programme")
-    .select("id, university!inner(country)", { count: "exact", head: true })
-    .eq("university.country", country);
-  if (error) throw error;
-  return count ?? 0;
-});
+export async function getProgrammeCount(country: Country): Promise<number> {
+  return (await allProgrammes(country)).length;
+}
 
 export type ProgrammeFilters = {
   interests?: InterestKey[];
@@ -113,78 +118,74 @@ export type ProgrammeFilters = {
 // Список городов каталога — в профиле страны (src/lib/country.ts): один
 // на форму анкеты и на фильтр /programmes.
 
-export const listProgrammes = cache(
-  async (country: Country, filters: ProgrammeFilters = {}): Promise<ProgrammeWithUniversity[]> => {
-    // university!inner — нужен, чтобы можно было фильтровать по
-    // university.slug ниже (PostgREST требует inner-join для фильтрации
-    // встроенного ресурса). У программы university_id обязателен, так что
-    // на набор результатов без фильтра по вузу это не влияет.
-    // Фильтр по интересам (пункт 16 ревью) идёт через направление
-    // программы. programme_field!inner — только когда фильтр задан, иначе
-    // программы без разметки выпали бы из обычного каталога. Неподтверждённая
-    // разметка здесь допустима: это подсказка для поиска, а не факт, на
-    // который человек опирается (блок с доходами требует verified_at).
-    // У Литвы направление лежит в своей таблице и со своими кодами
-    // (lt_programme_field, классификатор общего приёма) — см. lt-fields.ts.
-    const fieldTable = country === "LT" ? "lt_programme_field" : "programme_field";
-    const codesFor = country === "LT" ? ltFieldCodesForInterests : fieldCodesForInterests;
-    const interestCodes = filters.interests && filters.interests.length > 0 ? codesFor(filters.interests) : null;
-    // Запрос собирается заново для каждой страницы: один и тот же объект
-    // запроса повторно не используется.
-    const buildQuery = () => {
-      let query = supabase
-        .from("programme")
-        .select(
-          interestCodes
-            ? `${CATALOG_LIST_COLUMNS}, university!inner(${UNIVERSITY_LIST_COLUMNS}), ${fieldTable}!inner(field_code)`
-            : `${CATALOG_LIST_COLUMNS}, university!inner(${UNIVERSITY_LIST_COLUMNS})`,
-        )
-        .eq("university.country", country);
-
-      if (interestCodes) {
-        query = query.in(`${fieldTable}.field_code`, interestCodes);
-      }
-      if (filters.budgetOnly) {
-        query = query.in("funding_type", ["budget", "both"]);
-      }
-      // Фильтр смотрит только на programme.city, не на university.city — пока
-      // у всех наших записей город указан явно на уровне программы, этого
-      // достаточно. Если появятся программы без своего city, нужно будет
-      // учитывать город вуза как запасной вариант.
-      if (filters.cities && filters.cities.length > 0) {
-        query = query.in("city", filters.cities);
-      }
-      if (filters.language) {
-        query = query.eq("language_of_instruction", filters.language);
-      }
-      if (filters.mode) {
-        query = query.eq("study_mode", filters.mode);
-      }
-      if (filters.university) {
-        query = query.eq("university.slug", filters.university);
-      }
-      // Тот же inner-join, что и для university.slug: фильтр по полю вуза.
-      if (filters.kind) {
-        query = query.eq("university.kind", filters.kind);
-      }
-
-      // id — последним ключом: без однозначного порядка строка на границе
-      // страниц могла бы попасть в обе или ни в одну.
-      return query.order("degree_level").order("name_en").order("id");
-    };
-
+// Весь каталог страны одним списком — из памяти сервера. Фильтров в запросе
+// нет: все они применяются потом к готовому списку (catalog-filter.ts).
+// До 2026-10-11 список с фильтрами запрашивался у базы при каждом показе
+// каталога — полтора мегабайта на две страны ради двенадцати карточек.
+// university!inner — чтобы отобрать по стране вуза.
+function allProgrammes(country: Country): Promise<ProgrammeWithUniversity[]> {
+  return remember(`programmes:${country}`, CATALOG_MEMORY_MS, async () => {
     const rows: ProgrammeWithUniversity[] = [];
     for (let from = 0; ; from += PAGE_ROWS) {
-      const { data, error } = await buildQuery().range(from, from + PAGE_ROWS - 1);
+      // id — последним ключом порядка: без однозначного порядка строка на
+      // границе страниц могла бы попасть в обе или ни в одну.
+      const { data, error } = await supabase
+        .from("programme")
+        .select(`${CATALOG_LIST_COLUMNS}, university!inner(${UNIVERSITY_LIST_COLUMNS})`)
+        .eq("university.country", country)
+        .order("degree_level")
+        .order("name_en")
+        .order("id")
+        .range(from, from + PAGE_ROWS - 1);
       if (error) throw error;
-      // Через unknown: строка select собирается условно, и разборщик типов
-      // supabase-js не может вывести форму строки из неё.
+      // Через unknown: разборщик типов supabase-js не выводит форму строки
+      // из собранной строки select.
       rows.push(...(data as unknown as ProgrammeWithUniversity[]));
       if (data.length < PAGE_ROWS) break;
     }
     return rows;
-  },
-);
+  });
+}
+
+// Направление каждой программы страны: id программы -> код. Нужно фильтру по
+// интересам (пункт 16 ревью). Неподтверждённая разметка здесь допустима: это
+// подсказка для поиска, а не факт, на который человек опирается (блок с
+// доходами требует verified_at). У Литвы направление лежит в своей таблице и
+// со своими кодами (lt_programme_field, классификатор общего приёма) — см.
+// lt-fields.ts. Строк около тысячи у каждой страны, поэтому читаем страницами.
+function programmeFieldCodes(country: Country): Promise<Map<string, string>> {
+  const table = country === "LT" ? "lt_programme_field" : "programme_field";
+  return remember(`field-codes:${country}`, CATALOG_MEMORY_MS, async () => {
+    const codes = new Map<string, string>();
+    for (let from = 0; ; from += PAGE_ROWS) {
+      const { data, error } = await supabase
+        .from(table)
+        .select("programme_id, field_code")
+        .order("programme_id")
+        .range(from, from + PAGE_ROWS - 1);
+      if (error) throw error;
+      for (const row of data) codes.set(row.programme_id as string, row.field_code as string);
+      if (data.length < PAGE_ROWS) break;
+    }
+    return codes;
+  });
+}
+
+// Программы страны, подходящие под фильтры. Возвращается новый массив:
+// список в памяти общий для всех запросов, менять его нельзя.
+export async function listProgrammes(
+  country: Country,
+  filters: ProgrammeFilters = {},
+): Promise<ProgrammeWithUniversity[]> {
+  const byInterest = filters.interests !== undefined && filters.interests.length > 0;
+  const codesFor = country === "LT" ? ltFieldCodesForInterests : fieldCodesForInterests;
+  const [programmes, fieldCodeById] = await Promise.all([
+    allProgrammes(country),
+    byInterest ? programmeFieldCodes(country) : new Map<string, string>(),
+  ]);
+  const interestCodes = byInterest ? new Set(codesFor(filters.interests!)) : null;
+  return filterProgrammes(programmes, filters, interestCodes, fieldCodeById);
+}
 
 // Не обёрнута в cache() — та предназначена для дедупликации запросов внутри
 // одного серверного рендера (React Server Components), а этот вызов идёт
@@ -209,26 +210,32 @@ export type UniversityOption = Pick<University, "slug" | "name_lv" | "name_lt" |
   programmeCount: number;
 };
 
-export const listUniversities = cache(async (country: Country): Promise<UniversityOption[]> => {
-  // programme(count) — PostgREST считает встроенные строки сам, одним
-  // запросом. RLS программы действует и здесь: скрытые программы
-  // (missed_runs >= 2) в число не попадают, как и в сам каталог.
-  const { data, error } = await supabase
-    .from("university")
-    .select("slug, name_lv, name_lt, name_en, programme(count)")
-    .eq("country", country)
-    .order("name_en");
+// Вузы страны с числом программ — для фильтра и главной. Из памяти сервера,
+// как и список программ; возвращается копия, чтобы вызывающий мог её
+// сортировать.
+export async function listUniversities(country: Country): Promise<UniversityOption[]> {
+  const universities = await remember(`universities:${country}`, CATALOG_MEMORY_MS, async () => {
+    // programme(count) — PostgREST считает встроенные строки сам, одним
+    // запросом. RLS программы действует и здесь: скрытые программы
+    // (missed_runs >= 2) в число не попадают, как и в сам каталог.
+    const { data, error } = await supabase
+      .from("university")
+      .select("slug, name_lv, name_lt, name_en, programme(count)")
+      .eq("country", country)
+      .order("name_en");
 
-  if (error) throw error;
-  // Через unknown: разборщик типов supabase-js не выводит форму count.
-  const rows = data as unknown as (Pick<University, "slug" | "name_lv" | "name_lt" | "name_en"> & {
-    programme: { count: number }[];
-  })[];
-  return rows.map(({ programme, ...university }) => ({
-    ...university,
-    programmeCount: programme[0]?.count ?? 0,
-  }));
-});
+    if (error) throw error;
+    // Через unknown: разборщик типов supabase-js не выводит форму count.
+    const rows = data as unknown as (Pick<University, "slug" | "name_lv" | "name_lt" | "name_en"> & {
+      programme: { count: number }[];
+    })[];
+    return rows.map(({ programme, ...university }) => ({
+      ...university,
+      programmeCount: programme[0]?.count ?? 0,
+    }));
+  });
+  return [...universities];
+}
 
 export const getProgramme = cache(
   async (
