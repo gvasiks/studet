@@ -52,9 +52,10 @@ export function SiteFooter({ dict, locale, tone }: { dict: Dictionary; locale: L
               ))}
             </ul>
           </nav>
-          <div className="mt-3">
-            <CountrySwitcher locale={locale} dict={dict} tone="dark" />
-          </div>
+          {/* Выбора страны на главной нет (решение владельца 2026-10-11):
+              каталог общий для всех открытых стран. В подвале остальных
+              страниц он остаётся — анкета, расчёт балла, словарь и права
+              у каждой страны свои. */}
         </div>
         <div className="flex items-start gap-3 rounded-2xl border border-white/10 bg-white/5 p-4">
           <InfoIcon size={16} className="mt-0.5 shrink-0 text-sky-400" />

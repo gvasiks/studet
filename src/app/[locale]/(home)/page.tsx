@@ -1,7 +1,7 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { countryOf, isLocale, type Country } from "@/i18n/config";
+import { countries, isLocale } from "@/i18n/config";
 import { hasFeature } from "@/lib/country";
 import { getDictionary } from "@/i18n/dictionaries";
 import { ArrowRightIcon } from "@/components/icons";
@@ -25,12 +25,23 @@ export async function generateMetadata({ params }: PageProps<"/[locale]">): Prom
   };
 }
 
-// Сбой базы не должен ронять сборку или главную страницу — просто
-// не показываем бейдж со счётчиками.
-async function loadStats(country: Country): Promise<{ programmes: number; universities: number } | null> {
+// Счётчик — по всем открытым странам: каталог, куда ведёт кнопка под ним,
+// по умолчанию показывает общий список (решение владельца 2026-10-10), и
+// число на главной должно с ним совпадать. До 2026-10-11 считалась только
+// страна раздела. Сбой базы не должен ронять сборку или главную страницу —
+// просто не показываем бейдж со счётчиками.
+async function loadStats(): Promise<{ programmes: number; universities: number } | null> {
   try {
-    const [programmes, universities] = await Promise.all([getProgrammeCount(country), listUniversities(country)]);
-    return { programmes, universities: universities.length };
+    const perCountry = await Promise.all(
+      countries.map(async (country) => {
+        const [programmes, universities] = await Promise.all([getProgrammeCount(country), listUniversities(country)]);
+        return { programmes, universities: universities.length };
+      }),
+    );
+    return {
+      programmes: perCountry.reduce((total, stats) => total + stats.programmes, 0),
+      universities: perCountry.reduce((total, stats) => total + stats.universities, 0),
+    };
   } catch {
     return null;
   }
@@ -43,8 +54,7 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
   if (!isLocale(locale)) notFound();
 
   const dict = await getDictionary(locale);
-  const country = countryOf(locale);
-  const stats = await loadStats(country);
+  const stats = await loadStats();
   // Только разделы, которые у страны готовы (src/lib/country.ts).
   const sections = [
     { feature: "match" as const, href: `/${locale}/match`, title: dict.nav.match, text: dict.home.matchText },
