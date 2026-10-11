@@ -9,9 +9,11 @@ import { remember } from "@/lib/server-memo";
 export type University = {
   id: string;
   slug: string;
-  // Название на языке страны: name_lv у латвийских, name_lt у литовских.
+  // Название на языке страны: name_lv у латвийских, name_lt у литовских,
+  // name_et у эстонских.
   name_lv: string | null;
   name_lt: string | null;
+  name_et: string | null;
   name_en: string | null;
   kind: string;
   city: string;
@@ -29,10 +31,13 @@ export type Programme = {
   slug: string;
   name_lv: string | null;
   name_lt: string | null;
+  name_et: string | null;
   name_en: string | null;
   degree_level: string;
   language_of_instruction: string;
-  study_mode: string;
+  // null — источник не сообщает (эстонские программы: формы обучения нет в
+  // данных государственного портала).
+  study_mode: string | null;
   city: string | null;
   // null — источник не сообщает (литовские программы: бюджетные места
   // делятся по направлениям, не по программам).
@@ -44,6 +49,7 @@ export type Programme = {
   accreditation_valid_until: string | null;
   description_lv: string | null;
   description_lt: string | null;
+  description_et: string | null;
   description_en: string | null;
   source_url: string | null;
   verified_at: string | null;
@@ -55,6 +61,8 @@ export type Programme = {
   degree_awarded_en: string | null;
   // Из карточки государственного реестра Литвы (pipeline/src/sources/lt_lamabpo.py).
   degree_awarded_lt: string | null;
+  // С государственного портала Эстонии (pipeline/src/sources/ee_haridusportaal.py).
+  degree_awarded_et: string | null;
   qualification_lv: string | null;
   diploma_document_lv: string | null;
   details_source_url: string | null;
@@ -66,18 +74,21 @@ export type Programme = {
 // getProgramme ниже) — на 899 строках каталога это была самая тяжёлая
 // пара колонок в запросе без всякой пользы (ревью performance-tester,
 // 2026-09-24). CATALOG_LIST_COLUMNS ниже — та же мысль на уровне SQL.
-export type ProgrammeWithUniversity = Omit<Programme, "description_lv" | "description_lt" | "description_en"> & {
-  university: Pick<University, "slug" | "name_lv" | "name_lt" | "name_en" | "kind" | "city" | "country">;
+export type ProgrammeWithUniversity = Omit<
+  Programme,
+  "description_lv" | "description_lt" | "description_et" | "description_en"
+> & {
+  university: Pick<University, "slug" | "name_lv" | "name_lt" | "name_et" | "name_en" | "kind" | "city" | "country">;
 };
 
 const CATALOG_LIST_COLUMNS =
-  "id, university_id, slug, name_lv, name_lt, name_en, degree_level, language_of_instruction, study_mode, " +
+  "id, university_id, slug, name_lv, name_lt, name_et, name_en, degree_level, language_of_instruction, study_mode, " +
   "city, funding_type, tuition_fee_amount, tuition_fee_currency, budget_places, duration_years, " +
   "accreditation_valid_until, source_url, verified_at";
 
 // kind — для фильтра «государственный или частный»: он применяется к списку
 // в памяти, а не в запросе.
-const UNIVERSITY_LIST_COLUMNS = "slug, name_lv, name_lt, name_en, kind, city, country";
+const UNIVERSITY_LIST_COLUMNS = "slug, name_lv, name_lt, name_et, name_en, kind, city, country";
 
 // Сколько список программ, вузов и направлений живёт в памяти сервера
 // (server-memo.ts). Каталог обновляется сбором раз в неделю, так что пять
@@ -153,10 +164,13 @@ function allProgrammes(country: Country): Promise<ProgrammeWithUniversity[]> {
 // доходами требует verified_at). У Литвы направление лежит в своей таблице и
 // со своими кодами (lt_programme_field, классификатор общего приёма) — см.
 // lt-fields.ts. Строк около тысячи у каждой страны, поэтому читаем страницами.
+// У Эстонии разметки направлений пока нет (docs/PLAN-ESTONIA.md) — фильтра
+// по интересам у неё тоже нет, см. профиль страны.
 function programmeFieldCodes(country: Country): Promise<Map<string, string>> {
   const table = country === "LT" ? "lt_programme_field" : "programme_field";
   return remember(`field-codes:${country}`, CATALOG_MEMORY_MS, async () => {
     const codes = new Map<string, string>();
+    if (country === "EE") return codes;
     for (let from = 0; ; from += PAGE_ROWS) {
       const { data, error } = await supabase
         .from(table)
@@ -205,7 +219,7 @@ export async function getProgrammesByIds(country: Country, ids: string[]): Promi
   return data as unknown as ProgrammeWithUniversity[];
 }
 
-export type UniversityOption = Pick<University, "slug" | "name_lv" | "name_lt" | "name_en"> & {
+export type UniversityOption = Pick<University, "slug" | "name_lv" | "name_lt" | "name_et" | "name_en"> & {
   /** Сколько программ вуза видно в каталоге — для списка «Augstskola». */
   programmeCount: number;
 };
@@ -220,13 +234,13 @@ export async function listUniversities(country: Country): Promise<UniversityOpti
     // (missed_runs >= 2) в число не попадают, как и в сам каталог.
     const { data, error } = await supabase
       .from("university")
-      .select("slug, name_lv, name_lt, name_en, programme(count)")
+      .select("slug, name_lv, name_lt, name_et, name_en, programme(count)")
       .eq("country", country)
       .order("name_en");
 
     if (error) throw error;
     // Через unknown: разборщик типов supabase-js не выводит форму count.
-    const rows = data as unknown as (Pick<University, "slug" | "name_lv" | "name_lt" | "name_en"> & {
+    const rows = data as unknown as (Pick<University, "slug" | "name_lv" | "name_lt" | "name_et" | "name_en"> & {
       programme: { count: number }[];
     })[];
     return rows.map(({ programme, ...university }) => ({

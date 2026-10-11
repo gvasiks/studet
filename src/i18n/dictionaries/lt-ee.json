@@ -1,0 +1,19 @@
+{
+  "meta": {
+    "title": "Pagalbininkas renkantis aukštąją mokyklą Estijoje"
+  },
+  "home": {
+    "description": "Estijos aukštojo mokslo programų katalogas vienoje vietoje — iš valstybinio švietimo portalo."
+  },
+  "coverage": {
+    "notice": "Kol kas čia yra tik Estijos aukštojo mokslo programų katalogas. Konkursinio balo skaičiavimo, terminų ir informacijos užsienio stojantiesiems dar nėra."
+  },
+  "catalog": {
+    "degreeLevel": {
+      "college": "Taikomasis aukštasis mokslas"
+    },
+    "tabs": {
+      "college": "Taikomasis"
+    }
+  }
+}

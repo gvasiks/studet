@@ -72,10 +72,12 @@ describe("профиль страны", () => {
 
 describe("фильтры общего списка двух стран", () => {
   it("одна страна — её собственные фильтры, уровни и города", () => {
-    for (const country of ["LV", "LT"] as const) {
+    for (const country of ["LV", "LT", "EE"] as const) {
       const single = catalogProfile([country]);
       const own = countryProfile(country);
-      expect(single.filters, country).toEqual(["interest", "fee", "budget"].filter((f) => (own.filters as readonly string[]).includes(f)));
+      expect(single.filters, country).toEqual(
+        ["interest", "fee", "budget", "mode"].filter((f) => (own.filters as readonly string[]).includes(f)),
+      );
       expect(single.levels, country).toEqual(LEVEL_KEYS.filter((level) => own.levels.includes(level)));
       expect(single.languages, country).toEqual([...own.languages]);
       expect(single.citiesByCountry, country).toEqual([{ country, cities: own.cities }]);
@@ -85,7 +87,16 @@ describe("фильтры общего списка двух стран", () => {
   // «Только бюджет» и «не дороже» по общему списку молча убрали бы все
   // литовские программы: у них вид финансирования и цена не известны вовсе.
   it("обе страны: остаётся только фильтр, под который данные есть у обеих", () => {
-    expect(catalogProfile(["LV", "LT"]).filters).toEqual(["interest"]);
+    expect(catalogProfile(["LV", "LT"]).filters).toEqual(["interest", "mode"]);
+  });
+
+  // У Эстонии нет ни направлений, ни формы обучения (государственный портал
+  // их не сообщает или они ещё не загружены): в общем списке с ней фильтры
+  // по данным пропадают все, пока не выбрана страна.
+  it("с Эстонией в общем списке фильтров по данным не остаётся", () => {
+    expect(countryProfile("EE").filters).toEqual([]);
+    expect(catalogProfile(["LV", "LT", "EE"]).filters).toEqual([]);
+    expect(catalogProfile(["LV", "LT", "EE"]).languages).toEqual(["lv", "en", "lt", "ru", "et"]);
   });
 
   it("обе страны: уровни и языки объединяются, города остаются по странам в порядке выбора", () => {

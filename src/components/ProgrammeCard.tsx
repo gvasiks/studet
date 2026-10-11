@@ -87,8 +87,9 @@ export function ProgrammeCard({
           )}
           {/* Форма — только когда она не очная: заочный и дистанционный
               варианты одной программы стоят в каталоге отдельными строками,
-              и без этой пометки их карточки выглядят одинаково. */}
-          {programme.study_mode !== "full_time" && (
+              и без этой пометки их карточки выглядят одинаково. Пустая форма
+              (эстонские программы: источник её не сообщает) не показывается. */}
+          {programme.study_mode !== null && programme.study_mode !== "full_time" && (
             <Chip>{enumLabel(dict.catalog.studyMode, programme.study_mode)}</Chip>
           )}
           {deadline && <Chip icon={<CalendarIcon size={13} />}>{deadline}</Chip>}

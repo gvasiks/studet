@@ -5,6 +5,9 @@ import lt from "./dictionaries/lt.json";
 import enLt from "./dictionaries/en-lt.json";
 import lvLt from "./dictionaries/lv-lt.json";
 import ltLv from "./dictionaries/lt-lv.json";
+import enEe from "./dictionaries/en-ee.json";
+import lvEe from "./dictionaries/lv-ee.json";
+import ltEe from "./dictionaries/lt-ee.json";
 
 // Файл отличий накладывается на базовый словарь по ключам. Ключ с
 // опечаткой не заменил бы строку, а молча добавил бы новую, которую никто
@@ -19,6 +22,9 @@ describe("файлы отличий словарей", () => {
     { name: "en-lt", override: enLt, base: en },
     { name: "lv-lt", override: lvLt, base: lv },
     { name: "lt-lv", override: ltLv, base: lt },
+    { name: "en-ee", override: enEe, base: en },
+    { name: "lv-ee", override: lvEe, base: lv },
+    { name: "lt-ee", override: ltEe, base: lt },
   ];
 
   for (const { name, override, base } of cases) {

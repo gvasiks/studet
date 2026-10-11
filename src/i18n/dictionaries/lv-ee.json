@@ -1,0 +1,19 @@
+{
+  "meta": {
+    "title": "Palīgs augstskolas izvēlei Igaunijā"
+  },
+  "home": {
+    "description": "Igaunijas augstākās izglītības programmu katalogs vienuviet — no valsts izglītības portāla."
+  },
+  "coverage": {
+    "notice": "Pagaidām šeit ir tikai Igaunijas augstākās izglītības programmu katalogs. Konkursa punktu aprēķina, termiņu un informācijas ārvalstu reflektantiem vēl nav."
+  },
+  "catalog": {
+    "degreeLevel": {
+      "college": "Profesionālā augstākā izglītība"
+    },
+    "tabs": {
+      "college": "Profesionālā"
+    }
+  }
+}

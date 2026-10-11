@@ -38,7 +38,8 @@
       "lv": "latviešu",
       "en": "angļu",
       "lt": "lietuviešu",
-      "ru": "krievu"
+      "ru": "krievu",
+      "et": "igauņu"
     },
     "city": {
       "riga": "Rīga",
@@ -60,7 +61,12 @@
       "alytus": "Alīta",
       "telsiai": "Telši",
       "marijampole": "Marijampole",
-      "taurage": "Taurage"
+      "taurage": "Taurage",
+      "tallinn": "Tallina",
+      "tartu": "Tartu",
+      "reola": "Reola",
+      "modriku": "Mõdriku",
+      "vaimela": "Väimela"
     },
     "funding": {
       "budget": "Budžeta vietas",
@@ -104,8 +110,8 @@
     "filters": {
       "title": "Filtri",
       "country": "Studiju valsts",
-      "allCountries": "Abas valstis",
-      "droppedFiltersHint": "Filtri pēc studiju maksas un budžeta vietām ir tikai Latvijas sarakstā: Lietuvas programmām šādu datu nav.",
+      "allCountries": "Visas valstis",
+      "droppedFiltersHint": "Filtri pēc virziena, studiju formas, maksas un budžeta vietām redzami tikai tad, ja šādi dati ir visām sarakstā iekļautajām valstīm.",
       "budgetOnlyHint": "Valsts finansētās programmas",
       "university": "Universitāte",
       "anyUniversity": "Visas universitātes",
@@ -144,6 +150,7 @@
     "contentInLatvian": "Nosaukumi un apraksts ir latviešu valodā — tā, kā tos publicējusi augstskola.",
     "contentInEnglish": "Nosaukumi un apraksts ir angļu valodā — tā, kā tos publicējusi augstskola.",
     "contentInLithuanian": "Nosaukumi un apraksts ir lietuviešu valodā, kā publicēts valsts reģistrā.",
+    "contentInEstonian": "Nosaukumi ir igauņu valodā, kā publicēts valsts izglītības portālā.",
     "degreeLevel": "Studiju līmenis",
     "language": "Studiju valoda",
     "studyMode": "Studiju forma",
@@ -185,7 +192,8 @@
   },
   "countries": {
     "LV": "Latvija",
-    "LT": "Lietuva"
+    "LT": "Lietuva",
+    "EE": "Igaunija"
   },
   "report": {
     "link": "Ziņot par kļūdu",

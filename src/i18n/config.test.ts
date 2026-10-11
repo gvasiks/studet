@@ -56,6 +56,11 @@ describe("адрес = язык + страна", () => {
     expect([languageOf("lv-lt"), countryOf("lv-lt")]).toEqual(["lv", "LT"]);
     expect([languageOf("en-lt"), countryOf("en-lt")]).toEqual(["en", "LT"]);
     expect([languageOf("lt"), countryOf("lt")]).toEqual(["lt", "LT"]);
+    // Эстония: пока без адреса на эстонском (docs/PLAN-ESTONIA.md)
+    expect([languageOf("en-ee"), countryOf("en-ee")]).toEqual(["en", "EE"]);
+    expect([languageOf("lv-ee"), countryOf("lv-ee")]).toEqual(["lv", "EE"]);
+    expect([languageOf("lt-ee"), countryOf("lt-ee")]).toEqual(["lt", "EE"]);
+    for (const locale of ["en-ee", "lv-ee", "lt-ee"]) expect(isLocale(locale), locale).toBe(false);
   });
 
   it("по языку браузера: родной язык ведёт в свою страну, английский — в Латвию", () => {

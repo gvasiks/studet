@@ -193,12 +193,14 @@ export function FilterSidebar({
           ))}
         </SelectField>
 
-        <SelectField label={filters.mode} name="mode" defaultValue={state.mode ?? ""}>
-          <option value="">{filters.anyMode}</option>
-          <option value="full_time">{dict.catalog.studyMode.full_time}</option>
-          <option value="part_time">{dict.catalog.studyMode.part_time}</option>
-          <option value="distance">{dict.catalog.studyMode.distance}</option>
-        </SelectField>
+        {profile.filters.includes("mode") && (
+          <SelectField label={filters.mode} name="mode" defaultValue={state.mode ?? ""}>
+            <option value="">{filters.anyMode}</option>
+            <option value="full_time">{dict.catalog.studyMode.full_time}</option>
+            <option value="part_time">{dict.catalog.studyMode.part_time}</option>
+            <option value="distance">{dict.catalog.studyMode.distance}</option>
+          </SelectField>
+        )}
 
         {/* Длительность и плата — те же пороги, что в анкете. Без видимого
             поля фильтр из анкеты нельзя было бы ни заметить, ни снять. */}

@@ -38,7 +38,8 @@
       "lv": "Latvių",
       "lt": "Lietuvių",
       "en": "Anglų",
-      "ru": "Rusų"
+      "ru": "Rusų",
+      "et": "Estų"
     },
     "city": {
       "riga": "Ryga",
@@ -60,7 +61,12 @@
       "alytus": "Alytus",
       "telsiai": "Telšiai",
       "marijampole": "Marijampolė",
-      "taurage": "Tauragė"
+      "taurage": "Tauragė",
+      "tallinn": "Talinas",
+      "tartu": "Tartu",
+      "reola": "Reola",
+      "modriku": "Mõdriku",
+      "vaimela": "Väimela"
     },
     "funding": {
       "budget": "Valstybės finansuojamos vietos",
@@ -104,8 +110,8 @@
     "filters": {
       "title": "Filtrai",
       "country": "Šalis",
-      "allCountries": "Abi šalys",
-      "droppedFiltersHint": "Filtrai pagal studijų kainą ir valstybės finansuojamas vietas veikia tik Latvijos sąraše: Lietuvos programoms tokių duomenų neturime.",
+      "allCountries": "Visos šalys",
+      "droppedFiltersHint": "Filtrai pagal kryptį, studijų formą, kainą ir valstybės finansuojamas vietas rodomi tik tada, kai tokius duomenis turi visos sąraše esančios šalys.",
       "budgetOnlyHint": "Valstybės finansuojamos programos",
       "university": "Aukštoji mokykla",
       "anyUniversity": "Visos aukštosios mokyklos",
@@ -144,6 +150,7 @@
     "contentInLatvian": "Pavadinimai ir aprašymas pateikti latvių kalba, kaip paskelbė aukštoji mokykla.",
     "contentInEnglish": "Pavadinimai ir aprašymas pateikti anglų kalba, kaip paskelbė aukštoji mokykla.",
     "contentInLithuanian": "Pavadinimai ir aprašymas pateikti lietuvių kalba, kaip paskelbta valstybės registre.",
+    "contentInEstonian": "Pavadinimai pateikti estų kalba, kaip paskelbta valstybiniame švietimo portale.",
     "degreeLevel": "Studijų lygmuo",
     "language": "Studijų kalba",
     "studyMode": "Studijų forma",
@@ -185,7 +192,8 @@
   },
   "countries": {
     "LV": "Latvija",
-    "LT": "Lietuva"
+    "LT": "Lietuva",
+    "EE": "Estija"
   },
   "report": {
     "link": "Pastebėjote klaidą? Parašykite mums",

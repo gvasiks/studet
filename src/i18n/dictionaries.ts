@@ -20,6 +20,11 @@ const overrides: Partial<Record<Locale, () => Promise<unknown>>> = {
   "en-lt": () => import("@/i18n/dictionaries/en-lt.json").then((module) => module.default),
   "lv-lt": () => import("@/i18n/dictionaries/lv-lt.json").then((module) => module.default),
   "lt-lv": () => import("@/i18n/dictionaries/lt-lv.json").then((module) => module.default),
+  // Эстония: эстонского языка интерфейса пока нет, поэтому у всех трёх
+  // адресов — файл отличий поверх словаря другой страны.
+  "en-ee": () => import("@/i18n/dictionaries/en-ee.json").then((module) => module.default),
+  "lv-ee": () => import("@/i18n/dictionaries/lv-ee.json").then((module) => module.default),
+  "lt-ee": () => import("@/i18n/dictionaries/lt-ee.json").then((module) => module.default),
 };
 
 export async function getDictionary(locale: Locale): Promise<Dictionary> {

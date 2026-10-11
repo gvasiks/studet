@@ -13,9 +13,11 @@ const CALCULATOR_IDS_MEMORY_MS = 5 * 60 * 1000;
 // каталога и «моего списка». Формулы у стран устроены по-разному и лежат в
 // разных таблицах: в Латвии своя у каждой программы и подтверждена
 // человеком, в Литве общая на страну и сверена с официальным калькулятором.
+// У Эстонии расчёта балла пока нет (docs/PLAN-ESTONIA.md, фаза 7).
 // Множество общее для всех запросов — только читать (.has), не менять.
 export function getCalculatorProgrammeIds(country: Country): Promise<Set<string>> {
-  return remember(`calculator-ids:${country}`, CALCULATOR_IDS_MEMORY_MS, () =>
-    country === "LT" ? getLtProgrammeIdsWithFormula() : getProgrammeIdsWithFormula(),
-  );
+  return remember(`calculator-ids:${country}`, CALCULATOR_IDS_MEMORY_MS, async () => {
+    if (country === "EE") return new Set<string>();
+    return country === "LT" ? getLtProgrammeIdsWithFormula() : getProgrammeIdsWithFormula();
+  });
 }

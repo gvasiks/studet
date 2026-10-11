@@ -183,15 +183,25 @@ describe("государственный или частный вуз", () => {
 });
 
 describe("фильтры, под которые у страны нет данных", () => {
-  const state = parseCatalogState({ budget: "1", fee: "3000", interest: "it,law", city: "vilnius", q: "teise" });
-
-  it("страна со всеми фильтрами — состояние не меняется", () => {
-    expect(onlySupported(state, ["interest", "fee", "budget"])).toEqual(state);
+  const state = parseCatalogState({
+    budget: "1",
+    fee: "3000",
+    interest: "it,law",
+    mode: "part_time",
+    city: "vilnius",
+    q: "teise",
   });
 
-  it("страна без фильтров — плата, бюджет и интересы сброшены, остальное на месте", () => {
+  it("страна со всеми фильтрами — состояние не меняется", () => {
+    expect(onlySupported(state, ["interest", "fee", "budget", "mode"])).toEqual(state);
+  });
+
+  it("страна без фильтров — плата, бюджет, интересы и форма сброшены, остальное на месте", () => {
     const limited = onlySupported(state, []);
     expect(limited).toMatchObject({ budgetOnly: false, maxFee: null, interests: [], cities: ["vilnius"], q: "teise" });
+    // Форма обучения: у эстонских программ её нет в данных, и ?mode=…
+    // по чужой ссылке дал бы пустой каталог.
+    expect(limited.mode).toBeUndefined();
     // В ссылках «показать ещё» и сортировки сброшенных фильтров тоже нет.
     expect(catalogQuery(limited)).toBe("?q=teise&city=vilnius");
   });
@@ -200,6 +210,7 @@ describe("фильтры, под которые у страны нет данн�
     expect(onlySupported(state, ["interest"])).toMatchObject({ budgetOnly: false, maxFee: null, interests: ["it", "law"] });
     expect(onlySupported(state, ["fee"])).toMatchObject({ budgetOnly: false, maxFee: 3000, interests: [] });
     expect(onlySupported(state, ["budget"])).toMatchObject({ budgetOnly: true, maxFee: null, interests: [] });
+    expect(onlySupported(state, ["mode"])).toMatchObject({ budgetOnly: false, maxFee: null, interests: [], mode: "part_time" });
   });
 });
 

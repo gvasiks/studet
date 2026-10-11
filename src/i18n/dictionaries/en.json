@@ -38,7 +38,8 @@
       "lv": "Latvian",
       "en": "English",
       "lt": "Lithuanian",
-      "ru": "Russian"
+      "ru": "Russian",
+      "et": "Estonian"
     },
     "city": {
       "riga": "Riga",
@@ -60,7 +61,12 @@
       "alytus": "Alytus",
       "telsiai": "Telšiai",
       "marijampole": "Marijampolė",
-      "taurage": "Tauragė"
+      "taurage": "Tauragė",
+      "tallinn": "Tallinn",
+      "tartu": "Tartu",
+      "reola": "Reola",
+      "modriku": "Mõdriku",
+      "vaimela": "Väimela"
     },
     "funding": {
       "budget": "Budget places",
@@ -104,8 +110,8 @@
     "filters": {
       "title": "Filters",
       "country": "Country",
-      "allCountries": "Both countries",
-      "droppedFiltersHint": "Filters by fee and state-funded places work only in the Latvian list: we have no such data for Lithuanian programmes.",
+      "allCountries": "All countries",
+      "droppedFiltersHint": "Filters by field, study mode, fee and state-funded places are shown only when every country in the list has such data.",
       "budgetOnlyHint": "State-funded programmes",
       "university": "University",
       "anyUniversity": "All universities",
@@ -144,6 +150,7 @@
     "contentInLatvian": "Names and the description are in Latvian, as published by the university.",
     "contentInEnglish": "Names and the description are in English, as published by the university.",
     "contentInLithuanian": "Names and the description are in Lithuanian, as published in the state register.",
+    "contentInEstonian": "Names are in Estonian, as published on the state education portal.",
     "degreeLevel": "Degree level",
     "language": "Language of instruction",
     "studyMode": "Study mode",
@@ -185,7 +192,8 @@
   },
   "countries": {
     "LV": "Latvia",
-    "LT": "Lithuania"
+    "LT": "Lithuania",
+    "EE": "Estonia"
   },
   "report": {
     "link": "Spotted a mistake? Email us",

@@ -128,6 +128,7 @@ export function onlySupported(state: CatalogState, supported: readonly CatalogFi
     interests: supported.includes("interest") ? state.interests : [],
     maxFee: supported.includes("fee") ? state.maxFee : null,
     budgetOnly: supported.includes("budget") && state.budgetOnly,
+    mode: supported.includes("mode") ? state.mode : undefined,
   };
 }
 

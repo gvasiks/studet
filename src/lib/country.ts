@@ -1,4 +1,4 @@
-import { countryOf, languageOf, type Country, type Language, type Locale } from "@/i18n/config";
+import { countryOf, languageOf, type ContentLanguage, type Country, type Language, type Locale } from "@/i18n/config";
 
 // Всё, чем каталог одной страны отличается от другой, кроме самих данных:
 // какие разделы сайта для неё готовы и какие значения стоят в фильтрах.
@@ -17,8 +17,9 @@ export type Feature =
   | "verification";
 
 // Фильтр каталога, для которого у страны может не быть данных. Город,
-// язык, форма обучения, вуз и длительность есть у всех.
-export type CatalogFilter = "interest" | "fee" | "budget";
+// язык, вуз и длительность есть у всех. Формы обучения нет у Эстонии:
+// государственный портал её не сообщает.
+export type CatalogFilter = "interest" | "fee" | "budget" | "mode";
 
 // Экран анкеты. На одном экране бывает два близких вопроса: уровень и
 // длительность, бюджет и плата, язык и форма обучения.
@@ -40,7 +41,7 @@ type CountryProfile = {
   /** Языки обучения в фильтре. */
   languages: readonly string[];
   /** Язык, на котором источники страны публикуют названия программ. */
-  nativeLanguage: Language;
+  nativeLanguage: ContentLanguage;
   /**
    * Общий приём страны: все программы каталога взяты из его списка и
    * подаются через одну систему. url — куда вести человека, sourceUrl —
@@ -59,7 +60,7 @@ export type LevelKey = (typeof LEVEL_KEYS)[number];
 const profiles: Record<Country, CountryProfile> = {
   LV: {
     features: ["favorites", "survey", "match", "calculator", "glossary", "rights", "privacy", "verification"],
-    filters: ["interest", "fee", "budget"],
+    filters: ["interest", "fee", "budget", "mode"],
     surveySteps: ["exams", "interests", "levelDuration", "fundingFee", "city", "languageMode", "kind"],
     levels: ["bachelor", "master", "doctoral", "college"],
     cities: ["riga", "daugavpils", "valmiera", "ventspils", "jelgava", "liepaja", "rezekne", "jurmala", "gulbene", "malnava"],
@@ -76,7 +77,7 @@ const profiles: Record<Country, CountryProfile> = {
   // программы из списка общего приёма (src/lib/lt-fields.ts).
   LT: {
     features: ["favorites", "survey", "match", "calculator", "glossary", "rights", "privacy"],
-    filters: ["interest"],
+    filters: ["interest", "mode"],
     // Без экзаменов (вопрос ни на что не влияет, а оценки вводятся в «куда
     // я прохожу») и без бюджета с платой (данных нет).
     surveySteps: ["interests", "levelDuration", "city", "languageMode", "kind"],
@@ -91,6 +92,29 @@ const profiles: Record<Country, CountryProfile> = {
       url: "https://lamabpo.lt/pirmosios-pakopos-ir-vientisosios-studijos/",
       sourceUrl: "https://lamabpo.lt/pirmosios-pakopos-ir-vientisosios-studijos/programu-sarasas/",
     },
+  },
+  // Эстония (с 2026-10-11, docs/PLAN-ESTONIA.md): пока каталог, карточка
+  // программы и список сохранённых. Данные — список программ
+  // государственного портала haridusportaal.edu.ee: в нём нет формы
+  // обучения, цены и вида финансирования, поэтому таких фильтров нет.
+  // Направления (ISCED-F) в данных есть, но ещё не загружены — фильтр по
+  // интересам появится вместе с ними. Анкеты, расчёта балла, словаря и прав
+  // пока нет.
+  EE: {
+    features: ["favorites"],
+    filters: [],
+    surveySteps: [],
+    levels: ["bachelor", "master", "doctoral", "college", "integrated"],
+    // Город — из адреса учреждения: у вузов с филиалами это город головного
+    // здания (см. сборщик). Реола, Мыдрику и Вяймела — посёлки, где стоят
+    // лётная академия и две прикладные высшие школы.
+    cities: ["tallinn", "tartu", "reola", "modriku", "vaimela"],
+    languages: ["et", "en", "ru"],
+    nativeLanguage: "et",
+    // Заявления в Эстонии подаются через государственную систему SAIS, но
+    // что так у всех учреждений каталога, не проверено — блок «где подать»
+    // появится вместе со сроками приёма (фаза 6).
+    generalAdmission: null,
   },
 };
 
@@ -114,7 +138,7 @@ export type CatalogProfile = {
 
 export function catalogProfile(shown: readonly Country[]): CatalogProfile {
   const list = shown.map((country) => profiles[country]);
-  const allFilters: CatalogFilter[] = ["interest", "fee", "budget"];
+  const allFilters: CatalogFilter[] = ["interest", "fee", "budget", "mode"];
   return {
     filters: allFilters.filter((filter) => list.every((profile) => profile.filters.includes(filter))),
     levels: LEVEL_KEYS.filter((level) => list.some((profile) => profile.levels.includes(level))),
@@ -139,6 +163,7 @@ const writtenIn: Record<Country, Partial<Record<Feature, readonly Language[]>>> 
     verification: ["lv", "en"],
   },
   LT: {},
+  EE: {},
 };
 
 // Раздел открыт под адресом, если он готов у страны и написан на языке

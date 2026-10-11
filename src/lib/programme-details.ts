@@ -1,4 +1,4 @@
-import type { Language } from "@/i18n/config";
+import type { ContentLanguage, Language } from "@/i18n/config";
 // Диплом, квалификация и описание программы — чистая логика выбора, без
 // обращения к базе (тот же приём, что outcomes.ts): её можно тестировать
 // отдельно.
@@ -7,7 +7,9 @@ import type { Language } from "@/i18n/config";
 //   NIID.lv — официальные латышские названия (pipeline/src/enrich_niid_details.py);
 //   lu.lv   — английские страницы программ ЛУ (pipeline/src/enrich_lu_details.py);
 //   aikos.smm.lt — государственный реестр Литвы, на литовском
-//             (pipeline/src/sources/lt_lamabpo.py).
+//             (pipeline/src/sources/lt_lamabpo.py);
+//   haridusportaal.edu.ee — государственный портал Эстонии, на эстонском
+//             (pipeline/src/sources/ee_haridusportaal.py).
 // Переводить название диплома сами мы не вправе, поэтому показываем то, что
 // есть, и помечаем язык: атрибутом lang (WCAG 3.1.2) и строкой для человека.
 
@@ -15,18 +17,20 @@ export type ProgrammeDetailsSource = {
   degree_awarded_lv?: string | null;
   degree_awarded_en?: string | null;
   degree_awarded_lt?: string | null;
+  degree_awarded_et?: string | null;
   qualification_lv?: string | null;
   diploma_document_lv?: string | null;
   description_lv?: string | null;
   description_en?: string | null;
   description_lt?: string | null;
+  description_et?: string | null;
   details_source_url?: string | null;
   details_extracted_at?: string | null;
 };
 
 export type ProgrammeDetails = {
   /** Язык показанных названий и описания. */
-  lang: Language;
+  lang: ContentLanguage;
   degree: string | null;
   qualification: string | null;
   document: string | null;
@@ -81,12 +85,19 @@ export function pickDetails(record: ProgrammeDetailsSource, language: Language):
     document: null,
     paragraphs: splitParagraphs(record.description_lt),
   };
-  const hasAny = (set: typeof latvian | typeof english | typeof lithuanian) =>
+  const estonian = {
+    lang: "et" as const,
+    degree: record.degree_awarded_et ?? null,
+    qualification: null,
+    document: null,
+    paragraphs: splitParagraphs(record.description_et),
+  };
+  const hasAny = (set: typeof latvian | typeof english | typeof lithuanian | typeof estonian) =>
     Boolean(set.degree || set.qualification || set.document || set.paragraphs.length > 0);
 
   // Сначала набор на языке страницы, потом остальные: у программы на
   // практике заполнен один.
-  const all = [latvian, lithuanian, english];
+  const all = [latvian, lithuanian, estonian, english];
   const preferred = [...all.filter((set) => set.lang === language), ...all.filter((set) => set.lang !== language)];
   const chosen = preferred.find(hasAny);
   if (!chosen) return null;

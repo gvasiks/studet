@@ -46,18 +46,19 @@ async function loadProgramme(params: Params) {
 // программ (иначе никак), но содержание каждый раз собирается из того,
 // что реально известно об этой конкретной программе.
 function buildDescription(
-  record: Programme & { university: Pick<University, "name_lv" | "name_lt" | "name_en"> },
+  record: Programme & { university: Pick<University, "name_lv" | "name_lt" | "name_et" | "name_en"> },
   dict: Dictionary,
   locale: Locale,
 ): string {
   const universityName = localizedName(record.university, languageOf(locale));
   const degree = enumLabel(dict.catalog.degreeLevel, record.degree_level);
   const language = enumLabel(dict.catalog.language, record.language_of_instruction);
-  const mode = enumLabel(dict.catalog.studyMode, record.study_mode);
+  // Формы обучения может не быть (эстонские программы) — тогда о ней молчим.
+  const mode = record.study_mode ? enumLabel(dict.catalog.studyMode, record.study_mode) : null;
   const city = record.city ? enumLabel(dict.catalog.city, record.city) : null;
 
   const parts = [`${degree} — ${universityName}${city ? `, ${city}` : ""}.`];
-  parts.push(`${dict.programme.language}: ${language}. ${dict.programme.studyMode}: ${mode}.`);
+  parts.push(`${dict.programme.language}: ${language}.${mode ? ` ${dict.programme.studyMode}: ${mode}.` : ""}`);
   if (record.tuition_fee_amount !== null) {
     parts.push(`${dict.programme.tuitionFee}: ${record.tuition_fee_amount} ${record.tuition_fee_currency}.`);
   } else if (record.funding_type) {
@@ -204,7 +205,9 @@ export default async function ProgrammePage({ params }: { params: Params }) {
           label={dict.programme.language}
           value={enumLabel(dict.catalog.language, record.language_of_instruction)}
         />
-        <Fact label={dict.programme.studyMode} value={enumLabel(dict.catalog.studyMode, record.study_mode)} />
+        {record.study_mode && (
+          <Fact label={dict.programme.studyMode} value={enumLabel(dict.catalog.studyMode, record.study_mode)} />
+        )}
         {record.duration_years !== null && (
           <Fact label={dict.programme.duration} value={`${record.duration_years} ${dict.catalog.years}`} />
         )}
@@ -280,6 +283,7 @@ export default async function ProgrammePage({ params }: { params: Params }) {
                   lv: dict.programme.contentInLatvian,
                   en: dict.programme.contentInEnglish,
                   lt: dict.programme.contentInLithuanian,
+                  et: dict.programme.contentInEstonian,
                 }[details.lang]
               } `}
             {interpolate(dict.programme.detailsSource, {

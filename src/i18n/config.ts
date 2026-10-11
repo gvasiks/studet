@@ -8,12 +8,17 @@
 //
 // Правило записи: «язык-страна»; у языка самой страны суффикса нет.
 //
+// С 2026-10-11 строится Эстония (docs/PLAN-ESTONIA.md): пока на трёх
+// нынешних языках — /en-ee, /lv-ee, /lt-ee. Эстонский язык интерфейса (/et и
+// /et-lv, /et-lt) появится отдельным шагом; до него первым у Эстонии стоит
+// английский адрес.
+//
 // В коде сегмент по-прежнему называется locale (так называется папка
 // маршрутов). Когда нужен язык или страна — спрашивай languageOf() и
 // countryOf(), а не сравнивай сегмент со строкой.
 //
 // Порядок важен: первым у страны стоит адрес на её языке (nativeLocale).
-const allLocales = ["lv", "en-lv", "lt-lv", "lt", "en-lt", "lv-lt"] as const;
+const allLocales = ["lv", "en-lv", "lt-lv", "lt", "en-lt", "lv-lt", "en-ee", "lv-ee", "lt-ee"] as const;
 
 export type Locale = (typeof allLocales)[number];
 
@@ -23,8 +28,13 @@ export const languages = ["lv", "lt", "en"] as const;
 
 export type Language = (typeof languages)[number];
 
+// Язык, на котором написаны названия и описания программ. Шире языков
+// интерфейса: эстонские программы названы по-эстонски, а эстонского
+// интерфейса пока нет.
+export type ContentLanguage = Language | "et";
+
 // ISO 3166-1 alpha-2, как в university.country.
-export type Country = "LV" | "LT";
+export type Country = "LV" | "LT" | "EE";
 
 const variants: Record<Locale, { language: Language; country: Country }> = {
   lv: { language: "lv", country: "LV" },
@@ -33,6 +43,9 @@ const variants: Record<Locale, { language: Language; country: Country }> = {
   lt: { language: "lt", country: "LT" },
   "en-lt": { language: "en", country: "LT" },
   "lv-lt": { language: "lv", country: "LT" },
+  "en-ee": { language: "en", country: "EE" },
+  "lv-ee": { language: "lv", country: "EE" },
+  "lt-ee": { language: "lt", country: "EE" },
 };
 
 // Страны, которые ещё строятся. Их адреса (у Литвы — /lt, /en-lt, /lv-lt) не
@@ -47,7 +60,7 @@ const variants: Record<Locale, { language: Language; country: Country }> = {
 //
 // Закрывается именно страна, а не язык: латвийский каталог на литовском
 // (/lt-lv) открыт всегда — решение владельца 2026-10-06.
-const previewCountries: Country[] = ["LT"];
+const previewCountries: Country[] = ["LT", "EE"];
 
 function isOpen(locale: Locale): boolean {
   return !previewCountries.includes(variants[locale].country) || process.env.NEXT_PUBLIC_PREVIEW_COUNTRIES === "1";

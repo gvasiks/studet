@@ -65,6 +65,16 @@ const LT_ROUTES = [
   "/lv/programmes?country=LV",
   "/lt/programmes?country=LT",
   "/en-lv/programmes?country=LT",
+  // Эстония (с 2026-10-11): каталог, карточка программы и список сохранённых
+  // на трёх нынешних языках; остальных разделов у неё пока нет.
+  "/en-ee",
+  "/lv-ee",
+  "/lt-ee",
+  "/lv-ee/programmes?country=EE",
+  "/en-ee/programmes?country=EE&level=college",
+  "/lv-ee/programmes/ut/informaatika-4",
+  "/en-ee/programmes/taltech/informaatika-0",
+  "/lt-ee/favorites",
 ];
 
 for (const route of LT_ROUTES) {

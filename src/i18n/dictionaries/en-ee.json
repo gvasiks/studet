@@ -1,0 +1,19 @@
+{
+  "meta": {
+    "title": "University Choice Helper for Estonia"
+  },
+  "home": {
+    "description": "A catalogue of Estonian higher-education programmes in one place, taken from the state education portal."
+  },
+  "coverage": {
+    "notice": "This currently covers only the catalogue of Estonian higher-education programmes. Score calculation, deadlines and information for international applicants aren't built yet."
+  },
+  "catalog": {
+    "degreeLevel": {
+      "college": "Professional higher education"
+    },
+    "tabs": {
+      "college": "Professional"
+    }
+  }
+}

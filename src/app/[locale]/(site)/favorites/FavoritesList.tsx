@@ -116,7 +116,7 @@ export function FavoritesList({
   const rows: Row[] = [
     { label: dict.programme.degreeLevel, render: (p) => enumLabel(dict.catalog.degreeLevel, p.degree_level) },
     { label: dict.programme.language, render: (p) => enumLabel(dict.catalog.language, p.language_of_instruction) },
-    { label: dict.programme.studyMode, render: (p) => enumLabel(dict.catalog.studyMode, p.study_mode) },
+    { label: dict.programme.studyMode, render: (p) => (p.study_mode ? enumLabel(dict.catalog.studyMode, p.study_mode) : "—") },
     {
       label: dict.programme.duration,
       render: (p) => (p.duration_years !== null ? `${p.duration_years} ${dict.catalog.years}` : "—"),
