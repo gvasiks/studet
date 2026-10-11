@@ -14,9 +14,11 @@ class UniversityDraft(BaseModel):
     # ISO 3166-1 alpha-2, как university.country. По умолчанию Латвия: так
     # латвийским сборщикам ничего менять не нужно.
     country: str = "LV"
-    # Название на языке страны: name_lv у латвийских, name_lt у литовских.
+    # Название на языке страны: name_lv у латвийских, name_lt у литовских,
+    # name_et у эстонских.
     name_lv: str | None = None
     name_lt: str | None = None
+    name_et: str | None = None
     name_en: str | None = None
     kind: str  # 'public' | 'private'
     city: str
@@ -28,6 +30,7 @@ class ProgrammeDraft(BaseModel):
     slug: str
     name_lv: str | None = None
     name_lt: str | None = None
+    name_et: str | None = None
     name_en: str | None = None
     degree_level: str
     # 'lv' | 'en' (у Литвы ещё 'lt', 'ru'…). Пусто — сборщик не смог
@@ -37,7 +40,11 @@ class ProgrammeDraft(BaseModel):
     # CLAUDE.md). Что с пустым значением делает запись — см.
     # catalog_diff.drop_new_without.
     language_of_instruction: str | None = None
-    study_mode: str  # 'full_time' | 'part_time' | 'distance'
+    # 'full_time' | 'part_time' | 'distance'. Пусто — только там, где
+    # источник формы обучения не сообщает (Эстония: её нет в данных
+    # государственного портала). Латвийские и литовские сборщики передают
+    # значение всегда.
+    study_mode: str | None = None
     city: str | None = None
     # 'budget' | 'paid' | 'both'. Пусто — только там, где источник этого не
     # сообщает (Литва: бюджетные места делятся по направлениям, не по
@@ -55,6 +62,8 @@ class ProgrammeDraft(BaseModel):
     # латвийских программ эти сведения дописывают отдельные скрипты enrich_*.
     description_lt: str | None = None
     degree_awarded_lt: str | None = None
+    # Эстония: степень приходит тем же запросом, что и сама программа.
+    degree_awarded_et: str | None = None
     details_source_url: str | None = None
     details_extracted_at: str | None = None
     source_url: str

@@ -20,16 +20,17 @@ from catalog_diff import (
 from db import get_service_client
 from db_retry import execute
 from scrape_scope import LOCAL_ONLY
-from sources import bsa, du, eka, ekra, jvlma, lbtu, lka, lma, lnaa, lt_lamabpo, lu, lutera, niid_colleges, niid_universities, rai, rgsl, riseba, rnu, rsu, rtu_catalog, rtu_english, rtu_liepaja, sse_riga, tsi, turiba, venta, via
+from sources import bsa, du, ee_haridusportaal, eka, ekra, jvlma, lbtu, lka, lma, lnaa, lt_lamabpo, lu, lutera, niid_colleges, niid_universities, rai, rgsl, riseba, rnu, rsu, rtu_catalog, rtu_english, rtu_liepaja, sse_riga, tsi, turiba, venta, via
 
-SOURCES = [turiba, riseba, rtu_liepaja, tsi, bsa, sse_riga, rgsl, lu, venta, lbtu, du, eka, rnu, rtu_catalog, rtu_english, via, rsu, lka, lma, jvlma, rai, lnaa, lutera, ekra, niid_colleges, niid_universities, lt_lamabpo]
+SOURCES = [turiba, riseba, rtu_liepaja, tsi, bsa, sse_riga, rgsl, lu, venta, lbtu, du, eka, rnu, rtu_catalog, rtu_english, via, rsu, lka, lma, jvlma, rai, lnaa, lutera, ekra, niid_colleges, niid_universities, lt_lamabpo, ee_haridusportaal]
 
 # Источники, которые запускаются только по имени: `python src/main.py lt_lamabpo`.
 # У Литвы своё расписание (.github/workflows/scrape-lithuania.yml) и своя
 # команда для сбора с компьютера владельца (pipeline/src/lt_refresh.py): её
 # сбор не должен попадать в недельный латвийский прогон и красить его, если
 # литовский реестр не ответил. Остаётся здесь и после запуска Литвы.
-BY_NAME_ONLY = {"lt_lamabpo"}
+# Эстония (с 2026-10-11) — так же: `python src/main.py ee_haridusportaal`.
+BY_NAME_ONLY = {"lt_lamabpo", "ee_haridusportaal"}
 
 # Ревью 2026-09, пункт 05: конвейер должен падать, если число найденных
 # программ у источника резко просело — lu.py однажды тихо потерял целый
@@ -144,6 +145,31 @@ MIN_PROGRAMME_COUNT = {
     "sources.lt_lamabpo:vk": 71,
     "sources.lt_lamabpo:vu": 108,
     "sources.lt_lamabpo:vvk": 33,
+    # Эстония: снимок 2026-10-11 (21 учреждение, 1115 строк каталога). Порог
+    # на учреждение — 85 % от снимка, а не сам снимок: список портала живой,
+    # программы в нём закрываются и открываются в течение года. Порог ловит
+    # сбой формата (пропала половина записей), а не закрытие двух программ.
+    "sources.ee_haridusportaal:ut": 277,
+    "sources.ee_haridusportaal:tlu": 182,
+    "sources.ee_haridusportaal:taltech": 170,
+    "sources.ee_haridusportaal:emu": 50,
+    "sources.ee_haridusportaal:eka-ee": 44,
+    "sources.ee_haridusportaal:emta": 36,
+    "sources.ee_haridusportaal:tktk": 34,
+    "sources.ee_haridusportaal:eek": 28,
+    "sources.ee_haridusportaal:euroakadeemia": 22,
+    "sources.ee_haridusportaal:ebs": 19,
+    "sources.ee_haridusportaal:ska": 11,
+    "sources.ee_haridusportaal:tartuh": 10,
+    "sources.ee_haridusportaal:pallas": 9,
+    "sources.ee_haridusportaal:eava": 8,
+    "sources.ee_haridusportaal:ttk": 8,
+    "sources.ee_haridusportaal:kvak": 8,
+    "sources.ee_haridusportaal:vorumaa-htk": 7,
+    "sources.ee_haridusportaal:lvrkk": 6,
+    "sources.ee_haridusportaal:emkts": 5,
+    "sources.ee_haridusportaal:eelkui": 2,
+    "sources.ee_haridusportaal:kus": 2,
 }
 
 
@@ -319,6 +345,17 @@ def _check_and_save(client, now: str, key: str, university, programmes) -> int: 
             "вместо страницы программы — источник не записан. Если сайт не отвечает серверу "
             "GitHub, добавьте источник в LOCAL_ONLY (scrape_scope.py)."
         )
+
+    # Форма обучения может быть пустой только у эстонских программ: их
+    # источник её не сообщает (sources/ee_haridusportaal.py). У остальных
+    # пустое значение — ошибка сборщика, а не «источник молчит».
+    if university.country != "EE":
+        without_mode = [programme.slug for programme in programmes if programme.study_mode is None]
+        if without_mode:
+            raise CatalogCompletenessError(
+                f"{key}: у {len(without_mode)} программ не указана форма обучения "
+                f"({', '.join(without_mode[:5])}{' …' if len(without_mode) > 5 else ''}) — источник не записан."
+            )
 
     uni_row = university.model_dump(exclude_none=True)
     uni_row["extracted_at"] = now
