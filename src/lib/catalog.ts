@@ -4,6 +4,7 @@ import { supabase } from "@/lib/supabase";
 import { filterProgrammes } from "@/lib/catalog-filter";
 import { fieldCodesForInterests, type InterestKey } from "@/lib/fields";
 import { ltFieldCodesForInterests } from "@/lib/lt-fields";
+import { eeInterestOf } from "@/lib/ee-fields";
 import { remember } from "@/lib/server-memo";
 
 export type University = {
@@ -164,13 +165,29 @@ function allProgrammes(country: Country): Promise<ProgrammeWithUniversity[]> {
 // доходами требует verified_at). У Литвы направление лежит в своей таблице и
 // со своими кодами (lt_programme_field, классификатор общего приёма) — см.
 // lt-fields.ts. Строк около тысячи у каждой страны, поэтому читаем страницами.
-// У Эстонии разметки направлений пока нет (docs/PLAN-ESTONIA.md) — фильтра
-// по интересам у неё тоже нет, см. профиль страны.
+// У Эстонии «кодом» служит сама категория интересов: она зависит не только
+// от направления, но и от группы программ внутри него (экономика), поэтому
+// вычисляется сразу при чтении — см. ee-fields.ts.
 function programmeFieldCodes(country: Country): Promise<Map<string, string>> {
   const table = country === "LT" ? "lt_programme_field" : "programme_field";
   return remember(`field-codes:${country}`, CATALOG_MEMORY_MS, async () => {
     const codes = new Map<string, string>();
-    if (country === "EE") return codes;
+    if (country === "EE") {
+      for (let from = 0; ; from += PAGE_ROWS) {
+        const { data, error } = await supabase
+          .from("ee_programme_field")
+          .select("programme_id, field_code, detailed_name")
+          .order("programme_id")
+          .range(from, from + PAGE_ROWS - 1);
+        if (error) throw error;
+        for (const row of data) {
+          const interest = eeInterestOf(row.field_code as string, row.detailed_name as string | null);
+          if (interest) codes.set(row.programme_id as string, interest);
+        }
+        if (data.length < PAGE_ROWS) break;
+      }
+      return codes;
+    }
     for (let from = 0; ; from += PAGE_ROWS) {
       const { data, error } = await supabase
         .from(table)
@@ -192,7 +209,13 @@ export async function listProgrammes(
   filters: ProgrammeFilters = {},
 ): Promise<ProgrammeWithUniversity[]> {
   const byInterest = filters.interests !== undefined && filters.interests.length > 0;
-  const codesFor = country === "LT" ? ltFieldCodesForInterests : fieldCodesForInterests;
+  // У Эстонии в памяти уже лежит категория интересов (см. выше).
+  const codesFor =
+    country === "EE"
+      ? (keys: InterestKey[]): string[] => keys
+      : country === "LT"
+        ? ltFieldCodesForInterests
+        : fieldCodesForInterests;
   const [programmes, fieldCodeById] = await Promise.all([
     allProgrammes(country),
     byInterest ? programmeFieldCodes(country) : new Map<string, string>(),

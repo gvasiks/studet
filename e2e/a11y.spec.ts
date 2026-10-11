@@ -71,6 +71,7 @@ const LT_ROUTES = [
   "/lv-ee",
   "/lt-ee",
   "/lv-ee/programmes?country=EE",
+  "/lv-ee/programmes?country=EE&interest=it",
   "/en-ee/programmes?country=EE&level=college",
   "/lv-ee/programmes/ut/informaatika-4",
   "/en-ee/programmes/taltech/informaatika-0",

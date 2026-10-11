@@ -11,6 +11,7 @@ import { getLtFormula } from "@/lib/lt-score-queries";
 import { getLtProgrammeField } from "@/lib/lt-field-queries";
 import { getLtAdmissionYear } from "@/lib/lt-admission-stat-queries";
 import { getLtFieldOutcome } from "@/lib/lt-field-outcome-queries";
+import { getEeProgrammeField } from "@/lib/ee-field-queries";
 import { getApplicationRounds } from "@/lib/deadline-queries";
 import { matchRounds } from "@/lib/deadlines";
 import { getAdmissionType } from "@/lib/admission-type-queries";
@@ -92,9 +93,11 @@ export default async function ProgrammePage({ params }: { params: Params }) {
     countryOf(locale) === "LT" ? getLtFormula(record.id).then(Boolean) : Promise.resolve(false);
   // Направление по классификатору общего приёма — только у литовских программ.
   const ltFieldPromise = countryOf(locale) === "LT" ? getLtProgrammeField(record.id) : Promise.resolve(null);
+  // Направление по ISCED-F с государственного портала — у эстонских программ.
+  const eeFieldPromise = countryOf(locale) === "EE" ? getEeProgrammeField(record.id) : Promise.resolve(null);
   // Цифры прошлого приёма из открытого набора LAMA BPO — тоже только у Литвы.
   const ltStatsPromise = countryOf(locale) === "LT" ? getLtAdmissionYear(record.id) : Promise.resolve(null);
-  const [formula, rounds, admissionType, outcome, channels, hasLtCalculator, ltField, ltStats] = await Promise.all([
+  const [formula, rounds, admissionType, outcome, channels, hasLtCalculator, ltField, ltStats, eeField] = await Promise.all([
     getFormula(record.id),
     getApplicationRounds(),
     getAdmissionType(record.university_id),
@@ -103,6 +106,7 @@ export default async function ProgrammePage({ params }: { params: Params }) {
     hasCalculatorPromise,
     ltFieldPromise,
     ltStatsPromise,
+    eeFieldPromise,
   ]);
   // Что стало с выпускниками: у Литвы — показатели направления на этой
   // ступени по всей стране (у Латвии — блок ниже, по направлению в вузе).
@@ -219,6 +223,14 @@ export default async function ProgrammePage({ params }: { params: Params }) {
             label={dict.programme.studyField}
             value={`${ltField.fieldName} (${ltField.groupName})`}
             valueLang="lt"
+          />
+        )}
+        {/* То же у эстонских программ: название — как на государственном портале. */}
+        {eeField && (
+          <Fact
+            label={dict.programme.studyField}
+            value={`${eeField.fieldName} (${eeField.broadName})`}
+            valueLang="et"
           />
         )}
         {/* Пусто — источник не сообщает (литовские программы); строку не показываем. */}

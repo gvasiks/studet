@@ -90,12 +90,12 @@ describe("фильтры общего списка двух стран", () => {
     expect(catalogProfile(["LV", "LT"]).filters).toEqual(["interest", "mode"]);
   });
 
-  // У Эстонии нет ни направлений, ни формы обучения (государственный портал
-  // их не сообщает или они ещё не загружены): в общем списке с ней фильтры
-  // по данным пропадают все, пока не выбрана страна.
-  it("с Эстонией в общем списке фильтров по данным не остаётся", () => {
-    expect(countryProfile("EE").filters).toEqual([]);
-    expect(catalogProfile(["LV", "LT", "EE"]).filters).toEqual([]);
+  // У Эстонии есть направления, но нет формы обучения (государственный
+  // портал её не сообщает): в общем списке с ней остаётся только фильтр по
+  // интересам, пока не выбрана страна.
+  it("с Эстонией в общем списке остаётся только фильтр по интересам", () => {
+    expect(countryProfile("EE").filters).toEqual(["interest"]);
+    expect(catalogProfile(["LV", "LT", "EE"]).filters).toEqual(["interest"]);
     expect(catalogProfile(["LV", "LT", "EE"]).languages).toEqual(["lv", "en", "lt", "ru", "et"]);
   });
 
