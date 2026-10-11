@@ -32,9 +32,12 @@ describe("профиль страны", () => {
   // Анкета отправляет ответы в каталог параметрами фильтров. Если фильтра у
   // страны нет, ответ пропал бы молча — вопрос тогда задавать нельзя.
   it("анкета не спрашивает о том, что каталог страны применить не может", () => {
-    for (const country of ["LV", "LT"] as const) {
+    for (const country of ["LV", "LT", "EE"] as const) {
       const { filters, surveySteps } = countryProfile(country);
       if (surveySteps.includes("interests")) expect(filters, country).toContain("interest");
+      if (surveySteps.includes("languageMode")) expect(filters, country).toContain("mode");
+      // вопрос о языке задаётся один раз: либо с формой обучения, либо без неё
+      expect(surveySteps.includes("languageMode") && surveySteps.includes("language"), country).toBe(false);
       if (surveySteps.includes("fundingFee")) {
         expect(filters, country).toContain("fee");
         expect(filters, country).toContain("budget");

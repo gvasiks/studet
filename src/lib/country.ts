@@ -22,8 +22,17 @@ export type Feature =
 export type CatalogFilter = "interest" | "fee" | "budget" | "mode";
 
 // Экран анкеты. На одном экране бывает два близких вопроса: уровень и
-// длительность, бюджет и плата, язык и форма обучения.
-export type SurveyStep = "exams" | "interests" | "levelDuration" | "fundingFee" | "city" | "languageMode" | "kind";
+// длительность, бюджет и плата, язык и форма обучения. "language" — тот же
+// экран без вопроса о форме обучения: для страны, у которой её нет в данных.
+export type SurveyStep =
+  | "exams"
+  | "interests"
+  | "levelDuration"
+  | "fundingFee"
+  | "city"
+  | "languageMode"
+  | "language"
+  | "kind";
 
 type CountryProfile = {
   features: readonly Feature[];
@@ -98,12 +107,12 @@ const profiles: Record<Country, CountryProfile> = {
   // государственного портала haridusportaal.edu.ee: в нём нет формы
   // обучения, цены и вида финансирования, поэтому таких фильтров нет.
   // Интересы работают по направлению программы с того же портала
-  // (ISCED-F, src/lib/ee-fields.ts). Анкеты, расчёта балла, словаря и прав
-  // пока нет.
+  // (ISCED-F, src/lib/ee-fields.ts). Анкета — без экзаменов, бюджета, платы
+  // и формы обучения. Расчёта балла, словаря и прав пока нет.
   EE: {
-    features: ["favorites"],
+    features: ["favorites", "survey"],
     filters: ["interest"],
-    surveySteps: [],
+    surveySteps: ["interests", "levelDuration", "city", "language", "kind"],
     levels: ["bachelor", "master", "doctoral", "college", "integrated"],
     // Город — из адреса учреждения: у вузов с филиалами это город головного
     // здания (см. сборщик). Реола, Мыдрику и Вяймела — посёлки, где стоят

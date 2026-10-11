@@ -348,7 +348,7 @@ export function SurveyWizard({ locale, dict }: { locale: Locale; dict: Dictionar
             </StepShell>
           )}
 
-          {current === "languageMode" && (
+          {(current === "languageMode" || current === "language") && (
             <>
               <StepShell title={dict.survey.language.title}>
                 <RadioGroup
@@ -366,28 +366,32 @@ export function SurveyWizard({ locale, dict }: { locale: Locale; dict: Dictionar
                   </Radio>
                 </RadioGroup>
               </StepShell>
-              <div className={SECOND_QUESTION}>
-                <StepShell title={dict.survey.mode.title}>
-                  <RadioGroup
-                    classNames={RADIO_GRID}
-                    value={answers.mode}
-                    onValueChange={(value) => setAnswers((a) => ({ ...a, mode: value as ModeChoice }))}
-                  >
-                    <Radio value="full_time" classNames={TILE}>
-                      {dict.catalog.studyMode.full_time}
-                    </Radio>
-                    <Radio value="part_time" classNames={TILE}>
-                      {dict.catalog.studyMode.part_time}
-                    </Radio>
-                    <Radio value="distance" classNames={TILE}>
-                      {dict.catalog.studyMode.distance}
-                    </Radio>
-                    <Radio value="any" classNames={TILE}>
-                      {dict.survey.mode.any}
-                    </Radio>
-                  </RadioGroup>
-                </StepShell>
-              </div>
+              {/* Вопроса о форме обучения нет у страны, в данных которой её нет
+                  (Эстония): ответ некуда было бы применить. */}
+              {current === "languageMode" && (
+                <div className={SECOND_QUESTION}>
+                  <StepShell title={dict.survey.mode.title}>
+                    <RadioGroup
+                      classNames={RADIO_GRID}
+                      value={answers.mode}
+                      onValueChange={(value) => setAnswers((a) => ({ ...a, mode: value as ModeChoice }))}
+                    >
+                      <Radio value="full_time" classNames={TILE}>
+                        {dict.catalog.studyMode.full_time}
+                      </Radio>
+                      <Radio value="part_time" classNames={TILE}>
+                        {dict.catalog.studyMode.part_time}
+                      </Radio>
+                      <Radio value="distance" classNames={TILE}>
+                        {dict.catalog.studyMode.distance}
+                      </Radio>
+                      <Radio value="any" classNames={TILE}>
+                        {dict.survey.mode.any}
+                      </Radio>
+                    </RadioGroup>
+                  </StepShell>
+                </div>
+              )}
             </>
           )}
 

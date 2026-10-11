@@ -76,6 +76,7 @@ const LT_ROUTES = [
   "/lv-ee/programmes/ut/informaatika-4",
   "/en-ee/programmes/taltech/informaatika-0",
   "/lt-ee/favorites",
+  "/lv-ee/survey",
 ];
 
 for (const route of LT_ROUTES) {
