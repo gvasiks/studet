@@ -224,22 +224,48 @@ def check_records(records: list[dict]) -> None:
             )
 
 
-def build(records: list[dict]) -> list[tuple[UniversityDraft, list[ProgrammeDraft]]]:
-    check_records(records)
-    now = datetime.now(timezone.utc).isoformat()
+def catalog_rows(records: list[dict]) -> dict[str, list[tuple[dict, str, str, str | None]]]:
+    """Название учреждения -> [(запись портала, уровень, код программы, язык)].
 
-    by_institution: dict[str, list[dict]] = defaultdict(list)
+    Здесь решается, какие записи попадают в каталог и под каким кодом: одна
+    строка на язык обучения. Тем же разбором пользуется загрузчик
+    направлений (ee_load_fields.py) — так запись портала привязывается к
+    программе каталога одним и тем же кодом."""
+    check_records(records)
+    result: dict[str, list[tuple[dict, str, str, str | None]]] = defaultdict(list)
+    seen: dict[str, set[str]] = defaultdict(set)
     skipped = Counter()
     for record in records:
         institution = institution_of(record)
         if institution is None or not institution.get("title"):
             skipped["нет учреждения"] += 1
             continue
-        by_institution[institution["title"]].append(record)
+        name = institution["title"]
+        levels = [LEVELS[level] for level in values(record.get("fieldStudyProgrammeLevel")) if level in LEVELS]
+        if len(levels) != 1:
+            skipped["нет уровня"] += 1
+            continue
+        base = programme_slug(record)
+        if not base or not record.get("title"):
+            skipped["нет адреса или названия"] += 1
+            continue
+        for index, language in enumerate(languages_of(record)):
+            slug = base if index == 0 else f"{base}-{language}"
+            if slug in seen[name]:
+                # два адреса портала дали один код — различаем номером записи
+                slug = f"{slug}-{record.get('nid')}"
+            seen[name].add(slug)
+            result[name].append((record, levels[0], slug, language))
+    if skipped:
+        print("ee_haridusportaal: не записано — " + ", ".join(f"{reason}: {count}" for reason, count in skipped.items()))
+    return result
 
+
+def build(records: list[dict]) -> list[tuple[UniversityDraft, list[ProgrammeDraft]]]:
+    now = datetime.now(timezone.utc).isoformat()
     result = []
-    for name, items in by_institution.items():
-        institution = institution_of(items[0])
+    for name, rows in catalog_rows(records).items():
+        institution = institution_of(rows[0][0])
         ownership = values(institution.get("fieldOwnershipType"))
         kind = OWNERSHIP.get(ownership[0]) if len(ownership) == 1 else None
         home_city = city_of(institution_address(institution))
@@ -247,43 +273,30 @@ def build(records: list[dict]) -> list[tuple[UniversityDraft, list[ProgrammeDraf
             # Форма собственности и город — факты, которые читаются только
             # из источника. Без них учреждение пропускается целиком, а не
             # записывается с угаданным значением.
-            print(f"ee_haridusportaal: {name} пропущено — не прочитана форма собственности ({ownership}) или город")
-            skipped["учреждение без формы собственности или города"] += len(items)
+            print(
+                f"ee_haridusportaal: {name} пропущено ({len(rows)} строк) — не прочитана форма собственности "
+                f"({ownership}) или город"
+            )
             continue
 
         programmes: list[ProgrammeDraft] = []
-        seen: set[str] = set()
-        for record in items:
-            levels = [LEVELS[level] for level in values(record.get("fieldStudyProgrammeLevel")) if level in LEVELS]
-            if len(levels) != 1:
-                skipped["нет уровня"] += 1
-                continue
-            base = programme_slug(record)
-            if not base or not record.get("title"):
-                skipped["нет адреса или названия"] += 1
-                continue
+        for record, level, slug, language in rows:
             degree = "; ".join(str(value) for value in values(record.get("fieldDegreeOrDiplomaAwarded"))) or None
             source_url = PORTAL + str(record["path"])
-            for index, language in enumerate(languages_of(record)):
-                slug = base if index == 0 else f"{base}-{language}"
-                if slug in seen:
-                    # два адреса портала дали один код — различаем номером записи
-                    slug = f"{slug}-{record.get('nid')}"
-                seen.add(slug)
-                programmes.append(
-                    ProgrammeDraft(
-                        slug=slug,
-                        name_et=str(record["title"]).strip(),
-                        degree_level=levels[0],
-                        language_of_instruction=language,
-                        city=city_of(record.get("fieldSchoolSearchAddress")) or home_city,
-                        duration_years=years_of(record),
-                        degree_awarded_et=degree,
-                        details_source_url=source_url if degree else None,
-                        details_extracted_at=now if degree else None,
-                        source_url=source_url,
-                    )
+            programmes.append(
+                ProgrammeDraft(
+                    slug=slug,
+                    name_et=str(record["title"]).strip(),
+                    degree_level=level,
+                    language_of_instruction=language,
+                    city=city_of(record.get("fieldSchoolSearchAddress")) or home_city,
+                    duration_years=years_of(record),
+                    degree_awarded_et=degree,
+                    details_source_url=source_url if degree else None,
+                    details_extracted_at=now if degree else None,
+                    source_url=source_url,
                 )
+            )
 
         university = UniversityDraft(
             slug=university_slug(name),
@@ -295,9 +308,6 @@ def build(records: list[dict]) -> list[tuple[UniversityDraft, list[ProgrammeDraf
             source_url=CATALOG_URL,
         )
         result.append((university, programmes))
-
-    if skipped:
-        print("ee_haridusportaal: не записано — " + ", ".join(f"{reason}: {count}" for reason, count in skipped.items()))
     return result
 
 
