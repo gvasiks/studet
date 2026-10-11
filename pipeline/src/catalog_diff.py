@@ -31,6 +31,7 @@ from dataclasses import dataclass, field
 CONTENT_FIELDS = (
     "name_lv",
     "name_lt",
+    "name_et",
     "name_en",
     "degree_level",
     "language_of_instruction",
@@ -46,6 +47,7 @@ CONTENT_FIELDS = (
     "description_lt",
     "description_en",
     "degree_awarded_lt",
+    "degree_awarded_et",
     "source_url",
 )
 
@@ -114,7 +116,7 @@ def compute_diff(
         was_verified = prior.get("verified_at") is not None
         change = ProgrammeChange(
             slug=slug,
-            name=row.get("name_en") or row.get("name_lv") or row.get("name_lt") or slug,
+            name=row.get("name_en") or row.get("name_lv") or row.get("name_lt") or row.get("name_et") or slug,
             diffs=diffs,
             reset_verification=was_verified,
         )
@@ -230,7 +232,7 @@ def suspicious_names(programme_rows: list[dict]) -> list[str]:
     bad: list[str] = []
     titles: list[tuple[str, ...]] = []
     for row in programme_rows:
-        names = [row.get("name_lv"), row.get("name_lt"), row.get("name_en")]
+        names = [row.get("name_lv"), row.get("name_lt"), row.get("name_et"), row.get("name_en")]
         present = [name.strip() for name in names if isinstance(name, str) and name.strip()]
         titles.append(tuple(present))
         if not present or any(_WEB_ADDRESS.match(name) for name in present):
@@ -253,6 +255,7 @@ def selftest() -> None:
     assert suspicious_names([{"slug": "d"}]) == ["d"]
     assert suspicious_names([{"slug": "e", "name_lt": "Teisė"}]) == [], "литовское название — тоже название"
     assert suspicious_names([{"slug": "f", "name_lt": "www.vu.lt"}]) == ["f"]
+    assert suspicious_names([{"slug": "g", "name_et": "Õigusteadus"}]) == [], "эстонское название — тоже название"
     assert suspicious_names(
         [
             {"slug": "ok1", "name_lv": "Logopēdija"},
