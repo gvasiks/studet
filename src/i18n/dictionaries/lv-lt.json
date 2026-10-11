@@ -29,7 +29,7 @@
     "applyNote": "Attiecas uz reflektantiem ar Lietuvā iegūtu izglītību; ārvalstu reflektantiem kārtība var atšķirties."
   },
   "match": {
-    "intro": "Ievadi savu valsts brieduma eksāmenu (VBE) vērtējumus — parādīsim konkursa punktus Lietuvas kopējās uzņemšanas programmām un to, kuru eksāmenu vēl trūkst."
+    "intro": "Pēc ievadītajiem valsts brieduma eksāmenu (VBE) vērtējumiem tiek parādīti konkursa punkti Lietuvas kopējās uzņemšanas programmām un tas, kuru eksāmenu vēl trūkst."
   },
   "rights": {
     "intro": "Ko Lietuvas likumi un kopējās uzņemšanas kārtība paredz reflektantam: kad izziņo prasības, kā iesniegt un mainīt pieteikumu, kā apstrīdēt kļūdu, kad slēdz līgumu un kas notiek ar valsts finansējumu.",
@@ -62,25 +62,25 @@
       {
         "id": "change-preferences",
         "title": "Vēlmes var mainīt līdz termiņa beigām",
-        "text": "Vēlmju sarakstu un to secību vari mainīt līdz noteiktajām pieteikumu iesniegšanas beigām. No secības atkarīgs, kur tevi uzaicinās: saņem tikai vienu uzaicinājumu, tāpēc vēlmes jāsakārto no visvairāk līdz vismazāk vēlamajai.",
+        "text": "Vēlmju sarakstu un to secību var mainīt līdz noteiktajām pieteikumu iesniegšanas beigām. No secības atkarīgs, kurā programmā reflektantu uzaicinās: uzaicinājums ir tikai viens, tāpēc vēlmes jāsakārto no visvairāk līdz vismazāk vēlamajai.",
         "source": "LAMA BPO 2026. gada kopējās uzņemšanas kārtība, 23., 74. un 79. punkts"
       },
       {
         "id": "check-score",
         "title": "Savus punktus var pārbaudīt un apstrīdēt kļūdu",
-        "text": "BPIS vari pārbaudīt savus konkursa punktus un tev piemērojamos zemākos konkursa punktus katrai vēlmei. Ja pamani kļūdu, vari rakstiski iesniegt apelāciju LAMA BPO ne vēlāk kā 24 stundas pirms galīgā pieteikumu iesniegšanas termiņa.",
+        "text": "BPIS reflektants var pārbaudīt savus konkursa punktus un viņam piemērojamos zemākos konkursa punktus katrai vēlmei. Konstatējot kļūdu, var rakstiski iesniegt apelāciju LAMA BPO ne vēlāk kā 24 stundas pirms galīgā pieteikumu iesniegšanas termiņa.",
         "source": "LAMA BPO 2026. gada kopējās uzņemšanas kārtība, 64. punkts"
       },
       {
         "id": "one-invitation",
         "title": "Viens uzaicinājums un termiņš līgumam",
-        "text": "Uzvarot konkursā, saņem vienu uzaicinājumu ieņemt studiju vietu, pretējā gadījumā — noraidošu atbildi. Uzaicinātajam uzaicinājumā norādītajā laikā jānoslēdz studiju līgums ar augstskolu; ja līgums laikā nav noslēgts, uzaicinājumu anulē.",
+        "text": "Uzvarot konkursā, reflektants saņem vienu uzaicinājumu ieņemt studiju vietu, pretējā gadījumā — noraidošu atbildi. Uzaicinātajam uzaicinājumā norādītajā laikā jānoslēdz studiju līgums ar augstskolu; ja līgums laikā nav noslēgts, uzaicinājumu anulē.",
         "source": "LAMA BPO 2026. gada kopējās uzņemšanas kārtība, 71. un 79. punkts"
       },
       {
         "id": "additional-admission",
-        "title": "Papilduzņemšanā var piedalīties arī tad, ja nepiedalījies pamatuzņemšanā",
-        "text": "Papilduzņemšanā var piedalīties arī tie, kas pamatuzņemšanas laikā nebija reģistrējušies. Ja jau esi noslēdzis līgumu par valsts finansētām studijām vai saņēmis studiju stipendiju, papilduzņemšanā vari pretendēt tikai uz valsts nefinansētu vietu.",
+        "title": "Papilduzņemšanā var piedalīties arī bez dalības pamatuzņemšanā",
+        "text": "Papilduzņemšanā var piedalīties arī tie, kas pamatuzņemšanas laikā nebija reģistrējušies. Reflektants, kas jau noslēdzis līgumu par valsts finansētām studijām vai saņēmis studiju stipendiju, papilduzņemšanā var pretendēt tikai uz valsts nefinansētu vietu.",
         "source": "LAMA BPO 2026. gada kopējās uzņemšanas kārtība, 81. punkts"
       },
       {
@@ -103,7 +103,7 @@
       },
       {
         "id": "funding-kept",
-        "title": "Valsts finansējums saglabājas, ja labi mācies",
+        "title": "Valsts finansējums saglabājas pie labām sekmēm",
         "text": "Studentam valsts finansētā vietā finansējums saglabājas, ja pēc augstskolas noteiktā vērtēšanas perioda (ne ilgāka par studiju gadu) viņš atbilst labu sekmju kritērijiem: nav akadēmisko parādu un sasniegts teicams vai tipisks sasniegumu līmenis. Students, kas tiem neatbilst, finansējumu zaudē un turpmāk maksā augstskolas noteikto studiju maksu; izņēmums noteikts likuma 78. panta 6. daļā.",
         "source": "Zinātnes un studiju likums, 78. panta 4., 5. un 6. daļa"
       },
@@ -116,19 +116,19 @@
       {
         "id": "complaints",
         "title": "Studenta sūdzību izskata 15 dienās",
-        "text": "Kad esi kļuvis par studentu, par savu tiesību vai likumīgo interešu pārkāpumu vari rakstiski vērsties pie augstskolas vadītāja: viņam vai viņa pilnvarotām personām 15 kalendāro dienu laikā iesniegums vai sūdzība jāizskata un rakstiski jāatbild. Augstskolā darbojas arī strīdu izskatīšanas komisija, kas risina studentu un administrācijas strīdus.",
+        "text": "Students par savu tiesību vai likumīgo interešu pārkāpumu var rakstiski vērsties pie augstskolas vadītāja: viņam vai viņa pilnvarotām personām 15 kalendāro dienu laikā iesniegums vai sūdzība jāizskata un rakstiski jāatbild. Augstskolā darbojas arī strīdu izskatīšanas komisija, kas risina studentu un administrācijas strīdus.",
         "source": "Zinātnes un studiju likums, 62. panta 7. un 8. daļa"
       },
       {
         "id": "your-data",
-        "title": "Tavi dati uzņemšanas sistēmā",
-        "text": "Pēc pieprasījuma LAMA BPO vai augstskolai nekavējoties jāsniedz precīza informācija, kādi tavi personas dati un kādiem mērķiem tiek apstrādāti. Ja lūdz datus dzēst, tie jādzēš, ja to glabāšanu neprasa apstrādes mērķis vai spēkā esošie tiesību akti.",
+        "title": "Personas dati uzņemšanas sistēmā",
+        "text": "Pēc pieprasījuma LAMA BPO vai augstskolai nekavējoties jāsniedz precīza informācija, kādi reflektanta personas dati un kādiem mērķiem tiek apstrādāti. Ja reflektants lūdz datus dzēst, tie jādzēš, ja to glabāšanu neprasa apstrādes mērķis vai spēkā esošie tiesību akti.",
         "source": "LAMA BPO 2026. gada kopējās uzņemšanas kārtība, 96. un 97. punkts"
       },
       {
         "id": "education-abroad",
-        "title": "Ja izglītību esi ieguvis ārvalstīs",
-        "text": "Ja izglītību esi ieguvis ārvalsts iestādē vai pēc starptautiskas organizācijas programmas, vajadzīgs dokuments par tās akadēmisko atzīšanu Lietuvā; atzīšanu veic Studiju kvalitātes novērtēšanas centrs (SKVC) vai augstskola, kurai ir šādas tiesības. Kopš 2019. gada Latvijā un Igaunijā iegūtus vidējās izglītības dokumentus (Latvijā — Atestāts par vispārējo vidējo izglītību vai Diploms par profesionālo vidējo izglītību) atzīst automātiski. Ja studijas notiks lietuviešu valodā un lietuviešu valodu neesi mācījies, jānokārto lietuviešu valodas ieskaite. Ārzemnieki, kuriem nav tiesību uz valsts finansētām vietām, par uzņemšanu vēršas tieši augstskolā.",
+        "title": "Ja izglītība iegūta ārvalstīs",
+        "text": "Ja izglītība iegūta ārvalsts iestādē vai pēc starptautiskas organizācijas programmas, vajadzīgs dokuments par tās akadēmisko atzīšanu Lietuvā; atzīšanu veic Studiju kvalitātes novērtēšanas centrs (SKVC) vai augstskola, kurai ir šādas tiesības. Kopš 2019. gada Latvijā un Igaunijā iegūtus vidējās izglītības dokumentus (Latvijā — Atestāts par vispārējo vidējo izglītību vai Diploms par profesionālo vidējo izglītību) atzīst automātiski. Ja studijas notiks lietuviešu valodā un reflektants lietuviešu valodu nav mācījies, jānokārto lietuviešu valodas ieskaite. Ārzemnieki, kuriem nav tiesību uz valsts finansētām vietām, par uzņemšanu vēršas tieši augstskolā.",
         "source": "LAMA BPO 2026. gada kopējās uzņemšanas kārtība, 24., 25. un 37. punkts"
       }
     ],
@@ -144,7 +144,7 @@
     ]
   },
   "glossary": {
-    "intro": "Vārdi, ko sastapsi Lietuvas augstskolu uzņemšanas noteikumos un šajā vietnē. Iekavās — termins lietuviešu valodā, kā to raksta dokumentos. Definīcijas ņemtas no Zinātnes un studiju likuma un LAMA BPO kopējās uzņemšanas kārtības; pie katras norādīts avots. Skaitļi ar norādi uz 2026. gadu ir no 2026. gada kārtības; 2027. gada kārtība vēl nav publicēta.",
+    "intro": "Vārdi, kas sastopami Lietuvas augstskolu uzņemšanas noteikumos un šajā vietnē. Iekavās — termins lietuviešu valodā, kā to raksta dokumentos. Definīcijas ņemtas no Zinātnes un studiju likuma un LAMA BPO kopējās uzņemšanas kārtības; pie katras norādīts avots. Skaitļi ar norādi uz 2026. gadu ir no 2026. gada kārtības; 2027. gada kārtība vēl nav publicēta.",
     "items": [
       {
         "id": "general-admission",
@@ -299,7 +299,7 @@
     ]
   },
   "privacy": {
-    "intro": "Kā šī vietne apstrādā personas datus: ko mēs uzglabājam, ko nē, un kādas ir tavas tiesības.",
+    "intro": "Kā šī vietne apstrādā personas datus: kas tiek glabāts, kas ne, un kādas ir datu subjekta tiesības.",
     "updated": "Redakcija: 2026. gada 10. oktobris",
     "authorityLabel": "Lietuvas Valsts datu aizsardzības inspekcija (vdai.lrv.lt)",
     "authorityUrl": "https://vdai.lrv.lt",
@@ -309,23 +309,23 @@
         "title": "Īsumā",
         "body": [
           "- Vietnei nav lietotāju kontu, un reģistrācija nav vajadzīga.",
-          "- Eksāmenu rezultāti, ko ievadi kalkulatorā vai meklēšanā «Kur es varu iestāties?», tiek aprēķināti tavā pārlūkā. Tie netiek nosūtīti uz mūsu serveri un nekur netiek saglabāti.",
+          "- Kalkulatorā vai sadaļā «Kurās programmās var iestāties» ievadītie eksāmenu rezultāti tiek aprēķināti apmeklētāja pārlūkā. Tie netiek nosūtīti uz mūsu serveri un nekur netiek saglabāti.",
           "- Mēs neizmantojam sīkdatnes izsekošanai un nerādām reklāmu.",
-          "- Izlase (zvaigznītes pie programmām) glabājas tikai tavā ierīcē."
+          "- Saglabāto programmu saraksts (zvaigznītes pie programmām) glabājas tikai apmeklētāja ierīcē."
         ]
       },
       {
         "id": "controller",
         "title": "Kas ir pārzinis",
         "body": [
-          "Personas datu pārzinis ir {controller}. Jautājumos par personas datiem raksti: {email}."
+          "Personas datu pārzinis ir {controller}. Jautājumos par personas datiem jāraksta uz {email}."
         ]
       },
       {
         "id": "visit",
         "title": "Vietnes apmeklējums",
         "body": [
-          "Kad atver lapu, hostinga pakalpojuma sniedzējs automātiski reģistrē tehniskos datus: IP adresi, laiku, pieprasīto adresi un pārlūka veidu. To dara, lai vietne darbotos un būtu droša. Mēs šos datus neizmantojam, lai kādu identificētu.",
+          "Atverot lapu, hostinga pakalpojuma sniedzējs automātiski reģistrē tehniskos datus: IP adresi, laiku, pieprasīto adresi un pārlūka veidu. To dara, lai vietne darbotos un būtu droša. Mēs šos datus neizmantojam, lai kādu identificētu.",
           "Pamats: mūsu leģitīmās intereses nodrošināt vietnes drošību un darbību (Vispārīgās datu aizsardzības regulas 6. panta 1. punkta f) apakšpunkts). Glabāšanas termiņu nosaka pakalpojuma sniedzējs.",
           "Valodu (latviešu, lietuviešu vai angļu) pirmajā apmeklējumā izvēlamies pēc pārlūka valodas iestatījuma; tas netiek saglabāts."
         ]
@@ -334,23 +334,23 @@
         "id": "survey",
         "title": "Aptauja un kalkulatori",
         "body": [
-          "- Eksāmenu rezultāti kalkulatorā un meklēšanā «Kur es varu iestāties?» tiek aprēķināti tikai tavā pārlūkā. Tie netiek sūtīti uz serveri, netiek saglabāti un netiek ielikti lapas adresē.",
+          "- Eksāmenu rezultāti kalkulatorā un sadaļā «Kurās programmās var iestāties» tiek aprēķināti tikai apmeklētāja pārlūkā. Tie netiek sūtīti uz serveri, netiek saglabāti un netiek ielikti lapas adresē.",
           "- Aptaujā izvēlētie filtri (interešu joma, studiju līmenis, pilsēta, studiju valoda un forma) tiek ielikti lapas adresē, lai varētu parādīt programmu sarakstu. Līdz ar apmeklējumu tie nonāk tehniskajos žurnālos (skat. iepriekš), bet mēs tos nesaistām ar personu. Eksāmenu atbildes aptaujā uz serveri netiek nosūtītas."
         ]
       },
       {
         "id": "favorites",
-        "title": "Izlase",
+        "title": "Saglabātās programmas",
         "body": [
-          "Programmu saraksts, ko atzīmē ar zvaigznīti, glabājas tikai tavā pārlūkā (localStorage). To var dzēst, iztīrot vietnes datus pārlūka iestatījumos. Šī glabāšana ir vajadzīga funkcijai, ko tu pats izvēlies izmantot.",
-          "Kad atver izlasi, pārlūks pieprasa šo programmu datus no mūsu datubāzes (Supabase). Pieprasījumā ir programmu identifikatori; tāpat kā jebkurš apmeklējums, tas nonāk pakalpojuma sniedzēja tehniskajos žurnālos. Mēs sarakstu neglabājam un nesaistām to ar personu."
+          "Ar zvaigznīti atzīmēto programmu saraksts glabājas tikai apmeklētāja pārlūkā (localStorage). To var dzēst, iztīrot vietnes datus pārlūka iestatījumos. Šī glabāšana ir vajadzīga funkcijai, ko apmeklētājs izmanto pēc paša izvēles.",
+          "Atverot saglabāto programmu sarakstu, pārlūks pieprasa šo programmu datus no mūsu datubāzes (Supabase). Pieprasījumā ir programmu identifikatori; tāpat kā jebkurš apmeklējums, tas nonāk pakalpojuma sniedzēja tehniskajos žurnālos. Mēs sarakstu neglabājam un nesaistām to ar personu."
         ]
       },
       {
         "id": "cookies",
         "title": "Sīkdatnes",
         "body": [
-          "Mēs neizmantojam sīkdatnes izsekošanai. Vietne pārlūkā glabā tikai izlases sarakstu (skat. iepriekš)."
+          "Mēs neizmantojam sīkdatnes izsekošanai. Vietne pārlūkā glabā tikai saglabāto programmu sarakstu (skat. iepriekš)."
         ]
       },
       {
@@ -361,15 +361,15 @@
           "- bez sīkdatnēm un bez datu glabāšanas pārlūkā;",
           "- bez cilvēka identificēšanas, bez sesiju ierakstiem un bez ievadīto lauku satura — eksāmenu rezultāti analītikā nenonāk;",
           "- IP adrese netiek glabāta.",
-          "Pamats: mūsu leģitīmās intereses uzlabot vietni (regulas 6. panta 1. punkta f) apakšpunkts). Tu vari iebilst — raksti uz {email}."
+          "Pamats: mūsu leģitīmās intereses uzlabot vietni (regulas 6. panta 1. punkta f) apakšpunkts). Pret šo apstrādi var iebilst, rakstot uz {email}."
         ]
       },
       {
         "id": "email",
         "title": "E-pasta atgādinājumi",
         "body": [
-          "Ja pats pieprasi atgādinājumu (piemēram, par uzņemšanas sākumu vai izmaiņām tavā programmu sarakstā), mēs uzglabājam tavu e-pasta adresi un to, par ko vēlies saņemt ziņas. Mēs tos izmantojam tikai tam, ko tu pieprasīji.",
-          "Pamats: tava piekrišana (regulas 6. panta 1. punkta a) apakšpunkts). Piekrišanu vari atsaukt jebkurā brīdī ar saiti katrā e-pastā vai rakstot uz {email}; atsaukums neietekmē iepriekšējo e-pastu likumību.",
+          "Ja apmeklētājs pats pieprasa atgādinājumu (piemēram, par uzņemšanas sākumu vai izmaiņām saglabāto programmu sarakstā), mēs uzglabājam viņa e-pasta adresi un to, par ko pieprasītas ziņas. Šos datus izmantojam tikai pieprasītajam mērķim.",
+          "Pamats: piekrišana (regulas 6. panta 1. punkta a) apakšpunkts). Piekrišanu var atsaukt jebkurā brīdī ar saiti katrā e-pastā vai rakstot uz {email}; atsaukums neietekmē iepriekšējo e-pastu likumību.",
           "E-pastus sūta pakalpojuma sniedzējs Resend. Adresi izdzēšam pēc piekrišanas atsaukšanas un ne vēlāk kā 12 mēnešus pēc pēdējā nosūtītā e-pasta."
         ]
       },
@@ -378,7 +378,7 @@
         "title": "Skolēni un jaunieši",
         "body": [
           "Vietnes auditorija galvenokārt ir skolēni un jaunieši. Lietuvā bērns pats var dot piekrišanu informācijas sabiedrības pakalpojumam no 14 gadu vecuma; jaunākam bērnam vajadzīga vecāka vai likumiskā aizbildņa piekrišana (Lietuvas Personas datu tiesiskās aizsardzības likuma 6. pants; Vispārīgās datu aizsardzības regulas 8. pants).",
-          "Eksāmenu rezultātus, ko ievadi vietnē, mēs neuzglabājam un nenosūtām."
+          "Vietnē ievadītos eksāmenu rezultātus mēs neuzglabājam un nenosūtām."
         ]
       },
       {
@@ -387,32 +387,32 @@
         "body": [
           "Mēs nepārdodam datus un nerādām reklāmu. Datus apstrādā tikai mūsu pakalpojumu sniedzēji (apstrādātāji), un tikai mūsu uzdevumā:",
           "- hostinga pakalpojuma sniedzējs (vietnes darbība);",
-          "- Supabase (datubāze ar serveriem Eiropas Savienībā; e-pasta adreses, ja tu tās iesniedz);",
+          "- Supabase (datubāze ar serveriem Eiropas Savienībā; e-pasta adreses, ja tās ir iesniegtas);",
           "- PostHog (lietošanas statistika, serveri Eiropas Savienībā);",
-          "- Google (e-pasts: ja mums raksti, sarakste glabājas Gmail pastkastē);",
+          "- Google (e-pasts: mums adresētā sarakste glabājas Gmail pastkastē);",
           "- Resend (e-pastu nosūtīšana).",
           "Ja pakalpojuma sniedzējs datus nodod ārpus Eiropas Ekonomikas zonas, tas notiek ar Eiropas Komisijas apstiprinātiem aizsardzības mehānismiem, piemēram, standarta līguma klauzulām."
         ]
       },
       {
         "id": "rights",
-        "title": "Tavas tiesības",
+        "title": "Datu subjekta tiesības",
         "body": [
-          "Tev ir tiesības:",
+          "Personai, kuras dati tiek apstrādāti (datu subjektam), ir tiesības:",
           "- saņemt informāciju par saviem datiem un piekļūt tiem;",
           "- prasīt datu labošanu vai dzēšanu;",
           "- ierobežot apstrādi un iebilst pret apstrādi, kas balstīta uz leģitīmajām interesēm;",
           "- saņemt datus pārnesamā formātā;",
           "- atsaukt piekrišanu jebkurā brīdī.",
-          "Raksti uz {email} — atbildēsim viena mēneša laikā. Ja uzskati, ka tavas tiesības pārkāptas, vari iesniegt sūdzību Lietuvas Valsts datu aizsardzības inspekcijai (vdai.lrv.lt) vai pārziņa valsts uzraudzības iestādei — Datu valsts inspekcijai (Elijas iela 17, Rīga, LV-1050)."
+          "Pieprasījumi sūtāmi uz {email} — atbildēsim viena mēneša laikā. Ja persona uzskata, ka tās tiesības ir pārkāptas, tā var iesniegt sūdzību Lietuvas Valsts datu aizsardzības inspekcijai (vdai.lrv.lt) vai pārziņa valsts uzraudzības iestādei — Datu valsts inspekcijai (Elijas iela 17, Rīga, LV-1050)."
         ]
       },
       {
         "id": "contact",
-        "title": "Ja raksti mums",
+        "title": "Sarakste ar mums",
         "body": [
-          "Programmas lapā un kalkulatorā ir saite, ar kuru vari paziņot par kļūdu. Tā atver tavu e-pasta programmu — vēstuli tu nosūti pats, vietne neko nenosūta tavā vietā.",
-          "Ja mums raksti, mēs saņemam tavu e-pasta adresi un vēstules saturu. Mēs tos izmantojam tikai, lai pārbaudītu un izlabotu informāciju un tev atbildētu. Eksāmenu rezultātus vēstulē neraksti — tie mums nav vajadzīgi.",
+          "Programmas lapā un kalkulatorā ir saite ziņošanai par kļūdu. Tā atver e-pasta programmu — vēstuli nosūta pats apmeklētājs, vietne viņa vietā neko nenosūta.",
+          "Saņemot vēstuli, mēs iegūstam sūtītāja e-pasta adresi un vēstules saturu. Tos izmantojam tikai, lai pārbaudītu un izlabotu informāciju un atbildētu sūtītājam. Eksāmenu rezultāti vēstulē nav jānorāda — tie mums nav vajadzīgi.",
           "Pamats: mūsu leģitīmās intereses uzturēt vietnē pareizu informāciju (regulas 6. panta 1. punkta f) apakšpunkts). Saraksti izdzēšam ne vēlāk kā 12 mēnešus pēc pēdējās vēstules."
         ]
       },
@@ -420,7 +420,7 @@
         "id": "decisions",
         "title": "Automatizēti lēmumi",
         "body": [
-          "Mēs nepieņemam automatizētus lēmumus, kas tevi ietekmē, un neveicam profilēšanu. Aprēķini vietnē ir orientējoši; galīgo lēmumu par uzņemšanu pieņem augstskola."
+          "Mēs nepieņemam automatizētus lēmumus, kas ietekmē personu, un neveicam profilēšanu. Aprēķini vietnē ir orientējoši; galīgo lēmumu par uzņemšanu pieņem augstskola."
         ]
       },
       {

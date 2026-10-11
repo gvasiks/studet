@@ -295,7 +295,7 @@
         "title": "In short",
         "body": [
           "- The site has no user accounts and needs no registration.",
-          "- Exam results that you enter in the calculator or in “Where can I get in?” are calculated in your browser. They are not sent to our server and are not stored anywhere.",
+          "- Exam results that you enter in the calculator or in “Where can you apply?” are calculated in your browser. They are not sent to our server and are not stored anywhere.",
           "- We do not use tracking cookies and we show no advertising.",
           "- Your favourites (the stars on programmes) are stored on your device only."
         ]
@@ -320,13 +320,13 @@
         "id": "survey",
         "title": "The survey and calculators",
         "body": [
-          "- Exam results in the calculator and in “Where can I get in?” are calculated only in your browser. They are not sent to a server, not stored and not put into the page address.",
+          "- Exam results in the calculator and in “Where can you apply?” are calculated only in your browser. They are not sent to a server, not stored and not put into the page address.",
           "- The filters you choose in the survey (field of interest, level of study, city, language and mode of study) are put into the page address so the programme list can be shown. Together with the visit they end up in the technical logs (see above), but we do not link them to a person. Exam answers from the survey are not sent to the server."
         ]
       },
       {
         "id": "favorites",
-        "title": "Favourites",
+        "title": "Saved programmes",
         "body": [
           "The list of programmes you mark with a star is kept only in your browser (localStorage). You can delete it by clearing the site's data in your browser settings. This storage is needed for a feature you choose to use.",
           "When you open the list, your browser requests the data of those programmes from our database (Supabase). The request contains the programmes' identifiers; like any visit, it ends up in the provider's technical logs. We do not store the list and do not link it to a person."

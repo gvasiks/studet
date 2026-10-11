@@ -108,11 +108,11 @@ npm run dev
       не падает.
 - [ ] Обе кнопки («Skatīt katalogu» / «Aizpildīt aptauju»; на EN — «Browse
       the catalogue» / «Take the survey») ведут на `/programmes` и `/survey`.
-- [ ] Шапка на ширине ≥1024 px: Katalogs · Aptauja · Kur varu iestāties ·
-      Mans saraksts · Vārdnīca · Tiesības в одну строку, текущий раздел
+- [ ] Шапка на ширине ≥1024 px: Katalogs · Aptauja · Kur var iestāties ·
+      Saglabātās · Vārdnīca · Tiesības в одну строку, текущий раздел
       подсвечен. Уже — кнопка «Izvēlne» (☰): открывается кликом и Enter,
       закрывается Esc (фокус на кнопке), кликом мимо и выбором пункта.
-- [ ] На главной под кнопками — три карточки: «Kur varu iestāties»,
+- [ ] На главной под кнопками — три карточки: «Kur var iestāties»,
       «Vārdnīca», «Tiesības»; те же ссылки в подвале главной.
 - [ ] На `/en-lv` — янтарный баннер под шапкой: «This currently covers Latvia's
       own admission system...». На `/lv` баннера быть не должно.
@@ -347,11 +347,11 @@ npm run dev
 сайте до запуска 1 июня 2027.
 
 - [ ] `/lt` — главная на литовском, счётчик «Programų: 1020 · Aukštųjų
-      mokyklų: 28» (на 2026-10-06). Есть кнопка анкеты и карточка «Kur galiu
+      mokyklų: 28» (на 2026-10-06). Есть кнопка анкеты и карточка «Kur galima
       stoti»; карточек словаря и прав нет — этих разделов у Литвы ещё нет.
 - [ ] `/lt/programmes` — вкладки «Universitetinės 488 · Koleginės 514 ·
       Vientisosios 18»; в фильтре литовские города и языки (литовский,
-      английский, русский). В меню «Katalogas», «Anketa», «Kur galiu stoti» и «Mano sąrašas».
+      английский, русский). В меню «Katalogas», «Anketa», «Kur galima stoti» и «Išsaugotos».
 - [ ] В фильтре `/lt/programmes` нет платы и «только бюджет» — под них нет
       данных. Адрес `/lt/programmes?budget=1&fee=3000` показывает полный
       каталог (1020), а не пустой список. У `/lv/programmes` оба фильтра на
@@ -455,7 +455,7 @@ npm run dev
       программы под латвийским адресом нет.
 - [ ] В подвале строка «Šalis: Latvija · Lietuva»; ссылка ведёт на главную
       другой страны. С `/en-lt` — на `/en-lv`, язык сохраняется.
-- [ ] Добавить программу в «Mano sąrašas» на `/lt`, открыть
+- [ ] Добавить программу в «Išsaugotos programos» на `/lt`, открыть
       `/lv/favorites` — список пуст и счётчика в шапке нет: у каждой страны
       список свой.
 - [ ] Программа в двух формах (например, EHU «Vizualinis dizainas» на

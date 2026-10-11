@@ -3,7 +3,7 @@
     "title": "University Choice Helper for Latvia"
   },
   "home": {
-    "title": "Where can I actually get in?",
+    "title": "Where can you actually get in?",
     "description": "Questionnaire, catalogue and competition score calculator in one place, currently covering Latvia's local admission system.",
     "catalogCta": "Browse the catalogue",
     "surveyCta": "Take the survey",
@@ -175,7 +175,7 @@
   "nav": {
     "catalog": "Catalogue",
     "survey": "Survey",
-    "match": "Where can I apply",
+    "match": "Where you can apply",
     "glossary": "Glossary",
     "rights": "Your rights",
     "menu": "Menu",
@@ -244,7 +244,7 @@
     "back": "Back",
     "next": "Next",
     "submit": "See programmes",
-    "skipToSearch": "I already know what I'm looking for",
+    "skipToSearch": "Skip the survey and open the catalogue",
     "exams": {
       "title": "Which national exams have you taken or plan to take?",
       "hint": "This answer doesn't affect the list yet — the competition score calculator is still being built.",
@@ -284,7 +284,7 @@
     },
     "city": {
       "title": "Which city do you want to study in?",
-      "anywhere": "I'm ready to relocate anywhere"
+      "anywhere": "Any city"
     },
     "level": {
       "title": "Which level of study are you looking for?",
@@ -425,10 +425,10 @@
     "source": "Source: information from the Ministry of Education, Science and Sport accompanying a draft government resolution, NŠA data ({date}). Extracted automatically."
   },
   "favorites": {
-    "navLink": "My list",
-    "add": "Add to my list",
-    "remove": "Remove from my list",
-    "title": "My list",
+    "navLink": "Saved",
+    "add": "Save programme",
+    "remove": "Remove from saved programmes",
+    "title": "Saved programmes",
     "subtitle": "The list is kept only in this browser — we don't store it. It stays until you clear your browser data.",
     "empty": "Nothing saved yet. Browse the catalogue and mark programmes with ★ to compare them here.",
     "removeFromCompare": "Remove from comparison",
@@ -441,7 +441,7 @@
     "disclaimer": "StudyPick is an independent informational portal, not a university or a government body — we have no contractual relationship with the universities listed here. Programme descriptions, deadlines, fees and competition-score formulas come from each university's own publicly available sources and may be outdated or inaccurate; every programme card states whether a fact was checked by a person or extracted automatically. Always verify current information on the university's official website before making a decision — only the university makes the final admission decision."
   },
   "match": {
-    "title": "Where can I apply?",
+    "title": "Where can you apply?",
     "intro": "Enter your centralised exam results — we'll show which programmes you can already calculate a competition score for, and which exams are still missing.",
     "privacy": "Results are calculated in your browser — they are not sent to a server and are not stored anywhere.",
     "examsHeading": "Your exams",
@@ -749,7 +749,7 @@
         "title": "In short",
         "body": [
           "- The site has no user accounts and needs no registration.",
-          "- Exam results that you enter in the calculator or in “Where can I get in?” are calculated in your browser. They are not sent to our server and are not stored anywhere.",
+          "- Exam results that you enter in the calculator or in “Where can you apply?” are calculated in your browser. They are not sent to our server and are not stored anywhere.",
           "- We do not use tracking cookies and we show no advertising.",
           "- Your favourites (the stars on programmes) are stored on your device only."
         ]
@@ -774,13 +774,13 @@
         "id": "survey",
         "title": "The survey and calculators",
         "body": [
-          "- Exam results in the calculator and in “Where can I get in?” are calculated only in your browser. They are not sent to a server, not stored and not put into the page address.",
+          "- Exam results in the calculator and in “Where can you apply?” are calculated only in your browser. They are not sent to a server, not stored and not put into the page address.",
           "- The filters you choose in the survey (field of interest, city, language and mode of study, budget places) are put into the page address so the programme list can be shown. Together with the visit they end up in the technical logs (see above), but we do not link them to a person. Exam answers from the survey are not sent to the server."
         ]
       },
       {
         "id": "favorites",
-        "title": "Favourites",
+        "title": "Saved programmes",
         "body": [
           "The list of programmes you mark with a star is kept only in your browser (localStorage). You can delete it by clearing the site's data in your browser settings. This storage is needed for a feature you choose to use.",
           "When you open the list, your browser requests the data of those programmes from our database (Supabase). The request contains the programmes' identifiers; like any visit, it ends up in the provider's technical logs. We do not store the list and do not link it to a person."

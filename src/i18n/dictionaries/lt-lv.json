@@ -310,7 +310,7 @@
         "title": "Trumpai",
         "body": [
           "- Svetainėje nėra naudotojų paskyrų ir nereikia registruotis.",
-          "- Egzaminų rezultatai, kuriuos įvedate skaičiuoklėje arba skiltyje „Kur galiu stoti“, skaičiuojami jūsų naršyklėje. Jie nesiunčiami į mūsų serverį ir niekur nesaugomi.",
+          "- Egzaminų rezultatai, kuriuos įvedate skaičiuoklėje arba skiltyje „Kur galima stoti“, skaičiuojami jūsų naršyklėje. Jie nesiunčiami į mūsų serverį ir niekur nesaugomi.",
           "- Nenaudojame sekimo slapukų ir nerodome reklamos.",
           "- Jūsų sąrašas (žvaigždute pažymėtos programos) saugomas tik jūsų įrenginyje."
         ]
@@ -335,13 +335,13 @@
         "id": "survey",
         "title": "Anketa ir skaičiuoklės",
         "body": [
-          "- Egzaminų rezultatai skaičiuoklėje ir skiltyje „Kur galiu stoti“ skaičiuojami tik jūsų naršyklėje. Jie nesiunčiami į serverį, nesaugomi ir neįrašomi į puslapio adresą.",
+          "- Egzaminų rezultatai skaičiuoklėje ir skiltyje „Kur galima stoti“ skaičiuojami tik jūsų naršyklėje. Jie nesiunčiami į serverį, nesaugomi ir neįrašomi į puslapio adresą.",
           "- Anketoje pasirinkti filtrai (dominanti sritis, miestas, studijų kalba ir forma, biudžetinės vietos) įrašomi į puslapio adresą, kad būtų galima parodyti programų sąrašą. Kartu su apsilankymu jie patenka į techninius žurnalus (žr. aukščiau), tačiau jų nesiejame su asmeniu. Anketos atsakymai apie egzaminus į serverį nesiunčiami."
         ]
       },
       {
         "id": "favorites",
-        "title": "Mano sąrašas",
+        "title": "Išsaugotos programos",
         "body": [
           "Programų, kurias pažymite žvaigždute, sąrašas saugomas tik jūsų naršyklėje (localStorage). Jį galite ištrinti išvalę svetainės duomenis naršyklės nustatymuose. Šis saugojimas reikalingas funkcijai, kuria naudotis pasirenkate patys.",
           "Kai atidarote sąrašą, naršyklė paprašo šių programų duomenų iš mūsų duomenų bazės (Supabase). Užklausoje yra programų identifikatoriai; kaip ir bet kuris apsilankymas, ji patenka į paslaugų teikėjo techninius žurnalus. Sąrašo nesaugome ir nesiejame jo su asmeniu."

@@ -85,7 +85,7 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
       </div>
 
       {/* Остальные разделы — карточками под главными кнопками: без них
-          «Kur varu iestāties», словарь и права были видны только из шапки. */}
+          «Kur var iestāties», словарь и права были видны только из шапки. */}
       {sections.length > 0 && (
         <nav aria-label={dict.home.sectionsLabel} className="mt-14 max-w-4xl">
           <ul className="grid gap-3 sm:grid-cols-3">

@@ -3,7 +3,7 @@
     "title": "Pagalbininkas renkantis aukštąją mokyklą Lietuvoje"
   },
   "home": {
-    "title": "Kur aš iš tikrųjų galiu įstoti?",
+    "title": "Kur iš tikrųjų galima įstoti?",
     "description": "Studijų programų katalogas vienoje vietoje: pirmosios pakopos ir vientisosios studijos, į kurias priimama per bendrąjį priėmimą.",
     "catalogCta": "Peržiūrėti katalogą",
     "surveyCta": "Užpildyti anketą",
@@ -175,7 +175,7 @@
   "nav": {
     "catalog": "Katalogas",
     "survey": "Anketa",
-    "match": "Kur galiu stoti",
+    "match": "Kur galima stoti",
     "glossary": "Žodynėlis",
     "rights": "Jūsų teisės",
     "menu": "Meniu",
@@ -244,7 +244,7 @@
     "back": "Atgal",
     "next": "Toliau",
     "submit": "Rodyti programas",
-    "skipToSearch": "Jau žinau, ko ieškau",
+    "skipToSearch": "Praleisti anketą ir atverti katalogą",
     "exams": {
       "title": "Kuriuos valstybinius brandos egzaminus laikėte ar planuojate laikyti?",
       "hint": "Šis atsakymas sąrašo kol kas nekeičia — konkursinio balo skaičiuoklė dar kuriama.",
@@ -284,7 +284,7 @@
     },
     "city": {
       "title": "Kuriame mieste norite studijuoti?",
-      "anywhere": "Galiu persikelti bet kur"
+      "anywhere": "Bet kuris miestas"
     },
     "level": {
       "title": "Kokio lygmens studijų ieškote?",
@@ -425,10 +425,10 @@
     "source": "Šaltinis: Švietimo, mokslo ir sporto ministerijos informacija prie Vyriausybės nutarimo projekto, NŠA duomenys ({date}). Surinkta automatiškai."
   },
   "favorites": {
-    "navLink": "Mano sąrašas",
-    "add": "Įtraukti į mano sąrašą",
-    "remove": "Pašalinti iš mano sąrašo",
-    "title": "Mano sąrašas",
+    "navLink": "Išsaugotos",
+    "add": "Išsaugoti programą",
+    "remove": "Pašalinti iš išsaugotų programų",
+    "title": "Išsaugotos programos",
     "subtitle": "Sąrašas saugomas tik šioje naršyklėje — mes jo nesaugome. Jis išlieka, kol išvalysite naršyklės duomenis.",
     "empty": "Kol kas nieko neišsaugota. Peržiūrėkite katalogą ir pažymėkite programas ★, kad galėtumėte jas čia palyginti.",
     "removeFromCompare": "Pašalinti iš palyginimo",
@@ -441,7 +441,7 @@
     "disclaimer": "StudyPick yra nepriklausomas informacinis portalas, ne aukštoji mokykla ir ne valstybės institucija — su čia išvardytomis aukštosiomis mokyklomis mūsų nesieja jokios sutartys. Programų aprašymai, terminai, kainos ir konkursinio balo formulės paimti iš viešai prieinamų oficialių šaltinių ir gali būti pasenę ar netikslūs; kiekvienoje programos kortelėje nurodyta, ar faktą patikrino žmogus, ar jis surinktas automatiškai. Prieš priimdami sprendimą visada pasitikrinkite informaciją oficialioje aukštosios mokyklos svetainėje — galutinį sprendimą dėl priėmimo priima tik aukštoji mokykla."
   },
   "match": {
-    "title": "Kur galiu stoti?",
+    "title": "Kur galima stoti?",
     "intro": "Įveskite savo valstybinių brandos egzaminų rezultatus — parodysime, kurių programų konkursinį balą jau galima apskaičiuoti ir kurių egzaminų dar trūksta.",
     "privacy": "Rezultatai skaičiuojami jūsų naršyklėje — jie nesiunčiami į serverį ir niekur nesaugomi.",
     "examsHeading": "Jūsų egzaminai",
@@ -773,7 +773,7 @@
         "title": "Trumpai",
         "body": [
           "- Svetainėje nėra naudotojų paskyrų ir nereikia registruotis.",
-          "- Egzaminų rezultatai, kuriuos įvedate skaičiuoklėje arba skiltyje „Kur galiu stoti“, skaičiuojami jūsų naršyklėje. Jie nesiunčiami į mūsų serverį ir niekur nesaugomi.",
+          "- Egzaminų rezultatai, kuriuos įvedate skaičiuoklėje arba skiltyje „Kur galima stoti“, skaičiuojami jūsų naršyklėje. Jie nesiunčiami į mūsų serverį ir niekur nesaugomi.",
           "- Nenaudojame sekimo slapukų ir nerodome reklamos.",
           "- Jūsų sąrašas (žvaigždute pažymėtos programos) saugomas tik jūsų įrenginyje."
         ]
@@ -798,13 +798,13 @@
         "id": "survey",
         "title": "Anketa ir skaičiuoklės",
         "body": [
-          "- Egzaminų rezultatai skaičiuoklėje ir skiltyje „Kur galiu stoti“ skaičiuojami tik jūsų naršyklėje. Jie nesiunčiami į serverį, nesaugomi ir neįrašomi į puslapio adresą.",
+          "- Egzaminų rezultatai skaičiuoklėje ir skiltyje „Kur galima stoti“ skaičiuojami tik jūsų naršyklėje. Jie nesiunčiami į serverį, nesaugomi ir neįrašomi į puslapio adresą.",
           "- Anketoje pasirinkti filtrai (dominanti sritis, studijų lygmuo, miestas, studijų kalba ir forma) įrašomi į puslapio adresą, kad būtų galima parodyti programų sąrašą. Kartu su apsilankymu jie patenka į techninius žurnalus (žr. aukščiau), tačiau jų nesiejame su asmeniu. Anketos atsakymai apie egzaminus į serverį nesiunčiami."
         ]
       },
       {
         "id": "favorites",
-        "title": "Mano sąrašas",
+        "title": "Išsaugotos programos",
         "body": [
           "Programų, kurias pažymite žvaigždute, sąrašas saugomas tik jūsų naršyklėje (localStorage). Jį galite ištrinti išvalę svetainės duomenis naršyklės nustatymuose. Šis saugojimas reikalingas funkcijai, kuria naudotis pasirenkate patys.",
           "Kai atidarote sąrašą, naršyklė paprašo šių programų duomenų iš mūsų duomenų bazės (Supabase). Užklausoje yra programų identifikatoriai; kaip ir bet kuris apsilankymas, ji patenka į paslaugų teikėjo techninius žurnalus. Sąrašo nesaugome ir nesiejame jo su asmeniu."

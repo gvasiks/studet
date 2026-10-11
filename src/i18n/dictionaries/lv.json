@@ -3,12 +3,12 @@
     "title": "Palīgs augstskolas izvēlei Latvijā"
   },
   "home": {
-    "title": "Kur tiešām varu iestāties?",
+    "title": "Kur tiešām var iestāties?",
     "description": "Aptauja, katalogs un konkursa punktu aprēķins vienuviet.",
     "catalogCta": "Skatīt katalogu",
     "surveyCta": "Aizpildīt aptauju",
     "sectionsLabel": "Citas sadaļas",
-    "matchText": "Ievadi eksāmenu rezultātus un redzi, kurām programmām punktus var aprēķināt jau tagad.",
+    "matchText": "Pēc ievadītajiem eksāmenu rezultātiem redzams, kurām programmām punktus var aprēķināt jau tagad.",
     "glossaryText": "Uzņemšanas noteikumu vārdi skaidrā valodā — katram norādīts avots.",
     "rightsText": "Ko likums garantē reflektantam: termiņi, līgums, rezultāti un lēmuma apstrīdēšana."
   },
@@ -17,9 +17,9 @@
   },
   "catalog": {
     "title": "Studiju programmu katalogs",
-    "subtitle": "Visas programmas, ko līdz šim esam pārbaudījuši.",
+    "subtitle": "Visas līdz šim apkopotās programmas.",
     "empty": "Pagaidām šeit nekā nav.",
-    "emptyFiltered": "Ar šādu filtru nekas neatbilst. Pamēģini paplašināt izvēli.",
+    "emptyFiltered": "Šādam filtram neatbilst neviena programma. Izvēli var paplašināt.",
     "years": "gadi",
     "degreeLevel": {
       "college": "Koledžas studijas",
@@ -68,14 +68,14 @@
       "both": "Budžeta un maksas vietas"
     },
     "verifiedPrefix": "Pārbaudīts",
-    "unverifiedLabel": "Iegūts automātiski — pārbaudiet augstskolas mājaslapā",
+    "unverifiedLabel": "Iegūts automātiski — jāpārbauda augstskolas mājaslapā",
     "sourceLinkLabel": "Oficiālais avots",
-    "surveyTeaser": "Nezini, ko izvēlēties?",
-    "surveyCta": "Aizpildi aptauju",
+    "surveyTeaser": "Palīdzība programmas izvēlē",
+    "surveyCta": "Aizpildīt aptauju",
     "filtersSummary": "Rādīts pēc filtra:",
     "clearFilters": "Notīrīt filtru",
     "heroBadge": "{programmes} programmas · {universities} iestādes",
-    "surveyCardText": "Aizpildi aptauju — atlasīsim tev programmas",
+    "surveyCardText": "Aptauja palīdz atlasīt piemērotas programmas",
     "surveyCardCta": "Sākt",
     "searchLabel": "Meklēt programmas",
     "searchPlaceholder": "Meklēt programmu vai augstskolu…",
@@ -122,7 +122,7 @@
       "fee": "Maksa gadā",
       "anyFee": "Jebkura maksa",
       "feeUpTo": "Līdz {amount} EUR",
-      "feeHint": "Maksa iegūta automātiski — pārbaudi augstskolas mājaslapā. Programmas bez norādītas maksas paliek sarakstā.",
+      "feeHint": "Maksa iegūta automātiski — jāpārbauda augstskolas mājaslapā. Programmas bez norādītas maksas paliek sarakstā.",
       "kind": "Augstskolas dibinātājs",
       "anyKind": "Valsts un privātās",
       "kinds": {
@@ -134,12 +134,12 @@
   },
   "programme": {
     "back": "Atpakaļ",
-    "detailsTitle": "Ko iegūsi",
+    "detailsTitle": "Iegūstamais grāds un kvalifikācija",
     "degreeAwarded": "Grāds",
     "qualification": "Profesionālā kvalifikācija",
     "diplomaDocument": "Izglītības dokuments",
     "aboutTitle": "Par programmu",
-    "detailsSource": "Iegūts automātiski no {source} {date} — pārbaudi augstskolas mājaslapā.",
+    "detailsSource": "Iegūts automātiski no {source} {date} — jāpārbauda augstskolas mājaslapā.",
     "fullDescriptionLink": "Pilns apraksts: {source}",
     "contentInLatvian": "Nosaukumi un apraksts ir latviešu valodā — tā, kā tos publicējusi augstskola.",
     "contentInEnglish": "Nosaukumi un apraksts ir angļu valodā — tā, kā tos publicējusi augstskola.",
@@ -175,7 +175,7 @@
   "nav": {
     "catalog": "Katalogs",
     "survey": "Aptauja",
-    "match": "Kur varu iestāties",
+    "match": "Kur var iestāties",
     "glossary": "Vārdnīca",
     "rights": "Tiesības",
     "menu": "Izvēlne",
@@ -188,8 +188,8 @@
     "LT": "Lietuva"
   },
   "report": {
-    "link": "Pamanīji kļūdu? Raksti mums",
-    "hint": "Atvērsies tava e-pasta programma; lapas adrese vēstulē jau būs ierakstīta.",
+    "link": "Ziņot par kļūdu",
+    "hint": "Atvērsies e-pasta programma; lapas adrese vēstulē jau būs ierakstīta.",
     "subject": "Kļūda StudyPick: {programme} — {university}",
     "body": "Lapa: {url}\n\nKas nav pareizi:\n\n\nKur redzama pareizā informācija (saite uz augstskolas lapu vai dokumentu):\n"
   },
@@ -237,16 +237,16 @@
     }
   },
   "survey": {
-    "title": "Kas tev der?",
-    "intro": "Daži ātri jautājumi. Atbildes nekur nesaglabājas.",
+    "title": "Programmu atlases aptauja",
+    "intro": "Daži īsi jautājumi. Atbildes netiek saglabātas.",
     "stepLabel": "Solis",
     "of": "no",
     "back": "Atpakaļ",
     "next": "Tālāk",
     "submit": "Skatīt programmas",
-    "skipToSearch": "Es jau zinu, ko meklēju",
+    "skipToSearch": "Izlaist aptauju un atvērt katalogu",
     "exams": {
-      "title": "Kurus centralizētos eksāmenus esi kārtojis vai plāno kārtot?",
+      "title": "Kārtotie vai plānotie centralizētie eksāmeni",
       "hint": "Pagaidām šī atbilde neietekmē sarakstu — konkursa punktu aprēķins vēl top.",
       "subjects": {
         "mathematics": "Matemātika",
@@ -262,8 +262,8 @@
       }
     },
     "interests": {
-      "title": "Kuras jomas tev interesē?",
-      "hint": "Katalogs tiks atlasīts pēc virziena. Ja neko neatzīmē, rādām visas programmas.",
+      "title": "Interešu jomas",
+      "hint": "Katalogs tiks atlasīts pēc virziena. Ja nekas nav atzīmēts, tiek rādītas visas programmas.",
       "categories": {
         "business": "Bizness un ekonomika",
         "it": "IT un tehnoloģijas",
@@ -278,36 +278,36 @@
       }
     },
     "funding": {
-      "title": "Budžeta vieta vai esi gatavs maksāt?",
+      "title": "Studiju finansējums",
       "budgetOnly": "Tikai budžeta vietas",
       "any": "Visi varianti"
     },
     "city": {
-      "title": "Kurā pilsētā vēlies studēt?",
-      "anywhere": "Esmu gatavs pārcelties uz jebkuru pilsētu"
+      "title": "Vēlamā studiju pilsēta",
+      "anywhere": "Jebkura pilsēta"
     },
     "level": {
-      "title": "Kādu studiju līmeni meklē?",
+      "title": "Studiju līmenis",
       "any": "Nav svarīgi"
     },
     "duration": {
-      "title": "Cik ilgi esi gatavs studēt?",
+      "title": "Studiju ilgums",
       "any": "Nav svarīgi"
     },
     "fee": {
-      "title": "Cik esi gatavs maksāt gadā?",
+      "title": "Studiju maksa gadā",
       "any": "Nav svarīgi"
     },
     "kind": {
-      "title": "Valsts vai privāta augstskola?",
+      "title": "Augstskolas dibinātājs",
       "any": "Nav svarīgi"
     },
     "language": {
-      "title": "Kādā valodā vēlies studēt?",
+      "title": "Studiju valoda",
       "any": "Nav svarīgi"
     },
     "mode": {
-      "title": "Kādā formā vēlies studēt?",
+      "title": "Studiju forma",
       "any": "Nav svarīgi"
     }
   },
@@ -315,10 +315,10 @@
     "title": "Konkursa punktu kalkulators",
     "notAvailable": "Konkursa punktu aprēķins šai programmai vēl nav publicēts — vai nu formula vēl nav savākta, vai tā gaida pārbaudi.",
     "totalLabel": "Konkursa punkti",
-    "invalidPercent": "Ievadi skaitli no 0 līdz 100.",
-    "invalidNumber": "Ievadi skaitli, kas nav mazāks par 0.",
+    "invalidPercent": "Jāievada skaitlis no 0 līdz 100.",
+    "invalidNumber": "Jāievada skaitlis, kas nav mazāks par 0.",
     "incomplete": "Vēl jāievada: {list}.",
-    "fixInvalid": "Izlabo atzīmētos laukus, lai redzētu punktus.",
+    "fixInvalid": "Lai redzētu punktus, jāizlabo atzīmētie lauki.",
     "gateWarning": "Nav sasniegts minimālais slieksnis vienā vai vairākos priekšmetos — pēc uzņemšanas noteikumiem uz šo programmu var nepretendēt.",
     "disclaimer": "Šis ir orientējošs aprēķins pēc mūsu ievāktās formulas, nevis oficiāls rezultāts. Galīgo lēmumu pieņem augstskola.",
     "levels": {
@@ -341,13 +341,13 @@
     }
   },
   "ltCalculator": {
-    "intro": "Ievadi valsts brieduma eksāmenu (VBE) vērtējumus. Redzami tikai tie mācību priekšmeti, kurus ieskaita šīs programmas konkursa punktos.",
+    "intro": "Jāievada valsts brieduma eksāmenu (VBE) vērtējumi. Redzami tikai tie mācību priekšmeti, kurus ieskaita šīs programmas konkursa punktos.",
     "courseLabel": "Kurss",
     "courseA": "A (padziļinātais)",
     "courseB": "B (vispārīgais)",
-    "invalid": "Ievadi skaitli no 30 līdz 100.",
+    "invalid": "Jāievada skaitlis no 30 līdz 100.",
     "totalLabel": "Konkursa punktu pamatdaļa",
-    "empty": "Ievadi vismaz vienu vērtējumu, lai redzētu punktus.",
+    "empty": "Lai redzētu punktus, jāievada vismaz viens vērtējums.",
     "breakdownTitle": "No kā veidojas punkti",
     "component": "{n}. sastāvdaļa",
     "weight": "svara koeficients {weight}",
@@ -359,7 +359,7 @@
     "checkedNote": "Formula automātiski ņemta no oficiālā kalkulatora datiem; aprēķins ar to salīdzināts {date}.",
     "sourceLink": "Formulu avots",
     "decidedBy": "Tas ir aprēķins, nevis oficiāls rezultāts. Galīgos konkursa punktus aprēķina kopējās uzņemšanas sistēma.",
-    "notAvailable": "Šai programmai punktus neaprēķinām: tos nosaka iestājpārbaudījums vai sporta sasniegumi, vai arī dažādām specializācijām ir atšķirīgas formulas. Izmanto oficiālo kalkulatoru.",
+    "notAvailable": "Šai programmai punkti netiek aprēķināti: tos nosaka iestājpārbaudījums vai sporta sasniegumi, vai arī dažādām specializācijām ir atšķirīgas formulas. Jāizmanto oficiālais kalkulators.",
     "subjects": {
       "lithuanian": "Lietuviešu valoda un literatūra",
       "mathematics": "Matemātika",
@@ -379,9 +379,9 @@
   },
   "ltMatch": {
     "resultsHeading": "Rezultāti",
-    "courseHint": "Lietuviešu valodai un literatūrai un matemātikai atzīmē kursu: A — padziļinātais, B — vispārīgais.",
+    "courseHint": "Lietuviešu valodai un literatūrai un matemātikai jānorāda kurss: A — padziļinātais, B — vispārīgais.",
     "summary": "Programmas, kurām aizpildītas visas punktu sastāvdaļas: {complete} · programmas, kurām trūkst eksāmenu: {partial}",
-    "sameScale": "Lietuvā konkursa punktus aprēķina pēc viena visai valstij kopīga noteikuma, tāpēc programmas sakārtotas pēc punktiem. Tā nav prognoze, vai tevi uzņems: tas atkarīgs no citu reflektantu punktiem, un to šeit nav.",
+    "sameScale": "Lietuvā konkursa punktus aprēķina pēc viena visai valstij kopīga noteikuma, tāpēc programmas sakārtotas pēc punktiem. Tā nav uzņemšanas prognoze: rezultāts atkarīgs no citu reflektantu punktiem, un to šeit nav.",
     "searchLabel": "Meklēt programmu vai augstskolu",
     "emptySearch": "Pēc šī meklējuma programmas nav atrastas.",
     "completeTitle": "Punkti aprēķināti",
@@ -408,7 +408,7 @@
     "invited": "Uzaicināti studēt",
     "signed": "Parakstīja līgumu",
     "scope": "Skaitļi aptver visas šīs programmas studiju formas un valodas šajā pilsētā. Pieteikums šeit ir viena programma reflektanta sarakstā; viens cilvēks var norādīt programmu gan valsts finansētai, gan maksas vietai.",
-    "caveat": "Tie ir fakti par iepriekšējo uzņemšanu, nevis tavu izredžu vērtējums. Datu kopā nav ne vietu skaita, ne konkursa punktu.",
+    "caveat": "Tie ir fakti par iepriekšējo uzņemšanu, nevis izredžu vērtējums. Datu kopā nav ne vietu skaita, ne konkursa punktu.",
     "source": "Saskaitīts automātiski no LAMA BPO atvērtajiem datiem ({date})."
   },
   "ltOutcomes": {
@@ -421,35 +421,35 @@
     "employed": "Strādāja (algotu darbu vai kā pašnodarbinātie): {percent} %",
     "qualified": "Strādāja darbu, kam nepieciešama augstākās izglītības kvalifikācija: {percent} %",
     "income": "Vidējie ienākumi: {percent} % no visu šī līmeņa absolventu vidējā (avotā vidējais — {average} EUR)",
-    "caveat": "Tie ir visas valsts šī virziena absolventu dati — to, kuri neturpināja studijas (medicīnā — visu absolventu), nevis konkrētās programmas vai augstskolas. Daļas rēķinātas no tiem, kuriem bija jāstrādā; absolventu skaits avotā nav norādīts. Vērtē to kā orientieri, nevis solījumu.",
+    "caveat": "Tie ir visas valsts šī virziena absolventu dati — to, kuri neturpināja studijas (medicīnā — visu absolventu), nevis konkrētās programmas vai augstskolas. Daļas rēķinātas no tiem, kuriem bija jāstrādā; absolventu skaits avotā nav norādīts. Tas ir orientieris, nevis solījums.",
     "source": "Avots: Lietuvas Izglītības, zinātnes un sporta ministrijas informācija pie valdības lēmuma projekta, NŠA dati ({date}). Iegūts automātiski."
   },
   "favorites": {
-    "navLink": "Mans saraksts",
-    "add": "Pievienot manam sarakstam",
+    "navLink": "Saglabātās",
+    "add": "Saglabāt programmu",
     "remove": "Noņemt no saraksta",
-    "title": "Mans saraksts",
-    "subtitle": "Saraksts glabājas tikai šajā pārlūkā — mēs to neglabājam. Tas saglabājas, kamēr nenotīri pārlūka datus.",
-    "empty": "Vēl nekas nav saglabāts. Pārlūko katalogu un atzīmē programmas ar ★, lai tās salīdzinātu šeit.",
+    "title": "Saglabātās programmas",
+    "subtitle": "Saraksts glabājas tikai šajā pārlūkā — mēs to neglabājam. Tas saglabājas, kamēr nav notīrīti pārlūka dati.",
+    "empty": "Vēl nekas nav saglabāts. Katalogā ar ★ atzīmētās programmas būs redzamas un salīdzināmas šeit.",
     "removeFromCompare": "Noņemt no salīdzinājuma",
     "compare": "Salīdzināt",
     "compareTitle": "Salīdzinājums",
     "compareLimit": "Vienlaikus var salīdzināt ne vairāk kā {max} programmas. Izvēlētas: {count} no {max}.",
-    "compareEmpty": "Atzīmē “Salīdzināt” uz programmu kartītēm, lai redzētu tās blakus."
+    "compareEmpty": "Lai redzētu programmas blakus, uz to kartītēm jāatzīmē “Salīdzināt”."
   },
   "footer": {
-    "disclaimer": "StudyPick ir neatkarīgs informatīvs portāls, nevis augstskola vai valsts iestāde — ar aplūkotajām augstskolām mūs nesaista nekādas līgumattiecības. Programmu apraksti, termiņi, maksa un konkursa formulas iegūti no augstskolu publiski pieejamiem avotiem un var būt novecojuši vai neprecīzi; katras programmas kartītē norādīts, vai fakts ir pārbaudīts cilvēka rokām vai iegūts automātiski. Pirms lēmuma pieņemšanas vienmēr pārbaudiet aktuālo informāciju augstskolas oficiālajā mājaslapā — galīgo lēmumu par uzņemšanu pieņem tikai augstskola."
+    "disclaimer": "StudyPick ir neatkarīgs informatīvs portāls, nevis augstskola vai valsts iestāde — ar aplūkotajām augstskolām mūs nesaista nekādas līgumattiecības. Programmu apraksti, termiņi, maksa un konkursa formulas iegūti no augstskolu publiski pieejamiem avotiem un var būt novecojuši vai neprecīzi; katras programmas kartītē norādīts, vai fakts ir pārbaudīts cilvēka rokām vai iegūts automātiski. Pirms lēmuma pieņemšanas aktuālā informācija vienmēr jāpārbauda augstskolas oficiālajā mājaslapā — galīgo lēmumu par uzņemšanu pieņem tikai augstskola."
   },
   "match": {
-    "title": "Kur es varu iestāties?",
-    "intro": "Ievadi centralizēto eksāmenu rezultātus — parādīsim, pēc kurām programmām konkursa punktus var aprēķināt jau tagad, un kādu eksāmenu vēl trūkst.",
-    "privacy": "Rezultāti tiek aprēķināti tavā pārlūkā — tie netiek sūtīti uz serveri un nekur netiek saglabāti.",
-    "examsHeading": "Tavi eksāmeni",
-    "examsHint": "Aizpildi tikai tos eksāmenus, ko esi kārtojis. Pārējos atstāj tukšus.",
+    "title": "Kurās programmās var iestāties",
+    "intro": "Pēc ievadītajiem centralizēto eksāmenu rezultātiem tiek parādīts, kurām programmām konkursa punktus var aprēķināt jau tagad un kādu eksāmenu vēl trūkst.",
+    "privacy": "Rezultāti tiek aprēķināti pārlūkā — tie netiek sūtīti uz serveri un nekur netiek saglabāti.",
+    "examsHeading": "Eksāmenu rezultāti",
+    "examsHint": "Jāaizpilda tikai kārtotie eksāmeni; pārējie lauki paliek tukši.",
     "percentSuffix": "%",
     "levelLabel": "Līmenis",
-    "emptyNoFormulas": "Konkursa punktu formulas šobrīd tiek pārbaudītas. Kad tās būs apstiprinātas, šeit varēsi ievadīt eksāmenu rezultātus un redzēt, kur vari pretendēt. Pa to laiku skaties programmu katalogu.",
-    "emptyNoExams": "Ievadi vismaz vienu eksāmenu, lai redzētu rezultātus.",
+    "emptyNoFormulas": "Konkursa punktu formulas šobrīd tiek pārbaudītas. Kad tās būs apstiprinātas, šeit varēs ievadīt eksāmenu rezultātus un redzēt, uz kurām programmām var pretendēt. Līdz tam pieejams programmu katalogs.",
+    "emptyNoExams": "Lai redzētu rezultātus, jāievada vismaz viens eksāmens.",
     "testData": "TESTA DATI — izdomātas programmas un formulas, redzamas tikai izstrādes režīmā.",
     "summary": "Var aprēķināt: {computed} · Atbilst prasībām (bez punktiem): {eligible} · Trūkst eksāmenu: {missingExams} · Vajag papildu datus: {missingExtras} · Slieksnis nav sasniegts: {gateFailed}",
     "notComparable": "Punkti dažādās augstskolās nav salīdzināmi: katrai augstskolai sava skala. Saraksts nav sakārtots pēc punktiem un nesola uzņemšanu.",
@@ -457,13 +457,13 @@
       "computed": "Punktus var aprēķināt",
       "computedHint": "Visi formulai vajadzīgie eksāmeni ir ievadīti.",
       "eligibleByRequirements": "Atbilst prasībām",
-      "eligibleByRequirementsHint": "Šīm programmām konkursa formula vēl nav apstiprināta, bet tev ir visi nepieciešamie eksāmeni — konkursa punktus šeit neaprēķinām.",
+      "eligibleByRequirementsHint": "Šīm programmām konkursa formula vēl nav apstiprināta, bet visi nepieciešamie eksāmeni ir ievadīti — konkursa punkti šeit netiek aprēķināti.",
       "gateFailed": "Nav sasniegts minimālais slieksnis",
       "gateFailedHint": "Pēc uzņemšanas noteikumiem uz šīm programmām var nepretendēt.",
       "missingExtras": "Vajag papildu datus",
-      "missingExtrasHint": "Šajās programmās punktos ieskaita iestājpārbaudījumu vai atestāta vērtējumu — aprēķini tos programmas kalkulatorā.",
+      "missingExtrasHint": "Šajās programmās punktos ieskaita iestājpārbaudījumu vai atestāta vērtējumu — tos var aprēķināt programmas kalkulatorā.",
       "missingExams": "Trūkst eksāmenu",
-      "missingExamsHint": "Šīm programmām formulā ir eksāmeni, kurus tu neesi ievadījis."
+      "missingExamsHint": "Šīm programmām formulā ir eksāmeni, kas nav ievadīti."
     },
     "scoreLabel": "Konkursa punkti",
     "missingPrefix": "Trūkst",
@@ -474,12 +474,12 @@
     "breakdown": "No kā veidojas punkti"
   },
   "rights": {
-    "title": "Tavas tiesības, iestājoties augstskolā",
+    "title": "Reflektanta tiesības, iestājoties augstskolā",
     "intro": "Ko Latvijas likumi un Ministru kabineta noteikumi garantē reflektantam: kad jāpublicē noteikumi, kad var reģistrēties, kad slēdz līgumu, cik ātri jāizziņo rezultāti un kā apstrīdēt lēmumu.",
     "checkedNote": "Sagatavots pēc likumu teksta, ko lasījām likumi.lv 2026. gada 20. septembrī (MK noteikumi Nr. 846 — redakcija uz 30.12.2025.; Augstskolu likums — spēkā esošā redakcija). Tas nav juridisks padoms: noteicošie ir likumu teksti un konkrētās augstskolas uzņemšanas noteikumi.",
     "sourceLabel": "Avots",
     "sourcesTitle": "Avoti",
-    "glossaryLink": "Nesaprotami vārdi? Skati vārdnīcu",
+    "glossaryLink": "Terminu skaidrojumi — vārdnīcā",
     "items": [
       {
         "id": "rules-published",
@@ -514,7 +514,7 @@
       {
         "id": "contract-timing",
         "title": "Studiju līgumu slēdz pēc dokumentiem un rezultātiem",
-        "text": "Augstskolai ir tiesības slēgt studiju līgumu pēc tam, kad esi iesniedzis vidējo izglītību apliecinošu dokumentu un eksāmenu sertifikātus un kad ir izziņoti konkursa rezultāti. Pēc rezultātu izziņošanas augstskola nosūta uzaicinājumu noslēgt līgumu; imatrikulācija notiek pēc līguma noslēgšanas.",
+        "text": "Augstskolai ir tiesības slēgt studiju līgumu pēc tam, kad reflektants ir iesniedzis vidējo izglītību apliecinošu dokumentu un eksāmenu sertifikātus un kad ir izziņoti konkursa rezultāti. Pēc rezultātu izziņošanas augstskola nosūta uzaicinājumu noslēgt līgumu; imatrikulācija notiek pēc līguma noslēgšanas.",
         "source": "Augstskolu likums, 46. panta 6.¹ un 6.² daļa; MK noteikumi Nr. 846, 4. punkts"
       },
       {
@@ -526,7 +526,7 @@
       {
         "id": "written-refusal",
         "title": "Atteikumu var pieprasīt rakstiski",
-        "text": "Ja augstskola atsakās tevi imatrikulēt, tev ir tiesības prasīt, lai lēmums tiktu noformēts rakstiski (Administratīvā procesa likumā noteiktajā kārtībā).",
+        "text": "Ja augstskola atsakās reflektantu imatrikulēt, viņam ir tiesības prasīt, lai lēmums tiktu noformēts rakstiski (Administratīvā procesa likumā noteiktajā kārtībā).",
         "source": "MK noteikumi Nr. 846, 16. punkts"
       },
       {
@@ -555,7 +555,7 @@
       },
       {
         "id": "education-abroad",
-        "title": "Ja izglītību ieguvi ārzemēs",
+        "title": "Ja izglītība iegūta ārvalstīs",
         "text": "Ja izglītības dokuments iegūts ārvalstīs, iesniegumam pievieno Akadēmiskās informācijas centra (vai tiesīgas augstskolas) izziņu par to, kādam Latvijas dokumentam tas atbilst. Ārzemniekam jāpievieno arī dokuments par studiju valodas prasmi vismaz B2 līmenī, ja vien nav izņēmumu, un augstskola viņu intervē.",
         "source": "MK noteikumi Nr. 846, 7., 7.¹, 7.² un 13.¹ punkts"
       }
@@ -573,9 +573,9 @@
   },
   "glossary": {
     "title": "Uzņemšanas vārdnīca",
-    "intro": "Vārdi, ko sastapsi augstskolu uzņemšanas noteikumos un šajā vietnē. Definīcijas ņemtas no likumiem un augstskolu noteikumiem; pie katras norādīts avots.",
+    "intro": "Vārdi, kas sastopami augstskolu uzņemšanas noteikumos un šajā vietnē. Definīcijas ņemtas no likumiem un augstskolu noteikumiem; pie katras norādīts avots.",
     "sourceLabel": "Avots",
-    "rightsLink": "Kādas ir tavas tiesības uzņemšanā",
+    "rightsLink": "Reflektanta tiesības uzņemšanā",
     "items": [
       {
         "id": "accredited-programme",
@@ -732,14 +732,14 @@
     },
     "error": {
       "title": "Neizdevās ielādēt lapu",
-      "text": "Ielādējot datus, radās kļūda. Tā ir mūsu puses problēma, nevis tava. Pamēģini vēlreiz pēc brīža.",
+      "text": "Ielādējot datus, radās kļūda vietnes pusē. Pēc brīža var mēģināt vēlreiz.",
       "retry": "Mēģināt vēlreiz",
       "catalog": "Skatīt katalogu"
     }
   },
   "privacy": {
     "title": "Privātuma politika",
-    "intro": "Kā šī vietne apstrādā personas datus: ko mēs uzglabājam, ko nē, un kādas ir tavas tiesības.",
+    "intro": "Kā šī vietne apstrādā personas datus: kas tiek glabāts, kas ne, un kādas ir datu subjekta tiesības.",
     "updated": "Redakcija: 2026. gada 10. oktobris",
     "authorityLabel": "Datu valsts inspekcija (dvi.gov.lv)",
     "authorityUrl": "https://www.dvi.gov.lv",
@@ -749,23 +749,23 @@
         "title": "Īsumā",
         "body": [
           "- Vietnei nav lietotāju kontu, un reģistrācija nav vajadzīga.",
-          "- Eksāmenu rezultāti, ko ievadi kalkulatorā vai meklēšanā «Kur es varu iestāties?», tiek aprēķināti tavā pārlūkā. Tie netiek nosūtīti uz mūsu serveri un nekur netiek saglabāti.",
+          "- Kalkulatorā vai sadaļā «Kurās programmās var iestāties» ievadītie eksāmenu rezultāti tiek aprēķināti apmeklētāja pārlūkā. Tie netiek nosūtīti uz mūsu serveri un nekur netiek saglabāti.",
           "- Mēs neizmantojam sīkdatnes izsekošanai un nerādām reklāmu.",
-          "- Izlase (zvaigznītes pie programmām) glabājas tikai tavā ierīcē."
+          "- Saglabāto programmu saraksts (zvaigznītes pie programmām) glabājas tikai apmeklētāja ierīcē."
         ]
       },
       {
         "id": "controller",
         "title": "Kas ir pārzinis",
         "body": [
-          "Personas datu pārzinis ir {controller}. Jautājumos par personas datiem raksti: {email}."
+          "Personas datu pārzinis ir {controller}. Jautājumos par personas datiem jāraksta uz {email}."
         ]
       },
       {
         "id": "visit",
         "title": "Vietnes apmeklējums",
         "body": [
-          "Kad atver lapu, hostinga pakalpojuma sniedzējs automātiski reģistrē tehniskos datus: IP adresi, laiku, pieprasīto adresi un pārlūka veidu. To dara, lai vietne darbotos un būtu droša. Mēs šos datus neizmantojam, lai kādu identificētu.",
+          "Atverot lapu, hostinga pakalpojuma sniedzējs automātiski reģistrē tehniskos datus: IP adresi, laiku, pieprasīto adresi un pārlūka veidu. To dara, lai vietne darbotos un būtu droša. Mēs šos datus neizmantojam, lai kādu identificētu.",
           "Pamats: mūsu leģitīmās intereses nodrošināt vietnes drošību un darbību (Vispārīgās datu aizsardzības regulas 6. panta 1. punkta f) apakšpunkts). Glabāšanas termiņu nosaka pakalpojuma sniedzējs.",
           "Valodu (latviešu, lietuviešu vai angļu) pirmajā apmeklējumā izvēlamies pēc pārlūka valodas iestatījuma; tas netiek saglabāts."
         ]
@@ -774,23 +774,23 @@
         "id": "survey",
         "title": "Aptauja un kalkulatori",
         "body": [
-          "- Eksāmenu rezultāti kalkulatorā un meklēšanā «Kur es varu iestāties?» tiek aprēķināti tikai tavā pārlūkā. Tie netiek sūtīti uz serveri, netiek saglabāti un netiek ielikti lapas adresē.",
+          "- Eksāmenu rezultāti kalkulatorā un sadaļā «Kurās programmās var iestāties» tiek aprēķināti tikai apmeklētāja pārlūkā. Tie netiek sūtīti uz serveri, netiek saglabāti un netiek ielikti lapas adresē.",
           "- Aptaujā izvēlētie filtri (interešu joma, pilsēta, studiju valoda un forma, budžeta vietas) tiek ielikti lapas adresē, lai varētu parādīt programmu sarakstu. Līdz ar apmeklējumu tie nonāk tehniskajos žurnālos (skat. iepriekš), bet mēs tos nesaistām ar personu. Eksāmenu atbildes aptaujā uz serveri netiek nosūtītas."
         ]
       },
       {
         "id": "favorites",
-        "title": "Izlase",
+        "title": "Saglabātās programmas",
         "body": [
-          "Programmu saraksts, ko atzīmē ar zvaigznīti, glabājas tikai tavā pārlūkā (localStorage). To var dzēst, iztīrot vietnes datus pārlūka iestatījumos. Šī glabāšana ir vajadzīga funkcijai, ko tu pats izvēlies izmantot.",
-          "Kad atver izlasi, pārlūks pieprasa šo programmu datus no mūsu datubāzes (Supabase). Pieprasījumā ir programmu identifikatori; tāpat kā jebkurš apmeklējums, tas nonāk pakalpojuma sniedzēja tehniskajos žurnālos. Mēs sarakstu neglabājam un nesaistām to ar personu."
+          "Ar zvaigznīti atzīmēto programmu saraksts glabājas tikai apmeklētāja pārlūkā (localStorage). To var dzēst, iztīrot vietnes datus pārlūka iestatījumos. Šī glabāšana ir vajadzīga funkcijai, ko apmeklētājs izmanto pēc paša izvēles.",
+          "Atverot saglabāto programmu sarakstu, pārlūks pieprasa šo programmu datus no mūsu datubāzes (Supabase). Pieprasījumā ir programmu identifikatori; tāpat kā jebkurš apmeklējums, tas nonāk pakalpojuma sniedzēja tehniskajos žurnālos. Mēs sarakstu neglabājam un nesaistām to ar personu."
         ]
       },
       {
         "id": "cookies",
         "title": "Sīkdatnes",
         "body": [
-          "Mēs neizmantojam sīkdatnes izsekošanai. Vietne pārlūkā glabā tikai izlases sarakstu (skat. iepriekš)."
+          "Mēs neizmantojam sīkdatnes izsekošanai. Vietne pārlūkā glabā tikai saglabāto programmu sarakstu (skat. iepriekš)."
         ]
       },
       {
@@ -801,15 +801,15 @@
           "- bez sīkdatnēm un bez datu glabāšanas pārlūkā;",
           "- bez cilvēka identificēšanas, bez sesiju ierakstiem un bez ievadīto lauku satura — eksāmenu rezultāti analītikā nenonāk;",
           "- IP adrese netiek glabāta.",
-          "Pamats: mūsu leģitīmās intereses uzlabot vietni (regulas 6. panta 1. punkta f) apakšpunkts). Tu vari iebilst — raksti uz {email}."
+          "Pamats: mūsu leģitīmās intereses uzlabot vietni (regulas 6. panta 1. punkta f) apakšpunkts). Pret šo apstrādi var iebilst, rakstot uz {email}."
         ]
       },
       {
         "id": "email",
         "title": "E-pasta atgādinājumi",
         "body": [
-          "Ja pats pieprasi atgādinājumu (piemēram, par uzņemšanas sākumu vai izmaiņām tavā programmu sarakstā), mēs uzglabājam tavu e-pasta adresi un to, par ko vēlies saņemt ziņas. Mēs tos izmantojam tikai tam, ko tu pieprasīji.",
-          "Pamats: tava piekrišana (regulas 6. panta 1. punkta a) apakšpunkts). Piekrišanu vari atsaukt jebkurā brīdī ar saiti katrā e-pastā vai rakstot uz {email}; atsaukums neietekmē iepriekšējo e-pastu likumību.",
+          "Ja apmeklētājs pats pieprasa atgādinājumu (piemēram, par uzņemšanas sākumu vai izmaiņām saglabāto programmu sarakstā), mēs uzglabājam viņa e-pasta adresi un to, par ko pieprasītas ziņas. Šos datus izmantojam tikai pieprasītajam mērķim.",
+          "Pamats: piekrišana (regulas 6. panta 1. punkta a) apakšpunkts). Piekrišanu var atsaukt jebkurā brīdī ar saiti katrā e-pastā vai rakstot uz {email}; atsaukums neietekmē iepriekšējo e-pastu likumību.",
           "E-pastus sūta pakalpojuma sniedzējs Resend. Adresi izdzēšam pēc piekrišanas atsaukšanas un ne vēlāk kā 12 mēnešus pēc pēdējā nosūtītā e-pasta."
         ]
       },
@@ -818,7 +818,7 @@
         "title": "Skolēni un jaunieši",
         "body": [
           "Vietnes auditorija galvenokārt ir skolēni un jaunieši. Latvijā bērns pats var dot piekrišanu informācijas sabiedrības pakalpojumam no 13 gadu vecuma; jaunākam bērnam vajadzīga vecāka vai likumiskā aizbildņa piekrišana (Fizisko personu datu apstrādes likuma 33. pants).",
-          "Eksāmenu rezultātus, ko ievadi vietnē, mēs neuzglabājam un nenosūtām."
+          "Vietnē ievadītos eksāmenu rezultātus mēs neuzglabājam un nenosūtām."
         ]
       },
       {
@@ -827,32 +827,32 @@
         "body": [
           "Mēs nepārdodam datus un nerādām reklāmu. Datus apstrādā tikai mūsu pakalpojumu sniedzēji (apstrādātāji), un tikai mūsu uzdevumā:",
           "- hostinga pakalpojuma sniedzējs (vietnes darbība);",
-          "- Supabase (datubāze ar serveriem Eiropas Savienībā; e-pasta adreses, ja tu tās iesniedz);",
+          "- Supabase (datubāze ar serveriem Eiropas Savienībā; e-pasta adreses, ja tās ir iesniegtas);",
           "- PostHog (lietošanas statistika, serveri Eiropas Savienībā);",
-          "- Google (e-pasts: ja mums raksti, sarakste glabājas Gmail pastkastē);",
+          "- Google (e-pasts: mums adresētā sarakste glabājas Gmail pastkastē);",
           "- Resend (e-pastu nosūtīšana).",
           "Ja pakalpojuma sniedzējs datus nodod ārpus Eiropas Ekonomikas zonas, tas notiek ar Eiropas Komisijas apstiprinātiem aizsardzības mehānismiem, piemēram, standarta līguma klauzulām."
         ]
       },
       {
         "id": "rights",
-        "title": "Tavas tiesības",
+        "title": "Datu subjekta tiesības",
         "body": [
-          "Tev ir tiesības:",
+          "Personai, kuras dati tiek apstrādāti (datu subjektam), ir tiesības:",
           "- saņemt informāciju par saviem datiem un piekļūt tiem;",
           "- prasīt datu labošanu vai dzēšanu;",
           "- ierobežot apstrādi un iebilst pret apstrādi, kas balstīta uz leģitīmajām interesēm;",
           "- saņemt datus pārnesamā formātā;",
           "- atsaukt piekrišanu jebkurā brīdī.",
-          "Raksti uz {email} — atbildēsim viena mēneša laikā. Ja uzskati, ka tavas tiesības pārkāptas, vari iesniegt sūdzību Datu valsts inspekcijai (Elijas iela 17, Rīga, LV-1050)."
+          "Pieprasījumi sūtāmi uz {email} — atbildēsim viena mēneša laikā. Ja persona uzskata, ka tās tiesības ir pārkāptas, tā var iesniegt sūdzību Datu valsts inspekcijai (Elijas iela 17, Rīga, LV-1050)."
         ]
       },
       {
         "id": "contact",
-        "title": "Ja raksti mums",
+        "title": "Sarakste ar mums",
         "body": [
-          "Programmas lapā un kalkulatorā ir saite, ar kuru vari paziņot par kļūdu. Tā atver tavu e-pasta programmu — vēstuli tu nosūti pats, vietne neko nenosūta tavā vietā.",
-          "Ja mums raksti, mēs saņemam tavu e-pasta adresi un vēstules saturu. Mēs tos izmantojam tikai, lai pārbaudītu un izlabotu informāciju un tev atbildētu. Eksāmenu rezultātus vēstulē neraksti — tie mums nav vajadzīgi.",
+          "Programmas lapā un kalkulatorā ir saite ziņošanai par kļūdu. Tā atver e-pasta programmu — vēstuli nosūta pats apmeklētājs, vietne viņa vietā neko nenosūta.",
+          "Saņemot vēstuli, mēs iegūstam sūtītāja e-pasta adresi un vēstules saturu. Tos izmantojam tikai, lai pārbaudītu un izlabotu informāciju un atbildētu sūtītājam. Eksāmenu rezultāti vēstulē nav jānorāda — tie mums nav vajadzīgi.",
           "Pamats: mūsu leģitīmās intereses uzturēt vietnē pareizu informāciju (regulas 6. panta 1. punkta f) apakšpunkts). Saraksti izdzēšam ne vēlāk kā 12 mēnešus pēc pēdējās vēstules."
         ]
       },
@@ -860,7 +860,7 @@
         "id": "decisions",
         "title": "Automatizēti lēmumi",
         "body": [
-          "Mēs nepieņemam automatizētus lēmumus, kas tevi ietekmē, un neveicam profilēšanu. Aprēķini vietnē ir orientējoši; galīgo lēmumu par uzņemšanu pieņem augstskola."
+          "Mēs nepieņemam automatizētus lēmumus, kas ietekmē personu, un neveicam profilēšanu. Aprēķini vietnē ir orientējoši; galīgo lēmumu par uzņemšanu pieņem augstskola."
         ]
       },
       {

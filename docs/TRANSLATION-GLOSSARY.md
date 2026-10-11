@@ -157,9 +157,9 @@ level**.
 |---|---|---|
 | katalogs | catalogue | ~~catalog~~ (американское написание — только как ключ JSON, не в тексте) |
 | konkursa punktu kalkulators | Competition score calculator | ~~competitive score~~, ~~ranking calculator~~ |
-| Kur tiešām varu iestāties? | Where can I actually get in? | — |
+| Kur tiešām var iestāties? | Where can you actually get in? | — |
 | aptauja | survey / questionnaire | оба варианта в ходу (`nav.survey` = «Survey», `home.description` = «Questionnaire») — **не расхождение**, разные контексты (пункт меню vs. описание продукта), но не смешивать внутри одного экрана |
-| mans saraksts | My list (как подпись кнопки/страницы) | «favourites» само по себе — не ошибка (законно встречается в `privacy` как общее слово о механизме), ошибка — заменить им подпись кнопки/пункта меню |
+| saglabātās programmas (в меню — «Saglabātās») | Saved programmes (в меню — «Saved»; как подпись кнопки/страницы) | «favourites» само по себе — не ошибка (законно встречается в `privacy` как общее слово о механизме), ошибка — заменить им подпись кнопки/пункта меню |
 | pārbaudīts (cilvēka) | Verified | ~~checked~~, ~~confirmed~~ |
 | iegūts automātiski | Auto-extracted | ~~automatically collected~~ |
 
