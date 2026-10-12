@@ -108,7 +108,7 @@ export function HeaderNav({
   return (
     <nav aria-label={labels.main} className={className}>
       {/* Широкий экран: строка пунктов */}
-      <ul className="hidden items-center gap-1 lg:flex">
+      <ul className="hidden items-center gap-1 xl:flex">
         {items.map((item) => {
           const active = isActive(item.href);
           const palette = dark
@@ -134,7 +134,7 @@ export function HeaderNav({
       </ul>
 
       {/* Узкий экран: кнопка и выпадающий список */}
-      <div ref={menuRef} className="relative lg:hidden">
+      <div ref={menuRef} className="relative xl:hidden">
         <button
           ref={buttonRef}
           type="button"
@@ -189,7 +189,7 @@ export function FavoritesLink({ locale, label }: { locale: Locale; label: string
     <Link
       href={`/${locale}/favorites`}
       // Уже lg «Мой список» — пункт выпадающего меню, отдельная кнопка не нужна.
-      className="hidden h-9 items-center gap-2 rounded-full border lg:inline-flex border-white/15 bg-white/5 px-3.5 text-sm font-medium text-white transition-colors hover:bg-white/10"
+      className="hidden h-9 items-center gap-2 rounded-full border xl:inline-flex border-white/15 bg-white/5 px-3.5 text-sm font-medium text-white transition-colors hover:bg-white/10"
     >
       <StarIcon size={14} />
       {label}

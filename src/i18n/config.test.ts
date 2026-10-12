@@ -56,11 +56,16 @@ describe("адрес = язык + страна", () => {
     expect([languageOf("lv-lt"), countryOf("lv-lt")]).toEqual(["lv", "LT"]);
     expect([languageOf("en-lt"), countryOf("en-lt")]).toEqual(["en", "LT"]);
     expect([languageOf("lt"), countryOf("lt")]).toEqual(["lt", "LT"]);
-    // Эстония: пока без адреса на эстонском (docs/PLAN-ESTONIA.md)
+    // Эстония и эстонский язык (docs/PLAN-ESTONIA.md)
+    expect([languageOf("et"), countryOf("et")]).toEqual(["et", "EE"]);
     expect([languageOf("en-ee"), countryOf("en-ee")]).toEqual(["en", "EE"]);
     expect([languageOf("lv-ee"), countryOf("lv-ee")]).toEqual(["lv", "EE"]);
     expect([languageOf("lt-ee"), countryOf("lt-ee")]).toEqual(["lt", "EE"]);
-    for (const locale of ["en-ee", "lv-ee", "lt-ee"]) expect(isLocale(locale), locale).toBe(false);
+    expect([languageOf("et-lv"), countryOf("et-lv")]).toEqual(["et", "LV"]);
+    expect([languageOf("et-lt"), countryOf("et-lt")]).toEqual(["et", "LT"]);
+    // Без флага предпросмотра закрыты и страна, и язык: эстонского адреса
+    // нет даже у открытой Латвии.
+    for (const locale of ["et", "en-ee", "lv-ee", "lt-ee", "et-lv", "et-lt"]) expect(isLocale(locale), locale).toBe(false);
   });
 
   it("по языку браузера: родной язык ведёт в свою страну, английский — в Латвию", () => {

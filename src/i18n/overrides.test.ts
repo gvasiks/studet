@@ -6,6 +6,9 @@ import enLt from "./dictionaries/en-lt.json";
 import lvLt from "./dictionaries/lv-lt.json";
 import ltLv from "./dictionaries/lt-lv.json";
 import enEe from "./dictionaries/en-ee.json";
+import et from "./dictionaries/et.json";
+import etLv from "./dictionaries/et-lv.json";
+import etLt from "./dictionaries/et-lt.json";
 import lvEe from "./dictionaries/lv-ee.json";
 import ltEe from "./dictionaries/lt-ee.json";
 
@@ -25,6 +28,8 @@ describe("файлы отличий словарей", () => {
     { name: "en-ee", override: enEe, base: en },
     { name: "lv-ee", override: lvEe, base: lv },
     { name: "lt-ee", override: ltEe, base: lt },
+    { name: "et-lv", override: etLv, base: et },
+    { name: "et-lt", override: etLt, base: et },
   ];
 
   for (const { name, override, base } of cases) {
@@ -33,6 +38,29 @@ describe("файлы отличий словарей", () => {
       expect(paths(override).filter((path) => !known.has(path))).toEqual([]);
     });
   }
+
+  // Эстонский словарь лежит поверх английского (dictionaries.ts): строка,
+  // которой в et.json нет, молча показалась бы по-английски. Поэтому все
+  // короткие тексты обязаны быть в нём; длинные разделы (словарь терминов,
+  // права, политика) не переведены и под эстонскими адресами закрыты.
+  it("et: переведены все тексты, кроме словаря терминов, прав и политики", () => {
+    const untranslated = ["rights", "glossary", "privacy"];
+    const short = (path: string) => !untranslated.includes(path.split(".")[1]);
+    expect(paths(et).filter(short).sort()).toEqual(paths(en).filter(short).sort());
+    expect(paths(et).filter((path) => !short(path))).toEqual([]);
+  });
+
+  it("et: подстановки те же, что в английской строке", () => {
+    const flat = (value: unknown, prefix = ""): [string, string][] =>
+      typeof value === "string"
+        ? [[prefix, value]]
+        : Object.entries(value as Record<string, unknown>).flatMap(([key, child]) => flat(child, `${prefix}.${key}`));
+    const english = new Map(flat(en).filter(([, text]) => typeof text === "string"));
+    const placeholders = (line: string) => (line.match(/\{\w+\}/g) ?? []).sort();
+    for (const [path, text] of flat(et)) {
+      expect(placeholders(text), path).toEqual(placeholders(english.get(path) ?? ""));
+    }
+  });
 
   // Литовский перевод латвийских словаря, прав и политики: тот же набор
   // записей, что в латышском оригинале, — иначе якорные ссылки и оглавление

@@ -22,7 +22,7 @@ export function SiteHeader({ locale, dict, tone }: { locale: Locale; dict: Dicti
             поместиться в 320 px без горизонтальной прокрутки (WCAG 1.4.10).
             Поэтому промежутки там меньше, а название рядом со значком
             появляется только от 360 px — имя сайта остаётся в aria-label. */}
-        <div className="page-container flex min-h-[72px] items-center gap-x-2 sm:gap-x-3 lg:gap-x-6">
+        <div className="page-container flex min-h-[72px] items-center gap-x-2 sm:gap-x-3 xl:gap-x-6">
           <Link href={`/${locale}`} className="flex items-center gap-2.5" aria-label={SITE_NAME}>
             <span className="grid h-8 w-8 place-items-center rounded-[10px] bg-brand text-white">
               <GraduationCapIcon size={18} />
@@ -33,12 +33,14 @@ export function SiteHeader({ locale, dict, tone }: { locale: Locale; dict: Dicti
               {SITE_NAME}
             </span>
           </Link>
-          {/* от lg — строка пунктов рядом с логотипом; уже — кнопка «Izvēlne»
-              в самом конце строки, после переключателя языка */}
+          {/* от xl (1280 px) — строка пунктов рядом с логотипом; уже — кнопка
+              «Izvēlne» в самом конце строки, после переключателя языка. До
+              2026-10-12 граница была lg (1024 px): с четвёртым языком в
+              переключателе строка из шести пунктов туда перестала помещаться. */}
           <HeaderNav
             locale={locale}
             tone={tone}
-            className="order-last lg:order-none"
+            className="order-last xl:order-none"
             labels={{
               catalog: dict.nav.catalog,
               survey: dict.nav.survey,

@@ -6,12 +6,25 @@ export type Dictionary = typeof lv;
 
 // Словарь выбирается по языку, а не по сегменту адреса. Базовый словарь
 // каждого языка написан для одной страны: lv.json и en.json — для Латвии,
-// lt.json — для Литвы. Для другой страны поверх него накладывается файл
-// отличий.
+// lt.json — для Литвы, et.json — для Эстонии. Для другой страны поверх него
+// накладывается файл отличий.
+//
+// В et.json пока только короткие тексты интерфейса: словарь терминов, права
+// и политика на эстонский не переведены и под эстонскими адресами закрыты
+// (writtenIn в src/lib/country.ts). Чтобы у словаря была полная форма, под
+// эстонский подложен английский: его длинные разделы под эстонским адресом
+// никогда не показываются, а полноту коротких проверяет overrides.test.ts.
 const dictionaries: Record<Language, () => Promise<Dictionary>> = {
   lv: () => import("@/i18n/dictionaries/lv.json").then((module) => module.default),
   en: () => import("@/i18n/dictionaries/en.json").then((module) => module.default),
   lt: () => import("@/i18n/dictionaries/lt.json").then((module) => module.default),
+  et: async () => {
+    const [english, estonian] = await Promise.all([
+      import("@/i18n/dictionaries/en.json").then((module) => module.default),
+      import("@/i18n/dictionaries/et.json").then((module) => module.default),
+    ]);
+    return mergeDictionary<Dictionary>(english, estonian);
+  },
 };
 
 // Только строки, которые в этой стране звучат иначе (название сайта,
@@ -20,8 +33,9 @@ const overrides: Partial<Record<Locale, () => Promise<unknown>>> = {
   "en-lt": () => import("@/i18n/dictionaries/en-lt.json").then((module) => module.default),
   "lv-lt": () => import("@/i18n/dictionaries/lv-lt.json").then((module) => module.default),
   "lt-lv": () => import("@/i18n/dictionaries/lt-lv.json").then((module) => module.default),
-  // Эстония: эстонского языка интерфейса пока нет, поэтому у всех трёх
-  // адресов — файл отличий поверх словаря другой страны.
+  "et-lv": () => import("@/i18n/dictionaries/et-lv.json").then((module) => module.default),
+  "et-lt": () => import("@/i18n/dictionaries/et-lt.json").then((module) => module.default),
+  // Эстония на остальных языках — файл отличий поверх словаря другой страны.
   "en-ee": () => import("@/i18n/dictionaries/en-ee.json").then((module) => module.default),
   "lv-ee": () => import("@/i18n/dictionaries/lv-ee.json").then((module) => module.default),
   "lt-ee": () => import("@/i18n/dictionaries/lt-ee.json").then((module) => module.default),

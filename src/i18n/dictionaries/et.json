@@ -1,0 +1,498 @@
+{
+  "meta": {
+    "title": "Abiline kõrgkooli valikul Eestis"
+  },
+  "home": {
+    "title": "Kuhu on tegelikult võimalik sisse astuda?",
+    "description": "Eesti kõrghariduse õppekavade kataloog ühes kohas — riikliku haridusportaali andmetel.",
+    "catalogCta": "Ava kataloog",
+    "surveyCta": "Täida küsitlus",
+    "sectionsLabel": "Teised jaotised",
+    "matchText": "Sisestatud eksamitulemuste põhjal on näha, milliste õppekavade konkursipunkte saab juba praegu arvutada.",
+    "glossaryText": "Vastuvõtueeskirjade mõisted lihtsas keeles — igaühe juures on allikas.",
+    "rightsText": "Mida seadus kandidaadile tagab: tähtajad, leping, tulemused ja otsuse vaidlustamine."
+  },
+  "coverage": {
+    "notice": "Praegu on siin ainult Eesti kõrghariduse õppekavade kataloog. Konkursipunktide arvutust, tähtaegu ja teavet välismaalt kandideerijatele veel ei ole."
+  },
+  "catalog": {
+    "title": "Õppekavade kataloog",
+    "subtitle": "Kõik seni kogutud õppekavad.",
+    "empty": "Siin ei ole veel midagi.",
+    "emptyFiltered": "Sellele filtrile ei vasta ükski õppekava. Valikut saab laiendada.",
+    "years": "aastat",
+    "degreeLevel": {
+      "college": "Rakenduskõrgharidusõpe",
+      "bachelor": "Bakalaureuseõpe",
+      "master": "Magistriõpe",
+      "doctoral": "Doktoriõpe",
+      "foundation": "Ettevalmistusprogramm",
+      "integrated": "Integreeritud õpe"
+    },
+    "studyMode": {
+      "full_time": "Täiskoormusega õpe",
+      "part_time": "Osakoormusega õpe",
+      "distance": "Kaugõpe"
+    },
+    "language": {
+      "lv": "läti keel",
+      "en": "inglise keel",
+      "lt": "leedu keel",
+      "ru": "vene keel",
+      "et": "eesti keel"
+    },
+    "city": {
+      "riga": "Riia",
+      "daugavpils": "Daugavpils",
+      "valmiera": "Valmiera",
+      "ventspils": "Ventspils",
+      "jelgava": "Jelgava",
+      "liepaja": "Liepāja",
+      "rezekne": "Rēzekne",
+      "jurmala": "Jūrmala",
+      "gulbene": "Gulbene",
+      "malnava": "Malnava",
+      "vilnius": "Vilnius",
+      "kaunas": "Kaunas",
+      "klaipeda": "Klaipėda",
+      "siauliai": "Šiauliai",
+      "panevezys": "Panevėžys",
+      "utena": "Utena",
+      "alytus": "Alytus",
+      "telsiai": "Telšiai",
+      "marijampole": "Marijampolė",
+      "taurage": "Tauragė",
+      "tallinn": "Tallinn",
+      "tartu": "Tartu",
+      "reola": "Reola",
+      "modriku": "Mõdriku",
+      "vaimela": "Väimela"
+    },
+    "funding": {
+      "budget": "Riigieelarvelised kohad",
+      "paid": "Tasuline õpe",
+      "both": "Riigieelarvelised ja tasulised kohad"
+    },
+    "verifiedPrefix": "Kontrollitud",
+    "unverifiedLabel": "Saadud automaatselt — tuleb kontrollida kõrgkooli veebilehelt",
+    "sourceLinkLabel": "Ametlik allikas",
+    "surveyTeaser": "Abi õppekava valikul",
+    "surveyCta": "Täida küsitlus",
+    "heroBadge": "{programmes} õppekava · {universities} õppeasutust",
+    "surveyCardText": "Küsitlus aitab leida sobivad õppekavad",
+    "surveyCardCta": "Alusta",
+    "searchLabel": "Õppekavade otsing",
+    "searchPlaceholder": "Otsi õppekava või kõrgkooli…",
+    "sortMenu": {
+      "label": "Sorteeri",
+      "name": "A–Z",
+      "name_desc": "Z–A",
+      "university": "Kõrgkooli järgi"
+    },
+    "tabs": {
+      "all": "Kõik",
+      "bachelor": "Bakalaureus",
+      "master": "Magister",
+      "doctoral": "Doktor",
+      "college": "Rakenduskõrgharidus",
+      "integrated": "Integreeritud"
+    },
+    "levelTabsLabel": "Õppeaste",
+    "found": "Leitud {count} õppekava",
+    "foundOne": "Leitud {count} õppekava",
+    "shown": "Näidatud {shown} / {total}",
+    "calculatorCta": "Arvuta punktid",
+    "showMore": "Näita rohkem",
+    "clear": "Tühjenda",
+    "openFilters": "Filtrid",
+    "filtersSummary": "Näidatud filtri järgi:",
+    "clearFilters": "Tühjenda filter",
+    "filters": {
+      "title": "Filtrid",
+      "country": "Õpingute riik",
+      "allCountries": "Kõik riigid",
+      "droppedFiltersHint": "Filtrid õppesuuna, õppevormi, õppemaksu ja riigieelarveliste kohtade järgi on nähtaval ainult siis, kui sellised andmed on olemas kõigi loendis olevate riikide kohta.",
+      "budgetOnlyHint": "Riigi rahastatud õppekavad",
+      "university": "Kõrgkool",
+      "anyUniversity": "Kõik kõrgkoolid",
+      "city": "Linn",
+      "language": "Õppekeel",
+      "anyLanguage": "Mis tahes keel",
+      "mode": "Õppevorm",
+      "anyMode": "Mis tahes vorm",
+      "budgetOnly": "Ainult riigieelarvelised kohad",
+      "interest": "Õppesuund",
+      "duration": "Õpingute kestus",
+      "anyDuration": "Mis tahes kestus",
+      "durationUpTo": "Kuni {years} aastat",
+      "fee": "Õppemaks aastas",
+      "anyFee": "Mis tahes õppemaks",
+      "feeUpTo": "Kuni {amount} EUR",
+      "feeHint": "Õppemaks on saadud automaatselt — tuleb kontrollida kõrgkooli veebilehelt. Õppekavad, mille õppemaks ei ole märgitud, jäävad loendisse.",
+      "kind": "Kõrgkooli omandivorm",
+      "anyKind": "Riiklikud ja erakõrgkoolid",
+      "kinds": {
+        "public": "Riiklik",
+        "private": "Era"
+      },
+      "apply": "Filtreeri"
+    }
+  },
+  "programme": {
+    "back": "Tagasi",
+    "detailsTitle": "Omandatav kraad ja kvalifikatsioon",
+    "degreeAwarded": "Kraad",
+    "qualification": "Kutsekvalifikatsioon",
+    "diplomaDocument": "Haridust tõendav dokument",
+    "aboutTitle": "Õppekavast",
+    "detailsSource": "Saadud automaatselt allikast {source} {date} — tuleb kontrollida kõrgkooli veebilehelt.",
+    "fullDescriptionLink": "Täielik kirjeldus: {source}",
+    "contentInLatvian": "Nimetused ja kirjeldus on läti keeles — nii, nagu kõrgkool on need avaldanud.",
+    "contentInEnglish": "Nimetused ja kirjeldus on inglise keeles — nii, nagu kõrgkool on need avaldanud.",
+    "contentInLithuanian": "Nimetused ja kirjeldus on leedu keeles, nagu avaldatud riiklikus registris.",
+    "contentInEstonian": "Nimetused on eesti keeles, nagu avaldatud riiklikus haridusportaalis.",
+    "degreeLevel": "Õppeaste",
+    "language": "Õppekeel",
+    "studyMode": "Õppevorm",
+    "tuitionFee": "Õppemaks aastas (EL/EMP)",
+    "duration": "Kestus",
+    "city": "Linn",
+    "funding": "Rahastus",
+    "budgetPlaces": "Riigieelarveliste kohtade arv",
+    "studyField": "Õppesuund",
+    "accreditation": "Akrediteeritud kuni",
+    "notFoundTitle": "Õppekava ei leitud",
+    "applyTitle": "Kuhu avaldus esitada",
+    "applyTypes": {
+      "unified_portal": "Avaldus esitatakse riiklikus sisseastumise infosüsteemis SAIS — üks keskkond mitme kõrgkooli jaoks.",
+      "university": "Avaldus esitatakse otse kõrgkoolile — kord on kirjeldatud selle veebilehel."
+    },
+    "applyLink": "Ava avalduse esitamise leht ({host})",
+    "applyNote": "Kehtib Eestis hariduse omandanud kandidaatide kohta; välismaalt kandideerijatele võib kord erineda.",
+    "deadlinesTitle": "Avalduste esitamise tähtajad",
+    "deadlinesNotAvailable": "Selle õppekava vastuvõtu kuupäevad ei ole veel kinnitatud.",
+    "deadlinesOpens": "alates",
+    "deadlinesCloses": "kuni",
+    "selectionTypes": {
+      "entrance_exam": "Selles kõrgkoolis konkursipunkte ei ole — vastuvõtt toimub sisseastumiskatsete põhjal.",
+      "open_admission": "Selles kõrgkoolis konkursipunkte ei ole — vastu võetakse nõuete täitmise alusel, ilma konkursita.",
+      "interview": "Selles kõrgkoolis konkursipunkte ei ole — otsus tehakse vestluse põhjal."
+    }
+  },
+  "nav": {
+    "catalog": "Kataloog",
+    "survey": "Küsitlus",
+    "match": "Kuhu kandideerida",
+    "glossary": "Sõnastik",
+    "rights": "Õigused",
+    "menu": "Menüü",
+    "main": "Peamenüü",
+    "footer": "Jaluse menüü",
+    "country": "Riik"
+  },
+  "countries": {
+    "LV": "Läti",
+    "LT": "Leedu",
+    "EE": "Eesti"
+  },
+  "report": {
+    "link": "Teata veast",
+    "hint": "Avaneb e-posti programm; lehe aadress on kirjas juba olemas.",
+    "subject": "Viga StudyPickis: {programme} — {university}",
+    "body": "Leht: {url}\n\nMis on valesti:\n\n\nKus on õige teave (link kõrgkooli lehele või dokumendile):\n"
+  },
+  "outcomes": {
+    "title": "Mis on saanud lõpetajatest",
+    "scope": "{university} lõpetajad õppesuunal „{field}“ (rühma kood {code}), {level}",
+    "cohort": "{year}. aasta lend, andmed {taxYear}. aasta kohta",
+    "employed": "Töötas {employed} lõpetajat {graduates}-st ({percent}%)",
+    "median": "Aastasissetuleku mediaan: {amount} EUR",
+    "incomeHidden": "Sissetulekut ei avaldata — töötajaid on vähem kui 30 (andmekaitse).",
+    "caveat": "Need on andmed selle kõrgkooli kõigi lõpetajate kohta sellel õppesuunal ja õppeastmel, mitte konkreetse õppekava kohta, ning ka ühe õppesuuna piires on lõpetajate erinevused suured — see on orientiir, mitte lubadus. Sissetulek on kogu aastasissetulek (ka osalise tööaja eest) ainult töötajatel; töötamine määratakse novembri seisuga. Osa bakalaureuseõppe lõpetajaid jätkab õpinguid, seetõttu on nende tööhõive osakaal väiksem.",
+    "source": "Allikas: IZM/CSP kõrghariduse lõpetajate seire",
+    "fieldAutomatic": "Selle õppekava õppesuund on määratud automaatselt nimetuse järgi, seda ei ole iga õppekava puhul eraldi kontrollitud.",
+    "levels": {
+      "college": "kolledž",
+      "bachelor": "bakalaureus",
+      "master": "magister",
+      "doctoral": "doktor"
+    }
+  },
+  "fields": {
+    "areas": {
+      "14": "Haridus",
+      "21": "Kunstid",
+      "22": "Humanitaaria",
+      "31": "Sotsiaal- ja käitumisteadused",
+      "32": "Ajakirjandus ja teave",
+      "34": "Ärindus ja haldus",
+      "38": "Õigus",
+      "42": "Bioteadused",
+      "44": "Füüsikalised loodusteadused",
+      "46": "Matemaatika ja statistika",
+      "48": "Arvutiteadused",
+      "52": "Tehnikaalad",
+      "54": "Tootmine ja töötlemine",
+      "58": "Arhitektuur ja ehitus",
+      "62": "Põllumajandus ja metsandus",
+      "64": "Veterinaaria",
+      "72": "Tervis",
+      "76": "Sotsiaalteenused",
+      "81": "Isikuteenindus (turism, sport)",
+      "84": "Transporditeenused",
+      "85": "Keskkonnakaitse",
+      "86": "Turvateenused"
+    }
+  },
+  "survey": {
+    "title": "Õppekavade valiku küsitlus",
+    "intro": "Mõned lühikesed küsimused. Vastuseid ei salvestata.",
+    "stepLabel": "Samm",
+    "of": "/",
+    "back": "Tagasi",
+    "next": "Edasi",
+    "submit": "Näita õppekavu",
+    "skipToSearch": "Jäta küsitlus vahele ja ava kataloog",
+    "exams": {
+      "title": "Sooritatud või kavandatud tsentraliseeritud eksamid",
+      "hint": "See vastus loendit praegu ei mõjuta — konkursipunktide arvutus on alles valmimisel.",
+      "subjects": {
+        "mathematics": "Matemaatika",
+        "latvian": "Läti keel",
+        "english": "Inglise keel",
+        "physics": "Füüsika",
+        "chemistry": "Keemia",
+        "biology": "Bioloogia",
+        "history": "Ajalugu",
+        "literature": "Läti kirjandus",
+        "socialstudies": "Sotsiaalteadused",
+        "german": "Saksa keel"
+      }
+    },
+    "interests": {
+      "title": "Huvivaldkonnad",
+      "hint": "Kataloog filtreeritakse õppesuuna järgi. Kui midagi ei ole märgitud, näidatakse kõiki õppekavu.",
+      "categories": {
+        "business": "Äri ja majandus",
+        "it": "IT ja tehnoloogia",
+        "law": "Õigus ja turvalisus",
+        "health": "Tervis ja sotsiaalvaldkond",
+        "engineering": "Tehnika ja ehitus",
+        "science": "Loodusteadused ja keskkond",
+        "humanities": "Humanitaarteadused ja kommunikatsioon",
+        "arts": "Kunst ja disain",
+        "society": "Psühholoogia, sotsiaalteadused ja haridus",
+        "services": "Turism ja sport"
+      }
+    },
+    "funding": {
+      "title": "Õpingute rahastus",
+      "budgetOnly": "Ainult riigieelarvelised kohad",
+      "any": "Kõik variandid"
+    },
+    "city": {
+      "title": "Soovitud õppimise linn",
+      "anywhere": "Mis tahes linn"
+    },
+    "level": {
+      "title": "Õppeaste",
+      "any": "Ei ole oluline"
+    },
+    "duration": {
+      "title": "Õpingute kestus",
+      "any": "Ei ole oluline"
+    },
+    "fee": {
+      "title": "Õppemaks aastas",
+      "any": "Ei ole oluline"
+    },
+    "kind": {
+      "title": "Kõrgkooli omandivorm",
+      "any": "Ei ole oluline"
+    },
+    "language": {
+      "title": "Õppekeel",
+      "any": "Ei ole oluline"
+    },
+    "mode": {
+      "title": "Õppevorm",
+      "any": "Ei ole oluline"
+    }
+  },
+  "calculator": {
+    "title": "Konkursipunktide kalkulaator",
+    "notAvailable": "Selle õppekava konkursipunktide arvutust ei ole veel avaldatud — valem on kas kogumata või ootab kontrollimist.",
+    "totalLabel": "Konkursipunktid",
+    "invalidPercent": "Sisestada tuleb arv vahemikus 0–100.",
+    "invalidNumber": "Sisestada tuleb arv, mis ei ole väiksem kui 0.",
+    "incomplete": "Veel tuleb sisestada: {list}.",
+    "fixInvalid": "Punktide nägemiseks tuleb märgitud väljad parandada.",
+    "gateWarning": "Ühes või mitmes õppeaines ei ole saavutatud miinimumlävendit — vastuvõtueeskirjade järgi ei pruugi sellele õppekavale kandideerimine olla võimalik.",
+    "disclaimer": "See on ligikaudne arvutus meie kogutud valemi põhjal, mitte ametlik tulemus. Lõpliku otsuse teeb kõrgkool.",
+    "levels": {
+      "augstakais": "Kõrgeim tase",
+      "optimalais": "Optimaalne tase",
+      "vispaarigais": "Üldtase"
+    },
+    "termKinds": {
+      "ce_average": "Keskmine % kõigis tsentraliseeritud eksamites",
+      "ce_average_leveled": "Keskmine % kõigis tsentraliseeritud eksamites (taseme koefitsiendiga)",
+      "certificate": "Lõputunnistuse hinne",
+      "entrance_exam": "Sisseastumiskatse",
+      "entrance_exam_english_test": "Inglise keele oskuse test",
+      "entrance_exam_interview": "Struktureeritud intervjuu",
+      "entrance_exam_math_test": "Matemaatika sisseastumiskatse",
+      "entrance_exam_art_test": "Praktiline katse kujutavas kunstis",
+      "entrance_exam_osppp": "Kutsesobivuse katse OSPPP (0–10)",
+      "certificate_physics": "Lõputunnistuse aastahinne füüsikas (1–10)",
+      "certificate_geography": "Lõputunnistuse aastahinne geograafias (1–10)"
+    }
+  },
+  "ltCalculator": {
+    "intro": "Sisestada tuleb riiklike küpsuseksamite (VBE) tulemused. Näidatud on ainult need õppeained, mida selle õppekava konkursipunktides arvestatakse.",
+    "courseLabel": "Kursus",
+    "courseA": "A (süvendatud)",
+    "courseB": "B (üld)",
+    "invalid": "Sisestada tuleb arv vahemikus 30–100.",
+    "totalLabel": "Konkursipunktide põhiosa",
+    "empty": "Punktide nägemiseks tuleb sisestada vähemalt üks tulemus.",
+    "breakdownTitle": "Millest punktid kujunevad",
+    "component": "{n}. komponent",
+    "weight": "kaalukoefitsient {weight}",
+    "notUsed": "sobivat tulemust ei ole — 0",
+    "average": "keskmine",
+    "extrasNote": "Lisapunkte (olümpiaadid, sõjaväeteenistus ja muud saavutused, kokku kuni 2,5) ei ole siin arvestatud.",
+    "rulesNote": "Arvutus {year}. aasta vastuvõtueeskirjade järgi ja ainult selle aasta riiklike küpsuseksamite põhjal: aastahindeid ja varasemate aastate eksameid ei arvestata.",
+    "officialLink": "Ametlik LAMA BPO kalkulaator",
+    "checkedNote": "Valem on võetud automaatselt ametliku kalkulaatori andmetest; arvutust on sellega võrreldud {date}.",
+    "sourceLink": "Valemite allikas",
+    "decidedBy": "See on arvutus, mitte ametlik tulemus. Lõplikud konkursipunktid arvutab ühise vastuvõtu süsteem.",
+    "notAvailable": "Selle õppekava punkte ei arvutata: need sõltuvad sisseastumiskatsest või spordisaavutustest või on eri spetsialiseerumistel erinevad valemid. Tuleb kasutada ametlikku kalkulaatorit.",
+    "subjects": {
+      "lithuanian": "Leedu keel ja kirjandus",
+      "mathematics": "Matemaatika",
+      "history": "Ajalugu",
+      "biology": "Bioloogia",
+      "chemistry": "Keemia",
+      "physics": "Füüsika",
+      "geography": "Geograafia",
+      "informatics": "Informaatika",
+      "foreign_language": "Võõrkeel",
+      "second_foreign_language": "Teine võõrkeel",
+      "minority_language": "Rahvusvähemuse emakeel",
+      "economics": "Majandus ja ettevõtlus",
+      "philosophy": "Filosoofia",
+      "engineering": "Insenertehnoloogiad"
+    }
+  },
+  "ltMatch": {
+    "resultsHeading": "Tulemused",
+    "courseHint": "Leedu keele ja kirjanduse ning matemaatika puhul tuleb märkida kursus: A — süvendatud, B — üld.",
+    "summary": "Õppekavad, mille kõik punktikomponendid on täidetud: {complete} · õppekavad, millel on eksameid puudu: {partial}",
+    "sameScale": "Leedus arvutatakse konkursipunkte ühe kogu riigis kehtiva reegli järgi, seetõttu on õppekavad järjestatud punktide järgi. See ei ole vastuvõtu prognoos: tulemus sõltub teiste kandidaatide punktidest, mida siin ei ole.",
+    "searchLabel": "Otsi õppekava või kõrgkooli",
+    "emptySearch": "Selle otsinguga õppekavu ei leitud.",
+    "completeTitle": "Punktid arvutatud",
+    "completeHint": "Sisestatud on kõik eksamid, mida need õppekavad arvestavad.",
+    "partialTitle": "Eksameid on puudu",
+    "partialHint": "Vähemalt ühel punktikomponendil ei ole sobivat tulemust — see on null. Iga rühma juures on kirjas, mis puudub.",
+    "programmes": "Õppekavu: {count}",
+    "missing": "Puudub:",
+    "showAll": "Näita kõiki ({count})",
+    "showLess": "Näita vähem",
+    "minimum": "Lisaks konkursipunktidele kehtivad miinimumnõuded: kolme riikliku küpsuseksami (leedu keel ja kirjandus, matemaatika ja üks valikeksam) keskmine tulemus peab olema vähemalt 50 ülikoolidesse ja 41 kolledžitesse kandideerimisel (kunstiõppes on erandid). Iga kõrgkool määrab ka oma madalaimad konkursipunktid.",
+    "minimumSource": "LAMA BPO teade",
+    "withoutCalculator": "Veel {count} õppekava siin ei ole: nende punktid sõltuvad sisseastumiskatsest või spordisaavutustest või on nende spetsialiseerumistel erinevad valemid."
+  },
+  "ltStats": {
+    "title": "{year}. aasta põhivastuvõtu arvud",
+    "funding": {
+      "state": "Riigi rahastatud kohad",
+      "stipend": "Kohad õppestipendiumiga",
+      "paid": "Riigi rahastamata (tasulised) kohad"
+    },
+    "applications": "Avaldusi",
+    "firstPriority": "Neist esimese eelistusena",
+    "invited": "Kutsutud õppima",
+    "signed": "Sõlmis lepingu",
+    "scope": "Arvud hõlmavad selle õppekava kõiki õppevorme ja -keeli selles linnas. Avaldus tähendab siin ühte õppekava kandidaadi loendis; üks inimene võib märkida õppekava nii riigi rahastatud kui ka tasulisele kohale.",
+    "caveat": "Need on faktid eelmise vastuvõtu kohta, mitte võimaluste hinnang. Andmestikus ei ole kohtade arvu ega konkursipunkte.",
+    "source": "Loendatud automaatselt LAMA BPO avaandmetest ({date})."
+  },
+  "ltOutcomes": {
+    "scope": "Kogu Leedu {level} lõpetajad, {from}.–{to}. aasta lennud, 12 kuud pärast lõpetamist. Õppesuund:",
+    "levels": {
+      "bachelor": "ülikoolide esimese astme õppe",
+      "college": "kolledžiõppe",
+      "integrated": "integreeritud õppe"
+    },
+    "employed": "Töötas (palgatööl või füüsilisest isikust ettevõtjana): {percent} %",
+    "qualified": "Töötas ametikohal, mis nõuab kõrghariduse kvalifikatsiooni: {percent} %",
+    "income": "Keskmine sissetulek: {percent} % kõigi selle astme lõpetajate keskmisest (allikas on keskmine {average} EUR)",
+    "caveat": "Need on kogu riigi selle õppesuuna lõpetajate andmed — nende, kes õpinguid ei jätkanud (meditsiinis kõigi lõpetajate) —, mitte konkreetse õppekava või kõrgkooli andmed. Osakaalud on arvutatud nende seast, kes pidid töötama; lõpetajate arvu allikas ei esita. See on orientiir, mitte lubadus.",
+    "source": "Allikas: Leedu Haridus-, Teadus- ja Spordiministeeriumi teave valitsuse otsuse eelnõu juurde, NŠA andmed ({date}). Saadud automaatselt."
+  },
+  "favorites": {
+    "navLink": "Salvestatud",
+    "add": "Salvesta õppekava",
+    "remove": "Eemalda loendist",
+    "title": "Salvestatud õppekavad",
+    "subtitle": "Loend on ainult selles brauseris — meie seda ei salvesta. See säilib, kuni brauseri andmeid ei ole kustutatud.",
+    "empty": "Midagi ei ole veel salvestatud. Kataloogis tähega ★ märgitud õppekavad on siin nähtavad ja võrreldavad.",
+    "removeFromCompare": "Eemalda võrdlusest",
+    "compare": "Võrdle",
+    "compareTitle": "Võrdlus",
+    "compareLimit": "Korraga saab võrrelda kuni {max} õppekava. Valitud: {count} / {max}.",
+    "compareEmpty": "Õppekavade kõrvuti nägemiseks tuleb nende kaartidel märkida „Võrdle“."
+  },
+  "footer": {
+    "disclaimer": "StudyPick on sõltumatu teabeportaal, mitte kõrgkool ega riigiasutus — siin käsitletud kõrgkoolidega ei seo meid ükski lepinguline suhe. Õppekavade kirjeldused, tähtajad, õppemaks ja konkursivalemid pärinevad kõrgkoolide avalikest allikatest ning võivad olla aegunud või ebatäpsed; iga õppekava kaardil on kirjas, kas fakti on kontrollinud inimene või on see saadud automaatselt. Enne otsuse tegemist tuleb ajakohast teavet alati kontrollida kõrgkooli ametlikult veebilehelt — lõpliku vastuvõtuotsuse teeb ainult kõrgkool."
+  },
+  "match": {
+    "title": "Millistele õppekavadele saab kandideerida",
+    "intro": "Sisestatud eksamitulemuste põhjal näidatakse, milliste õppekavade konkursipunkte saab juba praegu arvutada ja millised eksamid on veel puudu.",
+    "privacy": "Tulemused arvutatakse brauseris — neid ei saadeta serverisse ega salvestata kuhugi.",
+    "examsHeading": "Eksamitulemused",
+    "examsHint": "Täita tuleb ainult sooritatud eksamid; ülejäänud väljad jäävad tühjaks.",
+    "percentSuffix": "%",
+    "levelLabel": "Tase",
+    "emptyNoFormulas": "Konkursipunktide valemeid praegu kontrollitakse. Kui need on kinnitatud, saab siin sisestada eksamitulemused ja näha, millistele õppekavadele saab kandideerida. Seni on kasutada õppekavade kataloog.",
+    "emptyNoExams": "Tulemuste nägemiseks tuleb sisestada vähemalt üks eksam.",
+    "testData": "TESTANDMED — väljamõeldud õppekavad ja valemid, nähtavad ainult arendusrežiimis.",
+    "summary": "Saab arvutada: {computed} · Vastab nõuetele (punktideta): {eligible} · Eksameid puudu: {missingExams} · Vaja lisaandmeid: {missingExtras} · Lävend saavutamata: {gateFailed}",
+    "notComparable": "Eri kõrgkoolide punktid ei ole võrreldavad: igal kõrgkoolil on oma skaala. Loend ei ole punktide järgi järjestatud ega luba vastuvõttu.",
+    "groups": {
+      "computed": "Punkte saab arvutada",
+      "computedHint": "Kõik valemi jaoks vajalikud eksamid on sisestatud.",
+      "eligibleByRequirements": "Vastab nõuetele",
+      "eligibleByRequirementsHint": "Nende õppekavade konkursivalem ei ole veel kinnitatud, kuid kõik nõutavad eksamid on sisestatud — konkursipunkte siin ei arvutata.",
+      "gateFailed": "Miinimumlävend saavutamata",
+      "gateFailedHint": "Vastuvõtueeskirjade järgi ei pruugi nendele õppekavadele kandideerimine olla võimalik.",
+      "missingExtras": "Vaja lisaandmeid",
+      "missingExtrasHint": "Nende õppekavade punktides arvestatakse sisseastumiskatset või lõputunnistuse hinnet — neid saab arvutada õppekava kalkulaatoris.",
+      "missingExams": "Eksameid on puudu",
+      "missingExamsHint": "Nende õppekavade valemis on eksameid, mida ei ole sisestatud."
+    },
+    "scoreLabel": "Konkursipunktid",
+    "missingPrefix": "Puudub",
+    "extrasPrefix": "Vaja ka",
+    "gateFailedPrefix": "Lävend",
+    "openCalculator": "Ava kalkulaator",
+    "openProgramme": "Õppekava leht",
+    "breakdown": "Millest punktid kujunevad"
+  },
+  "system": {
+    "notFound": {
+      "title": "Lehte ei leitud",
+      "text": "Sellist lehte siin ei ole. Võimalik, et õppekava enam ei pakuta või on aadress sisestatud valesti.",
+      "catalog": "Ava kataloog",
+      "home": "Avalehele"
+    },
+    "error": {
+      "title": "Lehe laadimine ebaõnnestus",
+      "text": "Andmete laadimisel tekkis saidi poolel viga. Mõne aja pärast saab uuesti proovida.",
+      "retry": "Proovi uuesti",
+      "catalog": "Ava kataloog"
+    }
+  }
+}

@@ -8,8 +8,6 @@ import type { Language } from "@/i18n/config";
 // Название на языке страницы, а если его нет — на любом, какой есть.
 // У записи заполнено название на языке её страны (name_lv у латвийских,
 // name_lt у литовских, name_et у эстонских) и, не у всех, английское.
-// Эстонского языка интерфейса пока нет, поэтому эстонское название — всегда
-// запасное.
 //
 // Запасной порядок: сначала язык страны, потом английский. На латышской
 // странице литовского каталога вуз называется «Vilniaus universitetas», а
@@ -19,7 +17,7 @@ export function localizedName(
   entity: { name_lv: string | null; name_en: string | null; name_lt?: string | null; name_et?: string | null },
   language: Language,
 ): string {
-  const byLanguage = { lv: entity.name_lv, en: entity.name_en, lt: entity.name_lt ?? null };
+  const byLanguage = { lv: entity.name_lv, en: entity.name_en, lt: entity.name_lt ?? null, et: entity.name_et ?? null };
   return byLanguage[language] ?? entity.name_lv ?? entity.name_lt ?? entity.name_et ?? entity.name_en ?? "";
 }
 

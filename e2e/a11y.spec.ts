@@ -77,6 +77,20 @@ const LT_ROUTES = [
   "/en-ee/programmes/taltech/informaatika-0",
   "/lt-ee/favorites",
   "/lv-ee/survey",
+  // Эстонский язык интерфейса (с 2026-10-12): у Эстонии и у двух других
+  // стран. Словарь терминов, права и политика на эстонский не переведены и
+  // закрыты — /et-lv/glossary проверяется как страница «не найдено».
+  "/et",
+  "/et/programmes?country=EE",
+  "/et/programmes/ut/informaatika-4",
+  "/et/survey",
+  "/et-lv",
+  "/et-lv/programmes",
+  "/et-lv/match",
+  "/et-lv/programmes/lu/economics/calculator",
+  "/et-lv/glossary",
+  "/et-lt",
+  "/et-lt/match",
 ];
 
 for (const route of LT_ROUTES) {

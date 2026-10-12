@@ -1,0 +1,28 @@
+{
+  "meta": {
+    "title": "Abiline kõrgkooli valikul Lätis"
+  },
+  "home": {
+    "description": "Küsitlus, kataloog ja konkursipunktide arvutus ühes kohas — praegu Läti vastuvõtusüsteemi kohta."
+  },
+  "coverage": {
+    "notice": "Praegu on siin kirjeldatud ainult Läti vastuvõtusüsteem kohalikele koolilõpetajatele — teavet välismaalt kandideerijatele (kogukulud, dokumentide loendid, elamisload) veel ei ole."
+  },
+  "catalog": {
+    "degreeLevel": {
+      "college": "Kolledžiõpe"
+    },
+    "tabs": {
+      "college": "Kolledž"
+    }
+  },
+  "programme": {
+    "applyTypes": {
+      "unified_portal": "Avaldus esitatakse ühtses vastuvõtusüsteemis riigiteenuste portaalis — üks avaldus mitmele kõrgkoolile."
+    },
+    "applyNote": "Kehtib Lätis hariduse omandanud kandidaatide kohta; välismaalt kandideerijatele võib kord erineda."
+  },
+  "match": {
+    "intro": "Sisestatud tsentraliseeritud eksamite tulemuste põhjal näidatakse, milliste õppekavade konkursipunkte saab juba praegu arvutada ja millised eksamid on veel puudu."
+  }
+}

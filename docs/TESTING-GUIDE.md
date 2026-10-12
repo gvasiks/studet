@@ -108,7 +108,8 @@ npm run dev
       не падает.
 - [ ] Обе кнопки («Skatīt katalogu» / «Aizpildīt aptauju»; на EN — «Browse
       the catalogue» / «Take the survey») ведут на `/programmes` и `/survey`.
-- [ ] Шапка на ширине ≥1024 px: Katalogs · Aptauja · Kur var iestāties ·
+- [ ] Шапка на ширине ≥1280 px (до 2026-10-12 — от 1024 px; с четвёртым языком
+      строка меню туда не помещается, на 1024–1279 px вместо неё кнопка меню): Katalogs · Aptauja · Kur var iestāties ·
       Saglabātās · Vārdnīca · Tiesības в одну строку, текущий раздел
       подсвечен. Уже — кнопка «Izvēlne» (☰): открывается кликом и Enter,
       закрывается Esc (фокус на кнопке), кликом мимо и выбором пункта.

@@ -167,11 +167,24 @@ export function schoolLeaverLevels(country: Country): LevelKey[] {
 // все три языка (литовский перевод — 2026-10-06, lt-lv.json), поэтому их
 // здесь нет. Страница проверки — внутренний инструмент на латышском.
 // Раздел, которого здесь нет, доступен на всех языках.
+//
+// На эстонский (с 2026-10-12) длинные тексты ещё не переведены — ни
+// латвийские, ни литовские: под /et-lv и /et-lt словарь терминов, права и
+// политика закрыты. Перевод — отдельный шаг (docs/PLAN-ESTONIA.md, фаза 11);
+// когда раздел переведён, его строка отсюда убирается.
+const TRANSLATED: readonly Language[] = ["lv", "lt", "en"];
 const writtenIn: Record<Country, Partial<Record<Feature, readonly Language[]>>> = {
   LV: {
     verification: ["lv", "en"],
+    glossary: TRANSLATED,
+    rights: TRANSLATED,
+    privacy: TRANSLATED,
   },
-  LT: {},
+  LT: {
+    glossary: TRANSLATED,
+    rights: TRANSLATED,
+    privacy: TRANSLATED,
+  },
   EE: {},
 };
 

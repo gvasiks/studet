@@ -1,0 +1,34 @@
+{
+  "meta": {
+    "title": "Abiline kõrgkooli valikul Leedus"
+  },
+  "home": {
+    "description": "Õppekavade kataloog ühes kohas: esimese astme ja integreeritud õpe, kuhu võetakse vastu Leedu ühise vastuvõtu kaudu."
+  },
+  "coverage": {
+    "notice": "Praegu on siin ainult Leedu ühise vastuvõtu õppekavad kohalikele koolilõpetajatele. Teavet välismaalt kandideerijatele veel ei ole."
+  },
+  "catalog": {
+    "degreeLevel": {
+      "college": "Kolledžiõpe (kutsebakalaureus)",
+      "bachelor": "Ülikooli bakalaureuseõpe"
+    },
+    "tabs": {
+      "bachelor": "Ülikoolid",
+      "college": "Kolledžid"
+    },
+    "funding": {
+      "budget": "Riigi rahastatud kohad",
+      "both": "Riigi rahastatud ja tasulised kohad"
+    }
+  },
+  "programme": {
+    "applyTypes": {
+      "unified_portal": "Õppekava on ühise vastuvõtu loendis: avaldus esitatakse LAMA BPO ühise vastuvõtu süsteemis — üks avaldus mitmele kõrgkoolile."
+    },
+    "applyNote": "Kehtib Leedus hariduse omandanud kandidaatide kohta; välismaalt kandideerijatele võib kord erineda."
+  },
+  "match": {
+    "intro": "Sisestatud riiklike küpsuseksamite (VBE) tulemuste põhjal näidatakse Leedu ühise vastuvõtu õppekavade konkursipunktid ja see, millised eksamid on veel puudu."
+  }
+}

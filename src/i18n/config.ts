@@ -1,37 +1,37 @@
 // Первый сегмент адреса — пара «язык интерфейса + страна каталога».
-// Каталог каждой страны открывается на любом из трёх языков (решения
-// 2026-10-05 и 2026-10-06, docs/PLAN-LITHUANIA-2027.md):
+// Каталог каждой страны открывается на любом из языков интерфейса (решения
+// 2026-10-05 и 2026-10-06, docs/PLAN-LITHUANIA-2027.md; эстонский и Эстония
+// — 2026-10-11, docs/PLAN-ESTONIA.md):
 //
-//   /lv/…     латышский, каталог Латвии        /lt/…     литовский, каталог Литвы
-//   /en-lv/…  английский, каталог Латвии       /en-lt/…  английский, каталог Литвы
-//   /lt-lv/…  литовский, каталог Латвии        /lv-lt/…  латышский, каталог Литвы
+//   Латвия   /lv      /lt-lv   /et-lv   /en-lv
+//   Литва    /lv-lt   /lt      /et-lt   /en-lt
+//   Эстония  /lv-ee   /lt-ee   /et      /en-ee
 //
 // Правило записи: «язык-страна»; у языка самой страны суффикса нет.
-//
-// С 2026-10-11 строится Эстония (docs/PLAN-ESTONIA.md): пока на трёх
-// нынешних языках — /en-ee, /lv-ee, /lt-ee. Эстонский язык интерфейса (/et и
-// /et-lv, /et-lt) появится отдельным шагом; до него первым у Эстонии стоит
-// английский адрес.
 //
 // В коде сегмент по-прежнему называется locale (так называется папка
 // маршрутов). Когда нужен язык или страна — спрашивай languageOf() и
 // countryOf(), а не сравнивай сегмент со строкой.
 //
 // Порядок важен: первым у страны стоит адрес на её языке (nativeLocale).
-const allLocales = ["lv", "en-lv", "lt-lv", "lt", "en-lt", "lv-lt", "en-ee", "lv-ee", "lt-ee"] as const;
+const allLocales = [
+  "lv", "en-lv", "lt-lv", "et-lv",
+  "lt", "en-lt", "lv-lt", "et-lt",
+  "et", "en-ee", "lv-ee", "lt-ee",
+] as const;
 
 export type Locale = (typeof allLocales)[number];
 
 // В этом порядке языки стоят в переключателе в шапке — одинаково на всех
 // страницах.
-export const languages = ["lv", "lt", "en"] as const;
+export const languages = ["lv", "lt", "et", "en"] as const;
 
 export type Language = (typeof languages)[number];
 
-// Язык, на котором написаны названия и описания программ. Шире языков
-// интерфейса: эстонские программы названы по-эстонски, а эстонского
-// интерфейса пока нет.
-export type ContentLanguage = Language | "et";
+// Язык, на котором написаны названия и описания программ. Сейчас совпадает
+// с языками интерфейса; отдельное имя — на случай страны, чьи программы
+// названы на языке, которого в интерфейсе нет.
+export type ContentLanguage = Language;
 
 // ISO 3166-1 alpha-2, как в university.country.
 export type Country = "LV" | "LT" | "EE";
@@ -43,6 +43,9 @@ const variants: Record<Locale, { language: Language; country: Country }> = {
   lt: { language: "lt", country: "LT" },
   "en-lt": { language: "en", country: "LT" },
   "lv-lt": { language: "lv", country: "LT" },
+  "et-lv": { language: "et", country: "LV" },
+  "et-lt": { language: "et", country: "LT" },
+  et: { language: "et", country: "EE" },
   "en-ee": { language: "en", country: "EE" },
   "lv-ee": { language: "lv", country: "EE" },
   "lt-ee": { language: "lt", country: "EE" },
@@ -62,8 +65,16 @@ const variants: Record<Locale, { language: Language; country: Country }> = {
 // (/lt-lv) открыт всегда — решение владельца 2026-10-06.
 const previewCountries: Country[] = ["LT", "EE"];
 
+// Языки интерфейса, которые ещё строятся: тем же флагом закрыты все адреса
+// на этом языке, у любой страны. Эстонский (с 2026-10-12) — пока не
+// переведены словарь терминов, права и политика и пока владелец не решил,
+// выходит ли /et-lv вместе с латвийским запуском, как /lt-lv.
+const previewLanguages: Language[] = ["et"];
+
 function isOpen(locale: Locale): boolean {
-  return !previewCountries.includes(variants[locale].country) || process.env.NEXT_PUBLIC_PREVIEW_COUNTRIES === "1";
+  const { country, language } = variants[locale];
+  const preview = previewCountries.includes(country) || previewLanguages.includes(language);
+  return !preview || process.env.NEXT_PUBLIC_PREVIEW_COUNTRIES === "1";
 }
 
 // Адреса, которые существуют для посетителя.
