@@ -408,6 +408,31 @@
     "minimumSource": "LAMA BPO teade",
     "withoutCalculator": "Veel {count} õppekava siin ei ole: nende punktid sõltuvad sisseastumiskatsest või spordisaavutustest või on nende spetsialiseerumistel erinevad valemid."
   },
+  "eeAdmission": {
+    "title": "Konkursi tingimused",
+    "competition": "Konkurss",
+    "studyForm": "Õppetöö vorm",
+    "forms": {
+      "daytime": "päevane õpe",
+      "session": "sessioonõpe"
+    },
+    "location": "Õppetöö asukoht",
+    "startsOn": "Õppetöö algus",
+    "funding": "Koormus ja rahastus",
+    "loads": {
+      "full": "täiskoormus",
+      "part": "osakoormus",
+      "unspecified": "koormus määramata"
+    },
+    "free": "tasuta",
+    "paid": "tasuline",
+    "periods": {
+      "semester": "semestris",
+      "year": "aastas",
+      "credit": "ainepunkti eest"
+    },
+    "pastNote": "Need on eelmise vastuvõtu tingimused; uues vastuvõtus võivad need erineda."
+  },
   "ltStats": {
     "title": "{year}. aasta põhivastuvõtu arvud",
     "funding": {

@@ -374,6 +374,15 @@ python src/lt_load_field_outcomes.py --apply
 шаг, меньше минуты). Запускаются только по имени, с компьютера владельца;
 расписания и сторожа пока нет. План и ход работ — `docs/PLAN-ESTONIA.md`.
 
+Всё одной командой, по порядку и с остановкой на первом сбое:
+
+```
+.venv\Scripts\python.exe src\ee_refresh.py
+```
+
+В сезон приёма (март–август) — раз в неделю, в остальное время — раз в
+месяц. Те же шаги по отдельности:
+
 ```
 .venv\Scripts\python.exe src\main.py ee_haridusportaal      # каталог
 .venv\Scripts\python.exe src\ee_load_fields.py --apply      # направления, после каталога

@@ -408,6 +408,31 @@
     "minimumSource": "LAMA BPO announcement",
     "withoutCalculator": "{count} more programmes are not listed here: their score depends on an entrance exam or sport achievements, or their specialisations use different formulas."
   },
+  "eeAdmission": {
+    "title": "Admission conditions",
+    "competition": "Competition",
+    "studyForm": "Form of study",
+    "forms": {
+      "daytime": "daytime study",
+      "session": "session-based study"
+    },
+    "location": "Place of study",
+    "startsOn": "Studies start",
+    "funding": "Study load and funding",
+    "loads": {
+      "full": "full load",
+      "part": "partial load",
+      "unspecified": "load not specified"
+    },
+    "free": "free of charge",
+    "paid": "fee-paying",
+    "periods": {
+      "semester": "per semester",
+      "year": "per year",
+      "credit": "per credit point"
+    },
+    "pastNote": "These are the conditions of the previous admission round; they may differ in a new round."
+  },
   "ltStats": {
     "title": "Main admission in {year}: the numbers",
     "funding": {

@@ -173,10 +173,21 @@ def parse_date(text: str) -> str | None:
 
 
 def parse_location(text: str) -> str | None:
-    """«Eesti ,\\n Tartu» -> «Tartu»; «Tallinn, Kännu 67» остаётся как есть."""
+    """«Eesti ,\\n Tartu» -> «Tartu»; «Tallinn, Kännu 67» остаётся как есть.
+    Одна буква («t» у одного конкурса 2026 года) — опечатка в источнике, а
+    не место: значение остаётся пустым."""
     value = clean(text)
     value = re.sub(r"^Eesti\s*,\s*", "", value)
-    return value or None
+    return value if len(value) >= 2 else None
+
+
+def parse_study_form(text: str) -> str | None:
+    """«päevane õpe»; у конкурса бывает две формы, каждая на своей строке —
+    тогда «päevane õpe, sessioonõpe». «määramata» («не определена») SAIS
+    пишет, когда вуз форму не указал: это отсутствие значения."""
+    forms = [clean(line).lower() for line in (text or "").splitlines()]
+    forms = [form for form in forms if form and form != "määramata"]
+    return ", ".join(dict.fromkeys(forms)) or None
 
 
 def parse_page(title: str, pairs: list[list[str]]) -> dict:
@@ -184,12 +195,9 @@ def parse_page(title: str, pairs: list[list[str]]) -> dict:
     fields = {clean(label).rstrip(":").strip(): value for label, value in pairs}
     if LABEL_INSTITUTION not in fields:
         raise PageChanged("на странице нет подписи «Õppeasutus» — это не страница конкурса или она на другом языке")
-    # «määramata» («не определена») — SAIS пишет так, когда вуз форму не
-    # указал: это отсутствие значения, а не форма обучения.
-    study_form = clean(fields.get(LABEL_FORM, "")).lower()
     return {
         "title": clean(title) or None,
-        "study_form": None if study_form in ("", "määramata") else study_form,
+        "study_form": parse_study_form(fields.get(LABEL_FORM, "")),
         "location": parse_location(fields.get(LABEL_LOCATION, "")),
         "starts_on": parse_date(fields.get(LABEL_STARTS, "")),
         "funding": parse_funding(fields.get(LABEL_FUNDING, "")),
@@ -205,7 +213,10 @@ def _selftest() -> None:
     assert parse_location("Eesti ,\n Tartu") == "Tartu"
     assert parse_location("Tartu") == "Tartu"
     assert parse_location("Eesti , Tallinn, Kännu 67") == "Tallinn, Kännu 67"
-    assert parse_location("") is None
+    assert parse_location("") is None and parse_location("t") is None
+    assert parse_study_form("päevane õpe \n") == "päevane õpe"
+    assert parse_study_form("päevane õpe\nsessioonõpe\n") == "päevane õpe, sessioonõpe"
+    assert parse_study_form("määramata") is None and parse_study_form("") is None
 
     # полная нагрузка бесплатно — без цен
     assert parse_funding("täiskoormus:\ntasuta") == [{"load": "full", "paid": False, "prices": []}]

@@ -408,6 +408,31 @@
     "minimumSource": "LAMA BPO paziņojums",
     "withoutCalculator": "Vēl {count} programmu šeit nav: to punktus nosaka iestājpārbaudījums vai sporta sasniegumi, vai arī to specializācijām ir atšķirīgas formulas."
   },
+  "eeAdmission": {
+    "title": "Konkursa nosacījumi",
+    "competition": "Konkurss",
+    "studyForm": "Nodarbību forma",
+    "forms": {
+      "daytime": "dienas studijas",
+      "session": "sesiju studijas"
+    },
+    "location": "Studiju vieta",
+    "startsOn": "Studiju sākums",
+    "funding": "Slodze un finansējums",
+    "loads": {
+      "full": "pilna slodze",
+      "part": "nepilna slodze",
+      "unspecified": "slodze nav norādīta"
+    },
+    "free": "bez maksas",
+    "paid": "par maksu",
+    "periods": {
+      "semester": "semestrī",
+      "year": "gadā",
+      "credit": "par kredītpunktu"
+    },
+    "pastNote": "Tie ir iepriekšējās uzņemšanas nosacījumi; jaunā uzņemšanā tie var atšķirties."
+  },
   "ltStats": {
     "title": "{year}. gada pamatuzņemšanas skaitļi",
     "funding": {

@@ -27,6 +27,7 @@ import { BackButton } from "@/components/BackButton";
 import { FavoriteButton } from "@/components/FavoriteButton";
 import { LtAdmissionStats } from "@/components/LtAdmissionStats";
 import { LtFieldOutcome } from "@/components/LtFieldOutcome";
+import { EeAdmissionConditions } from "@/components/EeAdmissionConditions";
 import { ReportErrorLink } from "@/components/ReportErrorLink";
 import { buildAlternates, SITE_URL } from "@/lib/site";
 
@@ -356,7 +357,9 @@ export default async function ProgrammePage({ params }: { params: Params }) {
                 <p className="mt-2 text-zinc-700">
                   {interpolate(dict.programme.deadlinesPast, { date: tallinnDate(eeAdmission.closesAt!, language) })}
                 </p>
-                {eeSaisUrl && (
+                {/* Ссылка — только если страница конкурса прочитана: страницы
+                    старых конкурсов SAIS удаляет, и ссылка вела бы на ошибку. */}
+                {eeSaisUrl && eeAdmission.title !== null && (
                   <p className="mt-2">
                     <a href={eeSaisUrl} target="_blank" rel="noopener noreferrer" className="text-zinc-900 underline">
                       {interpolate(dict.programme.previousAdmissionLink, { host: sourceHost(eeSaisUrl) ?? "" })}
@@ -400,6 +403,10 @@ export default async function ProgrammePage({ params }: { params: Params }) {
           <p className="mt-2 text-zinc-500">{dict.programme.deadlinesNotAvailable}</p>
         )}
       </section>
+
+      {eeAdmission && eeAdmissionState && (
+        <EeAdmissionConditions dict={dict} language={language} admission={eeAdmission} state={eeAdmissionState} />
+      )}
 
       {channel && (
         <section className="mt-8">

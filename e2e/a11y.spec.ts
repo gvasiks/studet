@@ -88,6 +88,10 @@ const LT_ROUTES = [
   // показывается как прошлый приём) и программа с прошлым приёмом
   "/lv-ee/programmes/tlu/lingvistika",
   "/et/programmes/ebs/rahvusvaheline-arijuhtimine-mba-1",
+  // условия конкурса со страницы SAIS: три варианта нагрузки с ценами и
+  // конкурс с двумя ценами по семестрам
+  "/lv-ee/programmes/pallas/maal",
+  "/en-ee/programmes/ebs/ettevotlus-ja-arijuhtimine",
   "/et/survey",
   "/et-lv",
   "/et-lv/programmes",

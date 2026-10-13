@@ -8,6 +8,8 @@ import { buildAlternates } from "@/lib/site";
 import { getApplicationRoundsForCards } from "@/lib/deadline-queries";
 import { getCalculatorProgrammeIds } from "@/lib/calculator-ids";
 import { matchRounds } from "@/lib/deadlines";
+import { openDeadline, tallinnDate } from "@/lib/ee-admission";
+import { getEeOpenDeadlines } from "@/lib/ee-admission-queries";
 import { listProgrammes, listUniversities } from "@/lib/catalog";
 import { countriesShown, hasActiveFilters, onlySupported, parseCatalogState } from "@/lib/catalog-query";
 import { buildCatalogView } from "@/lib/catalog-view";
@@ -76,12 +78,15 @@ export default async function ProgrammesPage({
     university: state.university,
     kind: state.kind ?? undefined,
   };
-  const [programmeLists, universityLists, applicationRounds, calculatorIdSets] = await Promise.all([
+  const [programmeLists, universityLists, applicationRounds, calculatorIdSets, eeDeadlines] = await Promise.all([
     Promise.all(shown.map((country) => listProgrammes(country, filters))),
     Promise.all(shown.map((country) => listUniversities(country))),
     getApplicationRoundsForCards(),
     Promise.all(shown.map((country) => getCalculatorProgrammeIds(country))),
+    // Действующие сроки подачи эстонских программ — из данных государственного портала.
+    shown.includes("EE") ? getEeOpenDeadlines() : {},
   ]);
+  const now = new Date();
   const programmes = programmeLists.flat();
   const universityGroups = shown.map((country, index) => ({ country, universities: universityLists[index] }));
   const calculatorIds = new Set(calculatorIdSets.flatMap((ids) => [...ids]));
@@ -148,6 +153,8 @@ export default async function ProgrammesPage({
                     programme.degree_level,
                     programme.language_of_instruction,
                   ).find((round) => round.closesOn !== null);
+                  // У эстонской программы — срок её действующего конкурса.
+                  const eeClosesAt = openDeadline(eeDeadlines, programme.id, now);
 
                   return (
                     <ProgrammeCard
@@ -158,9 +165,11 @@ export default async function ProgrammesPage({
                       showCountry={shown.length > 1}
                       hasCalculator={calculatorIds.has(programme.id)}
                       deadline={
-                        nextRound
-                          ? `${dict.programme.deadlinesCloses} ${new Date(nextRound.closesOn!).toLocaleDateString(languageOf(locale))}`
-                          : null
+                        eeClosesAt
+                          ? `${dict.programme.deadlinesCloses} ${tallinnDate(eeClosesAt, languageOf(locale))}`
+                          : nextRound
+                            ? `${dict.programme.deadlinesCloses} ${new Date(nextRound.closesOn!).toLocaleDateString(languageOf(locale))}`
+                            : null
                       }
                     />
                   );

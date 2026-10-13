@@ -408,6 +408,31 @@
     "minimumSource": "LAMA BPO pranešimas",
     "withoutCalculator": "Dar {count} programų čia nėra: jų balą lemia stojamasis egzaminas ar sporto pasiekimai arba jų specializacijoms taikomos skirtingos formulės."
   },
+  "eeAdmission": {
+    "title": "Konkurso sąlygos",
+    "competition": "Konkursas",
+    "studyForm": "Studijų organizavimo forma",
+    "forms": {
+      "daytime": "dieninės studijos",
+      "session": "sesijinės studijos"
+    },
+    "location": "Studijų vieta",
+    "startsOn": "Studijų pradžia",
+    "funding": "Krūvis ir finansavimas",
+    "loads": {
+      "full": "visas krūvis",
+      "part": "dalinis krūvis",
+      "unspecified": "krūvis nenurodytas"
+    },
+    "free": "nemokamai",
+    "paid": "mokamai",
+    "periods": {
+      "semester": "per semestrą",
+      "year": "per metus",
+      "credit": "už kreditą"
+    },
+    "pastNote": "Tai ankstesnio priėmimo sąlygos; naujame priėmime jos gali skirtis."
+  },
   "ltStats": {
     "title": "{year} m. pagrindinio priėmimo skaičiai",
     "funding": {

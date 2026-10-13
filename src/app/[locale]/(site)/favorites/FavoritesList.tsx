@@ -6,6 +6,7 @@ import { countries, countryOf, languageOf, type Locale } from "@/i18n/config";
 import type { Dictionary } from "@/i18n/dictionaries";
 import { enumLabel, getProgrammesByIds, localizedName, type ProgrammeWithUniversity } from "@/lib/catalog";
 import { matchRounds, type ApplicationRound } from "@/lib/deadlines";
+import { openDeadline, tallinnDate } from "@/lib/ee-admission";
 import { getFavoriteIds, subscribeToFavorites } from "@/lib/favorites";
 import { interpolate } from "@/lib/outcomes";
 import { ProgrammeCard } from "@/components/ProgrammeCard";
@@ -24,6 +25,7 @@ export function FavoritesList({
   dict,
   calculatorIds,
   applicationRounds,
+  eeDeadlines,
 }: {
   locale: Locale;
   dict: Dictionary;
@@ -31,6 +33,8 @@ export function FavoritesList({
   calculatorIds: string[];
   /** Подтверждённые сроки подачи — для чипа «до …» на карточке. */
   applicationRounds: ApplicationRound[];
+  /** Действующие сроки подачи эстонских программ: id программы -> конец подачи. */
+  eeDeadlines: Record<string, string>;
 }) {
   // null — ещё не прочитали localStorage (первая отрисовка на сервере его
   // не видит); [] — прочитали, и там пусто. Различие нужно, чтобы не
@@ -154,6 +158,7 @@ export function FavoritesList({
             programme.degree_level,
             programme.language_of_instruction,
           ).find((round) => round.closesOn !== null);
+          const eeClosesAt = openDeadline(eeDeadlines, programme.id, new Date());
 
           return (
             <ProgrammeCard
@@ -164,9 +169,11 @@ export function FavoritesList({
               showCountry={countries.length > 1}
               hasCalculator={calculatorSet.has(programme.id)}
               deadline={
-                nextRound
-                  ? `${dict.programme.deadlinesCloses} ${new Date(nextRound.closesOn!).toLocaleDateString(languageOf(locale))}`
-                  : null
+                eeClosesAt
+                  ? `${dict.programme.deadlinesCloses} ${tallinnDate(eeClosesAt, languageOf(locale))}`
+                  : nextRound
+                    ? `${dict.programme.deadlinesCloses} ${new Date(nextRound.closesOn!).toLocaleDateString(languageOf(locale))}`
+                    : null
               }
               footer={
                 <label

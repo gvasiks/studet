@@ -6,6 +6,7 @@ import { getDictionary } from "@/i18n/dictionaries";
 import { getApplicationRoundsForCards } from "@/lib/deadline-queries";
 import type { ApplicationRound } from "@/lib/deadlines";
 import { getCalculatorProgrammeIds } from "@/lib/calculator-ids";
+import { getEeOpenDeadlines } from "@/lib/ee-admission-queries";
 import { FavoritesList } from "./FavoritesList";
 
 // noindex — страница у каждого посетителя своя (localStorage конкретного
@@ -30,16 +31,22 @@ export const revalidate = 3600;
 
 // Сбой базы не должен ронять страницу: карточки просто останутся без
 // кнопки калькулятора и без срока подачи.
-async function loadCardData(): Promise<{ calculatorIds: string[]; applicationRounds: ApplicationRound[] }> {
+async function loadCardData(): Promise<{
+  calculatorIds: string[];
+  applicationRounds: ApplicationRound[];
+  eeDeadlines: Record<string, string>;
+}> {
   try {
     // Список общий для всех открытых стран — и кнопка расчёта нужна программам каждой.
-    const [idSets, applicationRounds] = await Promise.all([
+    const [idSets, applicationRounds, eeDeadlines] = await Promise.all([
       Promise.all(countries.map((country) => getCalculatorProgrammeIds(country))),
       getApplicationRoundsForCards(),
+      // Действующие сроки подачи эстонских программ (id программы -> конец подачи).
+      countries.includes("EE") ? getEeOpenDeadlines() : {},
     ]);
-    return { calculatorIds: idSets.flatMap((ids) => [...ids]), applicationRounds };
+    return { calculatorIds: idSets.flatMap((ids) => [...ids]), applicationRounds, eeDeadlines };
   } catch {
-    return { calculatorIds: [], applicationRounds: [] };
+    return { calculatorIds: [], applicationRounds: [], eeDeadlines: {} };
   }
 }
 
@@ -49,7 +56,7 @@ export default async function FavoritesPage({ params }: PageProps<"/[locale]/fav
   if (!hasFeature(locale, "favorites")) notFound();
 
   const dict = await getDictionary(locale);
-  const { calculatorIds, applicationRounds } = await loadCardData();
+  const { calculatorIds, applicationRounds, eeDeadlines } = await loadCardData();
 
   return (
     // Заголовок — на сером фоне, как на /rights, /glossary и /survey;
@@ -60,7 +67,13 @@ export default async function FavoritesPage({ params }: PageProps<"/[locale]/fav
         <h1 className="text-3xl font-bold tracking-tighter text-zinc-900 sm:text-4xl">{dict.favorites.title}</h1>
         <p className="mt-3 max-w-[65ch] text-lg leading-relaxed text-zinc-600">{dict.favorites.subtitle}</p>
       </header>
-      <FavoritesList locale={locale} dict={dict} calculatorIds={calculatorIds} applicationRounds={applicationRounds} />
+      <FavoritesList
+        locale={locale}
+        dict={dict}
+        calculatorIds={calculatorIds}
+        applicationRounds={applicationRounds}
+        eeDeadlines={eeDeadlines}
+      />
     </main>
   );
 }
