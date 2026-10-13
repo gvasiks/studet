@@ -15,5 +15,352 @@
     "tabs": {
       "college": "Professional"
     }
+  },
+  "rights": {
+    "intro": "What Estonia's Higher Education Act provides for applicants and students: who may apply, who sets the admission conditions, when study is free and how to contest a decision.",
+    "checkedNote": "Prepared automatically from the text of Estonia's Higher Education Act (Kõrgharidusseadus) as we read it in Riigi Teataja on 13 October 2026: the version in force from 19 July to 31 December 2026 (RT I, 09.07.2026, 49). A lawyer has not checked this text. The next version takes effect on 1 January 2027. This is not legal advice: the Estonian text of the Act and each institution's admission conditions are what count.",
+    "items": [
+      {
+        "id": "who-can-apply",
+        "title": "Who may apply",
+        "text": "A person with secondary education or an equivalent qualification may apply for bachelor's studies and professional higher education. Master's studies require a bachelor's degree and doctoral studies a master's degree, or an equivalent qualification.",
+        "source": "Higher Education Act, § 12"
+      },
+      {
+        "id": "conditions-published",
+        "title": "The institution sets and publishes its admission conditions",
+        "text": "Each higher education institution sets and publishes its conditions of admission, including the minimum level of the language of instruction. The conditions are the institution's own.",
+        "source": "Higher Education Act, § 13(1)"
+      },
+      {
+        "id": "threshold-or-ranking",
+        "title": "Admission by meeting the conditions or by ranking",
+        "text": "A person who meets the institution's admission conditions is admitted. Where justified, the institution may cap the number of students admitted to a programme and fill the places by ranking — then those who meet the conditions and hold a place in the ranking that secures admission are admitted.",
+        "source": "Higher Education Act, § 13(2) and (4)"
+      },
+      {
+        "id": "no-grouping-by-fee",
+        "title": "Fee-paying and non-paying applicants are assessed alike",
+        "text": "When compliance with the admission conditions is assessed, applicants to the first and second level are not grouped by whether the institution may charge them for studying. Grouping is allowed in justified cases arising from the nature of the programme or learners' special needs.",
+        "source": "Higher Education Act, § 13(3)"
+      },
+      {
+        "id": "free-study",
+        "title": "Full-load study in Estonian is free",
+        "text": "Studying under an Estonian-language curriculum is free for a student who studies with a full load and cumulatively completes the required study volume every semester.",
+        "source": "Higher Education Act, § 16(1)"
+      },
+      {
+        "id": "no-admission-fee",
+        "title": "No admission fee where study is free",
+        "text": "Where studying is free for the student, the institution may not charge for admission or for performances defined as an admission condition.",
+        "source": "Higher Education Act, § 16(5)"
+      },
+      {
+        "id": "when-fee-charged",
+        "title": "When the institution may charge for studies",
+        "text": "A fee for the whole curriculum may be charged, among others, from a student who studies with a partial load, does not study under an Estonian-language curriculum, is already matriculated in free higher education when starting, has already studied free at the same level for at least 365 days with less than ten years since exmatriculation, starts an Estonian-language master's curriculum of fewer than 120 credit points, or starts a private institution's curriculum whose costs are not covered by state support. The full list is in the Act.",
+        "source": "Higher Education Act, § 16(6)"
+      },
+      {
+        "id": "fee-rates-in-advance",
+        "title": "Fee rates are set four months ahead",
+        "text": "The institution sets its fee rates and the rate and conditions of reimbursing study costs at least four months before the academic year starts. For a student already studying, the rate may rise by at most ten per cent compared with the previous academic year.",
+        "source": "Higher Education Act, § 16(8)"
+      },
+      {
+        "id": "load-choice",
+        "title": "The student chooses the load in the first year",
+        "text": "On entering, the student decides whether to study with a full or partial load in the first academic year, unless the curriculum allows only one of them. With a full load the student cumulatively completes at least 75 per cent of the curriculum's volume by the end of each academic year; with a partial load, 50 to 75 per cent.",
+        "source": "Higher Education Act, § 14(1), (2), (3) and (5)"
+      },
+      {
+        "id": "appeal",
+        "title": "At least three working days to contest an admission decision",
+        "text": "The time limit for contesting a decision related to admission may not be shorter than three working days from notification of the decision. The exact limit is set by the institution; for other study-related decisions it may not be shorter than ten working days.",
+        "source": "Higher Education Act, § 17¹"
+      },
+      {
+        "id": "student-rights",
+        "title": "Student rights",
+        "text": "Among other things, a student has the right to the information needed to complete the curriculum, to study and career counselling, to give feedback and contest study-related decisions, to at least two months of holiday in each academic year and, at the first and second level, to academic leave, generally of up to one year.",
+        "source": "Higher Education Act, § 15(1)"
+      },
+      {
+        "id": "prior-learning",
+        "title": "Prior studies and work experience can be recognised",
+        "text": "Under the conditions and procedure set by the institution, a person has the right to apply for recognition of prior studies and work experience.",
+        "source": "Higher Education Act, § 15(5)"
+      },
+      {
+        "id": "diploma-free",
+        "title": "The diploma and its supplement are issued free of charge",
+        "text": "After the curriculum is completed in full, the institution issues a diploma certifying the academic degree together with a diploma supplement in Estonian and English. Documents certifying higher education are issued to the graduate free of charge.",
+        "source": "Higher Education Act, § 19(1)"
+      }
+    ],
+    "sources": [
+      {
+        "label": "Higher Education Act of Estonia (Kõrgharidusseadus), in Estonian",
+        "url": "https://www.riigiteataja.ee/akt/KHaS"
+      }
+    ]
+  },
+  "glossary": {
+    "intro": "Words you will meet in Estonian institutions' admission conditions and on this site. The Estonian term, as written in documents, is in brackets. Definitions come from Estonia's Higher Education Act; each one cites its source.",
+    "items": [
+      {
+        "id": "levels",
+        "term": "Levels of higher education (kõrgharidusastmed)",
+        "definition": "Higher education consists of three levels: the first is bachelor's studies and professional higher education, the second master's studies and the third doctoral studies.",
+        "source": "Higher Education Act, § 3(1)"
+      },
+      {
+        "id": "curriculum",
+        "term": "Curriculum (õppekava)",
+        "definition": "The basis of higher education studies: it sets the aims and learning outcomes, the nominal duration and volume, the conditions for starting, the list of subjects, the options for specialisation and the conditions for graduating.",
+        "source": "Higher Education Act, § 3(2)"
+      },
+      {
+        "id": "credit-point",
+        "term": "Credit point (ainepunkt, EAP)",
+        "definition": "The unit of study volume. One academic year is 60 credit points; one credit point corresponds to 26 hours of a student's study work.",
+        "source": "Higher Education Act, § 4(1)"
+      },
+      {
+        "id": "bachelor",
+        "term": "Bachelor's studies (bakalaureuseõpe)",
+        "definition": "First-level studies in which the student acquires the basic knowledge and skills of a field and what is needed for work and for master's studies. The volume is 180–240 credit points and the nominal duration three to four academic years; the graduate is awarded a bachelor's degree.",
+        "source": "Higher Education Act, § 5(1), (3) and (6)"
+      },
+      {
+        "id": "professional-higher",
+        "term": "Professional higher education (rakenduskõrgharidusõpe)",
+        "definition": "First-level studies in which the student additionally acquires the knowledge, skills and attitudes for working in a specific profession. The volume is 180–240 credit points (270 in midwifery, 210 in nursing); the graduate is awarded a bachelor's degree.",
+        "source": "Higher Education Act, § 5(2), (3), (4) and (6)"
+      },
+      {
+        "id": "master",
+        "term": "Master's studies (magistriõpe)",
+        "definition": "Second-level studies in which the student deepens specialist knowledge and skills. The volume is 60–120 credit points and the nominal duration one to two academic years; the graduate is awarded a master's degree.",
+        "source": "Higher Education Act, § 6"
+      },
+      {
+        "id": "integrated",
+        "term": "Integrated bachelor's and master's studies (integreeritud õpe)",
+        "definition": "Studies combining the first two levels: this is how the training of doctors, veterinarians, pharmacists, dentists, architects, civil engineers and class teachers is organised. The volume is 300 credit points over five academic years, or 360 credit points over six in medicine and veterinary medicine; the graduate is awarded a master's degree.",
+        "source": "Higher Education Act, § 7(1), (2) and (5)"
+      },
+      {
+        "id": "doctoral",
+        "term": "Doctoral studies (doktoriõpe)",
+        "definition": "Third-level studies providing the knowledge and skills for independent research, development or professional creative work. The nominal duration is three to four academic years; the graduate is awarded a doctoral degree.",
+        "source": "Higher Education Act, § 8(1), (2) and (4)"
+      },
+      {
+        "id": "student",
+        "term": "Student, matriculation and exmatriculation (üliõpilane, immatrikuleerimine, eksmatrikuleerimine)",
+        "definition": "A student is a person studying at the level of higher education from admission to studies, that is matriculation, until removal from studies, that is exmatriculation.",
+        "source": "Higher Education Act, § 2(2)"
+      },
+      {
+        "id": "institution",
+        "term": "Higher education institution: university and professional higher education institution (kõrgkool, ülikool, rakenduskõrgkool)",
+        "definition": "Higher education is provided by universities and professional higher education institutions that have been granted the right to do so under the Act. The Act calls them jointly higher education institutions (kõrgkool).",
+        "source": "Higher Education Act, § 2(3)"
+      },
+      {
+        "id": "admission-conditions",
+        "term": "Admission conditions (vastuvõtutingimused)",
+        "definition": "The conditions an institution sets and publishes for admission to studies, including the minimum level of the language of instruction.",
+        "source": "Higher Education Act, § 13(1)"
+      },
+      {
+        "id": "ranking",
+        "term": "Ranking (paremusjärjestus)",
+        "definition": "The order of applicants by how they meet the admission conditions. Where the institution has capped the number admitted to a programme, places are filled by ranking: those holding a place that secures admission are admitted.",
+        "source": "Higher Education Act, § 13(2) and (4)"
+      },
+      {
+        "id": "full-load",
+        "term": "Full load (täiskoormus)",
+        "definition": "A study load in which the student cumulatively completes at least 75 per cent of the volume set in the curriculum by the end of each academic year.",
+        "source": "Higher Education Act, § 14(2)"
+      },
+      {
+        "id": "partial-load",
+        "term": "Partial load (osakoormus)",
+        "definition": "A study load in which the student cumulatively completes 50 to 75 per cent of the volume set in the curriculum by the end of each academic year. The institution may charge a partial-load student a fee for the whole curriculum.",
+        "source": "Higher Education Act, § 14(3); § 16(6)"
+      },
+      {
+        "id": "nominal-duration",
+        "term": "Nominal duration (nominaalkestus)",
+        "definition": "The duration of studies set in the curriculum. A student's nominal period of study generally equals the curriculum's nominal duration and is extended, for example, by time spent on academic leave.",
+        "source": "Higher Education Act, § 3(2); § 14(7)"
+      },
+      {
+        "id": "external-study",
+        "term": "External study (eksternõpe)",
+        "definition": "Studying without student status: an external learner must meet the curriculum's admission conditions and has the right, under the institution's procedure, to defend a final thesis or take a final exam. An external learner is not a student.",
+        "source": "Higher Education Act, § 14(9)"
+      },
+      {
+        "id": "study-cost-reimbursement",
+        "term": "Reimbursement of study costs (õppekulude hüvitamine)",
+        "definition": "A fee for the whole curriculum that the institution may require from a student in the cases listed in the Act — for example when studying with a partial load or in a language other than Estonian.",
+        "source": "Higher Education Act, § 16(6)"
+      },
+      {
+        "id": "academic-leave",
+        "term": "Academic leave (akadeemiline puhkus)",
+        "definition": "A temporary break in studies. At the first and second level a student is entitled to academic leave under the institution's procedure, generally for up to one year, and additionally for up to two years for health reasons, up to one year for conscript or alternative service and, to care for a child, until the child turns three.",
+        "source": "Higher Education Act, § 15(1)"
+      },
+      {
+        "id": "diploma-supplement",
+        "term": "Diploma supplement (akadeemiline õiend)",
+        "definition": "A document in Estonian and English issued together with the diploma. For graduates of bachelor's studies or professional higher education, the institution may issue the English supplement only on request.",
+        "source": "Higher Education Act, § 19(1) and (3)"
+      },
+      {
+        "id": "sais",
+        "term": "SAIS (sisseastumise infosüsteem)",
+        "definition": "The state information system through which applications for admission are submitted. Competition pages are public; submitting an application requires signing in with state authentication.",
+        "source": "sais.ee"
+      }
+    ]
+  },
+  "privacy": {
+    "authorityLabel": "Estonian Data Protection Inspectorate (aki.ee)",
+    "authorityUrl": "https://www.aki.ee",
+    "sections": [
+      {
+        "id": "summary",
+        "title": "In short",
+        "body": [
+          "- The site has no user accounts and needs no registration.",
+          "- Exam results that you enter in the calculator or in “Where can you apply?” are calculated in your browser. They are not sent to our server and are not stored anywhere.",
+          "- We do not use tracking cookies and we show no advertising.",
+          "- Your favourites (the stars on programmes) are stored on your device only."
+        ]
+      },
+      {
+        "id": "controller",
+        "title": "Who is responsible",
+        "body": [
+          "The data controller is {controller}. For questions about personal data write to: {email}."
+        ]
+      },
+      {
+        "id": "visit",
+        "title": "Visiting the site",
+        "body": [
+          "When you open a page, our hosting provider automatically records technical data: your IP address, the time, the requested address and the browser type. This is done so the site works and stays secure. We do not use this data to identify anyone.",
+          "Legal basis: our legitimate interest in keeping the site secure and running (General Data Protection Regulation, Article 6(1)(f)). The retention period is set by the provider.",
+          "On a first visit we pick the language (Latvian, Lithuanian or English) from your browser's language setting; this is not stored."
+        ]
+      },
+      {
+        "id": "survey",
+        "title": "The survey and calculators",
+        "body": [
+          "- Exam results in the calculator and in “Where can you apply?” are calculated only in your browser. They are not sent to a server, not stored and not put into the page address.",
+          "- The filters you choose in the survey (field of interest, level of study, city, language of study) are put into the page address so the programme list can be shown. Together with the visit they end up in the technical logs (see above), but we do not link them to a person. Exam answers from the survey are not sent to the server."
+        ]
+      },
+      {
+        "id": "favorites",
+        "title": "Saved programmes",
+        "body": [
+          "The list of programmes you mark with a star is kept only in your browser (localStorage). You can delete it by clearing the site's data in your browser settings. This storage is needed for a feature you choose to use.",
+          "When you open the list, your browser requests the data of those programmes from our database (Supabase). The request contains the programmes' identifiers; like any visit, it ends up in the provider's technical logs. We do not store the list and do not link it to a person."
+        ]
+      },
+      {
+        "id": "cookies",
+        "title": "Cookies",
+        "body": [
+          "We do not use cookies for tracking. The site keeps only the favourites list in your browser (see above)."
+        ]
+      },
+      {
+        "id": "analytics",
+        "title": "Usage statistics",
+        "body": [
+          "To understand which pages are read and how fast they load, we use PostHog analytics with servers in the European Union. It is set up as follows:",
+          "- no cookies and no data kept in the browser;",
+          "- no identification of people, no session recordings and no content of entered fields — exam results never reach analytics;",
+          "- IP addresses are not stored.",
+          "Legal basis: our legitimate interest in improving the site (Article 6(1)(f)). You can object — write to {email}."
+        ]
+      },
+      {
+        "id": "email",
+        "title": "E-mail reminders",
+        "body": [
+          "If you ask for a reminder yourself (for example about the start of admission or changes in your programme list), we store your e-mail address and what you want to be told about. We use them only for what you asked.",
+          "Legal basis: your consent (Article 6(1)(a)). You can withdraw consent at any time with the link in every e-mail or by writing to {email}; withdrawal does not affect e-mails already sent.",
+          "E-mails are sent by the provider Resend. We delete the address after you withdraw consent and no later than 12 months after the last e-mail sent."
+        ]
+      },
+      {
+        "id": "minors",
+        "title": "School pupils and young people",
+        "body": [
+          "The site is mainly for school pupils and young people. In Estonia a child can give consent to an information society service from the age of 13; for a younger child the consent of the child's legal representative is needed (Personal Data Protection Act, § 8; General Data Protection Regulation, Article 8).",
+          "We do not store or send the exam results you enter on the site."
+        ]
+      },
+      {
+        "id": "recipients",
+        "title": "Who we share data with",
+        "body": [
+          "We do not sell data and we show no advertising. Data is processed only by our service providers (processors), and only on our behalf:",
+          "- a hosting provider (running the site);",
+          "- Supabase (database with servers in the European Union; e-mail addresses, if you submit them);",
+          "- PostHog (usage statistics, servers in the European Union);",
+          "- Google (e-mail: if you write to us, the correspondence is kept in a Gmail mailbox);",
+          "- Resend (sending e-mail).",
+          "If a provider transfers data outside the European Economic Area, it does so with safeguards approved by the European Commission, for example standard contractual clauses."
+        ]
+      },
+      {
+        "id": "rights",
+        "title": "Your rights",
+        "body": [
+          "You have the right to:",
+          "- be informed about your data and access it;",
+          "- ask for it to be corrected or deleted;",
+          "- restrict processing and object to processing based on legitimate interests;",
+          "- receive your data in a portable format;",
+          "- withdraw consent at any time.",
+          "Write to {email} — we will answer within one month. If you believe your rights have been violated, you can complain to the Estonian Data Protection Inspectorate (Andmekaitse Inspektsioon, aki.ee) or to the supervisory authority of the controller's country, the Data State Inspectorate of Latvia (Elijas iela 17, Riga, LV-1050)."
+        ]
+      },
+      {
+        "id": "contact",
+        "title": "If you write to us",
+        "body": [
+          "The programme page and the calculator have a link for reporting a mistake. It opens your own e-mail app — you send the message yourself; the site sends nothing on your behalf.",
+          "If you write to us, we receive your e-mail address and the content of your message. We use them only to check and correct the information and to reply to you. Please do not include exam results — we do not need them.",
+          "Legal basis: our legitimate interest in keeping the information on the site correct (Article 6(1)(f)). We delete the correspondence no later than 12 months after the last message."
+        ]
+      },
+      {
+        "id": "decisions",
+        "title": "Automated decisions",
+        "body": [
+          "We do not make automated decisions that affect you and we do not profile. Calculations on the site are indicative; the final admission decision is made by the university."
+        ]
+      },
+      {
+        "id": "changes",
+        "title": "Changes",
+        "body": [
+          "If the policy changes we will update this page and the version date."
+        ]
+      }
+    ]
   }
 }

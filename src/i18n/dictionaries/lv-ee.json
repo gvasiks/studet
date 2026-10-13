@@ -15,5 +15,352 @@
     "tabs": {
       "college": "Profesionālā"
     }
+  },
+  "rights": {
+    "intro": "Ko Igaunijas Augstākās izglītības likums paredz reflektantam un studentam: kas var pretendēt, kas nosaka uzņemšanas nosacījumus, kad studijas ir bez maksas un kā apstrīdēt lēmumu.",
+    "checkedNote": "Sagatavots automātiski pēc Igaunijas Augstākās izglītības likuma (Kõrgharidusseadus) teksta, ko lasījām Riigi Teataja 2026. gada 13. oktobrī: redakcija, kas ir spēkā no 2026. gada 19. jūlija līdz 31. decembrim (RT I, 09.07.2026, 49). Jurists šo tekstu nav pārbaudījis. No 2027. gada 1. janvāra ir spēkā nākamā redakcija. Tas nav juridisks padoms: noteicošie ir likuma teksts igauņu valodā un katras augstskolas uzņemšanas nosacījumi.",
+    "items": [
+      {
+        "id": "who-can-apply",
+        "title": "Kas var pretendēt",
+        "text": "Bakalaura un profesionālās augstākās izglītības studijām var pretendēt persona, kurai ir vidējā izglītība vai tai atbilstoša kvalifikācija. Maģistra studijām vajadzīgs bakalaura grāds, doktora studijām — maģistra grāds vai tiem atbilstoša kvalifikācija.",
+        "source": "Augstākās izglītības likums, 12. pants"
+      },
+      {
+        "id": "conditions-published",
+        "title": "Uzņemšanas nosacījumus nosaka un publisko augstskola",
+        "text": "Augstskola nosaka un publisko uzņemšanas nosacījumus, tostarp studiju valodas prasmes minimālās prasības. Nosacījumus katra augstskola nosaka pati.",
+        "source": "Augstākās izglītības likums, 13. panta 1. daļa"
+      },
+      {
+        "id": "threshold-or-ranking",
+        "title": "Uzņem pēc nosacījumu izpildes vai pēc ranga",
+        "text": "Par studentu uzņem personu, kas atbilst augstskolas noteiktajiem uzņemšanas nosacījumiem. Pamatotā gadījumā augstskola var noteikt programmā uzņemamo studentu skaita augšējo robežu un aizpildīt studiju vietas pēc ranga — tad uzņem tos, kas atbilst nosacījumiem un rangā ir vietā, kura nodrošina uzņemšanu.",
+        "source": "Augstākās izglītības likums, 13. panta 2. un 4. daļa"
+      },
+      {
+        "id": "no-grouping-by-fee",
+        "title": "Maksas un bezmaksas pretendentus vērtē vienādi",
+        "text": "Vērtējot atbilstību uzņemšanas nosacījumiem, pirmā un otrā līmeņa studiju pretendentus nedala grupās pēc tā, vai augstskolai ir tiesības prasīt no viņiem maksu par studijām. Dalīt grupās drīkst pamatotos gadījumos — programmas specifikas un studējošo īpašo vajadzību dēļ.",
+        "source": "Augstākās izglītības likums, 13. panta 3. daļa"
+      },
+      {
+        "id": "free-study",
+        "title": "Studijas igauņu valodā ar pilnu slodzi ir bez maksas",
+        "text": "Studijas programmā igauņu valodā studentam ir bez maksas, ja viņš studē ar pilnu slodzi un katrā semestrī kumulatīvi izpilda prasīto studiju apjomu.",
+        "source": "Augstākās izglītības likums, 16. panta 1. daļa"
+      },
+      {
+        "id": "no-admission-fee",
+        "title": "Ja studijas ir bez maksas, par uzņemšanu maksu neprasa",
+        "text": "Ja studijas studentam ir bez maksas, augstskolai nav tiesību prasīt no viņa maksu par uzņemšanu studijās vai par pārbaudījumiem, kas noteikti kā uzņemšanas nosacījums.",
+        "source": "Augstākās izglītības likums, 16. panta 5. daļa"
+      },
+      {
+        "id": "when-fee-charged",
+        "title": "Kad augstskola drīkst prasīt maksu par studijām",
+        "text": "Maksu visas programmas apjomā drīkst prasīt, cita starpā, no studenta, kas studē ar nepilnu slodzi, nestudē programmā igauņu valodā, studiju sākumā jau ir imatrikulēts bezmaksas augstākās izglītības studijās, tajā pašā līmenī jau vismaz 365 dienas ir studējis bez maksas un kopš eksmatrikulācijas pagājuši mazāk nekā desmit gadi, sāk studijas maģistra programmā igauņu valodā, kuras apjoms ir mazāks par 120 kredītpunktiem, vai privātas augstskolas programmā, kuras izmaksas nesedz valsts atbalsts. Pilns uzskaitījums ir likumā.",
+        "source": "Augstākās izglītības likums, 16. panta 6. daļa"
+      },
+      {
+        "id": "fee-rates-in-advance",
+        "title": "Maksas apmēru nosaka četrus mēnešus iepriekš",
+        "text": "Augstskola nosaka maksas apmēru, kā arī studiju izmaksu atlīdzināšanas apmēru un nosacījumus vismaz četrus mēnešus pirms akadēmiskā gada sākuma. Studentam, kas studijas jau sācis, šo apmēru salīdzinājumā ar iepriekšējo akadēmisko gadu drīkst palielināt ne vairāk kā par desmit procentiem.",
+        "source": "Augstākās izglītības likums, 16. panta 8. daļa"
+      },
+      {
+        "id": "load-choice",
+        "title": "Slodzi pirmajā gadā izvēlas students",
+        "text": "Iestājoties augstskolā, students izlemj, vai pirmajā akadēmiskajā gadā studēs ar pilnu vai nepilnu slodzi, izņemot gadījumu, kad programmā var studēt tikai vienā veidā. Studējot ar pilnu slodzi, līdz akadēmiskā gada beigām kumulatīvi izpilda vismaz 75 procentus no programmā paredzētā apjoma, ar nepilnu slodzi — no 50 līdz 75 procentiem.",
+        "source": "Augstākās izglītības likums, 14. panta 1., 2., 3. un 5. daļa"
+      },
+      {
+        "id": "appeal",
+        "title": "Uzņemšanas lēmuma apstrīdēšanai — vismaz trīs darba dienas",
+        "text": "Termiņš, kurā var apstrīdēt ar uzņemšanu studijās saistītu lēmumu, nedrīkst būt īsāks par trim darba dienām no lēmuma paziņošanas. Precīzu termiņu nosaka augstskola; citiem studiju organizācijas lēmumiem tas nedrīkst būt īsāks par desmit darba dienām.",
+        "source": "Augstākās izglītības likums, 17¹. pants"
+      },
+      {
+        "id": "student-rights",
+        "title": "Studenta tiesības",
+        "text": "Studentam cita starpā ir tiesības saņemt programmas apguvei vajadzīgo informāciju, studiju un karjeras konsultācijas, sniegt atsauksmes un apstrīdēt ar studiju organizāciju saistītus lēmumus, katru akadēmisko gadu saņemt vismaz divus mēnešus brīvlaika un pirmajā un otrajā studiju līmenī — akadēmisko atvaļinājumu, parasti līdz vienam gadam.",
+        "source": "Augstākās izglītības likums, 15. panta 1. daļa"
+      },
+      {
+        "id": "prior-learning",
+        "title": "Var lūgt ieskaitīt iepriekšējās studijas un darba pieredzi",
+        "text": "Augstskolas noteiktajā kārtībā un ar tās nosacījumiem personai ir tiesības lūgt, lai tiktu ieskaitītas iepriekšējās studijas un darba pieredze.",
+        "source": "Augstākās izglītības likums, 15. panta 5. daļa"
+      },
+      {
+        "id": "diploma-free",
+        "title": "Diplomu un tā pielikumu izsniedz bez maksas",
+        "text": "Tam, kas programmu apguvis pilnā apjomā, augstskola izsniedz diplomu par akadēmisko grādu kopā ar diploma pielikumu igauņu un angļu valodā. Augstāko izglītību apliecinošos dokumentus absolventam izsniedz bez maksas.",
+        "source": "Augstākās izglītības likums, 19. panta 1. daļa"
+      }
+    ],
+    "sources": [
+      {
+        "label": "Igaunijas Augstākās izglītības likums (Kõrgharidusseadus), igauņu valodā",
+        "url": "https://www.riigiteataja.ee/akt/KHaS"
+      }
+    ]
+  },
+  "glossary": {
+    "intro": "Vārdi, kas sastopami Igaunijas augstskolu uzņemšanas nosacījumos un šajā vietnē. Iekavās — termins igauņu valodā, kā to raksta dokumentos. Definīcijas ņemtas no Igaunijas Augstākās izglītības likuma; pie katras norādīts avots.",
+    "items": [
+      {
+        "id": "levels",
+        "term": "Augstākās izglītības līmeņi (kõrgharidusastmed)",
+        "definition": "Augstākās izglītības studijas sastāv no trim līmeņiem: pirmais ir bakalaura studijas un profesionālās augstākās izglītības studijas, otrais — maģistra studijas, trešais — doktora studijas.",
+        "source": "Augstākās izglītības likums, 3. panta 1. daļa"
+      },
+      {
+        "id": "curriculum",
+        "term": "Studiju programma (õppekava)",
+        "definition": "Augstākās izglītības studiju pamats: tajā nosaka studiju mērķus un rezultātus, nominālo ilgumu un apjomu, studiju uzsākšanas nosacījumus, studiju kursu sarakstu, specializācijas iespējas un absolvēšanas nosacījumus.",
+        "source": "Augstākās izglītības likums, 3. panta 2. daļa"
+      },
+      {
+        "id": "credit-point",
+        "term": "Kredītpunkts (ainepunkt, EAP)",
+        "definition": "Studiju apjoma vienība. Viena akadēmiskā gada apjoms ir 60 kredītpunkti; viens kredītpunkts atbilst 26 stundām studenta studiju darba.",
+        "source": "Augstākās izglītības likums, 4. panta 1. daļa"
+      },
+      {
+        "id": "bachelor",
+        "term": "Bakalaura studijas (bakalaureuseõpe)",
+        "definition": "Pirmā līmeņa studijas, kurās students apgūst nozares pamatzināšanas un prasmes, kā arī zināšanas, kas vajadzīgas darbam un maģistra studijām. Apjoms ir 180–240 kredītpunkti, nominālais ilgums — trīs līdz četri akadēmiskie gadi; absolventam piešķir bakalaura grādu.",
+        "source": "Augstākās izglītības likums, 5. panta 1., 3. un 6. daļa"
+      },
+      {
+        "id": "professional-higher",
+        "term": "Profesionālās augstākās izglītības studijas (rakenduskõrgharidusõpe)",
+        "definition": "Pirmā līmeņa studijas, kurās students papildus apgūst zināšanas, prasmes un attieksmi darbam noteiktā profesijā. Apjoms ir 180–240 kredītpunkti (vecmāšu studijās 270, māsu studijās 210); absolventam piešķir bakalaura grādu.",
+        "source": "Augstākās izglītības likums, 5. panta 2., 3., 4. un 6. daļa"
+      },
+      {
+        "id": "master",
+        "term": "Maģistra studijas (magistriõpe)",
+        "definition": "Otrā līmeņa studijas, kurās students padziļina specialitātes zināšanas un prasmes. Apjoms ir 60–120 kredītpunkti, nominālais ilgums — viens līdz divi akadēmiskie gadi; absolventam piešķir maģistra grādu.",
+        "source": "Augstākās izglītības likums, 6. pants"
+      },
+      {
+        "id": "integrated",
+        "term": "Integrētās bakalaura un maģistra studijas (integreeritud õpe)",
+        "definition": "Studijas, kas apvieno pirmos divus līmeņus: tā organizē ārsta, veterinārārsta, farmaceita, zobārsta, arhitekta, būvinženiera un sākumskolas skolotāja studijas. Apjoms ir 300 kredītpunkti un pieci akadēmiskie gadi, ārsta un veterinārārsta studijās — 360 kredītpunkti un seši akadēmiskie gadi; absolventam piešķir maģistra grādu.",
+        "source": "Augstākās izglītības likums, 7. panta 1., 2. un 5. daļa"
+      },
+      {
+        "id": "doctoral",
+        "term": "Doktora studijas (doktoriõpe)",
+        "definition": "Trešā līmeņa studijas, kurās apgūst zināšanas un prasmes patstāvīgam zinātniskam, attīstības vai profesionālam radošam darbam. Nominālais ilgums ir trīs līdz četri akadēmiskie gadi; absolventam piešķir doktora grādu.",
+        "source": "Augstākās izglītības likums, 8. panta 1., 2. un 4. daļa"
+      },
+      {
+        "id": "student",
+        "term": "Students, imatrikulācija un eksmatrikulācija (üliõpilane, immatrikuleerimine, eksmatrikuleerimine)",
+        "definition": "Students ir persona, kas studē augstākās izglītības līmenī no uzņemšanas studijās jeb imatrikulācijas līdz izslēgšanai no studijām jeb eksmatrikulācijai.",
+        "source": "Augstākās izglītības likums, 2. panta 2. daļa"
+      },
+      {
+        "id": "institution",
+        "term": "Augstskola: universitāte un lietišķā augstskola (kõrgkool, ülikool, rakenduskõrgkool)",
+        "definition": "Augstākās izglītības studijas organizē universitātes un lietišķās augstskolas, kurām likumā noteiktajā kārtībā piešķirtas tiesības īstenot augstākās izglītības studijas. Likums tās kopā sauc par augstskolām (kõrgkool).",
+        "source": "Augstākās izglītības likums, 2. panta 3. daļa"
+      },
+      {
+        "id": "admission-conditions",
+        "term": "Uzņemšanas nosacījumi (vastuvõtutingimused)",
+        "definition": "Nosacījumi, ko augstskola nosaka un publisko uzņemšanai studijās, tostarp studiju valodas prasmes minimālās prasības.",
+        "source": "Augstākās izglītības likums, 13. panta 1. daļa"
+      },
+      {
+        "id": "ranking",
+        "term": "Rangs (paremusjärjestus)",
+        "definition": "Pretendentu secība pēc uzņemšanas nosacījumu izpildes. Ja augstskola programmā noteikusi uzņemamo skaita augšējo robežu, studiju vietas aizpilda pēc ranga: uzņem tos, kas ir vietā, kura nodrošina uzņemšanu.",
+        "source": "Augstākās izglītības likums, 13. panta 2. un 4. daļa"
+      },
+      {
+        "id": "full-load",
+        "term": "Pilna slodze (täiskoormus)",
+        "definition": "Studiju slodze, kurā students līdz katra akadēmiskā gada beigām kumulatīvi izpilda vismaz 75 procentus no programmā paredzētā studiju apjoma.",
+        "source": "Augstākās izglītības likums, 14. panta 2. daļa"
+      },
+      {
+        "id": "partial-load",
+        "term": "Nepilna slodze (osakoormus)",
+        "definition": "Studiju slodze, kurā students līdz katra akadēmiskā gada beigām kumulatīvi izpilda no 50 līdz 75 procentiem no programmā paredzētā studiju apjoma. No studenta ar nepilnu slodzi augstskola drīkst prasīt maksu visas programmas apjomā.",
+        "source": "Augstākās izglītības likums, 14. panta 3. daļa; 16. panta 6. daļa"
+      },
+      {
+        "id": "nominal-duration",
+        "term": "Nominālais ilgums (nominaalkestus)",
+        "definition": "Programmā noteiktais studiju ilgums. Studenta nominālais studiju laiks parasti atbilst programmas nominālajam ilgumam un pagarinās, piemēram, par akadēmiskajā atvaļinājumā pavadīto laiku.",
+        "source": "Augstākās izglītības likums, 3. panta 2. daļa; 14. panta 7. daļa"
+      },
+      {
+        "id": "external-study",
+        "term": "Eksternāts (eksternõpe)",
+        "definition": "Studijas bez studenta statusa: eksternam jāatbilst programmas uzņemšanas nosacījumiem, un viņam ir tiesības augstskolas noteiktajā kārtībā aizstāvēt noslēguma darbu vai kārtot noslēguma eksāmenu. Eksterns nav students.",
+        "source": "Augstākās izglītības likums, 14. panta 9. daļa"
+      },
+      {
+        "id": "study-cost-reimbursement",
+        "term": "Studiju izmaksu atlīdzināšana (õppekulude hüvitamine)",
+        "definition": "Maksa visas programmas apjomā, ko augstskola likumā uzskaitītajos gadījumos drīkst prasīt no studenta, — piemēram, studējot ar nepilnu slodzi vai citā valodā, nevis igauņu.",
+        "source": "Augstākās izglītības likums, 16. panta 6. daļa"
+      },
+      {
+        "id": "academic-leave",
+        "term": "Akadēmiskais atvaļinājums (akadeemiline puhkus)",
+        "definition": "Studiju pagaidu pārtraukums. Pirmajā un otrajā studiju līmenī studentam ir tiesības uz akadēmisko atvaļinājumu augstskolas noteiktajā kārtībā, parasti līdz vienam gadam, papildus veselības dēļ līdz diviem gadiem, obligātā vai alternatīvā dienesta gadījumā līdz vienam gadam un bērna kopšanai līdz bērna triju gadu vecumam.",
+        "source": "Augstākās izglītības likums, 15. panta 1. daļa"
+      },
+      {
+        "id": "diploma-supplement",
+        "term": "Diploma pielikums (akadeemiline õiend)",
+        "definition": "Dokuments igauņu un angļu valodā, ko izsniedz kopā ar diplomu. Bakalaura vai profesionālās augstākās izglītības studiju absolventam augstskola pielikumu angļu valodā var izsniegt tikai pēc pieprasījuma.",
+        "source": "Augstākās izglītības likums, 19. panta 1. un 3. daļa"
+      },
+      {
+        "id": "sais",
+        "term": "SAIS (sisseastumise infosüsteem)",
+        "definition": "Valsts informācijas sistēma, kurā iesniedz pieteikumus studijām. Konkursu lapas ir publiskas; pieteikuma iesniegšanai jāpiesakās ar valsts autentifikāciju.",
+        "source": "sais.ee"
+      }
+    ]
+  },
+  "privacy": {
+    "authorityLabel": "Igaunijas Datu aizsardzības inspekcija (aki.ee)",
+    "authorityUrl": "https://www.aki.ee",
+    "sections": [
+      {
+        "id": "summary",
+        "title": "Īsumā",
+        "body": [
+          "- Vietnei nav lietotāju kontu, un reģistrācija nav vajadzīga.",
+          "- Kalkulatorā vai sadaļā «Kurās programmās var iestāties» ievadītie eksāmenu rezultāti tiek aprēķināti apmeklētāja pārlūkā. Tie netiek nosūtīti uz mūsu serveri un nekur netiek saglabāti.",
+          "- Mēs neizmantojam sīkdatnes izsekošanai un nerādām reklāmu.",
+          "- Saglabāto programmu saraksts (zvaigznītes pie programmām) glabājas tikai apmeklētāja ierīcē."
+        ]
+      },
+      {
+        "id": "controller",
+        "title": "Kas ir pārzinis",
+        "body": [
+          "Personas datu pārzinis ir {controller}. Jautājumos par personas datiem jāraksta uz {email}."
+        ]
+      },
+      {
+        "id": "visit",
+        "title": "Vietnes apmeklējums",
+        "body": [
+          "Atverot lapu, hostinga pakalpojuma sniedzējs automātiski reģistrē tehniskos datus: IP adresi, laiku, pieprasīto adresi un pārlūka veidu. To dara, lai vietne darbotos un būtu droša. Mēs šos datus neizmantojam, lai kādu identificētu.",
+          "Pamats: mūsu leģitīmās intereses nodrošināt vietnes drošību un darbību (Vispārīgās datu aizsardzības regulas 6. panta 1. punkta f) apakšpunkts). Glabāšanas termiņu nosaka pakalpojuma sniedzējs.",
+          "Valodu (latviešu, lietuviešu vai angļu) pirmajā apmeklējumā izvēlamies pēc pārlūka valodas iestatījuma; tas netiek saglabāts."
+        ]
+      },
+      {
+        "id": "survey",
+        "title": "Aptauja un kalkulatori",
+        "body": [
+          "- Eksāmenu rezultāti kalkulatorā un sadaļā «Kurās programmās var iestāties» tiek aprēķināti tikai apmeklētāja pārlūkā. Tie netiek sūtīti uz serveri, netiek saglabāti un netiek ielikti lapas adresē.",
+          "- Aptaujā izvēlētie filtri (interešu joma, studiju līmenis, pilsēta, studiju valoda) tiek ielikti lapas adresē, lai varētu parādīt programmu sarakstu. Līdz ar apmeklējumu tie nonāk tehniskajos žurnālos (skat. iepriekš), bet mēs tos nesaistām ar personu. Eksāmenu atbildes aptaujā uz serveri netiek nosūtītas."
+        ]
+      },
+      {
+        "id": "favorites",
+        "title": "Saglabātās programmas",
+        "body": [
+          "Ar zvaigznīti atzīmēto programmu saraksts glabājas tikai apmeklētāja pārlūkā (localStorage). To var dzēst, iztīrot vietnes datus pārlūka iestatījumos. Šī glabāšana ir vajadzīga funkcijai, ko apmeklētājs izmanto pēc paša izvēles.",
+          "Atverot saglabāto programmu sarakstu, pārlūks pieprasa šo programmu datus no mūsu datubāzes (Supabase). Pieprasījumā ir programmu identifikatori; tāpat kā jebkurš apmeklējums, tas nonāk pakalpojuma sniedzēja tehniskajos žurnālos. Mēs sarakstu neglabājam un nesaistām to ar personu."
+        ]
+      },
+      {
+        "id": "cookies",
+        "title": "Sīkdatnes",
+        "body": [
+          "Mēs neizmantojam sīkdatnes izsekošanai. Vietne pārlūkā glabā tikai saglabāto programmu sarakstu (skat. iepriekš)."
+        ]
+      },
+      {
+        "id": "analytics",
+        "title": "Vietnes lietošanas statistika",
+        "body": [
+          "Lai saprastu, kuras lapas tiek lasītas un cik ātri tās ielādējas, mēs izmantojam PostHog analītiku ar serveriem Eiropas Savienībā. Tā ir iestatīta šādi:",
+          "- bez sīkdatnēm un bez datu glabāšanas pārlūkā;",
+          "- bez cilvēka identificēšanas, bez sesiju ierakstiem un bez ievadīto lauku satura — eksāmenu rezultāti analītikā nenonāk;",
+          "- IP adrese netiek glabāta.",
+          "Pamats: mūsu leģitīmās intereses uzlabot vietni (regulas 6. panta 1. punkta f) apakšpunkts). Pret šo apstrādi var iebilst, rakstot uz {email}."
+        ]
+      },
+      {
+        "id": "email",
+        "title": "E-pasta atgādinājumi",
+        "body": [
+          "Ja apmeklētājs pats pieprasa atgādinājumu (piemēram, par uzņemšanas sākumu vai izmaiņām saglabāto programmu sarakstā), mēs uzglabājam viņa e-pasta adresi un to, par ko pieprasītas ziņas. Šos datus izmantojam tikai pieprasītajam mērķim.",
+          "Pamats: piekrišana (regulas 6. panta 1. punkta a) apakšpunkts). Piekrišanu var atsaukt jebkurā brīdī ar saiti katrā e-pastā vai rakstot uz {email}; atsaukums neietekmē iepriekšējo e-pastu likumību.",
+          "E-pastus sūta pakalpojuma sniedzējs Resend. Adresi izdzēšam pēc piekrišanas atsaukšanas un ne vēlāk kā 12 mēnešus pēc pēdējā nosūtītā e-pasta."
+        ]
+      },
+      {
+        "id": "minors",
+        "title": "Skolēni un jaunieši",
+        "body": [
+          "Vietnes auditorija galvenokārt ir skolēni un jaunieši. Igaunijā bērns pats var dot piekrišanu informācijas sabiedrības pakalpojumam no 13 gadu vecuma; jaunākam bērnam vajadzīga likumiskā pārstāvja piekrišana (Igaunijas Personas datu aizsardzības likuma 8. pants; Vispārīgās datu aizsardzības regulas 8. pants).",
+          "Vietnē ievadītos eksāmenu rezultātus mēs neuzglabājam un nenosūtām."
+        ]
+      },
+      {
+        "id": "recipients",
+        "title": "Kam mēs datus nododam",
+        "body": [
+          "Mēs nepārdodam datus un nerādām reklāmu. Datus apstrādā tikai mūsu pakalpojumu sniedzēji (apstrādātāji), un tikai mūsu uzdevumā:",
+          "- hostinga pakalpojuma sniedzējs (vietnes darbība);",
+          "- Supabase (datubāze ar serveriem Eiropas Savienībā; e-pasta adreses, ja tās ir iesniegtas);",
+          "- PostHog (lietošanas statistika, serveri Eiropas Savienībā);",
+          "- Google (e-pasts: mums adresētā sarakste glabājas Gmail pastkastē);",
+          "- Resend (e-pastu nosūtīšana).",
+          "Ja pakalpojuma sniedzējs datus nodod ārpus Eiropas Ekonomikas zonas, tas notiek ar Eiropas Komisijas apstiprinātiem aizsardzības mehānismiem, piemēram, standarta līguma klauzulām."
+        ]
+      },
+      {
+        "id": "rights",
+        "title": "Datu subjekta tiesības",
+        "body": [
+          "Personai, kuras dati tiek apstrādāti (datu subjektam), ir tiesības:",
+          "- saņemt informāciju par saviem datiem un piekļūt tiem;",
+          "- prasīt datu labošanu vai dzēšanu;",
+          "- ierobežot apstrādi un iebilst pret apstrādi, kas balstīta uz leģitīmajām interesēm;",
+          "- saņemt datus pārnesamā formātā;",
+          "- atsaukt piekrišanu jebkurā brīdī.",
+          "Pieprasījumi sūtāmi uz {email} — atbildēsim viena mēneša laikā. Ja persona uzskata, ka tās tiesības ir pārkāptas, tā var iesniegt sūdzību Igaunijas Datu aizsardzības inspekcijai (Andmekaitse Inspektsioon, aki.ee) vai pārziņa valsts uzraudzības iestādei — Datu valsts inspekcijai (Elijas iela 17, Rīga, LV-1050)."
+        ]
+      },
+      {
+        "id": "contact",
+        "title": "Sarakste ar mums",
+        "body": [
+          "Programmas lapā un kalkulatorā ir saite ziņošanai par kļūdu. Tā atver e-pasta programmu — vēstuli nosūta pats apmeklētājs, vietne viņa vietā neko nenosūta.",
+          "Saņemot vēstuli, mēs iegūstam sūtītāja e-pasta adresi un vēstules saturu. Tos izmantojam tikai, lai pārbaudītu un izlabotu informāciju un atbildētu sūtītājam. Eksāmenu rezultāti vēstulē nav jānorāda — tie mums nav vajadzīgi.",
+          "Pamats: mūsu leģitīmās intereses uzturēt vietnē pareizu informāciju (regulas 6. panta 1. punkta f) apakšpunkts). Saraksti izdzēšam ne vēlāk kā 12 mēnešus pēc pēdējās vēstules."
+        ]
+      },
+      {
+        "id": "decisions",
+        "title": "Automatizēti lēmumi",
+        "body": [
+          "Mēs nepieņemam automatizētus lēmumus, kas ietekmē personu, un neveicam profilēšanu. Aprēķini vietnē ir orientējoši; galīgo lēmumu par uzņemšanu pieņem augstskola."
+        ]
+      },
+      {
+        "id": "changes",
+        "title": "Izmaiņas",
+        "body": [
+          "Ja politika mainās, mēs atjaunināsim šo lapu un redakcijas datumu."
+        ]
+      }
+    ]
   }
 }

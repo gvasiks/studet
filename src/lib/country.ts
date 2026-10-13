@@ -108,9 +108,11 @@ const profiles: Record<Country, CountryProfile> = {
   // обучения, цены и вида финансирования, поэтому таких фильтров нет.
   // Интересы работают по направлению программы с того же портала
   // (ISCED-F, src/lib/ee-fields.ts). Анкета — без экзаменов, бюджета, платы
-  // и формы обучения. Расчёта балла, словаря и прав пока нет.
+  // и формы обучения. Словарь, права и политика конфиденциальности
+  // (2026-10-13) — по закону о высшем образовании Эстонии, на четырёх
+  // языках. Расчёта балла и «куда можно поступить» пока нет.
   EE: {
-    features: ["favorites", "survey"],
+    features: ["favorites", "survey", "glossary", "rights", "privacy"],
     filters: ["interest"],
     surveySteps: ["interests", "levelDuration", "city", "language", "kind"],
     levels: ["bachelor", "master", "doctoral", "college", "integrated"],

@@ -17,5 +17,353 @@
       "bachelor": "Bakalauras",
       "college": "Taikomasis"
     }
+  },
+  "rights": {
+    "intro": "Ką Estijos aukštojo mokslo įstatymas numato stojančiajam ir studentui: kas gali stoti, kas nustato priėmimo sąlygas, kada studijos nemokamos ir kaip ginčyti sprendimą.",
+    "checkedNote": "Parengta automatiškai pagal Estijos aukštojo mokslo įstatymo (Kõrgharidusseadus) tekstą, kurį skaitėme „Riigi Teataja“ 2026 m. spalio 13 d.: redakcija, galiojanti nuo 2026 m. liepos 19 d. iki gruodžio 31 d. (RT I, 09.07.2026, 49). Teisininkas šio teksto netikrino. Nuo 2027 m. sausio 1 d. galioja kita redakcija. Tai nėra teisinė konsultacija: lemia įstatymo tekstas estų kalba ir kiekvienos aukštosios mokyklos priėmimo sąlygos.",
+    "items": [
+      {
+        "id": "who-can-apply",
+        "title": "Kas gali stoti",
+        "text": "Į bakalauro ir taikomojo aukštojo mokslo studijas gali stoti asmuo, turintis vidurinį išsilavinimą arba jį atitinkančią kvalifikaciją. Magistrantūrai reikia bakalauro laipsnio, doktorantūrai — magistro laipsnio arba juos atitinkančios kvalifikacijos.",
+        "source": "Aukštojo mokslo įstatymas, 12 straipsnis"
+      },
+      {
+        "id": "conditions-published",
+        "title": "Priėmimo sąlygas nustato ir skelbia aukštoji mokykla",
+        "text": "Aukštoji mokykla nustato ir skelbia priėmimo sąlygas, įskaitant minimalius studijų kalbos mokėjimo reikalavimus. Sąlygas kiekviena aukštoji mokykla nustato pati.",
+        "source": "Aukštojo mokslo įstatymas, 13 straipsnio 1 dalis"
+      },
+      {
+        "id": "threshold-or-ranking",
+        "title": "Priimama įvykdžius sąlygas arba pagal eilę",
+        "text": "Studentu priimamas asmuo, atitinkantis aukštosios mokyklos nustatytas priėmimo sąlygas. Pagrįstu atveju aukštoji mokykla gali nustatyti į programą priimamų studentų skaičiaus viršutinę ribą ir studijų vietas užpildyti pagal konkursinę eilę — tada priimami tie, kurie atitinka sąlygas ir eilėje užima priėmimą užtikrinančią vietą.",
+        "source": "Aukštojo mokslo įstatymas, 13 straipsnio 2 ir 4 dalys"
+      },
+      {
+        "id": "no-grouping-by-fee",
+        "title": "Mokantys ir nemokantys stojantieji vertinami vienodai",
+        "text": "Vertinant atitiktį priėmimo sąlygoms, pirmosios ir antrosios pakopos stojantieji neskirstomi į grupes pagal tai, ar aukštoji mokykla turi teisę iš jų reikalauti mokesčio už studijas. Skirstyti į grupes galima pagrįstais atvejais — dėl programos specifikos ir studijuojančiųjų specialiųjų poreikių.",
+        "source": "Aukštojo mokslo įstatymas, 13 straipsnio 3 dalis"
+      },
+      {
+        "id": "free-study",
+        "title": "Studijos estų kalba visu krūviu yra nemokamos",
+        "text": "Studijos pagal programą estų kalba studentui nemokamos, jei jis studijuoja visu krūviu ir kiekvieną semestrą kumuliatyviai įvykdo reikalaujamą studijų apimtį.",
+        "source": "Aukštojo mokslo įstatymas, 16 straipsnio 1 dalis"
+      },
+      {
+        "id": "no-admission-fee",
+        "title": "Jei studijos nemokamos, už priėmimą mokestis neimamas",
+        "text": "Jei studijos studentui nemokamos, aukštoji mokykla neturi teisės reikalauti iš jo mokesčio už priėmimą į studijas ar už užduotis, nustatytas kaip priėmimo sąlyga.",
+        "source": "Aukštojo mokslo įstatymas, 16 straipsnio 5 dalis"
+      },
+      {
+        "id": "when-fee-charged",
+        "title": "Kada aukštoji mokykla gali imti mokestį už studijas",
+        "text": "Mokesčio už visą programą gali būti reikalaujama, be kita ko, iš studento, kuris studijuoja daliniu krūviu, studijuoja ne pagal programą estų kalba, pradėdamas studijas jau yra imatrikuliuotas į nemokamas aukštojo mokslo studijas, toje pačioje pakopoje jau bent 365 dienas studijavo nemokamai ir nuo išbraukimo praėjo mažiau nei dešimt metų, pradeda studijuoti magistrantūros programoje estų kalba, kurios apimtis mažesnė nei 120 kreditų, arba privačios aukštosios mokyklos programoje, kurios išlaidų nedengia valstybės parama. Visas sąrašas — įstatyme.",
+        "source": "Aukštojo mokslo įstatymas, 16 straipsnio 6 dalis"
+      },
+      {
+        "id": "fee-rates-in-advance",
+        "title": "Mokesčio dydis nustatomas prieš keturis mėnesius",
+        "text": "Aukštoji mokykla nustato mokesčio dydžius ir studijų išlaidų atlyginimo dydį bei sąlygas ne vėliau kaip prieš keturis mėnesius iki mokslo metų pradžios. Jau studijuojančiam studentui šį dydį, palyginti su ankstesniais mokslo metais, galima padidinti ne daugiau kaip dešimčia procentų.",
+        "source": "Aukštojo mokslo įstatymas, 16 straipsnio 8 dalis"
+      },
+      {
+        "id": "load-choice",
+        "title": "Krūvį pirmaisiais metais pasirenka studentas",
+        "text": "Stodamas studentas nusprendžia, ar pirmaisiais mokslo metais studijuos visu ar daliniu krūviu, išskyrus atvejus, kai pagal programą galima studijuoti tik vienu būdu. Studijuojant visu krūviu iki mokslo metų pabaigos kumuliatyviai įvykdoma ne mažiau kaip 75 procentai programoje numatytos apimties, daliniu krūviu — nuo 50 iki 75 procentų.",
+        "source": "Aukštojo mokslo įstatymas, 14 straipsnio 1, 2, 3 ir 5 dalys"
+      },
+      {
+        "id": "appeal",
+        "title": "Priėmimo sprendimui ginčyti — ne mažiau kaip trys darbo dienos",
+        "text": "Terminas, per kurį galima ginčyti su priėmimu į studijas susijusį sprendimą, negali būti trumpesnis nei trys darbo dienos nuo sprendimo paskelbimo. Tikslų terminą nustato aukštoji mokykla; kitiems studijų organizavimo sprendimams jis negali būti trumpesnis nei dešimt darbo dienų.",
+        "source": "Aukštojo mokslo įstatymas, 17¹ straipsnis"
+      },
+      {
+        "id": "student-rights",
+        "title": "Studento teisės",
+        "text": "Studentas, be kita ko, turi teisę gauti programai įvykdyti reikalingą informaciją, studijų ir karjeros konsultacijas, teikti atsiliepimus ir ginčyti su studijų organizavimu susijusius sprendimus, kiekvienais mokslo metais gauti ne mažiau kaip du mėnesius atostogų, o pirmojoje ir antrojoje pakopoje — akademines atostogas, paprastai iki vienų metų.",
+        "source": "Aukštojo mokslo įstatymas, 15 straipsnio 1 dalis"
+      },
+      {
+        "id": "prior-learning",
+        "title": "Galima prašyti įskaityti ankstesnes studijas ir darbo patirtį",
+        "text": "Aukštosios mokyklos nustatytomis sąlygomis ir tvarka asmuo turi teisę prašyti įskaityti ankstesnes studijas ir darbo patirtį.",
+        "source": "Aukštojo mokslo įstatymas, 15 straipsnio 5 dalis"
+      },
+      {
+        "id": "diploma-free",
+        "title": "Diplomas ir jo priedėlis išduodami nemokamai",
+        "text": "Visą programą įvykdžiusiam asmeniui aukštoji mokykla išduoda akademinio laipsnio diplomą kartu su diplomo priedėliu estų ir anglų kalbomis. Aukštąjį išsilavinimą patvirtinantys dokumentai absolventui išduodami nemokamai.",
+        "source": "Aukštojo mokslo įstatymas, 19 straipsnio 1 dalis"
+      }
+    ],
+    "sources": [
+      {
+        "label": "Estijos aukštojo mokslo įstatymas (Kõrgharidusseadus), estų kalba",
+        "url": "https://www.riigiteataja.ee/akt/KHaS"
+      }
+    ]
+  },
+  "glossary": {
+    "intro": "Žodžiai, kuriuos sutiksite Estijos aukštųjų mokyklų priėmimo sąlygose ir šioje svetainėje. Skliausteliuose — terminas estų kalba, kaip jis rašomas dokumentuose. Apibrėžtys paimtos iš Estijos aukštojo mokslo įstatymo; prie kiekvienos nurodytas šaltinis.",
+    "items": [
+      {
+        "id": "levels",
+        "term": "Aukštojo mokslo pakopos (kõrgharidusastmed)",
+        "definition": "Aukštojo mokslo studijos susideda iš trijų pakopų: pirmoji — bakalauro studijos ir taikomojo aukštojo mokslo studijos, antroji — magistrantūra, trečioji — doktorantūra.",
+        "source": "Aukštojo mokslo įstatymas, 3 straipsnio 1 dalis"
+      },
+      {
+        "id": "curriculum",
+        "term": "Studijų programa (õppekava)",
+        "definition": "Aukštojo mokslo studijų pagrindas: joje nustatomi studijų tikslai ir rezultatai, nominali trukmė ir apimtis, studijų pradžios sąlygos, dalykų sąrašas, specializacijos galimybės ir baigimo sąlygos.",
+        "source": "Aukštojo mokslo įstatymas, 3 straipsnio 2 dalis"
+      },
+      {
+        "id": "credit-point",
+        "term": "Studijų kreditas (ainepunkt, EAP)",
+        "definition": "Studijų apimties vienetas. Vienų mokslo metų apimtis — 60 kreditų; vienas kreditas atitinka 26 studento studijų darbo valandas.",
+        "source": "Aukštojo mokslo įstatymas, 4 straipsnio 1 dalis"
+      },
+      {
+        "id": "bachelor",
+        "term": "Bakalauro studijos (bakalaureuseõpe)",
+        "definition": "Pirmosios pakopos studijos, kuriose studentas įgyja srities pagrindines žinias ir gebėjimus bei tai, ko reikia darbui ir magistrantūrai. Apimtis — 180–240 kreditų, nominali trukmė — treji–ketveri mokslo metai; absolventui suteikiamas bakalauro laipsnis.",
+        "source": "Aukštojo mokslo įstatymas, 5 straipsnio 1, 3 ir 6 dalys"
+      },
+      {
+        "id": "professional-higher",
+        "term": "Taikomojo aukštojo mokslo studijos (rakenduskõrgharidusõpe)",
+        "definition": "Pirmosios pakopos studijos, kuriose studentas papildomai įgyja žinių, gebėjimų ir nuostatų darbui konkrečioje profesijoje. Apimtis — 180–240 kreditų (akušerijos studijose 270, slaugos — 210); absolventui suteikiamas bakalauro laipsnis.",
+        "source": "Aukštojo mokslo įstatymas, 5 straipsnio 2, 3, 4 ir 6 dalys"
+      },
+      {
+        "id": "master",
+        "term": "Magistrantūra (magistriõpe)",
+        "definition": "Antrosios pakopos studijos, kuriose studentas gilina specialybės žinias ir gebėjimus. Apimtis — 60–120 kreditų, nominali trukmė — vieneri–dveji mokslo metai; absolventui suteikiamas magistro laipsnis.",
+        "source": "Aukštojo mokslo įstatymas, 6 straipsnis"
+      },
+      {
+        "id": "integrated",
+        "term": "Vientisosios bakalauro ir magistrantūros studijos (integreeritud õpe)",
+        "definition": "Studijos, jungiančios pirmąsias dvi pakopas: taip organizuojamos gydytojų, veterinarijos gydytojų, vaistininkų, odontologų, architektų, statybos inžinierių ir pradinių klasių mokytojų studijos. Apimtis — 300 kreditų ir penkeri mokslo metai, medicinos ir veterinarijos studijose — 360 kreditų ir šešeri mokslo metai; absolventui suteikiamas magistro laipsnis.",
+        "source": "Aukštojo mokslo įstatymas, 7 straipsnio 1, 2 ir 5 dalys"
+      },
+      {
+        "id": "doctoral",
+        "term": "Doktorantūra (doktoriõpe)",
+        "definition": "Trečiosios pakopos studijos, kuriose įgyjama žinių ir gebėjimų savarankiškam moksliniam, plėtros ar profesiniam kūrybiniam darbui. Nominali trukmė — treji–ketveri mokslo metai; absolventui suteikiamas daktaro laipsnis.",
+        "source": "Aukštojo mokslo įstatymas, 8 straipsnio 1, 2 ir 4 dalys"
+      },
+      {
+        "id": "student",
+        "term": "Studentas, imatrikuliacija ir eksmatrikuliacija (üliõpilane, immatrikuleerimine, eksmatrikuleerimine)",
+        "definition": "Studentas — aukštojo mokslo pakopoje studijuojantis asmuo nuo priėmimo į studijas, t. y. imatrikuliacijos, iki išbraukimo iš studijų, t. y. eksmatrikuliacijos.",
+        "source": "Aukštojo mokslo įstatymas, 2 straipsnio 2 dalis"
+      },
+      {
+        "id": "institution",
+        "term": "Aukštoji mokykla: universitetas ir taikomoji aukštoji mokykla (kõrgkool, ülikool, rakenduskõrgkool)",
+        "definition": "Aukštojo mokslo studijas organizuoja universitetai ir taikomosios aukštosios mokyklos, kurioms įstatymo nustatyta tvarka suteikta teisė vykdyti aukštojo mokslo studijas. Įstatymas jas bendrai vadina aukštosiomis mokyklomis (kõrgkool).",
+        "source": "Aukštojo mokslo įstatymas, 2 straipsnio 3 dalis"
+      },
+      {
+        "id": "admission-conditions",
+        "term": "Priėmimo sąlygos (vastuvõtutingimused)",
+        "definition": "Sąlygos, kurias aukštoji mokykla nustato ir skelbia priėmimui į studijas, įskaitant minimalius studijų kalbos mokėjimo reikalavimus.",
+        "source": "Aukštojo mokslo įstatymas, 13 straipsnio 1 dalis"
+      },
+      {
+        "id": "ranking",
+        "term": "Konkursinė eilė (paremusjärjestus)",
+        "definition": "Stojančiųjų eilė pagal priėmimo sąlygų įvykdymą. Jei aukštoji mokykla nustatė priimamųjų į programą skaičiaus viršutinę ribą, studijų vietos užpildomos pagal eilę: priimami tie, kurie užima priėmimą užtikrinančią vietą.",
+        "source": "Aukštojo mokslo įstatymas, 13 straipsnio 2 ir 4 dalys"
+      },
+      {
+        "id": "full-load",
+        "term": "Visas krūvis (täiskoormus)",
+        "definition": "Studijų krūvis, kai studentas iki kiekvienų mokslo metų pabaigos kumuliatyviai įvykdo ne mažiau kaip 75 procentus programoje numatytos studijų apimties.",
+        "source": "Aukštojo mokslo įstatymas, 14 straipsnio 2 dalis"
+      },
+      {
+        "id": "partial-load",
+        "term": "Dalinis krūvis (osakoormus)",
+        "definition": "Studijų krūvis, kai studentas iki kiekvienų mokslo metų pabaigos kumuliatyviai įvykdo nuo 50 iki 75 procentų programoje numatytos studijų apimties. Iš daliniu krūviu studijuojančio studento aukštoji mokykla gali reikalauti mokesčio už visą programą.",
+        "source": "Aukštojo mokslo įstatymas, 14 straipsnio 3 dalis; 16 straipsnio 6 dalis"
+      },
+      {
+        "id": "nominal-duration",
+        "term": "Nominali trukmė (nominaalkestus)",
+        "definition": "Programoje nustatyta studijų trukmė. Studento nominalus studijų laikas paprastai atitinka programos nominalią trukmę ir pailgėja, pavyzdžiui, akademinėse atostogose praleistu laiku.",
+        "source": "Aukštojo mokslo įstatymas, 3 straipsnio 2 dalis; 14 straipsnio 7 dalis"
+      },
+      {
+        "id": "external-study",
+        "term": "Eksternas (eksternõpe)",
+        "definition": "Mokymasis neturint studento statuso: eksternas turi atitikti programos priėmimo sąlygas ir turi teisę aukštosios mokyklos nustatyta tvarka ginti baigiamąjį darbą arba laikyti baigiamąjį egzaminą. Eksternas nėra studentas.",
+        "source": "Aukštojo mokslo įstatymas, 14 straipsnio 9 dalis"
+      },
+      {
+        "id": "study-cost-reimbursement",
+        "term": "Studijų išlaidų atlyginimas (õppekulude hüvitamine)",
+        "definition": "Mokestis už visą programą, kurio aukštoji mokykla įstatyme išvardytais atvejais gali reikalauti iš studento, pavyzdžiui, studijuojant daliniu krūviu arba ne estų kalba.",
+        "source": "Aukštojo mokslo įstatymas, 16 straipsnio 6 dalis"
+      },
+      {
+        "id": "academic-leave",
+        "term": "Akademinės atostogos (akadeemiline puhkus)",
+        "definition": "Laikinas studijų sustabdymas. Pirmojoje ir antrojoje pakopoje studentas turi teisę į akademines atostogas aukštosios mokyklos nustatyta tvarka, paprastai iki vienų metų, papildomai dėl sveikatos iki dvejų metų, dėl privalomosios ar alternatyviosios tarnybos iki vienų metų ir vaikui prižiūrėti, kol jam sueis treji metai.",
+        "source": "Aukštojo mokslo įstatymas, 15 straipsnio 1 dalis"
+      },
+      {
+        "id": "diploma-supplement",
+        "term": "Diplomo priedėlis (akadeemiline õiend)",
+        "definition": "Dokumentas estų ir anglų kalbomis, išduodamas kartu su diplomu. Bakalauro ar taikomojo aukštojo mokslo studijų absolventui aukštoji mokykla priedėlį anglų kalba gali išduoti tik paprašius.",
+        "source": "Aukštojo mokslo įstatymas, 19 straipsnio 1 ir 3 dalys"
+      },
+      {
+        "id": "sais",
+        "term": "SAIS (sisseastumise infosüsteem)",
+        "definition": "Valstybinė informacinė sistema, per kurią teikiami stojimo prašymai. Konkursų puslapiai vieši; prašymui pateikti reikia prisijungti naudojant valstybinę autentifikaciją.",
+        "source": "sais.ee"
+      }
+    ]
+  },
+  "privacy": {
+    "intro": "Kaip ši svetainė tvarko asmens duomenis: ką saugome, ko nesaugome ir kokios yra jūsų teisės. Šis tekstas — vertimas iš latvių kalbos; jei tekstai skiriasi, galioja tekstas latvių kalba.",
+    "authorityLabel": "Estijos duomenų apsaugos inspekcija (aki.ee)",
+    "authorityUrl": "https://www.aki.ee",
+    "sections": [
+      {
+        "id": "summary",
+        "title": "Trumpai",
+        "body": [
+          "- Svetainėje nėra naudotojų paskyrų ir nereikia registruotis.",
+          "- Egzaminų rezultatai, kuriuos įvedate skaičiuoklėje arba skiltyje „Kur galima stoti“, skaičiuojami jūsų naršyklėje. Jie nesiunčiami į mūsų serverį ir niekur nesaugomi.",
+          "- Nenaudojame sekimo slapukų ir nerodome reklamos.",
+          "- Jūsų sąrašas (žvaigždute pažymėtos programos) saugomas tik jūsų įrenginyje."
+        ]
+      },
+      {
+        "id": "controller",
+        "title": "Kas atsakingas",
+        "body": [
+          "Duomenų valdytojas yra {controller}. Klausimais dėl asmens duomenų rašykite: {email}."
+        ]
+      },
+      {
+        "id": "visit",
+        "title": "Lankymasis svetainėje",
+        "body": [
+          "Kai atidarote puslapį, mūsų prieglobos paslaugų teikėjas automatiškai užfiksuoja techninius duomenis: jūsų IP adresą, laiką, prašomą adresą ir naršyklės tipą. Tai daroma tam, kad svetainė veiktų ir būtų saugi. Šių duomenų nenaudojame asmeniui nustatyti.",
+          "Teisinis pagrindas: mūsų teisėtas interesas užtikrinti svetainės saugumą ir veikimą (Bendrojo duomenų apsaugos reglamento 6 straipsnio 1 dalies f punktas). Saugojimo laikotarpį nustato paslaugų teikėjas.",
+          "Pirmą kartą apsilankius kalbą (latvių, lietuvių arba anglų) parenkame pagal jūsų naršyklės kalbos nustatymą; tai nesaugoma."
+        ]
+      },
+      {
+        "id": "survey",
+        "title": "Anketa ir skaičiuoklės",
+        "body": [
+          "- Egzaminų rezultatai skaičiuoklėje ir skiltyje „Kur galima stoti“ skaičiuojami tik jūsų naršyklėje. Jie nesiunčiami į serverį, nesaugomi ir neįrašomi į puslapio adresą.",
+          "- Anketoje pasirinkti filtrai (dominanti sritis, studijų lygmuo, miestas, studijų kalba) įrašomi į puslapio adresą, kad būtų galima parodyti programų sąrašą. Kartu su apsilankymu jie patenka į techninius žurnalus (žr. aukščiau), tačiau jų nesiejame su asmeniu. Anketos atsakymai apie egzaminus į serverį nesiunčiami."
+        ]
+      },
+      {
+        "id": "favorites",
+        "title": "Išsaugotos programos",
+        "body": [
+          "Programų, kurias pažymite žvaigždute, sąrašas saugomas tik jūsų naršyklėje (localStorage). Jį galite ištrinti išvalę svetainės duomenis naršyklės nustatymuose. Šis saugojimas reikalingas funkcijai, kuria naudotis pasirenkate patys.",
+          "Kai atidarote sąrašą, naršyklė paprašo šių programų duomenų iš mūsų duomenų bazės (Supabase). Užklausoje yra programų identifikatoriai; kaip ir bet kuris apsilankymas, ji patenka į paslaugų teikėjo techninius žurnalus. Sąrašo nesaugome ir nesiejame jo su asmeniu."
+        ]
+      },
+      {
+        "id": "cookies",
+        "title": "Slapukai",
+        "body": [
+          "Slapukų sekimui nenaudojame. Svetainė jūsų naršyklėje saugo tik programų sąrašą (žr. aukščiau)."
+        ]
+      },
+      {
+        "id": "analytics",
+        "title": "Naudojimo statistika",
+        "body": [
+          "Kad suprastume, kurie puslapiai skaitomi ir kaip greitai jie įkeliami, naudojame „PostHog“ analitiką, kurios serveriai yra Europos Sąjungoje. Ji nustatyta taip:",
+          "- be slapukų ir be naršyklėje saugomų duomenų;",
+          "- be asmenų identifikavimo, be seansų įrašų ir be įvestų laukų turinio — egzaminų rezultatai į analitiką nepatenka niekada;",
+          "- IP adresai nesaugomi.",
+          "Teisinis pagrindas: mūsų teisėtas interesas tobulinti svetainę (6 straipsnio 1 dalies f punktas). Galite nesutikti — rašykite {email}."
+        ]
+      },
+      {
+        "id": "email",
+        "title": "Priminimai el. paštu",
+        "body": [
+          "Jei patys paprašote priminimo (pavyzdžiui, apie priėmimo pradžią arba pokyčius jūsų programų sąraše), saugome jūsų el. pašto adresą ir tai, apie ką norite būti informuoti. Naudojame juos tik tam, ko prašėte.",
+          "Teisinis pagrindas: jūsų sutikimas (6 straipsnio 1 dalies a punktas). Sutikimą galite atšaukti bet kada — nuoroda kiekviename laiške arba parašę {email}; atšaukimas neturi įtakos jau išsiųstiems laiškams.",
+          "Laiškus siunčia paslaugų teikėjas „Resend“. Adresą ištriname jums atšaukus sutikimą ir ne vėliau kaip po 12 mėnesių nuo paskutinio išsiųsto laiško."
+        ]
+      },
+      {
+        "id": "minors",
+        "title": "Moksleiviai ir jaunimas",
+        "body": [
+          "Svetainė daugiausia skirta moksleiviams ir jaunimui. Estijoje vaikas pats gali duoti sutikimą informacinės visuomenės paslaugai nuo 13 metų; jaunesniam vaikui reikia teisėto atstovo sutikimo (Estijos asmens duomenų apsaugos įstatymo 8 straipsnis; Bendrojo duomenų apsaugos reglamento 8 straipsnis).",
+          "Egzaminų rezultatų, kuriuos įvedate svetainėje, nesaugome ir nesiunčiame."
+        ]
+      },
+      {
+        "id": "recipients",
+        "title": "Kam perduodame duomenis",
+        "body": [
+          "Duomenų neparduodame ir nerodome reklamos. Duomenis tvarko tik mūsų paslaugų teikėjai (duomenų tvarkytojai) ir tik mūsų pavedimu:",
+          "- prieglobos paslaugų teikėjas (svetainės veikimas);",
+          "- „Supabase“ (duomenų bazė, serveriai Europos Sąjungoje; el. pašto adresai, jei juos pateikiate);",
+          "- „PostHog“ (naudojimo statistika, serveriai Europos Sąjungoje);",
+          "- „Google“ (el. paštas: jei mums rašote, susirašinėjimas saugomas „Gmail“ pašto dėžutėje);",
+          "- „Resend“ (el. laiškų siuntimas).",
+          "Jei paslaugų teikėjas perduoda duomenis už Europos ekonominės erdvės ribų, jis tai daro taikydamas Europos Komisijos patvirtintas apsaugos priemones, pavyzdžiui, standartines sutarčių sąlygas."
+        ]
+      },
+      {
+        "id": "rights",
+        "title": "Jūsų teisės",
+        "body": [
+          "Turite teisę:",
+          "- gauti informaciją apie savo duomenis ir susipažinti su jais;",
+          "- prašyti juos ištaisyti arba ištrinti;",
+          "- apriboti tvarkymą ir nesutikti su tvarkymu, grindžiamu teisėtais interesais;",
+          "- gauti savo duomenis perkeliamu formatu;",
+          "- bet kada atšaukti sutikimą.",
+          "Rašykite {email} — atsakysime per vieną mėnesį. Jei manote, kad jūsų teisės pažeistos, galite pateikti skundą Estijos duomenų apsaugos inspekcijai (Andmekaitse Inspektsioon, aki.ee) arba duomenų valdytojo šalies priežiūros institucijai — Latvijos duomenų valstybinei inspekcijai (Datu valsts inspekcija, Elijas iela 17, Ryga, LV-1050)."
+        ]
+      },
+      {
+        "id": "contact",
+        "title": "Jei mums rašote",
+        "body": [
+          "Programos puslapyje ir skaičiuoklėje yra nuoroda pranešti apie klaidą. Ji atidaro jūsų pačių el. pašto programą — laišką išsiunčiate patys; svetainė jūsų vardu nieko nesiunčia.",
+          "Jei mums parašote, gauname jūsų el. pašto adresą ir laiško turinį. Naudojame juos tik informacijai patikrinti ir ištaisyti bei jums atsakyti. Prašome nenurodyti egzaminų rezultatų — mums jų nereikia.",
+          "Teisinis pagrindas: mūsų teisėtas interesas, kad informacija svetainėje būtų teisinga (6 straipsnio 1 dalies f punktas). Susirašinėjimą ištriname ne vėliau kaip po 12 mėnesių nuo paskutinio laiško."
+        ]
+      },
+      {
+        "id": "decisions",
+        "title": "Automatizuoti sprendimai",
+        "body": [
+          "Nepriimame automatizuotų sprendimų, kurie turėtų jums poveikį, ir neprofiliuojame. Skaičiavimai svetainėje yra orientaciniai; galutinį sprendimą dėl priėmimo priima aukštoji mokykla."
+        ]
+      },
+      {
+        "id": "changes",
+        "title": "Pakeitimai",
+        "body": [
+          "Jei politika keisis, atnaujinsime šį puslapį ir redakcijos datą."
+        ]
+      }
+    ]
   }
 }

@@ -530,5 +530,362 @@
       "retry": "Proovi uuesti",
       "catalog": "Ava kataloog"
     }
+  },
+  "rights": {
+    "title": "Kandidaadi õigused kõrgkooli astumisel",
+    "intro": "Mida Eesti kõrgharidusseadus kandidaadile ja üliõpilasele ette näeb: kes võib kandideerida, kes kehtestab vastuvõtutingimused, millal on õpe tasuta ja kuidas otsust vaidlustada.",
+    "checkedNote": "Koostatud automaatselt kõrgharidusseaduse teksti põhjal, mida lugesime Riigi Teatajas 13. oktoobril 2026: redaktsioon, mis kehtib 19. juulist kuni 31. detsembrini 2026 (RT I, 09.07.2026, 49). Jurist ei ole seda teksti kontrollinud. Alates 1. jaanuarist 2027 kehtib järgmine redaktsioon. See ei ole õigusnõu: määravad on seaduse tekst ja iga kõrgkooli vastuvõtutingimused.",
+    "sourceLabel": "Allikas",
+    "sourcesTitle": "Allikad",
+    "glossaryLink": "Mõistete selgitused — sõnastikus",
+    "items": [
+      {
+        "id": "who-can-apply",
+        "title": "Kes võib kandideerida",
+        "text": "Bakalaureuseõppesse ja rakenduskõrgharidusõppesse on õigus kandideerida isikul, kellel on keskharidus või sellele vastav kvalifikatsioon. Magistriõppesse kandideerimiseks on vaja bakalaureusekraadi, doktoriõppesse — magistrikraadi või neile vastavat kvalifikatsiooni.",
+        "source": "Kõrgharidusseadus, § 12"
+      },
+      {
+        "id": "conditions-published",
+        "title": "Vastuvõtutingimused kehtestab ja avalikustab kõrgkool",
+        "text": "Kõrgkool kehtestab ja avalikustab vastuvõtu tingimused, sealhulgas õppekeele taseme miinimumnõuded. Tingimused kehtestab iga kõrgkool ise.",
+        "source": "Kõrgharidusseadus, § 13 lõige 1"
+      },
+      {
+        "id": "threshold-or-ranking",
+        "title": "Vastuvõtt tingimuste täitmisel või paremusjärjestuse alusel",
+        "text": "Üliõpilaseks võetakse vastu isik, kes vastab kõrgkooli kehtestatud vastuvõtutingimustele. Põhjendatud juhul võib kõrgkool kehtestada õppekavale vastuvõetavate üliõpilaste arvu ülempiiri ja täita õppekohad paremusjärjestuse alusel — siis võetakse vastu need, kes vastavad tingimustele ja on paremusjärjestuses vastuvõttu tagaval kohal.",
+        "source": "Kõrgharidusseadus, § 13 lõiked 2 ja 4"
+      },
+      {
+        "id": "no-grouping-by-fee",
+        "title": "Tasulisi ja tasuta kandidaate hinnatakse ühtemoodi",
+        "text": "Vastuvõtutingimustele vastavuse hindamisel ei rühmitata esimese ja teise õppeastme kandidaate selle järgi, kas kõrgkoolil on õigus neilt õppimise eest tasu nõuda. Rühmitada võib põhjendatud juhtudel õppekava eripära ja õppijate erivajaduste tõttu.",
+        "source": "Kõrgharidusseadus, § 13 lõige 3"
+      },
+      {
+        "id": "free-study",
+        "title": "Eestikeelne täiskoormusega õpe on tasuta",
+        "text": "Eestikeelse õppekava alusel õppimine on üliõpilasele tasuta, kui ta õpib täiskoormusega ja täidab igal semestril kumulatiivselt nõutava õppe mahu.",
+        "source": "Kõrgharidusseadus, § 16 lõige 1"
+      },
+      {
+        "id": "no-admission-fee",
+        "title": "Tasuta õppe korral ei võeta tasu vastuvõtu eest",
+        "text": "Kui õppimine on üliõpilasele tasuta, ei ole kõrgkoolil õigust nõuda temalt tasu õppesse vastuvõtmise ega vastuvõtutingimusena määratletud soorituste eest.",
+        "source": "Kõrgharidusseadus, § 16 lõige 5"
+      },
+      {
+        "id": "when-fee-charged",
+        "title": "Millal võib kõrgkool õppe eest tasu nõuda",
+        "text": "Tasu kogu õppekava ulatuses võib nõuda muu hulgas üliõpilaselt, kes õpib osakoormusega, ei õpi eestikeelse õppekava alusel, on õppima asudes juba immatrikuleeritud kõrgharidustaseme tasuta õppesse, on samal astmel juba vähemalt 365 päeva tasuta õppinud ja eksmatrikuleerimisest on möödas vähem kui kümme aastat, asub õppima alla 120 ainepunkti mahuga eestikeelsel magistriõppekaval või erakõrgkooli õppekaval, mille kulusid riigi toetusest ei kaeta. Täielik loetelu on seaduses.",
+        "source": "Kõrgharidusseadus, § 16 lõige 6"
+      },
+      {
+        "id": "fee-rates-in-advance",
+        "title": "Tasu määrad kehtestatakse neli kuud ette",
+        "text": "Kõrgkool kehtestab tasu määrad ning õppekulude hüvitamise määra ja tingimused vähemalt neli kuud enne õppeaasta algust. Juba õppima asunud üliõpilase õppekulude hüvitamise määra võib suurendada eelmise õppeaastaga võrreldes kuni kümme protsenti.",
+        "source": "Kõrgharidusseadus, § 16 lõige 8"
+      },
+      {
+        "id": "load-choice",
+        "title": "Koormuse valib esimesel aastal üliõpilane",
+        "text": "Kõrgkooli astudes otsustab üliõpilane, kas ta õpib esimesel õppeaastal täis- või osakoormusega, välja arvatud juhul, kui õppekava alusel saab õppida ainult ühel viisil. Täiskoormusega õppes täidetakse õppeaasta lõpuks kumulatiivselt vähemalt 75 protsenti õppekava mahust, osakoormusega — 50 kuni 75 protsenti.",
+        "source": "Kõrgharidusseadus, § 14 lõiked 1, 2, 3 ja 5"
+      },
+      {
+        "id": "appeal",
+        "title": "Vastuvõtuotsuse vaidlustamiseks on vähemalt kolm tööpäeva",
+        "text": "Õppesse vastuvõtmisega seotud otsuse peale vaide esitamise tähtaeg ei või olla lühem kui kolm tööpäeva otsuse teatavakstegemisest. Täpse tähtaja kehtestab kõrgkool; muude õppekorralduslike otsuste puhul ei või see olla lühem kui kümme tööpäeva.",
+        "source": "Kõrgharidusseadus, § 17¹"
+      },
+      {
+        "id": "student-rights",
+        "title": "Üliõpilase õigused",
+        "text": "Üliõpilasel on muu hulgas õigus saada õppekava täitmiseks vajalikku teavet ning õpi- ja karjäärinõustamist, anda tagasisidet ja vaidlustada õppekorraldusega seotud otsuseid, saada igal õppeaastal vähemalt kaks kuud puhkust ning esimesel ja teisel õppeastmel akadeemilist puhkust üldjuhul kuni üks aasta.",
+        "source": "Kõrgharidusseadus, § 15 lõige 1"
+      },
+      {
+        "id": "prior-learning",
+        "title": "Varasemaid õpinguid ja töökogemust saab lasta arvestada",
+        "text": "Kõrgkooli kehtestatud tingimustel ja korras on isikul õigus taotleda varasemate õpingute ja töökogemuse arvestamist.",
+        "source": "Kõrgharidusseadus, § 15 lõige 5"
+      },
+      {
+        "id": "diploma-free",
+        "title": "Diplom ja akadeemiline õiend antakse tasuta",
+        "text": "Õppekava täies mahus täitnule annab kõrgkool akadeemilise kraadi kohta diplomi koos eesti- ja ingliskeelse akadeemilise õiendiga. Kõrgharidust tõendavad dokumendid annab kõrgkool lõpetanule tasuta.",
+        "source": "Kõrgharidusseadus, § 19 lõige 1"
+      }
+    ],
+    "sources": [
+      {
+        "label": "Kõrgharidusseadus (KHaS), Riigi Teataja",
+        "url": "https://www.riigiteataja.ee/akt/KHaS"
+      }
+    ]
+  },
+  "glossary": {
+    "title": "Vastuvõtu sõnastik",
+    "intro": "Sõnad, mis esinevad Eesti kõrgkoolide vastuvõtutingimustes ja sellel saidil. Määratlused on võetud kõrgharidusseadusest; iga juures on allikas.",
+    "sourceLabel": "Allikas",
+    "rightsLink": "Kandidaadi õigused vastuvõtul",
+    "items": [
+      {
+        "id": "levels",
+        "term": "Kõrgharidusastmed",
+        "definition": "Kõrgharidustaseme õpe koosneb kolmest astmest: esimene on bakalaureuseõpe ja rakenduskõrgharidusõpe, teine magistriõpe ja kolmas doktoriõpe.",
+        "source": "Kõrgharidusseadus, § 3 lõige 1"
+      },
+      {
+        "id": "curriculum",
+        "term": "Õppekava",
+        "definition": "Kõrgharidustaseme õppe alus: selles määratakse õppe eesmärgid ja õpiväljundid, nominaalkestus ja maht, õppe alustamise tingimused, õppeainete loetelu, spetsialiseerumisvõimalused ja lõpetamise tingimused.",
+        "source": "Kõrgharidusseadus, § 3 lõige 2"
+      },
+      {
+        "id": "credit-point",
+        "term": "Ainepunkt (EAP)",
+        "definition": "Õppe mahu ühik. Ühe õppeaasta maht on 60 ainepunkti; üks ainepunkt vastab arvestuslikult 26 tunnile üliõpilase õppetööle.",
+        "source": "Kõrgharidusseadus, § 4 lõige 1"
+      },
+      {
+        "id": "bachelor",
+        "term": "Bakalaureuseõpe",
+        "definition": "Esimese astme õpe, milles üliõpilane omandab valdkonna alusteadmised ja -oskused ning tööle asumiseks ja magistriõppeks vajalikud teadmised. Maht on 180–240 ainepunkti, nominaalkestus kolm kuni neli õppeaastat; lõpetanule antakse bakalaureusekraad.",
+        "source": "Kõrgharidusseadus, § 5 lõiked 1, 3 ja 6"
+      },
+      {
+        "id": "professional-higher",
+        "term": "Rakenduskõrgharidusõpe",
+        "definition": "Esimese astme õpe, milles üliõpilane omandab lisaks ka teadmised, oskused ja hoiakud kindlal kutsealal tööle asumiseks. Maht on 180–240 ainepunkti (ämmaemandaõppes 270, õeõppes 210); lõpetanule antakse bakalaureusekraad.",
+        "source": "Kõrgharidusseadus, § 5 lõiked 2, 3, 4 ja 6"
+      },
+      {
+        "id": "master",
+        "term": "Magistriõpe",
+        "definition": "Teise astme õpe, milles üliõpilane süvendab erialateadmisi ja -oskusi. Maht on 60–120 ainepunkti, nominaalkestus üks kuni kaks õppeaastat; lõpetanule antakse magistrikraad.",
+        "source": "Kõrgharidusseadus, § 6"
+      },
+      {
+        "id": "integrated",
+        "term": "Integreeritud bakalaureuse- ja magistriõpe",
+        "definition": "Õpe, mis ühendab kaks esimest astet: nii korraldatakse arsti-, loomaarsti-, proviisori-, hambaarsti-, arhitekti-, ehitusinseneri- ja klassiõpetaja õpe. Maht on 300 ainepunkti ja viis õppeaastat, arsti- ja loomaarstiõppes 360 ainepunkti ja kuus õppeaastat; lõpetanule antakse magistrikraad.",
+        "source": "Kõrgharidusseadus, § 7 lõiked 1, 2 ja 5"
+      },
+      {
+        "id": "doctoral",
+        "term": "Doktoriõpe",
+        "definition": "Kolmanda astme õpe, milles omandatakse iseseisvaks teadus-, arendus- või kutsealaseks loometööks vajalikud teadmised ja oskused. Nominaalkestus on kolm kuni neli õppeaastat; lõpetanule antakse doktorikraad.",
+        "source": "Kõrgharidusseadus, § 8 lõiked 1, 2 ja 4"
+      },
+      {
+        "id": "student",
+        "term": "Üliõpilane, immatrikuleerimine ja eksmatrikuleerimine",
+        "definition": "Üliõpilane on kõrgharidustasemel õppija alates õppesse vastuvõtmisest ehk immatrikuleerimisest kuni õppest väljaarvamiseni ehk eksmatrikuleerimiseni.",
+        "source": "Kõrgharidusseadus, § 2 lõige 2"
+      },
+      {
+        "id": "institution",
+        "term": "Kõrgkool: ülikool ja rakenduskõrgkool",
+        "definition": "Kõrgharidustaseme õpet korraldavad ülikoolid ja rakenduskõrgkoolid, kellele on seaduses sätestatud korras antud kõrgharidustaseme õppeõigus. Seadus nimetab neid ühiselt kõrgkoolideks.",
+        "source": "Kõrgharidusseadus, § 2 lõige 3"
+      },
+      {
+        "id": "admission-conditions",
+        "term": "Vastuvõtutingimused",
+        "definition": "Tingimused, mille kõrgkool kehtestab ja avalikustab õppesse vastuvõtuks, sealhulgas õppekeele taseme miinimumnõuded.",
+        "source": "Kõrgharidusseadus, § 13 lõige 1"
+      },
+      {
+        "id": "ranking",
+        "term": "Paremusjärjestus",
+        "definition": "Kandidaatide järjestus vastuvõtutingimuste täitmise alusel. Kui kõrgkool on kehtestanud õppekavale vastuvõetavate arvu ülempiiri, täidetakse õppekohad paremusjärjestuse alusel: vastu võetakse need, kes on vastuvõttu tagaval kohal.",
+        "source": "Kõrgharidusseadus, § 13 lõiked 2 ja 4"
+      },
+      {
+        "id": "full-load",
+        "term": "Täiskoormus",
+        "definition": "Õppekoormus, mille puhul üliõpilane täidab iga õppeaasta lõpuks õppekavas ettenähtud õppe mahust kumulatiivselt vähemalt 75 protsenti.",
+        "source": "Kõrgharidusseadus, § 14 lõige 2"
+      },
+      {
+        "id": "partial-load",
+        "term": "Osakoormus",
+        "definition": "Õppekoormus, mille puhul üliõpilane täidab iga õppeaasta lõpuks õppekavas ettenähtud õppe mahust kumulatiivselt 50 kuni 75 protsenti. Osakoormusega õppijalt võib kõrgkool nõuda tasu kogu õppekava ulatuses.",
+        "source": "Kõrgharidusseadus, § 14 lõige 3; § 16 lõige 6"
+      },
+      {
+        "id": "nominal-duration",
+        "term": "Nominaalkestus",
+        "definition": "Õppekavas määratud õppe kestus. Üliõpilase nominaalne õppeaeg vastab üldjuhul õppekava nominaalkestusele ja pikeneb näiteks akadeemilisel puhkusel viibitud aja võrra.",
+        "source": "Kõrgharidusseadus, § 3 lõige 2; § 14 lõige 7"
+      },
+      {
+        "id": "external-study",
+        "term": "Eksternõpe",
+        "definition": "Õppimine ilma üliõpilase staatuseta: eksternõppes õppija peab vastama õppekava vastuvõtutingimustele ja tal on õigus kõrgkooli kehtestatud korras kaitsta lõputöö või sooritada lõpueksam. Eksternõppes õppija ei ole üliõpilane.",
+        "source": "Kõrgharidusseadus, § 14 lõige 9"
+      },
+      {
+        "id": "study-cost-reimbursement",
+        "term": "Õppekulude hüvitamine",
+        "definition": "Tasu kogu õppekava ulatuses, mida kõrgkool võib seaduses loetletud juhtudel üliõpilaselt nõuda — näiteks osakoormusega või muus keeles kui eesti keeles õppimise korral.",
+        "source": "Kõrgharidusseadus, § 16 lõige 6"
+      },
+      {
+        "id": "academic-leave",
+        "term": "Akadeemiline puhkus",
+        "definition": "Õpingute ajutine peatamine. Esimesel ja teisel õppeastmel on üliõpilasel õigus akadeemilisele puhkusele kõrgkooli kehtestatud korras üldjuhul kuni üks aasta, lisaks tervislikel põhjustel kuni kaks aastat, aja- või asendusteenistuse puhul kuni üks aasta ning lapse hooldamiseks kuni lapse kolmeaastaseks saamiseni.",
+        "source": "Kõrgharidusseadus, § 15 lõige 1"
+      },
+      {
+        "id": "diploma-supplement",
+        "term": "Akadeemiline õiend",
+        "definition": "Diplomiga koos antav dokument eesti ja inglise keeles. Bakalaureuseõppe või rakenduskõrgharidusõppe lõpetanule võib kõrgkool anda ingliskeelse õiendi ainult taotluse korral.",
+        "source": "Kõrgharidusseadus, § 19 lõiked 1 ja 3"
+      },
+      {
+        "id": "sais",
+        "term": "SAIS (sisseastumise infosüsteem)",
+        "definition": "Riiklik infosüsteem, mille kaudu esitatakse sisseastumisavaldusi. Konkursside lehed on avalikud; avalduse esitamiseks tuleb sisse logida riikliku autentimisega.",
+        "source": "sais.ee"
+      }
+    ]
+  },
+  "privacy": {
+    "title": "Privaatsuspoliitika",
+    "intro": "Kuidas see sait isikuandmeid töötleb: mida säilitatakse, mida mitte ja millised on andmesubjekti õigused. See tekst on tõlge läti keelest; lahknevuse korral kehtib lätikeelne tekst.",
+    "updated": "Redaktsioon: 10. oktoober 2026",
+    "authorityLabel": "Andmekaitse Inspektsioon (aki.ee)",
+    "authorityUrl": "https://www.aki.ee",
+    "sections": [
+      {
+        "id": "summary",
+        "title": "Lühidalt",
+        "body": [
+          "- Saidil ei ole kasutajakontosid ja registreerumine ei ole vajalik.",
+          "- Kalkulaatoris või jaotises „Millistele õppekavadele saab kandideerida“ sisestatud eksamitulemused arvutatakse külastaja brauseris. Neid ei saadeta meie serverisse ega salvestata kuhugi.",
+          "- Me ei kasuta küpsiseid jälgimiseks ega näita reklaami.",
+          "- Salvestatud õppekavade loend (tähed õppekavade juures) on ainult külastaja seadmes."
+        ]
+      },
+      {
+        "id": "controller",
+        "title": "Kes on vastutav töötleja",
+        "body": [
+          "Isikuandmete vastutav töötleja on {controller}. Isikuandmeid puudutavates küsimustes tuleb kirjutada aadressil {email}."
+        ]
+      },
+      {
+        "id": "visit",
+        "title": "Saidi külastamine",
+        "body": [
+          "Lehe avamisel registreerib majutusteenuse pakkuja automaatselt tehnilised andmed: IP-aadressi, aja, päritud aadressi ja brauseri tüübi. Seda tehakse selleks, et sait töötaks ja oleks turvaline. Me ei kasuta neid andmeid kellegi tuvastamiseks.",
+          "Alus: meie õigustatud huvi tagada saidi turvalisus ja toimimine (isikuandmete kaitse üldmääruse artikli 6 lõike 1 punkt f). Säilitamise tähtaja määrab teenusepakkuja.",
+          "Keele (läti, leedu, eesti või inglise) valime esimesel külastusel brauseri keeleseade järgi; seda ei salvestata."
+        ]
+      },
+      {
+        "id": "survey",
+        "title": "Küsitlus ja kalkulaatorid",
+        "body": [
+          "- Eksamitulemused kalkulaatoris ja jaotises „Millistele õppekavadele saab kandideerida“ arvutatakse ainult külastaja brauseris. Neid ei saadeta serverisse, ei salvestata ega lisata lehe aadressi.",
+          "- Küsitluses valitud filtrid (huvivaldkond, õppeaste, linn, õppekeel) lisatakse lehe aadressi, et saaks näidata õppekavade loendit. Koos külastusega jõuavad need tehnilistesse logidesse (vt eespool), kuid me ei seo neid isikuga. Küsitluse eksamivastuseid serverisse ei saadeta."
+        ]
+      },
+      {
+        "id": "favorites",
+        "title": "Salvestatud õppekavad",
+        "body": [
+          "Tähega märgitud õppekavade loend on ainult külastaja brauseris (localStorage). Selle saab kustutada, tühjendades brauseri seadetes saidi andmed. See säilitamine on vajalik funktsiooni jaoks, mida külastaja kasutab omal valikul.",
+          "Salvestatud õppekavade loendi avamisel pärib brauser nende õppekavade andmed meie andmebaasist (Supabase). Päringus on õppekavade identifikaatorid; nagu iga külastus, jõuab see teenusepakkuja tehnilistesse logidesse. Me loendit ei säilita ega seo seda isikuga."
+        ]
+      },
+      {
+        "id": "cookies",
+        "title": "Küpsised",
+        "body": [
+          "Me ei kasuta küpsiseid jälgimiseks. Sait hoiab brauseris ainult salvestatud õppekavade loendit (vt eespool)."
+        ]
+      },
+      {
+        "id": "analytics",
+        "title": "Saidi kasutusstatistika",
+        "body": [
+          "Et mõista, milliseid lehti loetakse ja kui kiiresti need laaditakse, kasutame PostHogi analüütikat, mille serverid asuvad Euroopa Liidus. See on seadistatud järgmiselt:",
+          "- ilma küpsisteta ja ilma andmete säilitamiseta brauseris;",
+          "- ilma inimese tuvastamiseta, ilma seansisalvestisteta ja ilma sisestatud väljade sisuta — eksamitulemused analüütikasse ei jõua;",
+          "- IP-aadressi ei säilitata.",
+          "Alus: meie õigustatud huvi saiti parandada (üldmääruse artikli 6 lõike 1 punkt f). Sellele töötlemisele saab esitada vastuväite, kirjutades aadressil {email}."
+        ]
+      },
+      {
+        "id": "email",
+        "title": "E-posti meeldetuletused",
+        "body": [
+          "Kui külastaja ise palub meeldetuletust (näiteks vastuvõtu alguse või salvestatud õppekavade loendi muudatuste kohta), säilitame tema e-posti aadressi ja selle, mille kohta teateid sooviti. Neid andmeid kasutame ainult soovitud eesmärgil.",
+          "Alus: nõusolek (üldmääruse artikli 6 lõike 1 punkt a). Nõusoleku saab igal ajal tagasi võtta iga e-kirja lingi kaudu või kirjutades aadressil {email}; tagasivõtmine ei mõjuta varasemate e-kirjade seaduslikkust.",
+          "E-kirju saadab teenusepakkuja Resend. Aadressi kustutame pärast nõusoleku tagasivõtmist ja hiljemalt 12 kuud pärast viimast saadetud e-kirja."
+        ]
+      },
+      {
+        "id": "minors",
+        "title": "Õpilased ja noored",
+        "body": [
+          "Saidi külastajad on peamiselt õpilased ja noored. Eestis võib laps ise anda nõusoleku infoühiskonna teenuse kasutamiseks alates 13. eluaastast; nooremale lapsele on vaja seadusliku esindaja nõusolekut (isikuandmete kaitse seaduse § 8; isikuandmete kaitse üldmääruse artikkel 8).",
+          "Saidil sisestatud eksamitulemusi me ei säilita ega edasta."
+        ]
+      },
+      {
+        "id": "recipients",
+        "title": "Kellele me andmeid edastame",
+        "body": [
+          "Me ei müü andmeid ega näita reklaami. Andmeid töötlevad ainult meie teenusepakkujad (volitatud töötlejad) ja ainult meie ülesandel:",
+          "- majutusteenuse pakkuja (saidi toimimine);",
+          "- Supabase (andmebaas serveritega Euroopa Liidus; e-posti aadressid, kui need on esitatud);",
+          "- PostHog (kasutusstatistika, serverid Euroopa Liidus);",
+          "- Google (e-post: meile saadetud kirjavahetus on Gmaili postkastis);",
+          "- Resend (e-kirjade saatmine).",
+          "Kui teenusepakkuja edastab andmeid väljapoole Euroopa Majanduspiirkonda, toimub see Euroopa Komisjoni heakskiidetud kaitsemeetmetega, näiteks lepingu tüüptingimustega."
+        ]
+      },
+      {
+        "id": "rights",
+        "title": "Andmesubjekti õigused",
+        "body": [
+          "Isikul, kelle andmeid töödeldakse (andmesubjektil), on õigus:",
+          "- saada teavet oma andmete kohta ja nendega tutvuda;",
+          "- nõuda andmete parandamist või kustutamist;",
+          "- piirata töötlemist ja esitada vastuväide töötlemisele, mis põhineb õigustatud huvil;",
+          "- saada andmed ülekantaval kujul;",
+          "- võtta nõusolek igal ajal tagasi.",
+          "Taotlused tuleb saata aadressil {email} — vastame ühe kuu jooksul. Kui isik leiab, et tema õigusi on rikutud, võib ta esitada kaebuse Andmekaitse Inspektsioonile (aki.ee) või vastutava töötleja riigi järelevalveasutusele — Läti Andmekaitse Inspektsioonile (Datu valsts inspekcija, Elijas iela 17, Rīga, LV-1050)."
+        ]
+      },
+      {
+        "id": "contact",
+        "title": "Kirjavahetus meiega",
+        "body": [
+          "Õppekava lehel ja kalkulaatoris on link veast teatamiseks. See avab e-posti programmi — kirja saadab külastaja ise, sait tema eest midagi ei saada.",
+          "Kirja saamisel saame saatja e-posti aadressi ja kirja sisu. Kasutame neid ainult teabe kontrollimiseks ja parandamiseks ning saatjale vastamiseks. Eksamitulemusi ei ole vaja kirjas esitada — meil ei ole neid tarvis.",
+          "Alus: meie õigustatud huvi hoida saidil õiget teavet (üldmääruse artikli 6 lõike 1 punkt f). Kirjavahetuse kustutame hiljemalt 12 kuud pärast viimast kirja."
+        ]
+      },
+      {
+        "id": "decisions",
+        "title": "Automatiseeritud otsused",
+        "body": [
+          "Me ei tee automatiseeritud otsuseid, mis isikut mõjutavad, ega tegele profiilianalüüsiga. Saidi arvutused on ligikaudsed; lõpliku vastuvõtuotsuse teeb kõrgkool."
+        ]
+      },
+      {
+        "id": "changes",
+        "title": "Muudatused",
+        "body": [
+          "Kui poliitika muutub, uuendame seda lehte ja redaktsiooni kuupäeva."
+        ]
+      }
+    ]
   }
 }
