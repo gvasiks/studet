@@ -84,6 +84,10 @@ const LT_ROUTES = [
   "/et",
   "/et/programmes?country=EE",
   "/et/programmes/ut/informaatika-4",
+  // сроки приёма: программа с конкурсом (действующим до 18.10.2026, потом он
+  // показывается как прошлый приём) и программа с прошлым приёмом
+  "/lv-ee/programmes/tlu/lingvistika",
+  "/et/programmes/ebs/rahvusvaheline-arijuhtimine-mba-1",
   "/et/survey",
   "/et-lv",
   "/et-lv/programmes",

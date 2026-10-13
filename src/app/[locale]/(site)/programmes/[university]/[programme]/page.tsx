@@ -12,6 +12,8 @@ import { getLtProgrammeField } from "@/lib/lt-field-queries";
 import { getLtAdmissionYear } from "@/lib/lt-admission-stat-queries";
 import { getLtFieldOutcome } from "@/lib/lt-field-outcome-queries";
 import { getEeProgrammeField } from "@/lib/ee-field-queries";
+import { admissionState, tallinnDate } from "@/lib/ee-admission";
+import { getEeAdmission } from "@/lib/ee-admission-queries";
 import { getApplicationRounds } from "@/lib/deadline-queries";
 import { matchRounds } from "@/lib/deadlines";
 import { getAdmissionType } from "@/lib/admission-type-queries";
@@ -95,19 +97,27 @@ export default async function ProgrammePage({ params }: { params: Params }) {
   const ltFieldPromise = countryOf(locale) === "LT" ? getLtProgrammeField(record.id) : Promise.resolve(null);
   // Направление по ISCED-F с государственного портала — у эстонских программ.
   const eeFieldPromise = countryOf(locale) === "EE" ? getEeProgrammeField(record.id) : Promise.resolve(null);
+  // Последний конкурс программы с того же портала: сроки и страница в SAIS.
+  const eeAdmissionPromise = countryOf(locale) === "EE" ? getEeAdmission(record.id) : Promise.resolve(null);
   // Цифры прошлого приёма из открытого набора LAMA BPO — тоже только у Литвы.
   const ltStatsPromise = countryOf(locale) === "LT" ? getLtAdmissionYear(record.id) : Promise.resolve(null);
-  const [formula, rounds, admissionType, outcome, channels, hasLtCalculator, ltField, ltStats, eeField] = await Promise.all([
-    getFormula(record.id),
-    getApplicationRounds(),
-    getAdmissionType(record.university_id),
-    getProgrammeOutcome(record.id, record.university_id),
-    getApplicationChannels(record.university_id),
-    hasCalculatorPromise,
-    ltFieldPromise,
-    ltStatsPromise,
-    eeFieldPromise,
-  ]);
+  const [formula, rounds, admissionType, outcome, channels, hasLtCalculator, ltField, ltStats, eeField, eeAdmission] =
+    await Promise.all([
+      getFormula(record.id),
+      getApplicationRounds(),
+      getAdmissionType(record.university_id),
+      getProgrammeOutcome(record.id, record.university_id),
+      getApplicationChannels(record.university_id),
+      hasCalculatorPromise,
+      ltFieldPromise,
+      ltStatsPromise,
+      eeFieldPromise,
+      eeAdmissionPromise,
+    ]);
+  // Действующий это конкурс или прошлый приём — по сроку (ee-admission.ts).
+  const eeAdmissionState = eeAdmission ? admissionState(eeAdmission, new Date()) : null;
+  const eeSaisUrl = httpUrl(eeAdmission?.saisUrl);
+  const eeAdmissionSourceUrl = httpUrl(eeAdmission?.sourceUrl);
   // Что стало с выпускниками: у Литвы — показатели направления на этой
   // ступени по всей стране (у Латвии — блок ниже, по направлению в вузе).
   const ltOutcome = ltField ? await getLtFieldOutcome(record.degree_level, ltField.fieldCode) : null;
@@ -316,7 +326,61 @@ export default async function ProgrammePage({ params }: { params: Params }) {
 
       <section className="mt-8">
         <h2 className="text-xs uppercase tracking-wide text-zinc-500">{dict.programme.deadlinesTitle}</h2>
-        {applicationRounds.length > 0 ? (
+        {/* Эстония: последний конкурс программы с государственного портала.
+            Срок, который ещё не прошёл, показан как действующий, со ссылкой на
+            подачу; прошедший — как факт о прошлом приёме (решение владельца
+            2026-10-13). Человек эти даты не подтверждает — под ними пометка
+            об автоматическом извлечении, дата и источник (правило 5). */}
+        {eeAdmission && eeAdmissionState !== "undated" ? (
+          <>
+            {eeAdmissionState === "current" ? (
+              <>
+                <p className="mt-2 text-zinc-900">
+                  {eeAdmission.opensAt
+                    ? interpolate(dict.programme.deadlinesCurrentFrom, {
+                        from: tallinnDate(eeAdmission.opensAt, language),
+                        to: tallinnDate(eeAdmission.closesAt!, language),
+                      })
+                    : interpolate(dict.programme.deadlinesCurrent, { to: tallinnDate(eeAdmission.closesAt!, language) })}
+                </p>
+                {eeSaisUrl && (
+                  <p className="mt-2">
+                    <a href={eeSaisUrl} target="_blank" rel="noopener noreferrer" className="font-medium text-zinc-900 underline">
+                      {interpolate(dict.programme.applyLink, { host: sourceHost(eeSaisUrl) ?? "" })}
+                    </a>
+                  </p>
+                )}
+              </>
+            ) : (
+              <>
+                <p className="mt-2 text-zinc-700">
+                  {interpolate(dict.programme.deadlinesPast, { date: tallinnDate(eeAdmission.closesAt!, language) })}
+                </p>
+                {eeSaisUrl && (
+                  <p className="mt-2">
+                    <a href={eeSaisUrl} target="_blank" rel="noopener noreferrer" className="text-zinc-900 underline">
+                      {interpolate(dict.programme.previousAdmissionLink, { host: sourceHost(eeSaisUrl) ?? "" })}
+                    </a>
+                  </p>
+                )}
+              </>
+            )}
+            <p className="mt-2 text-xs leading-relaxed text-zinc-500">
+              {interpolate(dict.programme.detailsSource, {
+                source: sourceHost(eeAdmission.sourceUrl) ?? "",
+                date: tallinnDate(eeAdmission.extractedAt, language),
+              })}
+              {eeAdmissionSourceUrl && (
+                <>
+                  {" "}
+                  <a href={eeAdmissionSourceUrl} target="_blank" rel="noopener noreferrer" className="underline">
+                    {dict.catalog.sourceLinkLabel}
+                  </a>
+                </>
+              )}
+            </p>
+          </>
+        ) : applicationRounds.length > 0 ? (
           <ul className="mt-2 space-y-1 text-zinc-900">
             {applicationRounds.map((round) => (
               <li key={round.label}>

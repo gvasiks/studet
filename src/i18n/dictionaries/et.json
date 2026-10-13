@@ -173,6 +173,10 @@
     "deadlinesNotAvailable": "Selle õppekava vastuvõtu kuupäevad ei ole veel kinnitatud.",
     "deadlinesOpens": "alates",
     "deadlinesCloses": "kuni",
+    "deadlinesCurrentFrom": "Avaldusi võetakse vastu alates {from} kuni {to}.",
+    "deadlinesCurrent": "Avaldusi võetakse vastu kuni {to}.",
+    "deadlinesPast": "Riiklikus haridusportaalis uue vastuvõtu tähtaegu veel ei ole. Eelmises vastuvõtus võeti avaldusi vastu kuni {date}.",
+    "previousAdmissionLink": "Eelmise konkursi leht ({host})",
     "selectionTypes": {
       "entrance_exam": "Selles kõrgkoolis konkursipunkte ei ole — vastuvõtt toimub sisseastumiskatsete põhjal.",
       "open_admission": "Selles kõrgkoolis konkursipunkte ei ole — vastu võetakse nõuete täitmise alusel, ilma konkursita.",

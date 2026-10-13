@@ -173,6 +173,10 @@
     "deadlinesNotAvailable": "Uzņemšanas datumi šai programmai vēl nav apstiprināti.",
     "deadlinesOpens": "no",
     "deadlinesCloses": "līdz",
+    "deadlinesCurrentFrom": "Pieteikumus pieņem no {from} līdz {to}",
+    "deadlinesCurrent": "Pieteikumus pieņem līdz {to}",
+    "deadlinesPast": "Valsts izglītības portālā jaunas uzņemšanas termiņu vēl nav. Iepriekšējā uzņemšanā pieteikumus pieņēma līdz {date}",
+    "previousAdmissionLink": "Iepriekšējā konkursa lapa ({host})",
     "selectionTypes": {
       "entrance_exam": "Šajā augstskolā nav konkursa punktu — uzņemšana notiek pēc iestājpārbaudījumiem.",
       "open_admission": "Šajā augstskolā nav konkursa punktu — uzņem pēc prasību izpildes, bez konkursa.",

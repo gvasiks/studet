@@ -173,6 +173,10 @@
     "deadlinesNotAvailable": "Šios programos priėmimo datos dar nepatvirtintos.",
     "deadlinesOpens": "nuo",
     "deadlinesCloses": "iki",
+    "deadlinesCurrentFrom": "Prašymai priimami nuo {from} iki {to}.",
+    "deadlinesCurrent": "Prašymai priimami iki {to}.",
+    "deadlinesPast": "Valstybiniame švietimo portale naujo priėmimo terminų dar nėra. Per ankstesnį priėmimą prašymai buvo priimami iki {date}.",
+    "previousAdmissionLink": "Ankstesnio konkurso puslapis ({host})",
     "selectionTypes": {
       "entrance_exam": "Šioje aukštojoje mokykloje konkursinio balo nėra — priimama pagal stojamuosius egzaminus.",
       "open_admission": "Šioje aukštojoje mokykloje konkursinio balo nėra — priimama pagal reikalavimų atitiktį, be konkurso.",

@@ -173,6 +173,10 @@
     "deadlinesNotAvailable": "Admission dates for this programme aren't confirmed yet.",
     "deadlinesOpens": "from",
     "deadlinesCloses": "to",
+    "deadlinesCurrentFrom": "Applications are accepted from {from} to {to}.",
+    "deadlinesCurrent": "Applications are accepted until {to}.",
+    "deadlinesPast": "The state education portal doesn't list dates for a new admission round yet. In the previous round applications closed on {date}.",
+    "previousAdmissionLink": "Previous admission page ({host})",
     "selectionTypes": {
       "entrance_exam": "This university has no competition score — admission is based on entrance exams.",
       "open_admission": "This university has no competition score — admission is based on meeting requirements, not competing.",
