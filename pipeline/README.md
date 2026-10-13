@@ -378,6 +378,7 @@ python src/lt_load_field_outcomes.py --apply
 .venv\Scripts\python.exe src\main.py ee_haridusportaal      # каталог
 .venv\Scripts\python.exe src\ee_load_fields.py --apply      # направления, после каталога
 .venv\Scripts\python.exe src\ee_load_admissions.py --apply  # сроки приёма и ссылка на конкурс в SAIS
+.venv\Scripts\python.exe src\ee_load_admission_details.py --apply  # условия конкурса со страниц SAIS
 ```
 
 - Это внутренний интерфейс портала, а не объявленные открытые данные. Если
@@ -388,6 +389,10 @@ python src/lt_load_field_outcomes.py --apply
   в неделю: новые конкурсы появляются на портале по мере открытия.
 - Программа с двумя языками обучения пишется двумя записями; записи без
   уровня (ординатура) и новые программы без языка не пишутся.
+- Условия конкурса читаются со страниц SAIS: первый запуск — около двадцати
+  минут (около пятисот страниц с паузами), следующие — только новые и
+  открытые конкурсы. Страницы конкурсов старше года SAIS удаляет, они не
+  запрашиваются.
 - Пороги числа программ на учреждение — 85 % от снимка 2026-10-11
   (`MIN_PROGRAMME_COUNT` в `main.py`).
 
