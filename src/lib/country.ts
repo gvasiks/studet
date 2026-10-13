@@ -115,7 +115,7 @@ const profiles: Record<Country, CountryProfile> = {
     surveySteps: ["interests", "levelDuration", "city", "language", "kind"],
     levels: ["bachelor", "master", "doctoral", "college", "integrated"],
     // Город — по месту учёбы со страницы конкурса в SAIS, а где конкурса
-    // нет — из адреса учреждения (решение владельца 2026-10-14;
+    // нет — из адреса учреждения (решение владельца 2026-10-13;
     // pipeline/src/ee_apply_cities.py). Реола, Мыдрику, Вяймела и Кукрузе —
     // посёлки, где стоят лётная академия и отделения прикладных высших школ.
     // Новый город сначала добавляется в таблицу того скрипта, сюда и в
