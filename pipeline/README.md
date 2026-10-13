@@ -388,6 +388,7 @@ python src/lt_load_field_outcomes.py --apply
 .venv\Scripts\python.exe src\ee_load_fields.py --apply      # направления, после каталога
 .venv\Scripts\python.exe src\ee_load_admissions.py --apply  # сроки приёма и ссылка на конкурс в SAIS
 .venv\Scripts\python.exe src\ee_load_admission_details.py --apply  # условия конкурса со страниц SAIS
+.venv\Scripts\python.exe src\ee_apply_cities.py --apply  # город по месту учёбы; всегда после каталога
 ```
 
 - Это внутренний интерфейс портала, а не объявленные открытые данные. Если

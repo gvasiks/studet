@@ -10,9 +10,11 @@
   },
   "catalog": {
     "degreeLevel": {
+      "bachelor": "Bakalauro studijos",
       "college": "Taikomasis aukštasis mokslas"
     },
     "tabs": {
+      "bachelor": "Bakalauras",
       "college": "Taikomasis"
     }
   }

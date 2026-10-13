@@ -26,17 +26,27 @@ from pathlib import Path
 PIPELINE_DIR = Path(__file__).resolve().parent.parent
 
 # Название шага и аргументы для Python. Порядок важен: направления и сроки
-# привязываются к программам каталога, условия конкурса — к срокам.
+# привязываются к программам каталога, условия конкурса — к срокам, город
+# — к условиям конкурса.
 STEPS = [
     ("каталог", ["src/main.py", "ee_haridusportaal"]),
     ("направления программ", ["src/ee_load_fields.py", "--apply"]),
     ("сроки приёма", ["src/ee_load_admissions.py", "--apply"]),
     ("условия конкурса", ["src/ee_load_admission_details.py", "--apply"]),
+    # Последним: сбор каталога каждый раз возвращает город из адреса
+    # учреждения, а этот шаг ставит город по месту учёбы из SAIS.
+    ("город по месту учёбы", ["src/ee_apply_cities.py", "--apply"]),
 ]
 
 
 def _selftest() -> None:
-    assert [name for name, _ in STEPS] == ["каталог", "направления программ", "сроки приёма", "условия конкурса"]
+    assert [name for name, _ in STEPS] == [
+        "каталог",
+        "направления программ",
+        "сроки приёма",
+        "условия конкурса",
+        "город по месту учёбы",
+    ]
     for _, command in STEPS:
         assert (PIPELINE_DIR / command[0]).is_file(), f"нет файла {command[0]}"
     print("selftest: OK")

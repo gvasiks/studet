@@ -114,10 +114,26 @@ const profiles: Record<Country, CountryProfile> = {
     filters: ["interest"],
     surveySteps: ["interests", "levelDuration", "city", "language", "kind"],
     levels: ["bachelor", "master", "doctoral", "college", "integrated"],
-    // Город — из адреса учреждения: у вузов с филиалами это город головного
-    // здания (см. сборщик). Реола, Мыдрику и Вяймела — посёлки, где стоят
-    // лётная академия и две прикладные высшие школы.
-    cities: ["tallinn", "tartu", "reola", "modriku", "vaimela"],
+    // Город — по месту учёбы со страницы конкурса в SAIS, а где конкурса
+    // нет — из адреса учреждения (решение владельца 2026-10-14;
+    // pipeline/src/ee_apply_cities.py). Реола, Мыдрику, Вяймела и Кукрузе —
+    // посёлки, где стоят лётная академия и отделения прикладных высших школ.
+    // Новый город сначала добавляется в таблицу того скрипта, сюда и в
+    // словари (catalog.city).
+    cities: [
+      "tallinn",
+      "tartu",
+      "narva",
+      "parnu",
+      "viljandi",
+      "kohtla-jarve",
+      "haapsalu",
+      "kuressaare",
+      "reola",
+      "modriku",
+      "vaimela",
+      "kukruse",
+    ],
     languages: ["et", "en", "ru"],
     nativeLanguage: "et",
     // Заявления в Эстонии подаются через государственную систему SAIS, но
