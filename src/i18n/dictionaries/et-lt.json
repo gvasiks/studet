@@ -30,5 +30,414 @@
   },
   "match": {
     "intro": "Sisestatud riiklike küpsuseksamite (VBE) tulemuste põhjal näidatakse Leedu ühise vastuvõtu õppekavade konkursipunktid ja see, millised eksamid on veel puudu."
+  },
+  "rights": {
+    "title": "Kandidaadi õigused kõrgkooli astumisel",
+    "intro": "Mida Leedu seadused ja ühise vastuvõtu kord kandidaadile ette näevad: millal nõuded teatavaks tehakse, kuidas avaldust esitada ja muuta, kuidas viga vaidlustada, millal sõlmitakse leping ja mis saab riigi rahastusest.",
+    "checkedNote": "Koostatud automaatselt õigusaktide tekstide põhjal, mida lugesime 8. oktoobril 2026: teaduse ja õppe seaduse konsolideeritud redaktsioon, mis kehtib alates 22. maist 2026, ja LAMA BPO 2026. aasta ühise vastuvõtu kord, kinnitatud 17. aprillil 2026. Jurist ei ole seda teksti kontrollinud. 2027. aasta vastuvõtu kord ei ole veel avaldatud, seetõttu võivad 2026. aasta korra arvud ja tähtajad muutuda. See ei ole õigusnõu: määravad on õigusaktide tekstid ja iga kõrgkooli vastuvõtueeskirjad. See tekst on tõlge; lahknevuse korral kehtib leedukeelne tekst.",
+    "sourceLabel": "Allikas",
+    "sourcesTitle": "Allikad",
+    "glossaryLink": "Mõistete selgitused — sõnastikus",
+    "items": [
+      {
+        "id": "principles-published",
+        "title": "Punktide kujunemise põhimõtted tehakse teatavaks 1. detsembriks",
+        "text": "Konkursipunktide kujunemise põhimõtted ja muud kriteeriumid teevad kõrgkoolid teatavaks igal aastal 1. detsembriks, hiljemalt 6 kuud enne vastuvõtu algust. Madalaimad konkursipunktid teevad nad teatavaks hiljemalt 1. juuniks.",
+        "source": "Teaduse ja õppe seadus, § 59 lõige 4"
+      },
+      {
+        "id": "subjects-three-years",
+        "title": "Konkursiained on teada kolm aastat ette",
+        "text": "Konkursi õppeainete loendi õppesuundade kaupa teevad kõrgkoolid ministeeriumiga kooskõlastatult teatavaks hiljemalt 3 aastat enne vastava aasta 1. septembrit. 2027. aasta loendid on juba avaldatud LAMA BPO veebilehel.",
+        "source": "Teaduse ja õppe seadus, § 59 lõige 2"
+      },
+      {
+        "id": "who-can-apply",
+        "title": "Kes saab konkursil osaleda",
+        "text": "Esimese astme ja integreeritud õppesse võetakse konkursi korras vastu isikud, kellel on vähemalt keskharidus ja sooritatud vähemalt kolm riiklikku küpsuseksamit, mille keskmine tulemus saavutab kehtestatud taseme. Need nõuded ei kehti muu hulgas isikute kohta, kes on omandanud hariduse välisriikide või rahvusvaheliste organisatsioonide programmide järgi, ega isikute kohta, kes on küpsuseksamitest vabastatud.",
+        "source": "Teaduse ja õppe seadus, § 59 lõiked 1 ja 2"
+      },
+      {
+        "id": "no-fee",
+        "title": "2026. aastal sisseastumistasu ei olnud",
+        "text": "2026. aasta ühises vastuvõtus sisseastumistasu ei olnud, tasuda ei tulnud ka eelistuste muutmise eest. Kõrgkoolid võivad õppelepingu sõlmimisel võtta enda kehtestatud registreerimistasu.",
+        "source": "LAMA BPO 2026. aasta ühise vastuvõtu kord, punktid 10 ja 70"
+      },
+      {
+        "id": "change-preferences",
+        "title": "Eelistusi saab muuta tähtaja lõpuni",
+        "text": "Eelistuste loendit ja nende järjekorda saab muuta kuni kehtestatud avalduste esitamise lõpuni. Järjekorrast sõltub, millisele õppekavale kandidaat kutsutakse: kutse on ainult üks, seetõttu tuleb eelistused reastada kõige soovitumast kõige vähem soovituni.",
+        "source": "LAMA BPO 2026. aasta ühise vastuvõtu kord, punktid 23, 74 ja 79"
+      },
+      {
+        "id": "check-score",
+        "title": "Oma punkte saab kontrollida ja viga vaidlustada",
+        "text": "BPIS-is saab kandidaat kontrollida oma konkursipunkte ja tema suhtes kohaldatavaid madalaimaid konkursipunkte iga eelistuse kohta. Vea avastamisel saab esitada LAMA BPO-le kirjaliku apellatsiooni hiljemalt 24 tundi enne avalduste esitamise lõplikku tähtaega.",
+        "source": "LAMA BPO 2026. aasta ühise vastuvõtu kord, punkt 64"
+      },
+      {
+        "id": "one-invitation",
+        "title": "Üks kutse ja lepingu tähtaeg",
+        "text": "Konkursi võitmisel saab kandidaat ühe kutse õppekohale asumiseks, vastasel juhul — eitava vastuse. Kutsutu peab kutses märgitud aja jooksul sõlmima kõrgkooliga õppelepingu; kui lepingut õigel ajal ei sõlmita, kutse tühistatakse.",
+        "source": "LAMA BPO 2026. aasta ühise vastuvõtu kord, punktid 71 ja 79"
+      },
+      {
+        "id": "additional-admission",
+        "title": "Lisavastuvõtus saab osaleda ka ilma põhivastuvõtus osalemata",
+        "text": "Lisavastuvõtus saavad osaleda ka need, kes põhivastuvõtu ajal ei olnud registreerunud. Kandidaat, kes on juba sõlminud lepingu riigi rahastatud õppeks või saanud õppestipendiumi, saab lisavastuvõtus kandideerida ainult riigi rahastamata kohale.",
+        "source": "LAMA BPO 2026. aasta ühise vastuvõtu kord, punkt 81"
+      },
+      {
+        "id": "programme-withdrawn",
+        "title": "Õppekava võib vastuvõtust kõrvaldada — sellest tuleb teatada",
+        "text": "Kõrgkool võib õppekava jooksva aasta vastuvõtust kõrvaldada, kuid mitte hiljem kui 3 päeva enne avalduste esitamise lõppu, et selle valinud kandidaate teavitataks ja nad jõuaksid valida teised eelistused. Riikliku kõrgkooli õppekavale vastuvõttu ei toimu, kui kutsutavaid isikuid on vähem kui ministri kehtestatud väikseim kohtade arv.",
+        "source": "LAMA BPO 2026. aasta ühise vastuvõtu kord, punktid 19 ja 66"
+      },
+      {
+        "id": "results-published",
+        "title": "Vastuvõtu tulemused avalikustatakse",
+        "text": "Igal aastal 30. augustiks avaldavad kõrgkoolid oma veebilehtedel vastuvõtu tulemused riigi rahastatud kohtadele õppekavade kaupa ning 1. oktoobriks — riigi rahastamata kohtadele. Sama teabe kõrgkoolide ja õppekavade kaupa avaldab ministeerium.",
+        "source": "Teaduse ja õppe seadus, § 59 lõige 7"
+      },
+      {
+        "id": "contract-and-price",
+        "title": "Õppeleping ja õppemaks",
+        "text": "Üliõpilase ja kõrgkooli suhted vormistatakse õppelepinguga; selle tüüptingimused kehtestab minister. Õppemaks peab olema märgitud kõrgkooli vastuvõtueeskirjades. Lepingu saab sõlmida elektrooniliselt või kohapeal; enne allkirjastamist on soovitatav selle tekstiga tutvuda.",
+        "source": "Teaduse ja õppe seadus, § 61 lõige 2, § 83 lõige 1; LAMA BPO 2026. aasta ühise vastuvõtu kord, punktid 68 ja 69"
+      },
+      {
+        "id": "funding-kept",
+        "title": "Riigi rahastus säilib heade õpitulemuste korral",
+        "text": "Riigi rahastatud kohal õppiva üliõpilase rahastus säilib, kui ta pärast kõrgkooli määratud hindamisperioodi (mitte pikem kui õppeaasta) vastab heade õpitulemuste kriteeriumidele: akadeemilisi võlgnevusi ei ole ja saavutatud on suurepärane või tüüpiline saavutustase. Üliõpilane, kes neile ei vasta, kaotab rahastuse ja maksab edaspidi kõrgkooli kehtestatud õppemaksu; erand on sätestatud seaduse § 78 lõikes 6.",
+        "source": "Teaduse ja õppe seadus, § 78 lõiked 4, 5 ja 6"
+      },
+      {
+        "id": "no-extra-payments",
+        "title": "Riigi rahastatud kohal lisamakseid ei ole",
+        "text": "Riigi rahastatud kohtadel õppivad isikud ei pea riiklikule kõrgkoolile tasuma ühtegi õppekava elluviimisega otseselt seotud makset, välja arvatud seaduse § 80 lõikes 3 nimetatud juhtudel.",
+        "source": "Teaduse ja õppe seadus, § 83 lõige 5"
+      },
+      {
+        "id": "complaints",
+        "title": "Üliõpilase kaebus vaadatakse läbi 15 päeva jooksul",
+        "text": "Üliõpilane võib oma õiguste või seaduslike huvide rikkumise korral pöörduda kirjalikult kõrgkooli juhi poole: juht või tema volitatud isikud peavad avalduse või kaebuse 15 kalendripäeva jooksul läbi vaatama ja kirjalikult vastama. Kõrgkoolis tegutseb ka vaidluste lahendamise komisjon, mis lahendab üliõpilaste ja administratsiooni vaidlusi.",
+        "source": "Teaduse ja õppe seadus, § 62 lõiked 7 ja 8"
+      },
+      {
+        "id": "your-data",
+        "title": "Isikuandmed vastuvõtusüsteemis",
+        "text": "Taotluse korral peab LAMA BPO või kõrgkool viivitamata andma täpse teabe selle kohta, milliseid kandidaadi isikuandmeid ja mis eesmärkidel töödeldakse. Kui kandidaat palub andmed kustutada, tuleb need kustutada, kui nende säilitamist ei nõua töötlemise eesmärk ega kehtivad õigusaktid.",
+        "source": "LAMA BPO 2026. aasta ühise vastuvõtu kord, punktid 96 ja 97"
+      },
+      {
+        "id": "education-abroad",
+        "title": "Kui haridus on omandatud välisriigis",
+        "text": "Kui haridus on omandatud välisriigi asutuses või rahvusvahelise organisatsiooni programmi järgi, on vaja dokumenti selle akadeemilise tunnustamise kohta Leedus; tunnustamist teostab Õppekvaliteedi Hindamise Keskus (SKVC) või kõrgkool, kellel on selleks õigus. Alates 2019. aastast tunnustatakse Lätis ja Eestis saadud keskharidust tõendavaid dokumente automaatselt. Kui õpe toimub leedu keeles ja kandidaat ei ole leedu keelt õppinud, tuleb sooritada leedu keele arvestus. Välismaalased, kellel ei ole õigust riigi rahastatud kohtadele, pöörduvad vastuvõtuks otse kõrgkooli.",
+        "source": "LAMA BPO 2026. aasta ühise vastuvõtu kord, punktid 24, 25 ja 37"
+      }
+    ],
+    "sources": [
+      {
+        "label": "Leedu Vabariigi teaduse ja õppe seadus (Mokslo ir studijų įstatymas, nr XI-242), konsolideeritud redaktsioon (leedu keeles)",
+        "url": "https://e-seimas.lrs.lt/portal/legalAct/lt/TAD/TAIS.343430/asr"
+      },
+      {
+        "label": "LAMA BPO: 2026. aasta ühise vastuvõtu kord Leedu kõrgkoolide lühikese tsükli, esimese astme, integreeritud ja kutseõppesse (leedu keeles)",
+        "url": "https://lamabpo.lt/wp-content/uploads/2026/04/Bendrojo-priemimo-i-Lietuvos-aukstuju-mokyklu-trumposios-pakopos-pirmosios-pakopos-vientisasias-ir-profesines-studijas-2026-metu-tvarkos-aprasas.pdf"
+      }
+    ]
+  },
+  "glossary": {
+    "title": "Vastuvõtu sõnastik",
+    "intro": "Sõnad, mis esinevad Leedu kõrgkoolide vastuvõtueeskirjades ja sellel saidil. Sulgudes on mõiste leedu keeles, nagu seda kirjutatakse dokumentides. Määratlused on võetud teaduse ja õppe seadusest ning LAMA BPO ühise vastuvõtu korrast; iga juures on allikas. Arvud, mille juures on viide 2026. aastale, pärinevad 2026. aasta korrast; 2027. aasta kord ei ole veel avaldatud.",
+    "sourceLabel": "Allikas",
+    "rightsLink": "Kandidaadi õigused vastuvõtul",
+    "items": [
+      {
+        "id": "general-admission",
+        "term": "Ühine vastuvõtt (bendrasis priėmimas)",
+        "definition": "Tsentraliseeritud vastuvõtt Leedu ülikoolide ja kolledžite lühikese tsükli, esimese astme ja integreeritud õppesse. See toimub selleks ette nähtud riiklikus infosüsteemis; seda korraldab LAMA BPO.",
+        "source": "Teaduse ja õppe seadus, § 59 lõige 7; LAMA BPO 2026. aasta ühise vastuvõtu kord, punktid 2 ja 4"
+      },
+      {
+        "id": "lama-bpo",
+        "term": "LAMA BPO",
+        "definition": "Leedu kõrgkoolide ühendus ühise vastuvõtu korraldamiseks. See korraldab ja viib läbi vastuvõtu, töötleb kandidaatide andmeid, koostab konkursijärjekorrad ja teeb teatavaks kutsed õppima asumiseks.",
+        "source": "LAMA BPO 2026. aasta ühise vastuvõtu kord, punkt 2"
+      },
+      {
+        "id": "bpis",
+        "term": "BPIS, ühise vastuvõtu infosüsteem (Bendrojo priėmimo informacinė sistema)",
+        "definition": "Süsteem, kus kandidaat registreerub, esitab avalduse ning näeb oma andmeid, konkursipunkte ja kutset õppima asumiseks. Sisse logitakse lamabpo.lt kaudu.",
+        "source": "LAMA BPO 2026. aasta ühise vastuvõtu kord, punktid 8 ja 21"
+      },
+      {
+        "id": "application",
+        "term": "Avaldus (prašymas priimti studijuoti)",
+        "definition": "Andmete kogum BPIS-is: kandidaadi isikuandmed ja kontaktteave, andmed hariduse ja muude saavutuste kohta ning valitud eelistused. Eelistusi saab muuta kuni avalduste esitamise lõpuni.",
+        "source": "LAMA BPO 2026. aasta ühise vastuvõtu kord, punkt 23"
+      },
+      {
+        "id": "preference",
+        "term": "Eelistus (pageidavimas)",
+        "definition": "Konkreetse kõrgkooli õppekava, mis on valitud koos rahastusviisiga: riigi rahastatud koht, riigi rahastamata koht õppestipendiumiga või riigi rahastamata koht. 2026. aasta põhivastuvõtus sai märkida kuni 9 eelistust, lisavastuvõtus — kuni 6. Eelistused reastatakse kõige soovitumast kõige vähem soovituni.",
+        "source": "LAMA BPO 2026. aasta ühise vastuvõtu kord, punkt 26"
+      },
+      {
+        "id": "state-exam",
+        "term": "Riiklik küpsuseksam, VBE (valstybinis brandos egzaminas)",
+        "definition": "Eksam, mis sooritatakse keskkooli lõpetamisel. Esimese astme ja integreeritud õppesse astumiseks peab olema sooritatud vähemalt kolm: leedu keel ja kirjandus, matemaatika ja üks valikeksam. Kunstide õppesuundade rühma astumisel ei ole matemaatika eksam kohustuslik.",
+        "source": "Teaduse ja õppe seadus, § 59 lõige 1"
+      },
+      {
+        "id": "minimum-average",
+        "term": "Kolme VBE keskmise tulemuse nõue (trijų VBE vidurkis)",
+        "definition": "Kolme kohustusliku riikliku küpsuseksami keskmine tulemus peab saavutama kindla taseme: põhitaseme — ülikooliõppesse astumisel, rahuldava — kolledžiõppesse astumisel. 2026. aasta vastuvõtus oli see 2025. aasta ja hilisemate aastate lõpetajatele alates 50 punktist (ülikooliõpe) ja alates 41 punktist (kolledžiõpe).",
+        "source": "Teaduse ja õppe seadus, § 59 lõige 1; LAMA BPO 2026. aasta ühise vastuvõtu kord, punkt 29"
+      },
+      {
+        "id": "competition-score",
+        "term": "Konkursipunktid (konkursinis balas)",
+        "definition": "Punktid, mille järgi kandidaadid konkursil reastatakse. Need arvutatakse küpsuseksamite, õppetöö ja muude erivõimete hindamise tulemustest. Konkursipunktide kujunemise põhimõtted teevad kõrgkoolid teatavaks igal aastal 1. detsembriks.",
+        "source": "Teaduse ja õppe seadus, § 77 lõige 1, § 59 lõige 4"
+      },
+      {
+        "id": "extra-points",
+        "term": "Lisapunktid (papildomi balai)",
+        "definition": "Punktid, mis lisatakse konkursipunktidele lisasaavutuste eest, näiteks auhinnaliste kohtade eest rahvusvahelistel ja riiklikel olümpiaadidel ja konkurssidel. 2026. aastal ei võinud lisapunktide kogusumma ületada 2,5.",
+        "source": "LAMA BPO 2026. aasta ühise vastuvõtu kord, punktid 28 ja 55"
+      },
+      {
+        "id": "minimum-score",
+        "term": "Madalaimad konkursipunktid (mažiausias stojamasis konkursinis balas)",
+        "definition": "Madalaimad konkursipunktid, millega saab konkreetsesse kõrgkooli kandideerida. Iga kõrgkool määrab need ise ja teeb teatavaks hiljemalt 1. juuniks; eri kõrgkoolides võivad need erineda.",
+        "source": "Teaduse ja õppe seadus, § 59 lõige 4; LAMA BPO 2026. aasta ühise vastuvõtu kord, punkt 54"
+      },
+      {
+        "id": "competition-queue",
+        "term": "Konkursijärjekord, esimene ja teine (konkursinė eilė)",
+        "definition": "Kandidaatide järjekord riigi rahastatud kohtadele ja õppestipendiumidele konkursipunktide alusel. Järjekordi on kaks: esimesse kuuluvad kõik, kes vastavad vastuvõtunõuetele; teise — need neist, kes vastavad lisatingimusele, näiteks on lõpetanud lühikese tsükli õppe või neil on seaduses sätestatud kestusega praktilise tegevuse kogemus.",
+        "source": "Teaduse ja õppe seadus, § 77 lõiked 1 ja 1¹"
+      },
+      {
+        "id": "state-funded-place",
+        "term": "Riigi rahastatud õppekoht (valstybės finansuojama studijų vieta)",
+        "definition": "Õppekoht, kus õppemaksu tasub riik. Sellisel kohal õppija ei pea riiklikule kõrgkoolile tasuma ühtegi õppekava elluviimisega otseselt seotud makset, välja arvatud seaduses nimetatud juhtudel.",
+        "source": "Teaduse ja õppe seadus, § 77 lõige 1, § 83 lõige 5"
+      },
+      {
+        "id": "non-funded-place",
+        "term": "Riigi rahastamata õppekoht (valstybės nefinansuojama studijų vieta)",
+        "definition": "Õppekoht, kus õpingute eest tasub üliõpilane ise. Õppemaksu määrab kõrgkool ja märgib selle oma vastuvõtueeskirjades.",
+        "source": "Teaduse ja õppe seadus, § 83 lõige 1; LAMA BPO 2026. aasta ühise vastuvõtu kord, punkt 6"
+      },
+      {
+        "id": "study-stipend",
+        "term": "Õppestipendium (studijų stipendija)",
+        "definition": "Stipendium, mis määratakse kõrgeimate konkursipunktidega isikutele, kes on vastu võetud riigi rahastamata kohtadele. Selle suurus on normatiivne õppemaks (või tegelik õppemaks, kui see on väiksem) ja see määratakse õppeajaks riigieelarve vahenditest.",
+        "source": "Teaduse ja õppe seadus, § 82 lõige 10"
+      },
+      {
+        "id": "normative-price",
+        "term": "Normatiivne õppemaks (norminė studijų kaina)",
+        "definition": "Valitsuse kehtestatud korras arvutatud õppesuuna või õppekavarühma õppemaks. Igal aastal 31. jaanuariks kinnitab selle haridus-, teadus- ja spordiminister. Kui kõrgkooli kehtestatud õppemaks on suurem, tasub riik ainult normatiivse õppemaksu.",
+        "source": "Teaduse ja õppe seadus, § 83 lõige 4"
+      },
+      {
+        "id": "invitation",
+        "term": "Kutse õppima asumiseks (kvietimas studijuoti)",
+        "definition": "Konkursi võitnud kandidaat saab ühe kutse konkreetsele õppekohale asumiseks; ülejäänud — eitava vastuse. Kutsutu peab kutses märgitud aja jooksul sõlmima õppelepingu, muidu kutse tühistatakse.",
+        "source": "LAMA BPO 2026. aasta ühise vastuvõtu kord, punktid 71 ja 79"
+      },
+      {
+        "id": "study-contract",
+        "term": "Õppeleping (studijų sutartis)",
+        "definition": "Leping, millega vormistatakse üliõpilase ja kõrgkooli suhted. Selle tüüptingimused kehtestab minister. Pärast lepingu sõlmimist loetakse kandidaat kõrgkooli vastuvõetuks.",
+        "source": "Teaduse ja õppe seadus, § 61 lõige 2; LAMA BPO 2026. aasta ühise vastuvõtu kord, punkt 70"
+      },
+      {
+        "id": "main-additional",
+        "term": "Põhivastuvõtt ja lisavastuvõtt (pagrindinis ir papildomas priėmimas)",
+        "definition": "Ühine vastuvõtt toimub etappidena. Pärast põhivastuvõttu kuulutatakse vabaks jäänud õppekohtadele välja lisavastuvõtt; 2026. aastal toimus see kahes etapis.",
+        "source": "LAMA BPO 2026. aasta ühise vastuvõtu kord, punktid 80 ja 82"
+      },
+      {
+        "id": "direct-admission",
+        "term": "Otsevastuvõtt (tiesioginis priėmimas)",
+        "definition": "Vastuvõtt riigi rahastamata õppekohtadele, mida kõrgkool korraldab ise, väljaspool ühise vastuvõtu konkurssi. Otse vastu võetud isikute andmed sisestab kõrgkool BPIS-i.",
+        "source": "LAMA BPO 2026. aasta ühise vastuvõtu kord, punkt 86"
+      },
+      {
+        "id": "cycles",
+        "term": "Õppeastmed (studijų pakopos)",
+        "definition": "Õpe jaguneb astmeteks: lühike tsükkel, esimene aste (selle järel antakse kutsebakalaureuse või bakalaureusekraad), teine aste (magistrikraad) ja kolmas aste (doktorikraad).",
+        "source": "Teaduse ja õppe seadus, § 52 lõiked 2, 4 ja 5"
+      },
+      {
+        "id": "integrated",
+        "term": "Integreeritud õpe (vientisosios studijos)",
+        "definition": "Õpe, mis ühendab esimese ja teise astme: selle lõpetamisel antakse kohe magistrikraad. Õppekava maht on 300 või 360 ainepunkti. Sinna astutakse pärast keskkooli.",
+        "source": "Teaduse ja õppe seadus, § 52 lõige 7, § 53 lõige 7, § 59 lõige 1"
+      },
+      {
+        "id": "university-college",
+        "term": "Ülikooli- ja kolledžiõpe (universitetinės ir koleginės studijos)",
+        "definition": "Ülikoolis omandatakse ülikooli kõrgharidus; pärast esimese astme ülikooliõpet antakse bakalaureusekraad. Kolledžis (kolegija) omandatakse kolledži kõrgharidus, mis põhineb rakendusuuringutel ja kutsepraktikal; pärast õpinguid antakse kutsebakalaureuse kraad.",
+        "source": "Teaduse ja õppe seadus, § 10 lõige 4, § 11 lõige 1, § 52 lõige 4"
+      },
+      {
+        "id": "study-mode",
+        "term": "Täiskoormusega ja osakoormusega õpe (nuolatinė ir ištęstinė forma)",
+        "definition": "Täiskoormusega õppe tavaline maht on 60 ainepunkti aastas (mitte vähem kui 45). Osakoormusega õppe aastane maht võib olla väiksem, kuid õppe kestus ei tohi olla üle pooleteise korra pikem. Mõlemas vormis omandatud haridus on samaväärne.",
+        "source": "Teaduse ja õppe seadus, § 53 lõiked 3 ja 4"
+      },
+      {
+        "id": "credit",
+        "term": "Ainepunkt (studijų kreditas)",
+        "definition": "Õppe mahu ühik, millega mõõdetakse üliõpilase keskmist töökoormust, mis on vajalik õpitulemuste saavutamiseks. Esimese astme õppekava maht võib olla 180, 210 või 240 ainepunkti.",
+        "source": "Teaduse ja õppe seadus, § 4 lõige 23, § 53 lõige 6"
+      },
+      {
+        "id": "study-field",
+        "term": "Õppesuund (studijų kryptis)",
+        "definition": "Akadeemiline, kutsealane ja teadusvaldkond, mida ühendavad ühine arusaam, õpitulemused ja nende saavutamise viisid. Õppesuunad koondatakse õppesuundade rühmadesse; nende järgi jaotatakse riigi rahastatud kohad ja määratakse konkursi õppeained.",
+        "source": "Teaduse ja õppe seadus, § 4 lõige 24, § 59 lõige 2, § 77 lõige 3"
+      }
+    ]
+  },
+  "privacy": {
+    "title": "Privaatsuspoliitika",
+    "intro": "Kuidas see sait isikuandmeid töötleb: mida säilitatakse, mida mitte ja millised on andmesubjekti õigused. See tekst on tõlge; lahknevuse korral kehtib leedukeelne tekst.",
+    "updated": "Redaktsioon: 10. oktoober 2026",
+    "authorityLabel": "Leedu Riiklik Andmekaitse Inspektsioon (vdai.lrv.lt)",
+    "authorityUrl": "https://vdai.lrv.lt",
+    "sections": [
+      {
+        "id": "summary",
+        "title": "Lühidalt",
+        "body": [
+          "- Saidil ei ole kasutajakontosid ja registreerumine ei ole vajalik.",
+          "- Kalkulaatoris või jaotises „Millistele õppekavadele saab kandideerida“ sisestatud eksamitulemused arvutatakse külastaja brauseris. Neid ei saadeta meie serverisse ega salvestata kuhugi.",
+          "- Me ei kasuta küpsiseid jälgimiseks ega näita reklaami.",
+          "- Salvestatud õppekavade loend (tähed õppekavade juures) on ainult külastaja seadmes."
+        ]
+      },
+      {
+        "id": "controller",
+        "title": "Kes on vastutav töötleja",
+        "body": [
+          "Isikuandmete vastutav töötleja on {controller}. Isikuandmeid puudutavates küsimustes tuleb kirjutada aadressil {email}."
+        ]
+      },
+      {
+        "id": "visit",
+        "title": "Saidi külastamine",
+        "body": [
+          "Lehe avamisel registreerib majutusteenuse pakkuja automaatselt tehnilised andmed: IP-aadressi, aja, päritud aadressi ja brauseri tüübi. Seda tehakse selleks, et sait töötaks ja oleks turvaline. Me ei kasuta neid andmeid kellegi tuvastamiseks.",
+          "Alus: meie õigustatud huvi tagada saidi turvalisus ja toimimine (isikuandmete kaitse üldmääruse artikli 6 lõike 1 punkt f). Säilitamise tähtaja määrab teenusepakkuja.",
+          "Keele (läti, leedu, eesti või inglise) valime esimesel külastusel brauseri keeleseade järgi; seda ei salvestata."
+        ]
+      },
+      {
+        "id": "survey",
+        "title": "Küsitlus ja kalkulaatorid",
+        "body": [
+          "- Eksamitulemused kalkulaatoris ja jaotises „Millistele õppekavadele saab kandideerida“ arvutatakse ainult külastaja brauseris. Neid ei saadeta serverisse, ei salvestata ega lisata lehe aadressi.",
+          "- Küsitluses valitud filtrid (huvivaldkond, õppeaste, linn, õppekeel ja -vorm) lisatakse lehe aadressi, et saaks näidata õppekavade loendit. Koos külastusega jõuavad need tehnilistesse logidesse (vt eespool), kuid me ei seo neid isikuga. Küsitluse eksamivastuseid serverisse ei saadeta."
+        ]
+      },
+      {
+        "id": "favorites",
+        "title": "Salvestatud õppekavad",
+        "body": [
+          "Tähega märgitud õppekavade loend on ainult külastaja brauseris (localStorage). Selle saab kustutada, tühjendades brauseri seadetes saidi andmed. See säilitamine on vajalik funktsiooni jaoks, mida külastaja kasutab omal valikul.",
+          "Salvestatud õppekavade loendi avamisel pärib brauser nende õppekavade andmed meie andmebaasist (Supabase). Päringus on õppekavade identifikaatorid; nagu iga külastus, jõuab see teenusepakkuja tehnilistesse logidesse. Me loendit ei säilita ega seo seda isikuga."
+        ]
+      },
+      {
+        "id": "cookies",
+        "title": "Küpsised",
+        "body": [
+          "Me ei kasuta küpsiseid jälgimiseks. Sait hoiab brauseris ainult salvestatud õppekavade loendit (vt eespool)."
+        ]
+      },
+      {
+        "id": "analytics",
+        "title": "Saidi kasutusstatistika",
+        "body": [
+          "Et mõista, milliseid lehti loetakse ja kui kiiresti need laaditakse, kasutame PostHogi analüütikat, mille serverid asuvad Euroopa Liidus. See on seadistatud järgmiselt:",
+          "- ilma küpsisteta ja ilma andmete säilitamiseta brauseris;",
+          "- ilma inimese tuvastamiseta, ilma seansisalvestisteta ja ilma sisestatud väljade sisuta — eksamitulemused analüütikasse ei jõua;",
+          "- IP-aadressi ei säilitata.",
+          "Alus: meie õigustatud huvi saiti parandada (üldmääruse artikli 6 lõike 1 punkt f). Sellele töötlemisele saab esitada vastuväite, kirjutades aadressil {email}."
+        ]
+      },
+      {
+        "id": "email",
+        "title": "E-posti meeldetuletused",
+        "body": [
+          "Kui külastaja ise palub meeldetuletust (näiteks vastuvõtu alguse või salvestatud õppekavade loendi muudatuste kohta), säilitame tema e-posti aadressi ja selle, mille kohta teateid sooviti. Neid andmeid kasutame ainult soovitud eesmärgil.",
+          "Alus: nõusolek (üldmääruse artikli 6 lõike 1 punkt a). Nõusoleku saab igal ajal tagasi võtta iga e-kirja lingi kaudu või kirjutades aadressil {email}; tagasivõtmine ei mõjuta varasemate e-kirjade seaduslikkust.",
+          "E-kirju saadab teenusepakkuja Resend. Aadressi kustutame pärast nõusoleku tagasivõtmist ja hiljemalt 12 kuud pärast viimast saadetud e-kirja."
+        ]
+      },
+      {
+        "id": "minors",
+        "title": "Õpilased ja noored",
+        "body": [
+          "Saidi külastajad on peamiselt õpilased ja noored. Leedus võib laps ise anda nõusoleku infoühiskonna teenuse kasutamiseks alates 14. eluaastast; nooremale lapsele on vaja vanema või seadusliku eestkostja nõusolekut (Leedu isikuandmete õiguskaitse seaduse § 6; isikuandmete kaitse üldmääruse artikkel 8).",
+          "Saidil sisestatud eksamitulemusi me ei säilita ega edasta."
+        ]
+      },
+      {
+        "id": "recipients",
+        "title": "Kellele me andmeid edastame",
+        "body": [
+          "Me ei müü andmeid ega näita reklaami. Andmeid töötlevad ainult meie teenusepakkujad (volitatud töötlejad) ja ainult meie ülesandel:",
+          "- majutusteenuse pakkuja (saidi toimimine);",
+          "- Supabase (andmebaas serveritega Euroopa Liidus; e-posti aadressid, kui need on esitatud);",
+          "- PostHog (kasutusstatistika, serverid Euroopa Liidus);",
+          "- Google (e-post: meile saadetud kirjavahetus on Gmaili postkastis);",
+          "- Resend (e-kirjade saatmine).",
+          "Kui teenusepakkuja edastab andmeid väljapoole Euroopa Majanduspiirkonda, toimub see Euroopa Komisjoni heakskiidetud kaitsemeetmetega, näiteks lepingu tüüptingimustega."
+        ]
+      },
+      {
+        "id": "rights",
+        "title": "Andmesubjekti õigused",
+        "body": [
+          "Isikul, kelle andmeid töödeldakse (andmesubjektil), on õigus:",
+          "- saada teavet oma andmete kohta ja nendega tutvuda;",
+          "- nõuda andmete parandamist või kustutamist;",
+          "- piirata töötlemist ja esitada vastuväide töötlemisele, mis põhineb õigustatud huvil;",
+          "- saada andmed ülekantaval kujul;",
+          "- võtta nõusolek igal ajal tagasi.",
+          "Taotlused tuleb saata aadressil {email} — vastame ühe kuu jooksul. Kui isik leiab, et tema õigusi on rikutud, võib ta esitada kaebuse Leedu Riiklikule Andmekaitse Inspektsioonile (vdai.lrv.lt) või vastutava töötleja riigi järelevalveasutusele — Läti Andmekaitse Inspektsioonile (Datu valsts inspekcija, Elijas iela 17, Rīga, LV-1050)."
+        ]
+      },
+      {
+        "id": "contact",
+        "title": "Kirjavahetus meiega",
+        "body": [
+          "Õppekava lehel ja kalkulaatoris on link veast teatamiseks. See avab e-posti programmi — kirja saadab külastaja ise, sait tema eest midagi ei saada.",
+          "Kirja saamisel saame saatja e-posti aadressi ja kirja sisu. Kasutame neid ainult teabe kontrollimiseks ja parandamiseks ning saatjale vastamiseks. Eksamitulemusi ei ole vaja kirjas esitada — meil ei ole neid tarvis.",
+          "Alus: meie õigustatud huvi hoida saidil õiget teavet (üldmääruse artikli 6 lõike 1 punkt f). Kirjavahetuse kustutame hiljemalt 12 kuud pärast viimast kirja."
+        ]
+      },
+      {
+        "id": "decisions",
+        "title": "Automatiseeritud otsused",
+        "body": [
+          "Me ei tee automatiseeritud otsuseid, mis isikut mõjutavad, ega tegele profiilianalüüsiga. Saidi arvutused on ligikaudsed; lõpliku vastuvõtuotsuse teeb kõrgkool."
+        ]
+      },
+      {
+        "id": "changes",
+        "title": "Muudatused",
+        "body": [
+          "Kui poliitika muutub, uuendame seda lehte ja redaktsiooni kuupäeva."
+        ]
+      }
+    ]
   }
 }

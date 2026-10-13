@@ -78,8 +78,9 @@ const LT_ROUTES = [
   "/lt-ee/favorites",
   "/lv-ee/survey",
   // Эстонский язык интерфейса (с 2026-10-12): у Эстонии и у двух других
-  // стран. Словарь терминов, права и политика на эстонский не переведены и
-  // закрыты — /et-lv/glossary проверяется как страница «не найдено».
+  // стран. Латвийские и литовские словарь терминов, права и политика
+  // переведены на эстонский 2026-10-13; у самой Эстонии этих разделов нет —
+  // /et/glossary проверяется как страница «не найдено».
   "/et",
   "/et/programmes?country=EE",
   "/et/programmes/ut/informaatika-4",
@@ -89,8 +90,14 @@ const LT_ROUTES = [
   "/et-lv/match",
   "/et-lv/programmes/lu/economics/calculator",
   "/et-lv/glossary",
+  "/et-lv/rights",
+  "/et-lv/privacy",
   "/et-lt",
   "/et-lt/match",
+  "/et-lt/glossary",
+  "/et-lt/rights",
+  "/et-lt/privacy",
+  "/et/glossary",
 ];
 
 for (const route of LT_ROUTES) {

@@ -1,4 +1,5 @@
 import { describe, expect, it } from "vitest";
+import { mergeDictionary } from "./merge";
 import lv from "./dictionaries/lv.json";
 import en from "./dictionaries/en.json";
 import lt from "./dictionaries/lt.json";
@@ -28,8 +29,9 @@ describe("файлы отличий словарей", () => {
     { name: "en-ee", override: enEe, base: en },
     { name: "lv-ee", override: lvEe, base: lv },
     { name: "lt-ee", override: ltEe, base: lt },
-    { name: "et-lv", override: etLv, base: et },
-    { name: "et-lt", override: etLt, base: et },
+    // эстонский словарь лежит поверх английского (dictionaries.ts)
+    { name: "et-lv", override: etLv, base: mergeDictionary(en, et) },
+    { name: "et-lt", override: etLt, base: mergeDictionary(en, et) },
   ];
 
   for (const { name, override, base } of cases) {
@@ -41,8 +43,9 @@ describe("файлы отличий словарей", () => {
 
   // Эстонский словарь лежит поверх английского (dictionaries.ts): строка,
   // которой в et.json нет, молча показалась бы по-английски. Поэтому все
-  // короткие тексты обязаны быть в нём; длинные разделы (словарь терминов,
-  // права, политика) не переведены и под эстонскими адресами закрыты.
+  // короткие тексты обязаны быть в нём. Длинных разделов (словарь терминов,
+  // права, политика) в et.json нет: у Эстонии их ещё нет вовсе, а латвийские
+  // и литовские на эстонском лежат в et-lv.json и et-lt.json.
   it("et: переведены все тексты, кроме словаря терминов, прав и политики", () => {
     const untranslated = ["rights", "glossary", "privacy"];
     const short = (path: string) => !untranslated.includes(path.split(".")[1]);
@@ -62,36 +65,49 @@ describe("файлы отличий словарей", () => {
     }
   });
 
-  // Литовский перевод латвийских словаря, прав и политики: тот же набор
-  // записей, что в латышском оригинале, — иначе якорные ссылки и оглавление
-  // на двух языках разошлись бы.
-  it("lt-lv: словарь, права и политика содержат те же записи, что латышский оригинал", () => {
-    const ids = (list: { id: string }[]) => list.map((entry) => entry.id);
-    expect(ids(ltLv.glossary.items)).toEqual(ids(lv.glossary.items));
-    expect(ids(ltLv.rights.items)).toEqual(ids(lv.rights.items));
-    expect(ids(ltLv.privacy.sections)).toEqual(ids(lv.privacy.sections));
-    expect(ltLv.rights.sources.map((source) => source.url)).toEqual(lv.rights.sources.map((source) => source.url));
-  });
+  // Литовский и эстонский переводы латвийских словаря, прав и политики: тот
+  // же набор записей, что в латышском оригинале, — иначе якорные ссылки и
+  // оглавление на разных языках разошлись бы.
+  for (const [name, translation] of [
+    ["lt-lv", ltLv],
+    ["et-lv", etLv],
+  ] as const) {
+    it(`${name}: словарь, права и политика содержат те же записи, что латышский оригинал`, () => {
+      const ids = (list: { id: string }[]) => list.map((entry) => entry.id);
+      expect(ids(translation.glossary.items)).toEqual(ids(lv.glossary.items));
+      expect(ids(translation.rights.items)).toEqual(ids(lv.rights.items));
+      expect(ids(translation.privacy.sections)).toEqual(ids(lv.privacy.sections));
+      expect(translation.rights.sources.map((source) => source.url)).toEqual(lv.rights.sources.map((source) => source.url));
+    });
 
-  it("lt-lv: в политике столько же строк, те же списки и те же подстановки", () => {
-    const placeholders = (line: string) => (line.match(/\{\w+\}/g) ?? []).sort();
-    lv.privacy.sections.forEach((original, index) => {
-      const translated = ltLv.privacy.sections[index];
-      expect(translated.body.length, original.id).toBe(original.body.length);
-      original.body.forEach((line, lineIndex) => {
-        expect(translated.body[lineIndex].startsWith("- "), `${original.id}[${lineIndex}]`).toBe(line.startsWith("- "));
-        expect(placeholders(translated.body[lineIndex]), `${original.id}[${lineIndex}]`).toEqual(placeholders(line));
+    it(`${name}: в политике столько же строк, те же списки и те же подстановки`, () => {
+      const placeholders = (line: string) => (line.match(/\{\w+\}/g) ?? []).sort();
+      lv.privacy.sections.forEach((original, index) => {
+        const translated = translation.privacy.sections[index];
+        expect(translated.body.length, original.id).toBe(original.body.length);
+        original.body.forEach((line, lineIndex) => {
+          expect(translated.body[lineIndex].startsWith("- "), `${original.id}[${lineIndex}]`).toBe(line.startsWith("- "));
+          expect(placeholders(translated.body[lineIndex]), `${original.id}[${lineIndex}]`).toEqual(placeholders(line));
+        });
       });
     });
-  });
+
+    it(`${name}: у каждой записи есть текст и источник, в правах и политике — оговорка о переводе`, () => {
+      for (const item of translation.glossary.items) expect(item.term && item.definition && item.source, item.id).toBeTruthy();
+      for (const item of translation.rights.items) expect(item.title && item.text && item.source, item.id).toBeTruthy();
+      expect(translation.rights.checkedNote).not.toBe(lv.rights.checkedNote);
+      expect(translation.privacy.intro).not.toBe(lv.privacy.intro);
+    });
+  }
 
   // Литовские словарь, права и политика написаны сразу на трёх языках
-  // (lt.json — литовский; английский и латышский — в файлах отличий).
-  describe("Литва: словарь, права и политика на трёх языках", () => {
+  // (lt.json — литовский; английский и латышский — в файлах отличий);
+  // эстонский перевод добавлен 2026-10-13 (et-lt.json).
+  describe("Литва: словарь, права и политика на четырёх языках", () => {
     const ids = (list: { id: string }[]) => list.map((entry) => entry.id);
 
     it("на каждом языке один и тот же набор записей и те же ссылки на источники", () => {
-      for (const translated of [enLt, lvLt]) {
+      for (const translated of [enLt, lvLt, etLt]) {
         expect(ids(translated.glossary.items)).toEqual(ids(lt.glossary.items));
         expect(ids(translated.rights.items)).toEqual(ids(lt.rights.items));
         expect(ids(translated.privacy.sections)).toEqual(ids(lt.privacy.sections));
@@ -100,7 +116,7 @@ describe("файлы отличий словарей", () => {
     });
 
     it("нет пустых записей и повторяющихся якорей", () => {
-      for (const dictionary of [lt, enLt, lvLt]) {
+      for (const dictionary of [lt, enLt, lvLt, etLt]) {
         for (const item of dictionary.glossary.items) {
           expect(item.term && item.definition && item.source, item.id).toBeTruthy();
         }
@@ -122,6 +138,7 @@ describe("файлы отличий словарей", () => {
         { lithuania: lt.privacy.sections, latvia: ltLv.privacy.sections },
         { lithuania: enLt.privacy.sections, latvia: en.privacy.sections },
         { lithuania: lvLt.privacy.sections, latvia: lv.privacy.sections },
+        { lithuania: etLt.privacy.sections, latvia: etLv.privacy.sections },
       ];
       for (const { lithuania, latvia } of pairs) {
         expect(ids(lithuania)).toEqual(ids(latvia));
@@ -137,7 +154,7 @@ describe("файлы отличий словарей", () => {
     });
 
     it("в литовской политике — литовский возраст согласия и литовский надзорный орган", () => {
-      for (const dictionary of [lt, enLt, lvLt]) {
+      for (const dictionary of [lt, enLt, lvLt, etLt]) {
         const text = JSON.stringify(dictionary.privacy.sections);
         expect(text).toContain("14");
         expect(text).not.toMatch(/\b13\b/);

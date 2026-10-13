@@ -24,5 +24,390 @@
   },
   "match": {
     "intro": "Sisestatud tsentraliseeritud eksamite tulemuste põhjal näidatakse, milliste õppekavade konkursipunkte saab juba praegu arvutada ja millised eksamid on veel puudu."
+  },
+  "rights": {
+    "title": "Kandidaadi õigused kõrgkooli astumisel",
+    "intro": "Mida Läti seadused ja Ministrite Kabineti määrused kandidaadile tagavad: millal tuleb eeskirjad avaldada, millal saab registreeruda, millal sõlmitakse leping, kui kiiresti tuleb tulemused teatavaks teha ja kuidas otsust vaidlustada.",
+    "checkedNote": "Koostatud õigusaktide tekstide põhjal, mida lugesime veebilehel likumi.lv 20. septembril 2026 (Ministrite Kabineti määrus nr 846 — redaktsioon seisuga 30.12.2025; kõrgkoolide seadus — kehtiv redaktsioon). See ei ole õigusnõu: määravad on õigusaktide tekstid ja konkreetse kõrgkooli vastuvõtueeskirjad. See tekst on tõlge läti keelest; lahknevuse korral kehtib lätikeelne tekst.",
+    "sourceLabel": "Allikas",
+    "sourcesTitle": "Allikad",
+    "glossaryLink": "Mõistete selgitused — sõnastikus",
+    "items": [
+      {
+        "id": "rules-published",
+        "title": "Eeskirjad tuleb avaldada 30. novembriks",
+        "text": "Kõrgkool avaldab igal aastal 30. novembriks oma veebilehel vastuvõtunõuded ning registreerimise ja vastuvõtu alguse tähtaja järgmiseks akadeemiliseks aastaks.",
+        "source": "Kõrgkoolide seadus, § 46 lõige 5; Ministrite Kabineti määrus nr 846, punkt 3"
+      },
+      {
+        "id": "rules-contents",
+        "title": "Mida eeskirjad peavad sisaldama",
+        "text": "Vastuvõtueeskirjades peab olema kirjas: milline varasem haridus on nõutav, millised tsentraliseeritud eksamid tuleb sooritada, millised on lisanõuded, millal algavad registreerimine ja vastuvõtt, konkursi hindamiskriteeriumid ja nende osakaal, tulemuste arvutamise kord, konkursi lõpptähtaeg, mõlema poole õigused ja kohustused, kuidas saada teavet vastuvõtu käigu kohta ja kuidas otsuseid vaidlustada.",
+        "source": "Ministrite Kabineti määrus nr 846, punkt 13"
+      },
+      {
+        "id": "open-competition",
+        "title": "Avalik ja võrdne konkurss",
+        "text": "Vastuvõtul toimub avalik ja võrdne konkurss kõrgkooli vastuvõtueeskirjade järgi. Kõrgkool ei tohi kellelegi anda eeliseid, mis on vastuolus tema eeskirjade, õigusaktide või õiguse üldpõhimõtetega.",
+        "source": "Ministrite Kabineti määrus nr 846, punktid 2 ja 8; kõrgkoolide seadus, § 46 lõige 3"
+      },
+      {
+        "id": "register-before-exams",
+        "title": "Registreeruda saab enne tsentraliseeritud eksamite sooritamist",
+        "text": "Kõrgkool võib alustada registreerimist ja vastuvõttu enne tsentraliseeritud eksamite sooritamist. Registreerumisel ei pea esitama lõputunnistust ega eksamitunnistusi.",
+        "source": "Kõrgkoolide seadus, § 46 lõiked 5 ja 6¹; Ministrite Kabineti määrus nr 846, punktid 6¹ ja 6⁴ (kohaldatakse alates 2026/2027. akadeemilisest aastast)"
+      },
+      {
+        "id": "how-to-register",
+        "title": "Kuidas saab registreeruda",
+        "text": "Registreeruda saab kohapeal kõrgkoolis (avaldus ja pass või isikutunnistus) või elektrooniliselt — portaalis www.latvija.lv või kõrgkooli infosüsteemis turvalise autentimisega.",
+        "source": "Ministrite Kabineti määrus nr 846, punkt 6"
+      },
+      {
+        "id": "contract-timing",
+        "title": "Õppeleping sõlmitakse pärast dokumente ja tulemusi",
+        "text": "Kõrgkoolil on õigus sõlmida õppeleping pärast seda, kui kandidaat on esitanud keskharidust tõendava dokumendi ja eksamitunnistused ning kui konkursi tulemused on teatavaks tehtud. Pärast tulemuste teatavakstegemist saadab kõrgkool kutse lepingu sõlmimiseks; immatrikuleerimine toimub pärast lepingu sõlmimist.",
+        "source": "Kõrgkoolide seadus, § 46 lõiked 6¹ ja 6²; Ministrite Kabineti määrus nr 846, punkt 4"
+      },
+      {
+        "id": "results-in-three-days",
+        "title": "Tulemused — hiljemalt kolme päeva jooksul",
+        "text": "Konkursi tulemused määrab ja kinnitab vastuvõtukomisjon. Need tehakse teatavaks hiljemalt kolme päeva jooksul konkursi lõppemise päevast.",
+        "source": "Ministrite Kabineti määrus nr 846, punkt 14"
+      },
+      {
+        "id": "written-refusal",
+        "title": "Keeldumist võib nõuda kirjalikult",
+        "text": "Kui kõrgkool keeldub kandidaati immatrikuleerimast, on kandidaadil õigus nõuda, et otsus vormistataks kirjalikult (haldusmenetluse seaduses sätestatud korras).",
+        "source": "Ministrite Kabineti määrus nr 846, punkt 16"
+      },
+      {
+        "id": "appeal",
+        "title": "Otsust saab vaidlustada ja edasi kaevata",
+        "text": "Vastuvõtukomisjoni otsust konkursi tulemuste kohta saab vaidlustada, esitades avalduse kõrgkooli rektorile (kolledžis — direktorile). Rektori otsuse saab edasi kaevata kohtusse haldusmenetluse seaduses sätestatud korras. Vaidlustamise tähtajad määravad konkreetse kõrgkooli eeskirjad.",
+        "source": "Ministrite Kabineti määrus nr 846, punkt 17"
+      },
+      {
+        "id": "exam-levels",
+        "title": "Eri tasemete eksamid on võrreldavad",
+        "text": "Et võrrelda eri õppesisu omandamise tasemetel sooritatud tsentraliseeritud eksameid, kohaldatakse koefitsiente: optimaalse taseme eksamitele 0,75 ja üldtaseme eksamitele 0,50 kõrgeima taseme suhtes. Eksamitele, mis on sooritatud vana korra järgi (enne uusi keskhariduse standardeid), kohaldatakse koefitsienti 0,75.",
+        "source": "Ministrite Kabineti määrus nr 846, punktid 10.1, 10.2 ja 20"
+      },
+      {
+        "id": "no-exam-groups",
+        "title": "Kes võib tsentraliseeritud eksamid sooritamata jätta",
+        "text": "Tsentraliseeritud eksameid ei pea sooritama isikud, kes on omandanud keskhariduse enne 2004. aastat või välisriigis, ning erivajadustega isikud; matemaatika eksamit ei pea sooritama ka need, kes on omandanud keskhariduse kuni 2008. aastani (kaasa arvatud). Korra, mille alusel neid isikuid vastu võetakse, määrab kõrgkool oma eeskirjades.",
+        "source": "Ministrite Kabineti määrus nr 846, punkt 12; kõrgkoolide seadus, § 46 lõige 3"
+      },
+      {
+        "id": "extra-requirements",
+        "title": "Kõrgkool võib kehtestada lisanõudeid",
+        "text": "Kõrgkool võib kehtestada lisanõudeid — eriline varasem haridus, eriline sobivus või ettevalmistus — ning sisseastumiskatseid, et kontrollida nende täitmist. Need nõuded peavad olema kirjas vastuvõtueeskirjades.",
+        "source": "Kõrgkoolide seadus, § 46 lõige 4; Ministrite Kabineti määrus nr 846, punktid 5¹ ja 13.3"
+      },
+      {
+        "id": "education-abroad",
+        "title": "Kui haridus on omandatud välisriigis",
+        "text": "Kui haridust tõendav dokument on saadud välisriigis, lisatakse avaldusele Akadeemilise Teabe Keskuse (või selleks õigust omava kõrgkooli) tõend selle kohta, millisele Läti dokumendile see vastab. Välismaalane peab lisama ka dokumendi õppekeele oskuse kohta vähemalt B2-tasemel, kui ei kehti erandid, ning kõrgkool viib temaga läbi vestluse.",
+        "source": "Ministrite Kabineti määrus nr 846, punktid 7, 7¹, 7² ja 13¹"
+      }
+    ],
+    "sources": [
+      {
+        "label": "Ministrite Kabineti 10. oktoobri 2006. aasta määrus nr 846 „Nõuded, kriteeriumid ja kord õppekavadele vastuvõtuks“ (MK noteikumi Nr. 846, läti keeles)",
+        "url": "https://likumi.lv/ta/id/146637-noteikumi-par-prasibam-kriterijiem-un-kartibu-uznemsanai-studiju-programmas"
+      },
+      {
+        "label": "Kõrgkoolide seadus (Augstskolu likums, läti keeles), § 46",
+        "url": "https://likumi.lv/ta/id/37967-augstskolu-likums"
+      }
+    ]
+  },
+  "glossary": {
+    "title": "Vastuvõtu sõnastik",
+    "intro": "Sõnad, mis esinevad Läti kõrgkoolide vastuvõtueeskirjades ja sellel saidil. Sulgudes on mõiste läti keeles, nagu seda kirjutatakse dokumentides. Määratlused on võetud seadustest ja kõrgkoolide eeskirjadest; iga juures on allikas.",
+    "sourceLabel": "Allikas",
+    "rightsLink": "Kandidaadi õigused vastuvõtul",
+    "items": [
+      {
+        "id": "accredited-programme",
+        "term": "Akrediteeritud õppekava (akreditēta studiju programma)",
+        "definition": "Õppekava, mis on vastava õppesuuna hindamisel tunnistatud seaduse nõuetele vastavaks.",
+        "source": "Kõrgkoolide seadus, § 1 punkt 1¹"
+      },
+      {
+        "id": "licensing",
+        "term": "Litsentsimine (licencēšana)",
+        "definition": "Õiguse andmine kindla õppekava elluviimiseks. Kõrgkool tohib üliõpilasi õppekavale vastu võtta alles pärast selle litsentsimist.",
+        "source": "Kõrgkoolide seadus, § 1 punkt 12 ja § 46 lõige 1"
+      },
+      {
+        "id": "applicant",
+        "term": "Kandidaat (reflektants)",
+        "definition": "Isik, kes taotleb vastuvõttu õppekavale. Seda sõna kasutavad õigusaktid ja vastuvõtueeskirjad.",
+        "source": "Kõrgkoolide seadus, § 46; Ministrite Kabineti määrus nr 846"
+      },
+      {
+        "id": "admission-rules",
+        "term": "Vastuvõtueeskirjad (uzņemšanas noteikumi)",
+        "definition": "Kõrgkooli dokument, mis määrab vastuvõtunõuded, konkursi kriteeriumid ja korra. Need peavad olema avaldatud 30. novembriks järgmise akadeemilise aasta kohta.",
+        "source": "Ministrite Kabineti määrus nr 846, punktid 3 ja 13"
+      },
+      {
+        "id": "admission-committee",
+        "term": "Vastuvõtukomisjon (uzņemšanas komisija)",
+        "definition": "Kõrgkooli moodustatud komisjon, mis korraldab vastuvõttu ning määrab ja kinnitab konkursi tulemused.",
+        "source": "Ministrite Kabineti määrus nr 846, punktid 5 ja 14"
+      },
+      {
+        "id": "competition",
+        "term": "Konkurss (konkurss)",
+        "definition": "Avalik ja võrdne valik õppekohtadele kõrgkooli eeskirjade järgi; eesmärk on valida õppekavale kõige sobivamad kandidaadid.",
+        "source": "Ministrite Kabineti määrus nr 846, punkt 8"
+      },
+      {
+        "id": "ce",
+        "term": "Tsentraliseeritud eksam (CE, centralizētais eksāmens)",
+        "definition": "Riiklik tsentraliseeritud eksam keskkooli lõpus. Konkursil võib arvesse võtta matemaatika, läti keele ja võõrkeele CE-d ning teisi valitud CE-sid.",
+        "source": "Ministrite Kabineti määrus nr 846, punktid 9 ja 10"
+      },
+      {
+        "id": "level",
+        "term": "Õppesisu omandamise tase (mācību satura apguves līmenis)",
+        "definition": "Tase, millel CE on sooritatud: üldtase, optimaalne või kõrgeim. Selle valib kandidaat ise.",
+        "source": "Ministrite Kabineti määrus nr 846, punkt 10"
+      },
+      {
+        "id": "level-coefficient",
+        "term": "Taseme koefitsient (līmeņa koeficients)",
+        "definition": "Arv, millega korrutatakse CE tulemus, et eri tasemete eksamid oleksid võrreldavad: kõrgeimal tasemel 1, optimaalsel 0,75, üldtasemel 0,50.",
+        "source": "Ministrite Kabineti määrus nr 846, punktid 10.1 ja 10.2"
+      },
+      {
+        "id": "ce-percent",
+        "term": "CE koondtulemus protsentides (CE kopvērtējums procentos)",
+        "definition": "CE tulemus protsentides, nagu see on märgitud eksamitunnistusel. Selle arvu korrutavad kõrgkoolid oma koefitsientidega.",
+        "source": "Kõrgkoolide vastuvõtueeskirjad (nt LU, RTU)"
+      },
+      {
+        "id": "competition-score",
+        "term": "Konkursipunktid (konkursa punkti, rangs)",
+        "definition": "Arv, mille kõrgkool arvutab oma reegli järgi CE tulemustest ja muudest kriteeriumidest. Skaalad on erinevad (nt LU — 1000 punkti, RSU — 100), seetõttu ei ole punktid kõrgkoolide vahel võrreldavad.",
+        "source": "Ministrite Kabineti määrus nr 846, punkt 13.4; LU ja RSU vastuvõtueeskirjad"
+      },
+      {
+        "id": "annual-mark",
+        "term": "Aastahinne (gada atzīme)",
+        "definition": "Hinne keskharidust tõendavas dokumendis (hinnetelehel). Kõrgkoolid kasutavad seda konkursil nende puhul, kes ei ole CE-sid sooritanud, näiteks enne 2004. aastat keskhariduse omandanute puhul.",
+        "source": "Ministrite Kabineti määrus nr 846, punkt 12; LU vastuvõtueeskirjad"
+      },
+      {
+        "id": "international-test",
+        "term": "Rahvusvahelise testimisasutuse eksam (STIP)",
+        "definition": "Võõrkeeleeksam, millega saab kindlaksmääratud juhtudel asendada võõrkeele CE.",
+        "source": "Ministrite Kabineti määrus nr 846, punkti 6¹ alapunkt 1.2"
+      },
+      {
+        "id": "additional-requirements",
+        "term": "Lisanõuded (papildu prasības)",
+        "definition": "Kõrgkooli kehtestatud nõuded väljaspool CE-sid — näiteks eriline varasem haridus või eriline sobivus.",
+        "source": "Kõrgkoolide seadus, § 46 lõige 4"
+      },
+      {
+        "id": "entrance-test",
+        "term": "Sisseastumiskatse (iestājpārbaudījums)",
+        "definition": "Katse, mille kõrgkool võib määrata, et teha kindlaks vastavus lisanõuetele.",
+        "source": "Ministrite Kabineti määrus nr 846, punkt 5¹"
+      },
+      {
+        "id": "outside-competition",
+        "term": "Vastuvõtt väljaspool konkurssi (ārpus konkursa)",
+        "definition": "Teatud rühmi võtavad kõrgkoolid vastu ilma konkursita — näiteks olümpiaadide auhinnasaajaid. Millised rühmad, määravad konkreetse kõrgkooli eeskirjad. Riigikaitseteenistuse läbinutele tagavad riiklikud kõrgkoolid riigieelarvelise koha ilma konkursita.",
+        "source": "Ministrite Kabineti määrus nr 846, punkt 17¹; DU ja LBTU vastuvõtueeskirjad"
+      },
+      {
+        "id": "priorities",
+        "term": "Eelistused (prioritātes)",
+        "definition": "Õppekavad, mille kandidaat reastab avalduses tähtsuse järgi. Tulemus teatatakse ühel õppekaval — kõrgeimal eelistusel, kus konkurss on läbitud; ülejäänuid enam ei vaadata.",
+        "source": "RSU ja DU vastuvõtueeskirjad"
+      },
+      {
+        "id": "budget-place",
+        "term": "Riigieelarveline koht (budžeta vieta)",
+        "definition": "Õppekoht, kus õpinguid rahastatakse riigieelarvest.",
+        "source": "DU vastuvõtueeskirjad"
+      },
+      {
+        "id": "paid-place",
+        "term": "Tasuline koht (maksas vieta)",
+        "definition": "Õppekoht, kus õpinguid rahastavad füüsilised või juriidilised isikud.",
+        "source": "DU vastuvõtueeskirjad"
+      },
+      {
+        "id": "study-contract",
+        "term": "Õppeleping (studiju līgums)",
+        "definition": "Kirjalik leping üliõpilase ja kõrgkooli vahel. See sõlmitakse pärast dokumentide esitamist ja konkursi tulemuste teatavakstegemist.",
+        "source": "Kõrgkoolide seadus, § 46 lõiked 2 ja 6¹"
+      },
+      {
+        "id": "matriculation",
+        "term": "Immatrikuleerimine (imatrikulācija)",
+        "definition": "Isiku kandmine kõrgkooli üliõpilaste nimekirja. See toimub pärast õppelepingu sõlmimist.",
+        "source": "Kõrgkoolide seadus, § 1 punkt 6 ja § 46 lõige 6²"
+      },
+      {
+        "id": "credit-point",
+        "term": "Ainepunkt (kredītpunkts, KP)",
+        "definition": "Õppetöö mahu mõõtühik. Täiskoormusega õppes omandatakse ühe akadeemilise aasta jooksul 60 ainepunkti; üks ainepunkt vastab 25–30 tunnile õppetööle.",
+        "source": "Kõrgkoolide seadus, § 1 punkt 8"
+      },
+      {
+        "id": "full-part-time",
+        "term": "Täiskoormusega ja osakoormusega õpe (pilna laika, nepilna laika)",
+        "definition": "Täiskoormusega õpe vastab 60 ainepunktile akadeemilises aastas, osakoormusega — vähem kui 60.",
+        "source": "Kõrgkoolide seadus, § 1 punktid 9 ja 10"
+      },
+      {
+        "id": "short-cycle-first-cycle",
+        "term": "Lühikese tsükli ja esimese astme õppekava (īsā cikla, pirmā cikla)",
+        "definition": "Õppekavade liigid, kuhu võetakse vastu keskharidusega: lühikese tsükli kutsekõrghariduse õppekavad ja esimese astme kõrghariduse õppekavad.",
+        "source": "Ministrite Kabineti määrus nr 846, punkt 1.2"
+      }
+    ]
+  },
+  "privacy": {
+    "title": "Privaatsuspoliitika",
+    "intro": "Kuidas see sait isikuandmeid töötleb: mida säilitatakse, mida mitte ja millised on andmesubjekti õigused. See tekst on tõlge läti keelest; lahknevuse korral kehtib lätikeelne tekst.",
+    "updated": "Redaktsioon: 10. oktoober 2026",
+    "authorityLabel": "Läti Andmekaitse Inspektsioon (Datu valsts inspekcija, dvi.gov.lv)",
+    "authorityUrl": "https://www.dvi.gov.lv",
+    "sections": [
+      {
+        "id": "summary",
+        "title": "Lühidalt",
+        "body": [
+          "- Saidil ei ole kasutajakontosid ja registreerumine ei ole vajalik.",
+          "- Kalkulaatoris või jaotises „Millistele õppekavadele saab kandideerida“ sisestatud eksamitulemused arvutatakse külastaja brauseris. Neid ei saadeta meie serverisse ega salvestata kuhugi.",
+          "- Me ei kasuta küpsiseid jälgimiseks ega näita reklaami.",
+          "- Salvestatud õppekavade loend (tähed õppekavade juures) on ainult külastaja seadmes."
+        ]
+      },
+      {
+        "id": "controller",
+        "title": "Kes on vastutav töötleja",
+        "body": [
+          "Isikuandmete vastutav töötleja on {controller}. Isikuandmeid puudutavates küsimustes tuleb kirjutada aadressil {email}."
+        ]
+      },
+      {
+        "id": "visit",
+        "title": "Saidi külastamine",
+        "body": [
+          "Lehe avamisel registreerib majutusteenuse pakkuja automaatselt tehnilised andmed: IP-aadressi, aja, päritud aadressi ja brauseri tüübi. Seda tehakse selleks, et sait töötaks ja oleks turvaline. Me ei kasuta neid andmeid kellegi tuvastamiseks.",
+          "Alus: meie õigustatud huvi tagada saidi turvalisus ja toimimine (isikuandmete kaitse üldmääruse artikli 6 lõike 1 punkt f). Säilitamise tähtaja määrab teenusepakkuja.",
+          "Keele (läti, leedu, eesti või inglise) valime esimesel külastusel brauseri keeleseade järgi; seda ei salvestata."
+        ]
+      },
+      {
+        "id": "survey",
+        "title": "Küsitlus ja kalkulaatorid",
+        "body": [
+          "- Eksamitulemused kalkulaatoris ja jaotises „Millistele õppekavadele saab kandideerida“ arvutatakse ainult külastaja brauseris. Neid ei saadeta serverisse, ei salvestata ega lisata lehe aadressi.",
+          "- Küsitluses valitud filtrid (huvivaldkond, linn, õppekeel ja -vorm, riigieelarvelised kohad) lisatakse lehe aadressi, et saaks näidata õppekavade loendit. Koos külastusega jõuavad need tehnilistesse logidesse (vt eespool), kuid me ei seo neid isikuga. Küsitluse eksamivastuseid serverisse ei saadeta."
+        ]
+      },
+      {
+        "id": "favorites",
+        "title": "Salvestatud õppekavad",
+        "body": [
+          "Tähega märgitud õppekavade loend on ainult külastaja brauseris (localStorage). Selle saab kustutada, tühjendades brauseri seadetes saidi andmed. See säilitamine on vajalik funktsiooni jaoks, mida külastaja kasutab omal valikul.",
+          "Salvestatud õppekavade loendi avamisel pärib brauser nende õppekavade andmed meie andmebaasist (Supabase). Päringus on õppekavade identifikaatorid; nagu iga külastus, jõuab see teenusepakkuja tehnilistesse logidesse. Me loendit ei säilita ega seo seda isikuga."
+        ]
+      },
+      {
+        "id": "cookies",
+        "title": "Küpsised",
+        "body": [
+          "Me ei kasuta küpsiseid jälgimiseks. Sait hoiab brauseris ainult salvestatud õppekavade loendit (vt eespool)."
+        ]
+      },
+      {
+        "id": "analytics",
+        "title": "Saidi kasutusstatistika",
+        "body": [
+          "Et mõista, milliseid lehti loetakse ja kui kiiresti need laaditakse, kasutame PostHogi analüütikat, mille serverid asuvad Euroopa Liidus. See on seadistatud järgmiselt:",
+          "- ilma küpsisteta ja ilma andmete säilitamiseta brauseris;",
+          "- ilma inimese tuvastamiseta, ilma seansisalvestisteta ja ilma sisestatud väljade sisuta — eksamitulemused analüütikasse ei jõua;",
+          "- IP-aadressi ei säilitata.",
+          "Alus: meie õigustatud huvi saiti parandada (üldmääruse artikli 6 lõike 1 punkt f). Sellele töötlemisele saab esitada vastuväite, kirjutades aadressil {email}."
+        ]
+      },
+      {
+        "id": "email",
+        "title": "E-posti meeldetuletused",
+        "body": [
+          "Kui külastaja ise palub meeldetuletust (näiteks vastuvõtu alguse või salvestatud õppekavade loendi muudatuste kohta), säilitame tema e-posti aadressi ja selle, mille kohta teateid sooviti. Neid andmeid kasutame ainult soovitud eesmärgil.",
+          "Alus: nõusolek (üldmääruse artikli 6 lõike 1 punkt a). Nõusoleku saab igal ajal tagasi võtta iga e-kirja lingi kaudu või kirjutades aadressil {email}; tagasivõtmine ei mõjuta varasemate e-kirjade seaduslikkust.",
+          "E-kirju saadab teenusepakkuja Resend. Aadressi kustutame pärast nõusoleku tagasivõtmist ja hiljemalt 12 kuud pärast viimast saadetud e-kirja."
+        ]
+      },
+      {
+        "id": "minors",
+        "title": "Õpilased ja noored",
+        "body": [
+          "Saidi külastajad on peamiselt õpilased ja noored. Lätis võib laps ise anda nõusoleku infoühiskonna teenuse kasutamiseks alates 13. eluaastast; nooremale lapsele on vaja vanema või seadusliku eestkostja nõusolekut (Läti füüsiliste isikute andmete töötlemise seaduse § 33).",
+          "Saidil sisestatud eksamitulemusi me ei säilita ega edasta."
+        ]
+      },
+      {
+        "id": "recipients",
+        "title": "Kellele me andmeid edastame",
+        "body": [
+          "Me ei müü andmeid ega näita reklaami. Andmeid töötlevad ainult meie teenusepakkujad (volitatud töötlejad) ja ainult meie ülesandel:",
+          "- majutusteenuse pakkuja (saidi toimimine);",
+          "- Supabase (andmebaas serveritega Euroopa Liidus; e-posti aadressid, kui need on esitatud);",
+          "- PostHog (kasutusstatistika, serverid Euroopa Liidus);",
+          "- Google (e-post: meile saadetud kirjavahetus on Gmaili postkastis);",
+          "- Resend (e-kirjade saatmine).",
+          "Kui teenusepakkuja edastab andmeid väljapoole Euroopa Majanduspiirkonda, toimub see Euroopa Komisjoni heakskiidetud kaitsemeetmetega, näiteks lepingu tüüptingimustega."
+        ]
+      },
+      {
+        "id": "rights",
+        "title": "Andmesubjekti õigused",
+        "body": [
+          "Isikul, kelle andmeid töödeldakse (andmesubjektil), on õigus:",
+          "- saada teavet oma andmete kohta ja nendega tutvuda;",
+          "- nõuda andmete parandamist või kustutamist;",
+          "- piirata töötlemist ja esitada vastuväide töötlemisele, mis põhineb õigustatud huvil;",
+          "- saada andmed ülekantaval kujul;",
+          "- võtta nõusolek igal ajal tagasi.",
+          "Taotlused tuleb saata aadressil {email} — vastame ühe kuu jooksul. Kui isik leiab, et tema õigusi on rikutud, võib ta esitada kaebuse Läti Andmekaitse Inspektsioonile (Datu valsts inspekcija, Elijas iela 17, Rīga, LV-1050)."
+        ]
+      },
+      {
+        "id": "contact",
+        "title": "Kirjavahetus meiega",
+        "body": [
+          "Õppekava lehel ja kalkulaatoris on link veast teatamiseks. See avab e-posti programmi — kirja saadab külastaja ise, sait tema eest midagi ei saada.",
+          "Kirja saamisel saame saatja e-posti aadressi ja kirja sisu. Kasutame neid ainult teabe kontrollimiseks ja parandamiseks ning saatjale vastamiseks. Eksamitulemusi ei ole vaja kirjas esitada — meil ei ole neid tarvis.",
+          "Alus: meie õigustatud huvi hoida saidil õiget teavet (üldmääruse artikli 6 lõike 1 punkt f). Kirjavahetuse kustutame hiljemalt 12 kuud pärast viimast kirja."
+        ]
+      },
+      {
+        "id": "decisions",
+        "title": "Automatiseeritud otsused",
+        "body": [
+          "Me ei tee automatiseeritud otsuseid, mis isikut mõjutavad, ega tegele profiilianalüüsiga. Saidi arvutused on ligikaudsed; lõpliku vastuvõtuotsuse teeb kõrgkool."
+        ]
+      },
+      {
+        "id": "changes",
+        "title": "Muudatused",
+        "body": [
+          "Kui poliitika muutub, uuendame seda lehte ja redaktsiooni kuupäeva."
+        ]
+      }
+    ]
   }
 }
