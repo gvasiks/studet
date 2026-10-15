@@ -33,6 +33,7 @@ STEPS = [
     ("направления программ", ["src/ee_load_fields.py", "--apply"]),
     ("сроки приёма", ["src/ee_load_admissions.py", "--apply"]),
     ("условия конкурса", ["src/ee_load_admission_details.py", "--apply"]),
+    ("правила конкурса ТÜ и TalTech", ["src/ee_load_rules.py", "--apply"]),
     # Последним: сбор каталога каждый раз возвращает город из адреса
     # учреждения, а этот шаг ставит город по месту учёбы из SAIS.
     ("город по месту учёбы", ["src/ee_apply_cities.py", "--apply"]),
@@ -45,6 +46,7 @@ def _selftest() -> None:
         "направления программ",
         "сроки приёма",
         "условия конкурса",
+        "правила конкурса ТÜ и TalTech",
         "город по месту учёбы",
     ]
     for _, command in STEPS:

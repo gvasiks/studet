@@ -1,5 +1,8 @@
 """Эстония: условия конкурса со страницы SAIS — форма обучения, место учёбы,
 начало занятий, нагрузка и финансирование с ценой (колонки ee_admission).
+Кроме того, сохраняется раздел «Vastuvõtukriteeriumid» как есть и ссылка из
+него на страницу программы у вуза: из них правило конкурса разбирает
+ee_load_rules.py.
 
 Страница конкурса (sais.ee/AdmissionSearch/View/N) открыта без входа, файла
 robots.txt у сайта нет. Устроена одинаково у всех учреждений: слева подписи
@@ -20,7 +23,8 @@ robots.txt у сайта нет. Устроена одинаково у всех
   python src/main.py ee_haridusportaal
   python src/ee_load_admissions.py --apply
 
-Колонки — миграция 20261014120000_ee_admission_details.sql.
+Колонки — миграции 20261014120000_ee_admission_details.sql и
+20261015120000_ee_admission_rule.sql.
 
 Запуск:
   python src/ee_load_admission_details.py --selftest
@@ -43,6 +47,7 @@ LABEL_FORM = "Õppevorm"
 LABEL_STARTS = "Õppetöö alguse aeg"
 LABEL_LOCATION = "Õppetöö asukoht"
 LABEL_FUNDING = "Finantseering"
+LABEL_CRITERIA = "Vastuvõtukriteeriumid"
 
 # Конкурсы старше этого срока не запрашиваются: их страниц в SAIS уже нет,
 # а каждый такой запрос заводит на той стороне запись об ошибке.
@@ -57,13 +62,22 @@ _FIELD_LINE = re.compile(r"^(Sihtgrupp|Valuuta|Hind|Periood|Rohkem infot)\s*:\s*
 # Вытащить со страницы заголовок и пары «подпись — значение». Значение
 # берётся у всей правой колонки, а не у абзаца в ней: в блоке финансирования
 # цены свёрстаны блоками внутри абзаца, и браузер выносит их из абзаца наружу.
-EXTRACT_JS = """() => ({
-  title: (document.querySelector('h1') || {}).innerText || '',
-  pairs: [...document.querySelectorAll('.form-group')].map((group) => [
-    (group.querySelector('label') || {}).innerText || '',
-    (group.querySelector('.col-sm-9') || group).innerText || '',
-  ]),
-})"""
+# Условия конкурса — блок рядом с подписью «Vastuvõtukriteeriumid» (список
+# или абзацы); ссылка «Rohkem infot» стоит под ним, в том же разделе.
+EXTRACT_JS = """() => {
+  const label = [...document.querySelectorAll('label')].find((el) => el.innerText.trim() === 'Vastuvõtukriteeriumid');
+  const heading = [...document.querySelectorAll('h2')].find((el) => el.innerText.trim() === 'Vastuvõtukriteeriumid');
+  const link = heading && [...heading.parentElement.querySelectorAll('a[href^="http"]')].find((a) => a.innerText.trim() === 'Rohkem infot');
+  return {
+    title: (document.querySelector('h1') || {}).innerText || '',
+    pairs: [...document.querySelectorAll('.form-group')].map((group) => [
+      (group.querySelector('label') || {}).innerText || '',
+      (group.querySelector('.col-sm-9') || group).innerText || '',
+    ]),
+    criteria: label && label.nextElementSibling ? label.nextElementSibling.innerText : '',
+    info_url: link ? link.href : '',
+  };
+}"""
 
 
 class PageChanged(RuntimeError):
@@ -190,8 +204,22 @@ def parse_study_form(text: str) -> str | None:
     return ", ".join(dict.fromkeys(forms)) or None
 
 
-def parse_page(title: str, pairs: list[list[str]]) -> dict:
-    """Условия конкурса из заголовка и пар «подпись — значение»."""
+def parse_criteria(text: str) -> str | None:
+    """Раздел «Vastuvõtukriteeriumid»: строки как на странице, без пустых и
+    без лишних пробелов. Разбирает его ee_rules.py."""
+    lines = [clean(line) for line in (text or "").replace("\xa0", " ").splitlines()]
+    return "\n".join(line for line in lines if line) or None
+
+
+def parse_info_url(url: str) -> str | None:
+    """Ссылка «Rohkem infot» — только настоящий адрес в интернете."""
+    url = (url or "").strip()
+    return url if url.startswith("https://") or url.startswith("http://") else None
+
+
+def parse_page(title: str, pairs: list[list[str]], criteria: str = "", info_url: str = "") -> dict:
+    """Условия конкурса из заголовка, пар «подпись — значение» и раздела
+    «Vastuvõtukriteeriumid»."""
     fields = {clean(label).rstrip(":").strip(): value for label, value in pairs}
     if LABEL_INSTITUTION not in fields:
         raise PageChanged("на странице нет подписи «Õppeasutus» — это не страница конкурса или она на другом языке")
@@ -201,6 +229,8 @@ def parse_page(title: str, pairs: list[list[str]]) -> dict:
         "location": parse_location(fields.get(LABEL_LOCATION, "")),
         "starts_on": parse_date(fields.get(LABEL_STARTS, "")),
         "funding": parse_funding(fields.get(LABEL_FUNDING, "")),
+        "criteria_text": parse_criteria(criteria),
+        "info_url": parse_info_url(info_url),
     }
 
 
@@ -289,7 +319,19 @@ Rohkem infot: Õppemaksu tasutakse semestri ehk poolaasta kaupa."""
         "location": "Tartu",
         "starts_on": "2026-09-01",
         "funding": [{"load": "full", "paid": False, "prices": []}],
+        "criteria_text": None,
+        "info_url": None,
     }, page
+    # условия конкурса: строки списка и абзацев, неразрывные пробелы
+    with_criteria = parse_page(
+        "Informaatika (BSc)",
+        [["Õppeasutus:", "Tartu Ülikool"]],
+        "Riigieksamid\neesti keele riigieksam 40%\xa0\n\n  matemaatika riigieksam 60%\nVÕI\n",
+        " https://ut.ee/et/oppekavad/informaatika ",
+    )
+    assert with_criteria["criteria_text"] == "Riigieksamid\neesti keele riigieksam 40%\nmatemaatika riigieksam 60%\nVÕI"
+    assert with_criteria["info_url"] == "https://ut.ee/et/oppekavad/informaatika"
+    assert parse_info_url("javascript:void(0)") is None and parse_info_url("") is None
     assert parse_page("X", [["Õppeasutus:", "Tallinna Ülikool"], ["Õppevorm:", "määramata"]])["study_form"] is None
     # нет начала занятий и места — пусто, а не догадка
     bare = parse_page("X", [["Õppeasutus:", "Tartu Ülikool"], ["Õppevorm:", "sessioonõpe"]])
@@ -369,7 +411,7 @@ def main() -> None:
                     gone.append(admission_id)
                     continue
                 data = page.evaluate(EXTRACT_JS)
-                parsed[admission_id] = parse_page(data["title"], data["pairs"])
+                parsed[admission_id] = parse_page(data["title"], data["pairs"], data["criteria"], data["info_url"])
             except Exception as exc:  # noqa: BLE001 — одна страница не останавливает остальные
                 failed.append(f"{admission_id}: {type(exc).__name__}: {str(exc)[:120]}")
             if number % 50 == 0:
@@ -389,6 +431,10 @@ def main() -> None:
     print("место учёбы:", locations.most_common(15))
     print("нагрузка и финансирование:", loads.most_common())
     print(f"с ценой: {priced} | без финансирования на странице: {sum(1 for d in parsed.values() if not d['funding'])}")
+    print(
+        f"с условиями конкурса: {sum(1 for d in parsed.values() if d['criteria_text'])} | "
+        f"со ссылкой на страницу вуза: {sum(1 for d in parsed.values() if d['info_url'])}"
+    )
     for line in failed[:10]:
         print("  не прочитано —", line)
     if limit:
@@ -412,7 +458,15 @@ def main() -> None:
         )
     # Удалённая страница: условия пустые, но отметка о чтении стоит — чтобы
     # не запрашивать её снова при каждом запуске.
-    empty = {"title": None, "study_form": None, "location": None, "starts_on": None, "funding": None}
+    empty = {
+        "title": None,
+        "study_form": None,
+        "location": None,
+        "starts_on": None,
+        "funding": None,
+        "criteria_text": None,
+        "info_url": None,
+    }
     for admission_id in gone:
         execute(
             client.table("ee_admission")
