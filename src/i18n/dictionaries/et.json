@@ -785,7 +785,7 @@
   "privacy": {
     "title": "Privaatsuspoliitika",
     "intro": "Kuidas see sait isikuandmeid töötleb: mida säilitatakse, mida mitte ja millised on andmesubjekti õigused. See tekst on tõlge läti keelest; lahknevuse korral kehtib lätikeelne tekst.",
-    "updated": "Redaktsioon: 10. oktoober 2026",
+    "updated": "Redaktsioon: 15. oktoober 2026",
     "authorityLabel": "Andmekaitse Inspektsioon (aki.ee)",
     "authorityUrl": "https://www.aki.ee",
     "sections": [
@@ -810,8 +810,8 @@
         "id": "visit",
         "title": "Saidi külastamine",
         "body": [
-          "Lehe avamisel registreerib majutusteenuse pakkuja automaatselt tehnilised andmed: IP-aadressi, aja, päritud aadressi ja brauseri tüübi. Seda tehakse selleks, et sait töötaks ja oleks turvaline. Me ei kasuta neid andmeid kellegi tuvastamiseks.",
-          "Alus: meie õigustatud huvi tagada saidi turvalisus ja toimimine (isikuandmete kaitse üldmääruse artikli 6 lõike 1 punkt f). Säilitamise tähtaja määrab teenusepakkuja.",
+          "Lehe avamisel registreerib saidi server automaatselt tehnilised andmed: IP-aadressi, aja, päritud aadressi ja brauseri tüübi. Seda tehakse selleks, et sait töötaks ja oleks turvaline. Me ei kasuta neid andmeid kellegi tuvastamiseks.",
+          "Alus: meie õigustatud huvi tagada saidi turvalisus ja toimimine (isikuandmete kaitse üldmääruse artikli 6 lõike 1 punkt f). Neid kirjeid säilitatakse 14 päeva, seejärel kustutatakse need automaatselt.",
           "Keele (läti, leedu, eesti või inglise) valime esimesel külastusel brauseri keeleseade järgi; seda ei salvestata."
         ]
       },

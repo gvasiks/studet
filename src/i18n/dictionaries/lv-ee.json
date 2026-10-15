@@ -256,8 +256,8 @@
         "id": "visit",
         "title": "Vietnes apmeklējums",
         "body": [
-          "Atverot lapu, hostinga pakalpojuma sniedzējs automātiski reģistrē tehniskos datus: IP adresi, laiku, pieprasīto adresi un pārlūka veidu. To dara, lai vietne darbotos un būtu droša. Mēs šos datus neizmantojam, lai kādu identificētu.",
-          "Pamats: mūsu leģitīmās intereses nodrošināt vietnes drošību un darbību (Vispārīgās datu aizsardzības regulas 6. panta 1. punkta f) apakšpunkts). Glabāšanas termiņu nosaka pakalpojuma sniedzējs.",
+          "Atverot lapu, vietnes serveris automātiski reģistrē tehniskos datus: IP adresi, laiku, pieprasīto adresi un pārlūka veidu. To dara, lai vietne darbotos un būtu droša. Mēs šos datus neizmantojam, lai kādu identificētu.",
+          "Pamats: mūsu leģitīmās intereses nodrošināt vietnes drošību un darbību (Vispārīgās datu aizsardzības regulas 6. panta 1. punkta f) apakšpunkts). Šos ierakstus glabājam 14 dienas, pēc tam tie tiek dzēsti automātiski.",
           "Valodu (latviešu, lietuviešu vai angļu) pirmajā apmeklējumā izvēlamies pēc pārlūka valodas iestatījuma; tas netiek saglabāts."
         ]
       },

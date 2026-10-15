@@ -256,8 +256,8 @@
         "id": "visit",
         "title": "Visiting the site",
         "body": [
-          "When you open a page, our hosting provider automatically records technical data: your IP address, the time, the requested address and the browser type. This is done so the site works and stays secure. We do not use this data to identify anyone.",
-          "Legal basis: our legitimate interest in keeping the site secure and running (General Data Protection Regulation, Article 6(1)(f)). The retention period is set by the provider.",
+          "When you open a page, our web server automatically records technical data: your IP address, the time, the requested address and the browser type. This is done so the site works and stays secure. We do not use this data to identify anyone.",
+          "Legal basis: our legitimate interest in keeping the site secure and running (General Data Protection Regulation, Article 6(1)(f)). These records are kept for 14 days and then deleted automatically.",
           "On a first visit we pick the language (Latvian, Lithuanian or English) from your browser's language setting; this is not stored."
         ]
       },

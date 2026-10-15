@@ -1,0 +1,18 @@
+# Журнал запросов сайта хранится 14 дней (политика конфиденциальности,
+# раздел «visit»; решение владельца 2026-10-15). Положить в
+# /etc/logrotate.d/studypick (deploy/README.md, шаг 6).
+#
+# Раз в день текущий файл переименовывается, хранятся 13 прошлых — вместе с
+# текущим это 14 дней; maxage удаляет и то, что почему-то пережило счёт.
+# copytruncate — Caddy держит файл открытым, переоткрывать его не нужно.
+/var/log/caddy/studypick-access.log {
+    daily
+    rotate 13
+    maxage 14
+    missingok
+    notifempty
+    copytruncate
+    compress
+    delaycompress
+    su caddy caddy
+}

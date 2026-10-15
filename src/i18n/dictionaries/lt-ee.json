@@ -259,8 +259,8 @@
         "id": "visit",
         "title": "Lankymasis svetainėje",
         "body": [
-          "Kai atidarote puslapį, mūsų prieglobos paslaugų teikėjas automatiškai užfiksuoja techninius duomenis: jūsų IP adresą, laiką, prašomą adresą ir naršyklės tipą. Tai daroma tam, kad svetainė veiktų ir būtų saugi. Šių duomenų nenaudojame asmeniui nustatyti.",
-          "Teisinis pagrindas: mūsų teisėtas interesas užtikrinti svetainės saugumą ir veikimą (Bendrojo duomenų apsaugos reglamento 6 straipsnio 1 dalies f punktas). Saugojimo laikotarpį nustato paslaugų teikėjas.",
+          "Kai atidarote puslapį, mūsų svetainės serveris automatiškai užfiksuoja techninius duomenis: jūsų IP adresą, laiką, prašomą adresą ir naršyklės tipą. Tai daroma tam, kad svetainė veiktų ir būtų saugi. Šių duomenų nenaudojame asmeniui nustatyti.",
+          "Teisinis pagrindas: mūsų teisėtas interesas užtikrinti svetainės saugumą ir veikimą (Bendrojo duomenų apsaugos reglamento 6 straipsnio 1 dalies f punktas). Šie įrašai saugomi 14 dienų, po to automatiškai ištrinami.",
           "Pirmą kartą apsilankius kalbą (latvių, lietuvių arba anglų) parenkame pagal jūsų naršyklės kalbos nustatymą; tai nesaugoma."
         ]
       },

@@ -27,6 +27,7 @@
 | Node.js для сайта | `/opt/node24` |
 | Служба | `/etc/systemd/system/studypick.service` |
 | Настройка Caddy | `/etc/caddy/Caddyfile` |
+| Журнал запросов (14 дней) | `/var/log/caddy/studypick-access.log`, удаление — `/etc/logrotate.d/studypick` |
 
 ## Чем жертвуем
 
@@ -128,7 +129,14 @@ curl -s http://127.0.0.1:3000/robots.txt
 ```
 apt install -y caddy
 cp /srv/studypick/app/deploy/Caddyfile /etc/caddy/Caddyfile
+install -d -o caddy -g caddy /var/log/caddy
+cp /srv/studypick/app/deploy/logrotate-studypick /etc/logrotate.d/studypick
 ```
+
+Caddy пишет журнал запросов (IP, время, адрес, браузер) в
+`/var/log/caddy/studypick-access.log`, а `logrotate` раз в день удаляет всё
+старше 14 дней. Этот срок обещан в политике конфиденциальности — не меняйте
+его, не поменяв политику.
 
 Пока домен не указывает на сервер, Caddy не сможет получить сертификат —
 поэтому сначала шаг 7, потом перезапуск Caddy.
@@ -241,6 +249,42 @@ systemctl restart studypick
 | Сборка падает с `Invalid supabaseUrl` | в `/etc/studypick/env` в строке адреса базы стоит не адрес (нет `https://`, перепутаны две строки, кавычки) |
 | Замка нет, сертификат не получен | домен ещё не указывает на сервер: `getent hosts studypick.eu` |
 | Бот перестал работать | выкладка его не трогает; проверьте, что `node -v` по-прежнему `v20…` |
+
+## Журнал запросов на уже работающем сервере (с 2026-10-15)
+
+Если сайт выложен раньше 15 октября 2026 года, журнала запросов на сервере
+нет, а политика конфиденциальности теперь обещает его с хранением 14 дней.
+**Не копируйте Caddyfile из репозитория поверх своего** — в своём у вас хеш
+пароля. Добавьте блок руками:
+
+```
+nano /etc/caddy/Caddyfile
+```
+
+Внутрь блока `studypick.eu { … }`, сразу после строки `reverse_proxy 127.0.0.1:3000`:
+
+```
+	log {
+		output file /var/log/caddy/studypick-access.log {
+			roll_disabled
+		}
+	}
+```
+
+Затем:
+
+```
+install -d -o caddy -g caddy /var/log/caddy
+cp /srv/studypick/app/deploy/logrotate-studypick /etc/logrotate.d/studypick
+caddy validate --config /etc/caddy/Caddyfile
+systemctl reload caddy
+logrotate --debug /etc/logrotate.d/studypick
+```
+
+`caddy validate` должен закончиться словом `Valid configuration`;
+`logrotate --debug` ничего не меняет, только показывает, что будет делать.
+Проверка: откройте сайт и выполните `tail -n 1 /var/log/caddy/studypick-access.log` —
+появится строка о запросе.
 
 ## Литва на закрытой выкладке
 
