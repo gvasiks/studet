@@ -1,0 +1,59 @@
+name: Scrape Estonia
+
+# Эстонские данные собираются отдельно от латвийского и литовского сбора
+# (docs/PLAN-ESTONIA.md, фаза 12): сбой одного источника не должен красить
+# прогоны других стран. Все шаги — одной командой pipeline/src/ee_refresh.py,
+# по порядку и с остановкой на первом сбое:
+#   каталог и направления с государственного портала (api.hp.edu.ee),
+#   сроки приёма, условия и правила конкурса со страниц SAIS и ut.ee,
+#   город по месту учёбы.
+#
+# Ритм: раз в месяц, а в сезон приёма (март–август) — ещё и раз в неделю:
+# новые конкурсы появляются в SAIS по мере открытия, и у открытых конкурсов
+# условия перечитываются при каждом прогоне. Прошедшие конкурсы не
+# перечитываются, поэтому обычный прогон — несколько минут.
+#
+# Упавший прогон базу не портит: каждый шаг сверяет то, что прочитал, и при
+# заметном расхождении ничего не пишет. Если данные нужны сейчас — сбор с
+# компьютера владельца, в папке pipeline:
+#     .venv\Scripts\python.exe src\ee_refresh.py
+# Если данные не обновлялись 45 дней, об этом напомнит estonia-health.yml.
+on:
+  schedule:
+    # 4-е число каждого месяца, 03:00 UTC — ночь, не 2-е (NIID), не 3-е
+    # (Литва) и не понедельник латвийского сбора
+    - cron: "0 3 4 * *"
+    # каждый вторник в марте–августе — сезон приёма
+    - cron: "0 3 * 3-8 2"
+  workflow_dispatch: {}
+
+# Права токена GitHub заданы явно: без этой строки они зависят от настроек
+# репозитория и могут оказаться шире нужного (аудит 2026-10-04).
+permissions:
+  contents: read
+
+jobs:
+  scrape:
+    runs-on: ubuntu-latest
+    # обычный прогон — минуты; полное перечитывание SAIS (около пятисот
+    # страниц с паузами) — около двадцати минут
+    timeout-minutes: 60
+    defaults:
+      run:
+        working-directory: pipeline
+    env:
+      SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+      SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+      SCRAPER_CONTACT: ${{ vars.SCRAPER_CONTACT }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+
+      - run: pip install -r requirements.txt
+      - run: playwright install --with-deps chromium
+
+      - name: Каталог, сроки, условия и правила конкурса
+        run: python src/ee_refresh.py
