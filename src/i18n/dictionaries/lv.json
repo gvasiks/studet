@@ -438,7 +438,36 @@
       "year": "gadā",
       "credit": "par kredītpunktu"
     },
-    "pastNote": "Tie ir iepriekšējās uzņemšanas nosacījumi; jaunā uzņemšanā tie var atšķirties."
+    "pastNote": "Tie ir iepriekšējās uzņemšanas nosacījumi; jaunā uzņemšanā tie var atšķirties.",
+    "rule": {
+      "scoreTitle": "No kā veidojas konkursa punkti",
+      "scoreIntro": "Katru rezultātu 0–100 punktu skalā reizina ar tā daļu, reizinājumus saskaita.",
+      "variantsIntro": "Ja variantu ir vairāki, tiek ņemts labākais.",
+      "or": "vai",
+      "exams": {
+        "estonian": "igauņu valodas vai igauņu valodas kā otrās valodas valsts eksāmens",
+        "math": "matemātikas valsts eksāmens"
+      },
+      "applyMin": "Lai pieteiktos, nepieciešami vismaz {points} punkti.",
+      "guaranteeMin": "Vietu garantē {points} punktu sliekšņa pārsniegšana; pārējās vietas aizpilda pēc konkursa saraksta.",
+      "wideMathBonus": "Plašās matemātikas eksāmena rezultātam pieskaita {points} punktus (kopā ne vairāk kā 100).",
+      "medalBonus": "Par zelta vai sudraba medaļu vai profesionālās vidējās izglītības diplomu ar izcilību pieskaita {points} punktus.",
+      "english": "Nepieciešamas angļu valodas zināšanas vismaz {level} līmenī.",
+      "thresholdsTitle": "Minimālie rezultāti",
+      "applySet": "Lai pieteiktos",
+      "guaranteeSet": "Vietu garantē",
+      "subjects": {
+        "math": "matemātikas valsts eksāmens",
+        "estonian": "igauņu valodas valsts eksāmens",
+        "estonianSecond": "igauņu valoda kā otrā valoda",
+        "english": "angļu valoda"
+      },
+      "atLeast": "vismaz {value}",
+      "mathNote": "Augstskola raksta „{quote}” — plašās matemātikas eksāmens.",
+      "places": "Vietu skaits: {places}.",
+      "ranking": "Ja garantēto rezultātu sasniegušo ir mazāk nekā vietu, pārējās vietas aizpilda pēc konkursa saraksta starp tiem, kas sasnieguši pieteikšanās rezultātus.",
+      "onlyThreshold": "Vietu piedāvā visiem, kas sasniedz šos rezultātus; zemākiem rezultātiem vietu nepiedāvā."
+    }
   },
   "ltStats": {
     "title": "{year}. gada pamatuzņemšanas skaitļi",

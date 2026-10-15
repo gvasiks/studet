@@ -10,6 +10,7 @@ import {
   type EeAdmissionState,
 } from "@/lib/ee-admission";
 import { interpolate } from "@/lib/outcomes";
+import { EeAdmissionRule } from "@/components/EeAdmissionRule";
 import { sourceHost } from "@/lib/programme-details";
 
 // Условия конкурса на карточке эстонской программы: форма обучения, место,
@@ -22,6 +23,9 @@ import { sourceHost } from "@/lib/programme-details";
 // и блок так и говорит. Название конкурса показано, потому что конкурс
 // бывает частным случаем программы — дополнительный набор, одна тема
 // докторантуры, одна из форм обучения.
+//
+// Правило конкурса (доли экзаменов, пороги) — EeAdmissionRule, пока у
+// бакалавриата Тартуского университета и TalTech.
 //
 // Значения, которые SAIS пишет по-эстонски (название конкурса, место,
 // незнакомая форма обучения), помечены языком (WCAG 3.1.2). Серверный
@@ -119,6 +123,15 @@ export function EeAdmissionConditions({
           </div>
         )}
       </dl>
+      {admission.rule && (
+        <EeAdmissionRule
+          dict={dict}
+          language={language}
+          rule={admission.rule}
+          sourceUrl={admission.ruleSourceUrl}
+          extractedAt={admission.ruleExtractedAt}
+        />
+      )}
       {state === "past" && <p className="mt-4 text-sm leading-relaxed text-zinc-600">{text.pastNote}</p>}
       <p className="mt-2 text-xs leading-relaxed text-zinc-500">
         {interpolate(dict.programme.detailsSource, {

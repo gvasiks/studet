@@ -1,18 +1,20 @@
 import { cache } from "react";
 import { supabase } from "@/lib/supabase";
 import { parseFunding, type EeAdmission } from "@/lib/ee-admission";
+import { parseRule } from "@/lib/ee-rule";
 import { remember } from "@/lib/server-memo";
 
 // Последний конкурс эстонской программы (таблица ee_admission). Сроки и
 // ссылку пишет pipeline/src/ee_load_admissions.py из данных государственного
-// портала, условия конкурса — ee_load_admission_details.py со страницы SAIS.
+// портала, условия конкурса — ee_load_admission_details.py со страницы SAIS,
+// правило конкурса — ee_load_rules.py.
 // Действующий он или прошлый, решает ee-admission.ts по сроку.
 
 export const getEeAdmission = cache(async (programmeId: string): Promise<EeAdmission | null> => {
   const { data, error } = await supabase
     .from("ee_admission")
     .select(
-      "sais_url, opens_at, closes_at, source_url, extracted_at, title, study_form, location, starts_on, funding, details_fetched_at",
+      "sais_url, opens_at, closes_at, source_url, extracted_at, title, study_form, location, starts_on, funding, details_fetched_at, rule, rule_source_url, rule_extracted_at",
     )
     .eq("programme_id", programmeId)
     .maybeSingle();
@@ -31,6 +33,9 @@ export const getEeAdmission = cache(async (programmeId: string): Promise<EeAdmis
     startsOn: data.starts_on,
     funding: parseFunding(data.funding),
     detailsFetchedAt: data.details_fetched_at,
+    rule: parseRule(data.rule),
+    ruleSourceUrl: data.rule_source_url,
+    ruleExtractedAt: data.rule_extracted_at,
   };
 });
 

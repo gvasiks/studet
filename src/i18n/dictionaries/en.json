@@ -438,7 +438,36 @@
       "year": "per year",
       "credit": "per credit point"
     },
-    "pastNote": "These are the conditions of the previous admission round; they may differ in a new round."
+    "pastNote": "These are the conditions of the previous admission round; they may differ in a new round.",
+    "rule": {
+      "scoreTitle": "How the competition score is made up",
+      "scoreIntro": "Each result on a 0–100 scale is multiplied by its share, and the products are added up.",
+      "variantsIntro": "Where there are several options, the best one counts.",
+      "or": "or",
+      "exams": {
+        "estonian": "state exam in Estonian or Estonian as a second language",
+        "math": "state exam in mathematics"
+      },
+      "applyMin": "At least {points} points are needed to apply.",
+      "guaranteeMin": "A place is guaranteed above the threshold of {points} points; the remaining places are filled by ranking.",
+      "wideMathBonus": "{points} points are added to the result of the advanced mathematics exam (up to 100 in total).",
+      "medalBonus": "A gold or silver medal or a vocational diploma with distinction adds {points} points.",
+      "english": "English at level {level} or higher is required.",
+      "thresholdsTitle": "Minimum results",
+      "applySet": "To apply",
+      "guaranteeSet": "Guaranteed place",
+      "subjects": {
+        "math": "state exam in mathematics",
+        "estonian": "state exam in Estonian",
+        "estonianSecond": "Estonian as a second language",
+        "english": "English"
+      },
+      "atLeast": "at least {value}",
+      "mathNote": "The university writes “{quote}”, meaning the advanced mathematics exam.",
+      "places": "Places: {places}.",
+      "ranking": "If fewer applicants reach the guaranteed-place results than there are places, the remaining places are filled by ranking among those who reached the results needed to apply.",
+      "onlyThreshold": "Everyone who reaches these results is offered a place; no places are offered below them."
+    }
   },
   "ltStats": {
     "title": "Main admission in {year}: the numbers",

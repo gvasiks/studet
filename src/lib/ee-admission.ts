@@ -11,6 +11,9 @@
 // цена) читаются со страницы конкурса в SAIS отдельным загрузчиком
 // (pipeline/src/ee_load_admission_details.py). Их может не быть: страница
 // ещё не прочитана или SAIS её уже удалил (так с конкурсами старше года).
+// Правило конкурса (доли экзаменов, пороги) — ee-rule.ts.
+
+import type { EeRule } from "./ee-rule";
 
 export type EeLoad = "full" | "part" | "unspecified";
 export type EePeriod = "semester" | "year" | "credit" | "other";
@@ -49,6 +52,11 @@ export type EeAdmission = {
   funding: EeFunding[];
   /** Когда страница конкурса была прочитана. */
   detailsFetchedAt: string | null;
+  /** Правило конкурса; null — не разобрано (ee-rule.ts). */
+  rule: EeRule | null;
+  /** Страница вуза, откуда взяты пороги (ut.ee); null — всё правило со страницы SAIS. */
+  ruleSourceUrl: string | null;
+  ruleExtractedAt: string | null;
 };
 
 // current — подача открыта или ещё впереди; past — срок прошёл; undated —

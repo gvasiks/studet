@@ -438,7 +438,36 @@
       "year": "per metus",
       "credit": "už kreditą"
     },
-    "pastNote": "Tai ankstesnio priėmimo sąlygos; naujame priėmime jos gali skirtis."
+    "pastNote": "Tai ankstesnio priėmimo sąlygos; naujame priėmime jos gali skirtis.",
+    "rule": {
+      "scoreTitle": "Iš ko susideda konkursinis balas",
+      "scoreIntro": "Kiekvienas rezultatas 0–100 balų skalėje dauginamas iš savo dalies, sandaugos sudedamos.",
+      "variantsIntro": "Jei variantų yra keli, įskaitomas geriausias.",
+      "or": "arba",
+      "exams": {
+        "estonian": "estų kalbos arba estų kaip antrosios kalbos valstybinis egzaminas",
+        "math": "matematikos valstybinis egzaminas"
+      },
+      "applyMin": "Prašymui pateikti reikia ne mažiau kaip {points} balų.",
+      "guaranteeMin": "Vietą garantuoja {points} balų slenksčio viršijimas; likusios vietos skiriamos pagal eilę.",
+      "wideMathBonus": "Prie išplėstinio matematikos egzamino rezultato pridedama {points} balų (iš viso ne daugiau kaip 100).",
+      "medalBonus": "Už aukso ar sidabro medalį arba profesinio vidurinio išsilavinimo diplomą su pagyrimu pridedama {points} balų.",
+      "english": "Reikia mokėti anglų kalbą ne žemesniu kaip {level} lygiu.",
+      "thresholdsTitle": "Minimalūs rezultatai",
+      "applySet": "Prašymui pateikti",
+      "guaranteeSet": "Vietą garantuoja",
+      "subjects": {
+        "math": "matematikos valstybinis egzaminas",
+        "estonian": "estų kalbos valstybinis egzaminas",
+        "estonianSecond": "estų kaip antroji kalba",
+        "english": "anglų kalba"
+      },
+      "atLeast": "ne mažiau kaip {value}",
+      "mathNote": "Aukštoji mokykla rašo „{quote}“ — tai išplėstinis matematikos egzaminas.",
+      "places": "Vietų skaičius: {places}.",
+      "ranking": "Jei garantuotus rezultatus pasiekusiųjų yra mažiau nei vietų, likusios vietos skiriamos pagal eilę tarp pasiekusiųjų prašymui pateikti reikalingus rezultatus.",
+      "onlyThreshold": "Vieta siūloma visiems, pasiekusiems šiuos rezultatus; žemesniems rezultatams vietų nesiūloma."
+    }
   },
   "ltStats": {
     "title": "{year} m. pagrindinio priėmimo skaičiai",

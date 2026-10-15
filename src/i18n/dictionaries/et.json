@@ -438,7 +438,36 @@
       "year": "aastas",
       "credit": "ainepunkti eest"
     },
-    "pastNote": "Need on eelmise vastuvõtu tingimused; uues vastuvõtus võivad need erineda."
+    "pastNote": "Need on eelmise vastuvõtu tingimused; uues vastuvõtus võivad need erineda.",
+    "rule": {
+      "scoreTitle": "Kuidas kujuneb konkursipunktide summa",
+      "scoreIntro": "Iga tulemus 100-punktisel skaalal korrutatakse selle osakaaluga ja korrutised liidetakse.",
+      "variantsIntro": "Mitme võimaluse korral arvestatakse parimat.",
+      "or": "või",
+      "exams": {
+        "estonian": "eesti keele või eesti keele teise keelena riigieksam",
+        "math": "matemaatika riigieksam"
+      },
+      "applyMin": "Kandideerimiseks on vaja vähemalt {points} punkti.",
+      "guaranteeMin": "Vastuvõtu tagab {points}-punktise lävendi ületamine; ülejäänud kohad täidetakse pingerea alusel.",
+      "wideMathBonus": "Laia matemaatika riigieksami tulemusele lisatakse {points} punkti (kokku kuni 100).",
+      "medalBonus": "Kuld- või hõbemedaliga või kutsekeskhariduse kiitusega lõpetamise eest lisatakse {points} punkti.",
+      "english": "Nõutav on inglise keele oskus vähemalt tasemel {level}.",
+      "thresholdsTitle": "Nõutavad tulemused",
+      "applySet": "Kandideerimiseks",
+      "guaranteeSet": "Õppekoha tagavad",
+      "subjects": {
+        "math": "matemaatika riigieksam",
+        "estonian": "eesti keele riigieksam",
+        "estonianSecond": "eesti keel teise keelena",
+        "english": "inglise keel"
+      },
+      "atLeast": "vähemalt {value}",
+      "mathNote": "Kõrgkool kirjutab „{quote}“ — see tähendab laia matemaatikat.",
+      "places": "Õppekohti: {places}.",
+      "ranking": "Kui õppekoha tagava tulemusega kandidaate on vähem kui kohti, täidetakse ülejäänud kohad pingerea alusel kandideerimiseks nõutava tulemuse saavutanute seas.",
+      "onlyThreshold": "Õppekoha pakkumise saavad kõik, kes need tulemused saavutavad; madalamate tulemustega kohta ei pakuta."
+    }
   },
   "ltStats": {
     "title": "{year}. aasta põhivastuvõtu arvud",
