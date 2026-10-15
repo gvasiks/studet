@@ -151,7 +151,8 @@ def main() -> None:
                     response = page.goto(url, wait_until="domcontentloaded", timeout=45000)
                     if response is None or response.status != 200:
                         raise RuntimeError(f"ответ {response.status if response else 'пустой'}")
-                    text = page.inner_text("body")
+                    # не inner_text: условия на ut.ee в свёрнутом разделе
+                    text = ee_rules.text_of_html(page.content())
                     if url == UT_POINTS_URL:
                         medal_bonus = ee_rules.parse_ut_medal(text)
                     else:

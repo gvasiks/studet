@@ -39,6 +39,7 @@ TalTech (taltech) — пороги, балла нет: минимумы по г�
 
 from __future__ import annotations
 
+import html
 import itertools
 import re
 
@@ -53,6 +54,14 @@ def lines_of(text: str) -> list[str]:
         if line:
             result.append(line)
     return result
+
+
+def text_of_html(markup: str) -> str:
+    """Текст страницы из HTML, включая свёрнутые разделы: на ut.ee условия
+    приёма спрятаны в раскрывающемся блоке, и браузерный innerText их не
+    отдаёт. Скрипты и стили выбрасываются, теги заменяются пробелом."""
+    markup = re.sub(r"<(script|style)\b.*?</\1>", " ", markup or "", flags=re.S | re.IGNORECASE)
+    return re.sub(r"\s+", " ", html.unescape(re.sub(r"<[^>]+>", " ", markup))).strip()
 
 
 # ---------------------------------------------------------------- Тартуский университет
@@ -120,7 +129,8 @@ def parse_ut_criteria(text: str) -> dict | None:
     return {"variants": variants, "requirements": requirements}
 
 
-_GUARANTEE = re.compile(r"Vastuvõtu tagab (\d+)[- ]punktise lävendi ületamine")
+# пробел вокруг дефиса — от снятой разметки: «<strong>80</strong>-punktise»
+_GUARANTEE = re.compile(r"Vastuvõtu tagab (\d+)\s*-?\s*punktise lävendi ületamine")
 _APPLY = re.compile(r"Kandideerimiseks peab punktisumma olema vähemalt (\d+)")
 _WIDE_MATH = re.compile(r"lisame laia matemaatika riigieksami tulemusele (\d+) punkti")
 _MEDAL = re.compile(r"Lisapunktid medali ja kiitusega lõpetanule\s*(\d+) lisapunkti")
@@ -302,6 +312,16 @@ def _selftest() -> None:
     assert parse_ut_page("Vastuvõtu tagab 93-punktise lävendi ületamine. … Vastuvõtu tagab 85-punktise lävendi ületamine.")["guarantee_min"] is None
     assert parse_ut_medal("Lisapunktid medali ja kiitusega lõpetanule\n3 lisapunkti\nantakse") == 3
     assert parse_ut_medal("") is None
+    # свёрнутый раздел и разметка внутри фразы
+    folded = (
+        '<button>Vastuvõtutingimused</button><div hidden><p>Vastuvõtu tagab <strong>80</strong>-punktise '
+        "lävendi ületamine.</p><p>Kandideerimiseks peab punktisumma olema vähemalt 66.</p></div>"
+        "<script>var x = 'Vastuvõtu tagab 10-punktise lävendi ületamine';</script>"
+        "<h3>Lisapunktid medali ja kiitusega lõpetanule</h3><p><strong>3 lisapunkti</strong>&nbsp;antakse</p>"
+    )
+    assert parse_ut_page(text_of_html(folded))["guarantee_min"] == 80
+    assert parse_ut_page(text_of_html(folded))["apply_min"] == 66
+    assert parse_ut_medal(text_of_html(folded)) == 3
 
     logistics = taltech_rule(
         "Kandideerimiseks nõutavad tulemused: (laia) matemaatika riigieksam vähemalt 35 ja eesti keele oma vähemalt 35 "

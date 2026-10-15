@@ -91,6 +91,10 @@ const LT_ROUTES = [
   // конкурс с двумя ценами по семестрам
   "/lv-ee/programmes/pallas/maal",
   "/en-ee/programmes/ebs/ettevotlus-ja-arijuhtimine",
+  // правило конкурса (с 2026-10-15): пороги TalTech с рейтингом и только
+  // порог (балл ТÜ — на /lv-ee/programmes/ut/informaatika-4 выше)
+  "/en-ee/programmes/taltech/informaatika-ja-tehisintellekt",
+  "/et/programmes/taltech/riistvara-arendus-ja-programmeerimine",
   "/et/survey",
   "/et-lv",
   "/et-lv/programmes",
