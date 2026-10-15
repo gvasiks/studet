@@ -1,7 +1,7 @@
-"""Эстония: правило конкурса из текста условий SAIS — пока у бакалавриата и
-цельного обучения Тартуского университета и TalTech (docs/PLAN-ESTONIA.md,
-раздел 9; магистратуру разборщик тоже понял бы, но формулировки её страниц
-не проверялись).
+"""Эстония: правило конкурса из текста условий SAIS — пока у бакалавриата,
+цельного и прикладного высшего обучения Тартуского университета и TalTech
+(docs/PLAN-ESTONIA.md, раздел 9; магистратуру разборщик тоже понял бы, но
+формулировки её страниц не проверялись).
 
 Текст условий («Vastuvõtukriteeriumid») и ссылку на страницу программы
 сохраняет ee_load_admission_details.py; здесь он разбирается (ee_rules.py)
@@ -49,7 +49,7 @@ import ee_rules
 UT_HOSTS = {"ut.ee", "www.ut.ee"}
 UT_POINTS_URL = "https://ut.ee/et/sisu/punktisumma-ja-pingeread"
 SUPPORTED = {"ut", "taltech"}
-LEVELS = {"bachelor", "integrated"}
+LEVELS = {"bachelor", "integrated", "college"}
 
 
 def is_ut_page(url: str | None) -> bool:
@@ -131,7 +131,7 @@ def main() -> None:
         for admission_id, row in admissions.items()
         if "--all" in args or row["rule_extracted_at"] is None or (row["closes_at"] or "") >= now
     }
-    print(f"конкурсов бакалавриата ТÜ и TalTech с условиями: {len(admissions)} | к разбору: {len(todo)}")
+    print(f"конкурсов первой ступени ТÜ и TalTech с условиями: {len(admissions)} | к разбору: {len(todo)}")
 
     ut_urls = sorted({row["info_url"] for row in todo.values() if row["slug"] == "ut" and is_ut_page(row["info_url"])})
     forms_by_url: dict[str, set] = {}
