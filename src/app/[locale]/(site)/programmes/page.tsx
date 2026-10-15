@@ -16,6 +16,7 @@ import { buildCatalogView } from "@/lib/catalog-view";
 import { CatalogForm } from "./CatalogForm";
 import { ProgrammeCard } from "@/components/ProgrammeCard";
 import { FilterSidebar, LevelTabs, LoadMore, SearchAndSort, SurveyCard } from "./CatalogControls";
+import { formatDate } from "@/lib/dates";
 
 // Каталог обновляет Python-конвейер напрямую в базе, мимо Next.js —
 // без этого страница закаменеет на состоянии последней сборки. Сами данные
@@ -168,7 +169,7 @@ export default async function ProgrammesPage({
                         eeClosesAt
                           ? `${dict.programme.deadlinesCloses} ${tallinnDate(eeClosesAt, languageOf(locale))}`
                           : nextRound
-                            ? `${dict.programme.deadlinesCloses} ${new Date(nextRound.closesOn!).toLocaleDateString(languageOf(locale))}`
+                            ? `${dict.programme.deadlinesCloses} ${formatDate(nextRound.closesOn!, languageOf(locale))}`
                             : null
                       }
                     />

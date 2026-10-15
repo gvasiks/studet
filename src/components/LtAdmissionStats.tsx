@@ -3,6 +3,7 @@ import type { Dictionary } from "@/i18n/dictionaries";
 import { httpUrl } from "@/lib/application-channel";
 import type { LtAdmissionYear } from "@/lib/lt-admission-stats";
 import { interpolate } from "@/lib/outcomes";
+import { formatDate } from "@/lib/dates";
 
 // Цифры прошлого приёма на карточке литовской программы. Только факты о
 // прошедшем приёме: сколько раз программу внесли в заявление, сколько из
@@ -45,7 +46,7 @@ export function LtAdmissionStats({
       <p className="mt-2 text-sm leading-relaxed text-zinc-600">{text.caveat}</p>
       {/* Дата и источник рядом с числами — правило 5. */}
       <p className="mt-2 text-xs leading-relaxed text-zinc-500">
-        {interpolate(text.source, { date: new Date(stats.extractedAt).toLocaleDateString(language) })}
+        {interpolate(text.source, { date: formatDate(stats.extractedAt, language) })}
         {sourceUrl && (
           <>
             {" "}

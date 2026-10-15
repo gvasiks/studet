@@ -15,6 +15,7 @@ import {
 } from "@/lib/formula";
 import { interpolate } from "@/lib/outcomes";
 import { subjectLabel, termLabel } from "@/lib/term-labels";
+import { formatDate } from "@/lib/dates";
 
 const LEVELS: ExamLevel[] = ["augstakais", "optimalais", "vispaarigais"];
 
@@ -218,7 +219,7 @@ export function CalculatorForm({
 
       <p className="mt-6 rounded-xl bg-amber-50 px-4 py-3 text-sm text-amber-900">
         {verifiedAt
-          ? `${dict.catalog.verifiedPrefix} ${new Date(verifiedAt).toLocaleDateString(languageOf(locale))}`
+          ? `${dict.catalog.verifiedPrefix} ${formatDate(verifiedAt, languageOf(locale))}`
           : dict.catalog.unverifiedLabel}
         {sourceUrl && (
           <>

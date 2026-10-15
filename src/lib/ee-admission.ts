@@ -13,6 +13,7 @@
 // ещё не прочитана или SAIS её уже удалил (так с конкурсами старше года).
 // Правило конкурса (доли экзаменов, пороги) — ee-rule.ts.
 
+import { formatDate } from "./dates";
 import type { EeRule } from "./ee-rule";
 
 export type EeLoad = "full" | "part" | "unspecified";
@@ -72,13 +73,13 @@ export function admissionState(admission: Pick<EeAdmission, "closesAt">, now: Da
 // полночь и закрывается в 23:59. Сервер сайта живёт по UTC, и без часового
 // пояса начало «5 октября 00:00» показалось бы как 4 октября.
 export function tallinnDate(moment: string, language: string): string {
-  return new Date(moment).toLocaleDateString(language, { timeZone: "Europe/Tallinn" });
+  return formatDate(moment, language, "Europe/Tallinn");
 }
 
 // Дата без времени («2026-09-01») — день как записан, без сдвига на часовой
 // пояс сервера или посетителя.
 export function plainDate(day: string, language: string): string {
-  return new Date(`${day.slice(0, 10)}T00:00:00Z`).toLocaleDateString(language, { timeZone: "UTC" });
+  return formatDate(`${day.slice(0, 10)}T00:00:00Z`, language, "UTC");
 }
 
 // Формы обучения, для которых в словарях есть перевод. Закрытого списка у

@@ -3,6 +3,7 @@ import type { Dictionary } from "@/i18n/dictionaries";
 import { httpUrl } from "@/lib/application-channel";
 import type { LtFieldOutcome as Outcome } from "@/lib/lt-field-outcome-queries";
 import { interpolate } from "@/lib/outcomes";
+import { formatDate } from "@/lib/dates";
 
 // «Что стало с выпускниками» на карточке литовской программы. Показатели —
 // по направлению и ступени по всей стране (так их публикует министерство),
@@ -44,7 +45,7 @@ export function LtFieldOutcome({
       <p className="mt-3 text-xs leading-relaxed text-zinc-500">{text.caveat}</p>
       {/* Дата и источник рядом с числами — правило 5. */}
       <p className="mt-1 text-xs leading-relaxed text-zinc-500">
-        {interpolate(text.source, { date: new Date(outcome.publishedOn).toLocaleDateString(language) })}
+        {interpolate(text.source, { date: formatDate(outcome.publishedOn, language) })}
         {sourceUrl && (
           <>
             {" "}

@@ -7,6 +7,7 @@ import { isPipelineStale } from "@/lib/pipeline-health";
 import { getPipelineHealth } from "@/lib/pipeline-health-queries";
 import { getVerificationHealth, getVerificationQueue, type VerificationQueueItem } from "@/lib/verification-queue";
 import { ArrowRightIcon, CheckIcon, ClockIcon, InfoIcon } from "@/components/icons";
+import { formatDate } from "@/lib/dates";
 
 // Данные меняются с каждым запуском конвейера — как и /programmes,
 // страница не может закаменеть на состоянии последней сборки.
@@ -197,11 +198,11 @@ export default async function VerificationPage({ params }: PageProps<"/[locale]/
                         <p className="mt-1 flex flex-wrap items-center gap-x-2 gap-y-1 text-xs text-zinc-500">
                           {item.programmeName && <span>{item.universityName}</span>}
                           <span className="tabular-nums">
-                            {new Date(item.collectedAt).toLocaleDateString(languageOf(locale))}
+                            {formatDate(item.collectedAt, languageOf(locale))}
                           </span>
                           {item.sourceDocDate && (
                             <span className="tabular-nums">
-                              {new Date(item.sourceDocDate).toLocaleDateString(languageOf(locale))}
+                              {formatDate(item.sourceDocDate, languageOf(locale))}
                             </span>
                           )}
                         </p>
@@ -255,7 +256,7 @@ export default async function VerificationPage({ params }: PageProps<"/[locale]/
                 <p className="mt-1 flex flex-wrap items-center gap-x-2 gap-y-1 text-xs text-zinc-500">
                   <span>{item.universityName}</span>
                   {item.disputedAt && (
-                    <span className="tabular-nums">{new Date(item.disputedAt).toLocaleDateString(languageOf(locale))}</span>
+                    <span className="tabular-nums">{formatDate(item.disputedAt, languageOf(locale))}</span>
                   )}
                 </p>
                 {/* disputed_reason больше не приходит через это (анонимно читаемое)

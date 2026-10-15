@@ -8,6 +8,7 @@ import { LtScoreBreakdown } from "@/components/LtScoreBreakdown";
 import { parsePercent } from "@/lib/exam-input";
 import { ltInputSubjects, ltScore, MIN_COUNTED_SCORE, type LtComponent, type LtExams } from "@/lib/lt-score";
 import { interpolate } from "@/lib/outcomes";
+import { formatDate } from "@/lib/dates";
 
 // Страница официального калькулятора LAMA BPO — туда ведём за
 // дополнительными баллами и за окончательным расчётом.
@@ -144,7 +145,7 @@ export function LtCalculatorForm({
       </p>
       <p className="mt-4 text-xs leading-relaxed text-zinc-500">
         {interpolate(text.rulesNote, { year: String(admissionYear) })}{" "}
-        {interpolate(text.checkedNote, { date: new Date(checkedAt).toLocaleDateString(language) })}{" "}
+        {interpolate(text.checkedNote, { date: formatDate(checkedAt, language) })}{" "}
         <a href={sourceUrl} target="_blank" rel="noopener noreferrer" className="underline">
           {text.sourceLink}
         </a>

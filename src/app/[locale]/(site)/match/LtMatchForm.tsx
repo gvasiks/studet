@@ -12,6 +12,7 @@ import { ltInputSubjects, ltScore, MIN_COUNTED_SCORE, type LtExams, type LtScore
 import type { LtMatchGroup, LtMatchProgramme } from "@/lib/lt-score-queries";
 import { enumLabel } from "@/lib/names";
 import { interpolate } from "@/lib/outcomes";
+import { formatDate } from "@/lib/dates";
 
 // Официальные страницы LAMA BPO: калькулятор (дополнительные баллы и
 // окончательный расчёт) и объявление о порядке приёма (минимальные требования).
@@ -323,7 +324,7 @@ export function LtMatchForm({
         {withoutCalculator > 0 && <p>{interpolate(text.withoutCalculator, { count: withoutCalculator })}</p>}
         <p className="text-xs text-zinc-600">
           {admissionYear !== null && interpolate(calculator.rulesNote, { year: String(admissionYear) })}{" "}
-          {checkedAt && interpolate(calculator.checkedNote, { date: new Date(checkedAt).toLocaleDateString(language) })}{" "}
+          {checkedAt && interpolate(calculator.checkedNote, { date: formatDate(checkedAt, language) })}{" "}
           {sourceUrl && (
             <a href={sourceUrl} target="_blank" rel="noopener noreferrer" className="underline">
               {calculator.sourceLink}

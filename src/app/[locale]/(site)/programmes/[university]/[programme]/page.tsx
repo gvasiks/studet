@@ -30,6 +30,7 @@ import { LtFieldOutcome } from "@/components/LtFieldOutcome";
 import { EeAdmissionConditions } from "@/components/EeAdmissionConditions";
 import { ReportErrorLink } from "@/components/ReportErrorLink";
 import { buildAlternates, SITE_URL } from "@/lib/site";
+import { formatDate } from "@/lib/dates";
 
 type Params = PageProps<"/[locale]/programmes/[university]/[programme]">["params"];
 
@@ -258,7 +259,7 @@ export default async function ProgrammePage({ params }: { params: Params }) {
           <Fact label={dict.programme.budgetPlaces} value={String(record.budget_places)} />
         )}
         {accreditation && (
-          <Fact label={dict.programme.accreditation} value={new Date(accreditation).toLocaleDateString(language)} />
+          <Fact label={dict.programme.accreditation} value={formatDate(accreditation, language)} />
         )}
       </dl>
 
@@ -311,7 +312,7 @@ export default async function ProgrammePage({ params }: { params: Params }) {
               } `}
             {interpolate(dict.programme.detailsSource, {
               source: details.sourceHost ?? "",
-              date: details.extractedAt ? new Date(details.extractedAt).toLocaleDateString(language) : "",
+              date: details.extractedAt ? formatDate(details.extractedAt, language) : "",
             })}
             {details.sourceUrl && (
               <>
@@ -391,9 +392,9 @@ export default async function ProgrammePage({ params }: { params: Params }) {
                 {(round.opensOn || round.closesOn) && (
                   <>
                     {": "}
-                    {round.opensOn && `${dict.programme.deadlinesOpens} ${new Date(round.opensOn).toLocaleDateString(language)}`}
+                    {round.opensOn && `${dict.programme.deadlinesOpens} ${formatDate(round.opensOn, language)}`}
                     {round.opensOn && round.closesOn && " "}
-                    {round.closesOn && `${dict.programme.deadlinesCloses} ${new Date(round.closesOn).toLocaleDateString(language)}`}
+                    {round.closesOn && `${dict.programme.deadlinesCloses} ${formatDate(round.closesOn, language)}`}
                   </>
                 )}
               </li>
@@ -422,7 +423,8 @@ export default async function ProgrammePage({ params }: { params: Params }) {
           {/* Дата проверки и источник рядом с фактом — правило 5. */}
           <p className="mt-2 text-xs leading-relaxed text-zinc-500">
             {dict.programme.applyNote} {dict.catalog.verifiedPrefix}{" "}
-            {new Date(channel.verifiedAt).toLocaleDateString(language)}.
+            {/* латышская дата сама кончается точкой — вторую не ставим */}
+            {formatDate(channel.verifiedAt, language).replace(/\.?$/, ".")}
             {channelSourceUrl && (
               <>
                 {" "}
@@ -453,7 +455,7 @@ export default async function ProgrammePage({ params }: { params: Params }) {
             {dict.programme.applyNote}{" "}
             {interpolate(dict.programme.detailsSource, {
               source: sourceHost(generalAdmission.sourceUrl) ?? "",
-              date: new Date(record.details_extracted_at!).toLocaleDateString(language),
+              date: formatDate(record.details_extracted_at!, language),
             })}{" "}
             <a href={generalAdmission.sourceUrl} target="_blank" rel="noopener noreferrer" className="underline">
               {dict.catalog.sourceLinkLabel}
@@ -538,7 +540,7 @@ export default async function ProgrammePage({ params }: { params: Params }) {
 
       <p className="mt-8 rounded-xl bg-amber-50 px-4 py-3 text-sm text-amber-900">
         {record.verified_at
-          ? `${dict.catalog.verifiedPrefix} ${new Date(record.verified_at).toLocaleDateString(language)}`
+          ? `${dict.catalog.verifiedPrefix} ${formatDate(record.verified_at, language)}`
           : dict.catalog.unverifiedLabel}
         {record.source_url && (
           <>

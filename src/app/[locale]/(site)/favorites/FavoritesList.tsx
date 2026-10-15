@@ -11,6 +11,7 @@ import { getFavoriteIds, subscribeToFavorites } from "@/lib/favorites";
 import { interpolate } from "@/lib/outcomes";
 import { ProgrammeCard } from "@/components/ProgrammeCard";
 import { ArrowRightIcon, CheckIcon, StarIcon, XIcon } from "@/components/icons";
+import { formatDate } from "@/lib/dates";
 
 type Row = { label: string; render: (programme: ProgrammeWithUniversity) => string };
 
@@ -172,7 +173,7 @@ export function FavoritesList({
                 eeClosesAt
                   ? `${dict.programme.deadlinesCloses} ${tallinnDate(eeClosesAt, languageOf(locale))}`
                   : nextRound
-                    ? `${dict.programme.deadlinesCloses} ${new Date(nextRound.closesOn!).toLocaleDateString(languageOf(locale))}`
+                    ? `${dict.programme.deadlinesCloses} ${formatDate(nextRound.closesOn!, languageOf(locale))}`
                     : null
               }
               footer={
