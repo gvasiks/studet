@@ -6,6 +6,8 @@ const dictionary = (language: string) =>
   JSON.parse(readFileSync(`src/i18n/dictionaries/${language}.json`, "utf8")) as { survey: { next: string } };
 const lv = dictionary("lv");
 const en = dictionary("en");
+const lt = dictionary("lt");
+const et = dictionary("et");
 
 // Клавиатурный проход (предрелизная проверка Д5, CLAUDE.md: «клавиатурный
 // проход по новым экранам на обоих языках»). axe в a11y.spec.ts смотрит
@@ -21,12 +23,27 @@ async function tabTo(page: Page, matches: (element: Element) => boolean, limit =
   throw new Error("за отведённое число нажатий Tab фокус не дошёл до нужного элемента");
 }
 
-const LANGUAGES = [
+// Анкета: латвийская на всех языках интерфейса, литовская и эстонская
+// (последние две — за флагом предпросмотра, как в a11y.spec.ts).
+const SURVEYS = [
   { locale: "lv", dict: lv },
   { locale: "en-lv", dict: en },
+  { locale: "lt-lv", dict: lt },
+  { locale: "et-lv", dict: et },
+  { locale: "lt", dict: lt },
+  { locale: "et", dict: et },
 ] as const;
 
-for (const { locale, dict } of LANGUAGES) {
+// Калькулятор с формулой: латвийский (ЛУ) на латышском, английском и
+// эстонском, литовский (VU, медицина).
+const CALCULATORS = [
+  "/lv/programmes/lu/economics/calculator",
+  "/en-lv/programmes/lu/economics/calculator",
+  "/et-lv/programmes/lu/economics/calculator",
+  "/lt/programmes/vu/medicina/calculator",
+];
+
+for (const { locale, dict } of SURVEYS) {
   test(`анкета проходится клавиатурой: /${locale}/survey`, async ({ page }) => {
     await page.goto(`/${locale}/survey`);
     const firstStep = await page.locator("main legend").first().innerText();
@@ -46,9 +63,11 @@ for (const { locale, dict } of LANGUAGES) {
     await page.keyboard.press("Enter");
     await expect(page.locator("main legend").first()).not.toHaveText(firstStep);
   });
+}
 
-  test(`калькулятор заполняется клавиатурой: /${locale}/programmes/lu/economics/calculator`, async ({ page }) => {
-    await page.goto(`/${locale}/programmes/lu/economics/calculator`);
+for (const path of CALCULATORS) {
+  test(`калькулятор заполняется клавиатурой: ${path}`, async ({ page }) => {
+    await page.goto(path);
     const fields = await page.locator('main input[type="text"]').count();
     expect(fields).toBeGreaterThan(0);
     for (let index = 0; index < fields; index += 1) {
@@ -67,7 +86,7 @@ for (const { locale, dict } of LANGUAGES) {
 
 // Фокус виден: у первых элементов страницы в порядке Tab есть рамка
 // (outline) или кольцо (box-shadow) — WCAG 2.2, 2.4.7.
-for (const path of ["/lv/programmes", "/en-lv/programmes/lu/economics"]) {
+for (const path of ["/lv/programmes", "/en-lv/programmes/lu/economics", "/lt/programmes", "/et/programmes"]) {
   test(`фокус виден на первых шагах Tab: ${path}`, async ({ page }) => {
     await page.goto(path);
     for (let step = 0; step < 6; step += 1) {
