@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { CAPTURE_URL, pageviewEvent, productEvent, shouldCount, uuidv7, withoutQuery } from "./analytics";
+import { CAPTURE_URL, isTrackedVital, pageviewEvent, productEvent, shouldCount, uuidv7, webVitalEvent, withoutQuery } from "./analytics";
 
 const visit = { distinctId: "visitor-1", sessionId: "session-1" };
 
@@ -58,6 +58,26 @@ describe("счётчик посещений: что уходит в аналит
         $lib: "studypick-web",
       },
     });
+  });
+
+  it("скорость страницы — имя замера, число и оценка в форме PostHog", () => {
+    const metric = { name: "LCP" as const, value: 1830.5, rating: "good", id: "v1-123", entries: [{}] };
+    const event = webVitalEvent("phc_test", visit, metric, "https://studypick.eu/lv/programmes?q=x");
+    expect(event.event).toBe("$web_vitals");
+    expect(event.properties).toEqual({
+      $current_url: "https://studypick.eu/lv/programmes",
+      $host: "studypick.eu",
+      $pathname: "/lv/programmes",
+      $session_id: "session-1",
+      $process_person_profile: false,
+      $lib: "studypick-web",
+      $web_vitals_LCP_value: 1830.5,
+      $web_vitals_LCP_event: { name: "LCP", value: 1830.5, rating: "good" },
+    });
+    // считаются только четыре замера и только числом
+    expect(isTrackedVital({ name: "INP", value: 120 })).toBe(true);
+    expect(isTrackedVital({ name: "TTFB", value: 300 })).toBe(false);
+    expect(isTrackedVital({ name: "CLS", value: Number.NaN })).toBe(false);
   });
 
   it("заход без источника помечается как прямой", () => {

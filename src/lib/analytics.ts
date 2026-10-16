@@ -4,7 +4,7 @@
 //
 // Библиотеки PostHog в проекте нет намеренно: она весит около 100 КБ в
 // сжатом виде и по умолчанию сама собирает клики и содержимое страницы.
-// Здесь уходит только то, что перечислено в pageviewEvent и productEvent, — политика
+// Здесь уходит только то, что перечислено в pageviewEvent, productEvent и webVitalEvent, — политика
 // конфиденциальности (раздел «Naudojimo statistika» / «Usage statistics»)
 // обещает ровно это: без cookies, без хранения в браузере, без содержимого
 // полей ввода, без записи сессий.
@@ -99,6 +99,41 @@ export function productEvent(key: string, visit: Visit, name: ProductEvent, href
       $session_id: visit.sessionId,
       $process_person_profile: false,
       $lib: "studypick-web",
+    },
+  };
+}
+
+/**
+ * Скорость страницы у настоящего посетителя (Core Web Vitals) — то, что
+ * требует CLAUDE.md: LCP < 2,5 с, INP < 200 мс, CLS < 0,1, мерить на реальных
+ * пользователях. Замер делает Next.js (useReportWebVitals); здесь — только
+ * форма события, та же, что у библиотеки PostHog (`$web_vitals`, свойства
+ * `$web_vitals_LCP_value` и `$web_vitals_LCP_event`), чтобы работал готовый
+ * отчёт PostHog. Уходят имя замера, число и оценка — ничего о человеке.
+ */
+export const WEB_VITALS = ["LCP", "INP", "CLS", "FCP"] as const;
+export type WebVitalName = (typeof WEB_VITALS)[number];
+export type WebVital = { name: string; value: number; rating?: string };
+
+export function isTrackedVital(metric: WebVital): metric is WebVital & { name: WebVitalName } {
+  return (WEB_VITALS as readonly string[]).includes(metric.name) && Number.isFinite(metric.value);
+}
+
+export function webVitalEvent(key: string, visit: Visit, metric: WebVital & { name: WebVitalName }, href: string) {
+  const page = new URL(href);
+  return {
+    api_key: key,
+    event: "$web_vitals",
+    distinct_id: visit.distinctId,
+    properties: {
+      $current_url: withoutQuery(href),
+      $host: page.host,
+      $pathname: page.pathname,
+      $session_id: visit.sessionId,
+      $process_person_profile: false,
+      $lib: "studypick-web",
+      [`$web_vitals_${metric.name}_value`]: metric.value,
+      [`$web_vitals_${metric.name}_event`]: { name: metric.name, value: metric.value, rating: metric.rating ?? null },
     },
   };
 }

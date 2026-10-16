@@ -2,19 +2,24 @@
 
 import { useEffect, useRef } from "react";
 import { usePathname } from "next/navigation";
+import { useReportWebVitals } from "next/web-vitals";
 import {
   CAPTURE_URL,
+  isTrackedVital,
   pageviewEvent,
   productEvent,
   shouldCount,
   uuidv7,
+  webVitalEvent,
   type ProductEvent,
   type Visit,
+  type WebVital,
 } from "@/lib/analytics";
 
 // Счётчик посещений: одно событие «просмотр страницы» при открытии сайта и
 // при каждом переходе между страницами, плюс три события о том, что анкетой,
-// калькулятором и обратным поиском пользуются до конца. Что именно уходит и
+// калькулятором и обратным поиском пользуются до конца, и скорость страницы
+// у посетителя (Core Web Vitals). Что именно уходит и
 // почему без библиотеки PostHog — src/lib/analytics.ts.
 //
 // Клиентский компонент, но ничего не рисует и стоит один раз в корневой
@@ -64,8 +69,17 @@ export function useTrackOnce(name: ProductEvent, happened: boolean) {
   }, [happened, name]);
 }
 
+// Скорость страницы: Next.js сообщает замеры сам (LCP — после загрузки,
+// INP и CLS — когда человек уходит со страницы). Функция вне компонента —
+// так советует документация Next.js, иначе замеры могут прийти дважды.
+function reportVital(metric: WebVital) {
+  if (!isTrackedVital(metric)) return;
+  send((key, current) => webVitalEvent(key, current, metric, window.location.href));
+}
+
 export function Analytics() {
   const pathname = usePathname();
+  useReportWebVitals(reportVital);
 
   useEffect(() => {
     send((key, current) => pageviewEvent(key, current, window.location.href, document.referrer));
