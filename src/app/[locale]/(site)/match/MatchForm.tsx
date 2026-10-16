@@ -397,6 +397,21 @@ function ResultRow({
         </p>
       )}
 
+      {/* Посчитанный балл — тоже повод открыть калькулятор: там можно
+          поменять уровень экзамена и увидеть разбор подробнее (аудит
+          2026-10-04 — ссылка была только у «нужны доп. данные»). */}
+      {item.status === "computed" && !isFixture && (
+        <p className="mt-2 text-sm">
+          <Link
+            href={`${programmeHref}/calculator`}
+            className="inline-flex items-center gap-1 font-medium text-brand hover:text-brand-dark"
+          >
+            {t.openCalculator}
+            <ArrowRightIcon size={12} />
+          </Link>
+        </p>
+      )}
+
       {item.score && (
         <details className="group mt-3 border-t border-zinc-100 pt-3">
           <summary className="flex cursor-pointer list-none items-center gap-1.5 text-sm font-medium text-zinc-700 hover:text-brand">

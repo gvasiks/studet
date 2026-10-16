@@ -31,6 +31,7 @@ import { EeAdmissionConditions } from "@/components/EeAdmissionConditions";
 import { ReportErrorLink } from "@/components/ReportErrorLink";
 import { buildAlternates, SITE_URL } from "@/lib/site";
 import { formatDate } from "@/lib/dates";
+import { durationLabel } from "@/lib/duration";
 
 type Params = PageProps<"/[locale]/programmes/[university]/[programme]">["params"];
 
@@ -227,7 +228,7 @@ export default async function ProgrammePage({ params }: { params: Params }) {
           <Fact label={dict.programme.studyMode} value={enumLabel(dict.catalog.studyMode, record.study_mode)} />
         )}
         {record.duration_years !== null && (
-          <Fact label={dict.programme.duration} value={`${record.duration_years} ${dict.catalog.years}`} />
+          <Fact label={dict.programme.duration} value={durationLabel(record.duration_years, language, { one: dict.catalog.yearOne, many: dict.catalog.years })} />
         )}
         {record.city && <Fact label={dict.programme.city} value={enumLabel(dict.catalog.city, record.city)} />}
         {/* Название направления — как в официальном списке, на литовском:

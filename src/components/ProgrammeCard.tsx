@@ -6,6 +6,7 @@ import { ArrowRightIcon, BuildingIcon, CalendarIcon, ClockIcon, GlobeIcon, MapPi
 import { FavoriteButton } from "@/components/FavoriteButton";
 import { enumLabel, localizedName } from "@/lib/names";
 import type { ProgrammeWithUniversity } from "@/lib/catalog";
+import { durationLabel } from "@/lib/duration";
 
 // Карточка программы — одна и та же в каталоге и в «Моём списке».
 // Без "use client": в каталоге её рисует сервер, в «Моём списке» она
@@ -82,7 +83,7 @@ export function ProgrammeCard({
           </Chip>
           {programme.duration_years !== null && (
             <Chip icon={<ClockIcon size={13} />}>
-              {programme.duration_years} {dict.catalog.years}
+              {durationLabel(programme.duration_years, languageOf(locale), { one: dict.catalog.yearOne, many: dict.catalog.years })}
             </Chip>
           )}
           {/* Форма — только когда она не очная: заочный и дистанционный

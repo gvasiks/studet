@@ -1,7 +1,8 @@
 "use client";
 
+import { Suspense } from "react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useSearchParams } from "next/navigation";
 import { countryOf, languageOf, languages, localesOfCountry, type Locale } from "@/i18n/config";
 
 export type Tone = "light" | "dark";
@@ -17,7 +18,26 @@ export type Tone = "light" | "dark";
 //
 // Ссылки, а не кнопки: переключатель языка — это навигация (другой
 // адрес, другой индексируемый документ), не действие на странице.
-export function LocaleSwitcher({ locale, label, tone = "light" }: { locale: Locale; label: string; tone?: Tone }) {
+type Props = { locale: Locale; label: string; tone?: Tone };
+
+// Параметры адреса (фильтры каталога) переносятся в ссылку на другой язык —
+// иначе переключение языка сбрасывало выбранные фильтры (аудит 2026-10-04).
+// useSearchParams требует границы Suspense, иначе Next.js не может отдать
+// страницу статикой; пока параметры не прочитаны, ссылки — без них.
+export function LocaleSwitcher(props: Props) {
+  return (
+    <Suspense fallback={<Switcher {...props} query="" />}>
+      <SwitcherWithQuery {...props} />
+    </Suspense>
+  );
+}
+
+function SwitcherWithQuery(props: Props) {
+  const query = useSearchParams().toString();
+  return <Switcher {...props} query={query ? `?${query}` : ""} />;
+}
+
+function Switcher({ locale, label, tone = "light", query }: Props & { query: string }) {
   const pathname = usePathname();
   const rest = pathname.split("/").slice(2).join("/");
   const dark = tone === "dark";
@@ -36,7 +56,7 @@ export function LocaleSwitcher({ locale, label, tone = "light" }: { locale: Loca
         return (
           <Link
             key={code}
-            href={`/${code}${rest ? `/${rest}` : ""}`}
+            href={`/${code}${rest ? `/${rest}` : ""}${query}`}
             aria-current={active ? "page" : undefined}
             className={`inline-flex h-[30px] items-center rounded-full px-2.5 text-[13px] sm:px-3.5 ${
               active

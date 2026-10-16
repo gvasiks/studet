@@ -144,7 +144,8 @@
         "private": "Nevalstybinė"
       },
       "apply": "Filtruoti"
-    }
+    },
+    "yearOne": "m."
   },
   "programme": {
     "back": "Atgal",

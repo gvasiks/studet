@@ -12,6 +12,7 @@ import { interpolate } from "@/lib/outcomes";
 import { ProgrammeCard } from "@/components/ProgrammeCard";
 import { ArrowRightIcon, CheckIcon, StarIcon, XIcon } from "@/components/icons";
 import { formatDate } from "@/lib/dates";
+import { durationLabel } from "@/lib/duration";
 
 type Row = { label: string; render: (programme: ProgrammeWithUniversity) => string };
 
@@ -124,7 +125,7 @@ export function FavoritesList({
     { label: dict.programme.studyMode, render: (p) => (p.study_mode ? enumLabel(dict.catalog.studyMode, p.study_mode) : "—") },
     {
       label: dict.programme.duration,
-      render: (p) => (p.duration_years !== null ? `${p.duration_years} ${dict.catalog.years}` : "—"),
+      render: (p) => (p.duration_years !== null ? durationLabel(p.duration_years, languageOf(locale), { one: dict.catalog.yearOne, many: dict.catalog.years }) : "—"),
     },
     { label: dict.programme.city, render: (p) => (p.city ? enumLabel(dict.catalog.city, p.city) : "—") },
     {
