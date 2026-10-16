@@ -15,6 +15,7 @@ import { ArrowRightIcon, CheckIcon, InfoIcon } from "@/components/icons";
 import { formatDate } from "@/lib/dates";
 import { useTrackOnce } from "@/components/Analytics";
 import { Providers } from "@/app/[locale]/providers";
+import { formatPoints } from "@/lib/numbers";
 
 const LEVELS: ExamLevel[] = ["augstakais", "optimalais", "vispaarigais"];
 
@@ -355,7 +356,7 @@ function ResultRow({
           <span className="shrink-0 text-right">
             <span className="block text-[10px] font-medium uppercase tracking-wide text-zinc-500">{t.scoreLabel}</span>
             <strong className="block text-2xl font-bold leading-tight tabular-nums tracking-tight text-zinc-900">
-              {item.score.total.toFixed(2)}
+              {formatPoints(item.score.total, languageOf(locale))}
             </strong>
           </span>
         )}
@@ -422,7 +423,7 @@ function ResultRow({
             {item.score.lines.map((line, index) => (
               <div key={index} className="flex justify-between gap-4 border-b border-dashed border-zinc-100 pb-1.5 last:border-0">
                 <dt className="text-zinc-600">{termLabel(dict, line.term)}</dt>
-                <dd className="shrink-0 font-medium tabular-nums text-zinc-900">{line.points.toFixed(2)}</dd>
+                <dd className="shrink-0 font-medium tabular-nums text-zinc-900">{formatPoints(line.points, languageOf(locale))}</dd>
               </div>
             ))}
           </dl>

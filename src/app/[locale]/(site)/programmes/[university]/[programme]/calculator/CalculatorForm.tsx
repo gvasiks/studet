@@ -18,6 +18,7 @@ import { subjectLabel, termLabel } from "@/lib/term-labels";
 import { formatDate } from "@/lib/dates";
 import { useTrackOnce } from "@/components/Analytics";
 import { Providers } from "@/app/[locale]/providers";
+import { formatPoints } from "@/lib/numbers";
 
 const LEVELS: ExamLevel[] = ["augstakais", "optimalais", "vispaarigais"];
 
@@ -197,7 +198,7 @@ function CalculatorFormForm({
           <p className="text-sm text-zinc-500">{dict.calculator.totalLabel}</p>
           {result ? (
             <>
-              <p className="text-4xl font-bold tracking-tighter text-zinc-900">{result.total.toFixed(2)}</p>
+              <p className="text-4xl font-bold tracking-tighter text-zinc-900">{formatPoints(result.total, languageOf(locale))}</p>
               {result.failedGates.length > 0 && (
                 <p className="mt-4 rounded-lg bg-red-50 px-3 py-2 text-sm text-red-800">{dict.calculator.gateWarning}</p>
               )}
@@ -221,7 +222,7 @@ function CalculatorFormForm({
             {result.lines.map((line, index) => (
               <div key={index} className="flex justify-between">
                 <dt>{termLabel(dict, line.term)}</dt>
-                <dd>{line.points.toFixed(2)}</dd>
+                <dd>{formatPoints(line.points, languageOf(locale))}</dd>
               </div>
             ))}
           </dl>
