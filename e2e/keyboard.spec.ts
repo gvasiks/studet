@@ -62,6 +62,11 @@ for (const { locale, dict } of SURVEYS) {
     );
     await page.keyboard.press("Enter");
     await expect(page.locator("main legend").first()).not.toHaveText(firstStep);
+    // фокус перешёл на заголовок нового шага, а не остался на кнопке
+    expect(await page.evaluate(() => document.activeElement?.tagName)).toBe("LEGEND");
+    // у каждой группы ответов есть имя для экранного диктора
+    const unnamed = await page.locator('main [role="radiogroup"]:not([aria-label]), main [role="group"]:not([aria-label]):has(input)').count();
+    expect(unnamed).toBe(0);
   });
 }
 
@@ -103,3 +108,15 @@ for (const path of ["/lv/programmes", "/en-lv/programmes/lu/economics", "/lt/pro
     }
   });
 }
+
+// Защитные заголовки (next.config.ts, аудит 2026-10-04): страницу нельзя
+// встроить в чужой фрейм, сервер не называет себя.
+test("защитные заголовки на ответах сайта", async ({ request }) => {
+  const response = await request.get("/lv");
+  const headers = response.headers();
+  expect(headers["x-frame-options"]).toBe("DENY");
+  expect(headers["content-security-policy"]).toContain("frame-ancestors 'none'");
+  expect(headers["x-content-type-options"]).toBe("nosniff");
+  expect(headers["referrer-policy"]).toBe("strict-origin-when-cross-origin");
+  expect(headers["x-powered-by"]).toBeUndefined();
+});

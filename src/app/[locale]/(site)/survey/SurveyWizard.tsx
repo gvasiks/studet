@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import type { ReactNode } from "react";
 import { Button, Checkbox, CheckboxGroup, Radio, RadioGroup } from "@heroui/react";
@@ -94,7 +94,10 @@ function StepShell({
 }) {
   return (
     <fieldset className="min-w-0">
-      <legend className="text-xl font-semibold tracking-tight text-zinc-900">{title}</legend>
+      {/* tabIndex -1: на заголовок переходит фокус при смене шага — см. SurveyWizardForm */}
+      <legend tabIndex={-1} className="text-xl font-semibold tracking-tight text-zinc-900 focus:outline-none">
+        {title}
+      </legend>
       {hint && <p className="mt-2 max-w-[60ch] text-sm leading-relaxed text-zinc-500">{hint}</p>}
       <div className="mt-5">{children}</div>
     </fieldset>
@@ -110,6 +113,19 @@ function SurveyWizardForm({ locale, dict }: { locale: Locale; dict: Dictionary }
   const STEP_COUNT = steps.length;
   // Экран, который сейчас показан.
   const current = steps[step];
+
+  // После «Дальше» или «Назад» фокус переходит на заголовок нового шага:
+  // иначе он остаётся на кнопке, и человек с экранным диктором не узнаёт,
+  // что вопрос сменился (аудит 2026-10-04). При первом показе не трогаем.
+  const stepBox = useRef<HTMLDivElement>(null);
+  const shown = useRef(false);
+  useEffect(() => {
+    if (!shown.current) {
+      shown.current = true;
+      return;
+    }
+    stepBox.current?.querySelector("legend")?.focus();
+  }, [step]);
 
   function skipToSearch() {
     router.push(`/${locale}/programmes`);
@@ -211,10 +227,11 @@ function SurveyWizardForm({ locale, dict }: { locale: Locale; dict: Dictionary }
           </ol>
         </nav>
 
-        <div className="surface mt-6 p-6 sm:p-10">
+        <div ref={stepBox} className="surface mt-6 p-6 sm:p-10">
           {current === "exams" && (
             <StepShell title={dict.survey.exams.title} hint={dict.survey.exams.hint}>
               <CheckboxGroup
+                aria-label={dict.survey.exams.title}
                 classNames={TILE_GRID}
                 value={answers.exams}
                 onValueChange={(value) => setAnswers((a) => ({ ...a, exams: value }))}
@@ -231,6 +248,7 @@ function SurveyWizardForm({ locale, dict }: { locale: Locale; dict: Dictionary }
           {current === "interests" && (
             <StepShell title={dict.survey.interests.title} hint={dict.survey.interests.hint}>
               <CheckboxGroup
+                aria-label={dict.survey.interests.title}
                 classNames={TILE_GRID}
                 value={answers.interests}
                 onValueChange={(value) => setAnswers((a) => ({ ...a, interests: value }))}
@@ -248,6 +266,7 @@ function SurveyWizardForm({ locale, dict }: { locale: Locale; dict: Dictionary }
             <>
               <StepShell title={dict.survey.level.title}>
                 <RadioGroup
+                  aria-label={dict.survey.level.title}
                   classNames={RADIO_GRID}
                   value={answers.level}
                   onValueChange={(value) => setAnswers((a) => ({ ...a, level: value as LevelChoice }))}
@@ -265,6 +284,7 @@ function SurveyWizardForm({ locale, dict }: { locale: Locale; dict: Dictionary }
               <div className={SECOND_QUESTION}>
                 <StepShell title={dict.survey.duration.title}>
                   <RadioGroup
+                    aria-label={dict.survey.duration.title}
                     classNames={RADIO_GRID}
                     value={answers.maxYears}
                     onValueChange={(value) => setAnswers((a) => ({ ...a, maxYears: value }))}
@@ -287,6 +307,7 @@ function SurveyWizardForm({ locale, dict }: { locale: Locale; dict: Dictionary }
             <>
               <StepShell title={dict.survey.funding.title}>
                 <RadioGroup
+                  aria-label={dict.survey.funding.title}
                   classNames={RADIO_GRID}
                   value={answers.funding}
                   onValueChange={(value) => setAnswers((a) => ({ ...a, funding: value as Funding }))}
@@ -305,6 +326,7 @@ function SurveyWizardForm({ locale, dict }: { locale: Locale; dict: Dictionary }
                     указанной платы из списка не пропадут. */}
                 <StepShell title={dict.survey.fee.title} hint={dict.catalog.filters.feeHint}>
                   <RadioGroup
+                    aria-label={dict.survey.fee.title}
                     classNames={RADIO_GRID}
                     value={answers.maxFee}
                     onValueChange={(value) => setAnswers((a) => ({ ...a, maxFee: value }))}
@@ -326,6 +348,7 @@ function SurveyWizardForm({ locale, dict }: { locale: Locale; dict: Dictionary }
           {current === "city" && (
             <StepShell title={dict.survey.city.title}>
               <CheckboxGroup
+                aria-label={dict.survey.city.title}
                 classNames={TILE_GRID}
                 value={answers.cities}
                 isDisabled={answers.anywhere}
@@ -356,6 +379,7 @@ function SurveyWizardForm({ locale, dict }: { locale: Locale; dict: Dictionary }
             <>
               <StepShell title={dict.survey.language.title}>
                 <RadioGroup
+                  aria-label={dict.survey.language.title}
                   classNames={RADIO_GRID}
                   value={answers.language}
                   onValueChange={(value) => setAnswers((a) => ({ ...a, language: value as LanguageChoice }))}
@@ -376,6 +400,7 @@ function SurveyWizardForm({ locale, dict }: { locale: Locale; dict: Dictionary }
                 <div className={SECOND_QUESTION}>
                   <StepShell title={dict.survey.mode.title}>
                     <RadioGroup
+                      aria-label={dict.survey.mode.title}
                       classNames={RADIO_GRID}
                       value={answers.mode}
                       onValueChange={(value) => setAnswers((a) => ({ ...a, mode: value as ModeChoice }))}
@@ -402,6 +427,7 @@ function SurveyWizardForm({ locale, dict }: { locale: Locale; dict: Dictionary }
           {current === "kind" && (
             <StepShell title={dict.survey.kind.title}>
               <RadioGroup
+                aria-label={dict.survey.kind.title}
                 classNames={RADIO_GRID}
                 value={answers.kind}
                 onValueChange={(value) => setAnswers((a) => ({ ...a, kind: value }))}

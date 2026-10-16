@@ -13,7 +13,8 @@
     "rightsText": "Ką stojantiesiems garantuoja įstatymai: terminai, sutartys, rezultatai ir apeliacijos."
   },
   "coverage": {
-    "notice": "Kol kas čia yra tik Lietuvos bendrojo priėmimo programos vietos abiturientams. Informacijos užsienio stojantiesiems dar nėra."
+    "notice": "Kol kas čia yra tik Lietuvos bendrojo priėmimo programos vietos abiturientams. Informacijos užsienio stojantiesiems dar nėra.",
+    "label": "Apie svetainės aprėptį"
   },
   "catalog": {
     "title": "Studijų programų katalogas",
@@ -199,7 +200,8 @@
     "menu": "Meniu",
     "main": "Pagrindinė navigacija",
     "footer": "Poraštės navigacija",
-    "country": "Šalis"
+    "country": "Šalis",
+    "language": "Kalba"
   },
   "countries": {
     "LV": "Latvija",

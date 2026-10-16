@@ -199,7 +199,9 @@ export default async function ProgrammePage({ params }: { params: Params }) {
   return (
     <main className="page-container py-8 sm:py-12">
       <div className="surface mx-auto max-w-3xl p-6 sm:p-10">
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+      {/* «<» экранируется: названия собраны с сайтов вузов, и «</script>» в
+          одном из них закрыл бы тег раньше времени (аудит 2026-10-04). */}
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c") }} />
       <BackButton fallbackHref={`/${locale}/programmes`} label={dict.programme.back} />
 
       <p className="mt-4 text-sm text-zinc-500">{universityName}</p>

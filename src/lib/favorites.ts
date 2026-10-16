@@ -26,13 +26,18 @@ function storageKey(country: Country): string {
 // странице (список каталога) должны видеть изменения друг друга сразу.
 const CHANGE_EVENT = "studet:favorites-changed";
 
+const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+
 function readIds(country: Country): string[] {
   if (typeof window === "undefined") return [];
   try {
     const raw = window.localStorage.getItem(storageKey(country));
     if (!raw) return [];
     const parsed = JSON.parse(raw);
-    return Array.isArray(parsed) ? parsed.filter((id): id is string => typeof id === "string") : [];
+    // Только id вида UUID: строка вроде «abc» прошла бы проверку «это строка»,
+    // и запрос к базе по такому id падал бы целиком — страница списка
+    // оставалась пустой без объяснений (аудит 2026-10-04).
+    return Array.isArray(parsed) ? parsed.filter((id): id is string => typeof id === "string" && UUID.test(id)) : [];
   } catch {
     // Приватный режим, заполненное хранилище, битый JSON — в любом из
     // этих случаев просто считаем, что избранного нет, а не падаем.

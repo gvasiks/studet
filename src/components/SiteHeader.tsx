@@ -54,7 +54,7 @@ export function SiteHeader({ locale, dict, tone }: { locale: Locale; dict: Dicti
           />
           <div className="ml-auto flex items-center gap-3">
             {dark && <FavoritesLink locale={locale} label={dict.favorites.navLink} />}
-            <LocaleSwitcher locale={locale} tone={tone} />
+            <LocaleSwitcher locale={locale} label={dict.nav.language} tone={tone} />
           </div>
         </div>
       </header>
@@ -66,7 +66,7 @@ export function SiteHeader({ locale, dict, tone }: { locale: Locale; dict: Dicti
       {languageOf(locale) === "en" && (
         <div
           role="region"
-          aria-label="Coverage notice"
+          aria-label={dict.coverage.label}
           className={dark ? "relative z-20 bg-amber-400/95" : "bg-amber-50"}
         >
           <p

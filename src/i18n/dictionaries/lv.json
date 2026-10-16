@@ -13,7 +13,8 @@
     "rightsText": "Ko likums garantē reflektantam: termiņi, līgums, rezultāti un lēmuma apstrīdēšana."
   },
   "coverage": {
-    "notice": "Pagaidām šeit ir aptverta tikai Latvijas uzņemšanas sistēma vietējiem skolu absolventiem — atbalsts ārvalstu reflektantiem (pilnas izmaksas, dokumentu saraksti, uzturēšanās atļaujas) vēl nav izveidots."
+    "notice": "Pagaidām šeit ir aptverta tikai Latvijas uzņemšanas sistēma vietējiem skolu absolventiem — atbalsts ārvalstu reflektantiem (pilnas izmaksas, dokumentu saraksti, uzturēšanās atļaujas) vēl nav izveidots.",
+    "label": "Par vietnes tvērumu"
   },
   "catalog": {
     "title": "Studiju programmu katalogs",
@@ -199,7 +200,8 @@
     "menu": "Izvēlne",
     "main": "Galvenā navigācija",
     "footer": "Navigācija lapas apakšā",
-    "country": "Valsts"
+    "country": "Valsts",
+    "language": "Valoda"
   },
   "countries": {
     "LV": "Latvija",

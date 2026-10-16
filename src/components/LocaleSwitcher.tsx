@@ -17,14 +17,14 @@ export type Tone = "light" | "dark";
 //
 // Ссылки, а не кнопки: переключатель языка — это навигация (другой
 // адрес, другой индексируемый документ), не действие на странице.
-export function LocaleSwitcher({ locale, tone = "light" }: { locale: Locale; tone?: Tone }) {
+export function LocaleSwitcher({ locale, label, tone = "light" }: { locale: Locale; label: string; tone?: Tone }) {
   const pathname = usePathname();
   const rest = pathname.split("/").slice(2).join("/");
   const dark = tone === "dark";
 
   return (
     <nav
-      aria-label="Language"
+      aria-label={label}
       className={`flex items-center rounded-full p-[3px] ${dark ? "bg-white/10" : "bg-zinc-200"}`}
     >
       {/* Поля кнопок на узком экране уже (px-2.5): с тремя языками шапка

@@ -13,7 +13,8 @@
     "rightsText": "What the law guarantees applicants: deadlines, contracts, results and appeals."
   },
   "coverage": {
-    "notice": "This currently covers Latvia's own admission system for local school-leavers. Support for international applicants — full costs, document checklists, residence permits — isn't built yet."
+    "notice": "This currently covers Latvia's own admission system for local school-leavers. Support for international applicants — full costs, document checklists, residence permits — isn't built yet.",
+    "label": "About the site's coverage"
   },
   "catalog": {
     "title": "Study programme catalogue",
@@ -199,7 +200,8 @@
     "menu": "Menu",
     "main": "Main navigation",
     "footer": "Footer navigation",
-    "country": "Country"
+    "country": "Country",
+    "language": "Language"
   },
   "countries": {
     "LV": "Latvia",

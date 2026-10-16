@@ -13,7 +13,8 @@
     "rightsText": "Mida seadus kandidaadile tagab: tähtajad, leping, tulemused ja otsuse vaidlustamine."
   },
   "coverage": {
-    "notice": "Praegu on siin ainult Eesti kõrghariduse õppekavade kataloog. Konkursipunktide arvutust, tähtaegu ja teavet välismaalt kandideerijatele veel ei ole."
+    "notice": "Praegu on siin ainult Eesti kõrghariduse õppekavade kataloog. Konkursipunktide arvutust, tähtaegu ja teavet välismaalt kandideerijatele veel ei ole.",
+    "label": "Saidi ulatusest"
   },
   "catalog": {
     "title": "Õppekavade kataloog",
@@ -199,7 +200,8 @@
     "menu": "Menüü",
     "main": "Peamenüü",
     "footer": "Jaluse menüü",
-    "country": "Riik"
+    "country": "Riik",
+    "language": "Keel"
   },
   "countries": {
     "LV": "Läti",
