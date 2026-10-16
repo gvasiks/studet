@@ -323,8 +323,8 @@
           "- prieglobos paslaugų teikėjas (svetainės veikimas);",
           "- „Supabase“ (duomenų bazė, serveriai Europos Sąjungoje; el. pašto adresai, jei juos pateikiate);",
           "- „PostHog“ (naudojimo statistika, serveriai Europos Sąjungoje);",
-          "- „Google“ (el. paštas: jei mums rašote, susirašinėjimas saugomas „Gmail“ pašto dėžutėje);",
           "- „Resend“ (el. laiškų siuntimas).",
+          "Jei mums rašote, susirašinėjimas saugomas „Gmail“ pašto dėžutėje. Šią paslaugą „Google“ teikia pagal savo sąlygas ir privatumo politiką (policies.google.com/privacy) kaip savarankiškas duomenų valdytojas, o ne mūsų pavedimu: duomenų tvarkymo sutarties su „Google“ neturime. Susirašinėjimas gali būti saugomas ir už Europos ekonominės erdvės ribų.",
           "Jei paslaugų teikėjas perduoda duomenis už Europos ekonominės erdvės ribų, jis tai daro taikydamas Europos Komisijos patvirtintas apsaugos priemones, pavyzdžiui, standartines sutarčių sąlygas."
         ]
       },

@@ -308,7 +308,7 @@
   "privacy": {
     "title": "Privaatsuspoliitika",
     "intro": "Kuidas see sait isikuandmeid töötleb: mida säilitatakse, mida mitte ja millised on andmesubjekti õigused. See tekst on tõlge; lahknevuse korral kehtib leedukeelne tekst.",
-    "updated": "Redaktsioon: 15. oktoober 2026",
+    "updated": "Redaktsioon: 16. oktoober 2026",
     "authorityLabel": "Leedu Riiklik Andmekaitse Inspektsioon (vdai.lrv.lt)",
     "authorityUrl": "https://vdai.lrv.lt",
     "sections": [
@@ -397,8 +397,8 @@
           "- majutusteenuse pakkuja (saidi toimimine);",
           "- Supabase (andmebaas serveritega Euroopa Liidus; e-posti aadressid, kui need on esitatud);",
           "- PostHog (kasutusstatistika, serverid Euroopa Liidus);",
-          "- Google (e-post: meile saadetud kirjavahetus on Gmaili postkastis);",
           "- Resend (e-kirjade saatmine).",
+          "Meile saadetud kirjavahetus on Gmaili postkastis. Seda teenust osutab Google oma tingimuste ja privaatsuspoliitika (policies.google.com/privacy) alusel iseseisva vastutava töötlejana, mitte meie ülesandel: isikuandmete töötlemise lepingut meil Google'iga ei ole. Kirjavahetust võidakse säilitada ka väljaspool Euroopa Majanduspiirkonda.",
           "Kui teenusepakkuja edastab andmeid väljapoole Euroopa Majanduspiirkonda, toimub see Euroopa Komisjoni heakskiidetud kaitsemeetmetega, näiteks lepingu tüüptingimustega."
         ]
       },
