@@ -40,6 +40,8 @@ RULES: list[tuple[str, list[str]]] = [
     (r"dental hygien|zobu higiēn", ["724"]),
     (r"health care|healthcare", ["720", "721"]),
     (r"public health|sabiedrības veselīb", ["722"]),
+    # RSU «Digitālā transformācija veselības nozarē» — добавлено 2026-10-16
+    (r"digital transformation in health|digitālā transformācija veselīb", ["720", "481"]),
     (r"physician assistant|ārsta palīg", ["722"]),
     (r"nutrition|uztur", ["722"]),
     (r"orthotics|prosthetics|ortoz|protēz", ["726", "725"]),
@@ -71,11 +73,15 @@ RULES: list[tuple[str, list[str]]] = [
     # --- образование
     (r"speciālā izglītība|special education", ["141", "142"]),
     (r"izglītības zinātn|education science|educational science", ["142", "141"]),
+    # RTU «Digitālās izglītības tehnoloģijas» (Рига, Резекне, Лиепая) — 2026-10-16
+    (r"digital education|digitālās izglītības", ["142", "481"]),
     (r"teacher|skolotāj|pedagog|pirmsskolas", ["141"]),
     # --- туризм
     (r"tourism|tūrism|hospitality|hotel|viesnīc", ["812", "811"]),
     # --- архитектура, строительство
     (r"architect|arhitekt", ["581"]),
+    # LU «Spatial Planning» — 2026-10-16 (планировка территорий — как архитектура)
+    (r"spatial planning|telpiskā plānošan|teritorijas plānošan", ["581"]),
     (r"geoinformat", ["443"]),
     (r"geomatic|ģeomātik", ["582", "443"]),
     (r"real estate|nekustam", ["345", "582"]),
@@ -103,7 +109,9 @@ RULES: list[tuple[str, list[str]]] = [
     # поэтому \b не срабатывал. Обнаружено при подготовке выборки для
     # подтверждения по правилу (план 2026-09-21, неделя 3, пункт 01, отчёт
     # seed_programme_fields.py, "NO RULE MATCHED").
-    (r"^arts?\b|\bart \|| māksla\b", ["211"]),
+    # 2026-10-16: и «"Arts"» в кавычках (докторская LKA), и «Mākslas» без
+    # английского названия (докторские LMA из NIID: строка « | mākslas»).
+    (r"^arts?\b|\bart \|| māksla\b|\"arts\"|\| mākslas$", ["211"]),
     # --- гуманитарные
     (r"theolog|teoloģ|religio", ["221"]),
     (r"philosoph|filozof", ["226", "225"]),
@@ -116,6 +124,9 @@ RULES: list[tuple[str, list[str]]] = [
     (r"valodas, saziņa|language and culture|eastern european", ["227", "222", "345"]),
     (r"translat|tulkoš|terminolog|philolog|filolo[gģ]|linguist|lingvist|valodu un literatūr|european languages|eiropas valodu|language|zīmju valod", ["222"]),
     (r"anthropolog|asian|āzijas|cultural studies|kultūrvide", ["227", "314"]),
+    # LKA «Culture and Arts Studies», «Intercultural Relations» — 2026-10-16
+    (r"culture and arts studies|kultūras un mākslas studij", ["227", "214"]),
+    (r"intercultural|starpkultūru", ["314", "227"]),
     # --- социальные науки
     (r"psycholog|psiholo[gģ]", ["313"]),
     (r"sociolog|socioloģ", ["314"]),

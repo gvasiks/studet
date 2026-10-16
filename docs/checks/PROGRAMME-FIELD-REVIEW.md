@@ -372,3 +372,24 @@ rehabilitācija»/«Sociālais darbs un sociālā rehabilitācija»). Добав
 Направление — не факт из перечня правила 6 CLAUDE.md, поэтому это
 подтверждение разовое пакетное, а не построчное через Studio; тем не менее
 это ваше решение, не моё — скрипт я не запускаю сам, пока вы не скажете «go».
+
+## 7. Партия 2026-10-16: семь новых правил, 11 программ
+
+К 16 октября без направления оставались 12 латвийских программ (новые записи
+из NIID и сборщиков). Причины: «Mākslas» (родительный падеж, без английского
+названия) и «"Arts"» в кавычках не узнавало правило искусства; для остальных
+правил не было. Добавлено (`pipeline/src/programme_fields.py`, помечены датой):
+
+| Правило | Код | Программы |
+|---|---|---|
+| `"arts"` в кавычках, `| mākslas` без английского названия — к правилу искусства | 211 | LKA «Academic doctoral study programme "Arts"»; LMA «Mākslas» (три записи) |
+| `culture and arts studies` | 227, 214 | LKA «Culture and Arts Studies» → 227 |
+| `intercultural` | 314, 227 | LKA «Intercultural Relations» → 314 |
+| `spatial planning` | 581 | ЛУ «Spatial Planning» |
+| `digitālā transformācija veselīb` | 720, 481 | RSU «Digitālā transformācija veselības nozarē» → 720 |
+| `digital education` / `digitālās izglītības` | 142, 481 | РТУ «Digitālās izglītības tehnoloģijas» (три города) → **481**: из кандидатов берётся код, по которому у вуза и уровня есть данные о выпускниках, у магистратуры РТУ это только 481 |
+
+**Решение владельца 2026-10-16 — подтвердить все 11 по правилу**
+(`confirm_programme_fields_by_rule.py --apply`, подпись называет эту дату).
+Без направления осталась одна программа — LMA «POST» (`lma/post-master`): по
+названию направление не определить.
