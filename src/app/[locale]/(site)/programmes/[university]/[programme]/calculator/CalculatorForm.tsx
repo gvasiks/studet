@@ -17,12 +17,13 @@ import { interpolate } from "@/lib/outcomes";
 import { subjectLabel, termLabel } from "@/lib/term-labels";
 import { formatDate } from "@/lib/dates";
 import { useTrackOnce } from "@/components/Analytics";
+import { Providers } from "@/app/[locale]/providers";
 
 const LEVELS: ExamLevel[] = ["augstakais", "optimalais", "vispaarigais"];
 
 type SubjectInput = { percent: string; level: ExamLevel };
 
-export function CalculatorForm({
+function CalculatorFormForm({
   dict,
   terms,
   gates,
@@ -188,35 +189,42 @@ export function CalculatorForm({
       </div>
 
       <div className="mt-8 rounded-xl bg-zinc-50 p-6">
-        <p className="text-sm text-zinc-500">{dict.calculator.totalLabel}</p>
-        {result ? (
-          <>
-            <p className="text-4xl font-bold tracking-tighter text-zinc-900">{result.total.toFixed(2)}</p>
+        {/* Итог, подсказка «не хватает…» и предупреждение о пороге меняются
+            без перехода фокуса — экранный диктор узнаёт о них из живой
+            области (WCAG 2.2, 4.1.3). Разбор по слагаемым — вне её, иначе
+            он зачитывался бы целиком на каждое изменение. */}
+        <div role="status" aria-live="polite" aria-atomic="true">
+          <p className="text-sm text-zinc-500">{dict.calculator.totalLabel}</p>
+          {result ? (
+            <>
+              <p className="text-4xl font-bold tracking-tighter text-zinc-900">{result.total.toFixed(2)}</p>
+              {result.failedGates.length > 0 && (
+                <p className="mt-4 rounded-lg bg-red-50 px-3 py-2 text-sm text-red-800">{dict.calculator.gateWarning}</p>
+              )}
+            </>
+          ) : (
+            <>
+              <p className="text-4xl font-bold tracking-tighter text-zinc-500" aria-hidden="true">
+                —
+              </p>
+              <p className="mt-2 text-sm text-zinc-700">
+                {hasInvalid
+                  ? dict.calculator.fixInvalid
+                  : interpolate(dict.calculator.incomplete, { list: missing.join(", ") })}
+              </p>
+            </>
+          )}
+        </div>
 
-            <dl className="mt-4 space-y-1 text-sm text-zinc-600">
-              {result.lines.map((line, index) => (
-                <div key={index} className="flex justify-between">
-                  <dt>{termLabel(dict, line.term)}</dt>
-                  <dd>{line.points.toFixed(2)}</dd>
-                </div>
-              ))}
-            </dl>
-
-            {result.failedGates.length > 0 && (
-              <p className="mt-4 rounded-lg bg-red-50 px-3 py-2 text-sm text-red-800">{dict.calculator.gateWarning}</p>
-            )}
-          </>
-        ) : (
-          <>
-            <p className="text-4xl font-bold tracking-tighter text-zinc-500" aria-hidden="true">
-              —
-            </p>
-            <p className="mt-2 text-sm text-zinc-700">
-              {hasInvalid
-                ? dict.calculator.fixInvalid
-                : interpolate(dict.calculator.incomplete, { list: missing.join(", ") })}
-            </p>
-          </>
+        {result && (
+          <dl className="mt-4 space-y-1 text-sm text-zinc-600">
+            {result.lines.map((line, index) => (
+              <div key={index} className="flex justify-between">
+                <dt>{termLabel(dict, line.term)}</dt>
+                <dd>{line.points.toFixed(2)}</dd>
+              </div>
+            ))}
+          </dl>
         )}
       </div>
 
@@ -235,5 +243,16 @@ export function CalculatorForm({
       </p>
       <p className="mt-4 text-xs text-zinc-500">{dict.calculator.disclaimer}</p>
     </div>
+  );
+}
+
+// Провайдер HeroUI — только вокруг интерактивной формы, а не во всей
+// раскладке: публичные страницы без HeroUI не должны грузить его код
+// (правило 4 CLAUDE.md; замер 2026-10-16 — 4–7 КБ сжатого кода на каждой странице).
+export function CalculatorForm(props: React.ComponentProps<typeof CalculatorFormForm>) {
+  return (
+    <Providers>
+      <CalculatorFormForm {...props} />
+    </Providers>
   );
 }

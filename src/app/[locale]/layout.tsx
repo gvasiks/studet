@@ -5,7 +5,6 @@ import { isLocale, languageOf, locales } from "@/i18n/config";
 import { getDictionary } from "@/i18n/dictionaries";
 import { isSiteClosed, SITE_URL } from "@/lib/site";
 import { Analytics } from "@/components/Analytics";
-import { Providers } from "./providers";
 import "../globals.css";
 
 // latin-ext обязателен — без него диакритика латышского (ā, š, ž...)
@@ -39,7 +38,8 @@ export async function generateMetadata({
 // Шапка и подвал живут не здесь, а в раскладках групп маршрутов: (site) —
 // светлые, для каталога и остальных страниц, (home) — тёмные, часть
 // сцены главной. Здесь только то, что общее для всех: <html>, шрифт,
-// провайдеры.
+// счётчик посещений. Провайдер HeroUI — не здесь, а вокруг интерактивных
+// форм (анкета, калькулятор, обратный поиск): публичным страницам он не нужен.
 export default async function LocaleLayout({
   children,
   params,
@@ -53,7 +53,7 @@ export default async function LocaleLayout({
       className={`${inter.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col font-sans">
-        <Providers>{children}</Providers>
+        {children}
         {/* Счётчик посещений: ничего не рисует, считает только на рабочем сайте */}
         <Analytics />
       </body>

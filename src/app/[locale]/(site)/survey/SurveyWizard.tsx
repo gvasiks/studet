@@ -12,6 +12,7 @@ import { DURATION_LIMITS, FEE_LIMITS, UNIVERSITY_KINDS } from "@/lib/catalog-que
 import { interpolate } from "@/lib/outcomes";
 import { ArrowRightIcon, CheckIcon, SearchIcon } from "@/components/icons";
 import { track } from "@/components/Analytics";
+import { Providers } from "@/app/[locale]/providers";
 
 type Funding = "budget_only" | "any";
 // "any" либо язык обучения из профиля страны.
@@ -100,7 +101,7 @@ function StepShell({
   );
 }
 
-export function SurveyWizard({ locale, dict }: { locale: Locale; dict: Dictionary }) {
+function SurveyWizardForm({ locale, dict }: { locale: Locale; dict: Dictionary }) {
   const router = useRouter();
   const [step, setStep] = useState(0);
   const [answers, setAnswers] = useState<Answers>(initialAnswers);
@@ -436,5 +437,16 @@ export function SurveyWizard({ locale, dict }: { locale: Locale; dict: Dictionar
         </div>
       </div>
     </main>
+  );
+}
+
+// Провайдер HeroUI — только вокруг интерактивной формы, а не во всей
+// раскладке: публичные страницы без HeroUI не должны грузить его код
+// (правило 4 CLAUDE.md; замер 2026-10-16 — 4–7 КБ сжатого кода на каждой странице).
+export function SurveyWizard(props: React.ComponentProps<typeof SurveyWizardForm>) {
+  return (
+    <Providers>
+      <SurveyWizardForm {...props} />
+    </Providers>
   );
 }

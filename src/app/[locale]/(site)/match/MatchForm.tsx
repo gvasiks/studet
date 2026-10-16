@@ -14,6 +14,7 @@ import { subjectLabel, termLabel } from "@/lib/term-labels";
 import { ArrowRightIcon, CheckIcon, InfoIcon } from "@/components/icons";
 import { formatDate } from "@/lib/dates";
 import { useTrackOnce } from "@/components/Analytics";
+import { Providers } from "@/app/[locale]/providers";
 
 const LEVELS: ExamLevel[] = ["augstakais", "optimalais", "vispaarigais"];
 
@@ -45,7 +46,7 @@ const GROUP_STYLE: Record<
 // не путать с "можно посчитать балл" (computed) — это более бедный ответ.
 const REQUIREMENTS_STYLE = { bar: "bg-sky-500", edge: "border-sky-500", chip: "bg-sky-50 text-sky-800" };
 
-export function MatchForm({
+function MatchFormForm({
   dict,
   locale,
   formulas,
@@ -534,5 +535,16 @@ function RequirementRow({
         )}
       </p>
     </li>
+  );
+}
+
+// Провайдер HeroUI — только вокруг интерактивной формы, а не во всей
+// раскладке: публичные страницы без HeroUI не должны грузить его код
+// (правило 4 CLAUDE.md; замер 2026-10-16 — 4–7 КБ сжатого кода на каждой странице).
+export function MatchForm(props: React.ComponentProps<typeof MatchFormForm>) {
+  return (
+    <Providers>
+      <MatchFormForm {...props} />
+    </Providers>
   );
 }

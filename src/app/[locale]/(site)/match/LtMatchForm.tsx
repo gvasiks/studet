@@ -14,6 +14,7 @@ import { enumLabel } from "@/lib/names";
 import { interpolate } from "@/lib/outcomes";
 import { formatDate } from "@/lib/dates";
 import { useTrackOnce } from "@/components/Analytics";
+import { Providers } from "@/app/[locale]/providers";
 
 // Официальные страницы LAMA BPO: калькулятор (дополнительные баллы и
 // окончательный расчёт) и объявление о порядке приёма (минимальные требования).
@@ -44,7 +45,7 @@ type Scored = {
 //
 // Оценки живут только в памяти этой страницы: не в адресе, не в
 // localStorage и не на сервере (экзамены несовершеннолетних, CLAUDE.md).
-export function LtMatchForm({
+function LtMatchFormForm({
   dict,
   locale,
   groups,
@@ -337,5 +338,16 @@ export function LtMatchForm({
         <p className="text-xs text-zinc-600">{calculator.decidedBy}</p>
       </div>
     </div>
+  );
+}
+
+// Провайдер HeroUI — только вокруг интерактивной формы, а не во всей
+// раскладке: публичные страницы без HeroUI не должны грузить его код
+// (правило 4 CLAUDE.md; замер 2026-10-16 — 4–7 КБ сжатого кода на каждой странице).
+export function LtMatchForm(props: React.ComponentProps<typeof LtMatchFormForm>) {
+  return (
+    <Providers>
+      <LtMatchFormForm {...props} />
+    </Providers>
   );
 }

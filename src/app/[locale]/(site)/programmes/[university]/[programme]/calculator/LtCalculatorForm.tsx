@@ -10,6 +10,7 @@ import { ltInputSubjects, ltScore, MIN_COUNTED_SCORE, type LtComponent, type LtE
 import { interpolate } from "@/lib/outcomes";
 import { formatDate } from "@/lib/dates";
 import { useTrackOnce } from "@/components/Analytics";
+import { Providers } from "@/app/[locale]/providers";
 
 // Страница официального калькулятора LAMA BPO — туда ведём за
 // дополнительными баллами и за окончательным расчётом.
@@ -24,7 +25,7 @@ type SubjectInput = { score: string; course: "A" | "B" };
 // сверенной (см. src/lib/lt-score-queries.ts); сам расчёт — src/lib/lt-score.ts.
 // Оценки считаются в браузере и никуда не отправляются — как в латвийском
 // калькуляторе.
-export function LtCalculatorForm({
+function LtCalculatorFormForm({
   dict,
   locale,
   components,
@@ -120,22 +121,28 @@ export function LtCalculatorForm({
       </div>
 
       <div className="mt-8 rounded-xl bg-zinc-50 p-6">
-        <p className="text-sm text-zinc-500">{text.totalLabel}</p>
-        {result ? (
-          <>
+        {/* Итог и подсказка меняются без перехода фокуса — экранный диктор
+            узнаёт о них из живой области (WCAG 2.2, 4.1.3). Разбор — вне её. */}
+        <div role="status" aria-live="polite" aria-atomic="true">
+          <p className="text-sm text-zinc-500">{text.totalLabel}</p>
+          {result ? (
             <p className="text-4xl font-bold tracking-tighter text-zinc-900">{number(result.total)}</p>
+          ) : (
+            <>
+              <p className="text-4xl font-bold tracking-tighter text-zinc-500" aria-hidden="true">
+                —
+              </p>
+              <p className="mt-2 text-sm text-zinc-700">{hasInvalid ? dict.calculator.fixInvalid : text.empty}</p>
+            </>
+          )}
+        </div>
 
+        {result && (
+          <>
             <h2 className="mt-5 text-xs uppercase tracking-wide text-zinc-500">{text.breakdownTitle}</h2>
             <div className="mt-2">
               <LtScoreBreakdown dict={dict} language={language} components={components} items={result.items} />
             </div>
-          </>
-        ) : (
-          <>
-            <p className="text-4xl font-bold tracking-tighter text-zinc-500" aria-hidden="true">
-              —
-            </p>
-            <p className="mt-2 text-sm text-zinc-700">{hasInvalid ? dict.calculator.fixInvalid : text.empty}</p>
           </>
         )}
       </div>
@@ -155,5 +162,16 @@ export function LtCalculatorForm({
       </p>
       <p className="mt-2 text-xs leading-relaxed text-zinc-500">{text.decidedBy}</p>
     </div>
+  );
+}
+
+// Провайдер HeroUI — только вокруг интерактивной формы, а не во всей
+// раскладке: публичные страницы без HeroUI не должны грузить его код
+// (правило 4 CLAUDE.md; замер 2026-10-16 — 4–7 КБ сжатого кода на каждой странице).
+export function LtCalculatorForm(props: React.ComponentProps<typeof LtCalculatorFormForm>) {
+  return (
+    <Providers>
+      <LtCalculatorFormForm {...props} />
+    </Providers>
   );
 }
