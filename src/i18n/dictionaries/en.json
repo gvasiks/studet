@@ -108,9 +108,7 @@
     "levelTabsLabel": "Study level",
     "found": "{count} programmes found",
     "foundOne": "{count} programme found",
-    "shown": "Showing {shown} of {total}",
     "calculatorCta": "Calculate score",
-    "showMore": "Show more",
     "clear": "Clear",
     "openFilters": "Filters",
     "filtersSummary": "Shown by filter:",
@@ -145,7 +143,14 @@
       },
       "apply": "Filter"
     },
-    "yearOne": "year"
+    "yearOne": "year",
+    "pagination": {
+      "label": "Pages",
+      "previous": "Previous",
+      "next": "Next",
+      "page": "Page {page}",
+      "range": "Showing {from}–{to} of {total}"
+    }
   },
   "programme": {
     "back": "Back",

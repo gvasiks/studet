@@ -108,9 +108,7 @@
     "levelTabsLabel": "Õppeaste",
     "found": "Leitud {count} õppekava",
     "foundOne": "Leitud {count} õppekava",
-    "shown": "Näidatud {shown} / {total}",
     "calculatorCta": "Arvuta punktid",
-    "showMore": "Näita rohkem",
     "clear": "Tühjenda",
     "openFilters": "Filtrid",
     "filtersSummary": "Näidatud filtri järgi:",
@@ -145,7 +143,14 @@
       },
       "apply": "Filtreeri"
     },
-    "yearOne": "aasta"
+    "yearOne": "aasta",
+    "pagination": {
+      "label": "Leheküljed",
+      "previous": "Eelmine",
+      "next": "Järgmine",
+      "page": "{page}. lehekülg",
+      "range": "Näidatud {from}–{to} / {total}"
+    }
   },
   "programme": {
     "back": "Tagasi",

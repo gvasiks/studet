@@ -11,7 +11,8 @@ import AxeBuilder from "@axe-core/playwright";
 // «Par programmu» (диплом и описание), которых нет у программ ЛУ.
 // /programmes/lu/economics/calculator — калькулятор с формулой; /programmes/lu/nav-tadas — страница
 // «не найдено» (код ответа 404, но вёрстка своя — её тоже проверяем).
-const ROUTES = ["", "/programmes", "/programmes/lu/economics", "/programmes/lu/economics/calculator", "/programmes/gfk/110", "/programmes/lu/nav-tadas", "/survey", "/match", "/rights", "/glossary", "/privacy", "/favorites"];
+// /programmes?page=2 — навигация по страницам каталога (с 2026-10-16)
+const ROUTES = ["", "/programmes", "/programmes?page=2", "/programmes/lu/economics", "/programmes/lu/economics/calculator", "/programmes/gfk/110", "/programmes/lu/nav-tadas", "/survey", "/match", "/rights", "/glossary", "/privacy", "/favorites"];
 const LOCALES = ["lv", "en-lv", "lt-lv"] as const;
 
 for (const locale of LOCALES) {

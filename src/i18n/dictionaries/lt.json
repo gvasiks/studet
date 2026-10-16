@@ -108,9 +108,7 @@
     "levelTabsLabel": "Studijų lygmuo",
     "found": "Rasta programų: {count}",
     "foundOne": "Rasta programų: {count}",
-    "shown": "Rodoma {shown} iš {total}",
     "calculatorCta": "Skaičiuoti balą",
-    "showMore": "Rodyti daugiau",
     "clear": "Išvalyti",
     "openFilters": "Filtrai",
     "filtersSummary": "Rodoma pagal filtrą:",
@@ -145,7 +143,14 @@
       },
       "apply": "Filtruoti"
     },
-    "yearOne": "m."
+    "yearOne": "m.",
+    "pagination": {
+      "label": "Puslapiai",
+      "previous": "Ankstesnis",
+      "next": "Kitas",
+      "page": "{page} puslapis",
+      "range": "Rodoma {from}–{to} iš {total}"
+    }
   },
   "programme": {
     "back": "Atgal",

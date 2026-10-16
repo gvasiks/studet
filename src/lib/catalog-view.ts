@@ -1,7 +1,7 @@
 import type { Language } from "@/i18n/config";
 import type { ProgrammeWithUniversity } from "./catalog";
 import type { CatalogState, LevelKey } from "./catalog-query";
-import { LEVEL_KEYS } from "./catalog-query";
+import { LEVEL_KEYS, PAGE_SIZE } from "./catalog-query";
 import { localizedName } from "./names";
 
 // Без диакритики и регистра: "riga" находит "Rīga", "sikdatnes" —
@@ -84,12 +84,19 @@ export type CatalogView = {
   levelCounts: Record<LevelKey, number>;
   /** Сколько подошло с учётом выбранного уровня — это число "Atrastas N". */
   total: number;
+  /** Карточки текущей страницы. */
   visible: ProgrammeWithUniversity[];
+  /** Текущая страница (номер из адреса, но не дальше последней) и их число. */
+  page: number;
+  pages: number;
+  /** Какие по счёту программы на странице: «25–48 из 812». */
+  from: number;
+  to: number;
 };
 
 // Порядок: длительность и плата -> поиск -> счётчики по уровням (они не
 // зависят от выбранного таба, иначе остальные табы показывали бы нули) ->
-// уровень -> сортировка -> "показать ещё". Фильтры базы (город, язык,
+// уровень -> сортировка -> страница. Фильтры базы (город, язык,
 // направление...) уже применены до вызова.
 export function buildCatalogView(
   programmes: ProgrammeWithUniversity[],
@@ -103,10 +110,36 @@ export function buildCatalogView(
   const atLevel = state.level ? searched.filter((programme) => programme.degree_level === state.level) : searched;
   const sorted = sortProgrammes(atLevel, state.sort, language);
 
+  const pages = Math.max(1, Math.ceil(atLevel.length / PAGE_SIZE));
+  const page = Math.min(state.page, pages);
+  const start = (page - 1) * PAGE_SIZE;
+  const visible = sorted.slice(start, start + PAGE_SIZE);
+
   return {
     matched: searched.length,
     levelCounts,
     total: atLevel.length,
-    visible: sorted.slice(0, state.limit),
+    visible,
+    page,
+    pages,
+    from: visible.length > 0 ? start + 1 : 0,
+    to: start + visible.length,
   };
+}
+
+/**
+ * Номера страниц для навигации: первая, последняя, текущая и её соседи, а
+ * между ними пропуск («gap») — «1 … 4 5 6 … 34». При семи страницах и
+ * меньше — все подряд.
+ */
+export function pageList(page: number, pages: number): (number | "gap")[] {
+  if (pages <= 7) return Array.from({ length: pages }, (_, index) => index + 1);
+  const shown = new Set([1, pages, page - 1, page, page + 1].filter((n) => n >= 1 && n <= pages));
+  const sorted = [...shown].sort((a, b) => a - b);
+  const result: (number | "gap")[] = [];
+  sorted.forEach((n, index) => {
+    if (index > 0 && n - sorted[index - 1] > 1) result.push(n - sorted[index - 1] === 2 ? n - 1 : "gap");
+    result.push(n);
+  });
+  return result;
 }

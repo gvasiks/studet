@@ -15,12 +15,11 @@ import {
   catalogQuery,
   DURATION_LIMITS,
   FEE_LIMITS,
-  PAGE_SIZE,
   SORT_KEYS,
   UNIVERSITY_KINDS,
   type CatalogState,
 } from "@/lib/catalog-query";
-import type { CatalogView } from "@/lib/catalog-view";
+import { pageList, type CatalogView } from "@/lib/catalog-view";
 import { INTEREST_KEYS } from "@/lib/fields";
 import { interpolate } from "@/lib/outcomes";
 
@@ -392,7 +391,7 @@ export function LevelTabs({
             return (
               <li key={tab.key ?? "all"}>
                 <Link
-                  href={`${base}${catalogQuery(state, { level: tab.key, limit: PAGE_SIZE })}`}
+                  href={`${base}${catalogQuery(state, { level: tab.key, page: 1 })}`}
                   aria-current={active ? "page" : undefined}
                   className={`inline-flex h-9 items-center gap-2 rounded-full px-4 text-sm transition-colors ${
                     active ? "bg-white font-semibold text-zinc-900 shadow-pill" : "font-medium text-zinc-600 hover:text-zinc-900"
@@ -436,7 +435,11 @@ export function SurveyCard({ locale, dict }: { locale: Locale; dict: Dictionary 
   );
 }
 
-export function LoadMore({
+// Страницы каталога (решение владельца 2026-10-16): «Parādītas 25–48 no 812»
+// и навигация «1 … 4 5 6 … 34» со ссылками «назад» и «вперёд». Обычные
+// ссылки на тот же адрес с другим ?page= — работают без JavaScript и
+// индексируются. Текущая страница помечена aria-current (WCAG 2.2, 1.3.1).
+export function Pagination({
   locale,
   dict,
   state,
@@ -447,31 +450,55 @@ export function LoadMore({
   state: CatalogState;
   view: CatalogView;
 }) {
-  const shown = view.visible.length;
-  const percent = view.total > 0 ? Math.round((shown / view.total) * 100) : 0;
+  const text = dict.catalog.pagination;
+  const href = (page: number) => `/${locale}/programmes${catalogQuery(state, { page })}`;
+  const pill =
+    "inline-flex h-10 min-w-10 items-center justify-center rounded-full px-3 text-sm font-medium transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand";
 
   return (
     <div className="mt-10 flex flex-col items-center gap-3">
-      <div
-        role="progressbar"
-        aria-valuemin={0}
-        aria-valuemax={view.total}
-        aria-valuenow={shown}
-        aria-label={interpolate(dict.catalog.shown, { shown, total: view.total })}
-        className="h-1 w-60 overflow-hidden rounded-full bg-zinc-200"
-      >
-        <div className="h-full rounded-full bg-brand" style={{ width: `${percent}%` }} />
-      </div>
-      <p className="text-[13px] text-zinc-600">{interpolate(dict.catalog.shown, { shown, total: view.total })}</p>
-      {shown < view.total && (
-        <Link
-          // scroll={false}: список дорастает вниз, а не прыгает в начало страницы
-          scroll={false}
-          href={`/${locale}/programmes${catalogQuery(state, { limit: state.limit + PAGE_SIZE })}`}
-          className="inline-flex h-10 items-center rounded-full bg-zinc-200 px-5 text-sm font-medium text-zinc-900 transition-colors hover:bg-zinc-300 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"
-        >
-          {dict.catalog.showMore}
-        </Link>
+      <p className="text-[13px] text-zinc-600">
+        {interpolate(text.range, { from: view.from, to: view.to, total: view.total })}
+      </p>
+      {view.pages > 1 && (
+        <nav aria-label={text.label}>
+          <ul className="flex flex-wrap items-center justify-center gap-1.5">
+            {view.page > 1 && (
+              <li>
+                <Link href={href(view.page - 1)} rel="prev" className={`${pill} bg-zinc-200 text-zinc-900 hover:bg-zinc-300`}>
+                  {text.previous}
+                </Link>
+              </li>
+            )}
+            {pageList(view.page, view.pages).map((item, index) =>
+              item === "gap" ? (
+                <li key={`gap-${index}`} aria-hidden="true" className="px-1 text-zinc-500">
+                  …
+                </li>
+              ) : (
+                <li key={item}>
+                  <Link
+                    href={href(item)}
+                    aria-label={interpolate(text.page, { page: item })}
+                    aria-current={item === view.page ? "page" : undefined}
+                    className={`${pill} ${
+                      item === view.page ? "bg-zinc-900 text-white" : "bg-zinc-100 text-zinc-900 hover:bg-zinc-200"
+                    }`}
+                  >
+                    {item}
+                  </Link>
+                </li>
+              ),
+            )}
+            {view.page < view.pages && (
+              <li>
+                <Link href={href(view.page + 1)} rel="next" className={`${pill} bg-zinc-200 text-zinc-900 hover:bg-zinc-300`}>
+                  {text.next}
+                </Link>
+              </li>
+            )}
+          </ul>
+        </nav>
       )}
     </div>
   );

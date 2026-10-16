@@ -28,10 +28,14 @@ export type FeeLimit = (typeof FEE_LIMITS)[number];
 export const UNIVERSITY_KINDS = ["public", "private"] as const;
 export type UniversityKind = (typeof UNIVERSITY_KINDS)[number];
 
-export const PAGE_SIZE = 12;
-// Потолок нужен, чтобы ?limit=999999 не превратился в запрос на весь
-// каталог с рендером всех карточек разом.
-const MAX_LIMIT = 600;
+// Каталог показывается страницами по PAGE_SIZE программ (решение владельца
+// 2026-10-16). Раньше список дорастал кнопкой «показать ещё» до 600 карточек
+// на одной странице — до 4 МБ разметки (аудит 2026-10-04). Старые ссылки с
+// ?limit= открывают первую страницу.
+export const PAGE_SIZE = 24;
+// Номер страницы больше этого не принимается — дальше последней страницы
+// buildCatalogView всё равно не уйдёт, это лишь защита от ?page=1e9.
+const MAX_PAGE = 1000;
 
 // Какие страны показывает каталог. По умолчанию (null) — общий список всех
 // открытых стран (решение владельца 2026-10-10); код страны — только она.
@@ -45,7 +49,8 @@ export type CatalogState = {
   q: string;
   sort: SortKey;
   level: LevelKey | null;
-  limit: number;
+  /** Номер страницы списка, с единицы. */
+  page: number;
   cities: string[];
   interests: InterestKey[];
   university?: string;
@@ -87,7 +92,7 @@ function oneOf<T extends number>(allowed: readonly T[], value: string | undefine
 export function parseCatalogState(sp: SearchParams, open: readonly Country[] = countries): CatalogState {
   const sort = firstValue(sp.sort);
   const level = firstValue(sp.level);
-  const limit = Number(firstValue(sp.limit));
+  const page = Number(firstValue(sp.page));
   const kind = firstValue(sp.kind);
 
   const country = firstValue(sp.country);
@@ -99,7 +104,7 @@ export function parseCatalogState(sp: SearchParams, open: readonly Country[] = c
     q: (firstValue(sp.q) ?? "").trim().slice(0, 100),
     sort: (SORT_KEYS as readonly string[]).includes(sort ?? "") ? (sort as SortKey) : "name",
     level: (LEVEL_KEYS as readonly string[]).includes(level ?? "") ? (level as LevelKey) : null,
-    limit: Number.isFinite(limit) && limit >= PAGE_SIZE ? Math.min(Math.floor(limit), MAX_LIMIT) : PAGE_SIZE,
+    page: Number.isInteger(page) && page >= 1 ? Math.min(page, MAX_PAGE) : 1,
     cities: listValues(sp.city),
     interests: listValues(sp.interest).filter(isInterestKey),
     university: firstValue(sp.university) || undefined,
@@ -142,7 +147,7 @@ export function catalogQuery(state: CatalogState, overrides: Partial<CatalogStat
   if (next.q) params.set("q", next.q);
   if (next.sort !== "name") params.set("sort", next.sort);
   if (next.level) params.set("level", next.level);
-  if (next.limit !== PAGE_SIZE) params.set("limit", String(next.limit));
+  if (next.page !== 1) params.set("page", String(next.page));
   for (const city of next.cities) params.append("city", city);
   for (const interest of next.interests) params.append("interest", interest);
   if (next.university) params.set("university", next.university);
@@ -157,7 +162,7 @@ export function catalogQuery(state: CatalogState, overrides: Partial<CatalogStat
   return query ? `?${query}` : "";
 }
 
-/** Есть ли что сбрасывать кнопкой "Notīrīt": сортировка и число карточек — не фильтры. */
+/** Есть ли что сбрасывать кнопкой "Notīrīt": сортировка и номер страницы — не фильтры. */
 export function hasActiveFilters(state: CatalogState): boolean {
   return Boolean(
     state.countryChoice ||

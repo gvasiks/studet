@@ -15,7 +15,7 @@ import { countriesShown, hasActiveFilters, onlySupported, parseCatalogState } fr
 import { buildCatalogView } from "@/lib/catalog-view";
 import { CatalogForm } from "./CatalogForm";
 import { ProgrammeCard } from "@/components/ProgrammeCard";
-import { FilterSidebar, LevelTabs, LoadMore, SearchAndSort, SurveyCard } from "./CatalogControls";
+import { FilterSidebar, LevelTabs, Pagination, SearchAndSort, SurveyCard } from "./CatalogControls";
 import { formatDate } from "@/lib/dates";
 
 // Каталог обновляет Python-конвейер напрямую в базе, мимо Next.js —
@@ -176,7 +176,7 @@ export default async function ProgrammesPage({
                   );
                 })}
               </div>
-              <LoadMore locale={locale} dict={dict} state={state} view={view} />
+              <Pagination locale={locale} dict={dict} state={state} view={view} />
             </>
           )}
         </div>

@@ -110,9 +110,7 @@
     "levelTabsLabel": "Studiju līmenis",
     "found": "Atrastas {count} programmas",
     "foundOne": "Atrasta {count} programma",
-    "shown": "Parādītas {shown} no {total}",
     "calculatorCta": "Aprēķināt punktus",
-    "showMore": "Rādīt vairāk",
     "clear": "Notīrīt",
     "openFilters": "Filtri",
     "filters": {
@@ -145,7 +143,14 @@
       },
       "apply": "Filtrēt"
     },
-    "yearOne": "gads"
+    "yearOne": "gads",
+    "pagination": {
+      "label": "Lapas",
+      "previous": "Iepriekšējā",
+      "next": "Nākamā",
+      "page": "{page}. lapa",
+      "range": "Parādītas {from}–{to} no {total}"
+    }
   },
   "programme": {
     "back": "Atpakaļ",

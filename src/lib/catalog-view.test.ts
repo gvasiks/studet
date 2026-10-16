@@ -8,7 +8,7 @@ import {
   PAGE_SIZE,
   parseCatalogState,
 } from "./catalog-query";
-import { buildCatalogView, matchesQuery, normalize } from "./catalog-view";
+import { buildCatalogView, matchesQuery, normalize, pageList } from "./catalog-view";
 
 const programme = (
   name_en: string,
@@ -74,12 +74,26 @@ describe("вид каталога", () => {
     expect(byUniversity[0].university.name_en).toBe("Riga Technical University");
   });
 
-  it("отдаёт только limit карточек, но total — все подошедшие", () => {
-    const many = Array.from({ length: 30 }, (_, i) => programme(`P${String(i).padStart(2, "0")}`, "bachelor", LU));
-    const view = buildCatalogView(many, state, "en");
-    expect(view.visible).toHaveLength(PAGE_SIZE);
-    expect(view.total).toBe(30);
-    expect(buildCatalogView(many, { ...state, limit: 24 }, "en").visible).toHaveLength(24);
+  it("показывает одну страницу, total — все подошедшие", () => {
+    const many = Array.from({ length: 60 }, (_, i) => programme(`P${String(i).padStart(2, "0")}`, "bachelor", LU));
+    const first = buildCatalogView(many, state, "en");
+    expect(first.visible).toHaveLength(PAGE_SIZE);
+    expect(first).toMatchObject({ total: 60, page: 1, pages: 3, from: 1, to: PAGE_SIZE });
+    const last = buildCatalogView(many, { ...state, page: 3 }, "en");
+    expect(last.visible.map((p) => p.name_en)).toEqual(["P48", "P49", "P50", "P51", "P52", "P53", "P54", "P55", "P56", "P57", "P58", "P59"]);
+    expect(last).toMatchObject({ page: 3, from: 49, to: 60 });
+    // номер дальше последней страницы — последняя страница, а не пустой список
+    expect(buildCatalogView(many, { ...state, page: 99 }, "en")).toMatchObject({ page: 3, from: 49 });
+    // пустой результат — одна страница без карточек
+    expect(buildCatalogView([], state, "en")).toMatchObject({ page: 1, pages: 1, from: 0, to: 0 });
+  });
+
+  it("номера страниц с пропусками", () => {
+    expect(pageList(1, 5)).toEqual([1, 2, 3, 4, 5]);
+    expect(pageList(1, 34)).toEqual([1, 2, "gap", 34]);
+    expect(pageList(5, 34)).toEqual([1, "gap", 4, 5, 6, "gap", 34]);
+    expect(pageList(3, 34)).toEqual([1, 2, 3, 4, "gap", 34]);
+    expect(pageList(34, 34)).toEqual([1, "gap", 33, 34]);
   });
 });
 
@@ -93,7 +107,7 @@ describe("адрес каталога", () => {
       q: "ekonomika",
       sort: "university",
       level: "master",
-      limit: "24",
+      page: "2",
       city: ["riga", "jelgava"],
       interest: "it,law",
       budget: "1",
@@ -102,22 +116,26 @@ describe("адрес каталога", () => {
       q: "ekonomika",
       sort: "university",
       level: "master",
-      limit: 24,
+      page: 2,
       budgetOnly: true,
     });
     expect(catalogQuery(state)).toContain("city=riga&city=jelgava");
     expect(state.interests).toEqual(["it", "law"]);
   });
 
-  it("отбрасывает мусорные значения: неизвестную сортировку, уровень и огромный limit", () => {
-    const state = parseCatalogState({ sort: "hack", level: "phd", limit: "999999" });
+  it("отбрасывает мусорные значения: неизвестную сортировку, уровень и номер страницы", () => {
+    const state = parseCatalogState({ sort: "hack", level: "phd", page: "999999" });
     expect(state.sort).toBe("name");
     expect(state.level).toBeNull();
-    expect(state.limit).toBe(600);
+    expect(state.page).toBe(1000);
+    expect(parseCatalogState({ page: "-3" }).page).toBe(1);
+    expect(parseCatalogState({ page: "2.5" }).page).toBe(1);
+    // старая ссылка с ?limit= — первая страница
+    expect(parseCatalogState({ limit: "48" }).page).toBe(1);
   });
 
   it("сортировка и число карточек — не фильтры", () => {
-    expect(hasActiveFilters(parseCatalogState({ sort: "name_desc", limit: "24" }))).toBe(false);
+    expect(hasActiveFilters(parseCatalogState({ sort: "name_desc", page: "3" }))).toBe(false);
     expect(hasActiveFilters(parseCatalogState({ q: "x" }))).toBe(true);
   });
 });
