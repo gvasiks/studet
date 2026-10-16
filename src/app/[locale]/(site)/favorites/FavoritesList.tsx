@@ -7,7 +7,7 @@ import type { Dictionary } from "@/i18n/dictionaries";
 import { enumLabel, getProgrammesByIds, localizedName, type ProgrammeWithUniversity } from "@/lib/catalog";
 import { matchRounds, type ApplicationRound } from "@/lib/deadlines";
 import { openDeadline, tallinnDate } from "@/lib/ee-admission";
-import { getFavoriteIds, subscribeToFavorites } from "@/lib/favorites";
+import { getFavoriteIds, keepOnlyFavorites, subscribeToFavorites } from "@/lib/favorites";
 import { interpolate } from "@/lib/outcomes";
 import { ProgrammeCard } from "@/components/ProgrammeCard";
 import { ArrowRightIcon, CheckIcon, StarIcon, XIcon } from "@/components/icons";
@@ -44,6 +44,8 @@ export function FavoritesList({
   const [programmes, setProgrammes] = useState<ProgrammeWithUniversity[] | null>(null);
   // null — человек ещё ничего не выбирал: сравниваем первые MAX_COMPARE.
   const [chosenIds, setChosenIds] = useState<string[] | null>(null);
+  // Были ли в списке программы, которых каталог больше не показывает.
+  const [removedMissing, setRemovedMissing] = useState(false);
   const country = countryOf(locale);
 
   useEffect(() => {
@@ -62,6 +64,13 @@ export function FavoritesList({
       const lists = await Promise.all(
         groups.map(async (group) => {
           const data = await getProgrammesByIds(group.country, group.ids);
+          // Запрос прошёл, а части программ в ответе нет — их больше нет в
+          // каталоге: убираем из хранилища (при ошибке запроса сюда не дойдём).
+          // Пометку ставим и у отменённой загрузки: хранилище она уже почистила,
+          // а следующая загрузка лишнего не найдёт и пометку не поставит.
+          if (keepOnlyFavorites(group.country, data.map((programme) => programme.id))) {
+            setRemovedMissing(true);
+          }
           // База отдаёт в своём порядке — возвращаем порядок, в котором
           // человек добавлял программы: от него зависит, какие четыре
           // сравниваются по умолчанию.
@@ -150,6 +159,11 @@ export function FavoritesList({
 
   return (
     <>
+      {removedMissing && (
+        <p role="status" className="mt-8 rounded-xl bg-amber-50 px-4 py-3 text-sm text-amber-900">
+          {dict.favorites.removedMissing}
+        </p>
+      )}
       {/* Те же карточки, что в каталоге, плюс галочка «сравнить». */}
       <div className="mt-8 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
         {programmes.map((programme) => {

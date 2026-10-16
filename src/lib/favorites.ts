@@ -75,6 +75,20 @@ export function toggleFavorite(country: Country, programmeId: string): boolean {
   return false;
 }
 
+/**
+ * Оставить в списке страны только эти id — тех программ, которые база ещё
+ * показывает. Скрытая или удалённая из каталога программа иначе навсегда
+ * оставалась бы в счётчике шапки, а убрать её со страницы было нельзя: её
+ * карточки больше нет (аудит 2026-10-04). Возвращает, было ли что убрать.
+ */
+export function keepOnlyFavorites(country: Country, available: readonly string[]): boolean {
+  const ids = readIds(country);
+  const kept = ids.filter((id) => available.includes(id));
+  if (kept.length === ids.length) return false;
+  writeIds(country, kept);
+  return true;
+}
+
 export function subscribeToFavorites(callback: () => void): () => void {
   if (typeof window === "undefined") return () => {};
   window.addEventListener(CHANGE_EVENT, callback);
