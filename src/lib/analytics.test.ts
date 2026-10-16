@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { CAPTURE_URL, pageviewEvent, shouldCount, uuidv7, withoutQuery } from "./analytics";
+import { CAPTURE_URL, pageviewEvent, productEvent, shouldCount, uuidv7, withoutQuery } from "./analytics";
 
 const visit = { distinctId: "visitor-1", sessionId: "session-1" };
 
@@ -41,6 +41,23 @@ describe("счётчик посещений: что уходит в аналит
     });
     // ни поискового запроса на сайте, ни запроса в поисковике
     expect(JSON.stringify(event)).not.toMatch(/tiesibas|budget|augstskolas/);
+  });
+
+  it("событие функции — только имя, адрес без параметров и номер визита", () => {
+    const event = productEvent("phc_test", visit, "calculator_result_shown", "https://studypick.eu/lv/programmes/lu/medicina/calculator?x=1#r");
+    expect(event).toEqual({
+      api_key: "phc_test",
+      event: "calculator_result_shown",
+      distinct_id: "visitor-1",
+      properties: {
+        $current_url: "https://studypick.eu/lv/programmes/lu/medicina/calculator",
+        $host: "studypick.eu",
+        $pathname: "/lv/programmes/lu/medicina/calculator",
+        $session_id: "session-1",
+        $process_person_profile: false,
+        $lib: "studypick-web",
+      },
+    });
   });
 
   it("заход без источника помечается как прямой", () => {

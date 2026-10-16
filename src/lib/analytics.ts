@@ -4,7 +4,7 @@
 //
 // Библиотеки PostHog в проекте нет намеренно: она весит около 100 КБ в
 // сжатом виде и по умолчанию сама собирает клики и содержимое страницы.
-// Здесь уходит только то, что перечислено в pageviewEvent, — политика
+// Здесь уходит только то, что перечислено в pageviewEvent и productEvent, — политика
 // конфиденциальности (раздел «Naudojimo statistika» / «Usage statistics»)
 // обещает ровно это: без cookies, без хранения в браузере, без содержимого
 // полей ввода, без записи сессий.
@@ -66,6 +66,37 @@ export function pageviewEvent(key: string, visit: Visit, href: string, referrer:
       $referring_domain: cameFrom ? new URL(cameFrom).hostname : "$direct",
       $session_id: visit.sessionId,
       // событие без профиля человека: PostHog не заводит на посетителя запись
+      $process_person_profile: false,
+      $lib: "studypick-web",
+    },
+  };
+}
+
+/**
+ * События о том, что функцией пользуются до конца (docs/ANALYTICS-PLAN.md,
+ * «Дополнительные вопросы»). Список закрытый: новое событие — сначала в план
+ * и в политику конфиденциальности, потом сюда.
+ *
+ * - survey_completed — анкета пройдена до кнопки «Показать программы»;
+ * - calculator_result_shown — калькулятор показал посчитанный балл;
+ * - match_result_shown — обратный поиск показал хотя бы одну программу с баллом.
+ *
+ * Свойств у них нет: какая программа, видно из адреса страницы, а введённые
+ * результаты экзаменов и сам балл в событие не попадают никогда.
+ */
+export type ProductEvent = "survey_completed" | "calculator_result_shown" | "match_result_shown";
+
+export function productEvent(key: string, visit: Visit, name: ProductEvent, href: string) {
+  const page = new URL(href);
+  return {
+    api_key: key,
+    event: name,
+    distinct_id: visit.distinctId,
+    properties: {
+      $current_url: withoutQuery(href),
+      $host: page.host,
+      $pathname: page.pathname,
+      $session_id: visit.sessionId,
       $process_person_profile: false,
       $lib: "studypick-web",
     },

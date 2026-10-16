@@ -357,7 +357,7 @@
         "id": "analytics",
         "title": "Vietnes lietošanas statistika",
         "body": [
-          "Lai saprastu, kuras lapas tiek lasītas un cik ātri tās ielādējas, mēs izmantojam PostHog analītiku ar serveriem Eiropas Savienībā. Tā ir iestatīta šādi:",
+          "Lai saprastu, kuras lapas tiek lasītas, cik ātri tās ielādējas un vai anketu un kalkulatoru izmanto līdz rezultātam, mēs izmantojam PostHog analītiku ar serveriem Eiropas Savienībā. Tā ir iestatīta šādi:",
           "- bez sīkdatnēm un bez datu glabāšanas pārlūkā;",
           "- bez cilvēka identificēšanas, bez sesiju ierakstiem un bez ievadīto lauku satura — eksāmenu rezultāti analītikā nenonāk;",
           "- IP adrese netiek glabāta.",

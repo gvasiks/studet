@@ -870,7 +870,7 @@
         "id": "analytics",
         "title": "Usage statistics",
         "body": [
-          "To understand which pages are read and how fast they load, we use PostHog analytics with servers in the European Union. It is set up as follows:",
+          "To understand which pages are read, how fast they load and whether the survey and the calculator are used through to a result, we use PostHog analytics with servers in the European Union. It is set up as follows:",
           "- no cookies and no data kept in the browser;",
           "- no identification of people, no session recordings and no content of entered fields — exam results never reach analytics;",
           "- IP addresses are not stored.",

@@ -13,6 +13,7 @@ import type { LtMatchGroup, LtMatchProgramme } from "@/lib/lt-score-queries";
 import { enumLabel } from "@/lib/names";
 import { interpolate } from "@/lib/outcomes";
 import { formatDate } from "@/lib/dates";
+import { useTrackOnce } from "@/components/Analytics";
 
 // Официальные страницы LAMA BPO: калькулятор (дополнительные баллы и
 // окончательный расчёт) и объявление о порядке приёма (минимальные требования).
@@ -139,6 +140,8 @@ export function LtMatchForm({
     .sort((a, b) => b.score.total - a.score.total);
   const complete = scored.filter((item) => item.complete);
   const partial = scored.filter((item) => !item.complete);
+  // аналитика: список с посчитанным баллом показан (без оценок и баллов)
+  useTrackOnce("match_result_shown", complete.length > 0);
   const count = (items: Scored[]) => items.reduce((sum, item) => sum + item.programmes.length, 0);
 
   return (

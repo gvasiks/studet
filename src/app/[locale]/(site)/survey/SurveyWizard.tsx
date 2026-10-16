@@ -11,6 +11,7 @@ import { countryProfile, schoolLeaverLevels } from "@/lib/country";
 import { DURATION_LIMITS, FEE_LIMITS, UNIVERSITY_KINDS } from "@/lib/catalog-query";
 import { interpolate } from "@/lib/outcomes";
 import { ArrowRightIcon, CheckIcon, SearchIcon } from "@/components/icons";
+import { track } from "@/components/Analytics";
 
 type Funding = "budget_only" | "any";
 // "any" либо язык обучения из профиля страны.
@@ -137,6 +138,8 @@ export function SurveyWizard({ locale, dict }: { locale: Locale; dict: Dictionar
     if (answers.kind !== "any") params.set("kind", answers.kind);
 
     const query = params.toString();
+    // аналитика: анкета пройдена до конца (ответы в событие не попадают)
+    track("survey_completed");
     router.push(`/${locale}/programmes${query ? `?${query}` : ""}`);
   }
 

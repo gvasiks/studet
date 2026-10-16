@@ -9,6 +9,7 @@ import { parsePercent } from "@/lib/exam-input";
 import { ltInputSubjects, ltScore, MIN_COUNTED_SCORE, type LtComponent, type LtExams } from "@/lib/lt-score";
 import { interpolate } from "@/lib/outcomes";
 import { formatDate } from "@/lib/dates";
+import { useTrackOnce } from "@/components/Analytics";
 
 // Страница официального калькулятора LAMA BPO — туда ведём за
 // дополнительными баллами и за окончательным расчётом.
@@ -65,6 +66,8 @@ export function LtCalculatorForm({
   );
   const hasAny = Object.keys(exams).length > 0;
   const result = hasAny && !hasInvalid ? ltScore(components, exams) : null;
+  // аналитика: балл показан (сам балл и оценки в событие не попадают)
+  useTrackOnce("calculator_result_shown", result !== null);
 
   const number = (value: number) => value.toLocaleString(language, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 

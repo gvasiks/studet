@@ -13,6 +13,7 @@ import { interpolate } from "@/lib/outcomes";
 import { subjectLabel, termLabel } from "@/lib/term-labels";
 import { ArrowRightIcon, CheckIcon, InfoIcon } from "@/components/icons";
 import { formatDate } from "@/lib/dates";
+import { useTrackOnce } from "@/components/Analytics";
 
 const LEVELS: ExamLevel[] = ["augstakais", "optimalais", "vispaarigais"];
 
@@ -82,6 +83,8 @@ export function MatchForm({
   // пересобираемого на каждый рендер списка экзаменов только запутала бы код
   const groups = matchProgrammes(formulas, exams, levelCoefficients);
   const eligibleByRequirements = matchRequirements(requirements, exams);
+  // аналитика: список с посчитанным баллом показан (без оценок и баллов)
+  useTrackOnce("match_result_shown", exams.length > 0 && groups.computed.length > 0);
 
   const summary = interpolate(t.summary, {
     computed: groups.computed.length,

@@ -842,7 +842,7 @@
         "id": "analytics",
         "title": "Saidi kasutusstatistika",
         "body": [
-          "Et mõista, milliseid lehti loetakse ja kui kiiresti need laaditakse, kasutame PostHogi analüütikat, mille serverid asuvad Euroopa Liidus. See on seadistatud järgmiselt:",
+          "Et mõista, milliseid lehti loetakse, kui kiiresti need laaditakse ning kas küsimustikku ja kalkulaatorit kasutatakse tulemuseni, kasutame PostHogi analüütikat, mille serverid asuvad Euroopa Liidus. See on seadistatud järgmiselt:",
           "- ilma küpsisteta ja ilma andmete säilitamiseta brauseris;",
           "- ilma inimese tuvastamiseta, ilma seansisalvestisteta ja ilma sisestatud väljade sisuta — eksamitulemused analüütikasse ei jõua;",
           "- IP-aadressi ei säilitata.",

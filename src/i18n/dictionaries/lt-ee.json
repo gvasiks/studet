@@ -291,7 +291,7 @@
         "id": "analytics",
         "title": "Naudojimo statistika",
         "body": [
-          "Kad suprastume, kurie puslapiai skaitomi ir kaip greitai jie įkeliami, naudojame „PostHog“ analitiką, kurios serveriai yra Europos Sąjungoje. Ji nustatyta taip:",
+          "Kad suprastume, kurie puslapiai skaitomi, kaip greitai jie įkeliami ir ar anketa bei skaičiuokle naudojamasi iki rezultato, naudojame „PostHog“ analitiką, kurios serveriai yra Europos Sąjungoje. Ji nustatyta taip:",
           "- be slapukų ir be naršyklėje saugomų duomenų;",
           "- be asmenų identifikavimo, be seansų įrašų ir be įvestų laukų turinio — egzaminų rezultatai į analitiką nepatenka niekada;",
           "- IP adresai nesaugomi.",

@@ -16,6 +16,7 @@ import {
 import { interpolate } from "@/lib/outcomes";
 import { subjectLabel, termLabel } from "@/lib/term-labels";
 import { formatDate } from "@/lib/dates";
+import { useTrackOnce } from "@/components/Analytics";
 
 const LEVELS: ExamLevel[] = ["augstakais", "optimalais", "vispaarigais"];
 
@@ -95,6 +96,8 @@ export function CalculatorForm({
     parsedExtras.some(({ parsed }) => parsed.state === "invalid");
   const result =
     missing.length === 0 && !hasInvalid ? calculateScore(terms, gates, examResults, levelCoefficients, extras) : null;
+  // аналитика: балл показан (сам балл и оценки в событие не попадают)
+  useTrackOnce("calculator_result_shown", result !== null);
 
   return (
     <div className="mt-8">
