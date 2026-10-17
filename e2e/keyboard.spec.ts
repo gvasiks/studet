@@ -81,6 +81,14 @@ for (const path of CALCULATORS) {
         () => (document.activeElement?.matches('main input[type="text"]') ?? false) && (document.activeElement as HTMLInputElement).value === "",
       );
       await page.keyboard.type("80");
+      // латвийский калькулятор: уровень экзамена выбирается обязательно
+      // (решение владельца 2026-10-16) — Tab в группу уровней и пробел
+      if (!path.startsWith("/lt/")) {
+        await page.keyboard.press("Tab");
+        if (await page.evaluate(() => document.activeElement?.matches('input[type="radio"]') ?? false)) {
+          await page.keyboard.press("Space");
+        }
+      }
     }
     // итог объявляется экранному диктору: живая область с числом
     const status = page.locator('main [role="status"]').first();

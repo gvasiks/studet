@@ -365,7 +365,10 @@
       "entrance_exam_osppp": "Profesionālās piemērotības pārbaudījums OSPPP (0–10)",
       "certificate_physics": "Atestāta gada atzīme fizikā (1–10)",
       "certificate_geography": "Atestāta gada atzīme ģeogrāfijā (1–10)"
-    }
+    },
+    "chooseLevel": "Jāizvēlas eksāmena līmenis: {list}.",
+    "levelPlaceholder": "Līmenis…",
+    "levelMissing": "Jāizvēlas līmenis — bez tā eksāmens netiek ņemts vērā."
   },
   "ltCalculator": {
     "intro": "Jāievada valsts brieduma eksāmenu (VBE) vērtējumi. Redzami tikai tie mācību priekšmeti, kurus ieskaita šīs programmas konkursa punktos.",

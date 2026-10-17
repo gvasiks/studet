@@ -365,7 +365,10 @@
       "entrance_exam_osppp": "Professional aptitude test OSPPP (0–10)",
       "certificate_physics": "School certificate annual mark in physics (1–10)",
       "certificate_geography": "School certificate annual mark in geography (1–10)"
-    }
+    },
+    "chooseLevel": "Choose the exam level: {list}.",
+    "levelPlaceholder": "Level…",
+    "levelMissing": "Choose the level — the exam is not counted without it."
   },
   "ltCalculator": {
     "intro": "Enter your state matura exam (VBE) results. Only the subjects that count towards this programme's competition score are shown.",

@@ -365,7 +365,10 @@
       "entrance_exam_osppp": "Kutsesobivuse katse OSPPP (0–10)",
       "certificate_physics": "Lõputunnistuse aastahinne füüsikas (1–10)",
       "certificate_geography": "Lõputunnistuse aastahinne geograafias (1–10)"
-    }
+    },
+    "chooseLevel": "Tuleb valida eksami tase: {list}.",
+    "levelPlaceholder": "Tase…",
+    "levelMissing": "Tuleb valida tase — ilma selleta eksamit ei arvestata."
   },
   "ltCalculator": {
     "intro": "Sisestada tuleb riiklike küpsuseksamite (VBE) tulemused. Näidatud on ainult need õppeained, mida selle õppekava konkursipunktides arvestatakse.",

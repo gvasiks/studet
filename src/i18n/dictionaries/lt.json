@@ -365,7 +365,10 @@
       "entrance_exam_osppp": "Profesinio tinkamumo testas OSPPP (0–10)",
       "certificate_physics": "Fizikos metinis pažymys atestate (1–10)",
       "certificate_geography": "Geografijos metinis pažymys atestate (1–10)"
-    }
+    },
+    "chooseLevel": "Pasirinkite egzamino lygį: {list}.",
+    "levelPlaceholder": "Lygis…",
+    "levelMissing": "Pasirinkite lygį — be jo egzaminas neįskaičiuojamas."
   },
   "ltCalculator": {
     "intro": "Įveskite valstybinių brandos egzaminų (VBE) įvertinimus. Rodomi tik tie dalykai, kurie įskaitomi į šios programos konkursinį balą.",

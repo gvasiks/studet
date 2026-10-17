@@ -23,7 +23,10 @@ import { formatPoints } from "@/lib/numbers";
 
 const LEVELS: ExamLevel[] = ["augstakais", "optimalais", "vispaarigais"];
 
-type SubjectInput = { percent: string; level: ExamLevel };
+// Уровень экзамена не выбирается за человека (решение владельца 2026-10-16):
+// раньше по умолчанию стоял «augstākais» (×1,00), и кто сдавал
+// оптимальный уровень и не переключил, видел завышенный балл. null — не выбран.
+type SubjectInput = { percent: string; level: ExamLevel | null };
 
 function CalculatorFormForm({
   dict,
@@ -62,7 +65,7 @@ function CalculatorFormForm({
   );
 
   const [inputs, setInputs] = useState<Record<string, SubjectInput>>(() =>
-    Object.fromEntries(subjects.map((subject) => [subject, { percent: "", level: "augstakais" as ExamLevel }])),
+    Object.fromEntries(subjects.map((subject) => [subject, { percent: "", level: null }])),
   );
   const [extraInputs, setExtraInputs] = useState<Record<string, string>>(() =>
     Object.fromEntries(extraTerms.map((term) => [extraKey(term), ""])),
@@ -75,8 +78,14 @@ function CalculatorFormForm({
   });
 
   const examResults: ExamResult[] = parsedSubjects.flatMap(({ subject, parsed }) =>
-    parsed.state === "ok" ? [{ subject, percent: parsed.value, level: inputs[subject].level }] : [],
+    parsed.state === "ok" && inputs[subject].level !== null
+      ? [{ subject, percent: parsed.value, level: inputs[subject].level as ExamLevel }]
+      : [],
   );
+  // Процент введён, а уровень не выбран — такой экзамен в расчёт не идёт.
+  const needsLevel = parsedSubjects
+    .filter(({ subject, parsed }) => parsed.state === "ok" && inputs[subject].level === null)
+    .map(({ subject }) => subjectLabel(dict, subject));
   const extras: Record<string, number> = {};
   for (const { key, parsed } of parsedExtras) {
     if (parsed.state === "ok") extras[key] = parsed.value;
@@ -98,7 +107,9 @@ function CalculatorFormForm({
     parsedSubjects.some(({ parsed }) => parsed.state === "invalid") ||
     parsedExtras.some(({ parsed }) => parsed.state === "invalid");
   const result =
-    missing.length === 0 && !hasInvalid ? calculateScore(terms, gates, examResults, levelCoefficients, extras) : null;
+    missing.length === 0 && needsLevel.length === 0 && !hasInvalid
+      ? calculateScore(terms, gates, examResults, levelCoefficients, extras)
+      : null;
   // аналитика: балл показан (сам балл и оценки в событие не попадают)
   useTrackOnce("calculator_result_shown", result !== null);
 
@@ -212,7 +223,9 @@ function CalculatorFormForm({
               <p className="mt-2 text-sm text-zinc-700">
                 {hasInvalid
                   ? dict.calculator.fixInvalid
-                  : interpolate(dict.calculator.incomplete, { list: missing.join(", ") })}
+                  : missing.length > 0
+                    ? interpolate(dict.calculator.incomplete, { list: missing.join(", ") })
+                    : interpolate(dict.calculator.chooseLevel, { list: needsLevel.join(", ") })}
               </p>
             </>
           )}

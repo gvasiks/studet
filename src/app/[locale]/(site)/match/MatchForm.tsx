@@ -19,7 +19,9 @@ import { formatPoints } from "@/lib/numbers";
 
 const LEVELS: ExamLevel[] = ["augstakais", "optimalais", "vispaarigais"];
 
-type SubjectInput = { percent: string; level: ExamLevel };
+// Уровень экзамена не выбирается за человека (решение владельца 2026-10-16),
+// как и в калькуляторе. null — не выбран; без уровня экзамен не считается.
+type SubjectInput = { percent: string; level: ExamLevel | null };
 
 // Порядок групп на экране после "можно посчитать" и "атбилст прасибам"
 // (эта — не MatchStatus, у неё свой блок и в счётчиках, и в результатах,
@@ -68,7 +70,7 @@ function MatchFormForm({
   // Всё состояние — только в памяти этой страницы: ни в URL, ни в
   // localStorage, ни на сервер (экзамены несовершеннолетних, CLAUDE.md)
   const [inputs, setInputs] = useState<Record<string, SubjectInput>>(() =>
-    Object.fromEntries(subjects.map((subject) => [subject, { percent: "", level: "augstakais" as ExamLevel }])),
+    Object.fromEntries(subjects.map((subject) => [subject, { percent: "", level: null }])),
   );
 
   // Разбор — общий с калькулятором (exam-input.ts): «72,5» и «72.5» — одно и
@@ -78,7 +80,8 @@ function MatchFormForm({
   const parsed = Object.fromEntries(subjects.map((subject) => [subject, parsePercent(inputs[subject].percent)]));
   const exams: ExamResult[] = subjects.flatMap((subject) => {
     const value = parsed[subject];
-    return value.state === "ok" ? [{ subject, percent: value.value, level: inputs[subject].level }] : [];
+    const level = inputs[subject].level;
+    return value.state === "ok" && level !== null ? [{ subject, percent: value.value, level }] : [];
   });
 
   // Без useMemo: формул десятки-сотни, счёт мгновенный, а зависимость от
@@ -149,14 +152,15 @@ function MatchFormForm({
                   <select
                     className="h-9 min-w-0 flex-1 rounded-lg border border-zinc-300 bg-white px-2 text-sm text-zinc-900 shadow-control"
                     aria-label={`${subjectLabel(dict, subject)}, ${t.levelLabel}`}
-                    value={inputs[subject].level}
+                    value={inputs[subject].level ?? ""}
                     onChange={(event) =>
                       setInputs((prev) => ({
                         ...prev,
-                        [subject]: { ...prev[subject], level: event.target.value as ExamLevel },
+                        [subject]: { ...prev[subject], level: (event.target.value || null) as ExamLevel | null },
                       }))
                     }
                   >
+                    <option value="">{dict.calculator.levelPlaceholder}</option>
                     {LEVELS.map((level) => (
                       <option key={level} value={level}>
                         {dict.calculator.levels[level]}
@@ -168,6 +172,9 @@ function MatchFormForm({
                   <p id={errorId} className="mt-2 text-sm text-red-700">
                     {dict.calculator.invalidPercent}
                   </p>
+                )}
+                {parsed[subject].state === "ok" && inputs[subject].level === null && (
+                  <p className="mt-2 text-sm text-amber-800">{dict.calculator.levelMissing}</p>
                 )}
               </div>
             );
