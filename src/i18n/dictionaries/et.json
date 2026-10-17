@@ -520,7 +520,8 @@
     "compareTitle": "Võrdlus",
     "compareLimit": "Korraga saab võrrelda kuni {max} õppekava. Valitud: {count} / {max}.",
     "compareEmpty": "Õppekavade kõrvuti nägemiseks tuleb nende kaartidel märkida „Võrdle“.",
-    "removedMissing": "Mõnda salvestatud õppekava kataloogis enam ei ole — need on loendist eemaldatud."
+    "missingNote": "Salvestatud õppekavu, mida praegu kataloogis ei ole: {count}. See võib olla ajutine.",
+    "removeMissing": "Eemalda need loendist"
   },
   "footer": {
     "disclaimer": "StudyPick on sõltumatu teabeportaal, mitte kõrgkool ega riigiasutus — siin käsitletud kõrgkoolidega ei seo meid ükski lepinguline suhe. Õppekavade kirjeldused, tähtajad, õppemaks ja konkursivalemid pärinevad kõrgkoolide avalikest allikatest ning võivad olla aegunud või ebatäpsed; iga õppekava kaardil on kirjas, kas fakti on kontrollinud inimene või on see saadud automaatselt. Enne otsuse tegemist tuleb ajakohast teavet alati kontrollida kõrgkooli ametlikult veebilehelt — lõpliku vastuvõtuotsuse teeb ainult kõrgkool."

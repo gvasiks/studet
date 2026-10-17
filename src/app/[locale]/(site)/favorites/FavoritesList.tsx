@@ -2,12 +2,12 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { countries, countryOf, languageOf, type Locale } from "@/i18n/config";
+import { countries, countryOf, languageOf, type Country, type Locale } from "@/i18n/config";
 import type { Dictionary } from "@/i18n/dictionaries";
 import { enumLabel, getProgrammesByIds, localizedName, type ProgrammeWithUniversity } from "@/lib/catalog";
 import { matchRounds, type ApplicationRound } from "@/lib/deadlines";
 import { openDeadline, tallinnDate } from "@/lib/ee-admission";
-import { getFavoriteIds, keepOnlyFavorites, subscribeToFavorites } from "@/lib/favorites";
+import { getFavoriteIds, removeFavorites, subscribeToFavorites } from "@/lib/favorites";
 import { interpolate } from "@/lib/outcomes";
 import { ProgrammeCard } from "@/components/ProgrammeCard";
 import { ArrowRightIcon, CheckIcon, StarIcon, XIcon } from "@/components/icons";
@@ -44,8 +44,11 @@ export function FavoritesList({
   const [programmes, setProgrammes] = useState<ProgrammeWithUniversity[] | null>(null);
   // null — человек ещё ничего не выбирал: сравниваем первые MAX_COMPARE.
   const [chosenIds, setChosenIds] = useState<string[] | null>(null);
-  // Были ли в списке программы, которых каталог больше не показывает.
-  const [removedMissing, setRemovedMissing] = useState(false);
+  // Сохранённые программы, которых база сейчас не показывает, — по странам.
+  // Сами они не удаляются (ревью 2026-10-17): программу скрывают и временно,
+  // если её не нашли два сбора подряд, и после следующего сбора она
+  // возвращается. Убрать их из списка решает человек — кнопкой.
+  const [missing, setMissing] = useState<{ country: Country; ids: string[] }[]>([]);
   const country = countryOf(locale);
 
   useEffect(() => {
@@ -58,26 +61,33 @@ export function FavoritesList({
         .map((group) => ({ country: group, ids: getFavoriteIds(group) }))
         .filter((group) => group.ids.length > 0);
       if (groups.length === 0) {
-        if (!cancelled) setProgrammes([]);
+        if (!cancelled) {
+          setProgrammes([]);
+          setMissing([]);
+        }
         return;
       }
       const lists = await Promise.all(
         groups.map(async (group) => {
           const data = await getProgrammesByIds(group.country, group.ids);
-          // Запрос прошёл, а части программ в ответе нет — их больше нет в
-          // каталоге: убираем из хранилища (при ошибке запроса сюда не дойдём).
-          // Пометку ставим и у отменённой загрузки: хранилище она уже почистила,
-          // а следующая загрузка лишнего не найдёт и пометку не поставит.
-          if (keepOnlyFavorites(group.country, data.map((programme) => programme.id))) {
-            setRemovedMissing(true);
-          }
+          // Запрос прошёл, а части программ в ответе нет — сейчас их нет в
+          // каталоге. Сравниваются только id из этого запроса.
+          const returned = new Set(data.map((programme) => programme.id));
+          const absent = group.ids.filter((id) => !returned.has(id));
           // База отдаёт в своём порядке — возвращаем порядок, в котором
           // человек добавлял программы: от него зависит, какие четыре
           // сравниваются по умолчанию.
-          return data.sort((a, b) => group.ids.indexOf(a.id) - group.ids.indexOf(b.id));
+          return { programmes: data.sort((a, b) => group.ids.indexOf(a.id) - group.ids.indexOf(b.id)), absent };
         }),
       );
-      if (!cancelled) setProgrammes(lists.flat());
+      if (!cancelled) {
+        setProgrammes(lists.flatMap((list) => list.programmes));
+        setMissing(
+          groups
+            .map((group, index) => ({ country: group.country, ids: lists[index].absent }))
+            .filter((group) => group.ids.length > 0),
+        );
+      }
     }
 
     load();
@@ -90,11 +100,27 @@ export function FavoritesList({
 
   if (programmes === null) return null;
 
+  const missingCount = missing.reduce((sum, group) => sum + group.ids.length, 0);
+  const missingNote = missingCount > 0 && (
+    <div role="status" className="mt-8 flex flex-wrap items-center gap-x-4 gap-y-2 rounded-xl bg-amber-50 px-4 py-3 text-sm text-amber-900">
+      <span>{interpolate(dict.favorites.missingNote, { count: missingCount })}</span>
+      <button
+        type="button"
+        onClick={() => missing.forEach((group) => removeFavorites(group.country, group.ids))}
+        className="font-medium underline hover:no-underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"
+      >
+        {dict.favorites.removeMissing}
+      </button>
+    </div>
+  );
+
   // Пустое состояние видит большинство пришедших: на него ведёт пункт меню,
   // а звёздочку до этого никто не нажимал. Раньше это был абзац с кнопкой —
   // теперь звезда объясняет, чем отмечают, а карточка держит форму страницы.
   if (programmes.length === 0) {
     return (
+      <>
+      {missingNote}
       <div className="surface mt-8 px-6 py-14 text-center sm:px-10">
         <span
           aria-hidden="true"
@@ -111,6 +137,7 @@ export function FavoritesList({
           <ArrowRightIcon size={15} />
         </Link>
       </div>
+      </>
     );
   }
 
@@ -159,11 +186,7 @@ export function FavoritesList({
 
   return (
     <>
-      {removedMissing && (
-        <p role="status" className="mt-8 rounded-xl bg-amber-50 px-4 py-3 text-sm text-amber-900">
-          {dict.favorites.removedMissing}
-        </p>
-      )}
+      {missingNote}
       {/* Те же карточки, что в каталоге, плюс галочка «сравнить». */}
       <div className="mt-8 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
         {programmes.map((programme) => {

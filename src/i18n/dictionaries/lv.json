@@ -520,7 +520,8 @@
     "compareTitle": "Salīdzinājums",
     "compareLimit": "Vienlaikus var salīdzināt ne vairāk kā {max} programmas. Izvēlētas: {count} no {max}.",
     "compareEmpty": "Lai redzētu programmas blakus, uz to kartītēm jāatzīmē “Salīdzināt”.",
-    "removedMissing": "Dažas saglabātās programmas vairs nav katalogā — tās izņemtas no saraksta."
+    "missingNote": "Saglabātās programmas, kuru pašlaik nav katalogā: {count}. Iespējams, tas ir uz laiku.",
+    "removeMissing": "Noņemt tās no saraksta"
   },
   "footer": {
     "disclaimer": "StudyPick ir neatkarīgs informatīvs portāls, nevis augstskola vai valsts iestāde — ar aplūkotajām augstskolām mūs nesaista nekādas līgumattiecības. Programmu apraksti, termiņi, maksa un konkursa formulas iegūti no augstskolu publiski pieejamiem avotiem un var būt novecojuši vai neprecīzi; katras programmas kartītē norādīts, vai fakts ir pārbaudīts cilvēka rokām vai iegūts automātiski. Pirms lēmuma pieņemšanas aktuālā informācija vienmēr jāpārbauda augstskolas oficiālajā mājaslapā — galīgo lēmumu par uzņemšanu pieņem tikai augstskola."

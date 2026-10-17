@@ -520,7 +520,8 @@
     "compareTitle": "Palyginimas",
     "compareLimit": "Vienu metu galima lyginti iki {max} programų. Pasirinkta: {count} iš {max}.",
     "compareEmpty": "Programų kortelėse pažymėkite „Lyginti“, kad pamatytumėte jas greta.",
-    "removedMissing": "Kai kurių išsaugotų programų kataloge nebėra — jos pašalintos iš sąrašo."
+    "missingNote": "Išsaugotų programų, kurių dabar nėra kataloge: {count}. Galbūt tai laikina.",
+    "removeMissing": "Pašalinti jas iš sąrašo"
   },
   "footer": {
     "disclaimer": "StudyPick yra nepriklausomas informacinis portalas, ne aukštoji mokykla ir ne valstybės institucija — su čia išvardytomis aukštosiomis mokyklomis mūsų nesieja jokios sutartys. Programų aprašymai, terminai, kainos ir konkursinio balo formulės paimti iš viešai prieinamų oficialių šaltinių ir gali būti pasenę ar netikslūs; kiekvienoje programos kortelėje nurodyta, ar faktą patikrino žmogus, ar jis surinktas automatiškai. Prieš priimdami sprendimą visada pasitikrinkite informaciją oficialioje aukštosios mokyklos svetainėje — galutinį sprendimą dėl priėmimo priima tik aukštoji mokykla."
