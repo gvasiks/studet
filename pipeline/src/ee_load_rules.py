@@ -173,7 +173,12 @@ def main() -> None:
             # страница вуза не прочиталась — правило не трогаем до следующего запуска
             skipped.append(admission_id)
             continue
-        rules[admission_id] = (ee_rules.ut_rule(row["criteria_text"], pages.get(url), medal_bonus), url)
+        # Надбавка за медаль не прочиталась (страница ut.ee недоступна или
+        # сменила вёрстку) — берём прежнюю из сохранённого правила, а не
+        # стираем её у всех правил ТÜ (ревью 2026-10-17).
+        previous = (row["rule"] or {}).get("medal_bonus") if isinstance(row["rule"], dict) else None
+        medal = medal_bonus if medal_bonus is not None else previous
+        rules[admission_id] = (ee_rules.ut_rule(row["criteria_text"], pages.get(url), medal), url)
 
     by_result: Counter = Counter()
     for admission_id, (rule, url) in rules.items():

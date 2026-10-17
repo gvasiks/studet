@@ -396,8 +396,8 @@ ut.ee. План и ход работ — `docs/PLAN-ESTONIA.md`.
 .venv\Scripts\python.exe src\ee_load_fields.py --apply      # направления, после каталога
 .venv\Scripts\python.exe src\ee_load_admissions.py --apply  # сроки приёма и ссылка на конкурс в SAIS
 .venv\Scripts\python.exe src\ee_load_admission_details.py --apply  # условия конкурса со страниц SAIS
-.venv\Scripts\python.exe src\ee_load_rules.py --apply  # правила конкурса ТÜ и TalTech; пороги ТÜ — с ut.ee
 .venv\Scripts\python.exe src\ee_apply_cities.py --apply  # город по месту учёбы; всегда после каталога
+.venv\Scripts\python.exe src\ee_load_rules.py --apply  # правила конкурса ТÜ и TalTech; пороги ТÜ — с ut.ee
 ```
 
 - Это внутренний интерфейс портала, а не объявленные открытые данные. Если
