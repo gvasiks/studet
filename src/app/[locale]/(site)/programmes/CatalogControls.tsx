@@ -343,7 +343,7 @@ export function SearchAndSort({ locale, dict, state }: { locale: Locale; dict: D
           {SORT_KEYS.map((key) => (
             <li key={key}>
               <Link
-                href={`${base}${catalogQuery(state, { sort: key })}`}
+                href={`${base}${catalogQuery(state, { sort: key, page: 1 })}`}
                 aria-current={key === state.sort ? "true" : undefined}
                 className={`flex h-9 items-center rounded-xl px-3 text-sm hover:bg-zinc-100 ${
                   key === state.sort ? "font-semibold text-brand-dark" : "text-zinc-800"

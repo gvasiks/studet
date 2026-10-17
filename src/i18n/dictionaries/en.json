@@ -274,7 +274,7 @@
     "skipToSearch": "Skip the survey and open the catalogue",
     "exams": {
       "title": "Which national exams have you taken or plan to take?",
-      "hint": "This answer doesn't affect the list yet — the competition score calculator is still being built.",
+      "hint": "This answer does not change the list of programmes.",
       "subjects": {
         "mathematics": "Mathematics",
         "latvian": "Latvian language",

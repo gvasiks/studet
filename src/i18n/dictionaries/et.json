@@ -222,7 +222,7 @@
   },
   "outcomes": {
     "title": "Mis on saanud lõpetajatest",
-    "scope": "{university} lõpetajad õppesuunal „{field}“ (rühma kood {code}), {level}",
+    "scope": "Lõpetajad õppesuunal „{field}“ (rühma kood {code}), {level} — {university}",
     "cohort": "{year}. aasta lend, andmed {taxYear}. aasta kohta",
     "employed": "Töötas {employed} lõpetajat {graduates}-st ({percent}%)",
     "median": "Aastasissetuleku mediaan: {amount} EUR",
@@ -274,7 +274,7 @@
     "skipToSearch": "Jäta küsitlus vahele ja ava kataloog",
     "exams": {
       "title": "Sooritatud või kavandatud tsentraliseeritud eksamid",
-      "hint": "See vastus loendit praegu ei mõjuta — konkursipunktide arvutus on alles valmimisel.",
+      "hint": "See vastus õppekavade loendit ei mõjuta.",
       "subjects": {
         "mathematics": "Matemaatika",
         "latvian": "Läti keel",

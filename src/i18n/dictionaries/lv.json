@@ -222,7 +222,7 @@
   },
   "outcomes": {
     "title": "Kas noticis ar absolventiem",
-    "scope": "{university} absolventi virzienā “{field}” (grupas kods {code}), {level}",
+    "scope": "Absolventi virzienā “{field}” (grupas kods {code}), {level} — {university}",
     "cohort": "{year}. gada izlaidums, dati par {taxYear}. gadu",
     "employed": "Strādāja {employed} no {graduates} absolventiem ({percent}%)",
     "median": "Gada ienākumu mediāna: {amount} EUR",
@@ -274,7 +274,7 @@
     "skipToSearch": "Izlaist aptauju un atvērt katalogu",
     "exams": {
       "title": "Kārtotie vai plānotie centralizētie eksāmeni",
-      "hint": "Pagaidām šī atbilde neietekmē sarakstu — konkursa punktu aprēķins vēl top.",
+      "hint": "Šī atbilde programmu sarakstu neietekmē.",
       "subjects": {
         "mathematics": "Matemātika",
         "latvian": "Latviešu valoda",

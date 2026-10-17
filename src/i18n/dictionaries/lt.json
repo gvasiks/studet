@@ -222,7 +222,7 @@
   },
   "outcomes": {
     "title": "Kas nutiko absolventams",
-    "scope": "{university} absolventai, sritis „{field}“ (programų grupė {code}), {level}",
+    "scope": "Absolventai, sritis „{field}“ (programų grupė {code}), {level} — {university}",
     "cohort": "{year} m. laida, {taxYear} m. duomenys",
     "employed": "Dirbo {employed} iš {graduates} absolventų ({percent} %)",
     "median": "Metinių pajamų mediana: {amount} EUR",
@@ -274,7 +274,7 @@
     "skipToSearch": "Praleisti anketą ir atverti katalogą",
     "exams": {
       "title": "Kuriuos valstybinius brandos egzaminus laikėte ar planuojate laikyti?",
-      "hint": "Šis atsakymas sąrašo kol kas nekeičia — konkursinio balo skaičiuoklė dar kuriama.",
+      "hint": "Šis atsakymas programų sąrašo nekeičia.",
       "subjects": {
         "mathematics": "Matematika",
         "latvian": "Latvių kalba",
