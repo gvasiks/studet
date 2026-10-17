@@ -560,7 +560,8 @@
     "openProgramme": "Programmas lapa",
     "breakdown": "No kā veidojas punkti",
     "showList": "Rādīt programmas ({count})",
-    "optionalMissing": "Punktos nav ieskaitīts neobligātais: {list}. Ar to punktu būtu vairāk."
+    "optionalMissing": "Punktos nav ieskaitīts neobligātais: {list}. Ar to punktu būtu vairāk.",
+    "emptyNoLevel": "Lai redzētu rezultātus, pie ievadītajiem eksāmeniem jāizvēlas līmenis."
   },
   "rights": {
     "title": "Reflektanta tiesības, iestājoties augstskolā",

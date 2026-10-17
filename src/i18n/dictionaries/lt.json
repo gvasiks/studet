@@ -560,7 +560,8 @@
     "openProgramme": "Programos puslapis",
     "breakdown": "Iš ko susideda balas",
     "showList": "Rodyti programas ({count})",
-    "optionalMissing": "Į balą neįskaičiuota neprivaloma dalis: {list}. Su ja balas būtų didesnis."
+    "optionalMissing": "Į balą neįskaičiuota neprivaloma dalis: {list}. Su ja balas būtų didesnis.",
+    "emptyNoLevel": "Kad matytumėte rezultatus, pasirinkite įvestų egzaminų lygį."
   },
   "rights": {
     "title": "Jūsų teisės stojant į aukštąją mokyklą",

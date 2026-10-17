@@ -560,7 +560,8 @@
     "openProgramme": "Õppekava leht",
     "breakdown": "Millest punktid kujunevad",
     "showList": "Näita õppekavasid ({count})",
-    "optionalMissing": "Punktides ei ole arvestatud mittekohustuslikku osa: {list}. Sellega oleks punkte rohkem."
+    "optionalMissing": "Punktides ei ole arvestatud mittekohustuslikku osa: {list}. Sellega oleks punkte rohkem.",
+    "emptyNoLevel": "Tulemuste nägemiseks tuleb sisestatud eksamitele valida tase."
   },
   "system": {
     "notFound": {

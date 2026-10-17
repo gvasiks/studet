@@ -69,12 +69,20 @@ export function useTrackOnce(name: ProductEvent, happened: boolean) {
   }, [happened, name]);
 }
 
+// Адрес страницы, с которой начался визит. Замеры скорости относятся к
+// загрузке документа: при переходах внутри сайта документ тот же, и INP и
+// CLS копятся за весь визит, а приходят, когда вкладку закрывают — уже на
+// другой странице (ревью 2026-10-17). Поэтому замер приписывается странице
+// входа, а не той, что открыта в момент отправки.
+let landingHref: string | null = null;
+
 // Скорость страницы: Next.js сообщает замеры сам (LCP — после загрузки,
 // INP и CLS — когда человек уходит со страницы). Функция вне компонента —
 // так советует документация Next.js, иначе замеры могут прийти дважды.
 function reportVital(metric: WebVital) {
   if (!isTrackedVital(metric)) return;
-  send((key, current) => webVitalEvent(key, current, metric, window.location.href));
+  const href = landingHref ?? window.location.href;
+  send((key, current) => webVitalEvent(key, current, metric, href));
 }
 
 export function Analytics() {
@@ -82,6 +90,7 @@ export function Analytics() {
   useReportWebVitals(reportVital);
 
   useEffect(() => {
+    if (landingHref === null) landingHref = window.location.href;
     send((key, current) => pageviewEvent(key, current, window.location.href, document.referrer));
   }, [pathname]);
 

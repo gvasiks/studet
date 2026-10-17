@@ -11,12 +11,15 @@
 // сократит сентябрь иначе, чем сервер («Sep» и «Sept»), React сообщит о
 // несовпадении разметки.
 //
-// timeZone — для моментов времени, у которых важен день в конкретной стране
-// (конец подачи в Эстонии — по таллинскому времени); без него — часовой пояс
-// сервера, как было.
+// Часовой пояс по умолчанию — Рига (ревью 2026-10-17). У всех трёх стран
+// сайта одно время (восточноевропейское), поэтому день один и тот же на
+// сервере (UTC) и в любом браузере: иначе дата подтверждения ночью по UTC
+// в клиентской форме расходилась бы на день между сервером и браузером, а
+// дата без времени («2027-07-20») в браузере западнее UTC показывалась бы
+// днём раньше (аудит 2026-10-04).
 const ENGLISH_MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
-export function formatDate(value: string | Date, language: string, timeZone?: string): string {
+export function formatDate(value: string | Date, language: string, timeZone = "Europe/Riga"): string {
   const date = typeof value === "string" ? new Date(value) : value;
   if (language === "en") {
     const parts = new Intl.DateTimeFormat("en-GB", { day: "numeric", month: "numeric", year: "numeric", timeZone }).formatToParts(date);

@@ -193,7 +193,11 @@ function MatchFormForm({
           для скринридера и как объяснение цифр. */}
       <div className="mt-6" role="status" aria-live="polite">
         {exams.length === 0 ? (
-          <p className="surface p-6 text-zinc-600 sm:p-8">{t.emptyNoExams}</p>
+          <p className="surface p-6 text-zinc-600 sm:p-8">
+            {/* Процент введён, а уровень не выбран — подсказка про уровень, а
+                не «введите хотя бы один экзамен» (ревью 2026-10-17). */}
+            {subjects.some((subject) => parsed[subject].state === "ok") ? t.emptyNoLevel : t.emptyNoExams}
+          </p>
         ) : (
           <div className="surface p-6 sm:p-8">
             <dl className="grid grid-cols-2 gap-4 sm:grid-cols-5">
