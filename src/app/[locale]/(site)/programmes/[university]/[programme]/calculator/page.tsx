@@ -76,8 +76,9 @@ export default async function CalculatorPage({ params }: { params: Params }) {
     );
   }
 
-  const formula = await getFormula(record.id);
-  const levelCoefficients = await getLevelCoefficients();
+  // Параллельно: коэффициенты уровней от программы не зависят (и живут в
+  // памяти сервера, formula-queries.ts).
+  const [formula, levelCoefficients] = await Promise.all([getFormula(record.id), getLevelCoefficients()]);
 
   // Пункт 06 ревью 2026-09: если тип отбора подтверждён и это не
   // конкурсный балл, сообщение объясняет почему, а не повторяет общее

@@ -14,7 +14,7 @@ import { getLtFieldOutcome } from "@/lib/lt-field-outcome-queries";
 import { getEeProgrammeField } from "@/lib/ee-field-queries";
 import { admissionState, tallinnDate } from "@/lib/ee-admission";
 import { getEeAdmission } from "@/lib/ee-admission-queries";
-import { getApplicationRounds } from "@/lib/deadline-queries";
+import { getApplicationRoundsForCards } from "@/lib/deadline-queries";
 import { matchRounds } from "@/lib/deadlines";
 import { getAdmissionType } from "@/lib/admission-type-queries";
 import { httpUrl, matchChannel } from "@/lib/application-channel";
@@ -107,7 +107,7 @@ export default async function ProgrammePage({ params }: { params: Params }) {
   const [formula, rounds, admissionType, outcome, channels, hasLtCalculator, ltField, ltStats, eeField, eeAdmission] =
     await Promise.all([
       getFormula(record.id),
-      getApplicationRounds(),
+      getApplicationRoundsForCards(),
       getAdmissionType(record.university_id),
       getProgrammeOutcome(record.id, record.university_id),
       getApplicationChannels(record.university_id),

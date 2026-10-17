@@ -24,23 +24,27 @@ export type ProgrammeOutcome = {
 // показывать под ним доходы.
 export const getProgrammeOutcome = cache(
   async (programmeId: string, universityId: string): Promise<ProgrammeOutcome | null> => {
-    const { data: field, error } = await supabase
-      .from("programme_field")
-      .select("field_code, verification_method")
-      .eq("programme_id", programmeId)
-      .not("verified_at", "is", null)
-      .maybeSingle();
+    // Направление программы и все строки статистики её вуза — одновременно,
+    // одним кругом к базе; нужная группа выбирается ниже. Строк у вуза —
+    // десятки, у крупнейших — несколько сотен (замер 2026-10-17: два
+    // последовательных запроса стоили карточке ~70 мс).
+    const [{ data: field, error }, { data: all, error: outcomeError }] = await Promise.all([
+      supabase
+        .from("programme_field")
+        .select("field_code, verification_method")
+        .eq("programme_id", programmeId)
+        .not("verified_at", "is", null)
+        .maybeSingle(),
+      supabase
+        .from("graduate_outcome")
+        .select("programme_group, graduation_year, tax_year, level_code, graduates, employed, median_income_eur")
+        .eq("university_id", universityId),
+    ]);
 
     if (error) throw error;
-    if (!field) return null;
-
-    const { data, error: outcomeError } = await supabase
-      .from("graduate_outcome")
-      .select("graduation_year, tax_year, level_code, graduates, employed, median_income_eur")
-      .eq("university_id", universityId)
-      .eq("programme_group", field.field_code);
-
     if (outcomeError) throw outcomeError;
+    if (!field) return null;
+    const data = (all ?? []).filter((row) => row.programme_group === field.field_code);
 
     return {
       fieldCode: field.field_code,

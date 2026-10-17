@@ -6,6 +6,7 @@ import { getLevelCoefficients } from "@/lib/formula-queries";
 import type { ExamLevel, FormulaGate, FormulaTerm } from "@/lib/formula";
 import { FIXTURE_FORMULAS, FIXTURE_LEVEL_COEFFICIENTS, FIXTURE_REQUIREMENTS } from "@/lib/match-fixture";
 import type { MatchFormula, MatchRequirement } from "@/lib/match";
+import { remember } from "@/lib/server-memo";
 
 export type MatchData = {
   formulas: MatchFormula[];
@@ -32,7 +33,17 @@ function fixtureEnabled(): boolean {
 // — не защита, а пояснение того же условия. Программы, пропавшие с сайта
 // вуза (missed_runs >= 2), скрыты политикой таблицы programme. Только
 // вариант "ce": варианты для льготников и иностранцев — отдельная задача.
-export const getMatchData = cache(async (language: Language, country: Country): Promise<MatchData> => {
+// Формулы и требования одинаковы для всех посетителей страны на одном языке
+// — пять минут живут в памяти сервера, как данные каталога (server-memo.ts;
+// замер 2026-10-17: 174 мс на каждый показ /match). Цена та же: после
+// подтверждения в Studio формула появляется в /match с задержкой до пяти
+// минут. Объект общий для всех запросов — только читать (страница лишь
+// передаёт его в клиентскую форму).
+export function getMatchData(language: Language, country: Country): Promise<MatchData> {
+  return remember(`match:${country}:${language}`, 5 * 60 * 1000, () => loadMatchData(language, country));
+}
+
+const loadMatchData = cache(async (language: Language, country: Country): Promise<MatchData> => {
   if (fixtureEnabled()) {
     return {
       formulas: FIXTURE_FORMULAS,

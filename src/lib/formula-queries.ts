@@ -1,5 +1,6 @@
 import { cache } from "react";
 import { supabase } from "@/lib/supabase";
+import { remember } from "@/lib/server-memo";
 import type { ExamLevel, FormulaGate, FormulaTerm } from "@/lib/formula";
 
 export type FormulaRecord = {
@@ -23,10 +24,16 @@ export type FormulaRecord = {
 // "показать неподтверждённые для разработки" здесь нет и быть не
 // может — RLS его всё равно проигнорирует; проверить черновую формулу
 // локально можно, только временно проставив verified_at в Studio.
+//
+// Один запрос: слагаемые и пороги приходят вложенными (связь по formula_id),
+// а не вторым кругом к базе — карточка и калькулятор ждут на один круг
+// меньше (замер 2026-10-17: карточка 230 мс, калькулятор 300 мс).
 export const getFormula = cache(async (programmeId: string): Promise<FormulaRecord | null> => {
   const { data: formula, error } = await supabase
     .from("formula")
-    .select("id, variant, source_url, verified_at")
+    .select(
+      "id, variant, source_url, verified_at, formula_term(kind, subject, coefficient, optional), formula_gate(subject, min_percent)",
+    )
     .eq("programme_id", programmeId)
     .is("valid_to", null)
     .not("verified_at", "is", null)
@@ -36,14 +43,8 @@ export const getFormula = cache(async (programmeId: string): Promise<FormulaReco
 
   if (error) throw error;
   if (!formula) return null;
-
-  const [{ data: terms, error: termsError }, { data: gates, error: gatesError }] = await Promise.all([
-    supabase.from("formula_term").select("kind, subject, coefficient, optional").eq("formula_id", formula.id),
-    supabase.from("formula_gate").select("subject, min_percent").eq("formula_id", formula.id),
-  ]);
-
-  if (termsError) throw termsError;
-  if (gatesError) throw gatesError;
+  const terms = formula.formula_term;
+  const gates = formula.formula_gate;
 
   return {
     id: formula.id,
@@ -78,8 +79,15 @@ export const getProgrammeIdsWithFormula = cache(async (): Promise<Set<string>> =
   return new Set((data ?? []).map((row) => row.programme_id as string));
 });
 
-// Для каждого уровня — коэффициент с самым свежим valid_from.
-export const getLevelCoefficients = cache(async (): Promise<Record<ExamLevel, number>> => {
+// Для каждого уровня — коэффициент с самым свежим valid_from. Меняются раз
+// в год (а то и реже), поэтому живут в памяти сервера пять минут, как
+// данные каталога (server-memo.ts): калькулятору и /match не нужен ради них
+// отдельный круг к базе. Объект общий для всех запросов — только читать.
+export function getLevelCoefficients(): Promise<Record<ExamLevel, number>> {
+  return remember("level-coefficients", 5 * 60 * 1000, loadLevelCoefficients);
+}
+
+const loadLevelCoefficients = cache(async (): Promise<Record<ExamLevel, number>> => {
   const { data, error } = await supabase
     .from("level_coefficient")
     .select("level, coefficient, valid_from")
