@@ -12,6 +12,12 @@ studypick.eu {
 	encode zstd gzip
 	reverse_proxy 127.0.0.1:3000
 
+	# Метод TRACE сайту не нужен: Next.js отвечает на него ошибкой 500 и пишет
+	# её в журнал (ревью 2026-10-17). Caddy отвечает сам, до сайта запрос не
+	# доходит.
+	@trace method TRACE
+	respond @trace 405
+
 	# Журнал запросов (IP, время, адрес, браузер) — для безопасности сайта.
 	# Хранится 14 дней: старые файлы удаляет logrotate (deploy/logrotate-studypick,
 	# deploy/README.md, шаг 6). Своя ротация Caddy режет файл только по

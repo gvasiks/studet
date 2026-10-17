@@ -250,7 +250,7 @@ systemctl restart studypick
 | Замка нет, сертификат не получен | домен ещё не указывает на сервер: `getent hosts studypick.eu` |
 | Бот перестал работать | выкладка его не трогает; проверьте, что `node -v` по-прежнему `v20…` |
 
-## Журнал запросов на уже работающем сервере (с 2026-10-15)
+## Журнал запросов и запрет TRACE на уже работающем сервере (с 2026-10-15)
 
 Если сайт выложен раньше 15 октября 2026 года, журнала запросов на сервере
 нет, а политика конфиденциальности теперь обещает его с хранением 14 дней.
@@ -264,6 +264,9 @@ nano /etc/caddy/Caddyfile
 Внутрь блока `studypick.eu { … }`, сразу после строки `reverse_proxy 127.0.0.1:3000`:
 
 ```
+	@trace method TRACE
+	respond @trace 405
+
 	log {
 		output file /var/log/caddy/studypick-access.log {
 			roll_disabled
@@ -283,6 +286,8 @@ logrotate --debug /etc/logrotate.d/studypick
 
 `caddy validate` должен закончиться словом `Valid configuration`;
 `logrotate --debug` ничего не меняет, только показывает, что будет делать.
+Проверка TRACE: `curl -s -o /dev/null -w '%{http_code}\n' -X TRACE https://studypick.eu/` отвечает `405`.
+
 Проверка: откройте сайт и выполните `tail -n 1 /var/log/caddy/studypick-access.log` —
 появится строка о запросе.
 
