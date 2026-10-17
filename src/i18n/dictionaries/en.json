@@ -368,7 +368,8 @@
     },
     "chooseLevel": "Choose the exam level: {list}.",
     "levelPlaceholder": "Level…",
-    "levelMissing": "Choose the level — the exam is not counted without it."
+    "levelMissing": "Choose the level — the exam is not counted without it.",
+    "optionalSkipped": "not entered — optional"
   },
   "ltCalculator": {
     "intro": "Enter your state matura exam (VBE) results. Only the subjects that count towards this programme's competition score are shown.",
@@ -558,7 +559,8 @@
     "openCalculator": "Open the calculator",
     "openProgramme": "Programme page",
     "breakdown": "How the score adds up",
-    "showList": "Show programmes ({count})"
+    "showList": "Show programmes ({count})",
+    "optionalMissing": "Not counted, because it was not entered (optional): {list}. With it the score would be higher."
   },
   "rights": {
     "title": "Your rights when applying to university",

@@ -16,6 +16,7 @@ import { formatDate } from "@/lib/dates";
 import { useTrackOnce } from "@/components/Analytics";
 import { Providers } from "@/app/[locale]/providers";
 import { formatPoints } from "@/lib/numbers";
+import { enumLabel } from "@/lib/names";
 
 const LEVELS: ExamLevel[] = ["augstakais", "optimalais", "vispaarigais"];
 
@@ -367,16 +368,26 @@ function ResultRow({
   return (
     <li className="rounded-2xl border border-zinc-200 p-4">
       <div className="flex flex-wrap items-start justify-between gap-x-4 gap-y-2">
-        {isFixture ? (
-          <span className="min-w-0 flex-1 font-medium leading-snug text-zinc-900">{formula.programmeName}</span>
-        ) : (
-          <Link
-            href={programmeHref}
-            className="min-w-0 flex-1 font-medium leading-snug text-zinc-900 hover:text-brand"
-          >
-            {formula.programmeName}
-          </Link>
-        )}
+        <span className="min-w-0 flex-1">
+          {isFixture ? (
+            <span className="font-medium leading-snug text-zinc-900">{formula.programmeName}</span>
+          ) : (
+            <Link href={programmeHref} className="font-medium leading-snug text-zinc-900 hover:text-brand">
+              {formula.programmeName}
+            </Link>
+          )}
+          {/* уровень и язык — у одного вуза бывают одноимённые программы */}
+          {(formula.degreeLevel || formula.language) && (
+            <span className="mt-0.5 block text-xs text-zinc-500">
+              {[
+                formula.degreeLevel && enumLabel(dict.catalog.degreeLevel, formula.degreeLevel),
+                formula.language && enumLabel(dict.catalog.language, formula.language),
+              ]
+                .filter(Boolean)
+                .join(" · ")}
+            </span>
+          )}
+        </span>
         {/* Балл — то, за чем пришли: крупно, моноширинными цифрами, справа. */}
         {item.score && (
           <span className="shrink-0 text-right">
@@ -427,6 +438,16 @@ function ResultRow({
       {/* Посчитанный балл — тоже повод открыть калькулятор: там можно
           поменять уровень экзамена и увидеть разбор подробнее (аудит
           2026-10-04 — ссылка была только у «нужны доп. данные»). */}
+      {item.score && item.score.lines.some((line) => line.input === null && line.term.optional) && (
+        <p className="mt-2 text-sm text-amber-800">
+          {interpolate(t.optionalMissing, {
+            list: item.score.lines
+              .filter((line) => line.input === null && line.term.optional)
+              .map((line) => termLabel(dict, line.term))
+              .join(", "),
+          })}
+        </p>
+      )}
       {item.status === "computed" && !isFixture && (
         <p className="mt-2 text-sm">
           <Link
@@ -450,11 +471,18 @@ function ResultRow({
               <div key={index} className="flex justify-between gap-4 border-b border-dashed border-zinc-100 pb-1.5 last:border-0">
                 <dt className="text-zinc-600">{termLabel(dict, line.term)}</dt>
                 <dd className="shrink-0 text-right tabular-nums">
-                  {/* как получились баллы слагаемого: «72 % × 0,75 × 1,5 =» */}
-                  {lineFormula(line, languageOf(locale)) && (
-                    <span className="mr-1.5 text-zinc-500">{lineFormula(line, languageOf(locale))} =</span>
+                  {line.input === null && line.term.optional ? (
+                    // необязательное слагаемое не введено — не «0,00», а пояснение
+                    <span className="text-zinc-500">{dict.calculator.optionalSkipped}</span>
+                  ) : (
+                    <>
+                      {/* как получились баллы слагаемого: «72 % × 0,75 × 1,5 =» */}
+                      {lineFormula(line, languageOf(locale)) && (
+                        <span className="mr-1.5 text-zinc-500">{lineFormula(line, languageOf(locale))} =</span>
+                      )}
+                      <span className="font-medium text-zinc-900">{formatPoints(line.points, languageOf(locale))}</span>
+                    </>
                   )}
-                  <span className="font-medium text-zinc-900">{formatPoints(line.points, languageOf(locale))}</span>
                 </dd>
               </div>
             ))}

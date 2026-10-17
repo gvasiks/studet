@@ -11,6 +11,8 @@ function formula(overrides: Partial<MatchFormula> & Pick<MatchFormula, "programm
     programmeSlug: overrides.programmeName.toLowerCase(),
     universitySlug: "u1",
     universityName: "Universitāte A",
+    degreeLevel: "bachelor",
+    language: "lv",
     verifiedAt: "2026-12-10T10:00:00Z",
     sourceUrl: null,
     terms: [

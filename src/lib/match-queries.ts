@@ -45,7 +45,7 @@ export const getMatchData = cache(async (language: Language, country: Country): 
   const { data: rows, error } = await supabase
     .from("formula")
     .select(
-      "id, programme_id, valid_from, source_url, verified_at, programme!inner(slug, name_lv, name_en, university!inner(slug, name_lv, name_en))",
+      "id, programme_id, valid_from, source_url, verified_at, programme!inner(slug, name_lv, name_en, degree_level, language_of_instruction, university!inner(slug, name_lv, name_en))",
     )
     .eq("variant", "ce")
     .eq("programme.university.country", country)
@@ -101,6 +101,8 @@ export const getMatchData = cache(async (language: Language, country: Country): 
       slug: string;
       name_lv: string | null;
       name_en: string | null;
+      degree_level: string | null;
+      language_of_instruction: string | null;
       university: { slug: string; name_lv: string; name_en: string | null };
     };
     return {
@@ -109,6 +111,8 @@ export const getMatchData = cache(async (language: Language, country: Country): 
       programmeName: localizedName(programme, language),
       universitySlug: programme.university.slug,
       universityName: localizedName(programme.university, language),
+      degreeLevel: programme.degree_level,
+      language: programme.language_of_instruction,
       verifiedAt: row.verified_at as string,
       sourceUrl: row.source_url,
       terms: termsByFormula.get(row.id) ?? [],

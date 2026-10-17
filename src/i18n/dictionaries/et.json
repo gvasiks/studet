@@ -368,7 +368,8 @@
     },
     "chooseLevel": "Tuleb valida eksami tase: {list}.",
     "levelPlaceholder": "Tase…",
-    "levelMissing": "Tuleb valida tase — ilma selleta eksamit ei arvestata."
+    "levelMissing": "Tuleb valida tase — ilma selleta eksamit ei arvestata.",
+    "optionalSkipped": "sisestamata — pole kohustuslik"
   },
   "ltCalculator": {
     "intro": "Sisestada tuleb riiklike küpsuseksamite (VBE) tulemused. Näidatud on ainult need õppeained, mida selle õppekava konkursipunktides arvestatakse.",
@@ -558,7 +559,8 @@
     "openCalculator": "Ava kalkulaator",
     "openProgramme": "Õppekava leht",
     "breakdown": "Millest punktid kujunevad",
-    "showList": "Näita õppekavasid ({count})"
+    "showList": "Näita õppekavasid ({count})",
+    "optionalMissing": "Punktides ei ole arvestatud mittekohustuslikku osa: {list}. Sellega oleks punkte rohkem."
   },
   "system": {
     "notFound": {

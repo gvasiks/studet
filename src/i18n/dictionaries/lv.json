@@ -368,7 +368,8 @@
     },
     "chooseLevel": "Jāizvēlas eksāmena līmenis: {list}.",
     "levelPlaceholder": "Līmenis…",
-    "levelMissing": "Jāizvēlas līmenis — bez tā eksāmens netiek ņemts vērā."
+    "levelMissing": "Jāizvēlas līmenis — bez tā eksāmens netiek ņemts vērā.",
+    "optionalSkipped": "nav ievadīts — nav obligāts"
   },
   "ltCalculator": {
     "intro": "Jāievada valsts brieduma eksāmenu (VBE) vērtējumi. Redzami tikai tie mācību priekšmeti, kurus ieskaita šīs programmas konkursa punktos.",
@@ -558,7 +559,8 @@
     "openCalculator": "Atvērt kalkulatoru",
     "openProgramme": "Programmas lapa",
     "breakdown": "No kā veidojas punkti",
-    "showList": "Rādīt programmas ({count})"
+    "showList": "Rādīt programmas ({count})",
+    "optionalMissing": "Punktos nav ieskaitīts neobligātais: {list}. Ar to punktu būtu vairāk."
   },
   "rights": {
     "title": "Reflektanta tiesības, iestājoties augstskolā",

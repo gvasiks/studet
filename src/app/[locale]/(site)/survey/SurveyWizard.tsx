@@ -6,7 +6,7 @@ import type { ReactNode } from "react";
 import { Button, Checkbox, CheckboxGroup, Radio, RadioGroup } from "@heroui/react";
 import { countries, countryOf, type Locale } from "@/i18n/config";
 import type { Dictionary } from "@/i18n/dictionaries";
-import { enumLabel } from "@/lib/catalog";
+import { enumLabel } from "@/lib/names";
 import { countryProfile, schoolLeaverLevels } from "@/lib/country";
 import { DURATION_LIMITS, FEE_LIMITS, UNIVERSITY_KINDS } from "@/lib/catalog-query";
 import { interpolate } from "@/lib/outcomes";

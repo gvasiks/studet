@@ -33,6 +33,8 @@ function fixture(
     programmeName: `[TEST] ${programme}`,
     universitySlug: "fixture",
     universityName: `[TEST] ${university}`,
+    degreeLevel: "bachelor",
+    language: "lv",
     verifiedAt: VERIFIED,
     sourceUrl: null,
     terms,

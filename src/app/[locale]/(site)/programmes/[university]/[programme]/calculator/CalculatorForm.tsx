@@ -237,11 +237,18 @@ function CalculatorFormForm({
               <div key={index} className="flex justify-between">
                 <dt>{termLabel(dict, line.term)}</dt>
                 <dd className="text-right tabular-nums">
-                  {/* как получились баллы слагаемого: «72 % × 0,75 × 1,5 =» */}
-                  {lineFormula(line, languageOf(locale)) && (
-                    <span className="mr-1.5 text-zinc-500">{lineFormula(line, languageOf(locale))} =</span>
+                  {line.input === null && line.term.optional ? (
+                    // необязательное слагаемое не введено — не «0,00», а пояснение
+                    <span className="text-zinc-500">{dict.calculator.optionalSkipped}</span>
+                  ) : (
+                    <>
+                      {/* как получились баллы слагаемого: «72 % × 0,75 × 1,5 =» */}
+                      {lineFormula(line, languageOf(locale)) && (
+                        <span className="mr-1.5 text-zinc-500">{lineFormula(line, languageOf(locale))} =</span>
+                      )}
+                      {formatPoints(line.points, languageOf(locale))}
+                    </>
                   )}
-                  {formatPoints(line.points, languageOf(locale))}
                 </dd>
               </div>
             ))}

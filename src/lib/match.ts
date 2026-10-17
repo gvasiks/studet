@@ -32,6 +32,11 @@ export type MatchFormula = {
   programmeName: string;
   universitySlug: string;
   universityName: string;
+  // Уровень и язык — чтобы одноимённые программы одного вуза («Business
+  // Administration» бакалавриата и магистратуры) можно было различить
+  // (ревью 2026-10-17). null — в каталоге не указано.
+  degreeLevel: string | null;
+  language: string | null;
   verifiedAt: string;
   sourceUrl: string | null;
   terms: FormulaTerm[];

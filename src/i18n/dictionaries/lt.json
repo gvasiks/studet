@@ -368,7 +368,8 @@
     },
     "chooseLevel": "Pasirinkite egzamino lygį: {list}.",
     "levelPlaceholder": "Lygis…",
-    "levelMissing": "Pasirinkite lygį — be jo egzaminas neįskaičiuojamas."
+    "levelMissing": "Pasirinkite lygį — be jo egzaminas neįskaičiuojamas.",
+    "optionalSkipped": "neįvesta — neprivaloma"
   },
   "ltCalculator": {
     "intro": "Įveskite valstybinių brandos egzaminų (VBE) įvertinimus. Rodomi tik tie dalykai, kurie įskaitomi į šios programos konkursinį balą.",
@@ -558,7 +559,8 @@
     "openCalculator": "Atidaryti skaičiuoklę",
     "openProgramme": "Programos puslapis",
     "breakdown": "Iš ko susideda balas",
-    "showList": "Rodyti programas ({count})"
+    "showList": "Rodyti programas ({count})",
+    "optionalMissing": "Į balą neįskaičiuota neprivaloma dalis: {list}. Su ja balas būtų didesnis."
   },
   "rights": {
     "title": "Jūsų teisės stojant į aukštąją mokyklą",
