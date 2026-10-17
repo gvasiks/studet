@@ -553,7 +553,8 @@
     "gateFailedPrefix": "Slenkstis",
     "openCalculator": "Atidaryti skaičiuoklę",
     "openProgramme": "Programos puslapis",
-    "breakdown": "Iš ko susideda balas"
+    "breakdown": "Iš ko susideda balas",
+    "showList": "Rodyti programas ({count})"
   },
   "rights": {
     "title": "Jūsų teisės stojant į aukštąją mokyklą",

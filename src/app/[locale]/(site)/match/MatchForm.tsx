@@ -6,7 +6,7 @@ import { Input } from "@heroui/react";
 import { languageOf, type Locale } from "@/i18n/config";
 import type { Dictionary } from "@/i18n/dictionaries";
 import { parsePercent } from "@/lib/exam-input";
-import type { ExamLevel, ExamResult } from "@/lib/formula";
+import { lineFormula, type ExamLevel, type ExamResult } from "@/lib/formula";
 import { matchProgrammes, matchRequirements, type MatchItem, type MatchStatus } from "@/lib/match";
 import type { MatchFormula, MatchRequirement, RequirementMatchItem } from "@/lib/match";
 import { interpolate } from "@/lib/outcomes";
@@ -257,6 +257,9 @@ function MatchFormForm({
   );
 }
 
+// Сколько программ в группе «чего-то не хватает» показывать без сворачивания.
+const COLLAPSE_AFTER = 5;
+
 function ResultGroup({
   status,
   items,
@@ -284,6 +287,21 @@ function ResultGroup({
     byUniversity.set(item.formula.universityName, list);
   }
 
+  const list = (
+    <div className="divide-y divide-zinc-100">
+      {[...byUniversity.entries()].map(([universityName, universityItems]) => (
+        <div key={universityName} className="px-6 py-5 sm:px-8">
+          <h3 className="text-xs font-semibold uppercase tracking-wide text-zinc-500">{universityName}</h3>
+          <ul className="mt-3 space-y-3">
+            {universityItems.map((item) => (
+              <ResultRow key={item.formula.formulaId} item={item} dict={dict} locale={locale} isFixture={isFixture} />
+            ))}
+          </ul>
+        </div>
+      ))}
+    </div>
+  );
+
   return (
     <section aria-labelledby={headingId} className="surface mt-6 overflow-hidden">
       <div className="flex gap-4 border-b border-zinc-100 p-6 sm:p-8">
@@ -307,18 +325,19 @@ function ResultGroup({
         </div>
       </div>
 
-      <div className="divide-y divide-zinc-100">
-        {[...byUniversity.entries()].map(([universityName, universityItems]) => (
-          <div key={universityName} className="px-6 py-5 sm:px-8">
-            <h3 className="text-xs font-semibold uppercase tracking-wide text-zinc-500">{universityName}</h3>
-            <ul className="mt-3 space-y-3">
-              {universityItems.map((item) => (
-                <ResultRow key={item.formula.formulaId} item={item} dict={dict} locale={locale} isFixture={isFixture} />
-              ))}
-            </ul>
-          </div>
-        ))}
-      </div>
+      {/* Группы «чего-то не хватает» при двух-трёх экзаменах бывают длинными
+          (71 программа — наблюдение приёмки, аудит 2026-10-04): длинный
+          список свёрнут, заголовок и подсказка группы видны всегда. */}
+      {status !== "computed" && items.length > COLLAPSE_AFTER ? (
+        <details>
+          <summary className="cursor-pointer px-6 py-4 text-sm font-medium text-brand hover:text-brand-dark sm:px-8">
+            {interpolate(dict.match.showList, { count: items.length })}
+          </summary>
+          {list}
+        </details>
+      ) : (
+        list
+      )}
     </section>
   );
 }
@@ -423,7 +442,13 @@ function ResultRow({
             {item.score.lines.map((line, index) => (
               <div key={index} className="flex justify-between gap-4 border-b border-dashed border-zinc-100 pb-1.5 last:border-0">
                 <dt className="text-zinc-600">{termLabel(dict, line.term)}</dt>
-                <dd className="shrink-0 font-medium tabular-nums text-zinc-900">{formatPoints(line.points, languageOf(locale))}</dd>
+                <dd className="shrink-0 text-right tabular-nums">
+                  {/* как получились баллы слагаемого: «72 % × 0,75 × 1,5 =» */}
+                  {lineFormula(line, languageOf(locale)) && (
+                    <span className="mr-1.5 text-zinc-500">{lineFormula(line, languageOf(locale))} =</span>
+                  )}
+                  <span className="font-medium text-zinc-900">{formatPoints(line.points, languageOf(locale))}</span>
+                </dd>
               </div>
             ))}
           </dl>

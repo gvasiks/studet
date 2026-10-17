@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { calculateScore, extraKey, type ExamResult, type FormulaTerm } from "./formula";
+import { calculateScore, extraKey, type ExamResult, type FormulaTerm, lineFormula } from "./formula";
 
 // Пример расчёта ЛУ из docs/PLAN.md, раздел 6 (опубликован университетом):
 // математика 56% (augstākais) × 1,00 × 6,5 = 364,00
@@ -113,5 +113,25 @@ describe("calculateScore — пороги допуска", () => {
 
     expect(result.failedGates).toHaveLength(1);
     expect(result.total).toBeGreaterThan(0); // сам балл вычислитель не занижает — это решение вуза
+  });
+});
+
+describe("запись разбора балла", () => {
+  const term = (kind: "ce" | "ce_average" | "certificate", coefficient: number) =>
+    ({ kind, subject: "matematika", coefficient, optional: false }) as never;
+
+  it("CE — процент, уровень и вес; десятичный знак по языку", () => {
+    const line = { term: term("ce", 1.5), input: 54, points: 81, percent: 72, levelCoefficient: 0.75 };
+    expect(lineFormula(line, "lv")).toBe("72 % × 0,75 × 1,5");
+    expect(lineFormula(line, "en")).toBe("72% × 0.75 × 1.5");
+  });
+
+  it("среднее и аттестат", () => {
+    expect(lineFormula({ term: term("ce_average", 0.2), input: 68.5, points: 13.7, percent: 68.5, levelCoefficient: null }, "lv")).toBe("68,5 % × 0,2");
+    expect(lineFormula({ term: term("certificate", 10), input: 8.2, points: 82, percent: null, levelCoefficient: null }, "lv")).toBe("8,2 × 10");
+  });
+
+  it("нет данных — нет записи", () => {
+    expect(lineFormula({ term: term("ce", 1), input: null, points: 0, percent: null, levelCoefficient: null }, "lv")).toBeNull();
   });
 });

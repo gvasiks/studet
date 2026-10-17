@@ -49,6 +49,12 @@ export type ScoreLine = {
   // не указан балл аттестата и т.п.) — считается как 0, но видно почему.
   input: number | null;
   points: number;
+  // Из чего получился input — для записи разбора «72 % × 0,75 × 1,5»
+  // (lineFormula): процент экзамена (у среднего — средний процент) и
+  // коэффициент его уровня. null, где их нет (аттестат, испытание вуза,
+  // нет данных).
+  percent: number | null;
+  levelCoefficient: number | null;
 };
 
 export type ScoreResult = {
@@ -69,23 +75,24 @@ export function calculateScore(
   const lines: ScoreLine[] = terms.map((term) => {
     if (term.kind === "ce") {
       const result = term.subject ? bySubject.get(term.subject) : undefined;
-      if (!result) return { term, input: null, points: 0 };
-      const input = result.percent * levelCoefficients[result.level];
-      return { term, input, points: input * term.coefficient };
+      if (!result) return { term, input: null, points: 0, percent: null, levelCoefficient: null };
+      const levelCoefficient = levelCoefficients[result.level];
+      const input = result.percent * levelCoefficient;
+      return { term, input, points: input * term.coefficient, percent: result.percent, levelCoefficient };
     }
 
     if (term.kind === "ce_average") {
-      if (examResults.length === 0) return { term, input: null, points: 0 };
+      if (examResults.length === 0) return { term, input: null, points: 0, percent: null, levelCoefficient: null };
       const withLevel = term.subject === AVERAGE_WITH_LEVEL;
       const average =
         examResults.reduce((sum, r) => sum + r.percent * (withLevel ? levelCoefficients[r.level] : 1), 0) /
         examResults.length;
-      return { term, input: average, points: average * term.coefficient };
+      return { term, input: average, points: average * term.coefficient, percent: average, levelCoefficient: null };
     }
 
     const raw = extras[extraKey(term)];
-    if (raw === undefined) return { term, input: null, points: 0 };
-    return { term, input: raw, points: raw * term.coefficient };
+    if (raw === undefined) return { term, input: null, points: 0, percent: null, levelCoefficient: null };
+    return { term, input: raw, points: raw * term.coefficient, percent: null, levelCoefficient: null };
   });
 
   const failedGates = gates.filter((gate) => {
@@ -98,4 +105,24 @@ export function calculateScore(
     lines,
     failedGates,
   };
+}
+
+/**
+ * Как получились баллы слагаемого — для разбора под калькулятором и в
+ * /match (аудит 2026-10-04: был виден только итог «81.00» без того, из чего
+ * он сложился). CE: «72 % × 0,75 × 1,5» (процент × уровень × вес);
+ * среднее: «68,5 % × 0,2»; аттестат и испытание вуза: «8,2 × 10».
+ * null — данных для слагаемого нет. Числа — с десятичным знаком языка.
+ */
+export function lineFormula(line: ScoreLine, language: string): string | null {
+  if (line.input === null) return null;
+  const number = (value: number) => value.toLocaleString(language, { maximumFractionDigits: 2 });
+  const percent = (value: number) => (language === "en" ? `${number(value)}%` : `${number(value)} %`);
+  const parts =
+    line.percent === null
+      ? [number(line.input)]
+      : line.levelCoefficient === null
+        ? [percent(line.percent)]
+        : [percent(line.percent), number(line.levelCoefficient)];
+  return [...parts, number(line.term.coefficient)].join(" × ");
 }

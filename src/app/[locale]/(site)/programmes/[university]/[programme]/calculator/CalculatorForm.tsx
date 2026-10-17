@@ -12,6 +12,7 @@ import {
   type ExamResult,
   type FormulaGate,
   type FormulaTerm,
+  lineFormula,
 } from "@/lib/formula";
 import { interpolate } from "@/lib/outcomes";
 import { subjectLabel, termLabel } from "@/lib/term-labels";
@@ -222,7 +223,13 @@ function CalculatorFormForm({
             {result.lines.map((line, index) => (
               <div key={index} className="flex justify-between">
                 <dt>{termLabel(dict, line.term)}</dt>
-                <dd>{formatPoints(line.points, languageOf(locale))}</dd>
+                <dd className="text-right tabular-nums">
+                  {/* как получились баллы слагаемого: «72 % × 0,75 × 1,5 =» */}
+                  {lineFormula(line, languageOf(locale)) && (
+                    <span className="mr-1.5 text-zinc-500">{lineFormula(line, languageOf(locale))} =</span>
+                  )}
+                  {formatPoints(line.points, languageOf(locale))}
+                </dd>
               </div>
             ))}
           </dl>

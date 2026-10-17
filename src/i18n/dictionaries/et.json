@@ -553,7 +553,8 @@
     "gateFailedPrefix": "Lävend",
     "openCalculator": "Ava kalkulaator",
     "openProgramme": "Õppekava leht",
-    "breakdown": "Millest punktid kujunevad"
+    "breakdown": "Millest punktid kujunevad",
+    "showList": "Näita õppekavasid ({count})"
   },
   "system": {
     "notFound": {

@@ -553,7 +553,8 @@
     "gateFailedPrefix": "Threshold",
     "openCalculator": "Open the calculator",
     "openProgramme": "Programme page",
-    "breakdown": "How the score adds up"
+    "breakdown": "How the score adds up",
+    "showList": "Show programmes ({count})"
   },
   "rights": {
     "title": "Your rights when applying to university",

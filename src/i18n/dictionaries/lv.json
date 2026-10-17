@@ -553,7 +553,8 @@
     "gateFailedPrefix": "Slieksnis",
     "openCalculator": "Atvērt kalkulatoru",
     "openProgramme": "Programmas lapa",
-    "breakdown": "No kā veidojas punkti"
+    "breakdown": "No kā veidojas punkti",
+    "showList": "Rādīt programmas ({count})"
   },
   "rights": {
     "title": "Reflektanta tiesības, iestājoties augstskolā",
