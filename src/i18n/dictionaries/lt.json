@@ -496,6 +496,31 @@
     "caveat": "Tai praėjusio priėmimo faktai, o ne jūsų galimybių vertinimas. Šiame duomenų rinkinyje nėra nei vietų skaičiaus, nei konkursinių balų.",
     "source": "Suskaičiuota automatiškai iš LAMA BPO atvirų duomenų ({date})."
   },
+  "vuppStats": {
+    "title": "{year} m. priėmimas",
+    "round": "Patvirtinti prašymai po {round} etapo",
+    "tableLabel": "Priėmimo skaičiai",
+    "rowHeader": "Finansavimas, forma, miestas",
+    "places": "Vietos",
+    "applications": "Prašymai",
+    "firstPriority": "1-uoju prioritetu",
+    "passed": "Preliminariai įveikė konkursą",
+    "unlimited": "neribota",
+    "funding": {
+      "budget": "valstybės finansuojamos vietos",
+      "paid": "mokamos vietos"
+    },
+    "mode": {
+      "fullDay": "nuolatinės, dieninės",
+      "fullEvening": "nuolatinės, vakarinės",
+      "partEvening": "ištęstinės, auditorinės arba vakarinės",
+      "partExtramural": "ištęstinės, neakivaizdinės",
+      "partDistance": "ištęstinės, nuotolinės"
+    },
+    "scope": "Prašymai — visais prioritetais kartu; 1-uoju prioritetu — tie, kuriuose programa nurodyta pirmoji.",
+    "caveat": "Tai faktai apie ankstesnį priėmimą, o ne galimybių vertinimas. Konkursinių balų portalas neskelbia.",
+    "source": "Duomenys iš statistika.vupp.lv (atnaujinta {updated}), įkelti automatiškai {date}."
+  },
   "ltOutcomes": {
     "scope": "Visos Lietuvos {level} absolventai, {from}–{to} m. laidos, praėjus 12 mėnesių po baigimo. Studijų kryptis:",
     "levels": {

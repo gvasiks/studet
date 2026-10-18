@@ -496,6 +496,31 @@
     "caveat": "Need on faktid eelmise vastuvõtu kohta, mitte võimaluste hinnang. Andmestikus ei ole kohtade arvu ega konkursipunkte.",
     "source": "Loendatud automaatselt LAMA BPO avaandmetest ({date})."
   },
+  "vuppStats": {
+    "title": "Vastuvõtt {year}. aastal",
+    "round": "Kinnitatud avaldused pärast {round}. vooru",
+    "tableLabel": "Vastuvõtu arvud",
+    "rowHeader": "Rahastus, vorm, linn",
+    "places": "Kohti",
+    "applications": "Avaldusi",
+    "firstPriority": "1. eelistusena",
+    "passed": "Esialgu konkursi läbinud",
+    "unlimited": "piiramatu",
+    "funding": {
+      "budget": "riigieelarvelised kohad",
+      "paid": "tasulised kohad"
+    },
+    "mode": {
+      "fullDay": "täiskoormus, päevaõpe",
+      "fullEvening": "täiskoormus, õhtuõpe",
+      "partEvening": "osakoormus, auditoorne või õhtuõpe",
+      "partExtramural": "osakoormus, sessioonõpe",
+      "partDistance": "osakoormus, kaugõpe"
+    },
+    "scope": "Avaldused — kõik eelistused kokku; 1. eelistusena — avaldused, kus õppekava on märgitud esimesena.",
+    "caveat": "Need on andmed eelmise vastuvõtu kohta, mitte hinnang kellegi võimalustele. Konkursipunkte portaal ei avalda.",
+    "source": "Andmed: statistika.vupp.lv (uuendatud {updated}), laaditud automaatselt {date}."
+  },
   "ltOutcomes": {
     "scope": "Kogu Leedu {level} lõpetajad, {from}.–{to}. aasta lennud, 12 kuud pärast lõpetamist. Õppesuund:",
     "levels": {

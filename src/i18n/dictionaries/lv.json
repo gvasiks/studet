@@ -496,6 +496,31 @@
     "caveat": "Tie ir fakti par iepriekšējo uzņemšanu, nevis izredžu vērtējums. Datu kopā nav ne vietu skaita, ne konkursa punktu.",
     "source": "Saskaitīts automātiski no LAMA BPO atvērtajiem datiem ({date})."
   },
+  "vuppStats": {
+    "title": "Uzņemšana {year}. gadā",
+    "round": "Apstiprinātie pieteikumi pēc {round}. kārtas",
+    "tableLabel": "Uzņemšanas skaitļi",
+    "rowHeader": "Finansējums, forma, pilsēta",
+    "places": "Vietas",
+    "applications": "Pieteikumi",
+    "firstPriority": "Ar 1. prioritāti",
+    "passed": "Provizoriski izturējuši konkursu",
+    "unlimited": "neierobežoti",
+    "funding": {
+      "budget": "budžeta vietas",
+      "paid": "maksas vietas"
+    },
+    "mode": {
+      "fullDay": "pilna laika, dienas",
+      "fullEvening": "pilna laika, vakara",
+      "partEvening": "nepilna laika, klātiene vai vakara",
+      "partExtramural": "nepilna laika, neklātiene",
+      "partDistance": "nepilna laika, tālmācība"
+    },
+    "scope": "Pieteikumi — visās prioritātēs kopā; ar 1. prioritāti — tie, kuros programma norādīta pirmā.",
+    "caveat": "Tie ir fakti par iepriekšējo uzņemšanu, nevis izredžu vērtējums. Konkursa punktus portāls nepublicē.",
+    "source": "Dati no statistika.vupp.lv (atjaunoti {updated}; ielādēti automātiski {date})."
+  },
   "ltOutcomes": {
     "scope": "Visas Lietuvas {level} absolventi, {from}.–{to}. gada izlaidumi, 12 mēnešus pēc absolvēšanas. Studiju virziens:",
     "levels": {

@@ -496,6 +496,31 @@
     "caveat": "These are facts about a past admission, not an estimate of your chances. The dataset contains neither the number of places nor competition scores.",
     "source": "Counted automatically from LAMA BPO open data ({date})."
   },
+  "vuppStats": {
+    "title": "Admission in {year}",
+    "round": "Confirmed applications after round {round}",
+    "tableLabel": "Admission figures",
+    "rowHeader": "Funding, mode, city",
+    "places": "Places",
+    "applications": "Applications",
+    "firstPriority": "1st priority",
+    "passed": "Provisionally passed",
+    "unlimited": "unlimited",
+    "funding": {
+      "budget": "state-funded places",
+      "paid": "fee-paying places"
+    },
+    "mode": {
+      "fullDay": "full-time, day",
+      "fullEvening": "full-time, evening",
+      "partEvening": "part-time, in person or evening",
+      "partExtramural": "part-time, extramural",
+      "partDistance": "part-time, distance learning"
+    },
+    "scope": "Applications count every priority; “1st priority” counts the applications that list the programme first.",
+    "caveat": "These are facts about the previous admission, not an estimate of anyone's chances. The portal does not publish admission scores.",
+    "source": "Data from statistika.vupp.lv (updated {updated}), loaded automatically on {date}."
+  },
   "ltOutcomes": {
     "scope": "Graduates of {level} across Lithuania, classes of {from}–{to}, 12 months after graduation. Study field:",
     "levels": {

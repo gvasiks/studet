@@ -10,6 +10,7 @@ import { getFormula } from "@/lib/formula-queries";
 import { getLtFormula } from "@/lib/lt-score-queries";
 import { getLtProgrammeField } from "@/lib/lt-field-queries";
 import { getLtAdmissionYear } from "@/lib/lt-admission-stat-queries";
+import { getVuppYear } from "@/lib/vupp-stat-queries";
 import { getLtFieldOutcome } from "@/lib/lt-field-outcome-queries";
 import { getEeProgrammeField } from "@/lib/ee-field-queries";
 import { admissionState, tallinnDate } from "@/lib/ee-admission";
@@ -26,6 +27,7 @@ import { employmentPercent, interpolate, OUTCOMES_SOURCE_URL, pickOutcomes } fro
 import { BackButton } from "@/components/BackButton";
 import { FavoriteButton } from "@/components/FavoriteButton";
 import { LtAdmissionStats } from "@/components/LtAdmissionStats";
+import { VuppAdmissionStats } from "@/components/VuppAdmissionStats";
 import { LtFieldOutcome } from "@/components/LtFieldOutcome";
 import { EeAdmissionConditions } from "@/components/EeAdmissionConditions";
 import { ReportErrorLink } from "@/components/ReportErrorLink";
@@ -104,7 +106,10 @@ export default async function ProgrammePage({ params }: { params: Params }) {
   const eeAdmissionPromise = countryOf(locale) === "EE" ? getEeAdmission(record.id) : Promise.resolve(null);
   // Цифры прошлого приёма из открытого набора LAMA BPO — тоже только у Литвы.
   const ltStatsPromise = countryOf(locale) === "LT" ? getLtAdmissionYear(record.id) : Promise.resolve(null);
-  const [formula, rounds, admissionType, outcome, channels, hasLtCalculator, ltField, ltStats, eeField, eeAdmission] =
+  // Прошлогодний конкурс с statistika.vupp.lv — у Латвии, где связь программы
+  // с кодом приёма подтверждена владельцем (vupp-stat-queries.ts).
+  const vuppStatsPromise = countryOf(locale) === "LV" ? getVuppYear(record.id) : Promise.resolve(null);
+  const [formula, rounds, admissionType, outcome, channels, hasLtCalculator, ltField, ltStats, eeField, eeAdmission, vuppStats] =
     await Promise.all([
       getFormula(record.id),
       getApplicationRoundsForCards(),
@@ -116,6 +121,7 @@ export default async function ProgrammePage({ params }: { params: Params }) {
       ltStatsPromise,
       eeFieldPromise,
       eeAdmissionPromise,
+      vuppStatsPromise,
     ]);
   // Действующий это конкурс или прошлый приём — по сроку (ee-admission.ts).
   const eeAdmissionState = eeAdmission ? admissionState(eeAdmission, new Date()) : null;
@@ -468,6 +474,8 @@ export default async function ProgrammePage({ params }: { params: Params }) {
       )}
 
       {ltStats && <LtAdmissionStats dict={dict} language={language} stats={ltStats} />}
+
+      {vuppStats && <VuppAdmissionStats dict={dict} language={language} stats={vuppStats} />}
 
       {ltOutcome && (
         <LtFieldOutcome dict={dict} language={language} degreeLevel={record.degree_level} outcome={ltOutcome} />
