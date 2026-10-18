@@ -581,6 +581,7 @@
     "missingPrefix": "Puudub",
     "extrasPrefix": "Vaja ka",
     "gateFailedPrefix": "Lävend",
+    "pastAdmission": "Vastuvõtu arvud {year}. aastal — õppekava lehel",
     "openCalculator": "Ava kalkulaator",
     "openProgramme": "Õppekava leht",
     "breakdown": "Millest punktid kujunevad",

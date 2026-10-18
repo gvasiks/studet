@@ -34,6 +34,30 @@ async function loadLinks(): Promise<Map<string, ProgrammeCodes>> {
   return links;
 }
 
+/** Год последнего приёма на портале для программ со связью: для ссылки
+ * «цифры приёма — на странице программы» в /match. Программы без связи
+ * в ответ не попадают. */
+export async function getVuppYears(programmeIds: string[]): Promise<Map<string, number>> {
+  const links = await getLinks();
+  const linked = programmeIds.filter((id) => links.has(id));
+  const years = new Map<string, number>();
+  if (linked.length === 0) return years;
+  const codes = [...new Set(linked.flatMap((id) => links.get(id)!.codes))];
+  const { data, error } = await supabase
+    .from("vupp_admission_stat")
+    .select("university_slug, programme_code, admission_year")
+    .in("programme_code", codes);
+  if (error) throw error;
+  for (const id of linked) {
+    const link = links.get(id)!;
+    for (const row of data ?? []) {
+      if (row.university_slug !== link.university || !link.codes.includes(row.programme_code)) continue;
+      years.set(id, Math.max(years.get(id) ?? 0, row.admission_year));
+    }
+  }
+  return years;
+}
+
 export const getVuppYear = cache(async (programmeId: string): Promise<VuppYear | null> => {
   const link = (await getLinks()).get(programmeId);
   if (!link) return null;

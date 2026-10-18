@@ -463,6 +463,16 @@ function ResultRow({
           </Link>
         </p>
       )}
+      {/* Прошлогодний конкурс — ссылкой на таблицу карточки, а не числом:
+          у программы несколько строк (бюджет и платные, формы, города),
+          одно число из них было бы нашим выводом (решение 2026-10-18). */}
+      {formula.pastAdmissionYear && !isFixture && (
+        <p className="mt-1 text-sm">
+          <Link href={`${programmeHref}#past-admission`} className="text-zinc-600 underline hover:text-brand">
+            {interpolate(t.pastAdmission, { year: formula.pastAdmissionYear })}
+          </Link>
+        </p>
+      )}
 
       {item.score && (
         <details className="group mt-3 border-t border-zinc-100 pt-3">

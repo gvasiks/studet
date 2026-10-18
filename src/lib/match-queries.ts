@@ -3,6 +3,7 @@ import type { Country, Language } from "@/i18n/config";
 import { supabase } from "@/lib/supabase";
 import { localizedName } from "@/lib/names";
 import { getLevelCoefficients } from "@/lib/formula-queries";
+import { getVuppYears } from "@/lib/vupp-stat-queries";
 import type { ExamLevel, FormulaGate, FormulaTerm } from "@/lib/formula";
 import { FIXTURE_FORMULAS, FIXTURE_LEVEL_COEFFICIENTS, FIXTURE_REQUIREMENTS } from "@/lib/match-fixture";
 import type { MatchFormula, MatchRequirement } from "@/lib/match";
@@ -80,11 +81,13 @@ const loadMatchData = cache(async (language: Language, country: Country): Promis
   const ids = chosen.map((row) => row.id);
 
   const programmeIdsWithFormula = new Set(chosen.map((row) => row.programme_id));
-  const [termsResult, gatesResult, levelCoefficients, requirements] = await Promise.all([
+  const [termsResult, gatesResult, levelCoefficients, requirements, pastYears] = await Promise.all([
     supabase.from("formula_term").select("formula_id, kind, subject, coefficient, optional").in("formula_id", ids),
     supabase.from("formula_gate").select("formula_id, subject, min_percent").in("formula_id", ids),
     getLevelCoefficients(),
     getMatchRequirements(language, country, programmeIdsWithFormula),
+    // прошлогодний конкурс есть только у Латвии (statistika.vupp.lv)
+    country === "LV" ? getVuppYears([...programmeIdsWithFormula]) : Promise.resolve(new Map<string, number>()),
   ]);
   if (termsResult.error) throw termsResult.error;
   if (gatesResult.error) throw gatesResult.error;
@@ -128,6 +131,7 @@ const loadMatchData = cache(async (language: Language, country: Country): Promis
       sourceUrl: row.source_url,
       terms: termsByFormula.get(row.id) ?? [],
       gates: gatesByFormula.get(row.id) ?? [],
+      pastAdmissionYear: pastYears.get(row.programme_id),
     };
   });
 

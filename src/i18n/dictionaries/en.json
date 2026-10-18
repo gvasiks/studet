@@ -581,6 +581,7 @@
     "missingPrefix": "Missing",
     "extrasPrefix": "Also needs",
     "gateFailedPrefix": "Threshold",
+    "pastAdmission": "Admission figures for {year} — on the programme page",
     "openCalculator": "Open the calculator",
     "openProgramme": "Programme page",
     "breakdown": "How the score adds up",

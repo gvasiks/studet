@@ -41,6 +41,9 @@ export type MatchFormula = {
   sourceUrl: string | null;
   terms: FormulaTerm[];
   gates: FormulaGate[];
+  // Год прошлого приёма, цифры которого есть на странице программы
+  // (statistika.vupp.lv, только Латвия); нет — ссылки нет.
+  pastAdmissionYear?: number;
 };
 
 export type MatchStatus = "computed" | "missing_exams" | "missing_extras" | "gate_failed";

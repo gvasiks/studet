@@ -581,6 +581,7 @@
     "missingPrefix": "Trūkst",
     "extrasPrefix": "Vajag arī",
     "gateFailedPrefix": "Slieksnis",
+    "pastAdmission": "Uzņemšanas skaitļi {year}. gadā — programmas lapā",
     "openCalculator": "Atvērt kalkulatoru",
     "openProgramme": "Programmas lapa",
     "breakdown": "No kā veidojas punkti",

@@ -581,6 +581,7 @@
     "missingPrefix": "Trūksta",
     "extrasPrefix": "Dar reikia",
     "gateFailedPrefix": "Slenkstis",
+    "pastAdmission": "{year} m. priėmimo skaičiai — programos puslapyje",
     "openCalculator": "Atidaryti skaičiuoklę",
     "openProgramme": "Programos puslapis",
     "breakdown": "Iš ko susideda balas",

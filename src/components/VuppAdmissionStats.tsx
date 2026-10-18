@@ -34,7 +34,7 @@ export function VuppAdmissionStats({
   const showNames = stats.groups.length > 1;
 
   return (
-    <section className="mt-8">
+    <section id="past-admission" className="mt-8 scroll-mt-24">
       <h2 className="text-xs uppercase tracking-wide text-zinc-500">{interpolate(text.title, { year: stats.year })}</h2>
       {stats.round !== null && (
         <p className="mt-1 text-sm text-zinc-600">{interpolate(text.round, { round: stats.round })}</p>

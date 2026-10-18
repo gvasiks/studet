@@ -10,6 +10,8 @@ import { getAdmissionType } from "@/lib/admission-type-queries";
 import { getLtFormula } from "@/lib/lt-score-queries";
 import { buildAlternates, SITE_URL } from "@/lib/site";
 import { ReportErrorLink } from "@/components/ReportErrorLink";
+import { VuppAdmissionStats } from "@/components/VuppAdmissionStats";
+import { getVuppYear } from "@/lib/vupp-stat-queries";
 import { CalculatorForm } from "./CalculatorForm";
 import { LtCalculatorForm } from "./LtCalculatorForm";
 
@@ -78,7 +80,12 @@ export default async function CalculatorPage({ params }: { params: Params }) {
 
   // Параллельно: коэффициенты уровней от программы не зависят (и живут в
   // памяти сервера, formula-queries.ts).
-  const [formula, levelCoefficients] = await Promise.all([getFormula(record.id), getLevelCoefficients()]);
+  // Прошлогодний конкурс программы — рядом с баллом (CLAUDE.md, правило 2).
+  const [formula, levelCoefficients, vuppStats] = await Promise.all([
+    getFormula(record.id),
+    getLevelCoefficients(),
+    getVuppYear(record.id),
+  ]);
 
   // Пункт 06 ревью 2026-09: если тип отбора подтверждён и это не
   // конкурсный балл, сообщение объясняет почему, а не повторяет общее
@@ -113,6 +120,8 @@ export default async function CalculatorPage({ params }: { params: Params }) {
           locale={locale}
         />
       )}
+
+      {formula && vuppStats && <VuppAdmissionStats dict={dict} language={languageOf(locale)} stats={vuppStats} />}
 
       {/* В письмо подставляется только адрес страницы — введённые
           результаты экзаменов браузер не покидают. */}

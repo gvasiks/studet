@@ -145,6 +145,8 @@ for (const locale of LOCALES) {
     const levels = page.locator("main select");
     for (let index = 0; index < 3; index += 1) await levels.nth(index).selectOption("augstakais");
     await page.locator("details summary").first().click();
+    // у посчитанных программ ЛУ — ссылка на прошлогодний конкурс (с 2026-10-18)
+    await expect(page.locator('main a[href$="#past-admission"]').first()).toBeVisible();
     const results = await new AxeBuilder({ page }).analyze();
     expect(results.violations, JSON.stringify(results.violations, null, 2)).toEqual([]);
   });
