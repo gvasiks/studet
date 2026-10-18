@@ -83,7 +83,14 @@ def _groups_from_criteria(criteria_text: str) -> list[list[str]]:
         match = BULLET_LINE_RE.match(bullet.strip(" ,.;"))
         if not match:
             continue
-        codes = _classify_for_requirement(match.group(2))
+        body = match.group(2)
+        # «45% no kopējā vērtējuma CE veido vērtējums latviešu valodā» — слово
+        # CE стоит перед «veido», и BULLET_LINE_RE его съедает; без него
+        # экзамен не узнаётся (до 2026-10-18 так пропал латышский у
+        # «Multimediju komunikācija» — сверка с подтверждённой формулой).
+        if re.search(r"vērtējuma\s+CE\s+(?:veido|ietekmē)", bullet) and not body.lower().startswith("ce "):
+            body = "CE " + body
+        codes = _classify_for_requirement(body)
         if codes:
             groups.append(codes)
     return groups
@@ -146,6 +153,15 @@ def selftest() -> None:
     assert note is None, note
     assert groups is not None
     assert ["mathematics"] in groups and ["latvian"] in groups and ["english"] in groups
+
+    # «CE» перед «veido» — тот же экзамен
+    swapped, _ = extract_requirements(
+        "• 10% no kopējā vērtējuma veido CE vērtējums matemātikā "
+        "• 45% no kopējā vērtējuma CE veido vērtējums latviešu valodā, "
+        "• 45% no kopējā vērtējuma veido CE vērtējums svešvalodā vai starptautiskas "
+        "testēšanas institūcijas pārbaudījuma vērtējums svešvalodā."
+    )
+    assert swapped is not None and sorted(swapped) == [["english"], ["latvian"], ["mathematics"]], swapped
     assert len(groups) == 3, groups
 
     # CE-альтернатива между двумя разными предметами: для требования — группа,

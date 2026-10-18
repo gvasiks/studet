@@ -93,6 +93,12 @@ def _classify_for_requirement(description: str) -> list[str] | None:
 def _groups_from_text(formula_text: str) -> list[list[str]]:
     groups: list[list[str]] = []
     for piece in split_terms(formula_text):
+        # «ja nav CE …, tad 0» — без этого экзамена поступить можно, слагаемое
+        # просто даёт 0 (так же считает formulas_lu.py: optional). Требованием
+        # оно не становится; до 2026-10-18 становилось — 9 программ ЛУ
+        # требовали лишний экзамен (сверка с подтверждёнными формулами).
+        if "tad 0" in piece:
+            continue
         numbers = NUMBERS_RE.search(piece)
         if not numbers:
             continue
@@ -180,6 +186,19 @@ def selftest() -> None:
     assert ["mathematics"] in groups
     assert ["physics", "chemistry", "biology"] in groups
     assert len(groups) == 4, groups
+
+    # «ja nav CE sociālajās zinātnēs, tad 0» — надбавка, а не требование
+    sociology_block = (
+        "2.1.15. Socioloģija – akadēmiskā bakalaura studiju programma pilna laika klātienes studijām: \n"
+        "• vērtējuma aprēķināšanas formulas 1. variants vasaras uzņemšanā : CE latviešu valodā "
+        "kopvērtējums procentos (3,5 x 100 = 350) + CE angļu valodā vai CE franču valodā, vai CE vācu valodā "
+        "kopvērtējums procentos (3,5 x 100 = 350) + CE matemātikā kopvērtējums procentos (2 x 100 = 200) + "
+        "CE sociālajās zinātnēs procentos ((1 x 100 = 100), ja nav CE sociālajās zinātnēs, tad 0); \n"
+        "• vērtējuma aprēķināšanas formulas 2. variants vasaras uzņemšanā : vidējās izglītības ...;"
+    )
+    groups_soc, note_soc = extract_requirements(sociology_block)
+    assert note_soc is None, note_soc
+    assert sorted(groups_soc or []) == [["english"], ["latvian"], ["mathematics"]], groups_soc
 
     # 1.a/1.b — по-прежнему не берём
     fizika_block = (
