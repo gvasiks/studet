@@ -54,7 +54,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 from datetime import date
 
-from formula_drafts import DocumentMeta, RequirementDraft, write_requirement_drafts
+from formula_drafts import FOREIGN_LANGUAGE_CHOICE, DocumentMeta, RequirementDraft, write_requirement_drafts
 
 SOURCE_URL = (
     "https://du.lv/wp-content/uploads/2026/08/"
@@ -67,7 +67,8 @@ SOURCE_DOC = (
 VALID_FROM = date(2025, 10, 21)
 COPY_PATH = "docs/source-documents/du/studiju-iespejas-pamatstudijas-2026-27-08-2026.pdf"
 
-BASE_GROUPS: list[list[str]] = [["latvian"], ["english"], ["mathematics"]]
+# «svešvaloda» в документе — любой иностранный (formula_drafts.FOREIGN_LANGUAGE_CHOICE)
+BASE_GROUPS: list[list[str]] = [["latvian"], list(FOREIGN_LANGUAGE_CHOICE), ["mathematics"]]
 
 
 @dataclass

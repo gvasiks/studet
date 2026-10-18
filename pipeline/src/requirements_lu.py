@@ -31,7 +31,7 @@ from dataclasses import dataclass, field
 from datetime import date
 from pathlib import Path
 
-from formula_drafts import DocumentMeta, RequirementDraft, write_requirement_drafts
+from formula_drafts import FOREIGN_LANGUAGE_CHOICE, DocumentMeta, RequirementDraft, write_requirement_drafts
 from formulas_lu import (
     CE_SUBJECTS,
     LANGUAGE_SLOT,
@@ -83,7 +83,9 @@ def _classify_for_requirement(description: str) -> list[str] | None:
     if parts is None:
         return None
     if set(parts) <= LANGUAGE_SLOT and "angļu valodā" in parts:
-        return ["english"]
+        # выбор языка («angļu vai franču, vai vācu») — группа; только
+        # английский — английский
+        return list(FOREIGN_LANGUAGE_CHOICE) if "vācu valodā" in parts else ["english"]
     codes = [CE_SUBJECTS.get(p) for p in parts]
     if any(code is None for code in codes):
         return None  # неизвестный предмет — не рискуем
@@ -182,7 +184,7 @@ def selftest() -> None:
     assert note is None, note
     assert groups is not None
     assert ["latvian"] in groups
-    assert ["english"] in groups
+    assert FOREIGN_LANGUAGE_CHOICE in groups
     assert ["mathematics"] in groups
     assert ["physics", "chemistry", "biology"] in groups
     assert len(groups) == 4, groups
@@ -198,7 +200,7 @@ def selftest() -> None:
     )
     groups_soc, note_soc = extract_requirements(sociology_block)
     assert note_soc is None, note_soc
-    assert sorted(groups_soc or []) == [["english"], ["latvian"], ["mathematics"]], groups_soc
+    assert sorted(groups_soc or []) == [FOREIGN_LANGUAGE_CHOICE, ["latvian"], ["mathematics"]], groups_soc
 
     # 1.a/1.b — по-прежнему не берём
     fizika_block = (

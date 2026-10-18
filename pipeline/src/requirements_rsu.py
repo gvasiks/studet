@@ -27,7 +27,7 @@ import sys
 from dataclasses import dataclass, field
 from datetime import date
 
-from formula_drafts import DocumentMeta, RequirementDraft, write_requirement_drafts
+from formula_drafts import FOREIGN_LANGUAGE_CHOICE, DocumentMeta, RequirementDraft, write_requirement_drafts
 from formulas_rsu import (
     BULLET_LINE_RE,
     CE_SUBJECTS,
@@ -70,7 +70,11 @@ def _classify_for_requirement(body: str) -> list[str] | None:
         return None
     subject_phrase = match.group(1).strip()
     if match.group(2):
-        return ["english"] if subject_phrase in ("svešvalodā", "angļu valodā") else None
+        # «svešvalodā vai … pārbaudījuma vērtējums svešvalodā» — любой
+        # иностранный: группа; «angļu valodā» — именно английский
+        if subject_phrase == "svešvalodā":
+            return list(FOREIGN_LANGUAGE_CHOICE)
+        return ["english"] if subject_phrase == "angļu valodā" else None
     parts = [p.strip() for p in subject_phrase.split(" vai ")]
     codes = [CE_SUBJECTS.get(p) for p in parts]
     return None if any(code is None for code in codes) else codes
@@ -152,7 +156,7 @@ def selftest() -> None:
     groups, note = extract_requirements(text)
     assert note is None, note
     assert groups is not None
-    assert ["mathematics"] in groups and ["latvian"] in groups and ["english"] in groups
+    assert ["mathematics"] in groups and ["latvian"] in groups and FOREIGN_LANGUAGE_CHOICE in groups
 
     # «CE» перед «veido» — тот же экзамен
     swapped, _ = extract_requirements(
@@ -161,7 +165,7 @@ def selftest() -> None:
         "• 45% no kopējā vērtējuma veido CE vērtējums svešvalodā vai starptautiskas "
         "testēšanas institūcijas pārbaudījuma vērtējums svešvalodā."
     )
-    assert swapped is not None and sorted(swapped) == [["english"], ["latvian"], ["mathematics"]], swapped
+    assert swapped is not None and sorted(swapped) == [FOREIGN_LANGUAGE_CHOICE, ["latvian"], ["mathematics"]], swapped
     assert len(groups) == 3, groups
 
     # CE-альтернатива между двумя разными предметами: для требования — группа,
