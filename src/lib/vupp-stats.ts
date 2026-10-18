@@ -91,6 +91,15 @@ function compareRows(a: VuppStat, b: VuppStat): number {
   return a.city.localeCompare(b.city, "lv");
 }
 
+/** Название группы строки. Филиал ЛУ на портале — отдельное название
+ * («Pirmsskolas skolotājs (Cēsis)» в строке города Cēsis), но это та же
+ * программа, а город и так стоит в строке: пометка снимается, и филиалы
+ * идут одной таблицей с Ригой. */
+export function vuppGroupName(row: VuppStat): string {
+  const suffix = ` (${row.city})`;
+  return row.programmeName.endsWith(suffix) ? row.programmeName.slice(0, -suffix.length) : row.programmeName;
+}
+
 /** Самый поздний год программы: строки по названиям, внутри — бюджет,
  * потом платные; очная форма раньше заочной. null — цифр нет. */
 export function latestVuppYear(stats: VuppStat[]): VuppYear | null {
@@ -98,7 +107,10 @@ export function latestVuppYear(stats: VuppStat[]): VuppYear | null {
   const year = Math.max(...stats.map((stat) => stat.admissionYear));
   const rows = stats.filter((stat) => stat.admissionYear === year);
   const byName = new Map<string, VuppStat[]>();
-  for (const row of rows) byName.set(row.programmeName, [...(byName.get(row.programmeName) ?? []), row]);
+  for (const row of rows) {
+    const name = vuppGroupName(row);
+    byName.set(name, [...(byName.get(name) ?? []), row]);
+  }
   const groups = [...byName.entries()]
     .sort(([a], [b]) => a.localeCompare(b, "lv"))
     .map(([name, groupRows]) => ({ name, rows: [...groupRows].sort(compareRows) }));

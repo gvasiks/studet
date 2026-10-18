@@ -150,3 +150,79 @@ LBTU (на портале у LBTU нет пометки языка) и прог�
 подтверждено `confirm_vupp_links_by_rule.py --batch name`. Наружу видно 169
 связей. Остальные программы — ручная таблица соответствий (решение того же
 дня), третьей партией.
+
+## Третья партия — ручная таблица соответствий (2026-10-18)
+
+Скрипт `pipeline/src/vupp_link_manual.py`, таблица `MANUAL`: программа
+каталога → латышские названия на портале (не коды: у RNU код меняется
+каждый год, у EKA он включает форму обучения). Составил я по названиям;
+решает владелец. Записано **178 черновиков у 60 программ** (ЛУ 31, DU 14,
+EKA 10, RNU 5); опечаток в таблице и конфликтов кодов нет.
+
+На карточке филиалы ЛУ («Pirmsskolas skolotājs (Cēsis)») идут одной таблицей
+с Ригой — город стоит в строке. Если подпрограмм больше трёх («Skolotājs» у
+DU — 24, «Mūzika» — 7, учитель ЛУ — 10), каждая свёрнута под своим
+названием.
+
+**ЛУ (31):**
+
+| Каталог | Портал |
+|---|---|
+| Art | Māksla |
+| Communication Science | Komunikācijas zinātne |
+| Computer Science (lv / en) | Datorzinātnes / Datorzinātnes (angļu valodā) — двойной диплом с Линкольном (22317) не связан |
+| Cultural and Social Anthropology (en) | Kultūras un sociālā antropoloģija (angļu val.) |
+| English, European Languages and Business Studies (en) | Anglistikas, Eiropas valodu un biznesa studijas — **проверить**: на портале без пометки языка |
+| Environmental Science | Vides zinātne |
+| Geography / Geoinformatics / Geology | Ģeogrāfija / Ģeoinformātika / Ģeoloģija |
+| History and Archeology | Vēsture un arheoloģija |
+| Information Management | Informācijas pārvaldība |
+| Labour Protection (колледж) | Darba aizsardzība |
+| Occupational Health and Safety at Work | Arodveselība un drošība darbā |
+| Optometry (lv / en) | Optometrija / Optometrija (angļu val.) |
+| Philology (lv) | пять латышских подпрограмм: французская, классическая, русская, финно-угорская, немецкая |
+| Philosophy / Political Science / Psychology / Sociology | Filozofija / Politikas zinātne / Psiholoģija / Socioloģija |
+| Preschool teacher (колледж) | Pirmsskolas skolotājs + 6 филиалов |
+| Primary Education Teacher | Sākumizglītības skolotājs + 6 филиалов |
+| Professional Bachelor ‘Teacher’ | 10 программ «… skolotājs» (английского, математики, информатики и т. д.) |
+| Programming and Computer Network Administration (колледж) | Programmēšana un datortīklu administrēšana |
+| Research and protection of Cultural and Environmental Heritage | Kultūrvides mantojuma izpēte un aizsardzība |
+| Social work (Rīga and UL branches) | + 4 филиала (Рига уже связана) |
+| Sports Coach (колледж) | Sporta treneris + 4 филиала |
+| Sports, Technology and Public Health | Sports, tehnoloģijas un sabiedrības veselība |
+| Theology and Religious Studies | Teoloģija un reliģijpētniecība |
+| Pre-Trial Investigation | Pirmstiesas izmeklēšana — **проверить**: на lu.lv код 20221, на портале 20220 |
+
+**DU (14):** Psychology → Psiholoģija; History → Vēsture; Science of Law →
+Tiesību zinātne; Strategic risks and crisis management → Stratēģiskie riski
+un krīžu vadība; Biology → Bioloģija; Chemistry → Ķīmija (atjaunojamo
+resursu ķīmija vai praktiskā bioanalītika); Environmental Science (lv) →
+Vides zinātne; Language and culture studies (lv) → три «Valodu un kultūras
+studijas (…)»; Grafikas dizains → Dizains (grafikas dizains); Biznesa un
+finanšu procesi (lv) → … (finansists vai ekonomists); Informācijas
+tehnoloģijas (бакалавр) → … (programmēšanas inženieris); Civilā drošība
+un aizsardzība (колледж) → три специализации; Mūzika (lv) → 7 «Mūzika (…)»;
+Skolotājs → 24 «Skolotājs (…)».
+
+**EKA (10, латышские потоки):** Management → Vadības zinības; Culture
+Management → Kultūras vadība; Business Economics → Biznesa ekonomika;
+Information Technologies (Programming) → Informācijas tehnoloģijas
+(Programmēšanas inženieris); International Trade and Logistics (колледж) →
+Starptautiskie tirdzniecības darījumi un loģistika; Law → Tiesību zinātne;
+Interior Design → Interjera dizains; Accounting and Finance Management →
+Grāmatvedība un finanšu vadība; Marketing → Mārketings; Computer Game
+Design → Datorspēļu dizains.
+
+**RNU (5, латышские потоки):** Business Administration → Uzņēmējdarbības
+vadība; Business Administration in Tourism → Uzņēmējdarbības vadība
+tūrismā (2024 — Tūrisma uzņēmējdarbības vadība); Information Systems →
+Informācijas sistēmas; Psychology → Psiholoģija; Tourism Service
+Organisation (колледж) → Tūrisma pakalpojumu organizēšana.
+
+**Не связано намеренно:** английские потоки, если портал не помечает язык
+(EKA 4, RNU 4, DU 4, LBTU 6); ЛУ «Asian and Intercultural Studies» (на
+портале «Āzijas studijas, modulis …» и «Austrumu-Rietumu starpkultūru
+studijas» — неясно, что из этого); DU «Eastern European Culture and Business
+Relations» (на портале «Austrumeiropas kultūras sakari un integrācijas
+procesi» — похоже, но не наверняка); ЛУ Medicine (en) и Radiography — на
+портале их нет.

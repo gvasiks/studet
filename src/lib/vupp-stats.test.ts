@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { latestVuppYear, vuppModeKey, vuppRound, type VuppStat } from "./vupp-stats";
+import { latestVuppYear, vuppGroupName, vuppModeKey, vuppRound, type VuppStat } from "./vupp-stats";
 
 function stat(overrides: Partial<VuppStat>): VuppStat {
   return {
@@ -69,6 +69,17 @@ describe("прошлогодний конкурс латвийской прог�
     ]);
     expect(result?.groups).toHaveLength(1);
     expect(result?.groups[0].rows.map((row) => row.programmeCode)).toEqual(["LGCS0", "NGCS0"]);
+  });
+
+  it("филиалы — в одной таблице с основной программой", () => {
+    const result = latestVuppYear([
+      stat({ programmeCode: "204KH", programmeName: "Pirmsskolas skolotājs (Cēsis)", city: "Cēsis" }),
+      stat({ programmeCode: "204KE", programmeName: "Pirmsskolas skolotājs" }),
+    ]);
+    expect(result?.groups.map((group) => group.name)).toEqual(["Pirmsskolas skolotājs"]);
+    expect(result?.groups[0].rows.map((row) => row.city)).toEqual(["Cēsis", "Rīga"]);
+    // скобка, которая не город строки, остаётся частью названия
+    expect(vuppGroupName(stat({ programmeName: "Skolotājs (Matemātika)", city: "Daugavpils" }))).toBe("Skolotājs (Matemātika)");
   });
 
   it("незнакомая форма обучения не ломает порядок и остаётся в конце", () => {
