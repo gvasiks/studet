@@ -70,6 +70,20 @@ def rtu_candidates(code: str, city: str | None, portal: dict[str, set[str]]) -> 
     )
 
 
+def language_mismatch(language: str | None, names: set[str]) -> bool:
+    """Язык программы каталога спорит с названием на портале. Портал помечает
+    английский поток в названии («Biznesa vadība (angļu val.)»), латышский —
+    никак. Страница lu.lv иногда ссылается и на соседний поток: на английской
+    странице филологии стоит код латышско-русской подпрограммы (22540), на
+    английской странице антропологии — код латышской программы (29639)."""
+    english = any("angļu" in name for name in names)
+    if language == "en":
+        return not english
+    if language == "lv":
+        return english
+    return False
+
+
 def drafts_without_conflicts(drafts: list[dict]) -> tuple[list[dict], dict[str, list[str]]]:
     """Код, который достался двум программам каталога, не связывается ни с
     одной: какая из них настоящая, решает человек."""
@@ -102,6 +116,13 @@ def _selftest() -> None:
     assert rtu_candidates("MCE", "riga", portal) == ["RMCE0"]
     assert rtu_candidates("GCS", "liepaja", portal) == ["LGCS0", "NGCS0"], "очная и заочная форма — оба кода"
     assert rtu_candidates("GCS", "riga", portal) == []
+
+    assert language_mismatch("en", {"Filoloģija, apakšprogramma Krievu filoloģija (latviešu un krievu valodā)"})
+    assert not language_mismatch("en", {"Biznesa vadība (angļu val.)"})
+    assert not language_mismatch("en", {"Starptautiskās finanses (angļu valodā)"})
+    assert language_mismatch("lv", {"Kultūras un sociālā antropoloģija (angļu val.)"})
+    assert not language_mismatch("lv", {"Biznesa vadība"})
+    assert not language_mismatch(None, {"Datorsistēmas"}), "язык неизвестен — не спорит"
 
     drafts = [
         {"programme_slug": "a", "university_slug": "lu", "programme_code": "207B7"},
@@ -163,7 +184,7 @@ def main() -> None:
     robots.read()
     lu_programmes = fetch_all(
         lambda: client.table("programme")
-        .select("id, slug, name_lv, name_en, source_url")
+        .select("id, slug, name_lv, name_en, language_of_instruction, source_url")
         .eq("university_id", universities["lu"])
         .in_("degree_level", LEVELS)
         .order("id")
@@ -184,7 +205,7 @@ def main() -> None:
 
     rtu_programmes = fetch_all(
         lambda: client.table("programme")
-        .select("id, slug, name_lv, name_en, city, source_url")
+        .select("id, slug, name_lv, name_en, language_of_instruction, city, source_url")
         .eq("university_id", universities["rtu"])
         .in_("degree_level", LEVELS)
         .order("id")
@@ -198,6 +219,8 @@ def main() -> None:
         for candidate in candidates:
             drafts.append(_draft(programme, "rtu", candidate, "code_from_slug", programme["source_url"]))
 
+    mismatched = [d for d in drafts if language_mismatch(d["language"], portal_names[(d["university_slug"], d["programme_code"])])]
+    drafts = [d for d in drafts if d not in mismatched]
     drafts, conflicts = drafts_without_conflicts(drafts)
     linked_codes = {(d["university_slug"], d["programme_code"]) for d in drafts}
 
@@ -207,6 +230,11 @@ def main() -> None:
         names = portal_names[(draft["university_slug"], draft["programme_code"])]
         if draft["catalog_name"].casefold() not in {name.casefold() for name in names}:
             print(f"  {draft['university_slug']} {draft['programme_slug']} «{draft['catalog_name']}» ↔ {draft['programme_code']} {sorted(names)}")
+    if mismatched:
+        print("\nязык программы и название на портале расходятся — не связано:")
+        for draft in mismatched:
+            names = sorted(portal_names[(draft["university_slug"], draft["programme_code"])])
+            print(f"  {draft['university_slug']} {draft['programme_slug']} ({draft['language']}) ↔ {draft['programme_code']} {names}")
     if conflicts:
         print("\nкод у нескольких программ каталога — не связан:")
         for code, slugs in conflicts.items():
@@ -243,6 +271,7 @@ def _draft(programme: dict, university: str, code: str, method: str, source_url:
         "programme_id": programme["id"],
         "programme_slug": programme["slug"],
         "catalog_name": programme["name_lv"] or programme["name_en"] or "",
+        "language": programme["language_of_instruction"],
         "university_slug": university,
         "programme_code": code,
         "method": method,
