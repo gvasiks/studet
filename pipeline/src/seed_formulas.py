@@ -249,6 +249,19 @@ FORMULA_SEEDS = [
         ],
     },
     {
+        # Английский поток: в документе одна строка «Datorzinātnes (ENG un
+        # LV)» на оба потока — формула та же (добавлено 2026-10-21 по решению
+        # владельца; английскому потоку сверх того нужен английский не ниже B2
+        # — это не слагаемое формулы).
+        "programme_slug": "datorzinatnes-bakalaurs-en",
+        "terms": [
+            ("ce", "mathematics", 0.6),
+            ("ce", "english", 0.2),
+            ("ce", "latvian", 0.1),
+            ("ce_average", None, 0.1),
+        ],
+    },
+    {
         "programme_slug": "biznesa-vadiba-bakalaurs",
         "terms": [
             ("ce", "mathematics", 0.6),

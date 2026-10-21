@@ -3,8 +3,10 @@
 docs/checks/REQUIREMENTS-REVIEW.md — этот скрипт исполняет решение
 владельца, а не принимает его.
 
-  python src/confirm_requirements_by_rule.py            # только отчёт
-  python src/confirm_requirements_by_rule.py --apply    # подтвердить
+  python src/confirm_requirements_by_rule.py --batch venta            # только отчёт
+  python src/confirm_requirements_by_rule.py --batch venta --apply    # подтвердить
+
+Партия — решение владельца про вузы и число программ (BATCHES ниже).
 
 Правило. Требования и формула взяты из одного документа вуза, формулу
 человек уже проверил по этому документу. Если обязательные экзамены
@@ -26,13 +28,29 @@ from datetime import datetime, timezone
 
 from formula_drafts import FOREIGN_LANGUAGE_CHOICE
 
-# Решение владельца 2026-10-18: «62 по правилу» — ЛУ 45, RSU 17
-# (REQUIREMENTS-REVIEW.md, «Сверка с подтверждёнными формулами»).
-EXPECTED = 62
-VERIFIED_BY = (
-    "Gvasiks (подтверждение по правилу, решение владельца 2026-10-18: требования совпадают с подтверждённой "
-    "формулой той же программы; 62 программы ЛУ и RSU — docs/checks/REQUIREMENTS-REVIEW.md)"
-)
+# expected — сколько программ совпадало, когда владелец принимал решение;
+# другое число — черновики менялись, решение их не покрывает.
+BATCHES = {
+    # Решение владельца 2026-10-18: «62 по правилу» — ЛУ 45, RSU 17
+    # (REQUIREMENTS-REVIEW.md, «Сверка с подтверждёнными формулами»).
+    "lu-rsu": {
+        "universities": ["lu", "rsu"],
+        "expected": 62,
+        "verified_by": (
+            "Gvasiks (подтверждение по правилу, решение владельца 2026-10-18: требования совпадают с подтверждённой "
+            "формулой той же программы; 62 программы ЛУ и RSU — docs/checks/REQUIREMENTS-REVIEW.md)"
+        ),
+    },
+    # Решение владельца 2026-10-21: «Подтвердить 7» (раздел «Ventspils»).
+    "venta": {
+        "universities": ["venta"],
+        "expected": 7,
+        "verified_by": (
+            "Gvasiks (подтверждение по правилу, решение владельца 2026-10-21: требования совпадают с подтверждённой "
+            "формулой той же программы; 7 программ Ventspils — docs/checks/REQUIREMENTS-REVIEW.md, «Ventspils»)"
+        ),
+    },
+}
 
 
 def requirement_signature(rows: list[dict]) -> frozenset[frozenset[str]]:
@@ -80,7 +98,8 @@ def _selftest() -> None:
     print("selftest: OK")
 
 
-def main(apply: bool) -> None:
+def main(batch_name: str, apply: bool) -> None:
+    batch = BATCHES[batch_name]
     sys.stdout.reconfigure(encoding="utf-8")
     from dotenv import load_dotenv
 
@@ -110,7 +129,7 @@ def main(apply: bool) -> None:
     differing: list[str] = []
     for requirement_set in sets:
         formula = by_programme.get(requirement_set["programme_id"])
-        if formula is None:
+        if formula is None or requirement_set["programme"]["university"]["slug"] not in batch["universities"]:
             continue
         name = f"{requirement_set['programme']['university']['slug']} {requirement_set['programme']['slug']}"
         if requirement_signature(requirement_set["programme_requirement"]) == formula_signature(
@@ -126,8 +145,8 @@ def main(apply: bool) -> None:
     print(f"совпадают с подтверждённой формулой: {len(matching)} {dict(by_university)}")
     for name in differing:
         print(f"  НЕ совпадает (не подтверждается): {name}")
-    if len(matching) != EXPECTED:
-        raise SystemExit(f"ожидалось {EXPECTED} — черновики изменились после решения владельца; ничего не подтверждено")
+    if len(matching) != batch["expected"]:
+        raise SystemExit(f"ожидалось {batch['expected']} — черновики изменились после решения владельца; ничего не подтверждено")
     if not apply:
         print("отчёт — ничего не подтверждено; подтвердит --apply")
         return
@@ -136,14 +155,17 @@ def main(apply: bool) -> None:
     for start in range(0, len(ids), 200):
         execute(
             client.table("programme_requirement_set")
-            .update({"verified_at": now, "verified_by": VERIFIED_BY})
+            .update({"verified_at": now, "verified_by": batch["verified_by"]})
             .in_("id", ids[start : start + 200])
         )
     print(f"подтверждено: {len(ids)}")
 
 
 if __name__ == "__main__":
-    if "--selftest" in sys.argv[1:]:
+    args = sys.argv[1:]
+    if "--selftest" in args:
         _selftest()
+    elif "--batch" not in args or args[args.index("--batch") + 1] not in BATCHES:
+        raise SystemExit(f"укажите партию: --batch {' | '.join(BATCHES)}")
     else:
-        main("--apply" in sys.argv[1:])
+        main(args[args.index("--batch") + 1], "--apply" in args)
