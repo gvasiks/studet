@@ -47,3 +47,22 @@ jobs:
           NEXT_PUBLIC_PREVIEW_COUNTRIES: "1"
           NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
           NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY }}
+
+  # Самопроверки конвейера (pipeline/src/run_selftests.py): разбор документов
+  # и страниц на сохранённых образцах, без базы и сети. Раньше запускались
+  # только руками — поломка разборщика была видна в ночь сбора.
+  pipeline-selftests:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: pipeline
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+          cache: pip
+          cache-dependency-path: pipeline/requirements.txt
+      # браузер Playwright не ставится: самопроверки страниц не открывают
+      - run: pip install -r requirements.txt
+      - run: python src/run_selftests.py

@@ -208,3 +208,11 @@ def selftest() -> None:
     assert study_mode_from("Full-time studies") == "full_time" and study_mode_from("Part-time studies") == "part_time"
     assert study_mode_from("") is None
     print("самотест пройден")
+
+
+if __name__ == "__main__":
+    import sys
+
+    sys.stdout.reconfigure(encoding="utf-8")  # type: ignore[attr-defined]
+    if "--selftest" in sys.argv:
+        selftest()
