@@ -50,6 +50,22 @@ BATCHES = {
             "формулой той же программы; 7 программ Ventspils — docs/checks/REQUIREMENTS-REVIEW.md, «Ventspils»)"
         ),
     },
+    # Решение владельца 2026-10-21: «Подтверждаю … требования 77 программ без
+    # формулы» — список просмотрен им (REQUIREMENTS-REVIEW.md, «Без формулы» и
+    # «Ventspils»). Правило другое: не сверка с формулой, а просмотр списка;
+    # берутся программы БЕЗ подтверждённой формулы.
+    "reviewed-no-formula": {
+        "universities": ["lu", "rsu", "du", "lbtu", "venta"],
+        "without_formula": True,
+        # у этих двух есть черновик формулы (неподтверждённый) — в просмотренный
+        # список «без формулы» они не входили, решение их не покрывает
+        "exclude": {("lu", "business-process-management-lv"), ("lu", "finance-lv")},
+        "expected": 77,
+        "verified_by": (
+            "Gvasiks (решение владельца 2026-10-21 после просмотра списка 77 программ без подтверждённой формулы — "
+            "ЛУ 13, RSU 13, DU 22, LBTU 27, Ventspils 2; docs/checks/REQUIREMENTS-REVIEW.md)"
+        ),
+    },
 }
 
 
@@ -129,7 +145,15 @@ def main(batch_name: str, apply: bool) -> None:
     differing: list[str] = []
     for requirement_set in sets:
         formula = by_programme.get(requirement_set["programme_id"])
-        if formula is None or requirement_set["programme"]["university"]["slug"] not in batch["universities"]:
+        if requirement_set["programme"]["university"]["slug"] not in batch["universities"]:
+            continue
+        if batch.get("without_formula"):
+            # партия «просмотрено владельцем»: только программы без формулы
+            key = (requirement_set["programme"]["university"]["slug"], requirement_set["programme"]["slug"])
+            if formula is None and key not in batch.get("exclude", set()):
+                matching.append(requirement_set)
+            continue
+        if formula is None:
             continue
         name = f"{requirement_set['programme']['university']['slug']} {requirement_set['programme']['slug']}"
         if requirement_signature(requirement_set["programme_requirement"]) == formula_signature(
@@ -142,7 +166,8 @@ def main(batch_name: str, apply: bool) -> None:
     by_university: dict[str, int] = defaultdict(int)
     for requirement_set in matching:
         by_university[requirement_set["programme"]["university"]["slug"]] += 1
-    print(f"совпадают с подтверждённой формулой: {len(matching)} {dict(by_university)}")
+    label = "без подтверждённой формулы" if batch.get("without_formula") else "совпадают с подтверждённой формулой"
+    print(f"{label}: {len(matching)} {dict(by_university)}")
     for name in differing:
         print(f"  НЕ совпадает (не подтверждается): {name}")
     if len(matching) != batch["expected"]:
