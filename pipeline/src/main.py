@@ -11,6 +11,7 @@ from dotenv import load_dotenv
 import polite
 from catalog_diff import (
     CONTENT_FIELDS,
+    CatalogDiff,
     compute_diff,
     drop_new_without,
     fill_missing_keys,
@@ -19,6 +20,7 @@ from catalog_diff import (
 )
 from db import get_service_client
 from db_retry import execute
+from run_report import SourceReport, markdown_report, publish
 from scrape_scope import LOCAL_ONLY
 from sources import bsa, du, ee_haridusportaal, eka, ekra, jvlma, lbtu, lka, lma, lnaa, lt_lamabpo, lu, lutera, niid_colleges, niid_universities, rai, rgsl, riseba, rnu, rsu, rtu_catalog, rtu_english, rtu_liepaja, sse_riga, tsi, turiba, venta, via
 
@@ -234,6 +236,7 @@ def main() -> None:
     # полноты, не происходит: проверка стоит до неё.
     errors: list[str] = []
     programme_count = 0
+    reports: list[SourceReport] = []
 
     for source in sources:
         multi = hasattr(source, "scrape_all")  # колледжи из NIID — много учреждений сразу
@@ -256,7 +259,7 @@ def main() -> None:
         for university, programmes in results:
             key = f"{source.__name__}:{university.slug}" if multi else source.__name__
             try:
-                programme_count += _check_and_save(client, now, key, university, programmes)
+                programme_count += _check_and_save(client, now, key, university, programmes, reports)
             except CatalogCompletenessError as exc:
                 errors.append(str(exc))
                 print(f"ОШИБКА {exc}")
@@ -286,6 +289,8 @@ def main() -> None:
         )
         .eq("id", run_id)
     )
+
+    publish(markdown_report(reports, errors, HIDE_AFTER_MISSED_RUNS))
 
     if errors:
         print(f"\nИтого сбоев: {len(errors)}")
@@ -324,7 +329,7 @@ def _close_stale_runs(client) -> None:  # type: ignore[no-untyped-def]
         print(f"закрыто зависших записей о прогоне: {len(closed)}")
 
 
-def _check_and_save(client, now: str, key: str, university, programmes) -> int:  # type: ignore[no-untyped-def]
+def _check_and_save(client, now: str, key: str, university, programmes, reports: list[SourceReport]) -> int:  # type: ignore[no-untyped-def]
     minimum = MIN_PROGRAMME_COUNT.get(key)
     if minimum is not None and len(programmes) < minimum:
         raise CatalogCompletenessError(
@@ -362,6 +367,7 @@ def _check_and_save(client, now: str, key: str, university, programmes) -> int: 
     result = execute(client.table("university").upsert(uni_row, on_conflict="slug"))
     university_id = result.data[0]["id"]
 
+    diff = CatalogDiff()
     programme_rows = []
     for programme in programmes:
         row = programme.model_dump(exclude_none=True, mode="json")
@@ -411,6 +417,8 @@ def _check_and_save(client, now: str, key: str, university, programmes) -> int: 
 
     missing = _count_missed(client, university_id, key, {row["slug"] for row in programme_rows})
     print(f"{key}: upserted 1 university, {len(programme_rows)} programmes" + _missed_note(missing))
+    # пункт 07: итог для владельца — на странице запуска (run_report.py)
+    reports.append(SourceReport(key, university.slug, diff, missing))
     return len(programme_rows)
 
 
