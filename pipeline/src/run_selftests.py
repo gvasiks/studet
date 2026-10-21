@@ -25,6 +25,7 @@ SRC = Path(__file__).resolve().parent
 PLAIN = {"main_selftest.py", "run_report.py"}
 SKIP = {"run_selftests.py"}
 TIMEOUT_SECONDS = 180
+MIN_FILES = 40
 
 
 def selftest_files() -> list[Path]:
@@ -44,6 +45,10 @@ def main() -> None:
     }
     failed: list[str] = []
     files = selftest_files()
+    # Пустой прогон — тоже провал: неверный путь иначе выглядел бы как «всё
+    # прошло». На 2026-10-21 самопроверок 49.
+    if len(files) < MIN_FILES:
+        sys.exit(f"найдено самопроверок: {len(files)}, ожидалось не меньше {MIN_FILES} — путь к src/ неверен?")
     for path in files:
         command = [sys.executable, str(path)] + ([] if path.name in PLAIN else ["--selftest"])
         try:
