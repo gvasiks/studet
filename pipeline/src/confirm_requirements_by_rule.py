@@ -54,6 +54,19 @@ BATCHES = {
     # формулы» — список просмотрен им (REQUIREMENTS-REVIEW.md, «Без формулы» и
     # «Ventspils»). Правило другое: не сверка с формулой, а просмотр списка;
     # берутся программы БЕЗ подтверждённой формулы.
+    # Решение владельца 2026-10-21: «Подтвердить 101» — у РТУ требования одни
+    # на все программы (раздел 3 правил приёма), с формулой и без
+    # (REQUIREMENTS-REVIEW.md, «РТУ»).
+    "rtu": {
+        "universities": ["rtu"],
+        "whole_university": True,
+        "expected": 101,
+        "verified_by": (
+            "Gvasiks (решение владельца 2026-10-21: требования РТУ — одна фраза раздела 3 правил приёма "
+            "«obligātajiem CE – matemātikā, latviešu valodā un svešvalodā» для всех 101 программы; "
+            "docs/checks/REQUIREMENTS-REVIEW.md, «РТУ»)"
+        ),
+    },
     "reviewed-no-formula": {
         "universities": ["lu", "rsu", "du", "lbtu", "venta"],
         "without_formula": True,
@@ -147,6 +160,10 @@ def main(batch_name: str, apply: bool) -> None:
         formula = by_programme.get(requirement_set["programme_id"])
         if requirement_set["programme"]["university"]["slug"] not in batch["universities"]:
             continue
+        if batch.get("whole_university"):
+            # одно правило на весь вуз: все его черновики, с формулой и без
+            matching.append(requirement_set)
+            continue
         if batch.get("without_formula"):
             # партия «просмотрено владельцем»: только программы без формулы
             key = (requirement_set["programme"]["university"]["slug"], requirement_set["programme"]["slug"])
@@ -166,7 +183,11 @@ def main(batch_name: str, apply: bool) -> None:
     by_university: dict[str, int] = defaultdict(int)
     for requirement_set in matching:
         by_university[requirement_set["programme"]["university"]["slug"]] += 1
-    label = "без подтверждённой формулы" if batch.get("without_formula") else "совпадают с подтверждённой формулой"
+    label = (
+        "все программы вуза"
+        if batch.get("whole_university")
+        else "без подтверждённой формулы" if batch.get("without_formula") else "совпадают с подтверждённой формулой"
+    )
     print(f"{label}: {len(matching)} {dict(by_university)}")
     for name in differing:
         print(f"  НЕ совпадает (не подтверждается): {name}")
