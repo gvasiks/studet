@@ -28,6 +28,7 @@ CLAUDE.md: «автоматика ничего не додумывает») уп
 | Ventspils | — | — | — | — | — |
 | RNU (язык обучения) | — | — | — | — | — |
 | TSI (язык обучения) | — | — | — | — | — |
+| Turība (как отбирают местных) | — | — | — | — | — |
 
 **Ответ вуза приравнивается к источнику фактов** (правило 5 CLAUDE.md) наравне
 с утверждённым PDF: сохраните его текст (письмо целиком, со всеми
@@ -378,6 +379,45 @@ norādīta, savukārt NIID.lv tām norādīts "latviešu/angļu (LV/EN)":
 
 1. Vai 2027./2028. akadēmiskajā gadā šajās programmās notiek uzņemšana arī
    studijām latviešu valodā, vai tikai angļu valodā?
+
+Būsim pateicīgi par precizējumu.
+
+Ar cieņu,
+<vārds, uzvārds>
+```
+
+### Turība — как отбирают местных выпускников
+
+Добавлено 2026-10-22.
+
+**Адрес:** уточнить на [turiba.lv](https://www.turiba.lv/lv/uznemsana) — Uzņemšanas komisija.
+
+**Зачем.** Тип отбора Turība записан черновиком «вступительные испытания»
+(`seed_admission_types.py`) по английской странице
+`turiba.lv/en/admission/admission` — она для иностранцев (тесты, собеседование,
+проверка документов в AIC). Латышская страница `turiba.lv/lv/uznemsana`
+(прочитана 2026-10-22) для местных требует сертификаты ЦЭ по латышскому,
+математике и иностранному языку и упоминает только тест по языку для
+распределения по группам — ни вступительных испытаний, ни конкурса. Пока ответа
+нет, тип не подтверждается: на карточке без подтверждённого типа просто нет
+фразы о способе отбора. Turība открывает приём 5 января — вопрос до декабря.
+
+```
+Kam: <adrese>
+Tēma: Jautājums par uzņemšanas kārtību pamatstudiju programmās
+
+Labdien!
+
+Veidojam bezmaksas informatīvu portālu Latvijas skolu absolventiem par
+uzņemšanu augstskolās. Jūsu mājaslapā (sadaļā "Uzņemšana") norādīts, ka
+reflektantiem jāiesniedz centralizēto eksāmenu sertifikāti latviešu valodā,
+matemātikā un svešvalodā, taču nav minēts, kā notiek atlase.
+
+1. Vai Latvijas vidusskolu absolventi pamatstudiju programmās tiek uzņemti
+   konkursa kārtībā (pēc CE rezultātiem vai cita vērtējuma), vai visi, kas
+   izpilda prasības, līdz vietu skaits ir aizpildīts?
+2. Vai kādās pamatstudiju programmās Latvijas reflektantiem ir
+   iestājpārbaudījumi (tests, pārrunas)? Ja jā — kurās?
 
 Būsim pateicīgi par precizējumu.
 
