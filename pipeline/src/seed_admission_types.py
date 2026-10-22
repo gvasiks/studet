@@ -34,7 +34,30 @@ from dotenv import load_dotenv
 
 from db import get_service_client
 
-COMPETITIVE_SCORE_UNIVERSITIES = ["lu", "rtu", "venta"]
+COMPETITIVE_SCORE_UNIVERSITIES = ["lu", "rtu", "venta", "rsu", "du", "lbtu"]
+
+
+def competitive_sources() -> dict[str, str]:
+    """Источник типа «конкурс по баллам» — те же правила приёма, по которым
+    записаны формулы и требования этих вузов (правило 5: без ссылки факт не
+    показывается). RSU, DU, LBTU добавлены 2026-10-22: их правила
+    считают конкурс из процентов ЦЭ (formulas_rsu.py, requirements_du.py,
+    requirements_lbtu.py). У DU педагогические программы считают по
+    аттестату и собеседованию — это тоже конкурс по баллам, только не по ЦЭ."""
+    import formulas_rsu
+    import requirements_du
+    import requirements_lbtu
+    import requirements_lu
+    from seed_formulas import RTU_SOURCE_URL, VENTA_SOURCE_URL
+
+    return {
+        "lu": requirements_lu.SOURCE_URL,
+        "rtu": RTU_SOURCE_URL,
+        "venta": VENTA_SOURCE_URL,
+        "rsu": formulas_rsu.SOURCE_URL,
+        "du": requirements_du.SOURCE_URL,
+        "lbtu": requirements_lbtu.SOURCE_URL,
+    }
 
 TURIBA_SOURCE_URL = "https://www.turiba.lv/en/admission/admission"
 
@@ -129,6 +152,7 @@ if __name__ == "__main__":
     else:
         load_dotenv()
         client = get_service_client()
+        sources = competitive_sources()
         for slug in COMPETITIVE_SCORE_UNIVERSITIES:
-            seed(client, slug, "competitive_score")
+            seed(client, slug, "competitive_score", sources[slug])
         seed(client, "turiba", "entrance_exam", TURIBA_SOURCE_URL)
