@@ -34,7 +34,7 @@ from dotenv import load_dotenv
 
 from db import get_service_client
 
-COMPETITIVE_SCORE_UNIVERSITIES = ["lu", "rtu", "venta", "rsu", "du", "lbtu"]
+COMPETITIVE_SCORE_UNIVERSITIES = ["lu", "rtu", "venta", "rsu", "du", "lbtu", "juridiska-koledza", "psmk", "rnu", "bsa"]
 
 
 def competitive_sources() -> dict[str, str]:
@@ -46,6 +46,7 @@ def competitive_sources() -> dict[str, str]:
     аттестату и собеседованию — это тоже конкурс по баллам, только не по ЦЭ."""
     import formulas_rsu
     import requirements_du
+    import requirements_private
     import requirements_lbtu
     import requirements_lu
     from seed_formulas import RTU_SOURCE_URL, VENTA_SOURCE_URL
@@ -57,6 +58,11 @@ def competitive_sources() -> dict[str, str]:
         "rsu": formulas_rsu.SOURCE_URL,
         "du": requirements_du.SOURCE_URL,
         "lbtu": requirements_lbtu.SOURCE_URL,
+        # частные вузы и колледжи (2026-10-22): правила приёма прямо говорят
+        # «konkursa kārtībā, pamatojoties uz centralizēto eksāmenu rezultātiem»
+        # (requirements_private.py; BSA — п. 10 своих правил)
+        **{institution.slug: institution.source_url for institution in requirements_private.INSTITUTIONS},
+        "bsa": "https://bsa.edu.lv/docs/admission/uznemsanas_noteikumi_BSA_2026_27.pdf",
     }
 
 TURIBA_SOURCE_URL = "https://www.turiba.lv/en/admission/admission"
