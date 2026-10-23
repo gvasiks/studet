@@ -29,6 +29,7 @@ CLAUDE.md: «автоматика ничего не додумывает») уп
 | RNU (язык обучения) | — | — | — | — | — |
 | TSI (язык обучения) | — | — | — | — | — |
 | Turība (как отбирают местных) | — | — | — | — | — |
+| RAI, TSI, LMA, EKA, LKA (отбор и ЦЭ) | — | — | — | — | — |
 
 **Ответ вуза приравнивается к источнику фактов** (правило 5 CLAUDE.md) наравне
 с утверждённым PDF: сохраните его текст (письмо целиком, со всеми
@@ -402,6 +403,10 @@ Ar cieņu,
 нет, тип не подтверждается: на карточке без подтверждённого типа просто нет
 фразы о способе отбора. Turība открывает приём 5 января — вопрос до декабря.
 
+**Важно:** `robots.txt` turiba.lv закрывает сайт для ИИ-агентов (`anthropic-ai`,
+`ClaudeBot`); страницу 2026-10-22 я прочитал, не проверив это, — ошибка, больше
+сайт не читаю. Пересказ выше перепроверьте сами в браузере перед отправкой.
+
 ```
 Kam: <adrese>
 Tēma: Jautājums par uzņemšanas kārtību pamatstudiju programmās
@@ -420,6 +425,40 @@ matemātikā un svešvalodā, taču nav minēts, kā notiek atlase.
    iestājpārbaudījumi (tests, pārrunas)? Ja jā — kurās?
 
 Būsim pateicīgi par precizējumu.
+
+Ar cieņu,
+<vārds, uzvārds>
+```
+
+### RAI, TSI, LMA, EKA, LKA — как отбирают и какие ЦЭ нужны
+
+Добавлено 2026-10-23. Одно письмо, пять адресов (уточнить на сайтах).
+
+**Зачем.** У остальных вузов единой подачи и частных вузов требования к ЦЭ и
+тип отбора взяты из правил приёма (`requirements_private.py`,
+`docs/checks/REQUIREMENTS-REVIEW.md`). У этих пяти не получилось: RAI — в
+правилах не сказано, как отбирают в бакалавриат; TSI и LMA — сайты закрыты для
+ИИ-агентов в `robots.txt`, я их не читал; EKA — заявления через отдельный портал,
+правил на сайте не нашёл; LKA — страниц с правилами приёма не нашёл. Если правила
+опубликованы, хватит и ссылки на них в ответе.
+
+```
+Kam: <adrese>
+Tēma: Jautājums par uzņemšanas kārtību pamatstudiju programmās 2027./2028. gadā
+
+Labdien!
+
+Veidojam bezmaksas informatīvu portālu Latvijas skolu absolventiem par
+uzņemšanu augstskolās. Lūdzam precizēt divus jautājumus par uzņemšanu Jūsu
+pamatstudiju (bakalaura un īsā cikla) programmās:
+
+1. Kā notiek atlase — konkursa kārtībā pēc centralizēto eksāmenu rezultātiem,
+   pēc iestājpārbaudījumiem (kurās programmās?), vai tiek uzņemti visi, kas
+   izpilda prasības?
+2. Kuri centralizētie eksāmeni ir obligāti (piemēram, latviešu valoda,
+   matemātika, svešvaloda — un vai svešvaloda var būt jebkura)?
+
+Ja uzņemšanas noteikumi ir publicēti, pietiks ar saiti uz tiem.
 
 Ar cieņu,
 <vārds, uzvārds>

@@ -1,5 +1,6 @@
-"""Требования к экзаменам частных вузов и колледжей — план 2026-09-21, пункт
-02, порция 2 (начата досрочно, 2026-10-22).
+"""Требования к экзаменам частных вузов и колледжей (и ViA — у неё правило
+того же вида) — план 2026-09-21, пункт 02, порция 2 (начата досрочно,
+2026-10-22).
 
 Как у РТУ (requirements_rtu.py): правила приёма каждого учреждения говорят
 одной фразой, какие ЦЭ нужны для конкурса на все программы первого
@@ -26,7 +27,7 @@ docs/source-documents/<учреждение>/.
 
 from __future__ import annotations
 
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from datetime import date
 from pathlib import Path
 
@@ -49,6 +50,9 @@ class Institution:
     # дословная фраза документа — по ней проверяет самопроверка
     excerpt: str
     anchor: str
+    # обычно «латышский, математика, иностранный»; у RISEBA иностранный —
+    # именно английский
+    groups: list[list[str]] = field(default_factory=lambda: [list(group) for group in GROUPS])
 
 
 INSTITUTIONS: list[Institution] = [
@@ -98,6 +102,46 @@ INSTITUTIONS: list[Institution] = [
             "rezultātiem"
         ),
         anchor="pamatojoties uz visu obligāto CE rezultātiem",
+    ),
+    # ViA — государственный вуз, но правило того же вида: в приложении 1 у
+    # каждой из 7 программ бакалавриата в колонке «Centralizētie eksāmeni» одно
+    # и то же (прочитано 2026-10-23; у «Mediju studijas» и «Tūrisma
+    # organizācija» текст в PDF разбит по колонкам, но тот же). Конкурс —
+    # среднее всех сданных ЦЭ плюс надбавки.
+    Institution(
+        slug="via",
+        source_url=(
+            "https://va.lv/images/2024/Studiju%20grupa/Uznemsana%202026/"
+            "A1UznemNot1LPamST2026-2027-APST27112025-pedgroz30042026.pdf"
+        ),
+        source_doc="Uzņemšanas noteikumi Vidzemes Augstskolā bakalaura un maģistra studiju programmās 2026./2027., 1. pielikums",
+        doc_number="2025/8/1.1. (grozījumi 2026/2/1.1., 2026/3/1.1., 2026/5/1.1.)",
+        doc_date=date(2026, 4, 30),
+        valid_from=date(2025, 11, 27),
+        copy_path="docs/source-documents/via/uznemsanas-noteikumi-pamatstudijas-2026-27.pdf",
+        excerpt=(
+            "1. pielikums «Uzņemšanas prasības bakalaura studiju programmās», kolonna «Centralizētie eksāmeni» "
+            "(vienāda visām programmām): LATVIEŠU VALODA, MATEMĀTIKA, SVEŠVALODA (vienā no mācību satura apguves "
+            "līmeņiem (AL, OP, VL), kā arī pārējie reflektanta kārtotie CE). Obligātā prasība: CE rezultāti - visu "
+            "kārtoto CE rezultātu kopvērtējumu vidējā vērtība."
+        ),
+        anchor="LATVIEŠU VALODA** MATEMĀTIKA SVEŠVALODA*^",
+    ),
+    Institution(
+        slug="riseba",
+        source_url="https://riseba.lv/wp-content/uploads/2025/12/nt0002-42_-uznemsanas-noteikumi_2026_2027_galaredakcija.pdf",
+        source_doc="RISEBA Uzņemšanas noteikumi 2026./2027. studiju gadam (NT0002-42), 2.5. punkts",
+        doc_number="25/1.1-7/12",
+        doc_date=date(2025, 11, 12),
+        valid_from=date(2025, 11, 12),
+        copy_path="docs/source-documents/riseba/uznemsanas-noteikumi-2026-27.pdf",
+        excerpt=(
+            "2.5. Vispārējās prasības reflektantu uzņemšanai studijām pirmā cikla (bakalaura) studiju programmās: "
+            "2.5.1. Iegūta vidējā izglītība …; 2.5.2. Nokārtots centralizētais eksāmens latviešu valodā; 2.5.3. "
+            "Nokārtots centralizētais eksāmens matemātikā; 2.5.4. Nokārtots centralizētais eksāmens angļu valodā"
+        ),
+        anchor="2.5.4. Nokārtots centralizētais eksāmens angļu valodā",
+        groups=[["latvian"], ["mathematics"], ["english"]],
     ),
 ]
 
@@ -150,7 +194,9 @@ def seed(apply: bool) -> None:
             if apply
             else {}
         )
-        draft = RequirementDraft(block=f"{institution.slug} (visas programmas)", slugs=slugs, groups=GROUPS, excerpt=institution.excerpt)
+        draft = RequirementDraft(
+            block=f"{institution.slug} (visas programmas)", slugs=slugs, groups=institution.groups, excerpt=institution.excerpt
+        )
         meta = DocumentMeta(institution.slug, institution.source_url, institution.source_doc, institution.valid_from, protocol)
         write_requirement_drafts(meta, [draft], apply)
 
@@ -162,6 +208,8 @@ def selftest() -> None:
         # самопроверка напомнит перечитать
         assert institution.anchor in text, f"{institution.slug}: фразы-основания нет в копии документа"
     assert FOREIGN_LANGUAGE_CHOICE in GROUPS and ["latvian"] in GROUPS and ["mathematics"] in GROUPS
+    riseba = next(institution for institution in INSTITUTIONS if institution.slug == "riseba")
+    assert ["english"] in riseba.groups and FOREIGN_LANGUAGE_CHOICE not in riseba.groups, "у RISEBA — именно английский"
     print("самотест пройден")
 
 

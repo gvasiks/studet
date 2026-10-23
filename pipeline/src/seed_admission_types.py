@@ -34,7 +34,7 @@ from dotenv import load_dotenv
 
 from db import get_service_client
 
-COMPETITIVE_SCORE_UNIVERSITIES = ["lu", "rtu", "venta", "rsu", "du", "lbtu", "juridiska-koledza", "psmk", "rnu", "bsa"]
+COMPETITIVE_SCORE_UNIVERSITIES = ["lu", "rtu", "venta", "rsu", "du", "lbtu", "juridiska-koledza", "psmk", "rnu", "bsa", "via", "riseba"]
 
 
 def competitive_sources() -> dict[str, str]:

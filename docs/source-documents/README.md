@@ -24,6 +24,8 @@
 | `psmk/uznemsanas-noteikumi-2026-27.pdf` | LU P. Stradiņa medicīnas koledžas uzņemšanas noteikumi 2026./2027., padomes sēde 13.11.2025, prot. Nr. 6 | [psk.lu.lv](https://psk.lu.lv/uznemsanas-noteikumi) | 2026-10-22 | 0 — требования |
 | `rnu/uznemsanas-noteikumi-2026-27.pdf` | Rīgas Ziemeļvalstu augstskolas uzņemšanas noteikumi 2026./2027., Senāta sēde 25.11.2025, prot. Nr. 8-25 | [rnu.lv](https://rnu.lv/wp-content/uploads/2026/07/RZA_Uznemsanas_noteikumi_2026_2027.pdf) | 2026-10-22 | 0 — требования |
 | `bsa/uznemsanas-noteikumi-2026-27.pdf` | BSA uzņemšanas noteikumi un imatrikulācijas kārtība 2026./2027., Senāta sēde 14.10.2025, prot. Nr. 172, grozījumi 14.04.2026, prot. Nr. 173 | [bsa.edu.lv](https://bsa.edu.lv/docs/admission/uznemsanas_noteikumi_BSA_2026_27.pdf) | 2026-10-22 | 0 — только тип отбора (какие ЦЭ, документ не говорит) |
+| `via/uznemsanas-noteikumi-pamatstudijas-2026-27.pdf` | Uzņemšanas noteikumi Vidzemes Augstskolā bakalaura un maģistra studiju programmās 2026./2027., Senāta lēmums Nr. 2025/8/1.1. (27.11.2025), grozījumi 2026/2/1.1., 2026/3/1.1., 2026/5/1.1. (līdz 30.04.2026) | [va.lv](https://va.lv/uznemsana-2026/uznemsanas-noteikumi) | 2026-10-23 | 0 — требования (`requirements_private.py`) |
+| `riseba/uznemsanas-noteikumi-2026-27.pdf` | RISEBA Uzņemšanas noteikumi 2026./2027. (NT0002-42), Senāta sēde 12.11.2025, prot. Nr. 25/1.1-7/12 | [riseba.lv](https://riseba.lv/nac-studet/uznemsanas-noteikumi/) | 2026-10-23 | 0 — требования (`requirements_private.py`) |
 
 ## Что из этого следует
 
