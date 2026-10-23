@@ -67,6 +67,19 @@ BATCHES = {
             "docs/checks/REQUIREMENTS-REVIEW.md, «РТУ»)"
         ),
     },
+    # Решение владельца 2026-10-23: «Подтверждаю требования и типы» — порция 2:
+    # Juridiskā koledža 23, LU PSK 12, RNU 9, ViA 7, RISEBA 13 (одна фраза
+    # правил приёма на учреждение; REQUIREMENTS-REVIEW.md, «Частные вузы и
+    # колледжи» и «Дополнено 2026-10-23»).
+    "private": {
+        "universities": ["juridiska-koledza", "psmk", "rnu", "via", "riseba"],
+        "whole_university": True,
+        "expected": 64,
+        "verified_by": (
+            "Gvasiks (решение владельца 2026-10-23: требования — одна фраза правил приёма учреждения для всех его "
+            "программ; Juridiskā koledža, LU PSK, RNU, ViA, RISEBA — 64 программы; docs/checks/REQUIREMENTS-REVIEW.md)"
+        ),
+    },
     "reviewed-no-formula": {
         "universities": ["lu", "rsu", "du", "lbtu", "venta"],
         "without_formula": True,
