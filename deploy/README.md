@@ -280,11 +280,18 @@ nano /etc/caddy/Caddyfile
 install -d -o caddy -g caddy /var/log/caddy
 cp /srv/studypick/app/deploy/logrotate-studypick /etc/logrotate.d/studypick
 caddy validate --config /etc/caddy/Caddyfile
+chown -R caddy:caddy /var/log/caddy
 systemctl reload caddy
 logrotate --debug /etc/logrotate.d/studypick
 ```
 
-`caddy validate` должен закончиться словом `Valid configuration`;
+`caddy validate` должен закончиться словом `Valid configuration`. **`chown` после
+неё обязателен:** проверка запускается от root и сама создаёт файл журнала —
+файл root, Caddy (пользователь `caddy`) не может его открыть, и `reload` падает с
+`permission denied` (так было на сервере 18 и 24 октября 2026). Если `reload`
+завис (`systemctl status caddy` показывает `reloading`), сбросьте его полным
+перезапуском: `systemctl restart caddy`.
+`logrotate --debug` ничего не меняет, только показывает, что будет делать.
 `logrotate --debug` ничего не меняет, только показывает, что будет делать.
 Проверка TRACE: `curl -s -o /dev/null -w '%{http_code}\n' -X TRACE https://studypick.eu/` отвечает `405`.
 Пока сайт закрыт паролем (шаг 8), без пароля ответ будет `401` — Caddy сначала
