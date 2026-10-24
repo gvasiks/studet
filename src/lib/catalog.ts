@@ -87,6 +87,16 @@ const CATALOG_LIST_COLUMNS =
   "city, funding_type, tuition_fee_amount, tuition_fee_currency, budget_places, duration_years, " +
   "accreditation_valid_until, source_url, verified_at";
 
+// Колонки карточки программы и вуза — перечислены явно, не «*»: служебные
+// колонки (verified_by и др.) публичному ключу закрыты (миграция
+// 20261024120000_hide_service_columns.sql), и «*» получил бы ошибку прав.
+// Новая колонка в типе Programme/University должна появиться и здесь.
+const PROGRAMME_PAGE_COLUMNS =
+  CATALOG_LIST_COLUMNS +
+  ", description_lv, description_lt, description_et, description_en, degree_awarded_lv, degree_awarded_en, " +
+  "degree_awarded_lt, degree_awarded_et, qualification_lv, diploma_document_lv, details_source_url, details_extracted_at";
+const UNIVERSITY_COLUMNS = "id, slug, name_lv, name_lt, name_et, name_en, kind, city, country, website_url, source_url, verified_at";
+
 // kind — для фильтра «государственный или частный»: он применяется к списку
 // в памяти, а не в запросе.
 const UNIVERSITY_LIST_COLUMNS = "slug, name_lv, name_lt, name_et, name_en, kind, city, country";
@@ -288,7 +298,7 @@ export const getProgramme = cache(
     // что и в listProgrammes, чтобы фильтровать по university.slug.
     const { data, error } = await supabase
       .from("programme")
-      .select("*, university!inner(*)")
+      .select(`${PROGRAMME_PAGE_COLUMNS}, university!inner(${UNIVERSITY_COLUMNS})`)
       .eq("university.country", country)
       .eq("university.slug", universitySlug)
       .eq("slug", programmeSlug)

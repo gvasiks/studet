@@ -13,6 +13,12 @@ describe("профиль страны", () => {
     }
   });
 
+  it("внутренняя страница проверки закрыта на всех адресах (решение владельца 2026-10-24)", () => {
+    for (const locale of ["lv", "en-lv", "lt-lv", "et-lv"] as const) {
+      expect(hasFeature(locale, "verification"), locale).toBe(false);
+    }
+  });
+
   it("Латвия на литовском: все разделы для посетителя есть, внутренней страницы проверки нет", () => {
     for (const feature of ["survey", "match", "calculator", "favorites", "glossary", "rights", "privacy"] as const) {
       expect(hasFeature("lt-lv", feature), feature).toBe(true);
