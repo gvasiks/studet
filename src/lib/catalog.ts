@@ -262,23 +262,24 @@ export type UniversityOption = Pick<University, "slug" | "name_lv" | "name_lt" |
 // сортировать.
 export async function listUniversities(country: Country): Promise<UniversityOption[]> {
   const universities = await remember(`universities:${country}`, CATALOG_MEMORY_MS, async () => {
-    // programme(count) — PostgREST считает встроенные строки сам, одним
-    // запросом. RLS программы действует и здесь: скрытые программы
-    // (missed_runs >= 2) в число не попадают, как и в сам каталог.
+    // programme(id) и длина списка — не programme(count): count(*) требует
+    // права на всю таблицу, а у публичного ключа с 2026-10-24 право на
+    // programme выдано по колонкам (миграция 20261024120000). RLS программы
+    // действует и здесь: скрытые программы (missed_runs >= 2) в число не
+    // попадают, как и в сам каталог.
     const { data, error } = await supabase
       .from("university")
-      .select("slug, name_lv, name_lt, name_et, name_en, programme(count)")
+      .select("slug, name_lv, name_lt, name_et, name_en, programme(id)")
       .eq("country", country)
       .order("name_en");
 
     if (error) throw error;
-    // Через unknown: разборщик типов supabase-js не выводит форму count.
     const rows = data as unknown as (Pick<University, "slug" | "name_lv" | "name_lt" | "name_et" | "name_en"> & {
-      programme: { count: number }[];
+      programme: { id: string }[];
     })[];
     return rows.map(({ programme, ...university }) => ({
       ...university,
-      programmeCount: programme[0]?.count ?? 0,
+      programmeCount: programme.length,
     }));
   });
   return [...universities];
