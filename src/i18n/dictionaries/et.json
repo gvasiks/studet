@@ -828,7 +828,7 @@
   "privacy": {
     "title": "Privaatsuspoliitika",
     "intro": "Kuidas see sait isikuandmeid töötleb: mida säilitatakse, mida mitte ja millised on andmesubjekti õigused. See tekst on tõlge läti keelest; lahknevuse korral kehtib lätikeelne tekst.",
-    "updated": "Redaktsioon: 16. oktoober 2026",
+    "updated": "Redaktsioon: 24. oktoober 2026",
     "authorityLabel": "Andmekaitse Inspektsioon (aki.ee)",
     "authorityUrl": "https://www.aki.ee",
     "sections": [
@@ -914,7 +914,7 @@
         "title": "Kellele me andmeid edastame",
         "body": [
           "Me ei müü andmeid ega näita reklaami. Andmeid töötlevad ainult meie teenusepakkujad (volitatud töötlejad) ja ainult meie ülesandel:",
-          "- majutusteenuse pakkuja (saidi toimimine);",
+          "- majutusteenuse pakkuja Contabo GmbH, Saksamaa (saidi toimimine; server asub Euroopa Liidus);",
           "- Supabase (andmebaas serveritega Euroopa Liidus; e-posti aadressid, kui need on esitatud);",
           "- PostHog (kasutusstatistika, serverid Euroopa Liidus);",
           "- Resend (e-kirjade saatmine).",

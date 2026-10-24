@@ -856,7 +856,7 @@
   "privacy": {
     "title": "Privātuma politika",
     "intro": "Kā šī vietne apstrādā personas datus: kas tiek glabāts, kas ne, un kādas ir datu subjekta tiesības.",
-    "updated": "Redakcija: 2026. gada 16. oktobris",
+    "updated": "Redakcija: 2026. gada 24. oktobris",
     "authorityLabel": "Datu valsts inspekcija (dvi.gov.lv)",
     "authorityUrl": "https://www.dvi.gov.lv",
     "sections": [
@@ -942,7 +942,7 @@
         "title": "Kam mēs datus nododam",
         "body": [
           "Mēs nepārdodam datus un nerādām reklāmu. Datus apstrādā tikai mūsu pakalpojumu sniedzēji (apstrādātāji), un tikai mūsu uzdevumā:",
-          "- hostinga pakalpojuma sniedzējs (vietnes darbība);",
+          "- hostinga pakalpojuma sniedzējs Contabo GmbH, Vācija (vietnes darbība; serveris atrodas Eiropas Savienībā);",
           "- Supabase (datubāze ar serveriem Eiropas Savienībā; e-pasta adreses, ja tās ir iesniegtas);",
           "- PostHog (lietošanas statistika, serveri Eiropas Savienībā);",
           "- Resend (e-pastu nosūtīšana).",

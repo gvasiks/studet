@@ -880,7 +880,7 @@
   "privacy": {
     "title": "Privatumo politika",
     "intro": "Kaip ši svetainė tvarko asmens duomenis: ką saugome, ko nesaugome ir kokios yra jūsų teisės.",
-    "updated": "Redakcija: 2026 m. spalio 16 d.",
+    "updated": "Redakcija: 2026 m. spalio 24 d.",
     "authorityLabel": "Valstybinė duomenų apsaugos inspekcija (vdai.lrv.lt)",
     "authorityUrl": "https://vdai.lrv.lt",
     "sections": [
@@ -966,7 +966,7 @@
         "title": "Kam perduodame duomenis",
         "body": [
           "Duomenų neparduodame ir nerodome reklamos. Duomenis tvarko tik mūsų paslaugų teikėjai (duomenų tvarkytojai) ir tik mūsų pavedimu:",
-          "- prieglobos paslaugų teikėjas (svetainės veikimas);",
+          "- prieglobos paslaugų teikėjas Contabo GmbH, Vokietija (svetainės veikimas; serveris yra Europos Sąjungoje);",
           "- „Supabase“ (duomenų bazė, serveriai Europos Sąjungoje; el. pašto adresai, jei juos pateikiate);",
           "- „PostHog“ (naudojimo statistika, serveriai Europos Sąjungoje);",
           "- „Resend“ (el. laiškų siuntimas).",

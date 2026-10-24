@@ -317,7 +317,7 @@
         "title": "Who we share data with",
         "body": [
           "We do not sell data and we show no advertising. Data is processed only by our service providers (processors), and only on our behalf:",
-          "- a hosting provider (running the site);",
+          "- the hosting provider Contabo GmbH, Germany (running the site; the server is in the European Union);",
           "- Supabase (database with servers in the European Union; e-mail addresses, if you submit them);",
           "- PostHog (usage statistics, servers in the European Union);",
           "- Resend (sending e-mail).",

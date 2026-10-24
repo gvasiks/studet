@@ -286,7 +286,7 @@
   },
   "privacy": {
     "intro": "How this site handles personal data: what we keep, what we don't, and what your rights are.",
-    "updated": "Version: 16 October 2026",
+    "updated": "Version: 24 October 2026",
     "authorityLabel": "State Data Protection Inspectorate of Lithuania (vdai.lrv.lt)",
     "authorityUrl": "https://vdai.lrv.lt/en/",
     "sections": [
@@ -372,7 +372,7 @@
         "title": "Who we share data with",
         "body": [
           "We do not sell data and we show no advertising. Data is processed only by our service providers (processors), and only on our behalf:",
-          "- a hosting provider (running the site);",
+          "- the hosting provider Contabo GmbH, Germany (running the site; the server is in the European Union);",
           "- Supabase (database with servers in the European Union; e-mail addresses, if you submit them);",
           "- PostHog (usage statistics, servers in the European Union);",
           "- Resend (sending e-mail).",

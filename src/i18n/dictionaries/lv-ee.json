@@ -317,7 +317,7 @@
         "title": "Kam mēs datus nododam",
         "body": [
           "Mēs nepārdodam datus un nerādām reklāmu. Datus apstrādā tikai mūsu pakalpojumu sniedzēji (apstrādātāji), un tikai mūsu uzdevumā:",
-          "- hostinga pakalpojuma sniedzējs (vietnes darbība);",
+          "- hostinga pakalpojuma sniedzējs Contabo GmbH, Vācija (vietnes darbība; serveris atrodas Eiropas Savienībā);",
           "- Supabase (datubāze ar serveriem Eiropas Savienībā; e-pasta adreses, ja tās ir iesniegtas);",
           "- PostHog (lietošanas statistika, serveri Eiropas Savienībā);",
           "- Resend (e-pastu nosūtīšana).",
