@@ -287,6 +287,10 @@ logrotate --debug /etc/logrotate.d/studypick
 `caddy validate` должен закончиться словом `Valid configuration`;
 `logrotate --debug` ничего не меняет, только показывает, что будет делать.
 Проверка TRACE: `curl -s -o /dev/null -w '%{http_code}\n' -X TRACE https://studypick.eu/` отвечает `405`.
+Пока сайт закрыт паролем (шаг 8), без пароля ответ будет `401` — Caddy сначала
+спрашивает пароль; проверяйте с ним: `curl -s -o /dev/null -w '%{http_code}\n' -X TRACE -u ЛОГИН https://studypick.eu/`
+(пароль curl спросит сам) — должно быть `405`. Что блок вообще есть:
+`grep -n "trace\|log {" /etc/caddy/Caddyfile`.
 
 Проверка: откройте сайт и выполните `tail -n 1 /var/log/caddy/studypick-access.log` —
 появится строка о запросе.
