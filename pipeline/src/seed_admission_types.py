@@ -1,25 +1,18 @@
-"""Разовая загрузка типа отбора — ревью 2026-09, пункт 06. Как и
-seed_formulas.py/seed_deadlines.py: находит существующий university по
-slug и кладёт для него одну строку university_admission_type;
-verified_at везде NULL, подтверждает только человек через Supabase
-Studio (правило 6 CLAUDE.md).
+"""Черновики типа отбора (university_admission_type): одна строка на вуз,
+verified_at пустой — подтверждает только человек (правило 6 CLAUDE.md;
+решения владельца исполняет confirm_admission_types.py).
 
-Занесено только то, что уже твёрдо установлено в проекте, не всё
-четырнадцать вузов (лучше меньше, но точно):
+Тип отбора и его источник — в таблице SELECTION_TYPES ниже: вуз -> тип
+отбора; ссылка на правила приёма — из тех же модулей, по которым записаны
+формулы и требования (правило 5: без источника факт не показывается).
+Вуза нет в таблице — тип не записывается: лучше меньше, но точно.
 
-- ЛУ, РТУ, Вентспилс — 'competitive_score'. Это не новое наблюдение,
-  а сама основа калькулятора: CLAUDE.md прямо называет их вузами,
-  на которых подтверждена общая модель конкурсного балла.
-- Turība — 'entrance_exam' (turiba.lv/en/admission/admission,
-  проверено 2026-09-17): математический или социальный тест +
-  собеседование + тест английского для всех абитуриентов бакалавриата,
-  не сумма процентов ЦЭ.
-
-Остальные десять вузов (LBTU, DU, VIA — гос.; RISEBA, BSA, SSE Riga,
-RGSL, EKA, RNU, TSI — частные) сюда сознательно не попали: для
-государственных нет причин считать, что у них та же модель без
-проверки, а для частных нужно по одному заходу на сайт каждого —
-не делали вслепую.
+Сознательно не записаны:
+- Valsts policijas koledža — конкурс и по баллам ЦЭ, и по испытаниям
+  (физподготовка, тест памяти и латышского), ни один тип не подходит
+  (docs/checks/REQUIREMENTS-REVIEW.md);
+- EKA, LKA, RAI, TSI, LMA, SSE Riga, RGSL и др. — правил не нашли или не
+  читали, вопрос в письме комиссиям (docs/checks/ADMISSION-COMMITTEE-QUESTIONS.md).
 
 Запуск:
   python src/seed_admission_types.py             # записать черновики
@@ -34,38 +27,51 @@ from dotenv import load_dotenv
 
 from db import get_service_client
 
-COMPETITIVE_SCORE_UNIVERSITIES = ["lu", "rtu", "venta", "rsu", "du", "lbtu", "juridiska-koledza", "psmk", "rnu", "bsa", "via", "riseba", "bvk", "rbk", "r1mk"]
+# вуз -> тип отбора. «Конкурс по баллам»: правила считают конкурс из
+# процентов ЦЭ (у DU педагогические программы — по аттестату и собеседованию,
+# это тоже баллы). «Вступительные испытания»: Turība — тест и собеседование
+# у всех абитуриентов бакалавриата (проверено 2026-09-17); JVLMA — испытания
+# по специальности, сданные ЦЭ только допускают к ним (2026-10-25).
+SELECTION_TYPES = {
+    **{
+        slug: "competitive_score"
+        for slug in (
+            "lu", "rtu", "venta", "rsu", "du", "lbtu",
+            "juridiska-koledza", "psmk", "rnu", "bsa", "via", "riseba", "bvk", "rbk", "r1mk",
+        )
+    },
+    "turiba": "entrance_exam",
+    "jvlma": "entrance_exam",
+}
+
+TURIBA_SOURCE_URL = "https://www.turiba.lv/en/admission/admission"
+BSA_SOURCE_URL = "https://bsa.edu.lv/docs/admission/uznemsanas_noteikumi_BSA_2026_27.pdf"  # п. 10 правил
 
 
-def competitive_sources() -> dict[str, str]:
-    """Источник типа «конкурс по баллам» — те же правила приёма, по которым
-    записаны формулы и требования этих вузов (правило 5: без ссылки факт не
-    показывается). RSU, DU, LBTU добавлены 2026-10-22: их правила
-    считают конкурс из процентов ЦЭ (formulas_rsu.py, requirements_du.py,
-    requirements_lbtu.py). У DU педагогические программы считают по
-    аттестату и собеседованию — это тоже конкурс по баллам, только не по ЦЭ."""
+def source_urls() -> dict[str, str]:
+    """Вуз -> ссылка на правила приёма, по которым определён тип отбора."""
     import formulas_rsu
     import requirements_du
-    import requirements_private
     import requirements_lbtu
     import requirements_lu
+    import requirements_private
     from seed_formulas import RTU_SOURCE_URL, VENTA_SOURCE_URL
 
-    return {
+    urls = {
         "lu": requirements_lu.SOURCE_URL,
         "rtu": RTU_SOURCE_URL,
         "venta": VENTA_SOURCE_URL,
         "rsu": formulas_rsu.SOURCE_URL,
         "du": requirements_du.SOURCE_URL,
         "lbtu": requirements_lbtu.SOURCE_URL,
-        # частные вузы и колледжи (2026-10-22): правила приёма прямо говорят
-        # «konkursa kārtībā, pamatojoties uz centralizēto eksāmenu rezultātiem»
-        # (requirements_private.py; BSA — п. 10 своих правил)
-        **{institution.slug: institution.source_url for institution in requirements_private.INSTITUTIONS},
-        "bsa": "https://bsa.edu.lv/docs/admission/uznemsanas_noteikumi_BSA_2026_27.pdf",
+        "bsa": BSA_SOURCE_URL,
+        "turiba": TURIBA_SOURCE_URL,
     }
-
-TURIBA_SOURCE_URL = "https://www.turiba.lv/en/admission/admission"
+    # Частные вузы и колледжи — их правила в requirements_private.py. У JVLMA
+    # два документа; тип отбора взят из первого (направление «Mākslas»).
+    for institution in requirements_private.INSTITUTIONS:
+        urls.setdefault(institution.slug, institution.source_url)
+    return urls
 
 
 def seed(client, university_slug: str, selection_type: str, source_url: str | None = None) -> None:  # type: ignore[no-untyped-def]
@@ -148,6 +154,11 @@ def selftest() -> None:
         written = client.written["university_admission_type"]
         assert len(written) == 1 and written[0]["selection_type"] == "entrance_exam", written
         assert "verified_at" not in written[0], written[0]
+
+    # у каждого вуза из таблицы есть источник (правило 5)
+    urls = source_urls()
+    assert all(urls.get(slug) for slug in SELECTION_TYPES), [slug for slug in SELECTION_TYPES if not urls.get(slug)]
+    assert "izglitibas" not in urls["jvlma"], "JVLMA — по документу направления «Mākslas»"
     print("самотест пройден")
 
 
@@ -158,13 +169,6 @@ if __name__ == "__main__":
     else:
         load_dotenv()
         client = get_service_client()
-        sources = competitive_sources()
-        for slug in COMPETITIVE_SCORE_UNIVERSITIES:
-            seed(client, slug, "competitive_score", sources[slug])
-        seed(client, "turiba", "entrance_exam", TURIBA_SOURCE_URL)
-        # JVLMA (2026-10-25): конкурс по вступительным испытаниям (II–III
-        # часть правил «Mākslas»), сданные ЦЭ — только условие допуска
-        import requirements_private
-
-        jvlma = next(institution for institution in requirements_private.INSTITUTIONS if institution.slug == "jvlma")
-        seed(client, "jvlma", "entrance_exam", jvlma.source_url)
+        urls = source_urls()
+        for slug, selection_type in SELECTION_TYPES.items():
+            seed(client, slug, selection_type, urls[slug])
