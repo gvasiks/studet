@@ -13,6 +13,12 @@ null`) записями в docs/backups/verified-facts.json — файл КОМ�
 делает та же ветка workflow отдельным шагом с pg_dump (SUPABASE_DB_URL),
 он идёт в артефакт прогона, не в git (см. .github/workflows/backup.yml).
 
+Поля verified_by в снимке нет (решение владельца 2026-10-25): репозиторий
+публичный, а там — имя подтвердившего и пересказ его решений. Кто и почему
+подтвердил, видно в скриптах подтверждения (confirm_*.py) и в docs/checks/;
+дата подтверждения (verified_at) в снимке остаётся. Старые версии файла в
+истории git это поле ещё содержат.
+
 Ключи — не UUID (они не переживают пересоздание базы, а формулы
 seed-скриптов и так снова генерируют свои id при каждом запуске), а
 устойчивые слаги: university_slug + programme_slug. Так снимок можно
@@ -46,7 +52,7 @@ def _formulas(client) -> list[dict]:  # type: ignore[no-untyped-def]
         .select(
             "id, variant, valid_from, valid_to, source_url, source_doc, source_doc_number, "
             "source_doc_date, source_copy_path, source_copy_sha256, source_copy_fetched_on, source_excerpt, "
-            "verified_at, verified_by, "
+            "verified_at, "
             "programme!inner(slug, name_lv, university!inner(slug))"
         )
         .not_.is_("verified_at", "null")
@@ -97,7 +103,6 @@ def _formulas(client) -> list[dict]:  # type: ignore[no-untyped-def]
                 "source_copy_fetched_on": row["source_copy_fetched_on"],
                 "source_excerpt": row["source_excerpt"],
                 "verified_at": row["verified_at"],
-                "verified_by": row["verified_by"],
                 "terms": sorted(terms_by_formula.get(row["id"], []), key=lambda t: (t["kind"], t["subject"] or "")),
                 "gates": sorted(gates_by_formula.get(row["id"], []), key=lambda g: g["subject"]),
             }
@@ -110,7 +115,7 @@ def _application_rounds(client) -> list[dict]:  # type: ignore[no-untyped-def]
         client.table("application_round")
         .select(
             "degree_level, language_of_instruction, label, opens_on, closes_on, note, "
-            "source_url, verified_at, verified_by, university!inner(slug)"
+            "source_url, verified_at, university!inner(slug)"
         )
         .not_.is_("verified_at", "null")
         .execute()
@@ -127,7 +132,6 @@ def _application_rounds(client) -> list[dict]:  # type: ignore[no-untyped-def]
             "note": row["note"],
             "source_url": row["source_url"],
             "verified_at": row["verified_at"],
-            "verified_by": row["verified_by"],
         }
         for row in rows
     ]
@@ -137,7 +141,7 @@ def _application_rounds(client) -> list[dict]:  # type: ignore[no-untyped-def]
 def _admission_types(client) -> list[dict]:  # type: ignore[no-untyped-def]
     rows = (
         client.table("university_admission_type")
-        .select("selection_type, source_url, verified_at, verified_by, university!inner(slug)")
+        .select("selection_type, source_url, verified_at, university!inner(slug)")
         .not_.is_("verified_at", "null")
         .execute()
         .data
@@ -148,7 +152,6 @@ def _admission_types(client) -> list[dict]:  # type: ignore[no-untyped-def]
             "selection_type": row["selection_type"],
             "source_url": row["source_url"],
             "verified_at": row["verified_at"],
-            "verified_by": row["verified_by"],
         }
         for row in rows
     ]
@@ -161,7 +164,7 @@ def _programme_fields(client) -> list[dict]:  # type: ignore[no-untyped-def]
     rows = fetch_all(
         lambda: client.table("programme_field")
         .select(
-            "field_code, source, verified_at, verified_by, verification_method, "
+            "field_code, source, verified_at, verification_method, "
             "programme!inner(slug, name_lv, university!inner(slug))"
         )
         .not_.is_("verified_at", "null")
@@ -175,7 +178,6 @@ def _programme_fields(client) -> list[dict]:  # type: ignore[no-untyped-def]
             "field_code": row["field_code"],
             "source": row["source"],
             "verified_at": row["verified_at"],
-            "verified_by": row["verified_by"],
             # Без способа подтверждения база подтверждённую запись не примет
             # (ограничение programme_field_verified_needs_method) — без этого
             # поля восстановление падало на первой же строке.
@@ -203,7 +205,7 @@ def _requirement_sets(client) -> list[dict]:  # type: ignore[no-untyped-def]
     rows = fetch_all(
         lambda: client.table("programme_requirement_set")
         .select(
-            "id, " + ", ".join(_PROTOCOL_COLUMNS) + ", verified_at, verified_by, "
+            "id, " + ", ".join(_PROTOCOL_COLUMNS) + ", verified_at, "
             "programme!inner(slug, name_lv, university!inner(slug))"
         )
         .not_.is_("verified_at", "null")
@@ -237,7 +239,6 @@ def _requirement_sets(client) -> list[dict]:  # type: ignore[no-untyped-def]
                 "programme_name": programme.get("name_lv"),
                 **{column: row[column] for column in _PROTOCOL_COLUMNS},
                 "verified_at": row["verified_at"],
-                "verified_by": row["verified_by"],
                 "requirements": sorted(
                     requirements.get(row["id"], []), key=lambda r: (r["alternative_group"] or "", r["subject"])
                 ),
@@ -250,7 +251,7 @@ def _application_channels(client) -> list[dict]:  # type: ignore[no-untyped-def]
     rows = fetch_all(
         lambda: client.table("application_channel")
         .select(
-            "degree_level, channel_type, url, source_url, source_excerpt, verified_at, verified_by, "
+            "degree_level, channel_type, url, source_url, source_excerpt, verified_at, "
             "university!inner(slug)"
         )
         .not_.is_("verified_at", "null")
@@ -266,7 +267,6 @@ def _application_channels(client) -> list[dict]:  # type: ignore[no-untyped-def]
             "source_url": row["source_url"],
             "source_excerpt": row["source_excerpt"],
             "verified_at": row["verified_at"],
-            "verified_by": row["verified_by"],
         }
         for row in rows
     ]

@@ -4,11 +4,14 @@
 university/programme ищутся заново по устойчивым слагам, а не по UUID —
 он не переживает пересоздание базы или повторный прогон конвейера.
 
-Restore пишет verified_at/verified_by ИЗ СНИМКА — это не новое решение
-(правило 6 CLAUDE.md запрещает автоприём), а восстановление уже принятого
-человеком факта после потери данных: тот же verified_at, тот же
-verified_by, что человек проставил в первый раз через Supabase Studio,
-ничего не придумывается и не подтверждается заново.
+Restore пишет verified_at ИЗ СНИМКА — это не новое решение (правило 6
+CLAUDE.md запрещает автоприём), а восстановление уже принятого человеком
+факта после потери данных: тот же verified_at, что был проставлен в первый
+раз, ничего не придумывается и не подтверждается заново. verified_by
+снимки с 2026-10-25 не хранят (репозиторий публичный): пишется, только если
+он есть в старом снимке; иначе поле не трогается — на живой базе остаётся
+прежнее значение, на пустой оно пустое, а кто подтверждал, видно в
+confirm_*.py и docs/checks/.
 
 Критерий пункта 06 — "снимок восстанавливает подтверждения на пустой
 базе" раз в квартал. Полноценная проверка этого требует отдельного
@@ -132,8 +135,9 @@ def restore_formulas(
             "source_copy_sha256": row["source_copy_sha256"],
             "source_excerpt": row["source_excerpt"],
             "verified_at": row["verified_at"],
-            "verified_by": row["verified_by"],
         }
+        if row.get("verified_by"):
+            payload["verified_by"] = row["verified_by"]
         # Снимки до 2026-10-10 этой даты не хранили: ключа нет — не пишем
         # вовсе, чтобы на живой базе не стереть уже стоящее значение.
         if "source_copy_fetched_on" in row:
@@ -222,9 +226,10 @@ def restore_programme_fields(
             "field_code": row["field_code"],
             "source": row["source"],
             "verified_at": row["verified_at"],
-            "verified_by": row["verified_by"],
             "verification_method": row["verification_method"],
         }
+        if row.get("verified_by"):
+            payload["verified_by"] = row["verified_by"]
         client.table("programme_field").upsert(payload, on_conflict="programme_id").execute()
     return restored, missing, collisions, without_method
 
@@ -313,7 +318,7 @@ def main(apply: bool) -> None:
             f"\nНЕ ВОССТАНОВЛЕНО: у {pf_without_method} направлений в снимке нет способа подтверждения "
             "(снимок сделан до 2026-10-10).\nБаза такую запись не примет. Если база цела — пересоздайте снимок: "
             "python src/backup_verified.py.\nЕсли базы уже нет — способ придётся вписать в снимок вручную "
-            "(verification_method: \"rule\" или \"manual\"), см. поле verified_by каждой записи."
+            "(verification_method: \"rule\" или \"manual\"), см. скрипты confirm_*.py и docs/checks/."
         )
 
     missing = f_missing + ar_missing + at_missing + pf_missing + rs_missing + ac_missing
@@ -448,6 +453,8 @@ def selftest() -> None:
     assert "prog-2" not in [call.get("programme_id") for call in client.store.get("formula", [])]
     assert client.store["formula"][0]["programme_id"] == "prog-1"
     assert client.store["formula"][0]["verified_at"] == "2026-09-20T00:00:00Z"
+    # старый снимок с verified_by — поле восстанавливается как было
+    assert client.store["formula"][0]["verified_by"] == "owner"
     assert client.store["formula_term_children"][0]["subject"] == "latvian"
 
     restored_ar, missing_ar = restore_application_rounds(
