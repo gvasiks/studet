@@ -156,7 +156,9 @@ MANUAL: dict[tuple[str, str], list[str]] = {
     # РТУ: код из адреса программы совпадает (DCP, HCF), правило по коду
     # отложило связь только из-за языка — в каталоге программа английская,
     # портал язык не помечает (четвёртая партия, решение владельца 2026-10-25)
-    ("rtu", "dcp-33000"): [
+    # с 2026-10-25 программа в каталоге — запись английского реестра
+    # (ENGLISH_REGISTRY_TWINS в sources/rtu_catalog.py)
+    ("rtu", "finance-management-information-systems-173"): [
         "Finanšu pārvaldības informācijas sistēmas (kopīga studiju programma ar LU BA)",
         "Finanšu pārvaldības informācijas sistēmas (kopīga studiju programma ar BA)",
     ],

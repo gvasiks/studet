@@ -66,7 +66,9 @@ MIN_PROGRAMME_COUNT = {
     "sources.rnu": 8,
     # 2026-09-20: 124 -> 163. Раньше терялись программы в нескольких городах, только
     # в Лиепае и морские (Jūras akadēmija) — см. docstring rtu_catalog.py
-    "sources.rtu_catalog": 163,
+    # 2026-10-25: 163 -> 161, две программы берутся только из английского
+    # реестра (ENGLISH_REGISTRY_TWINS в rtu_catalog.py)
+    "sources.rtu_catalog": 161,
     # 2026-10-10: английский реестр РТУ, найдено 55. Порог ниже на 5: реестр
     # небольшой, РТУ меняет его каждый год.
     "sources.rtu_english": 50,

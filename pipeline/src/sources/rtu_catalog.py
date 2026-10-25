@@ -42,6 +42,11 @@ container)`, что и в rtu_liepaja.py). Цена и бюджетные мес
 программ) — такая программа пишется латышской: английские программы РТУ
 берутся из английского реестра (rtu_english.py). Правило и его история —
 в rtu_languages.py.
+
+Две программы латышский реестр называет только английскими, а в
+английском реестре у них есть двойник — та же программа (факультет,
+степень, кредиты, описание). Их латышские строки пропускаются
+(ENGLISH_REGISTRY_TWINS), чтобы программа не стояла в каталоге дважды.
 """
 
 from __future__ import annotations
@@ -68,6 +73,15 @@ UNIVERSITY = UniversityDraft(
 )
 
 KNOWN_VENUES = {"Rīga": "riga", "Rēzekne": "rezekne", "Liepāja": "liepaja"}
+
+# (код, подразделение) -> запись английского реестра (rtu_english.py), которая
+# остаётся в каталоге. Решение владельца 2026-10-25 «Оставляем английский»:
+# английские программы — из английского реестра; там английское название и
+# цены для ЕС и не для ЕС. Латышские записи bbb-31000 и dcp-33000 скрыты.
+ENGLISH_REGISTRY_TWINS = {
+    ("BBB", "31000"): "civil-engineering-188",  # Būvniecība (angļu valodā)
+    ("DCP", "33000"): "finance-management-information-systems-173",  # Finanšu pārvaldības informācijas sistēmas
+}
 
 _DISCOVER_JS = """
 () => {
@@ -218,6 +232,8 @@ def scrape() -> tuple[UniversityDraft, list[ProgrammeDraft]]:
             code, department = _code_and_department(row["href"])
             if cities == ["liepaja"] and code in rtu_liepaja.PROGRAMMES:
                 continue  # три программы, уже покрытые более точным источником
+            if (code, department) in ENGLISH_REGISTRY_TWINS:
+                continue  # та же программа есть в английском реестре
 
             # Реестр иногда даёт одну программу двумя строками под разными
             # подразделениями ("Būvniecība": 31000 и 0R000), каждая со всеми
