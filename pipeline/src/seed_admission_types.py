@@ -34,7 +34,7 @@ from dotenv import load_dotenv
 
 from db import get_service_client
 
-COMPETITIVE_SCORE_UNIVERSITIES = ["lu", "rtu", "venta", "rsu", "du", "lbtu", "juridiska-koledza", "psmk", "rnu", "bsa", "via", "riseba"]
+COMPETITIVE_SCORE_UNIVERSITIES = ["lu", "rtu", "venta", "rsu", "du", "lbtu", "juridiska-koledza", "psmk", "rnu", "bsa", "via", "riseba", "bvk", "rbk", "r1mk"]
 
 
 def competitive_sources() -> dict[str, str]:
@@ -162,3 +162,9 @@ if __name__ == "__main__":
         for slug in COMPETITIVE_SCORE_UNIVERSITIES:
             seed(client, slug, "competitive_score", sources[slug])
         seed(client, "turiba", "entrance_exam", TURIBA_SOURCE_URL)
+        # JVLMA (2026-10-25): конкурс по вступительным испытаниям (II–III
+        # часть правил «Mākslas»), сданные ЦЭ — только условие допуска
+        import requirements_private
+
+        jvlma = next(institution for institution in requirements_private.INSTITUTIONS if institution.slug == "jvlma")
+        seed(client, "jvlma", "entrance_exam", jvlma.source_url)
