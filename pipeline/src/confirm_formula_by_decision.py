@@ -25,6 +25,23 @@ DECISIONS = [
         "Gvasiks (решение владельца 2026-10-21 в чате: «Подтверждаю» формулу Datorzinātnes (en) — строка «Datorzinātnes "
         "(ENG un LV)» приложения 1 правил приёма VeA 2026/27; docs/checks/REQUIREMENTS-REVIEW.md, «Ventspils»)",
     ),
+    # Решение владельца 2026-10-25 в чате: «подтверждаю формулы» — очная форма
+    # (в каталоге обе программы очные); заочная формула ЛУ (1,5/1,5/6/1) в базу
+    # не заносилась. Порог 400 баллов за LU BA модель не хранит.
+    (
+        "lu",
+        "business-process-management-lv",
+        {("ce", "latvian", 0.3, False), ("ce", "english", 0.3, False), ("ce", "mathematics", 1.2, False), ("ce_average", None, 0.2, False), ("entrance_exam", None, 0.8, True)},
+        "Gvasiks (решение владельца 2026-10-25 в чате: формула очной формы, п. 2.6.1 «Uzņemšanas prasības un kritēriji "
+        "pamatstudiju programmās 2026./2027.» ЛУ; заочная формула не заносилась)",
+    ),
+    (
+        "lu",
+        "finance-lv",
+        {("ce", "latvian", 0.3, False), ("ce", "english", 0.3, False), ("ce", "mathematics", 1.2, False), ("ce_average", None, 0.2, False), ("entrance_exam", None, 0.8, True)},
+        "Gvasiks (решение владельца 2026-10-25 в чате: формула очной формы, п. 2.6.3 «Uzņemšanas prasības un kritēriji "
+        "pamatstudiju programmās 2026./2027.» ЛУ; заочная формула не заносилась)",
+    ),
 ]
 
 

@@ -83,6 +83,17 @@ BATCHES = {
     # Решение владельца 2026-10-25: «Подтверждаю и то и другое» — BVK 8, RBK 5
     # (у «Restaurācija» без математики), R1MK 2, колледж полиции 1, JVLMA 3
     # (REQUIREMENTS-REVIEW.md, «Порция 2, колледжи и специализированные вузы»).
+    # Решение владельца 2026-10-25 («подтверждаю формулы»; требования названы в
+    # том же предложении): Business Process Management (lv) и Finance (lv) ЛУ —
+    # требования совпадают с только что подтверждёнными формулами.
+    "lu-bpm-finance": {
+        "universities": ["lu"],
+        "expected": 2,
+        "verified_by": (
+            "Gvasiks (подтверждение по правилу, решение владельца 2026-10-25: требования совпадают с подтверждённой "
+            "формулой той же программы; ЛУ Business Process Management (lv) и Finance (lv))"
+        ),
+    },
     "colleges": {
         "universities": ["bvk", "rbk", "r1mk", "vpk", "jvlma"],
         "whole_university": True,
