@@ -32,10 +32,7 @@ from __future__ import annotations
 import csv
 import io
 import sys
-import time
 import urllib.error
-import urllib.request
-import urllib.robotparser
 from collections import Counter
 from collections.abc import Iterable
 from datetime import datetime, timezone
@@ -216,18 +213,8 @@ def _selftest() -> None:
     for r in rows:
         assert set(r) == {"programme_id", "funding", "applications", "first_priority", "invited", "signed"}, "в базу идут только суммы"
 
-    resource = "https://data.gov.lt/datasets/2914/versions/729/dynamic-resource/Programa/csv/download/"
-    allowed = robots_from("User-agent: *\nCrawl-delay: 5\nDisallow: /login\nDisallow: /datasets/stats\n")
-    assert allowed.can_fetch("StudyPick", resource) and allowed.crawl_delay("StudyPick") == 5
-    assert not allowed.can_fetch("StudyPick", "https://data.gov.lt/datasets/stats/x")
-    assert robots_from(None).can_fetch("StudyPick", resource), "robots.txt не получен — ограничений нет"
-    assert not robots_unreachable_means_stop(404) and not robots_unreachable_means_stop(403), "4xx — ограничений нет"
-    assert robots_unreachable_means_stop(500) and robots_unreachable_means_stop(503), "5xx — сайт не обходим"
-    assert not robots_from("User-agent: *\nDisallow: /\n").can_fetch("StudyPick", resource), "настоящий запрет остаётся запретом"
     print("selftest: OK")
 
-
-ROBOTS_URL = "https://data.gov.lt/robots.txt"
 
 REFUSED = (
     "data.gov.lt не отдал данные этому компьютеру (ответ {status} на {url}). Серверу GitHub портал "
@@ -237,43 +224,19 @@ REFUSED = (
 )
 
 
-def robots_unreachable_means_stop(status: int) -> bool:
-    """Что делать, если сам robots.txt не получен. По RFC 9309: ответ 4xx —
-    файла нет, ограничений нет; ответ 5xx — сервер недоступен, и обходить
-    сайт НЕЛЬЗЯ, пока он не ответит (правила неизвестны, а не отсутствуют)."""
-    return status >= 500
+def _open(url: str):  # type: ignore[no-untyped-def]
+    """Таблица набора потоком; User-Agent, robots.txt портала и пауза —
+    polite.py. Отказ портала или недоступный robots.txt — понятное
+    сообщение вместо простыни ошибки."""
+    import polite
 
-
-def robots_from(body: str | None) -> urllib.robotparser.RobotFileParser:
-    """Правила обхода из текста robots.txt. None — файл получить не удалось
-    (ответ 4xx): по RFC 9309 это значит «ограничений нет», так же считает и
-    polite.py. Стандартный RobotFileParser.read() при 401/403 запрещает
-    ВСЁ — из-за этого отказ портала выглядел как запрет в robots.txt."""
-    parser = urllib.robotparser.RobotFileParser()
-    parser.parse((body or "").splitlines())
-    return parser
-
-
-def _read_robots(agent: str) -> urllib.robotparser.RobotFileParser:
     try:
-        request = urllib.request.Request(ROBOTS_URL, headers={"User-Agent": agent})
-        return robots_from(urllib.request.urlopen(request, timeout=30).read().decode("utf-8", "replace"))
+        return polite.open_url(url, timeout=180)
     except urllib.error.HTTPError as error:
-        if robots_unreachable_means_stop(error.code):
-            print(REFUSED.format(status=error.code, url=ROBOTS_URL))
-            sys.exit(1)
-        print(f"robots.txt портала не получен (ответ {error.code}) — считаем, что ограничений нет")
-        return robots_from(None)
-
-
-def _open(url: str, agent: str, robots: urllib.robotparser.RobotFileParser):  # type: ignore[no-untyped-def]
-    if not robots.can_fetch(agent, url):
-        raise RuntimeError(f"robots.txt запрещает {url}")
-    try:
-        return urllib.request.urlopen(urllib.request.Request(url, headers={"User-Agent": agent}), timeout=180)
-    except urllib.error.HTTPError as error:
-        # Любой отказ портала — понятное сообщение вместо простыни ошибки.
         print(REFUSED.format(status=error.code, url=url))
+        sys.exit(1)
+    except polite.RobotsUnavailable as error:
+        print(REFUSED.format(status="на robots.txt", url=str(error)))
         sys.exit(1)
 
 
@@ -289,18 +252,12 @@ def main() -> None:
     sys.stdout.reconfigure(encoding="utf-8")
     from dotenv import load_dotenv
 
-    import polite
     from db import get_service_client
     from db_retry import execute
     from lt_load_formulas import ADMISSION_YEAR as CATALOG_YEAR
 
     load_dotenv()
-    agent = polite.user_agent()
-    robots = _read_robots(agent)
-    # Пауза между запросами к порталу — как просит его robots.txt.
-    pause = float(robots.crawl_delay(agent) or 5)
-
-    with _open(PROGRAMA_URL, agent, robots) as response:
+    with _open(PROGRAMA_URL) as response:
         programa = list(_csv_rows(response))
     year = latest_year(programa)
     programmes, unknown = programmes_of_year(programa, year)
@@ -308,8 +265,7 @@ def main() -> None:
     if unknown:
         print(f"самоуправления без города в таблице (их программы пропущены): {unknown}")
 
-    time.sleep(pause)
-    with _open(PRASYMAS_URL, agent, robots) as response:
+    with _open(PRASYMAS_URL) as response:
         totals = count_applications(_csv_rows(response), programmes)
     print(f"сумм (программа, город, вид места): {len(totals)} | строк заявлений основного приёма: {sum(c['applications'] for c in totals.values())}")
 

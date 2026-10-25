@@ -32,15 +32,12 @@ from __future__ import annotations
 
 import re
 import sys
-import time
 import unicodedata
-import urllib.request
 from collections import defaultdict
 
 # ссылка на каталог курсов ЛУ; в разметке скобки бывают закодированы
 _LU_CODE = re.compile(r"tx_lustudycatalogue_pi1(?:%5B|\[)program(?:%5D|\])=([A-Za-z0-9]{2,12})")
 _RTU_CODE = re.compile(r"/atvert/([A-Z0-9]{2,6})\?")
-LU_PAUSE_SECONDS = 2.0
 # уровни, которые набираются через портал (pamatstudijas)
 LEVELS = ["bachelor", "college"]
 
@@ -134,20 +131,12 @@ def _selftest() -> None:
     print("selftest: OK")
 
 
-def _fetch(url: str, agent: str) -> str:
-    request = urllib.request.Request(url, headers={"User-Agent": agent})
-    with urllib.request.urlopen(request, timeout=60) as response:
-        return response.read().decode("utf-8", "replace")
-
-
 def main() -> None:
     args = sys.argv[1:]
     if "--selftest" in args:
         _selftest()
         return
     sys.stdout.reconfigure(encoding="utf-8")
-    import urllib.robotparser
-
     from dotenv import load_dotenv
 
     import polite
@@ -156,7 +145,6 @@ def main() -> None:
 
     load_dotenv()
     client = get_service_client()
-    agent = polite.user_agent()
 
     # Строки портала: код -> названия и города (по вузу)
     stats = fetch_all(
@@ -180,8 +168,6 @@ def main() -> None:
     drafts: list[dict] = []
     without_code: list[str] = []
 
-    robots = urllib.robotparser.RobotFileParser("https://www.lu.lv/robots.txt")
-    robots.read()
     lu_programmes = fetch_all(
         lambda: client.table("programme")
         .select("id, slug, name_lv, name_en, language_of_instruction, source_url")
@@ -192,11 +178,15 @@ def main() -> None:
     print(f"ЛУ: программ бакалавра и колледжа — {len(lu_programmes)}, читаю страницы lu.lv…")
     for programme in lu_programmes:
         url = programme["source_url"] or ""
-        if not url.startswith("https://www.lu.lv/") or not robots.can_fetch(agent, url):
-            without_code.append(f"lu {programme['slug']}: адрес не на lu.lv или закрыт robots.txt")
+        if not url.startswith("https://www.lu.lv/"):
+            without_code.append(f"lu {programme['slug']}: адрес не на lu.lv")
             continue
-        time.sleep(LU_PAUSE_SECONDS)
-        codes = lu_codes(_fetch(url, agent))
+        # User-Agent, robots.txt и паузы — polite.py
+        try:
+            codes = lu_codes(polite.fetch_text(url))
+        except polite.RobotsDisallowed:
+            without_code.append(f"lu {programme['slug']}: закрыт robots.txt")
+            continue
         on_portal = sorted(code for code in codes if code in portal_cities["lu"])
         if not on_portal:
             without_code.append(f"lu {programme['slug']}: на странице {sorted(codes) or 'кода нет'}, в статистике портала нет")

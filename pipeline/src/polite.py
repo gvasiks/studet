@@ -20,12 +20,21 @@
   это 10 секунд. Сборщики идут по очереди, так что параллельных
   запросов к одному домену и так нет;
 - robots.txt: запрещённые для нас адреса не открываются, а попадают в
-  отчёт (SCRAPE_OBEY_ROBOTS=0 отключает, для отладки);
+  отчёт (SCRAPE_OBEY_ROBOTS=0 отключает, для отладки). Сам robots.txt — по
+  RFC 9309: ответ 4xx — файла нет, ограничений нет; ответ 5xx или нет связи
+  (после одного повтора) — правила неизвестны, и сайт в этом прогоне не
+  обходится (RobotsUnavailable; main.py записывает это как сбой источника).
+  До 2026-10-25 в этом случае сайт обходился как разрешённый;
 - картинки, шрифты и видео не загружаются — тексту они не нужны, а
   сайту это десятки лишних запросов на страницу;
 - локальный кэш для отладки (SCRAPE_CACHE=1): страницы и XHR сутки
   лежат в pipeline/.cache/, повторный запуск сборщика идёт без сети.
   В CI кэш выключен — данные должны быть свежими.
+
+Скрипты без браузера (файлы CSV, простые HTML-страницы) ходят через
+open_url() и fetch_text() — по тем же правилам: User-Agent, robots.txt,
+паузы. Своих запросов через urllib в конвейере нет (до 2026-10-25 их было
+четыре, с разными правилами robots.txt).
 """
 
 from __future__ import annotations
@@ -54,9 +63,14 @@ class RobotsDisallowed(Exception):
     """robots.txt запрещает этот адрес для нашего User-Agent."""
 
 
+class RobotsUnavailable(Exception):
+    """robots.txt не получен (ответ 5xx или нет связи): по RFC 9309 правила
+    обхода неизвестны, а не отсутствуют — сайт в этом прогоне не обходится."""
+
+
 _installed = False
 _last_finished: dict[str, float] = {}
-_robots: dict[str, urllib.robotparser.RobotFileParser | None] = {}
+_robots: dict[str, urllib.robotparser.RobotFileParser | RobotsUnavailable] = {}
 _stats = {"pages": 0, "waited": 0.0, "assets_skipped": 0, "cache_hits": 0, "blocked": []}
 
 
@@ -80,22 +94,51 @@ def _cache_enabled() -> bool:
     return os.environ.get("SCRAPE_CACHE", "") == "1"
 
 
-def _robots_for(url: str) -> urllib.robotparser.RobotFileParser | None:
+def robots_unreachable_means_stop(status: int) -> bool:
+    """Ответ на запрос robots.txt, при котором сайт не обходят (RFC 9309):
+    4xx — файла нет, ограничений нет; 5xx — правила неизвестны."""
+    return status >= 500
+
+
+def robots_from(body: str | None) -> urllib.robotparser.RobotFileParser:
+    """Правила обхода из текста robots.txt; None — файла нет (ответ 4xx),
+    ограничений нет. Стандартный RobotFileParser.read() не годится: при
+    401/403 он запрещает ВСЁ, и отказ сайта выглядел бы как запрет."""
+    parser = urllib.robotparser.RobotFileParser()
+    parser.parse((body or "").splitlines())
+    return parser
+
+
+def _robots_for(url: str) -> urllib.robotparser.RobotFileParser:
     parsed = urlparse(url)
     origin = f"{parsed.scheme}://{parsed.netloc}"
-    if origin in _robots:
-        return _robots[origin]
+    known = _robots.get(origin)
+    if isinstance(known, RobotsUnavailable):
+        raise known
+    if known is not None:
+        return known
 
-    parser: urllib.robotparser.RobotFileParser | None = urllib.robotparser.RobotFileParser()
-    try:
-        request = urllib.request.Request(f"{origin}/robots.txt", headers={"User-Agent": user_agent()})
-        body = urllib.request.urlopen(request, timeout=15).read().decode("utf-8", "replace")
-        parser.parse(body.splitlines())  # type: ignore[union-attr]
-    except urllib.error.HTTPError:
-        # по RFC 9309 недоступный (4xx) robots.txt — "ограничений нет"
-        parser = None
-    except Exception:  # noqa: BLE001 — сеть моргнула: не блокируем весь источник из-за robots.txt
-        parser = None
+    body: str | None = None
+    problem = ""
+    for attempt in (1, 2):
+        try:
+            request = urllib.request.Request(f"{origin}/robots.txt", headers={"User-Agent": user_agent()})
+            body = urllib.request.urlopen(request, timeout=15).read().decode("utf-8", "replace")
+            break
+        except urllib.error.HTTPError as error:
+            if not robots_unreachable_means_stop(error.code):
+                break  # 4xx — файла нет, ограничений нет
+            problem = f"ответ {error.code}"
+        except Exception as error:  # noqa: BLE001 — нет связи, таймаут
+            problem = type(error).__name__
+        if attempt == 1:
+            time.sleep(5)  # один повтор: сеть могла моргнуть
+    else:
+        unavailable = RobotsUnavailable(f"{origin}/robots.txt не получен ({problem}) — сайт в этом прогоне не обходится")
+        _robots[origin] = unavailable
+        raise unavailable
+
+    parser = robots_from(body)
     _robots[origin] = parser
     return parser
 
@@ -120,17 +163,19 @@ def forget(url: str) -> None:
 
 
 def _wait_turn(url: str) -> None:
-    """Проверка robots.txt и пауза перед переходом на страницу."""
-    if _cached(url):
-        return  # ответ из кэша сети не касается
-
+    """Проверка robots.txt и пауза перед запросом к сайту."""
     host = urlparse(url).netloc
-    parser = _robots_for(url)
-    if parser is not None and _obey_robots() and not parser.can_fetch(PRODUCT_TOKEN, url):
+    try:
+        parser = _robots_for(url)
+    except RobotsUnavailable:
+        if _obey_robots():
+            raise
+        parser = robots_from(None)  # отладка без robots.txt (SCRAPE_OBEY_ROBOTS=0)
+    if _obey_robots() and not parser.can_fetch(PRODUCT_TOKEN, url):
         _stats["blocked"].append(url)
         raise RobotsDisallowed(url)
 
-    crawl_delay = (parser.crawl_delay(PRODUCT_TOKEN) or 0) if parser is not None else 0
+    crawl_delay = parser.crawl_delay(PRODUCT_TOKEN) or 0
     wait = _last_finished.get(host, 0.0) + max(_delay(), float(crawl_delay)) - time.monotonic()
     if wait > 0:
         time.sleep(wait)
@@ -193,7 +238,8 @@ def install() -> None:
         return page
 
     def goto(self: Page, url: str, **kwargs):  # type: ignore[no-untyped-def]
-        _wait_turn(url)
+        if not _cached(url):  # ответ из кэша сети не касается
+            _wait_turn(url)
         try:
             response = original_goto(self, url, **kwargs)
             # Отказ сайта (403, 429, 503…) сборщики не замечают: страница
@@ -211,6 +257,48 @@ def install() -> None:
     Page.goto = goto  # type: ignore[method-assign]
 
 
+def open_url(url: str, timeout: float = 60):  # type: ignore[no-untyped-def]
+    """Запрос без браузера по тем же правилам, что page.goto: User-Agent,
+    robots.txt, пауза. Возвращает ответ urllib — его открывают в `with` и
+    могут читать потоком (большой CSV не ложится ни в память, ни на диск).
+    Отказ сайта — urllib.error.HTTPError, как у urlopen."""
+    _wait_turn(url)
+    try:
+        request = urllib.request.Request(url, headers={"User-Agent": user_agent()})
+        return urllib.request.urlopen(request, timeout=timeout)
+    finally:
+        _stats["pages"] += 1
+        _last_finished[urlparse(url).netloc] = time.monotonic()
+
+
+def fetch_text(url: str, timeout: float = 60, encoding: str = "utf-8") -> str:
+    """Страница или файл целиком, текстом (open_url и чтение до конца)."""
+    with open_url(url, timeout) as response:
+        return response.read().decode(encoding, "replace")
+
+
+def _selftest() -> None:
+    assert not robots_unreachable_means_stop(404) and not robots_unreachable_means_stop(403), "4xx — ограничений нет"
+    assert robots_unreachable_means_stop(500) and robots_unreachable_means_stop(503), "5xx — сайт не обходится"
+    resource = "https://data.gov.lt/datasets/2914/versions/729/dynamic-resource/Programa/csv/download/"
+    allowed = robots_from("User-agent: *\nCrawl-delay: 5\nDisallow: /login\nDisallow: /datasets/stats\n")
+    assert allowed.can_fetch(PRODUCT_TOKEN, resource) and allowed.crawl_delay(PRODUCT_TOKEN) == 5
+    assert not allowed.can_fetch(PRODUCT_TOKEN, "https://data.gov.lt/datasets/stats/x")
+    assert robots_from(None).can_fetch(PRODUCT_TOKEN, resource), "robots.txt нет — ограничений нет"
+    assert not robots_from("User-agent: *\nDisallow: /\n").can_fetch(PRODUCT_TOKEN, resource), "запрет остаётся запретом"
+    # недоступный robots.txt запоминается: следующий запрос к тому же сайту
+    # падает сразу, без новой попытки
+    _robots["https://down.example"] = RobotsUnavailable("down")
+    for _ in range(2):
+        try:
+            _robots_for("https://down.example/page")
+            raise AssertionError("ожидался RobotsUnavailable")
+        except RobotsUnavailable:
+            pass
+    del _robots["https://down.example"]
+    print("selftest: OK")
+
+
 def report_and_reset() -> str:
     """Одна строка для журнала после каждого источника."""
     blocked = _stats["blocked"]
@@ -223,3 +311,10 @@ def report_and_reset() -> str:
         line += " (" + ", ".join(blocked[:3]) + (" …" if len(blocked) > 3 else "") + ")"
     _stats.update(pages=0, waited=0.0, assets_skipped=0, cache_hits=0, blocked=[])
     return line
+
+
+if __name__ == "__main__":
+    import sys
+
+    if "--selftest" in sys.argv[1:]:
+        _selftest()

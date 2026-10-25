@@ -18,7 +18,6 @@ from __future__ import annotations
 
 import csv
 import io
-import urllib.request
 from dataclasses import dataclass
 
 DATASET_URL = (
@@ -131,8 +130,10 @@ def _integer(value: str) -> int | None:
 
 
 def download_csv(url: str = CSV_URL) -> str:
-    with urllib.request.urlopen(url, timeout=60) as response:
-        return response.read().decode("utf-8-sig")
+    """Файл датасета; User-Agent и robots.txt data.gov.lv — polite.py."""
+    import polite
+
+    return polite.fetch_text(url, encoding="utf-8-sig")
 
 
 def parse_outcomes(text: str) -> list[OutcomeRow]:

@@ -27,15 +27,12 @@ from __future__ import annotations
 
 import re
 import sys
-import time
-import urllib.request
 from collections import Counter
 from datetime import date, datetime, timezone
 from html.parser import HTMLParser
 
 BASE_URL = "https://statistika.vupp.lv"
 DEFAULT_YEARS = (2024, 2025, 2026)
-PAUSE_SECONDS = 2.0
 
 # Название вуза на портале -> наш код (university.slug). Banku augstskola
 # до 2025 года шла отдельно, теперь это часть ЛУ; в каталоге её нет.
@@ -297,14 +294,6 @@ def _selftest() -> None:
     print("selftest: OK")
 
 
-def _fetch(url: str, agent: str, robots) -> str:  # type: ignore[no-untyped-def]
-    if not robots.can_fetch(agent, url):
-        raise RuntimeError(f"robots.txt запрещает {url}")
-    request = urllib.request.Request(url, headers={"User-Agent": agent})
-    with urllib.request.urlopen(request, timeout=60) as response:
-        return response.read().decode("utf-8")
-
-
 def _years(args: list[str]) -> tuple[int, ...]:
     if "--years" not in args:
         return DEFAULT_YEARS
@@ -319,24 +308,20 @@ def main() -> None:
     sys.stdout.reconfigure(encoding="utf-8")
     from dotenv import load_dotenv
 
+    # User-Agent, robots.txt портала и паузы между страницами — polite.py
     import polite
-    from lt_load_admission_stats import robots_from
 
     load_dotenv()
-    agent = polite.user_agent()
-    robots = robots_from(_fetch_robots(agent))
-    pause = max(PAUSE_SECONDS, float(robots.crawl_delay(agent) or 0))
     extracted_at = datetime.now(timezone.utc).isoformat()
 
     rows: list[dict] = []
     for year in _years(args):
-        year_html = _fetch(f"{BASE_URL}/enrolment/{year}_Vasara", agent, robots)
+        year_html = polite.fetch_text(f"{BASE_URL}/enrolment/{year}_Vasara")
         pages = university_pages(year_html, year)
         if not pages:
             raise ValueError(f"{year}: на странице года нет ни одного вуза — разметка портала изменилась?")
         for name, url in pages:
-            time.sleep(pause)
-            page_rows, problems = parse_page(_fetch(url, agent, robots), year, url)
+            page_rows, problems = parse_page(polite.fetch_text(url), year, url)
             for row in page_rows:
                 row["extracted_at"] = extracted_at
             rows.extend(page_rows)
@@ -345,7 +330,6 @@ def main() -> None:
             print(f"{year} | {name}: строк {len(page_rows)} | срез: {stage} | обновлено {updated}")
             for problem in problems:
                 print(f"    не разобрано: {problem}")
-        time.sleep(pause)
 
     duplicates = duplicate_keys(rows)
     if duplicates:
@@ -366,19 +350,6 @@ def main() -> None:
         execute(client.table("vupp_admission_stat").upsert(rows[start : start + 500], on_conflict=conflict))
     print(f"записано: {len(rows)}")
 
-
-def _fetch_robots(agent: str) -> str | None:
-    """robots.txt портала; ответ 4xx — файла нет, ограничений нет (RFC 9309)."""
-    import urllib.error
-
-    try:
-        request = urllib.request.Request(f"{BASE_URL}/robots.txt", headers={"User-Agent": agent})
-        with urllib.request.urlopen(request, timeout=30) as response:
-            return response.read().decode("utf-8", "replace")
-    except urllib.error.HTTPError as error:
-        if error.code >= 500:
-            raise SystemExit(f"robots.txt портала не получен (ответ {error.code}) — обход отложен")
-        return None
 
 
 if __name__ == "__main__":
