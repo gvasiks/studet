@@ -22,6 +22,7 @@ import {
 import { pageList, type CatalogView } from "@/lib/catalog-view";
 import { INTEREST_KEYS } from "@/lib/fields";
 import { interpolate } from "@/lib/outcomes";
+import { FIELD_TEXT } from "@/lib/field-text";
 
 // Поля фильтров — обычные нативные input/select, их рисует сервер
 // (правило 4 CLAUDE.md). Состояние "включено" рисуется через
@@ -47,7 +48,7 @@ function SelectField({
         <select
           name={name}
           defaultValue={defaultValue}
-          className="h-10 w-full appearance-none rounded-xl bg-zinc-100 pl-3 pr-9 text-sm text-zinc-900 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"
+          className={`h-10 w-full appearance-none rounded-xl bg-zinc-100 pl-3 pr-9 ${FIELD_TEXT} text-zinc-900 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand`}
         >
           {children}
         </select>
@@ -326,7 +327,7 @@ export function SearchAndSort({ locale, dict, state }: { locale: Locale; dict: D
           defaultValue={state.q}
           aria-label={dict.catalog.searchLabel}
           placeholder={dict.catalog.searchPlaceholder}
-          className="min-w-0 flex-1 bg-transparent text-[15px] text-zinc-900 outline-none placeholder:text-zinc-500"
+          className="min-w-0 flex-1 bg-transparent text-base text-zinc-900 outline-none placeholder:text-zinc-500 sm:text-[15px]"
         />
       </label>
 

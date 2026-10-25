@@ -11,6 +11,7 @@ import { interpolate } from "@/lib/outcomes";
 import { formatDate } from "@/lib/dates";
 import { useTrackOnce } from "@/components/Analytics";
 import { Providers } from "@/app/[locale]/providers";
+import { HEROUI_FIELD_CLASSES } from "@/lib/field-text";
 
 // Страница официального калькулятора LAMA BPO — туда ведём за
 // дополнительными баллами и за окончательным расчётом.
@@ -90,6 +91,7 @@ function LtCalculatorFormForm({
                 maxLength={5}
                 size="sm"
                 className="w-24"
+                classNames={HEROUI_FIELD_CLASSES}
                 aria-label={label(subject)}
                 aria-describedby={invalid ? errorId : undefined}
                 isInvalid={invalid}

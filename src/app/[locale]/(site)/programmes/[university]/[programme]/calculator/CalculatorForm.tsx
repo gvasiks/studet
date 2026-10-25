@@ -20,6 +20,7 @@ import { formatDate } from "@/lib/dates";
 import { useTrackOnce } from "@/components/Analytics";
 import { Providers } from "@/app/[locale]/providers";
 import { formatPoints } from "@/lib/numbers";
+import { HEROUI_FIELD_CLASSES } from "@/lib/field-text";
 
 const LEVELS: ExamLevel[] = ["augstakais", "optimalais", "vispaarigais"];
 
@@ -133,6 +134,7 @@ function CalculatorFormForm({
                 maxLength={6}
                 size="sm"
                 className="w-24"
+                classNames={HEROUI_FIELD_CLASSES}
                 // Видимый <span> рядом — не <label>, программно ни с чем
                 // не связан; без aria-label скринридер объявил бы просто
                 // "edit text" без указания предмета (ревью 2026-09,
@@ -185,6 +187,7 @@ function CalculatorFormForm({
                 maxLength={8}
                 size="sm"
                 className="w-24"
+                classNames={HEROUI_FIELD_CLASSES}
                 aria-label={termLabel(dict, term)}
                 aria-describedby={invalid ? errorId : undefined}
                 isInvalid={invalid}

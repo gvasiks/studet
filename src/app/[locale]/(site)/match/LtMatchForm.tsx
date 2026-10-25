@@ -15,6 +15,7 @@ import { interpolate } from "@/lib/outcomes";
 import { formatDate } from "@/lib/dates";
 import { useTrackOnce } from "@/components/Analytics";
 import { Providers } from "@/app/[locale]/providers";
+import { FIELD_TEXT, HEROUI_FIELD_CLASSES } from "@/lib/field-text";
 
 // Официальные страницы LAMA BPO: калькулятор (дополнительные баллы и
 // окончательный расчёт) и объявление о порядке приёма (минимальные требования).
@@ -173,6 +174,7 @@ function LtMatchFormForm({
                     maxLength={5}
                     size="sm"
                     className="w-24"
+                    classNames={HEROUI_FIELD_CLASSES}
                     aria-label={label(subject)}
                     aria-describedby={invalid ? errorId : undefined}
                     isInvalid={invalid}
@@ -230,7 +232,7 @@ function LtMatchFormForm({
                 type="search"
                 value={query}
                 onChange={(event) => setQuery(event.target.value)}
-                className="mt-1.5 h-10 w-full max-w-md rounded-xl border border-zinc-300 bg-white px-3 text-sm text-zinc-900 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"
+                className={`mt-1.5 h-10 w-full max-w-md rounded-xl border border-zinc-300 bg-white px-3 ${FIELD_TEXT} text-zinc-900 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand`}
               />
             </div>
 

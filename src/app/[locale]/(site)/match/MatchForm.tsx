@@ -17,6 +17,7 @@ import { useTrackOnce } from "@/components/Analytics";
 import { Providers } from "@/app/[locale]/providers";
 import { formatPoints } from "@/lib/numbers";
 import { enumLabel } from "@/lib/names";
+import { FIELD_TEXT, HEROUI_FIELD_CLASSES } from "@/lib/field-text";
 
 const LEVELS: ExamLevel[] = ["augstakais", "optimalais", "vispaarigais"];
 
@@ -141,6 +142,7 @@ function MatchFormForm({
                     maxLength={6}
                     size="sm"
                     className="w-[5.5rem] shrink-0"
+                    classNames={HEROUI_FIELD_CLASSES}
                     aria-label={`${subjectLabel(dict, subject)}, ${t.percentSuffix}`}
                     aria-describedby={invalid ? errorId : undefined}
                     isInvalid={invalid}
@@ -151,7 +153,7 @@ function MatchFormForm({
                     endContent={<span className="text-zinc-500">{t.percentSuffix}</span>}
                   />
                   <select
-                    className="h-9 min-w-0 flex-1 rounded-lg border border-zinc-300 bg-white px-2 text-sm text-zinc-900 shadow-control"
+                    className={`h-9 min-w-0 flex-1 rounded-lg border border-zinc-300 bg-white px-2 ${FIELD_TEXT} text-zinc-900 shadow-control`}
                     aria-label={`${subjectLabel(dict, subject)}, ${t.levelLabel}`}
                     value={inputs[subject].level ?? ""}
                     onChange={(event) =>
