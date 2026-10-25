@@ -80,6 +80,18 @@ BATCHES = {
             "программ; Juridiskā koledža, LU PSK, RNU, ViA, RISEBA — 64 программы; docs/checks/REQUIREMENTS-REVIEW.md)"
         ),
     },
+    # Решение владельца 2026-10-25: «Подтверждаю и то и другое» — BVK 8, RBK 5
+    # (у «Restaurācija» без математики), R1MK 2, колледж полиции 1, JVLMA 3
+    # (REQUIREMENTS-REVIEW.md, «Порция 2, колледжи и специализированные вузы»).
+    "colleges": {
+        "universities": ["bvk", "rbk", "r1mk", "vpk", "jvlma"],
+        "whole_university": True,
+        "expected": 19,
+        "verified_by": (
+            "Gvasiks (решение владельца 2026-10-25: требования по правилам приёма учреждений — BVK, RBK, R1MK, "
+            "Valsts policijas koledža, JVLMA, 19 программ; docs/checks/REQUIREMENTS-REVIEW.md)"
+        ),
+    },
     "reviewed-no-formula": {
         "universities": ["lu", "rsu", "du", "lbtu", "venta"],
         "without_formula": True,

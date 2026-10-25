@@ -248,3 +248,10 @@ private`; типы отбора «конкурс по баллам» у 12 ву�
 ссылок на правила не нашёл.
 
 **Решить:** подтвердить 19 требований и 4 типа отбора.
+
+**Решение 2026-10-25 (владелец: «Подтверждаю и то и другое»):** 19 требований
+— `confirm_requirements_by_rule.py --batch colleges`; типы отбора BVK, RBK,
+R1MK (конкурс) и JVLMA (вступительные испытания) — `confirm_admission_types.py`.
+Проверено на карточке JVLMA: «Šajā augstskolā nav konkursa punktu — uzņemšana
+notiek pēc iestājpārbaudījumiem». Всего подтверждено 330 наборов требований и
+16 типов отбора.
