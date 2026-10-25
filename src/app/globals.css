@@ -54,3 +54,16 @@ body {
   border-radius: 1.5rem;
   box-shadow: var(--shadow-card);
 }
+
+/* Поля ввода на телефоне — не мельче 16px: Safari на iPhone при фокусе на
+   поле с более мелким шрифтом сам увеличивает страницу, и её приходится
+   уменьшать обратно (поиск в каталоге, баллы в калькуляторе и /match;
+   проверка 2026-10-25). !important — чтобы перебить классы размера текста
+   HeroUI и Tailwind; от sm (640px) остаётся их размер. */
+@media (max-width: 639px) {
+  input,
+  select,
+  textarea {
+    font-size: 16px !important;
+  }
+}

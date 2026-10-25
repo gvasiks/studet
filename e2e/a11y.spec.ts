@@ -197,3 +197,19 @@ for (const locale of LOCALES) {
     expect(results.violations, JSON.stringify(results.violations, null, 2)).toEqual([]);
   });
 }
+
+// Телефон (проверка 2026-10-25): страница не шире экрана, а шрифт полей не
+// мельче 16px — иначе Safari на iPhone при фокусе увеличивает страницу
+// (правило в globals.css).
+for (const path of ["/lv/programmes", "/lv/programmes/lu/economics/calculator", "/lv/match", "/lt/programmes/vu/medicina/calculator"]) {
+  test(`на телефоне без прокрутки вбок и поля от 16px: ${path}`, async ({ page }) => {
+    await page.setViewportSize({ width: 375, height: 812 });
+    await page.goto(path);
+    expect(await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth)).toBe(0);
+    const sizes = await page
+      .locator('main input:not([type="checkbox"]):not([type="radio"]):not([type="hidden"]), main select')
+      .evaluateAll((fields) => fields.filter((f) => f.getBoundingClientRect().width > 0).map((f) => parseFloat(getComputedStyle(f).fontSize)));
+    expect(sizes.length).toBeGreaterThan(0);
+    expect(Math.min(...sizes)).toBeGreaterThanOrEqual(16);
+  });
+}
