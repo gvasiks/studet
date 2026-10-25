@@ -69,15 +69,15 @@ Ar cieņu,
 
 ### ЛУ
 
-**Адрес:** приёмная комиссия ЛУ — уточнить на
-[lu.lv/gribustudet/uznemsanas-kartiba](https://www.lu.lv/gribustudet/uznemsanas-kartiba/pamatstudijas/)
-(общий адрес не найден в самом документе правил).
+**Адрес:** `uznemsana@lu.lv` — указан на странице
+[lu.lv/gribustudet/uznemsanas-kartiba/pamatstudijas](https://www.lu.lv/gribustudet/uznemsanas-kartiba/pamatstudijas/)
+(проверено 2026-10-25; там же `studijas@lu.lv` для общих вопросов).
 
 **Источник:** «Uzņemšanas prasības un kritēriji pamatstudiju programmās
 2026./2027. akadēmiskajā gadā» (LU rīkojums Nr. 1-4/506, `docs/source-documents/lu/uzn-prasibas-pamat-2026-27.pdf`).
 
 ```
-Kam: <adrese>
+Kam: uznemsana@lu.lv
 Tēma: Jautājumi par konkursa vērtējuma aprēķināšanu vairākās bakalaura programmās
 
 Labdien!
@@ -140,10 +140,11 @@ Ar cieņu,
 
 ### РТУ
 
-**Адрес:** уточнить на
-[rtu.lv/lv/studijas/uznemsana](https://www.rtu.lv/lv/studijas/uznemsana/uznemsanas-noteikumi/uznemsanas-noteikumi-pamatstudijas)
-(у РТУ нет утверждённого PDF, только страница — общий адрес на ней не
-приведён).
+**Адрес:** отдельного адреса приёмной комиссии на сайте РТУ нет (проверено
+2026-10-25: страницы «Uzņemšana», «Kontakti» и вопросов-ответов; для вопросов
+поступающих сайт предлагает чат). Остаётся общий `info@rtu.lv` с просьбой
+передать письмо приёмной комиссии — или чат на
+[rtu.lv/lv/tools/chat_page](https://www.rtu.lv/lv/tools/chat_page).
 
 **Источник:** «Uzņemšanas noteikumi īsā cikla un pirmā cikla studiju
 programmās 2026./2027. akadēmiskajā gadā», 31.1. punkts (RTU Senāta
@@ -162,7 +163,7 @@ programmās 2026./2027. akadēmiskajā gadā», 31.1. punkts (RTU Senāta
 обоими реестрами 2026-10-10 — перед отправкой проверьте, что они не изменились.
 
 ```
-Kam: <adrese>
+Kam: info@rtu.lv (lūgums pārsūtīt Uzņemšanas komisijai)
 Tēma: Jautājumi par konkursa vērtējuma aprēķinu, studiju virzieniem un studiju valodu
 
 Labdien!
@@ -243,10 +244,9 @@ Ar cieņu,
 
 ### DU
 
-**Адрес:** уточнить на
+**Адрес:** `uznemsana@du.lv` — указан на странице
 [du.lv/gribu-studet/uznemsana](https://du.lv/gribu-studet/uznemsana/)
-(в PDF правил общий адрес не приведён; там же телефон приёмной комиссии
-65421198, если нужен запасной канал).
+(проверено 2026-10-25; телефон приёмной комиссии 65421198 — запасной канал).
 
 **Источник:** «Uzņemšanas noteikumi pilna un nepilna laika pamatstudijām
 2026. gadā» (DU Senāta protokols Nr. 15, 21.10.2025, grozījumi 11.06.2026,
@@ -255,7 +255,7 @@ Ar cieņu,
 `docs/source-documents/du/studiju-iespejas-pamatstudijas-2026-27-08-2026.pdf`).
 
 ```
-Kam: <adrese>
+Kam: uznemsana@du.lv
 Tēma: Jautājums par konkursa punktu aprēķinu vairākās programmās
 
 Labdien!
@@ -315,7 +315,8 @@ Ar cieņu,
 Не про формулу, а про каталог. Добавлено 2026-10-10 после сверки с NIID
 (`docs/checks/NIID-LANGUAGE-REVIEW.md`).
 
-**Адрес:** уточнить на [rnu.lv](https://rnu.lv) — приёмная комиссия.
+**Адрес:** отдельного адреса приёмной комиссии на сайте нет (проверено
+2026-10-25, главная и «Uzņemšana»); общий — `rnu@rnu.lv`.
 
 **Зачем.** На английских страницах шести программ RNU язык обучения не указан;
 в NIID у всех шести стоит «latviešu/angļu (LV/EN)». По решению владельца каждая
@@ -325,7 +326,7 @@ Ar cieņu,
 в `pipeline/src/niid_languages.py`.
 
 ```
-Kam: <adrese>
+Kam: rnu@rnu.lv
 Tēma: Jautājums par studiju valodu sešās studiju programmās
 
 Labdien!
@@ -358,7 +359,8 @@ Ar cieņu,
 
 Тот же вопрос, три программы. Добавлено 2026-10-10.
 
-**Адрес:** уточнить на [tsi.lv](https://tsi.lv) — приёмная комиссия.
+**Адрес:** уточнить на [tsi.lv](https://tsi.lv) — приёмная комиссия. Сайт
+закрыт для ИИ-агентов в `robots.txt`, я его не читал — адрес нужно найти вручную.
 
 **Зачем.** У трёх программ TSI блок языка на странице пустой; в NIID у всех
 трёх «latviešu/angļu (LV/EN)». В каталоге каждая записана двумя записями;
@@ -432,7 +434,24 @@ Ar cieņu,
 
 ### RAI, TSI, LMA, EKA, LKA (+ с 2026-10-25: DMK, RTK, UCAK, LJK, RSU SKMK, SSE Riga, RGSL, LNAA, LU RMK) — как отбирают и какие ЦЭ нужны
 
-Добавлено 2026-10-23. Одно письмо, пять адресов (уточнить на сайтах).
+Добавлено 2026-10-23. Одно письмо, адреса — отдельно каждому учреждению.
+
+Адреса (проверено 2026-10-25 на сайтах, которые разрешают обход ИИ-агентам;
+отдельный адрес приёмной комиссии нашёлся не везде — тогда общий):
+
+| Учреждение | Адрес | Где указан |
+|---|---|---|
+| RAI | `manager@rai.lv` | страница «Uzņemšana 2026/2027» |
+| EKA | `sic@eka.edu.lv` | главная augstskola.lv (студенческий информационный центр) |
+| LKA | `lka@lka.edu.lv` | главная, общий |
+| DMK | `info@dmk.lv` | «Kontakti», общий |
+| LNAA | `studijas@mil.lv` | главная naa.mil.lv |
+| LU RMK | `koledza@rmkoledza.lv` | главная колледжа |
+| SSE Riga | `office@sseriga.edu` | главная, общий |
+| TSI, LMA | найти вручную | сайты закрыты для ИИ-агентов |
+| RTK, UCAK, RGSL | найти вручную | адреса на страницах не нашёл (вероятно, выводятся скриптом) |
+| LJK | найти вручную | сайт не открылся (ошибка 522) |
+| RSU SKMK | найти вручную | сайт с ошибкой сертификата — не открывал |
 
 **Зачем.** У остальных вузов единой подачи и частных вузов требования к ЦЭ и
 тип отбора взяты из правил приёма (`requirements_private.py`,
