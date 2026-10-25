@@ -60,6 +60,18 @@ BATCHES = {
             "по ручной таблице соответствий vupp_link_manual.py; список — docs/checks/VUPP-LINKS-REVIEW.md, «Третья партия»)"
         ),
     },
+    # Решение владельца 2026-10-25: «Связываем все 5» — новых связей 11 у
+    # четырёх программ (ЛУ Asian and Intercultural Studies 8, DU Eastern
+    # European… 1, РТУ dcp-33000 и hcf-33000 по 1); пятая (22537) связана
+    # ещё третьей партией (раздел «Четвёртая партия»).
+    "manual-4": {
+        "methods": ["manual"],
+        "expected": 11,
+        "verified_by": (
+            "Gvasiks (решение владельца 2026-10-25 «Связываем все 5»: 11 связей ЛУ, DU и РТУ по ручной таблице "
+            "vupp_link_manual.py; доводы — docs/checks/VUPP-LINKS-REVIEW.md, «Четвёртая партия»)"
+        ),
+    },
 }
 
 

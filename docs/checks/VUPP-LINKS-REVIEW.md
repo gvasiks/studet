@@ -82,7 +82,7 @@ vadītājs») — это та же программа. Одна программ
 |---|---|---|
 | ЛУ Philology (en) | 22540 | на портале — латышско-русская подпрограмма; три английские связаны |
 | ЛУ Cultural and Social Anthropology (en) | 29639 | это код латышской программы; английская на портале — 29646, на странице его нет |
-| ЛУ English, European Languages and Business Studies (en) | 22537 | на портале «Anglistikas, Eiropas valodu un biznesa studijas» без пометки об английском — скорее всего та же программа, но правило осторожное |
+| ~~ЛУ English, European Languages and Business Studies (en)~~ — связана третьей партией (2026-10-18) | 22537 | на портале «Anglistikas, Eiropas valodu un biznesa studijas» без пометки об английском — скорее всего та же программа, но правило осторожное |
 | РТУ dcp-33000 (en в каталоге) | RDCP0 | на портале без пометки об английском |
 | РТУ hcf-33000 (en в каталоге) | RHCF0 | так же |
 
@@ -239,7 +239,7 @@ procesi» — похоже, но не наверняка); ЛУ Medicine (en) и
 у RNU и EKA коды новые каждый год; новые черновики — новой партией в
 `confirm_vupp_links_by_rule.py` после решения владельца.
 
-## Четвёртая партия — предложение (2026-10-25), ждёт решения владельца
+## Четвёртая партия (2026-10-25)
 
 Пять программ, оставленных без связи «намеренно» и «спорно по языку», сверены
 со страницами вузов (robots.txt разрешает; проверено 2026-10-25). Черновики
@@ -249,7 +249,7 @@ procesi» — похоже, но не наверняка); ЛУ Medicine (en) и
 |---|---|---|
 | ЛУ Asian and Intercultural Studies (lv) | 22568 — четыре модуля «Āzijas studijas, modulis …» (Ķīnas, Japānas, Korejas, Tuvo Austrumu); в 2024 году — 22523 «…, apakšprogramma …» | Английская страница ЛУ: у программы две подпрограммы, «Asian Studies» на латышском и «East-West Intercultural Studies». Портал даёт их отдельно. Латышской записи каталога соответствует первая. **Вторая (22569, «Austrumu-Rietumu starpkultūru studijas (angļu valodā)») не связывается**: она английская, а английской записи у программы в каталоге нет |
 | DU Eastern European Culture and Business Relations (lv) | D02DP «Austrumeiropas kultūras sakari un integrācijas procesi» | Английская страница DU ссылается на латышскую с адресом `…/austrumeiropas-kulturas-sakari-un-integracijas-procesi/` — дословно название портала. Английская запись программы (`-en`) не связывается: портал язык не помечает |
-| ЛУ English, European Languages and Business Studies (en) | 22537 «Anglistikas, Eiropas valodu un biznesa studijas» | Английская страница ЛУ ведёт на латышскую `…/anglistikas-eiropas-valodu-un-biznesa-studijas/`, язык обучения — английский, бюджетных мест на 2026/27 — 23; на портале в 2026 году у 22537 тоже 23 бюджетных места. Другой записи этой программы в каталоге нет |
+| ЛУ English, European Languages and Business Studies (en) — **уже была связана третьей партией** | 22537 «Anglistikas, Eiropas valodu un biznesa studijas» | Английская страница ЛУ ведёт на латышскую `…/anglistikas-eiropas-valodu-un-biznesa-studijas/`, язык обучения — английский, бюджетных мест на 2026/27 — 23; на портале в 2026 году у 22537 тоже 23 бюджетных места. Другой записи этой программы в каталоге нет |
 | РТУ dcp-33000 «Finanšu pārvaldības informācijas sistēmas» (en) | RDCP0 | Код совпадает с адресом программы (DCP) и стоит в каталоге в единственном числе; черновик по коду не записан только из-за языка: латышский реестр РТУ называет программу английской, портал язык не помечает. Цифры портала относятся к коду программы, а не к языку |
 | РТУ hcf-33000 «Tehniskā tulkošana un tekstveide» (en) | RHCF0 | Так же |
 
@@ -261,3 +261,13 @@ procesi» — похоже, но не наверняка); ЛУ Medicine (en) и
 Без изменений остаются: ЛУ Philology (en) 22540 и Cultural and Social
 Anthropology (en) 29639 — у обеих на портале другой язык; ЛУ Medicine (en) и
 Radiography — на портале их нет.
+
+**Решение (2026-10-25):** владелец — «Связываем все 5». Связь 22537 уже стояла
+с 18 октября (ручная таблица третьей партии), а запись о ней в разделе «Не
+связано» оставалась неисправленной — поэтому новых связей 11 у четырёх
+программ: ЛУ Asian and Intercultural Studies 8 (22568 — четыре модуля 2025–2026,
+22523 — они же в 2024), DU 1 (D02DP), РТУ 2 (RDCP0, RHCF0). Записаны через
+`vupp_link_manual.py`, подтверждены `confirm_vupp_links_by_rule.py --batch
+manual-4` (сверка числа: 11). Наружу видно 358 связей у 210 программ. На
+карточке у РТУ dcp-33000 и hcf-33000 в 2026 году: 0 мест, 46 и 13 заявлений,
+0 прошедших — показано как есть.

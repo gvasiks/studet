@@ -12,9 +12,8 @@ vupp_link_by_name.py.
 Чего в таблице нет намеренно (отчёт — docs/checks/VUPP-LINKS-REVIEW.md):
 - английские потоки, если портал не помечает язык (LBTU, EKA, RNU, DU):
   не ясно, в одной ли строке портала латышский и английский набор;
-- программы, у которых соответствие неочевидно (ЛУ «Asian and
-  Intercultural Studies», DU «Eastern European Culture and Business
-  Relations»);
+- английская подпрограмма ЛУ «East-West Intercultural Studies» (22569):
+  английской записи этой программы в каталоге нет;
 - программы, которых на портале нет (ЛУ Medicine (en), Radiography).
 
 Запуск:
@@ -69,6 +68,13 @@ _DU_CIVIL = [
 # «Speciālists…» и «speciālists…»).
 MANUAL: dict[tuple[str, str], list[str]] = {
     ("lu", "art-1"): ["Māksla"],
+    # латышская подпрограмма «Asian Studies» с четырьмя модулями (четвёртая
+    # партия, решение владельца 2026-10-25); 2024 — «apakšprogramma», код 22523
+    ("lu", "asian-and-intercultural-studies"): [
+        f"Āzijas studijas, {kind} {module}"
+        for kind in ("modulis", "apakšprogramma")
+        for module in ("Japānas studijas", "Korejas studijas", "Tuvo Austrumu studijas", "Ķīnas studijas")
+    ],
     ("lu", "communication-science"): ["Komunikācijas zinātne"],
     ("lu", "computer-science"): ["Datorzinātnes"],
     ("lu", "computer-science-en"): ["Datorzinātnes (angļu valodā)"],
@@ -122,6 +128,8 @@ MANUAL: dict[tuple[str, str], list[str]] = {
     # на странице lu.lv код 20221, на портале 20220 — название то же
     ("lu", "translate-to-anglu-pirmstiesas-izmeklesana"): ["Pirmstiesas izmeklēšana"],
     ("du", "psychology"): ["Psiholoģija"],
+    # английская страница DU ведёт на латышскую с этим названием (четвёртая партия)
+    ("du", "eastern-european-cultural-and-business-relations"): ["Austrumeiropas kultūras sakari un integrācijas procesi"],
     ("du", "history"): ["Vēsture"],
     ("du", "science-of-law"): ["Tiesību zinātne"],
     ("du", "strategic-risks-and-crisis-management"): ["Stratēģiskie riski un krīžu vadība"],
@@ -145,6 +153,14 @@ MANUAL: dict[tuple[str, str], list[str]] = {
     ("eka", "accounting-and-finance-management"): ["Grāmatvedība un finanšu vadība"],
     ("eka", "marketing-lv"): ["Mārketings"],
     ("eka", "computer-game-design"): ["Datorspēļu dizains"],
+    # РТУ: код из адреса программы совпадает (DCP, HCF), правило по коду
+    # отложило связь только из-за языка — в каталоге программа английская,
+    # портал язык не помечает (четвёртая партия, решение владельца 2026-10-25)
+    ("rtu", "dcp-33000"): [
+        "Finanšu pārvaldības informācijas sistēmas (kopīga studiju programma ar LU BA)",
+        "Finanšu pārvaldības informācijas sistēmas (kopīga studiju programma ar BA)",
+    ],
+    ("rtu", "hcf-33000"): ["Tehniskā tulkošana un tekstveide"],
     ("rnu", "business-administration-bachelor"): ["Uzņēmējdarbības vadība"],
     # 2024 — «Tūrisma uzņēmējdarbības vadība», дальше — нынешнее название
     ("rnu", "business-administration-in-tourism-bachelor"): ["Uzņēmējdarbības vadība tūrismā", "Tūrisma uzņēmējdarbības vadība"],
