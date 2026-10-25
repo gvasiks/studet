@@ -117,6 +117,25 @@ for (const path of ["/lv/programmes", "/en-lv/programmes/lu/economics", "/lt/pro
   });
 }
 
+// Прошлогодний конкурс (с 2026-10-18): больше трёх подпрограмм — каждая
+// свёрнута в <details>; заголовок открывается клавишей Enter, фокус на нём виден.
+test("свёрнутая подпрограмма прошлогоднего конкурса открывается клавиатурой", async ({ page }) => {
+  await page.goto("/lv/programmes/du/niid-94");
+  await tabTo(page, () => document.activeElement?.matches("#past-admission summary") ?? false, 200);
+  const state = () =>
+    page.evaluate(() => {
+      const summary = document.activeElement as HTMLElement;
+      const style = getComputedStyle(summary);
+      return {
+        open: (summary.parentElement as HTMLDetailsElement).open,
+        focusVisible: (style.outlineStyle !== "none" && parseFloat(style.outlineWidth) > 0) || style.boxShadow !== "none",
+      };
+    });
+  expect(await state()).toEqual({ open: false, focusVisible: true });
+  await page.keyboard.press("Enter");
+  expect((await state()).open).toBe(true);
+});
+
 // Защитные заголовки (next.config.ts, аудит 2026-10-04): страницу нельзя
 // встроить в чужой фрейм, сервер не называет себя.
 test("защитные заголовки на ответах сайта", async ({ request }) => {
