@@ -22,9 +22,11 @@
 - robots.txt: запрещённые для нас адреса не открываются, а попадают в
   отчёт (SCRAPE_OBEY_ROBOTS=0 отключает, для отладки). Сам robots.txt — по
   RFC 9309: ответ 4xx — файла нет, ограничений нет; ответ 5xx или нет связи
-  (после одного повтора) — правила неизвестны, и сайт в этом прогоне не
-  обходится (RobotsUnavailable; main.py записывает это как сбой источника).
-  До 2026-10-25 в этом случае сайт обходился как разрешённый;
+  (после одного повтора) — повторяем через браузер сборщика: с сервера GitHub
+  часть сайтов не отвечает на простой запрос. Не вышло и так — правила
+  неизвестны, и сайт в этом прогоне не обходится (RobotsUnavailable;
+  main.py записывает это как сбой источника). До 2026-10-25 в этом случае
+  сайт обходился как разрешённый;
 - картинки, шрифты и видео не загружаются — тексту они не нужны, а
   сайту это десятки лишних запросов на страницу;
 - локальный кэш для отладки (SCRAPE_CACHE=1): страницы и XHR сутки
@@ -57,6 +59,7 @@ CACHE_TTL_SECONDS = 24 * 3600
 CACHE_DIR = Path(__file__).resolve().parent.parent / ".cache"
 SKIPPED_RESOURCE_TYPES = {"image", "media", "font"}
 CACHED_RESOURCE_TYPES = {"document", "xhr", "fetch"}
+ROBOTS_RETRY_PAUSE_SECONDS = 5
 
 
 class RobotsDisallowed(Exception):
@@ -70,6 +73,7 @@ class RobotsUnavailable(Exception):
 
 _installed = False
 _last_finished: dict[str, float] = {}
+_browser_goto = Page.goto  # настоящий Page.goto: install() его подменяет
 _robots: dict[str, urllib.robotparser.RobotFileParser | RobotsUnavailable] = {}
 _stats = {"pages": 0, "waited": 0.0, "assets_skipped": 0, "cache_hits": 0, "blocked": []}
 
@@ -109,7 +113,45 @@ def robots_from(body: str | None) -> urllib.robotparser.RobotFileParser:
     return parser
 
 
-def _robots_for(url: str) -> urllib.robotparser.RobotFileParser:
+def _robots_body(origin: str) -> str | None:
+    """Текст robots.txt простым запросом; None — файла нет (ответ 4xx)."""
+    problem = ""
+    for attempt in (1, 2):
+        try:
+            request = urllib.request.Request(f"{origin}/robots.txt", headers={"User-Agent": user_agent()})
+            return urllib.request.urlopen(request, timeout=15).read().decode("utf-8", "replace")
+        except urllib.error.HTTPError as error:
+            if not robots_unreachable_means_stop(error.code):
+                return None
+            problem = f"ответ {error.code}"
+        except Exception as error:  # noqa: BLE001 — нет связи, таймаут
+            # причина важна: URLError без неё ничего не объясняет (сбор 2026-10-26)
+            problem = f"{type(error).__name__}: {getattr(error, 'reason', error)}"
+        if attempt == 1:
+            time.sleep(ROBOTS_RETRY_PAUSE_SECONDS)  # один повтор: сеть могла моргнуть
+    raise RobotsUnavailable(f"{origin}/robots.txt не получен ({problem})")
+
+
+def _robots_body_via_browser(origin: str, page: Page) -> str | None:
+    """Текст robots.txt через браузер сборщика — тем же путём, которым он
+    пойдёт за страницами. С сервера GitHub простой запрос к lbtu.lv, niid.lv,
+    rai.lv и naa.mil.lv не проходит, а браузер туда попадает (сбор 2026-10-26:
+    шесть источников упали на этом месте). Страницу занимаем ненадолго:
+    сразу за этим сборщик уйдёт на свой адрес."""
+    url = f"{origin}/robots.txt"
+    try:
+        response = _browser_goto(page, url, wait_until="domcontentloaded", timeout=30000)
+    except Exception as error:  # noqa: BLE001 — браузер тоже не дошёл
+        raise RobotsUnavailable(f"{url} не получен и через браузер ({type(error).__name__}) — сайт в этом прогоне не обходится")
+    if response is None or robots_unreachable_means_stop(response.status):
+        status = response.status if response is not None else "нет ответа"
+        raise RobotsUnavailable(f"{url} не получен и через браузер (ответ {status}) — сайт в этом прогоне не обходится")
+    return response.text() if response.ok else None
+
+
+def _robots_for(url: str, page: Page | None = None) -> urllib.robotparser.RobotFileParser:
+    """Правила сайта. page — страница Playwright, если запрос идёт из браузера:
+    у неё есть запасной путь к robots.txt, у open_url() его нет."""
     parsed = urlparse(url)
     origin = f"{parsed.scheme}://{parsed.netloc}"
     known = _robots.get(origin)
@@ -118,25 +160,17 @@ def _robots_for(url: str) -> urllib.robotparser.RobotFileParser:
     if known is not None:
         return known
 
-    body: str | None = None
-    problem = ""
-    for attempt in (1, 2):
+    try:
         try:
-            request = urllib.request.Request(f"{origin}/robots.txt", headers={"User-Agent": user_agent()})
-            body = urllib.request.urlopen(request, timeout=15).read().decode("utf-8", "replace")
-            break
-        except urllib.error.HTTPError as error:
-            if not robots_unreachable_means_stop(error.code):
-                break  # 4xx — файла нет, ограничений нет
-            problem = f"ответ {error.code}"
-        except Exception as error:  # noqa: BLE001 — нет связи, таймаут
-            problem = type(error).__name__
-        if attempt == 1:
-            time.sleep(5)  # один повтор: сеть могла моргнуть
-    else:
-        unavailable = RobotsUnavailable(f"{origin}/robots.txt не получен ({problem}) — сайт в этом прогоне не обходится")
+            body = _robots_body(origin)
+        except RobotsUnavailable as unavailable:
+            if page is None:
+                raise
+            print(f"polite: {unavailable}; читаю через браузер")
+            body = _robots_body_via_browser(origin, page)
+    except RobotsUnavailable as unavailable:
         _robots[origin] = unavailable
-        raise unavailable
+        raise
 
     parser = robots_from(body)
     _robots[origin] = parser
@@ -162,11 +196,11 @@ def forget(url: str) -> None:
         path.unlink(missing_ok=True)
 
 
-def _wait_turn(url: str) -> None:
+def _wait_turn(url: str, page: Page | None = None) -> None:
     """Проверка robots.txt и пауза перед запросом к сайту."""
     host = urlparse(url).netloc
     try:
-        parser = _robots_for(url)
+        parser = _robots_for(url, page)
     except RobotsUnavailable:
         if _obey_robots():
             raise
@@ -228,8 +262,10 @@ def install() -> None:
             "почту в pipeline/.env (и переменную SCRAPER_CONTACT в GitHub)."
         )
 
+    global _browser_goto
     original_new_page = Browser.new_page
     original_goto = Page.goto
+    _browser_goto = original_goto
 
     def new_page(self: Browser, **kwargs):  # type: ignore[no-untyped-def]
         kwargs.setdefault("user_agent", user_agent())
@@ -239,7 +275,7 @@ def install() -> None:
 
     def goto(self: Page, url: str, **kwargs):  # type: ignore[no-untyped-def]
         if not _cached(url):  # ответ из кэша сети не касается
-            _wait_turn(url)
+            _wait_turn(url, self)
         try:
             response = original_goto(self, url, **kwargs)
             # Отказ сайта (403, 429, 503…) сборщики не замечают: страница
@@ -296,6 +332,57 @@ def _selftest() -> None:
         except RobotsUnavailable:
             pass
     del _robots["https://down.example"]
+
+    # простой запрос не прошёл (как с сервера GitHub) — запасной путь через браузер
+    class FakeResponse:
+        def __init__(self, status: int, body: str = "") -> None:
+            self.status, self.ok, self._body = status, status < 400, body
+
+        def text(self) -> str:
+            return self._body
+
+    def browser_answers(answer):  # type: ignore[no-untyped-def]
+        def fake_goto(_page, _url, **_kwargs):  # type: ignore[no-untyped-def]
+            if isinstance(answer, Exception):
+                raise answer
+            return answer
+
+        return fake_goto
+
+    def no_network(*_args, **_kwargs):  # type: ignore[no-untyped-def]
+        raise urllib.error.URLError("connection refused")
+
+    global _browser_goto, ROBOTS_RETRY_PAUSE_SECONDS
+    real_urlopen, real_goto, real_pause = urllib.request.urlopen, _browser_goto, ROBOTS_RETRY_PAUSE_SECONDS
+    urllib.request.urlopen, ROBOTS_RETRY_PAUSE_SECONDS = no_network, 0
+    page = object()
+    try:
+        _browser_goto = browser_answers(FakeResponse(200, "User-agent: *\nDisallow: /closed\n"))
+        rules = _robots_for("https://a.example/x", page)  # type: ignore[arg-type]
+        assert rules.can_fetch(PRODUCT_TOKEN, "https://a.example/x")
+        assert not rules.can_fetch(PRODUCT_TOKEN, "https://a.example/closed"), "правила из браузера действуют"
+
+        _browser_goto = browser_answers(FakeResponse(404))
+        assert _robots_for("https://b.example/x", page).can_fetch(PRODUCT_TOKEN, "https://b.example/x"), "4xx — ограничений нет"  # type: ignore[arg-type]
+
+        for origin, answer in (("https://c.example", FakeResponse(503)), ("https://d.example", TimeoutError())):
+            _browser_goto = browser_answers(answer)
+            try:
+                _robots_for(f"{origin}/x", page)  # type: ignore[arg-type]
+                raise AssertionError("ожидался RobotsUnavailable")
+            except RobotsUnavailable:
+                pass
+
+        # без браузера запасного пути нет, а причина сбоя видна в сообщении
+        try:
+            _robots_for("https://e.example/x")
+            raise AssertionError("ожидался RobotsUnavailable")
+        except RobotsUnavailable as error:
+            assert "connection refused" in str(error), error
+    finally:
+        urllib.request.urlopen, _browser_goto, ROBOTS_RETRY_PAUSE_SECONDS = real_urlopen, real_goto, real_pause
+        for name in "abcde":
+            _robots.pop(f"https://{name}.example", None)
     print("selftest: OK")
 
 
@@ -316,5 +403,6 @@ def report_and_reset() -> str:
 if __name__ == "__main__":
     import sys
 
+    sys.stdout.reconfigure(encoding="utf-8")  # type: ignore[attr-defined]
     if "--selftest" in sys.argv[1:]:
         _selftest()
