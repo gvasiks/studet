@@ -8,6 +8,10 @@ import type { Tone } from "@/components/LocaleSwitcher";
 import { SITE_NAME } from "@/lib/site";
 
 export function SiteFooter({ dict, locale, tone }: { dict: Dictionary; locale: Locale; tone: Tone }) {
+  // Политика — в подвале каждой страницы (решение владельца 2026-11-03;
+  // раньше ссылку собирались добавить только при публикации).
+  const privacyHref = hasFeature(locale, "privacy") ? `/${locale}/privacy` : null;
+
   if (tone === "light") {
     return (
       <footer className="mt-auto border-t border-zinc-200">
@@ -15,6 +19,13 @@ export function SiteFooter({ dict, locale, tone }: { dict: Dictionary; locale: L
           <CountrySwitcher locale={locale} dict={dict} tone="light" />
           {/* zinc-600, не 500: на сером фоне страницы (zinc-100) 500 не дотягивает до 4.5:1 */}
           <p className="text-xs leading-relaxed text-zinc-600">{dict.footer.disclaimer}</p>
+          {privacyHref && (
+            <p className="text-xs">
+              <Link href={privacyHref} className="text-zinc-600 underline hover:text-zinc-900">
+                {dict.privacy.title}
+              </Link>
+            </p>
+          )}
         </div>
       </footer>
     );
@@ -28,6 +39,7 @@ export function SiteFooter({ dict, locale, tone }: { dict: Dictionary; locale: L
     { href: `/${locale}/favorites`, label: dict.favorites.navLink, feature: "favorites" },
     { href: `/${locale}/glossary`, label: dict.nav.glossary, feature: "glossary" },
     { href: `/${locale}/rights`, label: dict.nav.rights, feature: "rights" },
+    { href: `/${locale}/privacy`, label: dict.privacy.title, feature: "privacy" },
   ];
   const links = allLinks.filter((link) => link.feature === null || hasFeature(locale, link.feature));
 

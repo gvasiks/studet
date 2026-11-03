@@ -13,10 +13,8 @@ export const dynamic = "force-dynamic";
 // только там, где они открыты у страны и написаны на языке адреса
 // (hasFeature): иначе карта сайта звала бы поисковик на страницу «не
 // найдено». Карточка программы — только под адресами своей страны.
-// Политики конфиденциальности здесь нет намеренно: ссылка на неё в подвале
-// и строка в карте сайта добавляются при публикации, когда владелец
-// утвердит текст и задаст оператора данных (docs/PRIVACY-CHECKLIST.md,
-// раздел 4).
+// Политика конфиденциальности — с 2026-11-03, вместе со ссылкой в подвале
+// (решение владельца; раньше обе ждали публикации).
 const SECTIONS: { path: string; feature?: Feature }[] = [
   { path: "" },
   { path: "/programmes" },
@@ -24,6 +22,7 @@ const SECTIONS: { path: string; feature?: Feature }[] = [
   { path: "/match", feature: "match" },
   { path: "/glossary", feature: "glossary" },
   { path: "/rights", feature: "rights" },
+  { path: "/privacy", feature: "privacy" },
 ];
 
 function entry(path: string, locale: Locale) {
