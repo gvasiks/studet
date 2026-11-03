@@ -265,7 +265,6 @@
   },
   "survey": {
     "title": "What fits you?",
-    "intro": "A few quick questions. Nothing is saved anywhere.",
     "stepLabel": "Step",
     "of": "of",
     "back": "Back",

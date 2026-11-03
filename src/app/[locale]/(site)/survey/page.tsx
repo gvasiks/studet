@@ -11,10 +11,12 @@ export async function generateMetadata({ params }: PageProps<"/[locale]/survey">
   if (!isLocale(locale)) notFound();
   if (!hasFeature(locale, "survey")) notFound();
 
+  // Своего описания нет: вводную строку под заголовком убрали (владелец,
+  // 2026-11-03), для поиска — описание сайта с главной.
   const dict = await getDictionary(locale);
   return {
     title: dict.survey.title,
-    description: dict.survey.intro,
+    description: dict.home.description,
     alternates: buildAlternates("/survey", locale),
   };
 }

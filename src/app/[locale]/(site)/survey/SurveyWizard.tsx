@@ -171,7 +171,6 @@ function SurveyWizardForm({ locale, dict }: { locale: Locale; dict: Dictionary }
         <header className="flex flex-wrap items-start justify-between gap-x-6 gap-y-3">
           <div className="min-w-0">
             <h1 className="text-3xl font-bold tracking-tighter text-zinc-900 sm:text-4xl">{dict.survey.title}</h1>
-            <p className="mt-3 max-w-[58ch] text-lg leading-relaxed text-zinc-600">{dict.survey.intro}</p>
           </div>
           {/* Вторая дверь: «я уже знаю, что ищу». Раньше была подчёркнутой
               серой строчкой в углу — то есть почти невидимой. Это не сноска,

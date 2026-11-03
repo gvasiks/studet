@@ -265,7 +265,6 @@
   },
   "survey": {
     "title": "Õppekavade valiku küsitlus",
-    "intro": "Mõned lühikesed küsimused. Vastuseid ei salvestata.",
     "stepLabel": "Samm",
     "of": "/",
     "back": "Tagasi",
