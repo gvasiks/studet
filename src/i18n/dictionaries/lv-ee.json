@@ -274,7 +274,7 @@
         "title": "Saglabātās programmas",
         "body": [
           "Ar zvaigznīti atzīmēto programmu saraksts glabājas tikai apmeklētāja pārlūkā (localStorage). To var dzēst, iztīrot vietnes datus pārlūka iestatījumos. Šī glabāšana ir vajadzīga funkcijai, ko apmeklētājs izmanto pēc paša izvēles.",
-          "Atverot saglabāto programmu sarakstu, pārlūks pieprasa šo programmu datus no mūsu datubāzes (Supabase). Pieprasījumā ir programmu identifikatori; tāpat kā jebkurš apmeklējums, tas nonāk pakalpojuma sniedzēja tehniskajos žurnālos. Mēs sarakstu neglabājam un nesaistām to ar personu."
+          "Atverot saglabāto programmu sarakstu, pārlūks pieprasa šo programmu datus no mūsu datubāzes. Pieprasījumā ir programmu identifikatori; tāpat kā jebkurš apmeklējums, tas nonāk pakalpojuma sniedzēja tehniskajos žurnālos. Mēs sarakstu neglabājam un nesaistām to ar personu."
         ]
       },
       {
@@ -318,7 +318,7 @@
         "body": [
           "Mēs nepārdodam datus un nerādām reklāmu. Datus apstrādā tikai mūsu pakalpojumu sniedzēji (apstrādātāji), un tikai mūsu uzdevumā:",
           "- hostinga pakalpojuma sniedzējs Contabo GmbH, Vācija (vietnes darbība; serveris atrodas Eiropas Savienībā);",
-          "- Supabase (datubāze ar serveriem Eiropas Savienībā; e-pasta adreses, ja tās ir iesniegtas);",
+          "- datubāzes pakalpojuma sniedzējs (serveri Eiropas Savienībā; e-pasta adreses, ja tās ir iesniegtas);",
           "- PostHog (lietošanas statistika, serveri Eiropas Savienībā);",
           "- Resend (e-pastu nosūtīšana).",
           "Mums adresētā e-pasta sarakste glabājas Gmail pastkastē. Šo pakalpojumu Google sniedz pēc saviem noteikumiem un privātuma politikas (policies.google.com/privacy) kā patstāvīgs pārzinis, nevis mūsu uzdevumā: datu apstrādes līguma ar Google mums nav. Sarakste var tikt glabāta arī ārpus Eiropas Ekonomikas zonas.",

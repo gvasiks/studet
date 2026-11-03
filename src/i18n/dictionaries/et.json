@@ -870,7 +870,7 @@
         "title": "Salvestatud õppekavad",
         "body": [
           "Tähega märgitud õppekavade loend on ainult külastaja brauseris (localStorage). Selle saab kustutada, tühjendades brauseri seadetes saidi andmed. See säilitamine on vajalik funktsiooni jaoks, mida külastaja kasutab omal valikul.",
-          "Salvestatud õppekavade loendi avamisel pärib brauser nende õppekavade andmed meie andmebaasist (Supabase). Päringus on õppekavade identifikaatorid; nagu iga külastus, jõuab see teenusepakkuja tehnilistesse logidesse. Me loendit ei säilita ega seo seda isikuga."
+          "Salvestatud õppekavade loendi avamisel pärib brauser nende õppekavade andmed meie andmebaasist. Päringus on õppekavade identifikaatorid; nagu iga külastus, jõuab see teenusepakkuja tehnilistesse logidesse. Me loendit ei säilita ega seo seda isikuga."
         ]
       },
       {
@@ -914,7 +914,7 @@
         "body": [
           "Me ei müü andmeid ega näita reklaami. Andmeid töötlevad ainult meie teenusepakkujad (volitatud töötlejad) ja ainult meie ülesandel:",
           "- majutusteenuse pakkuja Contabo GmbH, Saksamaa (saidi toimimine; server asub Euroopa Liidus);",
-          "- Supabase (andmebaas serveritega Euroopa Liidus; e-posti aadressid, kui need on esitatud);",
+          "- andmebaasiteenuse osutaja (serverid Euroopa Liidus; e-posti aadressid, kui need on esitatud);",
           "- PostHog (kasutusstatistika, serverid Euroopa Liidus);",
           "- Resend (e-kirjade saatmine).",
           "Meile saadetud kirjavahetus on Gmaili postkastis. Seda teenust osutab Google oma tingimuste ja privaatsuspoliitika (policies.google.com/privacy) alusel iseseisva vastutava töötlejana, mitte meie ülesandel: isikuandmete töötlemise lepingut meil Google'iga ei ole. Kirjavahetust võidakse säilitada ka väljaspool Euroopa Majanduspiirkonda.",

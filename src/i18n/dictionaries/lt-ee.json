@@ -277,7 +277,7 @@
         "title": "Išsaugotos programos",
         "body": [
           "Programų, kurias pažymite žvaigždute, sąrašas saugomas tik jūsų naršyklėje (localStorage). Jį galite ištrinti išvalę svetainės duomenis naršyklės nustatymuose. Šis saugojimas reikalingas funkcijai, kuria naudotis pasirenkate patys.",
-          "Kai atidarote sąrašą, naršyklė paprašo šių programų duomenų iš mūsų duomenų bazės (Supabase). Užklausoje yra programų identifikatoriai; kaip ir bet kuris apsilankymas, ji patenka į paslaugų teikėjo techninius žurnalus. Sąrašo nesaugome ir nesiejame jo su asmeniu."
+          "Kai atidarote sąrašą, naršyklė paprašo šių programų duomenų iš mūsų duomenų bazės. Užklausoje yra programų identifikatoriai; kaip ir bet kuris apsilankymas, ji patenka į paslaugų teikėjo techninius žurnalus. Sąrašo nesaugome ir nesiejame jo su asmeniu."
         ]
       },
       {
@@ -321,7 +321,7 @@
         "body": [
           "Duomenų neparduodame ir nerodome reklamos. Duomenis tvarko tik mūsų paslaugų teikėjai (duomenų tvarkytojai) ir tik mūsų pavedimu:",
           "- prieglobos paslaugų teikėjas Contabo GmbH, Vokietija (svetainės veikimas; serveris yra Europos Sąjungoje);",
-          "- „Supabase“ (duomenų bazė, serveriai Europos Sąjungoje; el. pašto adresai, jei juos pateikiate);",
+          "- duomenų bazės paslaugų teikėjas (serveriai Europos Sąjungoje; el. pašto adresai, jei juos pateikiate);",
           "- „PostHog“ (naudojimo statistika, serveriai Europos Sąjungoje);",
           "- „Resend“ (el. laiškų siuntimas).",
           "Jei mums rašote, susirašinėjimas saugomas „Gmail“ pašto dėžutėje. Šią paslaugą „Google“ teikia pagal savo sąlygas ir privatumo politiką (policies.google.com/privacy) kaip savarankiškas duomenų valdytojas, o ne mūsų pavedimu: duomenų tvarkymo sutarties su „Google“ neturime. Susirašinėjimas gali būti saugomas ir už Europos ekonominės erdvės ribų.",

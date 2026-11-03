@@ -329,7 +329,7 @@
         "title": "Saved programmes",
         "body": [
           "The list of programmes you mark with a star is kept only in your browser (localStorage). You can delete it by clearing the site's data in your browser settings. This storage is needed for a feature you choose to use.",
-          "When you open the list, your browser requests the data of those programmes from our database (Supabase). The request contains the programmes' identifiers; like any visit, it ends up in the provider's technical logs. We do not store the list and do not link it to a person."
+          "When you open the list, your browser requests the data of those programmes from our database. The request contains the programmes' identifiers; like any visit, it ends up in the provider's technical logs. We do not store the list and do not link it to a person."
         ]
       },
       {
@@ -373,7 +373,7 @@
         "body": [
           "We do not sell data and we show no advertising. Data is processed only by our service providers (processors), and only on our behalf:",
           "- the hosting provider Contabo GmbH, Germany (running the site; the server is in the European Union);",
-          "- Supabase (database with servers in the European Union; e-mail addresses, if you submit them);",
+          "- the database provider (servers in the European Union; e-mail addresses, if you submit them);",
           "- PostHog (usage statistics, servers in the European Union);",
           "- Resend (sending e-mail).",
           "If you write to us, the correspondence is kept in a Gmail mailbox. Google provides this service under its own terms and privacy policy (policies.google.com/privacy) as an independent controller, not on our behalf: we have no data processing agreement with Google. The correspondence may also be stored outside the European Economic Area.",
