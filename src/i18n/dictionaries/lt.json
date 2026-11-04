@@ -200,7 +200,7 @@
   "nav": {
     "catalog": "Katalogas",
     "survey": "Anketa",
-    "match": "Kur galima stoti",
+    "match": "Reikalavimų patikra",
     "glossary": "Žodynėlis",
     "rights": "Jūsų teisės",
     "menu": "Meniu",
@@ -553,7 +553,7 @@
   },
   "match": {
     "clearResults": "Išvalyti rezultatus",
-    "title": "Kur galima stoti?",
+    "title": "Atitiktis priėmimo reikalavimams",
     "intro": "Įveskite savo valstybinių brandos egzaminų rezultatus — parodysime, kurių programų konkursinį balą jau galima apskaičiuoti ir kurių egzaminų dar trūksta.",
     "privacy": "Rezultatai skaičiuojami jūsų naršyklėje ir nesiunčiami į serverį. Jie saugomi tik šiame skirtuke, kol jį uždarysite.",
     "examsHeading": "Jūsų egzaminai",
@@ -889,7 +889,7 @@
         "title": "Trumpai",
         "body": [
           "- Svetainėje nėra naudotojų paskyrų ir nereikia registruotis.",
-          "- Egzaminų rezultatai, kuriuos įvedate skaičiuoklėje arba skiltyje „Kur galima stoti“, skaičiuojami jūsų naršyklėje. Jie nesiunčiami į mūsų serverį; kad nedingtų atidarius programos puslapį, jie saugomi tik tame naršyklės skirtuke, kol jį uždarysite.",
+          "- Egzaminų rezultatai, kuriuos įvedate skaičiuoklėje arba skiltyje „Atitiktis priėmimo reikalavimams“, skaičiuojami jūsų naršyklėje. Jie nesiunčiami į mūsų serverį; kad nedingtų atidarius programos puslapį, jie saugomi tik tame naršyklės skirtuke, kol jį uždarysite.",
           "- Nenaudojame sekimo slapukų ir nerodome reklamos.",
           "- Jūsų sąrašas (žvaigždute pažymėtos programos) saugomas tik jūsų įrenginyje."
         ]
@@ -914,7 +914,7 @@
         "id": "survey",
         "title": "Anketa ir skaičiuoklės",
         "body": [
-          "- Egzaminų rezultatai skaičiuoklėje ir skiltyje „Kur galima stoti“ skaičiuojami tik jūsų naršyklėje. Jie nesiunčiami į serverį ir neįrašomi į puslapio adresą. Jie saugomi naršyklės seanso saugykloje (sessionStorage) tik tame skirtuke ir ištrinami, kai uždarote skirtuką arba paspaudžiate „Išvalyti rezultatus“.",
+          "- Egzaminų rezultatai skaičiuoklėje ir skiltyje „Atitiktis priėmimo reikalavimams“ skaičiuojami tik jūsų naršyklėje. Jie nesiunčiami į serverį ir neįrašomi į puslapio adresą. Jie saugomi naršyklės seanso saugykloje (sessionStorage) tik tame skirtuke ir ištrinami, kai uždarote skirtuką arba paspaudžiate „Išvalyti rezultatus“.",
           "- Anketoje pasirinkti filtrai (dominanti sritis, studijų lygmuo, miestas, studijų kalba ir forma) įrašomi į puslapio adresą, kad būtų galima parodyti programų sąrašą. Kartu su apsilankymu jie patenka į techninius žurnalus (žr. aukščiau), tačiau jų nesiejame su asmeniu. Anketos atsakymai apie egzaminus į serverį nesiunčiami."
         ]
       },

@@ -295,7 +295,7 @@
         "title": "In short",
         "body": [
           "- The site has no user accounts and needs no registration.",
-          "- Exam results that you enter in the calculator or in “Where can you apply?” are calculated in your browser. They are not sent to our server; so that they are not lost when you open a programme page, they are kept only in that browser tab until you close it.",
+          "- Exam results that you enter in the calculator or in “Admission requirements check” are calculated in your browser. They are not sent to our server; so that they are not lost when you open a programme page, they are kept only in that browser tab until you close it.",
           "- We do not use tracking cookies and we show no advertising.",
           "- Your favourites (the stars on programmes) are stored on your device only."
         ]
@@ -320,7 +320,7 @@
         "id": "survey",
         "title": "The survey and calculators",
         "body": [
-          "- Exam results in the calculator and in “Where can you apply?” are calculated only in your browser. They are not sent to a server and not put into the page address. They are kept in the browser's session storage (sessionStorage) for that tab only and are deleted when you close the tab or press “Clear results”.",
+          "- Exam results in the calculator and in “Admission requirements check” are calculated only in your browser. They are not sent to a server and not put into the page address. They are kept in the browser's session storage (sessionStorage) for that tab only and are deleted when you close the tab or press “Clear results”.",
           "- The filters you choose in the survey (field of interest, level of study, city, language and mode of study) are put into the page address so the programme list can be shown. Together with the visit they end up in the technical logs (see above), but we do not link them to a person. Exam answers from the survey are not sent to the server."
         ]
       },

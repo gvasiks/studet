@@ -91,7 +91,7 @@ npm run dev                 # http://localhost:3000
 | `/programmes/[вуз]/[программа]` | Карточка программы | Нет |
 | `…/calculator` | Калькулятор конкурсного балла | Да (HeroUI) |
 | `/survey` | Анкета | Да (HeroUI) |
-| `/match` | «Kur var iestāties»: ввёл экзамены — увидел, где считается балл | Да (HeroUI) |
+| `/match` | «Atbilstība uzņemšanas prasībām» (в меню — «Prasību pārbaude», с 2026-11-04): ввёл экзамены — увидел, где считается балл | Да (HeroUI) |
 | `/favorites` | «Saglabātās»: сохранённые и сравнение (только в браузере) | Да |
 | `/glossary`, `/rights`, `/privacy` | Словарь, права, политика — у каждой страны свои | Нет |
 | `/verification` | Внутренняя очередь неподтверждённых фактов — **закрыта с 2026-10-24** (решение владельца), отдаёт 404 | Нет |
@@ -126,11 +126,11 @@ Ventspils и РТУ**; у остальных честное «формула н�
       недоступна, счётчика нет, страница не падает.
 - [ ] Кнопки «Skatīt katalogu» / «Aizpildīt aptauju» ведут на `/programmes`
       и `/survey`.
-- [ ] Шапка от 1280 px: Katalogs · Aptauja · Kur var iestāties · Saglabātās ·
+- [ ] Шапка от 1280 px: Katalogs · Aptauja · Prasību pārbaude · Saglabātās ·
       Vārdnīca · Tiesības в одну строку, текущий раздел подсвечен. Уже —
       кнопка «Izvēlne» (☰): открывается кликом и Enter, закрывается Esc,
       кликом мимо и выбором пункта.
-- [ ] Под кнопками — карточки «Kur var iestāties», «Vārdnīca», «Tiesības».
+- [ ] Под кнопками — карточки «Prasību pārbaude», «Vārdnīca», «Tiesības» (с 2026-11-04; заголовок главной «Kur var iestāties?» остаётся).
       Выбора страны в подвале главной нет (решение 2026-10-11).
 - [ ] На `/en-lv` — янтарная полоса «This currently covers Latvia's own
       admission system...»; на `/lv` её нет.
@@ -229,7 +229,7 @@ Ventspils и РТУ**; у остальных честное «формула н�
 - [ ] **(с 2026-10-25)** iPhone: нажатие на поле балла не увеличивает страницу.
 - [ ] Только клавиатурой: Tab к полю, цифры, Tab в группу уровней, пробел —
       балл появляется. Экранный диктор (NVDA, если есть) произносит итог.
-- [ ] **(с 2026-11-04)** Экзамены, введённые в «Kur var iestāties», уже
+- [ ] **(с 2026-11-04)** Экзамены, введённые в «Prasību pārbaude», уже
       стоят в полях калькулятора; «Notīrīt rezultātus» под полями стирает и
       экзамены, и вступительные испытания.
 - [ ] Несуществующий адрес (`/lv/programmes/lu/nav-tadas`) — «Lapa nav
@@ -357,7 +357,7 @@ Supabase Studio (вид `verification_queue`) или в отчётах `docs/che
       stoti»; карточек словаря и прав нет — этих разделов у Литвы ещё нет.
 - [ ] `/lt/programmes` — вкладки «Universitetinės 488 · Koleginės 514 ·
       Vientisosios 18»; в фильтре литовские города и языки (литовский,
-      английский, русский). В меню «Katalogas», «Anketa», «Kur galima stoti» и «Išsaugotos».
+      английский, русский). В меню «Katalogas», «Anketa», «Reikalavimų patikra» (с 2026-11-04) и «Išsaugotos».
 - [ ] В фильтре `/lt/programmes` нет платы и «только бюджет» — под них нет
       данных. Адрес `/lt/programmes?budget=1&fee=3000` показывает полный
       каталог (1020), а не пустой список. У `/lv/programmes` оба фильтра на

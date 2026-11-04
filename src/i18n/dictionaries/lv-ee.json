@@ -240,7 +240,7 @@
         "title": "Īsumā",
         "body": [
           "- Vietnei nav lietotāju kontu, un reģistrācija nav vajadzīga.",
-          "- Kalkulatorā vai sadaļā «Kurās programmās var iestāties» ievadītie eksāmenu rezultāti tiek aprēķināti apmeklētāja pārlūkā. Tie netiek nosūtīti uz mūsu serveri; lai tie nepazustu, atverot programmas lapu, tie glabājas tikai šajā pārlūka cilnē, līdz tā tiek aizvērta.",
+          "- Kalkulatorā vai sadaļā «Atbilstība uzņemšanas prasībām» ievadītie eksāmenu rezultāti tiek aprēķināti apmeklētāja pārlūkā. Tie netiek nosūtīti uz mūsu serveri; lai tie nepazustu, atverot programmas lapu, tie glabājas tikai šajā pārlūka cilnē, līdz tā tiek aizvērta.",
           "- Mēs neizmantojam sīkdatnes izsekošanai un nerādām reklāmu.",
           "- Saglabāto programmu saraksts (zvaigznītes pie programmām) glabājas tikai apmeklētāja ierīcē."
         ]
@@ -265,7 +265,7 @@
         "id": "survey",
         "title": "Aptauja un kalkulatori",
         "body": [
-          "- Eksāmenu rezultāti kalkulatorā un sadaļā «Kurās programmās var iestāties» tiek aprēķināti tikai apmeklētāja pārlūkā. Tie netiek sūtīti uz serveri un netiek ielikti lapas adresē. Tie glabājas pārlūka sesijas krātuvē (sessionStorage) tikai šajā cilnē un tiek dzēsti, kad cilne tiek aizvērta vai tiek nospiesta poga «Notīrīt rezultātus».",
+          "- Eksāmenu rezultāti kalkulatorā un sadaļā «Atbilstība uzņemšanas prasībām» tiek aprēķināti tikai apmeklētāja pārlūkā. Tie netiek sūtīti uz serveri un netiek ielikti lapas adresē. Tie glabājas pārlūka sesijas krātuvē (sessionStorage) tikai šajā cilnē un tiek dzēsti, kad cilne tiek aizvērta vai tiek nospiesta poga «Notīrīt rezultātus».",
           "- Aptaujā izvēlētie filtri (interešu joma, studiju līmenis, pilsēta, studiju valoda) tiek ielikti lapas adresē, lai varētu parādīt programmu sarakstu. Līdz ar apmeklējumu tie nonāk tehniskajos žurnālos (skat. iepriekš), bet mēs tos nesaistām ar personu. Eksāmenu atbildes aptaujā uz serveri netiek nosūtītas."
         ]
       },
