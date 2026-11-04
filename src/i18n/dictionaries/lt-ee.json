@@ -243,7 +243,7 @@
         "title": "Trumpai",
         "body": [
           "- Svetainėje nėra naudotojų paskyrų ir nereikia registruotis.",
-          "- Egzaminų rezultatai, kuriuos įvedate skaičiuoklėje arba skiltyje „Kur galima stoti“, skaičiuojami jūsų naršyklėje. Jie nesiunčiami į mūsų serverį ir niekur nesaugomi.",
+          "- Egzaminų rezultatai, kuriuos įvedate skaičiuoklėje arba skiltyje „Kur galima stoti“, skaičiuojami jūsų naršyklėje. Jie nesiunčiami į mūsų serverį; kad nedingtų atidarius programos puslapį, jie saugomi tik tame naršyklės skirtuke, kol jį uždarysite.",
           "- Nenaudojame sekimo slapukų ir nerodome reklamos.",
           "- Jūsų sąrašas (žvaigždute pažymėtos programos) saugomas tik jūsų įrenginyje."
         ]
@@ -268,7 +268,7 @@
         "id": "survey",
         "title": "Anketa ir skaičiuoklės",
         "body": [
-          "- Egzaminų rezultatai skaičiuoklėje ir skiltyje „Kur galima stoti“ skaičiuojami tik jūsų naršyklėje. Jie nesiunčiami į serverį, nesaugomi ir neįrašomi į puslapio adresą.",
+          "- Egzaminų rezultatai skaičiuoklėje ir skiltyje „Kur galima stoti“ skaičiuojami tik jūsų naršyklėje. Jie nesiunčiami į serverį ir neįrašomi į puslapio adresą. Jie saugomi naršyklės seanso saugykloje (sessionStorage) tik tame skirtuke ir ištrinami, kai uždarote skirtuką arba paspaudžiate „Išvalyti rezultatus“.",
           "- Anketoje pasirinkti filtrai (dominanti sritis, studijų lygmuo, miestas, studijų kalba) įrašomi į puslapio adresą, kad būtų galima parodyti programų sąrašą. Kartu su apsilankymu jie patenka į techninius žurnalus (žr. aukščiau), tačiau jų nesiejame su asmeniu. Anketos atsakymai apie egzaminus į serverį nesiunčiami."
         ]
       },
@@ -284,7 +284,7 @@
         "id": "cookies",
         "title": "Slapukai",
         "body": [
-          "Slapukų sekimui nenaudojame. Svetainė jūsų naršyklėje saugo tik programų sąrašą (žr. aukščiau)."
+          "Slapukų sekimui nenaudojame. Svetainė jūsų naršyklėje saugo tik programų sąrašą ir, kol neuždarote skirtuko, įvestus egzaminų rezultatus (žr. aukščiau)."
         ]
       },
       {
@@ -312,7 +312,7 @@
         "title": "Moksleiviai ir jaunimas",
         "body": [
           "Svetainė daugiausia skirta moksleiviams ir jaunimui. Estijoje vaikas pats gali duoti sutikimą informacinės visuomenės paslaugai nuo 13 metų; jaunesniam vaikui reikia teisėto atstovo sutikimo (Estijos asmens duomenų apsaugos įstatymo 8 straipsnis; Bendrojo duomenų apsaugos reglamento 8 straipsnis).",
-          "Egzaminų rezultatų, kuriuos įvedate svetainėje, nesaugome ir nesiunčiame."
+          "Egzaminų rezultatų, kuriuos įvedate svetainėje, nesaugome savo serveryje ir niekam nesiunčiame: jie lieka tik jūsų naršyklės skirtuke, kol jį uždarysite."
         ]
       },
       {

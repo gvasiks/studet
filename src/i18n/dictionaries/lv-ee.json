@@ -240,7 +240,7 @@
         "title": "Īsumā",
         "body": [
           "- Vietnei nav lietotāju kontu, un reģistrācija nav vajadzīga.",
-          "- Kalkulatorā vai sadaļā «Kurās programmās var iestāties» ievadītie eksāmenu rezultāti tiek aprēķināti apmeklētāja pārlūkā. Tie netiek nosūtīti uz mūsu serveri un nekur netiek saglabāti.",
+          "- Kalkulatorā vai sadaļā «Kurās programmās var iestāties» ievadītie eksāmenu rezultāti tiek aprēķināti apmeklētāja pārlūkā. Tie netiek nosūtīti uz mūsu serveri; lai tie nepazustu, atverot programmas lapu, tie glabājas tikai šajā pārlūka cilnē, līdz tā tiek aizvērta.",
           "- Mēs neizmantojam sīkdatnes izsekošanai un nerādām reklāmu.",
           "- Saglabāto programmu saraksts (zvaigznītes pie programmām) glabājas tikai apmeklētāja ierīcē."
         ]
@@ -265,7 +265,7 @@
         "id": "survey",
         "title": "Aptauja un kalkulatori",
         "body": [
-          "- Eksāmenu rezultāti kalkulatorā un sadaļā «Kurās programmās var iestāties» tiek aprēķināti tikai apmeklētāja pārlūkā. Tie netiek sūtīti uz serveri, netiek saglabāti un netiek ielikti lapas adresē.",
+          "- Eksāmenu rezultāti kalkulatorā un sadaļā «Kurās programmās var iestāties» tiek aprēķināti tikai apmeklētāja pārlūkā. Tie netiek sūtīti uz serveri un netiek ielikti lapas adresē. Tie glabājas pārlūka sesijas krātuvē (sessionStorage) tikai šajā cilnē un tiek dzēsti, kad cilne tiek aizvērta vai tiek nospiesta poga «Notīrīt rezultātus».",
           "- Aptaujā izvēlētie filtri (interešu joma, studiju līmenis, pilsēta, studiju valoda) tiek ielikti lapas adresē, lai varētu parādīt programmu sarakstu. Līdz ar apmeklējumu tie nonāk tehniskajos žurnālos (skat. iepriekš), bet mēs tos nesaistām ar personu. Eksāmenu atbildes aptaujā uz serveri netiek nosūtītas."
         ]
       },
@@ -281,7 +281,7 @@
         "id": "cookies",
         "title": "Sīkdatnes",
         "body": [
-          "Mēs neizmantojam sīkdatnes izsekošanai. Vietne pārlūkā glabā tikai saglabāto programmu sarakstu (skat. iepriekš)."
+          "Mēs neizmantojam sīkdatnes izsekošanai. Vietne pārlūkā glabā tikai saglabāto programmu sarakstu un — līdz cilnes aizvēršanai — ievadītos eksāmenu rezultātus (skat. iepriekš)."
         ]
       },
       {
@@ -309,7 +309,7 @@
         "title": "Skolēni un jaunieši",
         "body": [
           "Vietnes auditorija galvenokārt ir skolēni un jaunieši. Igaunijā bērns pats var dot piekrišanu informācijas sabiedrības pakalpojumam no 13 gadu vecuma; jaunākam bērnam vajadzīga likumiskā pārstāvja piekrišana (Igaunijas Personas datu aizsardzības likuma 8. pants; Vispārīgās datu aizsardzības regulas 8. pants).",
-          "Vietnē ievadītos eksāmenu rezultātus mēs neuzglabājam un nenosūtām."
+          "Vietnē ievadītos eksāmenu rezultātus mēs neuzglabājam savā serverī un nevienam nenosūtām: tie paliek tikai apmeklētāja pārlūka cilnē, līdz tā tiek aizvērta."
         ]
       },
       {

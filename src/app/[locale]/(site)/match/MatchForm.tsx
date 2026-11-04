@@ -1,9 +1,9 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { useMemo } from "react";
 import { Input } from "@heroui/react";
-import { languageOf, type Locale } from "@/i18n/config";
+import { countryOf, languageOf, type Locale } from "@/i18n/config";
 import type { Dictionary } from "@/i18n/dictionaries";
 import { parsePercent } from "@/lib/exam-input";
 import { lineFormula, type ExamLevel, type ExamResult } from "@/lib/formula";
@@ -18,12 +18,15 @@ import { Providers } from "@/app/[locale]/providers";
 import { formatPoints } from "@/lib/numbers";
 import { enumLabel } from "@/lib/names";
 import { FIELD_TEXT, HEROUI_FIELD_CLASSES } from "@/lib/field-text";
+import { isLvExamInput, useSessionExams } from "@/lib/exam-session";
+import { ClearExamsButton } from "@/components/ClearExamsButton";
 
 const LEVELS: ExamLevel[] = ["augstakais", "optimalais", "vispaarigais"];
 
 // Уровень экзамена не выбирается за человека (решение владельца 2026-10-16),
 // как и в калькуляторе. null — не выбран; без уровня экзамен не считается.
 type SubjectInput = { percent: string; level: ExamLevel | null };
+const EMPTY_INPUT: SubjectInput = { percent: "", level: null };
 
 // Порядок групп на экране после "можно посчитать" и "атбилст прасибам"
 // (эта — не MatchStatus, у неё свой блок и в счётчиках, и в результатах,
@@ -66,14 +69,14 @@ function MatchFormForm({
   levelCoefficients: Record<ExamLevel, number>;
   isFixture: boolean;
 }) {
-  const subjects = Object.keys(dict.survey.exams.subjects);
+  const subjects = useMemo(() => Object.keys(dict.survey.exams.subjects), [dict]);
   const t = dict.match;
 
-  // Всё состояние — только в памяти этой страницы: ни в URL, ни в
-  // localStorage, ни на сервер (экзамены несовершеннолетних, CLAUDE.md)
-  const [inputs, setInputs] = useState<Record<string, SubjectInput>>(() =>
-    Object.fromEntries(subjects.map((subject) => [subject, { percent: "", level: null }])),
-  );
+  // Ввод — только в этой вкладке браузера (exam-session.ts): ни в URL, ни
+  // на сервер (экзамены несовершеннолетних, CLAUDE.md). Вкладка помнит его,
+  // чтобы возврат со страницы программы не стирал введённое.
+  const [inputs, setInputs, clearInputs] = useSessionExams(countryOf(locale), subjects, EMPTY_INPUT, isLvExamInput);
+  const anyFilled = subjects.some((subject) => inputs[subject].percent !== "" || inputs[subject].level !== null);
 
   // Разбор — общий с калькулятором (exam-input.ts): «72,5» и «72.5» — одно и
   // то же, всё вне 0–100 — ошибка, которую видно под полем. Раньше такое
@@ -184,10 +187,13 @@ function MatchFormForm({
           })}
         </div>
 
-        <p className="mt-5 flex items-start gap-2 border-t border-zinc-100 pt-4 text-xs leading-relaxed text-zinc-600">
-          <InfoIcon size={14} className="mt-px shrink-0 text-zinc-400" />
-          {t.privacy}
-        </p>
+        <div className="mt-5 flex flex-wrap items-start justify-between gap-3 border-t border-zinc-100 pt-4">
+          <p className="flex max-w-[65ch] items-start gap-2 text-xs leading-relaxed text-zinc-600">
+            <InfoIcon size={14} className="mt-px shrink-0 text-zinc-400" />
+            {t.privacy}
+          </p>
+          {anyFilled && <ClearExamsButton label={t.clearResults} onClear={clearInputs} />}
+        </div>
       </section>
 
       {/* Сводка — счётчики по группам: одной строкой прозой её не прочитать,

@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from "react";
 import { Input, Radio, RadioGroup } from "@heroui/react";
-import { languageOf, type Locale } from "@/i18n/config";
+import { countryOf, languageOf, type Locale } from "@/i18n/config";
 import type { Dictionary } from "@/i18n/dictionaries";
 import { parseNonNegative, parsePercent } from "@/lib/exam-input";
 import {
@@ -21,6 +21,8 @@ import { useTrackOnce } from "@/components/Analytics";
 import { Providers } from "@/app/[locale]/providers";
 import { formatPoints } from "@/lib/numbers";
 import { HEROUI_FIELD_CLASSES } from "@/lib/field-text";
+import { isLvExamInput, useSessionExams } from "@/lib/exam-session";
+import { ClearExamsButton } from "@/components/ClearExamsButton";
 
 const LEVELS: ExamLevel[] = ["augstakais", "optimalais", "vispaarigais"];
 
@@ -28,6 +30,7 @@ const LEVELS: ExamLevel[] = ["augstakais", "optimalais", "vispaarigais"];
 // раньше по умолчанию стоял «augstākais» (×1,00), и кто сдавал
 // оптимальный уровень и не переключил, видел завышенный балл. null — не выбран.
 type SubjectInput = { percent: string; level: ExamLevel | null };
+const EMPTY_INPUT: SubjectInput = { percent: "", level: null };
 
 function CalculatorFormForm({
   dict,
@@ -65,12 +68,16 @@ function CalculatorFormForm({
     [terms],
   );
 
-  const [inputs, setInputs] = useState<Record<string, SubjectInput>>(() =>
-    Object.fromEntries(subjects.map((subject) => [subject, { percent: "", level: null }])),
-  );
-  const [extraInputs, setExtraInputs] = useState<Record<string, string>>(() =>
-    Object.fromEntries(extraTerms.map((term) => [extraKey(term), ""])),
-  );
+  // Экзамены — общие с «Kur var iestāties» и живут во вкладке
+  // (exam-session.ts): перешёл на карточку программы и вернулся — ввод на
+  // месте. Вступительные испытания и аттестат у каждой программы свои,
+  // поэтому они — только в памяти этой страницы.
+  const [inputs, setInputs, clearInputs] = useSessionExams(countryOf(locale), subjects, EMPTY_INPUT, isLvExamInput);
+  const emptyExtras = useMemo(() => Object.fromEntries(extraTerms.map((term) => [extraKey(term), ""])), [extraTerms]);
+  const [extraInputs, setExtraInputs] = useState<Record<string, string>>(emptyExtras);
+  const anyFilled =
+    subjects.some((subject) => inputs[subject].percent !== "" || inputs[subject].level !== null) ||
+    Object.values(extraInputs).some((value) => value !== "");
 
   const parsedSubjects = subjects.map((subject) => ({ subject, parsed: parsePercent(inputs[subject].percent) }));
   const parsedExtras = extraTerms.map((term) => {
@@ -203,6 +210,18 @@ function CalculatorFormForm({
           );
         })}
       </div>
+
+      {anyFilled && (
+        <div className="mt-5">
+          <ClearExamsButton
+            label={dict.match.clearResults}
+            onClear={() => {
+              clearInputs();
+              setExtraInputs(emptyExtras);
+            }}
+          />
+        </div>
+      )}
 
       <div className="mt-8 rounded-xl bg-zinc-50 p-6">
         {/* Итог, подсказка «не хватает…» и предупреждение о пороге меняются

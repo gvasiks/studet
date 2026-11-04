@@ -240,7 +240,7 @@
         "title": "In short",
         "body": [
           "- The site has no user accounts and needs no registration.",
-          "- Exam results that you enter in the calculator or in “Where can you apply?” are calculated in your browser. They are not sent to our server and are not stored anywhere.",
+          "- Exam results that you enter in the calculator or in “Where can you apply?” are calculated in your browser. They are not sent to our server; so that they are not lost when you open a programme page, they are kept only in that browser tab until you close it.",
           "- We do not use tracking cookies and we show no advertising.",
           "- Your favourites (the stars on programmes) are stored on your device only."
         ]
@@ -265,7 +265,7 @@
         "id": "survey",
         "title": "The survey and calculators",
         "body": [
-          "- Exam results in the calculator and in “Where can you apply?” are calculated only in your browser. They are not sent to a server, not stored and not put into the page address.",
+          "- Exam results in the calculator and in “Where can you apply?” are calculated only in your browser. They are not sent to a server and not put into the page address. They are kept in the browser's session storage (sessionStorage) for that tab only and are deleted when you close the tab or press “Clear results”.",
           "- The filters you choose in the survey (field of interest, level of study, city, language of study) are put into the page address so the programme list can be shown. Together with the visit they end up in the technical logs (see above), but we do not link them to a person. Exam answers from the survey are not sent to the server."
         ]
       },
@@ -281,7 +281,7 @@
         "id": "cookies",
         "title": "Cookies",
         "body": [
-          "We do not use cookies for tracking. The site keeps only the favourites list in your browser (see above)."
+          "We do not use cookies for tracking. The site keeps in your browser only the favourites list and, until you close the tab, the exam results you entered (see above)."
         ]
       },
       {
@@ -309,7 +309,7 @@
         "title": "School pupils and young people",
         "body": [
           "The site is mainly for school pupils and young people. In Estonia a child can give consent to an information society service from the age of 13; for a younger child the consent of the child's legal representative is needed (Personal Data Protection Act, § 8; General Data Protection Regulation, Article 8).",
-          "We do not store or send the exam results you enter on the site."
+          "We do not store the exam results you enter on the site on our server and do not send them to anyone: they stay only in your browser tab until you close it."
         ]
       },
       {

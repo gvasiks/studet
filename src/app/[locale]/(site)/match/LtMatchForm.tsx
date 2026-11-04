@@ -3,7 +3,9 @@
 import { useMemo, useState } from "react";
 import Link from "next/link";
 import { Input, Radio, RadioGroup } from "@heroui/react";
-import { languageOf, type Locale } from "@/i18n/config";
+import { countryOf, languageOf, type Locale } from "@/i18n/config";
+import { isLtExamInput, useSessionExams } from "@/lib/exam-session";
+import { ClearExamsButton } from "@/components/ClearExamsButton";
 import type { Dictionary } from "@/i18n/dictionaries";
 import { LtScoreBreakdown } from "@/components/LtScoreBreakdown";
 import { normalize } from "@/lib/catalog-view";
@@ -27,6 +29,7 @@ const TWO_COURSE_SUBJECTS = new Set(["lithuanian", "mathematics"]);
 const VISIBLE_PROGRAMMES = 8;
 
 type SubjectInput = { score: string; course: "A" | "B" };
+const EMPTY_INPUT: SubjectInput = { score: "", course: "A" };
 // Карточка результата: программы, у которых при введённых оценках балл и его
 // разбор совпали полностью.
 type Scored = {
@@ -44,8 +47,8 @@ type Scored = {
 // одинаковым составом балла: сотни программ получают один и тот же балл, и
 // показывать их одинаковыми строками незачем.
 //
-// Оценки живут только в памяти этой страницы: не в адресе, не в
-// localStorage и не на сервере (экзамены несовершеннолетних, CLAUDE.md).
+// Оценки живут только в этой вкладке браузера (exam-session.ts): не в
+// адресе и не на сервере (экзамены несовершеннолетних, CLAUDE.md).
 function LtMatchFormForm({
   dict,
   locale,
@@ -67,9 +70,8 @@ function LtMatchFormForm({
   const calculator = dict.ltCalculator;
   const language = languageOf(locale);
   const subjects = useMemo(() => ltInputSubjects(groups.flatMap((group) => group.components)), [groups]);
-  const [inputs, setInputs] = useState<Record<string, SubjectInput>>(() =>
-    Object.fromEntries(subjects.map((subject) => [subject, { score: "", course: "A" as const }])),
-  );
+  const [inputs, setInputs, clearInputs] = useSessionExams(countryOf(locale), subjects, EMPTY_INPUT, isLtExamInput);
+  const anyFilled = subjects.some((subject) => inputs[subject].score !== "");
   const [query, setQuery] = useState("");
   const [expanded, setExpanded] = useState<Record<string, boolean>>({});
 
@@ -205,9 +207,12 @@ function LtMatchFormForm({
             );
           })}
         </div>
-        <p className="mt-4 text-xs leading-relaxed text-zinc-600">
-          {text.courseHint} {dict.match.privacy}
-        </p>
+        <div className="mt-4 flex flex-wrap items-start justify-between gap-3">
+          <p className="max-w-[65ch] text-xs leading-relaxed text-zinc-600">
+            {text.courseHint} {dict.match.privacy}
+          </p>
+          {anyFilled && <ClearExamsButton label={dict.match.clearResults} onClear={clearInputs} />}
+        </div>
       </section>
 
       <section aria-labelledby="lt-match-results" className="mt-8">

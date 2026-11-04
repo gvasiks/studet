@@ -1,8 +1,8 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useMemo } from "react";
 import { Input, Radio, RadioGroup } from "@heroui/react";
-import { languageOf, type Locale } from "@/i18n/config";
+import { countryOf, languageOf, type Locale } from "@/i18n/config";
 import type { Dictionary } from "@/i18n/dictionaries";
 import { LtScoreBreakdown } from "@/components/LtScoreBreakdown";
 import { parsePercent } from "@/lib/exam-input";
@@ -12,6 +12,8 @@ import { formatDate } from "@/lib/dates";
 import { useTrackOnce } from "@/components/Analytics";
 import { Providers } from "@/app/[locale]/providers";
 import { HEROUI_FIELD_CLASSES } from "@/lib/field-text";
+import { isLtExamInput, useSessionExams } from "@/lib/exam-session";
+import { ClearExamsButton } from "@/components/ClearExamsButton";
 
 // Страница официального калькулятора LAMA BPO — туда ведём за
 // дополнительными баллами и за окончательным расчётом.
@@ -21,11 +23,13 @@ const OFFICIAL_CALCULATOR = "https://lamabpo.lt/pirmosios-pakopos-ir-vientisosio
 const TWO_COURSE_SUBJECTS = new Set(["lithuanian", "mathematics"]);
 
 type SubjectInput = { score: string; course: "A" | "B" };
+const EMPTY_INPUT: SubjectInput = { score: "", course: "A" };
 
 // Литовский расчёт балла. Формула общая на страну и приходит из базы уже
 // сверенной (см. src/lib/lt-score-queries.ts); сам расчёт — src/lib/lt-score.ts.
 // Оценки считаются в браузере и никуда не отправляются — как в латвийском
-// калькуляторе.
+// калькуляторе; помнит их только эта вкладка (exam-session.ts), общие с
+// литовским «куда я прохожу».
 function LtCalculatorFormForm({
   dict,
   locale,
@@ -44,9 +48,8 @@ function LtCalculatorFormForm({
   const text = dict.ltCalculator;
   const language = languageOf(locale);
   const subjects = useMemo(() => ltInputSubjects(components), [components]);
-  const [inputs, setInputs] = useState<Record<string, SubjectInput>>(() =>
-    Object.fromEntries(subjects.map((subject) => [subject, { score: "", course: "A" as const }])),
-  );
+  const [inputs, setInputs, clearInputs] = useSessionExams(countryOf(locale), subjects, EMPTY_INPUT, isLtExamInput);
+  const anyFilled = subjects.some((subject) => inputs[subject].score !== "");
 
   const label = (subject: string) => text.subjects[subject as keyof typeof text.subjects] ?? subject;
 
@@ -121,6 +124,12 @@ function LtCalculatorFormForm({
           );
         })}
       </div>
+
+      {anyFilled && (
+        <div className="mt-5">
+          <ClearExamsButton label={dict.match.clearResults} onClear={clearInputs} />
+        </div>
+      )}
 
       <div className="mt-8 rounded-xl bg-zinc-50 p-6">
         {/* Итог и подсказка меняются без перехода фокуса — экранный диктор

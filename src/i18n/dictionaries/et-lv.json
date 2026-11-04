@@ -278,7 +278,7 @@
   "privacy": {
     "title": "Privaatsuspoliitika",
     "intro": "Kuidas see sait isikuandmeid töötleb: mida säilitatakse, mida mitte ja millised on andmesubjekti õigused. See tekst on tõlge läti keelest; lahknevuse korral kehtib lätikeelne tekst.",
-    "updated": "Redaktsioon: 24. oktoober 2026",
+    "updated": "Redaktsioon: 4. november 2026",
     "authorityLabel": "Läti Andmekaitse Inspektsioon (Datu valsts inspekcija, dvi.gov.lv)",
     "authorityUrl": "https://www.dvi.gov.lv",
     "sections": [
@@ -287,7 +287,7 @@
         "title": "Lühidalt",
         "body": [
           "- Saidil ei ole kasutajakontosid ja registreerumine ei ole vajalik.",
-          "- Kalkulaatoris või jaotises „Millistele õppekavadele saab kandideerida“ sisestatud eksamitulemused arvutatakse külastaja brauseris. Neid ei saadeta meie serverisse ega salvestata kuhugi.",
+          "- Kalkulaatoris või jaotises „Millistele õppekavadele saab kandideerida“ sisestatud eksamitulemused arvutatakse külastaja brauseris. Neid ei saadeta meie serverisse; et need õppekava lehe avamisel ei kaoks, säilivad need ainult selles brauseri vahekaardis kuni selle sulgemiseni.",
           "- Me ei kasuta küpsiseid jälgimiseks ega näita reklaami.",
           "- Salvestatud õppekavade loend (tähed õppekavade juures) on ainult külastaja seadmes."
         ]
@@ -312,7 +312,7 @@
         "id": "survey",
         "title": "Küsitlus ja kalkulaatorid",
         "body": [
-          "- Eksamitulemused kalkulaatoris ja jaotises „Millistele õppekavadele saab kandideerida“ arvutatakse ainult külastaja brauseris. Neid ei saadeta serverisse, ei salvestata ega lisata lehe aadressi.",
+          "- Eksamitulemused kalkulaatoris ja jaotises „Millistele õppekavadele saab kandideerida“ arvutatakse ainult külastaja brauseris. Neid ei saadeta serverisse ega lisata lehe aadressi. Need säilivad brauseri seansimälus (sessionStorage) ainult selles vahekaardis ja kustutatakse vahekaardi sulgemisel või nupu „Tühjenda tulemused“ vajutamisel.",
           "- Küsitluses valitud filtrid (huvivaldkond, linn, õppekeel ja -vorm, riigieelarvelised kohad) lisatakse lehe aadressi, et saaks näidata õppekavade loendit. Koos külastusega jõuavad need tehnilistesse logidesse (vt eespool), kuid me ei seo neid isikuga. Küsitluse eksamivastuseid serverisse ei saadeta."
         ]
       },
@@ -328,7 +328,7 @@
         "id": "cookies",
         "title": "Küpsised",
         "body": [
-          "Me ei kasuta küpsiseid jälgimiseks. Sait hoiab brauseris ainult salvestatud õppekavade loendit (vt eespool)."
+          "Me ei kasuta küpsiseid jälgimiseks. Sait hoiab brauseris ainult salvestatud õppekavade loendit ja kuni vahekaardi sulgemiseni sisestatud eksamitulemusi (vt eespool)."
         ]
       },
       {
@@ -356,7 +356,7 @@
         "title": "Õpilased ja noored",
         "body": [
           "Saidi külastajad on peamiselt õpilased ja noored. Lätis võib laps ise anda nõusoleku infoühiskonna teenuse kasutamiseks alates 13. eluaastast; nooremale lapsele on vaja vanema või seadusliku eestkostja nõusolekut (Läti füüsiliste isikute andmete töötlemise seaduse § 33).",
-          "Saidil sisestatud eksamitulemusi me ei säilita ega edasta."
+          "Saidil sisestatud eksamitulemusi me oma serveris ei säilita ega edasta kellelegi: need jäävad ainult külastaja brauseri vahekaarti kuni selle sulgemiseni."
         ]
       },
       {
