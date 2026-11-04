@@ -58,7 +58,9 @@ MIN_PROGRAMME_COUNT = {
     "sources.bsa": 12,
     "sources.sse_riga": 1,
     "sources.rgsl": 4,
-    "sources.lu": 166,
+    # 2026-11-03: 166 -> 165, ЛУ сняла "Industrial Engineering and Management"
+    # (английский бакалавр: страница отдаёт 404, в списке бакалавриата её нет)
+    "sources.lu": 165,
     "sources.venta": 13,
     "sources.lbtu": 9,
     "sources.du": 10,
