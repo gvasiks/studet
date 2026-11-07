@@ -57,10 +57,14 @@ export default async function ProgrammesPage({
   const profile = catalogProfile(shown);
   const state = onlySupported(parsed, profile.filters);
   // У какой-то из открытых стран есть фильтры (плата, только бюджет),
-  // которых в этом списке нет, — об этом говорит строка под фильтром
-  // «Страна»: чтобы ими пользоваться, нужно выбрать эту страну.
+  // которых нет в общем списке, — об этом говорит строка под фильтром
+  // «Страна»: чтобы ими пользоваться, нужно выбрать эту страну. Сравнение —
+  // с общим списком, а не с выбранной страной: строка остаётся и после
+  // выбора Латвии (решение владельца 2026-11-07), иначе пропадала вместе с
+  // объяснением, откуда взялись новые фильтры.
+  const commonFilters = catalogProfile(countries).filters;
   const filtersDropped = countries.some((country) =>
-    countryProfile(country).filters.some((filter) => !profile.filters.includes(filter)),
+    countryProfile(country).filters.some((filter) => !commonFilters.includes(filter)),
   );
   const dict = await getDictionary(locale);
 
