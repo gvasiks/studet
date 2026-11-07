@@ -20,6 +20,7 @@ import { enumLabel } from "@/lib/names";
 import { FIELD_TEXT, HEROUI_FIELD_CLASSES } from "@/lib/field-text";
 import { isLvExamInput, useSessionExams } from "@/lib/exam-session";
 import { ClearExamsButton } from "@/components/ClearExamsButton";
+import { clearMatchPages, MatchPager, useMatchPage } from "./MatchPager";
 
 const LEVELS: ExamLevel[] = ["augstakais", "optimalais", "vispaarigais"];
 
@@ -192,7 +193,15 @@ function MatchFormForm({
             <InfoIcon size={14} className="mt-px shrink-0 text-zinc-400" />
             {t.privacy}
           </p>
-          {anyFilled && <ClearExamsButton label={t.clearResults} onClear={clearInputs} />}
+          {anyFilled && (
+            <ClearExamsButton
+              label={t.clearResults}
+              onClear={() => {
+                clearMatchPages();
+                clearInputs();
+              }}
+            />
+          )}
         </div>
       </section>
 
@@ -298,10 +307,14 @@ function ResultGroup({
   const style = GROUP_STYLE[status];
   const hint = dict.match.groups[`${style.key}Hint` as keyof typeof dict.match.groups];
   const headingId = `match-group-${status}`;
+  const title = dict.match.groups[style.key];
+  const { page, pageCount, pageItems, setPage, headingRef } = useMatchPage(status, items);
 
-  // Программы одного вуза — вместе, под названием вуза (шкалы у вузов разные)
+  // Программы одного вуза — вместе, под названием вуза (шкалы у вузов разные).
+  // Группируется только текущая страница: вуз на границе страниц повторится
+  // заголовком на следующей.
   const byUniversity = new Map<string, MatchItem[]>();
-  for (const item of items) {
+  for (const item of pageItems) {
     const list = byUniversity.get(item.formula.universityName) ?? [];
     list.push(item);
     byUniversity.set(item.formula.universityName, list);
@@ -319,6 +332,7 @@ function ResultGroup({
           </ul>
         </div>
       ))}
+      <MatchPager page={page} pageCount={pageCount} onChange={setPage} text={dict.match.pager} groupTitle={title} />
     </div>
   );
 
@@ -327,8 +341,13 @@ function ResultGroup({
       <div className="flex gap-4 border-b border-zinc-100 p-6 sm:p-8">
         <span aria-hidden="true" className={`w-1 shrink-0 rounded-full ${style.bar}`} />
         <div className="min-w-0">
-          <h2 id={headingId} className="flex flex-wrap items-baseline gap-2 text-lg font-semibold tracking-tight text-zinc-900">
-            {dict.match.groups[style.key]}
+          <h2
+            ref={headingRef}
+            id={headingId}
+            tabIndex={-1}
+            className="flex scroll-mt-24 flex-wrap items-baseline gap-2 text-lg font-semibold tracking-tight text-zinc-900 focus:outline-none"
+          >
+            {title}
             <span className={`rounded-full px-2 py-0.5 text-xs font-semibold tabular-nums ${style.chip}`}>
               {items.length}
             </span>
@@ -551,9 +570,10 @@ function RequirementGroup({
 }) {
   const t = dict.match;
   const headingId = "match-group-eligible-requirements";
+  const { page, pageCount, pageItems, setPage, headingRef } = useMatchPage("eligible-requirements", items);
 
   const byUniversity = new Map<string, RequirementMatchItem[]>();
-  for (const item of items) {
+  for (const item of pageItems) {
     const list = byUniversity.get(item.requirement.universityName) ?? [];
     list.push(item);
     byUniversity.set(item.requirement.universityName, list);
@@ -564,7 +584,12 @@ function RequirementGroup({
       <div className="flex gap-4 border-b border-zinc-100 p-6 sm:p-8">
         <span aria-hidden="true" className={`w-1 shrink-0 rounded-full ${REQUIREMENTS_STYLE.bar}`} />
         <div className="min-w-0">
-          <h2 id={headingId} className="flex flex-wrap items-baseline gap-2 text-lg font-semibold tracking-tight text-zinc-900">
+          <h2
+            ref={headingRef}
+            id={headingId}
+            tabIndex={-1}
+            className="flex scroll-mt-24 flex-wrap items-baseline gap-2 text-lg font-semibold tracking-tight text-zinc-900 focus:outline-none"
+          >
             {t.groups.eligibleByRequirements}
             <span className={`rounded-full px-2 py-0.5 text-xs font-semibold tabular-nums ${REQUIREMENTS_STYLE.chip}`}>
               {items.length}
@@ -586,6 +611,13 @@ function RequirementGroup({
           </div>
         ))}
       </div>
+      <MatchPager
+        page={page}
+        pageCount={pageCount}
+        onChange={setPage}
+        text={t.pager}
+        groupTitle={t.groups.eligibleByRequirements}
+      />
     </section>
   );
 }

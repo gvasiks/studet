@@ -587,6 +587,12 @@
     "openProgramme": "Õppekava leht",
     "breakdown": "Millest punktid kujunevad",
     "showList": "Näita õppekavasid ({count})",
+    "pager": {
+      "label": "Lehed",
+      "previous": "Eelmine",
+      "next": "Järgmine",
+      "status": "Leht {page}/{total}"
+    },
     "optionalMissing": "Punktides ei ole arvestatud mittekohustuslikku osa: {list}. Sellega oleks punkte rohkem.",
     "emptyNoLevel": "Tulemuste nägemiseks tuleb sisestatud eksamitele valida tase."
   },
@@ -879,7 +885,7 @@
         "id": "cookies",
         "title": "Küpsised",
         "body": [
-          "Me ei kasuta küpsiseid jälgimiseks. Sait hoiab brauseris ainult salvestatud õppekavade loendit ja kuni vahekaardi sulgemiseni sisestatud eksamitulemusi (vt eespool)."
+          "Me ei kasuta küpsiseid jälgimiseks. Sait hoiab brauseris ainult salvestatud õppekavade loendit ja kuni vahekaardi sulgemiseni sisestatud eksamitulemusi ja tulemuste loendi avatud lehte (vt eespool)."
         ]
       },
       {

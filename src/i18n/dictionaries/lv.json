@@ -587,6 +587,12 @@
     "openProgramme": "Programmas lapa",
     "breakdown": "No kā veidojas punkti",
     "showList": "Rādīt programmas ({count})",
+    "pager": {
+      "label": "Lappuses",
+      "previous": "Iepriekšējā",
+      "next": "Nākamā",
+      "status": "{page}. lappuse no {total}"
+    },
     "optionalMissing": "Punktos nav ieskaitīts neobligātais: {list}. Ar to punktu būtu vairāk.",
     "emptyNoLevel": "Lai redzētu rezultātus, pie ievadītajiem eksāmeniem jāizvēlas līmenis."
   },
@@ -907,7 +913,7 @@
         "id": "cookies",
         "title": "Sīkdatnes",
         "body": [
-          "Mēs neizmantojam sīkdatnes izsekošanai. Vietne pārlūkā glabā tikai saglabāto programmu sarakstu un — līdz cilnes aizvēršanai — ievadītos eksāmenu rezultātus (skat. iepriekš)."
+          "Mēs neizmantojam sīkdatnes izsekošanai. Vietne pārlūkā glabā tikai saglabāto programmu sarakstu un — līdz cilnes aizvēršanai — ievadītos eksāmenu rezultātus un atvērto rezultātu saraksta lappusi (skat. iepriekš)."
         ]
       },
       {

@@ -587,6 +587,12 @@
     "openProgramme": "Programme page",
     "breakdown": "How the score adds up",
     "showList": "Show programmes ({count})",
+    "pager": {
+      "label": "Pages",
+      "previous": "Previous",
+      "next": "Next",
+      "status": "Page {page} of {total}"
+    },
     "optionalMissing": "Not counted, because it was not entered (optional): {list}. With it the score would be higher.",
     "emptyNoLevel": "To see results, choose the level of the exams you entered."
   },
@@ -907,7 +913,7 @@
         "id": "cookies",
         "title": "Cookies",
         "body": [
-          "We do not use cookies for tracking. The site keeps in your browser only the favourites list and, until you close the tab, the exam results you entered (see above)."
+          "We do not use cookies for tracking. The site keeps in your browser only the favourites list and, until you close the tab, the exam results you entered and the open page of the results list (see above)."
         ]
       },
       {
