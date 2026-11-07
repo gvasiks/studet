@@ -54,7 +54,7 @@ export function SiteHeader({ locale, dict, tone }: { locale: Locale; dict: Dicti
           />
           <div className="ml-auto flex items-center gap-3">
             {dark && <FavoritesLink locale={locale} label={dict.favorites.navLink} />}
-            <LocaleSwitcher locale={locale} label={dict.nav.language} tone={tone} />
+            <LocaleSwitcher locale={locale} label={dict.nav.language} names={dict.nav.languageNames} tone={tone} />
           </div>
         </div>
       </header>

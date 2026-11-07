@@ -1,4 +1,4 @@
-import { countryOf, languageOf, localesOfCountry, nativeLocale, type Locale } from "@/i18n/config";
+import { countryOf, languageOf, localeFor, localesOfCountry, type Locale } from "@/i18n/config";
 
 // Название продукта — имя собственное, одинаковое на всех языках, поэтому
 // живёт здесь, а не в словарях локалей. Решение владельца 2026-10-03
@@ -30,14 +30,16 @@ export function isSiteClosed(env: Record<string, string | undefined> = process.e
 // не "en-LV"): английская версия адресована иностранным абитуриентам
 // откуда угодно, а не англоязычным жителям Латвии.
 //
-// Canonical — на текущий адрес; x-default — на основной язык страны.
+// Canonical — на текущий адрес; x-default — на английский адрес страны: туда
+// же сайт ведёт посетителя с незнакомым языком браузера (решение владельца
+// 2026-11-07, localeForBrowser).
 export function buildAlternates(path: string, currentLocale: Locale) {
   const country = countryOf(currentLocale);
   const languages: Record<string, string> = {};
   for (const locale of localesOfCountry(country)) {
     languages[languageOf(locale)] = `${SITE_URL}/${locale}${path}`;
   }
-  languages["x-default"] = `${SITE_URL}/${nativeLocale(country)}${path}`;
+  languages["x-default"] = `${SITE_URL}/${localeFor(country, "en")}${path}`;
 
   return {
     canonical: `${SITE_URL}/${currentLocale}${path}`,

@@ -3,6 +3,7 @@ import {
   countries,
   countryOf,
   defaultLocale,
+  homeLocaleFor,
   isLocale,
   languageOf,
   legacyLocales,
@@ -68,14 +69,25 @@ describe("адрес = язык + страна", () => {
     for (const locale of ["et", "en-ee", "lv-ee", "lt-ee", "et-lv", "et-lt"]) expect(isLocale(locale), locale).toBe(false);
   });
 
-  it("по языку браузера: родной язык ведёт в свою страну, английский — в Латвию", () => {
+  it("по языку браузера: родной язык ведёт в свою страну, остальные — на английский", () => {
     expect(localeForBrowser("lv")).toBe("lv");
     expect(localeForBrowser("en")).toBe("en-lv");
     // Литва закрыта флагом — литовский браузер попадает в латвийский
     // каталог на литовском
     expect(localeForBrowser("lt")).toBe("lt-lv");
-    expect(localeForBrowser("de")).toBe("lv");
-    expect(localeForBrowser("")).toBe("lv");
+    // Незнакомый язык — английский (решение владельца 2026-11-07), как и
+    // эстонский, пока он закрыт флагом
+    expect(localeForBrowser("de")).toBe("en-lv");
+    expect(localeForBrowser("ru")).toBe("en-lv");
+    expect(localeForBrowser("et")).toBe("en-lv");
+    expect(localeForBrowser("")).toBe("en-lv");
+  });
+
+  it("выбор языка на главной ведёт в страну языка, пока она открыта", () => {
+    expect(homeLocaleFor("lv", "LV")).toBe("lv");
+    expect(homeLocaleFor("en", "LV")).toBe("en-lv");
+    // Литва закрыта — латвийский каталог на литовском
+    expect(homeLocaleFor("lt", "LV")).toBe("lt-lv");
   });
 
   it("каждый адрес из списка описан", () => {

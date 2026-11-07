@@ -2,7 +2,8 @@ import { NextResponse, type NextRequest } from "next/server";
 import { legacyLocales, localeForBrowser, locales, type Locale } from "@/i18n/config";
 
 // Посетитель без сегмента в адресе попадает на версию на своём языке:
-// латышский — в Латвию, литовский — в Литву, остальные — см. localeForBrowser.
+// латышский — в Латвию, литовский — в Литву, любой незнакомый — на
+// английский (см. localeForBrowser).
 function preferredLocale(request: NextRequest): Locale {
   const acceptLanguage = request.headers.get("accept-language") ?? "";
   return localeForBrowser(acceptLanguage.split(",")[0]?.split("-")[0] ?? "");

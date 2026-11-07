@@ -114,13 +114,25 @@ export function localeFor(country: Country, language: Language): Locale {
   return localesOfCountry(country).find((locale) => variants[locale].language === language) ?? nativeLocale(country);
 }
 
-// Куда отправить посетителя без сегмента в адресе по языку его браузера.
-// Язык, родной для какой-то открытой страны, ведёт в неё; остальные — в
-// первый адрес на этом языке, то есть в Латвию. Литовский браузер поэтому
-// попадает в /lt-lv, пока Литва закрыта, и в /lt, когда она откроется.
-export function localeForBrowser(language: string): Locale {
+// Куда вести по языку: в страну, для которой он родной, если она открыта;
+// иначе — в страну current на этом языке. Литовский поэтому ведёт в /lt-lv,
+// пока Литва закрыта, и в /lt, когда она откроется. Так работает выбор
+// языка на главной (решение владельца 2026-11-07).
+export function homeLocaleFor(language: Language, current: Country): Locale {
   const native = countries.map(nativeLocale).find((locale) => variants[locale].language === language);
-  return native ?? locales.find((locale) => variants[locale].language === language) ?? defaultLocale;
+  return native ?? localeFor(current, language);
+}
+
+// Куда отправить посетителя без сегмента в адресе по языку его браузера:
+// латышский, литовский, эстонский — как выбор языка на главной; любой
+// другой — английский (решение владельца 2026-11-07: «по умолчанию язык
+// английский»; до этого незнакомый язык вёл на латышский).
+// Язык, у которого нет ни одного открытого адреса (эстонский без флага
+// предпросмотра), считается незнакомым.
+export function localeForBrowser(language: string): Locale {
+  const open = locales.some((locale) => variants[locale].language === language);
+  const known = open ? (language as Language) : "en";
+  return homeLocaleFor(known, variants[defaultLocale].country);
 }
 
 // До 2026-10 английская версия жила на /en. Старые ссылки (закладки,

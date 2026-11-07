@@ -278,7 +278,7 @@
   "privacy": {
     "title": "Privaatsuspoliitika",
     "intro": "Kuidas see sait isikuandmeid töötleb: mida säilitatakse, mida mitte ja millised on andmesubjekti õigused. See tekst on tõlge läti keelest; lahknevuse korral kehtib lätikeelne tekst.",
-    "updated": "Redaktsioon: 4. november 2026",
+    "updated": "Redaktsioon: 7. november 2026",
     "authorityLabel": "Läti Andmekaitse Inspektsioon (Datu valsts inspekcija, dvi.gov.lv)",
     "authorityUrl": "https://www.dvi.gov.lv",
     "sections": [
@@ -305,7 +305,7 @@
         "body": [
           "Lehe avamisel registreerib saidi server automaatselt tehnilised andmed: IP-aadressi, aja, päritud aadressi ja brauseri tüübi. Seda tehakse selleks, et sait töötaks ja oleks turvaline. Me ei kasuta neid andmeid kellegi tuvastamiseks.",
           "Alus: meie õigustatud huvi tagada saidi turvalisus ja toimimine (isikuandmete kaitse üldmääruse artikli 6 lõike 1 punkt f). Neid kirjeid säilitatakse 14 päeva, seejärel kustutatakse need automaatselt.",
-          "Keele (läti, leedu, eesti või inglise) valime esimesel külastusel brauseri keeleseade järgi; seda ei salvestata."
+          "Keele (läti, leedu, eesti või inglise) valime esimesel külastusel brauseri keeleseade järgi, muu keele korral inglise; seda ei salvestata."
         ]
       },
       {
