@@ -20,6 +20,8 @@ import { matchRounds } from "@/lib/deadlines";
 import { getAdmissionType } from "@/lib/admission-type-queries";
 import { httpUrl, matchChannel } from "@/lib/application-channel";
 import { getApplicationChannels } from "@/lib/application-channel-queries";
+import { getCountryCosts, getProgrammeFees } from "@/lib/foreign-cost-queries";
+import { currentCountryCosts } from "@/lib/foreign-costs";
 import { getProgrammeOutcome } from "@/lib/outcome-queries";
 import { areaCode } from "@/lib/fields";
 import { currentAccreditation, pickDetails, sourceHost } from "@/lib/programme-details";
@@ -30,6 +32,7 @@ import { LtAdmissionStats } from "@/components/LtAdmissionStats";
 import { VuppAdmissionStats } from "@/components/VuppAdmissionStats";
 import { LtFieldOutcome } from "@/components/LtFieldOutcome";
 import { EeAdmissionConditions } from "@/components/EeAdmissionConditions";
+import { ForeignCosts } from "@/components/ForeignCosts";
 import { ReportErrorLink } from "@/components/ReportErrorLink";
 import { buildAlternates, SITE_URL } from "@/lib/site";
 import { formatDate } from "@/lib/dates";
@@ -109,7 +112,13 @@ export default async function ProgrammePage({ params }: { params: Params }) {
   // Прошлогодний конкурс с statistika.vupp.lv — у Латвии, где связь программы
   // с кодом приёма подтверждена владельцем (vupp-stat-queries.ts).
   const vuppStatsPromise = countryOf(locale) === "LV" ? getVuppYear(record.id) : Promise.resolve(null);
-  const [formula, rounds, admissionType, outcome, channels, hasLtCalculator, ltField, ltStats, eeField, eeAdmission, vuppStats] =
+  // Стоимость для иностранцев — пока только Латвия (решение Р1,
+  // docs/PLAN-FOREIGNERS.md). Только подтверждённые суммы.
+  const foreignPromise =
+    countryOf(locale) === "LV"
+      ? Promise.all([getCountryCosts("LV"), getProgrammeFees(record.id)])
+      : Promise.resolve(null);
+  const [formula, rounds, admissionType, outcome, channels, hasLtCalculator, ltField, ltStats, eeField, eeAdmission, vuppStats, foreign] =
     await Promise.all([
       getFormula(record.id),
       getApplicationRoundsForCards(),
@@ -122,6 +131,7 @@ export default async function ProgrammePage({ params }: { params: Params }) {
       eeFieldPromise,
       eeAdmissionPromise,
       vuppStatsPromise,
+      foreignPromise,
     ]);
   // Действующий это конкурс или прошлый приём — по сроку (ee-admission.ts).
   const eeAdmissionState = eeAdmission ? admissionState(eeAdmission, new Date()) : null;
@@ -130,6 +140,12 @@ export default async function ProgrammePage({ params }: { params: Params }) {
   // Что стало с выпускниками: у Литвы — показатели направления на этой
   // ступени по всей стране (у Латвии — блок ниже, по направлению в вузе).
   const ltOutcome = ltField ? await getLtFieldOutcome(record.degree_level, ltField.fieldCode) : null;
+  // Блок стоимости для иностранцев — у английских программ (их ищут
+  // иностранцы) и у любой программы с подтверждённой платой для групп ЕС / не ЕС.
+  const foreignCosts = foreign ? currentCountryCosts(foreign[0], new Date()) : [];
+  const foreignFees = foreign ? foreign[1] : [];
+  const showForeignCosts =
+    (foreignCosts.length > 0 && record.language_of_instruction === "en") || foreignFees.length > 0;
   // Где подать документы: только подтверждённая человеком запись вуза для
   // этого уровня (или для всех уровней). Нет записи — блока нет.
   const channel = matchChannel(channels, record.university_id, record.degree_level);
@@ -471,6 +487,10 @@ export default async function ProgrammePage({ params }: { params: Params }) {
             </a>
           </p>
         </section>
+      )}
+
+      {showForeignCosts && (
+        <ForeignCosts dict={dict} language={language} costs={foreignCosts} fees={foreignFees} />
       )}
 
       {ltStats && <LtAdmissionStats dict={dict} language={language} stats={ltStats} />}
