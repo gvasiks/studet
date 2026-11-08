@@ -198,6 +198,18 @@ Ventspils и РТУ**; у остальных честное «формула н�
       названия и описание на английском.
 - [ ] Блок «Kas noticis ar absolventiem» — на `/lv/programmes/rgsl/law-and-business`
       (свежий выпуск) и нет у программ, где последний выпуск старше 5 лет.
+- [ ] **(с 2026-11-08, иностранцы, шаг 1а — только после миграции
+      `20261108120000_foreign_costs.sql`, `seed_country_costs.py --apply` и
+      подтверждения сумм в Studio.)** `/en-lv/programmes/turiba/aesthetic-cosmetology`
+      (английская программа) — блок «Costs for international students»: у
+      граждан ЕС — «Tuition for this group has not been verified yet»; у
+      остальных — «Residence permit: review of documents (30 days) €160»,
+      «registration €75», «Long-stay visa, if one is needed €90»; ниже
+      «Funds to prove … €780 per month» и «It is not a payment». У каждой суммы
+      «Verified <дата>», норма (MK noteikumi Nr. 731, 5.1.1. …) и ссылка на
+      likumi.lv. Строки «Total in the first year» нет, пока не подтверждена плата
+      за обучение. У латышской программы без подтверждённой платы блока нет. На
+      320 px без прокрутки вбок. Неподтверждённая сумма не видна нигде.
 - [ ] Блок «Kur pieteikties» нигде не показывается (каналы подачи не
       подтверждены) — это ожидаемо.
 - [ ] **(с 2026-10-18) Блок «Uzņemšana 2026. gadā»** на `/lv/programmes/lu/economics`:
