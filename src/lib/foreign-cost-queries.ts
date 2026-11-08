@@ -55,7 +55,7 @@ export async function getCountryCosts(country: Country): Promise<CountryCost[]> 
 export const getProgrammeFees = cache(async (programmeId: string): Promise<ProgrammeFee[]> => {
   const { data, error } = await supabase
     .from("programme_fee")
-    .select("kind, applies_to, amount, currency, period, academic_year, source_url, verified_at")
+    .select("kind, applies_to, amount, currency, period, academic_year, source_url, verified_at, eu_scope")
     .eq("programme_id", programmeId)
     .not("verified_at", "is", null);
   if (error) return [];
@@ -75,5 +75,6 @@ export const getProgrammeFees = cache(async (programmeId: string): Promise<Progr
       academicYear: row.academic_year,
       sourceUrl: row.source_url,
       verifiedAt: row.verified_at,
+      euScope: row.eu_scope === "eu_efta_candidates" ? "eu_efta_candidates" : null,
     }));
 });

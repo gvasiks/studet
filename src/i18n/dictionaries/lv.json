@@ -188,6 +188,7 @@
       "intro": "Obligātie maksājumi pirmajā studiju gadā. Dzīvošanas izmaksas nav ietvertas.",
       "euTitle": "ES, EEZ un Šveices pilsoņiem",
       "nonEuTitle": "Citu valstu pilsoņiem",
+      "euIncludesCandidates": "Šajā augstskolā ES pilsoņu studiju maksa attiecas arī uz EBTA valstu un ES kandidātvalstu (piemēram, Ukrainas un Moldovas) pilsoņiem.",
       "tuition": "Studiju maksa gadā ({year})",
       "applicationFee": "Pieteikuma izskatīšanas maksa",
       "enrolmentFee": "Imatrikulācijas maksa",

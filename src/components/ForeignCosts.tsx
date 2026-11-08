@@ -4,6 +4,7 @@ import { httpUrl } from "@/lib/application-channel";
 import { interpolate } from "@/lib/outcomes";
 import {
   costFor,
+  euPriceIncludesCandidates,
   feesFor,
   firstYearTotal,
   formatMoney,
@@ -118,6 +119,9 @@ export function ForeignCosts({
           </div>
         ))}
       </div>
+
+      {/* Вуз шире понимает «цену ЕС», чем подпись колонки (миграция 20261108130000). */}
+      {euPriceIncludesCandidates(fees) && <p className="mt-3 text-sm text-zinc-700">{t.euIncludesCandidates}</p>}
 
       {means && (
         <div className="mt-4 rounded-2xl bg-zinc-50 p-4 text-sm">

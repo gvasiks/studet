@@ -188,6 +188,7 @@
       "intro": "Mandatory payments in the first year of study. Living costs are not included.",
       "euTitle": "Citizens of the EU, EEA and Switzerland",
       "nonEuTitle": "Citizens of other countries",
+      "euIncludesCandidates": "At this university, citizens of EFTA countries and EU candidate countries (for example Ukraine and Moldova) also pay the tuition fee for EU citizens.",
       "tuition": "Tuition per year ({year})",
       "applicationFee": "Application fee",
       "enrolmentFee": "Enrolment fee",

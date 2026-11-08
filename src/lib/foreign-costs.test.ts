@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import {
   currentCountryCosts,
+  euPriceIncludesCandidates,
   feesFor,
   firstYearTotal,
   formatMoney,
@@ -34,9 +35,18 @@ function fee(partial: Partial<ProgrammeFee>): ProgrammeFee {
     academicYear: "2027/28",
     sourceUrl: "https://example.lv/",
     verifiedAt: "2026-11-08T00:00:00Z",
+    euScope: null,
     ...partial,
   };
 }
+
+describe("цена ЕС для стран-кандидатов", () => {
+  it("пометка нужна, если хоть одна плата так помечена", () => {
+    expect(euPriceIncludesCandidates([fee({}), fee({ euScope: "eu_efta_candidates" })])).toBe(true);
+    expect(euPriceIncludesCandidates([fee({})])).toBe(false);
+    expect(euPriceIncludesCandidates([])).toBe(false);
+  });
+});
 
 describe("суммы страны на дату", () => {
   it("берёт действующую строку с самой поздней датой начала", () => {

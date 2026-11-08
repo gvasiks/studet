@@ -188,6 +188,7 @@
       "intro": "Kohustuslikud maksed esimesel õppeaastal. Elamiskulud ei ole arvestatud.",
       "euTitle": "EL-i, EMP ja Šveitsi kodanikele",
       "nonEuTitle": "Teiste riikide kodanikele",
+      "euIncludesCandidates": "Selles kõrgkoolis kehtib EL-i kodanike õppetasu ka EFTA riikide ja EL-i kandidaatriikide (näiteks Ukraina ja Moldova) kodanikele.",
       "tuition": "Õppetasu aastas ({year})",
       "applicationFee": "Avalduse menetlemise tasu",
       "enrolmentFee": "Immatrikuleerimistasu",

@@ -11,7 +11,9 @@
 «Citizens of EU, EFTA member countries and EU candidate countries» —
 то есть граждане стран-кандидатов (Украина, Молдова, Грузия и др.) платят
 по первой колонке. У нас группа eu — «граждане ЕС, ЕЭЗ и Швейцарии», поэтому
-сноска дословно лежит в цитате каждой строки: владелец решает при проверке.
+сноска дословно лежит в цитате каждой строки, а строки помечены
+eu_scope = 'eu_efta_candidates' — сайт показывает под ценами пометку
+(решение владельца 2026-11-08).
 
 Программа находится по source_url: тот же адрес карточки записывает в
 programme сборщик sources/rtu_english.py. Программа в нескольких городах —
@@ -112,6 +114,10 @@ def fee_rows(registry_row: dict, programme_id: str, year: str) -> list[dict]:
                 # стоит там, на карточке программы её может не быть.
                 "source_url": RTU_REGISTRY_URL,
                 "source_excerpt": registry_row["excerpt"],
+                # Сноска реестра: цену eu платят и граждане ЕАСТ и стран-кандидатов
+                # (миграция 20261108130000). Пишется обеим группам — блок на сайте
+                # видит пометку, какая бы из них ни была подтверждена.
+                "eu_scope": "eu_efta_candidates",
             }
         )
     return result
@@ -150,6 +156,7 @@ def selftest() -> None:
     for fee in fees:
         assert "verified_at" not in fee and "verified_by" not in fee  # их ставит только человек
         assert re.fullmatch(r"\d{4}/\d{2}", fee["academic_year"])
+        assert fee["eu_scope"] == "eu_efta_candidates"
     print("selftest ok")
 
 
