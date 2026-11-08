@@ -265,6 +265,13 @@ Ventspils и РТУ**; у остальных честное «формула н�
 - [ ] Экзамены в адрес не попадают никогда.
 - [ ] **(с 2026-10-17)** Подсказка на шаге экзаменов: «Šī atbilde programmu
       sarakstu neietekmē.» (без «aprēķins vēl top»).
+- [ ] **Эстония (только с флагом предпросмотра, комментарий #15, 2026-11-08).**
+      Главная `/et` → «Täida küsitlus» открывает `/et/survey`: 5 шагов без
+      экзаменов — huvivaldkonnad → tase ja kestus → linn → keel → kõrgkooli
+      liik. «Näita õppekavu» ведёт в `/et/programmes?country=EE`. Те же 5 шагов
+      на `/en-ee/survey`, `/lv-ee/survey`, `/lt-ee/survey`. Если адрес
+      открывает «не найдено», на сервере нет `NEXT_PUBLIC_PREVIEW_COUNTRIES=1`
+      или стоит сборка старше 2026-10-12 — см. `deploy/README.md`.
 
 ## 10. Чек-лист: обратный поиск (`/match`)
 
