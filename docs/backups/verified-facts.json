@@ -12131,7 +12131,7 @@
     },
     {
       "field_code": "523",
-      "programme_name": "Mehatronika",
+      "programme_name": "Robotika un automatizācija",
       "programme_slug": "24775",
       "source": "name-rules",
       "university_slug": "via",
@@ -25207,7 +25207,7 @@
       "verified_at": "2026-10-23T16:07:15.712375+00:00"
     },
     {
-      "programme_name": "Mehatronika",
+      "programme_name": "Robotika un automatizācija",
       "programme_slug": "24775",
       "requirements": [
         {
