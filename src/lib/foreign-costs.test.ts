@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 import {
   currentCountryCosts,
-  euPriceIncludesCandidates,
+  euPriceScope,
   feesFor,
   firstYearTotal,
   formatMoney,
@@ -40,11 +40,12 @@ function fee(partial: Partial<ProgrammeFee>): ProgrammeFee {
   };
 }
 
-describe("цена ЕС для стран-кандидатов", () => {
-  it("пометка нужна, если хоть одна плата так помечена", () => {
-    expect(euPriceIncludesCandidates([fee({}), fee({ euScope: "eu_efta_candidates" })])).toBe(true);
-    expect(euPriceIncludesCandidates([fee({})])).toBe(false);
-    expect(euPriceIncludesCandidates([])).toBe(false);
+describe("кому ещё цена ЕС", () => {
+  it("пометка — по первой помеченной плате", () => {
+    expect(euPriceScope([fee({}), fee({ euScope: "eu_efta_candidates" })])).toBe("eu_efta_candidates");
+    expect(euPriceScope([fee({ euScope: "eu_long_term_residents" })])).toBe("eu_long_term_residents");
+    expect(euPriceScope([fee({})])).toBeNull();
+    expect(euPriceScope([])).toBeNull();
   });
 });
 

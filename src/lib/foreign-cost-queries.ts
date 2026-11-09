@@ -4,10 +4,12 @@ import { supabase } from "@/lib/supabase";
 import { remember } from "@/lib/server-memo";
 import {
   COUNTRY_COST_CODES,
+  EU_SCOPES,
   FEE_KINDS,
   type AppliesTo,
   type CountryCost,
   type CountryCostCode,
+  type EuScope,
   type FeeKind,
   type ProgrammeFee,
 } from "@/lib/foreign-costs";
@@ -75,6 +77,6 @@ export const getProgrammeFees = cache(async (programmeId: string): Promise<Progr
       academicYear: row.academic_year,
       sourceUrl: row.source_url,
       verifiedAt: row.verified_at,
-      euScope: row.eu_scope === "eu_efta_candidates" ? "eu_efta_candidates" : null,
+      euScope: (EU_SCOPES as readonly string[]).includes(row.eu_scope) ? (row.eu_scope as EuScope) : null,
     }));
 });

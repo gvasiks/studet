@@ -189,6 +189,7 @@
       "euTitle": "ES, EEE ir Šveicarijos piliečiams",
       "nonEuTitle": "Kitų šalių piliečiams",
       "euIncludesCandidates": "Šioje aukštojoje mokykloje ES piliečių studijų kaina taikoma ir ELPA šalių bei ES šalių kandidačių (pavyzdžiui, Ukrainos ir Moldovos) piliečiams.",
+      "euIncludesLongTermResidents": "Šioje aukštojoje mokykloje ES piliečių studijų kaina taikoma ir ES ilgalaikio gyventojo leidimą gyventi turintiems asmenims bei abiejų grupių šeimos nariams.",
       "tuition": "Studijų kaina per metus ({year})",
       "applicationFee": "Prašymo nagrinėjimo mokestis",
       "enrolmentFee": "Registracijos mokestis",

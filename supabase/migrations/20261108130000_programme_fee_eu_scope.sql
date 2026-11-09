@@ -8,13 +8,16 @@
 --
 -- eu_scope:
 --   null                 — группа eu как подписано на сайте: ЕС, ЕЭЗ, Швейцария;
---   'eu_efta_candidates' — вуз даёт цену eu также гражданам ЕАСТ и стран-
---                          кандидатов в ЕС; под ценами показывается пометка.
+--   'eu_efta_candidates'    — вуз даёт цену eu также гражданам ЕАСТ и стран-
+--                             кандидатов в ЕС (РТУ);
+--   'eu_long_term_residents' — вуз даёт цену eu также держателям долгосрочного
+--                             (постоянного) ВНЖ ЕС и членам семей (ЛУ).
+-- У обоих значений под ценами показывается пометка.
 -- Это часть подтверждаемого факта: владелец сверяет её со сноской в
 -- source_excerpt вместе с суммой.
 
 alter table programme_fee
-  add column eu_scope text check (eu_scope in ('eu_efta_candidates'));
+  add column eu_scope text check (eu_scope in ('eu_efta_candidates', 'eu_long_term_residents'));
 
 -- Чтение у programme_fee выдано по колонкам (20261108120000_foreign_costs.sql):
 -- без этой строки запрос сайта с новой колонкой получит ошибку прав.

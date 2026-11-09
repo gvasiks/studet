@@ -39,14 +39,18 @@ export type ProgrammeFee = {
   academicYear: string;
   sourceUrl: string;
   verifiedAt: string;
-  /** null — цена eu для ЕС, ЕЭЗ и Швейцарии; eu_efta_candidates — вуз даёт её
-   * и гражданам ЕАСТ и стран-кандидатов в ЕС (миграция 20261108130000). */
-  euScope: "eu_efta_candidates" | null;
+  /** Кому ещё вуз даёт цену eu (миграция 20261108130000); null — только ЕС, ЕЭЗ, Швейцария. */
+  euScope: EuScope | null;
 };
 
-/** Вуз даёт цену eu и гражданам стран-кандидатов — нужна пометка под ценами. */
-export function euPriceIncludesCandidates(fees: ProgrammeFee[]): boolean {
-  return fees.some((fee) => fee.euScope === "eu_efta_candidates");
+export const EU_SCOPES = ["eu_efta_candidates", "eu_long_term_residents"] as const;
+/** eu_efta_candidates — и гражданам ЕАСТ и стран-кандидатов в ЕС (РТУ);
+ * eu_long_term_residents — и держателям долгосрочного ВНЖ ЕС и членам семей (ЛУ). */
+export type EuScope = (typeof EU_SCOPES)[number];
+
+/** Чья ещё цена eu — для пометки под ценами; null — пометка не нужна. */
+export function euPriceScope(fees: ProgrammeFee[]): EuScope | null {
+  return fees.find((fee) => fee.euScope !== null)?.euScope ?? null;
 }
 
 // Даты сравниваются строками «ГГГГ-ММ-ДД»: так не нужно думать о часовых поясах.

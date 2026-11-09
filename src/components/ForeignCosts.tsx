@@ -4,7 +4,7 @@ import { httpUrl } from "@/lib/application-channel";
 import { interpolate } from "@/lib/outcomes";
 import {
   costFor,
-  euPriceIncludesCandidates,
+  euPriceScope,
   feesFor,
   firstYearTotal,
   formatMoney,
@@ -82,6 +82,7 @@ export function ForeignCosts({
   const eu = group("eu");
   const nonEu = group("non_eu");
   const means = costFor(costs, "means_per_month", "non_eu");
+  const scope = euPriceScope(fees);
 
   return (
     <section className="mt-8" aria-labelledby="foreign-costs">
@@ -121,7 +122,11 @@ export function ForeignCosts({
       </div>
 
       {/* Вуз шире понимает «цену ЕС», чем подпись колонки (миграция 20261108130000). */}
-      {euPriceIncludesCandidates(fees) && <p className="mt-3 text-sm text-zinc-700">{t.euIncludesCandidates}</p>}
+      {scope && (
+        <p className="mt-3 text-sm text-zinc-700">
+          {scope === "eu_efta_candidates" ? t.euIncludesCandidates : t.euIncludesLongTermResidents}
+        </p>
+      )}
 
       {means && (
         <div className="mt-4 rounded-2xl bg-zinc-50 p-4 text-sm">
