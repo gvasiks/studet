@@ -28,12 +28,22 @@
    страница, где цены очной и заочной формы перемешаны, пропускаются —
    их видно в журнале. Учебный год — как у РТУ.
 
+3. RISEBA — страницы бакалаврских программ (riseba.lv/en/program/…), поле
+   «Tuition fee per year (for the 2026/2027 academic year)»: группа «Citizens
+   and permanent residents of Latvia, as well as citizens of other EU, EEA, and
+   EU candidate countries» и группа «Other countries», в каждой строки «цена
+   (форма, язык)». Учебный год — из подписи поля. Вариант пишется, только
+   если у одной формы и языка есть обе цены; программа — по адресу страницы,
+   языку и форме. Группа ЕС включает страны-кандидаты — eu_scope =
+   'eu_efta_candidates' (Швейцарии RISEBA не называет — сверить при проверке).
+   Магистратура RISEBA в каталоге из NIID, там цен по группам нет.
+
 Turība и TSI в robots.txt запрещают обход агентам Anthropic: их цены
 собирать этим путём нельзя, черновики для них — вручную владельцем.
 
   python src/seed_programme_fees.py            # показать, что будет записано
   python src/seed_programme_fees.py --apply    # записать черновики
-  python src/seed_programme_fees.py --only lu  # один источник: rtu или lu
+  python src/seed_programme_fees.py --only lu  # один источник: rtu, lu или riseba
   python src/seed_programme_fees.py --selftest # разбор образцов, без сети и базы
 """
 
@@ -150,6 +160,56 @@ def lu_excerpt(fee_text: str) -> str:
     return "Tuition fee: " + re.split(r"\s*Place of study:", fee_text)[0].strip()
 
 
+RISEBA_EU_HEADER = "citizens and permanent residents of latvia"
+RISEBA_OTHER_HEADER = "other countries"
+
+
+def parse_riseba_fees(page: str) -> tuple[str | None, list[dict]]:
+    """(учебный год из подписи поля, варианты), вариант — mode, language, eu, non_eu, excerpt.
+
+    Поле «Tuition fee per year (for the 2026/2027 academic year)»: под
+    заголовком группы ЕС строки «3750 EUR (Full-time in Latvian)», под
+    «Other countries» — свои. Вариант пишется, только если у одной формы и
+    одного языка есть цена в обеих группах.
+    """
+    from sources.riseba import _extract_language, _extract_mode
+
+    field = re.search(
+        r'<div class="key">\s*(Tuition fee per year[^<]*)</div>\s*<div class="value">(.*?)</div>', page, re.S | re.I
+    )
+    if not field:
+        return None, []
+    label = _text(field.group(1))
+    year_match = re.search(r"(\d{4})/(\d{4})", label)
+    year = f"{year_match.group(1)}/{year_match.group(2)[2:]}" if year_match else None
+
+    lines = [_text(line) for line in re.split(r"<br\s*/?>", field.group(2), flags=re.I)]
+    groups: dict[str, dict[tuple[str, str], float]] = {"eu": {}, "non_eu": {}}
+    group: str | None = None
+    for line in lines:
+        lowered = line.lower()
+        if lowered.startswith(RISEBA_EU_HEADER):
+            group = "eu"
+            continue
+        if lowered.startswith(RISEBA_OTHER_HEADER):
+            group = "non_eu"
+            continue
+        match = re.match(r"([\d\s,.]+)\s*EUR\s*\(([^)]+)\)", line, re.I)
+        if not match or group is None:
+            continue
+        mode, language = _extract_mode(match.group(2)), _extract_language(match.group(2))
+        if mode and language:
+            groups[group][(mode, language)] = parse_amount(match.group(1).replace(".", ""))
+
+    excerpt = f"{label} " + " ".join(line for line in lines if line)
+    variants = [
+        {"mode": mode, "language": language, "eu": eu, "non_eu": groups["non_eu"][(mode, language)], "excerpt": excerpt}
+        for (mode, language), eu in groups["eu"].items()
+        if (mode, language) in groups["non_eu"]
+    ]
+    return year, variants
+
+
 def fee_rows(registry_row: dict, programme_id: str, year: str) -> list[dict]:
     """Черновики programme_fee для одной программы: по строке на группу с ценой.
     registry_row — цена из любого источника: eu, non_eu, excerpt, fee_source_url, eu_scope."""
@@ -197,6 +257,19 @@ Tuition fee: 2800 EUR for EU/EEA/Swiss citizens, EU Long-term resident permit ho
 members. 3200 EUR for citizens of other countries<br>Study location: Riga</p></div>"""
 
 
+RISEBA_SAMPLE = """<li class="list-group-item ps-0"><div class="key">
+    Tuition fee per year (for the 2026/2027 academic year):
+</div>
+<div class="value">
+    Citizens and permanent residents of Latvia, as well as citizens of other EU, EEA, and EU candidate countries:<br />
+3750 EUR (Full-time in Latvian)<br />
+3200 EUR (Part-time in Latvian)<br />
+4500 EUR (Full-time in English)<br />
+<br />
+Other countries:<br />
+5600 EUR (Full-time in English)                                    </div></li>"""
+
+
 def selftest() -> None:
     assert academic_year(date(2026, 11, 8)) == "2026/27"
     assert academic_year(date(2027, 3, 1)) == "2026/27"
@@ -241,6 +314,14 @@ def selftest() -> None:
         "full-time studies – 4000 EUR for EU/EEA/Swiss Confederation citizens, permanent residents and their family "
         "members; 5200 EUR for citizens of other countries. Part-time online studies – 3000 EUR"
     ) == "цены очной и заочной формы в одном поле"
+    # RISEBA: вариант только с обеими ценами; учебный год — из подписи
+    year, variants = parse_riseba_fees(RISEBA_SAMPLE)
+    assert year == "2026/27", year
+    assert [(v["mode"], v["language"], v["eu"], v["non_eu"]) for v in variants] == [
+        ("full_time", "en", 4500.0, 5600.0)
+    ], variants
+    assert "EU candidate countries" in variants[0]["excerpt"] and "Other countries" in variants[0]["excerpt"]
+    assert parse_riseba_fees("<html></html>") == (None, [])
     print("selftest ok")
 
 
@@ -294,8 +375,49 @@ def lu_prices(fetch, programmes: list[dict]) -> tuple[list[tuple[dict, dict]], l
     return pairs, skipped
 
 
+def riseba_prices(fetch, programmes: list[dict]) -> tuple[list[tuple[dict, dict]], list[str]]:
+    """(программа, цена) со страниц бакалавриата RISEBA и пропущенные варианты."""
+    pairs: list[tuple[dict, dict]] = []
+    skipped: list[str] = []
+    by_url: dict[str, list[dict]] = {}
+    for programme in programmes:
+        if (programme["source_url"] or "").startswith("https://riseba.lv/en/program/"):
+            by_url.setdefault(programme["source_url"], []).append(programme)
+    for url, candidates in by_url.items():
+        try:
+            year, variants = parse_riseba_fees(fetch(url))
+        except Exception as exc:  # noqa: BLE001 — страница пропала: в журнал, не падаем
+            skipped.append(f"{url}: страница не открылась ({type(exc).__name__})")
+            continue
+        if not variants:
+            skipped.append(f"{url}: нет варианта с ценой в обеих группах")
+        for variant in variants:
+            matches = [
+                p
+                for p in candidates
+                if p["language_of_instruction"] == variant["language"] and p["study_mode"] == variant["mode"]
+            ]
+            if not matches:
+                skipped.append(f"{url}: {variant['mode']}/{variant['language']} — нет в каталоге")
+            for programme in matches:
+                pairs.append(
+                    (
+                        programme,
+                        {
+                            "eu": variant["eu"],
+                            "non_eu": variant["non_eu"],
+                            "excerpt": variant["excerpt"],
+                            "fee_source_url": url,
+                            "eu_scope": "eu_efta_candidates",
+                            "academic_year": year,
+                        },
+                    )
+                )
+    return pairs, skipped
+
+
 # университет в базе → источник цен
-SOURCES = {"rtu": rtu_prices, "lu": lu_prices}
+SOURCES = {"rtu": rtu_prices, "lu": lu_prices, "riseba": riseba_prices}
 
 
 def main(apply: bool, only: str | None) -> None:
@@ -329,15 +451,18 @@ def main(apply: bool, only: str | None) -> None:
             continue
         university = execute(client.table("university").select("id").eq("slug", slug)).data[0]
         programmes = execute(
-            client.table("programme").select("id, slug, source_url").eq("university_id", university["id"])
+            client.table("programme")
+            .select("id, slug, source_url, language_of_instruction, study_mode")
+            .eq("university_id", university["id"])
         ).data
         pairs, skipped = source(fetch_text, programmes)
 
         drafts: list[dict] = []
         for programme, price in pairs:
-            for fee in fee_rows(price, programme["id"], year):
+            # год из источника (RISEBA называет его), иначе — год прочтения
+            for fee in fee_rows(price, programme["id"], price.get("academic_year") or year):
                 drafts.append(fee)
-                print(f"{slug} {programme['slug']}: {fee['applies_to']} {fee['amount']:.0f} EUR / год ({year})")
+                print(f"{slug} {programme['slug']}: {fee['applies_to']} {fee['amount']:.0f} EUR / год ({fee['academic_year']})")
 
         written = skipped_verified = 0
         for fee in drafts:
