@@ -261,7 +261,9 @@ _PER_SUBPROGRAMME_FEE = re.compile(r"\b(?!Tuition fee per year\b)[A-Z][\w' ]{2,4
 def _parse_price(text: str) -> float | None:
     if len(_PER_SUBPROGRAMME_FEE.findall(text)) > 1:
         return None
-    match = re.search(r"([\d][\d\s ]*)\s*EUR", text)
+    # «3700,00 EUR» — копейки после запятой отбрасываются; до 2026-11-09 их
+    # не было в выражении, и цена читалась как «00» → 0 € (Psychology, магистратура)
+    match = re.search(r"([\d][\d\s ]*)(?:,\d{2})?\s*EUR", text)
     if not match:
         return None
     digits = re.sub(r"[\s ]", "", match.group(1))
@@ -384,3 +386,20 @@ def scrape() -> tuple[UniversityDraft, list[ProgrammeDraft]]:
         browser.close()
 
     return UNIVERSITY, programmes
+
+
+def selftest() -> None:
+    assert _parse_price("3340 EUR") == 3340.0
+    assert _parse_price("6000 EUR per year") == 6000.0
+    assert _parse_price("3700,00 EUR for EU/EEA/Swiss citizens. 4700,00 EUR for citizens of other countries") == 3700.0
+    assert _parse_price("Tuition fee per year - 3100 EUR") == 3100.0
+    assert _parse_price("Biology - 2700 EUR, Biomedicine - 3500 EUR") is None
+    assert _parse_price("free") is None
+    print("самотест пройден")
+
+
+if __name__ == "__main__":
+    import sys
+
+    if "--selftest" in sys.argv:
+        selftest()
