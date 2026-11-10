@@ -10,6 +10,7 @@ import {
   formatMoney,
   type AppliesTo,
   type CountryCost,
+  type HousingCost,
   type ProgrammeFee,
 } from "@/lib/foreign-costs";
 
@@ -29,12 +30,15 @@ export function ForeignCosts({
   language,
   costs,
   fees,
+  housing,
 }: {
   dict: Dictionary;
   language: string;
   /** Действующие на сегодня суммы страны (currentCountryCosts). */
   costs: CountryCost[];
   fees: ProgrammeFee[];
+  /** Действующая цена общежитий вуза (currentHousingCost) или null. */
+  housing: HousingCost | null;
 }) {
   const t = dict.programme.foreignCosts;
 
@@ -126,6 +130,29 @@ export function ForeignCosts({
         <p className="mt-3 text-sm text-zinc-700">
           {scope === "eu_efta_candidates" ? t.euIncludesCandidates : t.euIncludesLongTermResidents}
         </p>
+      )}
+
+      {housing && (
+        <div className="mt-4 rounded-2xl bg-zinc-50 p-4 text-sm">
+          <dl>
+            <CostLine
+              line={{
+                label: t.housing,
+                // «114–291 €»: диапазон от самой дешёвой комнаты до самой дорогой
+                value: interpolate(t.housingValue, {
+                  min: money(housing.amountMin, housing.currency),
+                  max: money(housing.amountMax, housing.currency),
+                }),
+                verifiedAt: housing.verifiedAt,
+                sourceUrl: housing.sourceUrl,
+                sourceTitle: housing.sourceTitle,
+              }}
+              dict={dict}
+              language={language}
+            />
+          </dl>
+          <p className="mt-2 text-xs leading-relaxed text-zinc-600">{t.housingNote}</p>
+        </div>
       )}
 
       {means && (

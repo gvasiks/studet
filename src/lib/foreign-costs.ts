@@ -53,6 +53,28 @@ export function euPriceScope(fees: ProgrammeFee[]): EuScope | null {
   return fees.find((fee) => fee.euScope !== null)?.euScope ?? null;
 }
 
+/** Место в общежитиях вуза за месяц: от самой дешёвой комнаты до самой дорогой. */
+export type HousingCost = {
+  amountMin: number;
+  amountMax: number;
+  currency: string;
+  validFrom: string;
+  sourceTitle: string;
+  sourceUrl: string;
+  verifiedAt: string;
+};
+
+/** Цены общежития, действующие на дату: строка с самой поздней датой начала. */
+export function currentHousingCost(rows: HousingCost[], today: Date): HousingCost | null {
+  const day = isoDay(today);
+  let best: HousingCost | null = null;
+  for (const row of rows) {
+    if (row.validFrom > day) continue;
+    if (!best || row.validFrom > best.validFrom) best = row;
+  }
+  return best;
+}
+
 // Даты сравниваются строками «ГГГГ-ММ-ДД»: так не нужно думать о часовых поясах.
 function isoDay(date: Date): string {
   return date.toISOString().slice(0, 10);

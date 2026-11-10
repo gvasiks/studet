@@ -20,8 +20,8 @@ import { matchRounds } from "@/lib/deadlines";
 import { getAdmissionType } from "@/lib/admission-type-queries";
 import { httpUrl, matchChannel } from "@/lib/application-channel";
 import { getApplicationChannels } from "@/lib/application-channel-queries";
-import { getCountryCosts, getProgrammeFees } from "@/lib/foreign-cost-queries";
-import { currentCountryCosts } from "@/lib/foreign-costs";
+import { getCountryCosts, getHousingCosts, getProgrammeFees } from "@/lib/foreign-cost-queries";
+import { currentCountryCosts, currentHousingCost } from "@/lib/foreign-costs";
 import { getProgrammeOutcome } from "@/lib/outcome-queries";
 import { areaCode } from "@/lib/fields";
 import { currentAccreditation, pickDetails, sourceHost } from "@/lib/programme-details";
@@ -116,7 +116,7 @@ export default async function ProgrammePage({ params }: { params: Params }) {
   // docs/PLAN-FOREIGNERS.md). Только подтверждённые суммы.
   const foreignPromise =
     countryOf(locale) === "LV"
-      ? Promise.all([getCountryCosts("LV"), getProgrammeFees(record.id)])
+      ? Promise.all([getCountryCosts("LV"), getProgrammeFees(record.id), getHousingCosts(record.university_id)])
       : Promise.resolve(null);
   const [formula, rounds, admissionType, outcome, channels, hasLtCalculator, ltField, ltStats, eeField, eeAdmission, vuppStats, foreign] =
     await Promise.all([
@@ -144,8 +144,11 @@ export default async function ProgrammePage({ params }: { params: Params }) {
   // иностранцы) и у любой программы с подтверждённой платой для групп ЕС / не ЕС.
   const foreignCosts = foreign ? currentCountryCosts(foreign[0], new Date()) : [];
   const foreignFees = foreign ? foreign[1] : [];
+  // Общежитие вуза — отдельной строкой, в итог не входит (шаг 1 плана).
+  const foreignHousing = foreign ? currentHousingCost(foreign[2], new Date()) : null;
   const showForeignCosts =
-    (foreignCosts.length > 0 && record.language_of_instruction === "en") || foreignFees.length > 0;
+    ((foreignCosts.length > 0 || foreignHousing !== null) && record.language_of_instruction === "en") ||
+    foreignFees.length > 0;
   // Где подать документы: только подтверждённая человеком запись вуза для
   // этого уровня (или для всех уровней). Нет записи — блока нет.
   const channel = matchChannel(channels, record.university_id, record.degree_level);
@@ -490,7 +493,13 @@ export default async function ProgrammePage({ params }: { params: Params }) {
       )}
 
       {showForeignCosts && (
-        <ForeignCosts dict={dict} language={language} costs={foreignCosts} fees={foreignFees} />
+        <ForeignCosts
+          dict={dict}
+          language={language}
+          costs={foreignCosts}
+          fees={foreignFees}
+          housing={foreignHousing}
+        />
       )}
 
       {ltStats && <LtAdmissionStats dict={dict} language={language} stats={ltStats} />}

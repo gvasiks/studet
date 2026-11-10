@@ -1,11 +1,13 @@
 import { describe, expect, it } from "vitest";
 import {
   currentCountryCosts,
+  currentHousingCost,
   euPriceScope,
   feesFor,
   firstYearTotal,
   formatMoney,
   type CountryCost,
+  type HousingCost,
   type ProgrammeFee,
 } from "./foreign-costs";
 
@@ -46,6 +48,28 @@ describe("кому ещё цена ЕС", () => {
     expect(euPriceScope([fee({ euScope: "eu_long_term_residents" })])).toBe("eu_long_term_residents");
     expect(euPriceScope([fee({})])).toBeNull();
     expect(euPriceScope([])).toBeNull();
+  });
+});
+
+describe("общежитие на дату", () => {
+  const row = (validFrom: string, amountMax: number): HousingCost => ({
+    amountMin: 114,
+    amountMax,
+    currency: "EUR",
+    validFrom,
+    sourceTitle: "LU dormitories",
+    sourceUrl: "https://www.lu.lv/",
+    verifiedAt: "2026-11-10T00:00:00Z",
+  });
+
+  it("берёт самую позднюю уже действующую строку", () => {
+    const rows = [row("2025-07-01", 256), row("2026-07-01", 291), row("2027-07-01", 320)];
+    expect(currentHousingCost(rows, new Date("2026-11-10T12:00:00Z"))?.amountMax).toBe(291);
+  });
+
+  it("до первой даты — ничего", () => {
+    expect(currentHousingCost([row("2026-07-01", 291)], new Date("2026-06-30T12:00:00Z"))).toBeNull();
+    expect(currentHousingCost([], new Date())).toBeNull();
   });
 });
 

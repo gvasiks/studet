@@ -10,6 +10,7 @@ import {
   type CountryCost,
   type CountryCostCode,
   type EuScope,
+  type HousingCost,
   type FeeKind,
   type ProgrammeFee,
 } from "@/lib/foreign-costs";
@@ -51,6 +52,28 @@ export async function getCountryCosts(country: Country): Promise<CountryCost[]> 
         sourceUrl: row.source_url,
         verifiedAt: row.verified_at,
       }));
+  });
+}
+
+// Цены общежитий вуза — подтверждённые строки, все даты (действующую выбирает
+// currentHousingCost). В памяти пять минут, как общие суммы страны.
+export async function getHousingCosts(universityId: string): Promise<HousingCost[]> {
+  return remember(`housing-costs:${universityId}`, COUNTRY_COSTS_MEMORY_MS, async () => {
+    const { data, error } = await supabase
+      .from("housing_cost")
+      .select("amount_min, amount_max, currency, valid_from, source_title, source_url, verified_at")
+      .eq("university_id", universityId)
+      .not("verified_at", "is", null);
+    if (error) return [];
+    return (data ?? []).map((row) => ({
+      amountMin: Number(row.amount_min),
+      amountMax: Number(row.amount_max),
+      currency: row.currency,
+      validFrom: row.valid_from,
+      sourceTitle: row.source_title,
+      sourceUrl: row.source_url,
+      verifiedAt: row.verified_at,
+    }));
   });
 }
 
