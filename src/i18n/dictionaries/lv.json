@@ -13,7 +13,7 @@
     "rightsText": "Ko likums garantē reflektantam: termiņi, līgums, rezultāti un lēmuma apstrīdēšana."
   },
   "coverage": {
-    "notice": "Pagaidām šeit ir aptverta tikai Latvijas uzņemšanas sistēma vietējiem skolu absolventiem. Atbalsts ārvalstu reflektantiem tiek veidots: apraksts par uzturēšanās atļauju studijām ir gatavs, izmaksas programmu lapās parādās pēc pārbaudes, dokumentu saraksti vēl nav izveidoti.",
+    "notice": "Pagaidām šeit ir aptverta tikai Latvijas uzņemšanas sistēma vietējiem skolu absolventiem. Atbalsts ārvalstu reflektantiem tiek veidots: apraksts par uzturēšanās atļauju studijām ir gatavs, izmaksas programmu lapās parādās pēc pārbaudes, dokumentu saraksti — angļu valodā īstenoto programmu lapās, arī pēc pārbaudes.",
     "label": "Par vietnes tvērumu"
   },
   "catalog": {
@@ -208,6 +208,43 @@
       "insuranceNote": "Nepieciešama arī veselības apdrošināšana; tās cenu normatīvie akti nenosaka.",
       "permitLink": "Kā saņemt uzturēšanās atļauju studijām",
       "disclaimer": "Summas var mainīties; galīgās summas nosaka augstskola un Pilsonības un migrācijas lietu pārvalde."
+    },
+    "foreignDocuments": {
+      "title": "Dokumenti, kas jāsagatavo",
+      "intro": "Ko augstskola šajā līmenī prasa ārvalstu reflektantiem. Atzīmes tiek saglabātas tikai šajā pārlūkā.",
+      "stages": {
+        "application": "Piesakoties",
+        "before_arrival": "Pirms ierašanās Latvijā"
+      },
+      "documents": {
+        "passport": "Pase",
+        "photo": "Fotogrāfija",
+        "secondary_diploma": "Vidējās izglītības atestāts",
+        "bachelor_diploma": "Bakalaura diploms",
+        "transcript": "Sekmju izraksts",
+        "enrolment_letter": "Izziņa par mācībām pēdējā kursā",
+        "english_translation": "Tulkojums angļu valodā",
+        "legalisation": "Legalizācija vai apostille",
+        "english_certificate": "Angļu valodas sertifikāts",
+        "motivation_letter": "Motivācijas vēstule",
+        "cv": "CV",
+        "recommendation_letters": "Ieteikuma vēstules",
+        "criminal_record": "Izziņa par sodāmību",
+        "minor_documents": "Dzimšanas apliecība un aizbildnības dokuments",
+        "proof_of_funds": "Apliecinājums par iztikas līdzekļiem",
+        "application_fee_receipt": "Pieteikuma maksas apliecinājums"
+      },
+      "conditions": {
+        "docs_issued_outside_eu": "ja dokumenti izdoti ārpus ES, EEZ un Šveices",
+        "non_eu_citizens": "valstu ārpus ES, EEZ un Šveices pilsoņiem",
+        "visa_required": "ja ieceļošanai Latvijā vajadzīga vīza",
+        "under_18": "nepilngadīgajiem",
+        "final_year": "ja mācības vēl nav pabeigtas"
+      },
+      "notesLanguage": "Piezīmes — angļu valodā, kā augstskolas lapā.",
+      "more": "Dažām programmām un valstīm augstskola var prasīt vairāk dokumentu. Pirms pieteikšanās jāpārbauda augstskolas lapa.",
+      "sources": "Avoti:",
+      "progress": "Sagatavoti {done} no {total}"
     },
     "deadlinesTitle": "Pieteikšanās termiņi",
     "deadlinesNotAvailable": "Uzņemšanas datumi šai programmai vēl nav apstiprināti.",
@@ -975,7 +1012,7 @@
   "privacy": {
     "title": "Privātuma politika",
     "intro": "Kā šī vietne apstrādā personas datus: kas tiek glabāts, kas ne, un kādas ir datu subjekta tiesības.",
-    "updated": "Redakcija: 2026. gada 7. novembris",
+    "updated": "Redakcija: 2026. gada 14. novembris",
     "authorityLabel": "Datu valsts inspekcija (dvi.gov.lv)",
     "authorityUrl": "https://www.dvi.gov.lv",
     "sections": [
@@ -1017,7 +1054,7 @@
         "id": "favorites",
         "title": "Saglabātās programmas",
         "body": [
-          "Ar zvaigznīti atzīmēto programmu saraksts glabājas tikai apmeklētāja pārlūkā (localStorage). To var dzēst, iztīrot vietnes datus pārlūka iestatījumos. Šī glabāšana ir vajadzīga funkcijai, ko apmeklētājs izmanto pēc paša izvēles.",
+          "Ar zvaigznīti atzīmēto programmu saraksts glabājas tikai apmeklētāja pārlūkā (localStorage). To var dzēst, iztīrot vietnes datus pārlūka iestatījumos. Šī glabāšana ir vajadzīga funkcijai, ko apmeklētājs izmanto pēc paša izvēles. Tāpat tiek glabātas atzīmes dokumentu sarakstā programmas lapā.",
           "Atverot saglabāto programmu sarakstu, pārlūks pieprasa šo programmu datus no mūsu datubāzes. Pieprasījumā ir programmu identifikatori; tāpat kā jebkurš apmeklējums, tas nonāk pakalpojuma sniedzēja tehniskajos žurnālos. Mēs sarakstu neglabājam un nesaistām to ar personu."
         ]
       },

@@ -14,6 +14,7 @@ import {
   type FeeKind,
   type ProgrammeFee,
 } from "@/lib/foreign-costs";
+import { parseRequirements, type DocumentRequirement } from "@/lib/foreign-documents";
 
 // Общие суммы страны меняются раз в год — живут в памяти сервера пять минут,
 // как каталог (server-memo.ts). Подтверждение в Studio видно с той же задержкой.
@@ -103,3 +104,18 @@ export const getProgrammeFees = cache(async (programmeId: string): Promise<Progr
       euScope: (EU_SCOPES as readonly string[]).includes(row.eu_scope) ? (row.eu_scope as EuScope) : null,
     }));
 });
+
+// Чек-лист документов вуза на уровне программы (шаг 3) — подтверждённые строки.
+// В памяти пять минут, как цены общежитий; ошибка — пустой список.
+export async function getDocumentRequirements(universityId: string, degreeLevel: string): Promise<DocumentRequirement[]> {
+  return remember(`documents:${universityId}:${degreeLevel}`, COUNTRY_COSTS_MEMORY_MS, async () => {
+    const { data, error } = await supabase
+      .from("foreign_document_requirement")
+      .select("document, applies_to, stage, note, sort_order, source_url, verified_at")
+      .eq("university_id", universityId)
+      .eq("degree_level", degreeLevel)
+      .not("verified_at", "is", null);
+    if (error) return [];
+    return parseRequirements(data ?? []);
+  });
+}

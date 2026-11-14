@@ -209,6 +209,43 @@
       "permitLink": "Kuidas saada elamisluba õppimiseks",
       "disclaimer": "Summad võivad muutuda; lõplikud summad määravad kõrgkool ning Läti kodakondsus- ja migratsiooniamet."
     },
+    "foreignDocuments": {
+      "title": "Ettevalmistatavad dokumendid",
+      "intro": "Mida ülikool sellel õppeastmel välismaa kandidaatidelt nõuab. Märked salvestatakse ainult selles brauseris.",
+      "stages": {
+        "application": "Avalduse esitamisel",
+        "before_arrival": "Enne Lätti saabumist"
+      },
+      "documents": {
+        "passport": "Pass",
+        "photo": "Foto",
+        "secondary_diploma": "Keskhariduse tunnistus",
+        "bachelor_diploma": "Bakalaureusediplom",
+        "transcript": "Hinneteleht",
+        "enrolment_letter": "Tõend viimasel kursusel õppimise kohta",
+        "english_translation": "Ingliskeelne tõlge",
+        "legalisation": "Legaliseerimine või apostill",
+        "english_certificate": "Inglise keele tunnistus",
+        "motivation_letter": "Motivatsioonikiri",
+        "cv": "CV",
+        "recommendation_letters": "Soovituskirjad",
+        "criminal_record": "Karistusregistri väljavõte",
+        "minor_documents": "Sünnitunnistus ja eestkostedokument",
+        "proof_of_funds": "Elatusvahendite tõend",
+        "application_fee_receipt": "Avaldusetasu maksmise tõend"
+      },
+      "conditions": {
+        "docs_issued_outside_eu": "kui dokumendid on välja antud väljaspool EL-i, EMP-d ja Šveitsi",
+        "non_eu_citizens": "EL-i, EMP ja Šveitsi väliste riikide kodanikele",
+        "visa_required": "kui Lätti sisenemiseks on vaja viisat",
+        "under_18": "alla 18-aastastele",
+        "final_year": "kui õpingud pole veel lõpetatud"
+      },
+      "notesLanguage": "Märkused on inglise keeles, nagu ülikooli lehel.",
+      "more": "Mõne õppekava ja riigi puhul võib ülikool nõuda rohkem dokumente. Enne avalduse esitamist tasub ülikooli lehte kontrollida.",
+      "sources": "Allikad:",
+      "progress": "Valmis {done}/{total}"
+    },
     "deadlinesTitle": "Avalduste esitamise tähtajad",
     "deadlinesNotAvailable": "Selle õppekava vastuvõtu kuupäevad ei ole veel kinnitatud.",
     "deadlinesOpens": "alates",
@@ -947,7 +984,7 @@
   "privacy": {
     "title": "Privaatsuspoliitika",
     "intro": "Kuidas see sait isikuandmeid töötleb: mida säilitatakse, mida mitte ja millised on andmesubjekti õigused. See tekst on tõlge läti keelest; lahknevuse korral kehtib lätikeelne tekst.",
-    "updated": "Redaktsioon: 7. november 2026",
+    "updated": "Redaktsioon: 14. november 2026",
     "authorityLabel": "Andmekaitse Inspektsioon (aki.ee)",
     "authorityUrl": "https://www.aki.ee",
     "sections": [
@@ -989,7 +1026,7 @@
         "id": "favorites",
         "title": "Salvestatud õppekavad",
         "body": [
-          "Tähega märgitud õppekavade loend on ainult külastaja brauseris (localStorage). Selle saab kustutada, tühjendades brauseri seadetes saidi andmed. See säilitamine on vajalik funktsiooni jaoks, mida külastaja kasutab omal valikul.",
+          "Tähega märgitud õppekavade loend on ainult külastaja brauseris (localStorage). Selle saab kustutada, tühjendades brauseri seadetes saidi andmed. See säilitamine on vajalik funktsiooni jaoks, mida külastaja kasutab omal valikul. Samamoodi hoitakse ka märkeid õppekava lehe dokumentide loendis.",
           "Salvestatud õppekavade loendi avamisel pärib brauser nende õppekavade andmed meie andmebaasist. Päringus on õppekavade identifikaatorid; nagu iga külastus, jõuab see teenusepakkuja tehnilistesse logidesse. Me loendit ei säilita ega seo seda isikuga."
         ]
       },

@@ -308,7 +308,7 @@
   "privacy": {
     "title": "Privaatsuspoliitika",
     "intro": "Kuidas see sait isikuandmeid töötleb: mida säilitatakse, mida mitte ja millised on andmesubjekti õigused. See tekst on tõlge; lahknevuse korral kehtib leedukeelne tekst.",
-    "updated": "Redaktsioon: 7. november 2026",
+    "updated": "Redaktsioon: 14. november 2026",
     "authorityLabel": "Leedu Riiklik Andmekaitse Inspektsioon (vdai.lrv.lt)",
     "authorityUrl": "https://vdai.lrv.lt",
     "sections": [
@@ -350,7 +350,7 @@
         "id": "favorites",
         "title": "Salvestatud õppekavad",
         "body": [
-          "Tähega märgitud õppekavade loend on ainult külastaja brauseris (localStorage). Selle saab kustutada, tühjendades brauseri seadetes saidi andmed. See säilitamine on vajalik funktsiooni jaoks, mida külastaja kasutab omal valikul.",
+          "Tähega märgitud õppekavade loend on ainult külastaja brauseris (localStorage). Selle saab kustutada, tühjendades brauseri seadetes saidi andmed. See säilitamine on vajalik funktsiooni jaoks, mida külastaja kasutab omal valikul. Samamoodi hoitakse ka märkeid õppekava lehe dokumentide loendis.",
           "Salvestatud õppekavade loendi avamisel pärib brauser nende õppekavade andmed meie andmebaasist. Päringus on õppekavade identifikaatorid; nagu iga külastus, jõuab see teenusepakkuja tehnilistesse logidesse. Me loendit ei säilita ega seo seda isikuga."
         ]
       },

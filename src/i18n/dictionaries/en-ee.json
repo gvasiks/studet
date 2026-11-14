@@ -273,7 +273,7 @@
         "id": "favorites",
         "title": "Saved programmes",
         "body": [
-          "The list of programmes you mark with a star is kept only in your browser (localStorage). You can delete it by clearing the site's data in your browser settings. This storage is needed for a feature you choose to use.",
+          "The list of programmes you mark with a star is kept only in your browser (localStorage). You can delete it by clearing the site's data in your browser settings. This storage is needed for a feature you choose to use. Ticks in the document checklist on a programme page are kept the same way.",
           "When you open the list, your browser requests the data of those programmes from our database. The request contains the programmes' identifiers; like any visit, it ends up in the provider's technical logs. We do not store the list and do not link it to a person."
         ]
       },

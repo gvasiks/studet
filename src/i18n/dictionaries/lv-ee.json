@@ -273,7 +273,7 @@
         "id": "favorites",
         "title": "Saglabātās programmas",
         "body": [
-          "Ar zvaigznīti atzīmēto programmu saraksts glabājas tikai apmeklētāja pārlūkā (localStorage). To var dzēst, iztīrot vietnes datus pārlūka iestatījumos. Šī glabāšana ir vajadzīga funkcijai, ko apmeklētājs izmanto pēc paša izvēles.",
+          "Ar zvaigznīti atzīmēto programmu saraksts glabājas tikai apmeklētāja pārlūkā (localStorage). To var dzēst, iztīrot vietnes datus pārlūka iestatījumos. Šī glabāšana ir vajadzīga funkcijai, ko apmeklētājs izmanto pēc paša izvēles. Tāpat tiek glabātas atzīmes dokumentu sarakstā programmas lapā.",
           "Atverot saglabāto programmu sarakstu, pārlūks pieprasa šo programmu datus no mūsu datubāzes. Pieprasījumā ir programmu identifikatori; tāpat kā jebkurš apmeklējums, tas nonāk pakalpojuma sniedzēja tehniskajos žurnālos. Mēs sarakstu neglabājam un nesaistām to ar personu."
         ]
       },

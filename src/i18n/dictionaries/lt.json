@@ -209,6 +209,43 @@
       "permitLink": "Kaip gauti leidimą gyventi studijoms",
       "disclaimer": "Sumos gali keistis; galutines sumas nustato aukštoji mokykla ir Latvijos pilietybės ir migracijos reikalų valdyba."
     },
+    "foreignDocuments": {
+      "title": "Dokumentai, kuriuos reikia paruošti",
+      "intro": "Ko universitetas šioje pakopoje prašo užsienio stojančiųjų. Jūsų žymės išsaugomos tik šioje naršyklėje.",
+      "stages": {
+        "application": "Teikiant prašymą",
+        "before_arrival": "Prieš atvykstant į Latviją"
+      },
+      "documents": {
+        "passport": "Pasas",
+        "photo": "Nuotrauka",
+        "secondary_diploma": "Vidurinio išsilavinimo atestatas",
+        "bachelor_diploma": "Bakalauro diplomas",
+        "transcript": "Pažymių išrašas",
+        "enrolment_letter": "Pažyma, kad mokotės paskutiniame kurse",
+        "english_translation": "Vertimas į anglų kalbą",
+        "legalisation": "Legalizavimas arba apostilė",
+        "english_certificate": "Anglų kalbos sertifikatas",
+        "motivation_letter": "Motyvacinis laiškas",
+        "cv": "Gyvenimo aprašymas (CV)",
+        "recommendation_letters": "Rekomendaciniai laiškai",
+        "criminal_record": "Pažyma apie teistumą",
+        "minor_documents": "Gimimo liudijimas ir globos dokumentas",
+        "proof_of_funds": "Lėšų pragyvenimui įrodymas",
+        "application_fee_receipt": "Prašymo mokesčio sumokėjimo įrodymas"
+      },
+      "conditions": {
+        "docs_issued_outside_eu": "jei dokumentai išduoti ne ES, EEE ar Šveicarijoje",
+        "non_eu_citizens": "ne ES, EEE ir Šveicarijos piliečiams",
+        "visa_required": "jei atvykti į Latviją jums reikia vizos",
+        "under_18": "jei jums nėra 18 metų",
+        "final_year": "jei dar nebaigėte mokslų"
+      },
+      "notesLanguage": "Pastabos — anglų kalba, kaip universiteto svetainėje.",
+      "more": "Kai kurioms programoms ir šalims universitetas gali prašyti daugiau dokumentų. Prieš teikdami prašymą, patikrinkite universiteto svetainę.",
+      "sources": "Šaltiniai:",
+      "progress": "Paruošta {done} iš {total}"
+    },
     "deadlinesTitle": "Prašymų teikimo terminai",
     "deadlinesNotAvailable": "Šios programos priėmimo datos dar nepatvirtintos.",
     "deadlinesOpens": "nuo",
@@ -999,7 +1036,7 @@
   "privacy": {
     "title": "Privatumo politika",
     "intro": "Kaip ši svetainė tvarko asmens duomenis: ką saugome, ko nesaugome ir kokios yra jūsų teisės.",
-    "updated": "Redakcija: 2026 m. lapkričio 7 d.",
+    "updated": "Redakcija: 2026 m. lapkričio 14 d.",
     "authorityLabel": "Valstybinė duomenų apsaugos inspekcija (vdai.lrv.lt)",
     "authorityUrl": "https://vdai.lrv.lt",
     "sections": [
@@ -1041,7 +1078,7 @@
         "id": "favorites",
         "title": "Išsaugotos programos",
         "body": [
-          "Programų, kurias pažymite žvaigždute, sąrašas saugomas tik jūsų naršyklėje (localStorage). Jį galite ištrinti išvalę svetainės duomenis naršyklės nustatymuose. Šis saugojimas reikalingas funkcijai, kuria naudotis pasirenkate patys.",
+          "Programų, kurias pažymite žvaigždute, sąrašas saugomas tik jūsų naršyklėje (localStorage). Jį galite ištrinti išvalę svetainės duomenis naršyklės nustatymuose. Šis saugojimas reikalingas funkcijai, kuria naudotis pasirenkate patys. Taip pat saugomos ir žymės dokumentų sąraše programos puslapyje.",
           "Kai atidarote sąrašą, naršyklė paprašo šių programų duomenų iš mūsų duomenų bazės. Užklausoje yra programų identifikatoriai; kaip ir bet kuris apsilankymas, ji patenka į paslaugų teikėjo techninius žurnalus. Sąrašo nesaugome ir nesiejame jo su asmeniu."
         ]
       },

@@ -6,7 +6,7 @@
     "description": "Anketa, katalogas ir konkursinio balo skaičiuoklė vienoje vietoje — kol kas apima Latvijos priėmimo sistemą."
   },
   "coverage": {
-    "notice": "Kol kas čia aprašyta Latvijos priėmimo sistema vietos abiturientams. Informacija užsienio stojantiesiems kuriama: aprašas apie leidimą gyventi studijoms jau parengtas, išlaidos programų puslapiuose rodomos po patikrinimo, dokumentų sąrašų dar nėra."
+    "notice": "Kol kas čia aprašyta Latvijos priėmimo sistema vietos abiturientams. Informacija užsienio stojantiesiems kuriama: aprašas apie leidimą gyventi studijoms jau parengtas, išlaidos programų puslapiuose rodomos po patikrinimo, dokumentų sąrašai — anglų kalba vykdomų programų puslapiuose, taip pat po patikrinimo."
   },
   "catalog": {
     "degreeLevel": {
@@ -301,7 +301,7 @@
   },
   "privacy": {
     "intro": "Kaip ši svetainė tvarko asmens duomenis: ką saugome, ko nesaugome ir kokios yra jūsų teisės. Šis tekstas — vertimas iš latvių kalbos; jei tekstai skiriasi, galioja tekstas latvių kalba.",
-    "updated": "Redakcija: 2026 m. lapkričio 7 d.",
+    "updated": "Redakcija: 2026 m. lapkričio 14 d.",
     "authorityLabel": "Latvijos duomenų valstybinė inspekcija (dvi.gov.lv)",
     "authorityUrl": "https://www.dvi.gov.lv/en",
     "sections": [
@@ -343,7 +343,7 @@
         "id": "favorites",
         "title": "Išsaugotos programos",
         "body": [
-          "Programų, kurias pažymite žvaigždute, sąrašas saugomas tik jūsų naršyklėje (localStorage). Jį galite ištrinti išvalę svetainės duomenis naršyklės nustatymuose. Šis saugojimas reikalingas funkcijai, kuria naudotis pasirenkate patys.",
+          "Programų, kurias pažymite žvaigždute, sąrašas saugomas tik jūsų naršyklėje (localStorage). Jį galite ištrinti išvalę svetainės duomenis naršyklės nustatymuose. Šis saugojimas reikalingas funkcijai, kuria naudotis pasirenkate patys. Taip pat saugomos ir žymės dokumentų sąraše programos puslapyje.",
           "Kai atidarote sąrašą, naršyklė paprašo šių programų duomenų iš mūsų duomenų bazės. Užklausoje yra programų identifikatoriai; kaip ir bet kuris apsilankymas, ji patenka į paslaugų teikėjo techninius žurnalus. Sąrašo nesaugome ir nesiejame jo su asmeniu."
         ]
       },
