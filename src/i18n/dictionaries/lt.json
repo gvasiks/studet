@@ -206,6 +206,7 @@
       "meansValue": "{amount} per mėnesį",
       "meansNote": "Leidimui gyventi reikia įrodyti, kad buvimo metu turėsite bent tokią sumą per mėnesį. Tai nėra mokėjimas.",
       "insuranceNote": "Taip pat reikalingas sveikatos draudimas; jo kainos teisės aktai nenustato.",
+      "permitLink": "Kaip gauti leidimą gyventi studijoms",
       "disclaimer": "Sumos gali keistis; galutines sumas nustato aukštoji mokykla ir Latvijos pilietybės ir migracijos reikalų valdyba."
     },
     "deadlinesTitle": "Prašymų teikimo terminai",
@@ -228,6 +229,7 @@
     "match": "Reikalavimų patikra",
     "glossary": "Žodynėlis",
     "rights": "Jūsų teisės",
+    "studentPermit": "Leidimas gyventi studijoms",
     "menu": "Meniu",
     "main": "Pagrindinė navigacija",
     "footer": "Poraštės navigacija",
@@ -573,6 +575,91 @@
     "compareEmpty": "Programų kortelėse pažymėkite „Lyginti“, kad pamatytumėte jas greta.",
     "missingNote": "Išsaugotų programų, kurių dabar nėra kataloge: {count}. Galbūt tai laikina.",
     "removeMissing": "Pašalinti jas iš sąrašo"
+  },
+  "studentPermit": {
+    "title": "Leidimas gyventi studijoms Latvijoje",
+    "intro": "Ko reikia kitos šalies studentui, kad studijų metu galėtų gyventi Latvijoje: kam reikia leidimo gyventi, kas pateikia dokumentus, kokie mokesčiai ir kokios taisyklės galioja po įstojimo. Prie kiekvieno punkto nurodyta teisės norma. Jei vertimas skiriasi, galioja latviškas tekstas.",
+    "checkedNote": "Kiekvienas punktas 2026 m. lapkričio 14 d. palygintas su galiojančia redakcija likumi.lv. Dėl kiekvieno prašymo sprendžia Pilietybės ir migracijos reikalų valdyba (PMLP); šis puslapis jos nurodymų nepakeičia.",
+    "sourceLabel": "Teisinis pagrindas",
+    "sourcesTitle": "Teisės aktai",
+    "items": [
+      {
+        "id": "eu-citizens",
+        "title": "ES, EEE ir Šveicarijos piliečiams leidimo gyventi nereikia",
+        "text": "Jie atvyksta į Latviją su galiojančiu kelionės dokumentu. Norėdami be pertraukos gyventi ilgiau nei tris mėnesius, jie registruojasi PMLP ir prašo registracijos pažymėjimo. Studentui, kurio numatomas buvimas neviršija vienerių metų, registruotis nereikia. Pažymėjimui gauti studentui reikia pakankamų pragyvenimo lėšų ir sveikatos draudimo arba ES dokumento, suteikiančio teisę Latvijoje gauti būtinąją medicinos pagalbą.",
+        "source": "Europos Sąjungos, Europos ekonominės erdvės ir Šveicarijos Konfederacijos piliečių ir jų šeimos narių atvykimo ir buvimo Latvijos Respublikoje įstatymas, 9 straipsnis, 19 straipsnio 1 dalis, 24 straipsnio 3 punktas ir 25 straipsnio 1 dalies 3 punktas"
+      },
+      {
+        "id": "who-needs-permit",
+        "title": "Visiems kitiems: laikinasis leidimas gyventi nuolatinėms studijoms",
+        "text": "Kitos šalies pilietis, priimtas į nuolatinių studijų programą Latvijos universitete ar kolegijoje, gali prašyti laikinojo leidimo gyventi studijoms. Jis išduodamas nuolatinių studijų laikotarpiui ir dar keturiems mėnesiams.",
+        "source": "Imigracijos įstatymas, 1 straipsnio 7⁴ punktas ir 23 straipsnio 1 dalies 10¹ punktas"
+      },
+      {
+        "id": "university-request",
+        "title": "Pirmiausia į PMLP kreipiasi aukštoji mokykla",
+        "text": "Aukštoji mokykla kaip kviečiančioji šalis pateikia PMLP prašymą. Jame ji nurodo numatomą studijų pabaigos datą.",
+        "source": "Ministrų kabineto nutarimas Nr. 564, 16.4.5 papunktis"
+      },
+      {
+        "id": "submitting",
+        "title": "Kaip pateikiami dokumentai",
+        "text": "Prie prašymo pridedama studijų sutartis. Jei studentas nėra Latvijoje, dokumentus pirmajam leidimui gyventi gauti jo vardu gali pateikti aukštoji mokykla. Tai netaikoma šalių, įtrauktų į Ministrų kabineto papildomo tikrinimo sąrašą, piliečiams ir asmenims, kuriems užsienyje suteiktas pabėgėlio, asmens be pilietybės ar alternatyvusis statusas arba laikinoji apsauga. Dokumentus taip pat galima pateikti elektroniniu būdu, įskaitant PMLP e. paslaugą, ir paštu, jei studentas jau yra Latvijoje.",
+        "source": "Ministrų kabineto nutarimas Nr. 564, 2, 3¹ ir 51 punktai"
+      },
+      {
+        "id": "fees-and-funds",
+        "title": "Valstybės rinkliavos ir lėšos, kurias reikia įrodyti",
+        "text": "Valstybės rinkliava mokama už dokumentų nagrinėjimą ir atskirai už leidimo gyventi registravimą; ilgalaikė viza, jei jos reikia, turi savo rinkliavą. Patikrintos sumos rodomos programų puslapiuose, bloke „Išlaidos užsienio studentams“. Už kiekvieną buvimo mėnesį reikia turėti lėšų, ne mažesnių už minimalųjį mėnesinį darbo užmokestį.",
+        "source": "Ministrų kabineto nutarimas Nr. 731, 2.1, 5.1.1 ir 6.1.1 papunkčiai; Ministrų kabineto nutarimas Nr. 225, 11.7 papunktis"
+      },
+      {
+        "id": "work",
+        "title": "Darbas studijų metu",
+        "text": "Studentas, turintis leidimą gyventi arba ilgalaikę vizą nuolatinėms studijoms, gali dirbti bet kuriam darbdaviui iki 20 valandų per savaitę, o per studijų atostogas – iki 40 valandų per savaitę. Nuolatinių magistrantūros ir doktorantūros studijų studentams, turintiems leidimą gyventi, šis apribojimas netaikomas.",
+        "source": "Imigracijos įstatymas, 9 straipsnio 5 dalies 25 punktas ir 9 straipsnio 5¹ dalis"
+      },
+      {
+        "id": "progress",
+        "title": "Studijų pažanga turi įtakos leidimui gyventi",
+        "text": "Leidimas gyventi neišduodamas, jei be nuo studento nepriklausančių aplinkybių jis per penkerius metus iki prašymo bent du kartus buvo pašalintas iš studijų programos dėl nepažangumo ar studijų sutarties nevykdymo, per tuos penkerius metus bent du kartus pradėjo ir nutraukė studijas arba vienoje programoje daugiau nei vienais metais (iki trejų metų programose) ar daugiau nei dvejais metais (ilgesnėse programose) viršija sutartyje nustatytą studijų laiką. Išduotas leidimas gyventi dėl studijų laiko viršijimo taip pat panaikinamas.",
+        "source": "Imigracijos įstatymas, 34 straipsnio 1 dalies 39 punktas ir 35 straipsnio 1 dalies 34 punktas"
+      },
+      {
+        "id": "after-graduation",
+        "title": "Po magistro ar daktaro laipsnio",
+        "text": "Latvijoje nuolatines magistrantūros ar doktorantūros studijas baigęs asmuo, turintis valstybės pripažintą diplomą, gali prašyti laikinojo leidimo gyventi devyniems mėnesiams. Prašymą reikia pateikti ne vėliau kaip per tris mėnesius nuo studijoms išduoto leidimo gyventi galiojimo pabaigos.",
+        "source": "Imigracijos įstatymas, 23 straipsnio 1 dalies 32 punktas"
+      },
+      {
+        "id": "russia-belarus",
+        "title": "Rusijos ir Baltarusijos piliečiams: atskiros taisyklės",
+        "text": "Rusijos pilietis gali prašyti laikinojo leidimo gyventi studijoms ne ilgiau kaip vieneriems metams ir tik tada, jei teisė gyventi nustatyta Europos Sąjungos teisės aktais. Baltarusijos pilietis gali jo prašyti nuolatinių studijų laikotarpiui ir dar keturiems mėnesiams.",
+        "source": "Imigracijos įstatymas, 23¹ straipsnio 1 dalis, 2 dalies 3 punktas ir 3 dalies 12 punktas"
+      }
+    ],
+    "sources": [
+      {
+        "label": "Imigracijos įstatymas (Imigrācijas likums)",
+        "url": "https://likumi.lv/ta/id/68522"
+      },
+      {
+        "label": "ES, EEE ir Šveicarijos piliečių ir jų šeimos narių atvykimo ir buvimo Latvijoje įstatymas (galioja nuo 2026 m. liepos 10 d.)",
+        "url": "https://likumi.lv/ta/id/369282"
+      },
+      {
+        "label": "Ministrų kabineto nutarimas Nr. 564 „Leidimų gyventi taisyklės“",
+        "url": "https://likumi.lv/ta/id/212441"
+      },
+      {
+        "label": "Ministrų kabineto nutarimas Nr. 731 dėl valstybės rinkliavos už migracijos paslaugas",
+        "url": "https://likumi.lv/ta/id/356656"
+      },
+      {
+        "label": "Ministrų kabineto nutarimas Nr. 225 dėl užsieniečių finansinių lėšų",
+        "url": "https://likumi.lv/ta/id/290808"
+      }
+    ]
   },
   "footer": {
     "disclaimer": "StudyPick yra nepriklausomas informacinis portalas, ne aukštoji mokykla ir ne valstybės institucija — su čia išvardytomis aukštosiomis mokyklomis mūsų nesieja jokios sutartys. Programų aprašymai, terminai, kainos ir konkursinio balo formulės paimti iš viešai prieinamų oficialių šaltinių ir gali būti pasenę ar netikslūs; kiekvienoje programos kortelėje nurodyta, ar faktą patikrino žmogus, ar jis surinktas automatiškai. Prieš priimdami sprendimą visada pasitikrinkite informaciją oficialioje aukštosios mokyklos svetainėje — galutinį sprendimą dėl priėmimo priima tik aukštoji mokykla."

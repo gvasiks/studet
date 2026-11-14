@@ -4,7 +4,7 @@ import type { Dictionary } from "@/i18n/dictionaries";
 import { notFound } from "next/navigation";
 import { countryOf, isLocale, languageOf, type Locale } from "@/i18n/config";
 import { getDictionary } from "@/i18n/dictionaries";
-import { countryProfile } from "@/lib/country";
+import { countryProfile, hasFeature } from "@/lib/country";
 import { enumLabel, getProgramme, localizedName, type Programme, type University } from "@/lib/catalog";
 import { getFormula } from "@/lib/formula-queries";
 import { getLtFormula } from "@/lib/lt-score-queries";
@@ -499,6 +499,7 @@ export default async function ProgrammePage({ params }: { params: Params }) {
           costs={foreignCosts}
           fees={foreignFees}
           housing={foreignHousing}
+          permitHref={hasFeature(locale, "studentPermit") ? `/${locale}/student-permit` : null}
         />
       )}
 

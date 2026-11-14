@@ -15,7 +15,7 @@ import AxeBuilder from "@axe-core/playwright";
 // /programmes/lu/biology — прошлогодний конкурс с двумя подпрограммами
 // (блок statistika.vupp.lv, с 2026-10-18; у economics он с одной таблицей);
 // /programmes/du/niid-94 — 24 подпрограммы, каждая свёрнута в <details>
-const ROUTES = ["", "/programmes", "/programmes?page=2", "/programmes/lu/economics", "/programmes/lu/biology", "/programmes/du/niid-94", "/programmes/lu/economics/calculator", "/programmes/gfk/110", "/programmes/lu/nav-tadas", "/survey", "/match", "/rights", "/glossary", "/privacy", "/favorites"];
+const ROUTES = ["", "/programmes", "/programmes?page=2", "/programmes/lu/economics", "/programmes/lu/biology", "/programmes/du/niid-94", "/programmes/lu/economics/calculator", "/programmes/gfk/110", "/programmes/lu/nav-tadas", "/survey", "/match", "/rights", "/student-permit", "/glossary", "/privacy", "/favorites"];
 const LOCALES = ["lv", "en-lv", "lt-lv"] as const;
 
 for (const locale of LOCALES) {
@@ -106,6 +106,7 @@ const LT_ROUTES = [
   "/et-lv/programmes/lu/economics/calculator",
   "/et-lv/glossary",
   "/et-lv/rights",
+  "/et-lv/student-permit",
   "/et-lv/privacy",
   "/et-lt",
   "/et-lt/match",

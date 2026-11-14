@@ -13,7 +13,7 @@
     "rightsText": "Ko likums garantē reflektantam: termiņi, līgums, rezultāti un lēmuma apstrīdēšana."
   },
   "coverage": {
-    "notice": "Pagaidām šeit ir aptverta tikai Latvijas uzņemšanas sistēma vietējiem skolu absolventiem — atbalsts ārvalstu reflektantiem (pilnas izmaksas, dokumentu saraksti, uzturēšanās atļaujas) vēl nav izveidots.",
+    "notice": "Pagaidām šeit ir aptverta tikai Latvijas uzņemšanas sistēma vietējiem skolu absolventiem. Atbalsts ārvalstu reflektantiem tiek veidots: apraksts par uzturēšanās atļauju studijām ir gatavs, izmaksas programmu lapās parādās pēc pārbaudes, dokumentu saraksti vēl nav izveidoti.",
     "label": "Par vietnes tvērumu"
   },
   "catalog": {
@@ -206,6 +206,7 @@
       "meansValue": "{amount} mēnesī",
       "meansNote": "Uzturēšanās atļaujai jāpierāda, ka uzturēšanās laikā ir pieejama vismaz šāda summa mēnesī. Tas nav maksājums.",
       "insuranceNote": "Nepieciešama arī veselības apdrošināšana; tās cenu normatīvie akti nenosaka.",
+      "permitLink": "Kā saņemt uzturēšanās atļauju studijām",
       "disclaimer": "Summas var mainīties; galīgās summas nosaka augstskola un Pilsonības un migrācijas lietu pārvalde."
     },
     "deadlinesTitle": "Pieteikšanās termiņi",
@@ -228,6 +229,7 @@
     "match": "Prasību pārbaude",
     "glossary": "Vārdnīca",
     "rights": "Tiesības",
+    "studentPermit": "Uzturēšanās atļauja studijām",
     "menu": "Izvēlne",
     "main": "Galvenā navigācija",
     "footer": "Navigācija lapas apakšā",
@@ -573,6 +575,91 @@
     "compareEmpty": "Lai redzētu programmas blakus, uz to kartītēm jāatzīmē “Salīdzināt”.",
     "missingNote": "Saglabātās programmas, kuru pašlaik nav katalogā: {count}. Iespējams, tas ir uz laiku.",
     "removeMissing": "Noņemt tās no saraksta"
+  },
+  "studentPermit": {
+    "title": "Uzturēšanās atļauja studijām Latvijā",
+    "intro": "Kas citas valsts studentam nepieciešams, lai studiju laikā dzīvotu Latvijā: kam vajadzīga uzturēšanās atļauja, kas iesniedz dokumentus, kādas ir nodevas un kādi noteikumi ir spēkā pēc imatrikulācijas. Pie katra punkta norādīta tiesību norma.",
+    "checkedNote": "Katrs punkts 2026. gada 14. novembrī salīdzināts ar spēkā esošo redakciju likumi.lv. Par katru pieteikumu lemj Pilsonības un migrācijas lietu pārvalde (PMLP); šī lapa neaizstāj tās norādījumus.",
+    "sourceLabel": "Tiesiskais pamats",
+    "sourcesTitle": "Tiesību akti",
+    "items": [
+      {
+        "id": "eu-citizens",
+        "title": "ES, EEZ un Šveices pilsoņiem uzturēšanās atļauja nav vajadzīga",
+        "text": "Viņi ieceļo Latvijā ar derīgu ceļošanas dokumentu. Lai nepārtraukti uzturētos ilgāk nekā trīs mēnešus, jāreģistrējas PMLP un jāpieprasa reģistrācijas apliecība. Studentam, kura paredzamā uzturēšanās nepārsniedz vienu gadu, reģistrēties nav nepieciešams. Apliecības saņemšanai studentam vajadzīgs pietiekams iztikas nodrošinājums un veselības apdrošināšana vai ES dokuments, kas dod tiesības Latvijā saņemt nepieciešamo medicīnisko palīdzību.",
+        "source": "Eiropas Savienības, Eiropas Ekonomikas zonas un Šveices Konfederācijas pilsoņu un viņu ģimenes locekļu ieceļošanas un uzturēšanās Latvijas Republikā likums, 9. pants, 19. panta pirmā daļa, 24. panta 3. punkts un 25. panta pirmās daļas 3. punkts"
+      },
+      {
+        "id": "who-needs-permit",
+        "title": "Pārējiem: termiņuzturēšanās atļauja pilna laika studijām",
+        "text": "Citas valsts pilsonis, kas uzņemts pilna laika studiju programmā augstskolā vai koledžā Latvijā, var pieprasīt termiņuzturēšanās atļauju studijām. To izsniedz uz pilna laika studiju laiku un vēl četriem mēnešiem.",
+        "source": "Imigrācijas likums, 1. panta 7.⁴ punkts un 23. panta pirmās daļas 10.¹ punkts"
+      },
+      {
+        "id": "university-request",
+        "title": "Vispirms PMLP pieteikumu iesniedz augstskola",
+        "text": "Augstskola kā uzaicinātājs iesniedz PMLP pieprasījumu. Tajā augstskola norāda paredzamo studiju beigu datumu.",
+        "source": "Ministru kabineta noteikumi Nr. 564, 16.4.5. apakšpunkts"
+      },
+      {
+        "id": "submitting",
+        "title": "Kā tiek iesniegti dokumenti",
+        "text": "Pieteikumam pievieno līgumu par studijām. Ja students neatrodas Latvijā, dokumentus pirmreizējas uzturēšanās atļaujas pieprasīšanai viņa vietā var iesniegt augstskola. Tas neattiecas uz valstu pilsoņiem, kas iekļauti Ministru kabineta sarakstā papildu pārbaudei, un uz personām, kurām ārvalstī piešķirts bēgļa, bezvalstnieka vai alternatīvais statuss vai pagaidu aizsardzība. Dokumentus var iesniegt arī elektroniski, tostarp PMLP e-pakalpojumā, un pa pastu, ja students jau atrodas Latvijā.",
+        "source": "Ministru kabineta noteikumi Nr. 564, 2., 3.¹ un 51. punkts"
+      },
+      {
+        "id": "fees-and-funds",
+        "title": "Valsts nodevas un līdzekļi, kas jāpierāda",
+        "text": "Valsts nodevu maksā par dokumentu izskatīšanu un atsevišķi par uzturēšanās atļaujas reģistrēšanu; ilgtermiņa vīzai, ja tā vajadzīga, ir sava nodeva. Summas pēc pārbaudes tiek parādītas programmu lapās blokā “Izmaksas ārvalstu studentiem”. Par katru uzturēšanās mēnesi jābūt līdzekļiem vismaz minimālās mēneša darba algas apmērā.",
+        "source": "Ministru kabineta noteikumi Nr. 731, 2.1., 5.1.1. un 6.1.1. apakšpunkts; Ministru kabineta noteikumi Nr. 225, 11.7. apakšpunkts"
+      },
+      {
+        "id": "work",
+        "title": "Darbs studiju laikā",
+        "text": "Students ar uzturēšanās atļauju vai ilgtermiņa vīzu pilna laika studijām drīkst strādāt pie jebkura darba devēja līdz 20 stundām nedēļā un studiju brīvlaikā līdz 40 stundām nedēļā. Pilna laika maģistra un doktora studentiem ar uzturēšanās atļauju šāda ierobežojuma nav.",
+        "source": "Imigrācijas likums, 9. panta piektās daļas 25. punkts un 9. panta 5.¹ daļa"
+      },
+      {
+        "id": "progress",
+        "title": "Sekmes studijās ietekmē uzturēšanās atļauju",
+        "text": "Uzturēšanās atļauju atsaka, ja bez no studenta neatkarīgiem apstākļiem viņš piecos gados pirms pieteikuma vismaz divas reizes atskaitīts no studiju programmas nesekmības vai studiju līguma neizpildes dēļ, šajos piecos gados vismaz divas reizes uzsācis un pārtraucis studijas vai vienā programmā vairāk nekā par vienu gadu (programmās līdz trim gadiem) vai vairāk nekā par diviem gadiem (garākās programmās) pārsniedz līgumā noteikto studiju laiku. Izsniegtu uzturēšanās atļauju par studiju laika pārsniegšanu tāpat anulē.",
+        "source": "Imigrācijas likums, 34. panta pirmās daļas 39. punkts un 35. panta pirmās daļas 34. punkts"
+      },
+      {
+        "id": "after-graduation",
+        "title": "Pēc maģistra vai doktora grāda",
+        "text": "Pilna laika maģistra vai doktora programmas absolvents Latvijā ar valsts atzītu diplomu var pieprasīt termiņuzturēšanās atļauju uz deviņiem mēnešiem. Pieprasījums jāiesniedz ne vēlāk kā trīs mēnešus pēc tam, kad beidzies studijām izsniegtās uzturēšanās atļaujas termiņš.",
+        "source": "Imigrācijas likums, 23. panta pirmās daļas 32. punkts"
+      },
+      {
+        "id": "russia-belarus",
+        "title": "Krievijas un Baltkrievijas pilsoņiem: atsevišķi noteikumi",
+        "text": "Krievijas pilsonis var pieprasīt termiņuzturēšanās atļauju studijām ne ilgāk kā uz vienu gadu un tikai tad, ja uzturēšanās tiesības noteiktas ar Eiropas Savienības tiesību aktiem. Baltkrievijas pilsonis to var pieprasīt uz pilna laika studiju laiku un vēl četriem mēnešiem.",
+        "source": "Imigrācijas likums, 23.¹ panta pirmā daļa, otrās daļas 3. punkts un trešās daļas 12. punkts"
+      }
+    ],
+    "sources": [
+      {
+        "label": "Imigrācijas likums",
+        "url": "https://likumi.lv/ta/id/68522"
+      },
+      {
+        "label": "Eiropas Savienības, Eiropas Ekonomikas zonas un Šveices Konfederācijas pilsoņu un viņu ģimenes locekļu ieceļošanas un uzturēšanās Latvijas Republikā likums (spēkā no 2026. gada 10. jūlija)",
+        "url": "https://likumi.lv/ta/id/369282"
+      },
+      {
+        "label": "Ministru kabineta noteikumi Nr. 564 “Uzturēšanās atļauju noteikumi”",
+        "url": "https://likumi.lv/ta/id/212441"
+      },
+      {
+        "label": "Ministru kabineta noteikumi Nr. 731 par valsts nodevu par migrācijas pakalpojumiem",
+        "url": "https://likumi.lv/ta/id/356656"
+      },
+      {
+        "label": "Ministru kabineta noteikumi Nr. 225 par ārzemnieku finanšu līdzekļiem",
+        "url": "https://likumi.lv/ta/id/290808"
+      }
+    ]
   },
   "footer": {
     "disclaimer": "StudyPick ir neatkarīgs informatīvs portāls, nevis augstskola vai valsts iestāde — ar aplūkotajām augstskolām mūs nesaista nekādas līgumattiecības. Programmu apraksti, termiņi, maksa un konkursa formulas iegūti no augstskolu publiski pieejamiem avotiem un var būt novecojuši vai neprecīzi; katras programmas kartītē norādīts, vai fakts ir pārbaudīts cilvēka rokām vai iegūts automātiski. Pirms lēmuma pieņemšanas aktuālā informācija vienmēr jāpārbauda augstskolas oficiālajā mājaslapā — galīgo lēmumu par uzņemšanu pieņem tikai augstskola."

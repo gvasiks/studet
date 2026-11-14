@@ -6,7 +6,7 @@
     "description": "Küsitlus, kataloog ja konkursipunktide arvutus ühes kohas — praegu Läti vastuvõtusüsteemi kohta."
   },
   "coverage": {
-    "notice": "Praegu on siin kirjeldatud ainult Läti vastuvõtusüsteem kohalikele koolilõpetajatele — teavet välismaalt kandideerijatele (kogukulud, dokumentide loendid, elamisload) veel ei ole."
+    "notice": "Praegu on siin kirjeldatud ainult Läti vastuvõtusüsteem kohalikele koolilõpetajatele. Teavet välismaalt kandideerijatele luuakse: juhend elamisloa kohta õppimiseks on valmis, kulud ilmuvad õppekavade lehtedele pärast kontrolli, dokumentide loendeid veel ei ole."
   },
   "catalog": {
     "degreeLevel": {

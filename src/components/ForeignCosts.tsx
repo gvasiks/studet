@@ -1,3 +1,4 @@
+import Link from "next/link";
 import type { Dictionary } from "@/i18n/dictionaries";
 import { formatDate } from "@/lib/dates";
 import { httpUrl } from "@/lib/application-channel";
@@ -31,6 +32,7 @@ export function ForeignCosts({
   costs,
   fees,
   housing,
+  permitHref,
 }: {
   dict: Dictionary;
   language: string;
@@ -39,6 +41,8 @@ export function ForeignCosts({
   fees: ProgrammeFee[];
   /** Действующая цена общежитий вуза (currentHousingCost) или null. */
   housing: HousingCost | null;
+  /** Страница о ВНЖ для студента (/student-permit) или null, если её нет у страны. */
+  permitHref: string | null;
 }) {
   const t = dict.programme.foreignCosts;
 
@@ -177,6 +181,11 @@ export function ForeignCosts({
       <p className="mt-4 text-xs leading-relaxed text-zinc-500">
         {t.insuranceNote} {t.disclaimer}
       </p>
+      {permitHref && (
+        <Link href={permitHref} className="mt-3 inline-block text-sm font-medium text-brand-dark underline hover:text-brand">
+          {t.permitLink}
+        </Link>
+      )}
     </section>
   );
 }
