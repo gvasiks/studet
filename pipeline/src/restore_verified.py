@@ -307,6 +307,42 @@ def restore_foreign_documents(
     return restored, missing
 
 
+def restore_english_requirements(
+    client, rows: list[dict], university_ids: dict[str, str], programme_lookup: dict, apply: bool  # type: ignore[no-untyped-def]
+) -> tuple[int, list[str], list[str]]:
+    restored = 0
+    missing: list[str] = []
+    collisions: list[str] = []
+    for row in rows:
+        university_id = university_ids.get(row["university_slug"])
+        if university_id is None:
+            missing.append(f"english_requirement {row['university_slug']}/{row['degree_level']}: вуза нет в каталоге")
+            continue
+        programme_id = None
+        if row.get("programme_slug"):
+            programme_id, collision = _resolve_programme(
+                programme_lookup, (row["university_slug"], row["programme_slug"]), row.get("programme_name")
+            )
+            if collision:
+                collisions.append(f"english_requirement {collision}")
+                continue
+            if programme_id is None:
+                missing.append(
+                    f"english_requirement {row['university_slug']}/{row['programme_slug']}: программы нет в каталоге"
+                )
+                continue
+        restored += 1
+        if not apply:
+            continue
+        payload = {
+            "university_id": university_id,
+            "programme_id": programme_id,
+            **{k: v for k, v in row.items() if k not in ("university_slug", "programme_slug", "programme_name")},
+        }
+        client.table("english_requirement").upsert(payload, on_conflict="university_id,degree_level,programme_id").execute()
+    return restored, missing, collisions
+
+
 def main(apply: bool) -> None:
     load_dotenv()
     client = get_service_client()
@@ -329,6 +365,10 @@ def main(apply: bool) -> None:
     # .get: в снимках до 2026-11-14 чек-листа документов нет.
     foreign_documents = snapshot.get("foreign_documents", [])
     fd_restored, fd_missing = restore_foreign_documents(client, foreign_documents, university_ids, apply)
+    english_requirements = snapshot.get("english_requirements", [])
+    er_restored, er_missing, er_collisions = restore_english_requirements(
+        client, english_requirements, university_ids, programme_lookup, apply
+    )
 
     verb = "восстановлено" if apply else "было бы восстановлено (сухой прогон, для записи запустите с --apply)"
     print(f"формулы: {verb} {f_restored} из {len(snapshot['formulas'])}")
@@ -338,6 +378,7 @@ def main(apply: bool) -> None:
     print(f"требования к поступающим: {verb} {rs_restored} из {len(requirement_sets)}")
     print(f"каналы подачи: {verb} {ac_restored} из {len(application_channels)}")
     print(f"документы для иностранцев: {verb} {fd_restored} из {len(foreign_documents)}")
+    print(f"требования к английскому: {verb} {er_restored} из {len(english_requirements)}")
 
     if pf_without_method:
         print(
@@ -347,13 +388,13 @@ def main(apply: bool) -> None:
             "(verification_method: \"rule\" или \"manual\"), см. скрипты confirm_*.py и docs/checks/."
         )
 
-    missing = f_missing + ar_missing + at_missing + pf_missing + rs_missing + ac_missing + fd_missing
+    missing = f_missing + ar_missing + at_missing + pf_missing + rs_missing + ac_missing + fd_missing + er_missing
     if missing:
         print(f"\nне нашлось в текущем каталоге ({len(missing)}):")
         for line in missing:
             print(f"  {line}")
 
-    collisions = f_collisions + pf_collisions + rs_collisions
+    collisions = f_collisions + pf_collisions + rs_collisions + er_collisions
     if collisions:
         print(f"\nПОХОЖЕ НА ПЕРЕСЛАГОВАНИЕ, НЕ ВОССТАНОВЛЕНО АВТОМАТИЧЕСКИ ({len(collisions)}):")
         for line in collisions:
@@ -578,6 +619,26 @@ def selftest() -> None:
     saved_document = client.store["foreign_document_requirement"][0]
     assert saved_document["university_id"] == "uni-1" and saved_document["verified_at"] == "2026-11-14T00:00:00Z"
     assert "university_slug" not in saved_document
+
+    # Требование к английскому: строка вуза (без программы) и строка программы;
+    # переслагованная программа не восстанавливается.
+    english = {"degree_level": "master", "ielts_min": 6.0, "toefl_ibt_min": 80, "toefl_ibt_band": None, "note": None,
+               "source_url": "https://example.com", "source_excerpt": "IELTS 6.0", "verified_at": "2026-11-14T00:00:00Z"}
+    restored_er, missing_er, collisions_er = restore_english_requirements(
+        client,
+        [
+            {"university_slug": "lu", "programme_slug": None, "programme_name": None, **english},
+            {"university_slug": "lu", "programme_slug": "sociology", "programme_name": "Socioloģija", **english},
+            {"university_slug": "lu", "programme_slug": "renamed-slug", "programme_name": "Socioloģija", **english},
+        ],
+        university_ids,
+        programme_lookup,
+        apply=True,
+    )
+    assert (restored_er, missing_er, len(collisions_er)) == (2, [], 1), (restored_er, missing_er, collisions_er)
+    saved_english = client.store["english_requirement"]
+    assert [row["programme_id"] for row in saved_english] == [None, "prog-1"], saved_english
+    assert not {"university_slug", "programme_slug", "programme_name"} & set(saved_english[0])
 
     # Чтение страницами: 1005 строк приходят двумя запросами и все доходят.
     class FakeQuery:

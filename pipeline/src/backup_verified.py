@@ -26,7 +26,8 @@ seed-скриптов и так снова генерируют свои id пр
 
 Что в снимке: формулы, сроки подачи, типы отбора, направления программ,
 требования к поступающим и каналы подачи (два последних — с 2026-10-10),
-чек-лист документов для иностранцев (с 2026-11-14). Таблицы стоимости для
+чек-лист документов и требования к английскому для иностранцев (с 2026-11-14).
+Таблицы стоимости для
 иностранцев (country_cost, programme_fee, housing_cost) — дописать, когда
 в них появятся подтверждения.
 Чего в снимке НЕТ: пометок verified_at у самих программ и вузов (цена,
@@ -300,6 +301,31 @@ def _foreign_documents(client) -> list[dict]:  # type: ignore[no-untyped-def]
     return sorted(out, key=lambda r: (r["university_slug"], r["degree_level"], r["sort_order"], r["document"], r["applies_to"]))
 
 
+# Требования к английскому (шаг 4). Строка вуза — без программы (programme_slug
+# пустой), строка программы — со слагом и именем, как у формул.
+_ENGLISH_COLUMNS = ("degree_level", "ielts_min", "toefl_ibt_min", "toefl_ibt_band", "note", "source_url", "source_excerpt")
+
+
+def _english_requirements(client) -> list[dict]:  # type: ignore[no-untyped-def]
+    rows = fetch_all(
+        lambda: client.table("english_requirement")
+        .select(", ".join(_ENGLISH_COLUMNS) + ", verified_at, university!inner(slug), programme(slug, name_lv)")
+        .not_.is_("verified_at", "null")
+        .order("id")
+    )
+    out = [
+        {
+            "university_slug": row["university"]["slug"],
+            "programme_slug": (row.get("programme") or {}).get("slug"),
+            "programme_name": (row.get("programme") or {}).get("name_lv"),
+            **{column: row[column] for column in _ENGLISH_COLUMNS},
+            "verified_at": row["verified_at"],
+        }
+        for row in rows
+    ]
+    return sorted(out, key=lambda r: (r["university_slug"], r["degree_level"], r["programme_slug"] or ""))
+
+
 def build_snapshot(client) -> dict:  # type: ignore[no-untyped-def]
     return {
         "formulas": _formulas(client),
@@ -309,6 +335,7 @@ def build_snapshot(client) -> dict:  # type: ignore[no-untyped-def]
         "requirement_sets": _requirement_sets(client),
         "application_channels": _application_channels(client),
         "foreign_documents": _foreign_documents(client),
+        "english_requirements": _english_requirements(client),
     }
 
 
