@@ -25,7 +25,10 @@ seed-скриптов и так снова генерируют свои id пр
 свериться глазами в PR-диффе, а не только машиной.
 
 Что в снимке: формулы, сроки подачи, типы отбора, направления программ,
-требования к поступающим и каналы подачи (два последних — с 2026-10-10).
+требования к поступающим и каналы подачи (два последних — с 2026-10-10),
+чек-лист документов для иностранцев (с 2026-11-14). Таблицы стоимости для
+иностранцев (country_cost, programme_fee, housing_cost) — дописать, когда
+в них появятся подтверждения.
 Чего в снимке НЕТ: пометок verified_at у самих программ и вузов (цена,
 бюджетные места) и у коэффициентов уровня — подтверждённых записей там
 пока нет (проверено 2026-10-10). Когда появятся — дописать сюда и в
@@ -273,6 +276,30 @@ def _application_channels(client) -> list[dict]:  # type: ignore[no-untyped-def]
     return sorted(out, key=lambda r: (r["university_slug"], r["degree_level"] or ""))
 
 
+# Чек-лист документов для иностранцев (docs/PLAN-FOREIGNERS.md, шаг 3).
+_DOCUMENT_COLUMNS = (
+    "degree_level", "document", "applies_to", "stage", "note", "sort_order", "source_url", "source_excerpt",
+)
+
+
+def _foreign_documents(client) -> list[dict]:  # type: ignore[no-untyped-def]
+    rows = fetch_all(
+        lambda: client.table("foreign_document_requirement")
+        .select(", ".join(_DOCUMENT_COLUMNS) + ", verified_at, university!inner(slug)")
+        .not_.is_("verified_at", "null")
+        .order("id")
+    )
+    out = [
+        {
+            "university_slug": row["university"]["slug"],
+            **{column: row[column] for column in _DOCUMENT_COLUMNS},
+            "verified_at": row["verified_at"],
+        }
+        for row in rows
+    ]
+    return sorted(out, key=lambda r: (r["university_slug"], r["degree_level"], r["sort_order"], r["document"], r["applies_to"]))
+
+
 def build_snapshot(client) -> dict:  # type: ignore[no-untyped-def]
     return {
         "formulas": _formulas(client),
@@ -281,6 +308,7 @@ def build_snapshot(client) -> dict:  # type: ignore[no-untyped-def]
         "programme_fields": _programme_fields(client),
         "requirement_sets": _requirement_sets(client),
         "application_channels": _application_channels(client),
+        "foreign_documents": _foreign_documents(client),
     }
 
 

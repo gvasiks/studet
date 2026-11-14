@@ -285,6 +285,28 @@ def restore_application_channels(
     return restored, missing
 
 
+def restore_foreign_documents(
+    client, rows: list[dict], university_ids: dict[str, str], apply: bool  # type: ignore[no-untyped-def]
+) -> tuple[int, list[str]]:
+    restored = 0
+    missing = []
+    for row in rows:
+        university_id = university_ids.get(row["university_slug"])
+        if university_id is None:
+            missing.append(
+                f"foreign_document_requirement {row['university_slug']}/{row['degree_level']}/{row['document']}: вуза нет в каталоге"
+            )
+            continue
+        restored += 1
+        if not apply:
+            continue
+        payload = {"university_id": university_id, **{k: v for k, v in row.items() if k != "university_slug"}}
+        client.table("foreign_document_requirement").upsert(
+            payload, on_conflict="university_id,degree_level,document,applies_to"
+        ).execute()
+    return restored, missing
+
+
 def main(apply: bool) -> None:
     load_dotenv()
     client = get_service_client()
@@ -304,6 +326,9 @@ def main(apply: bool) -> None:
     application_channels = snapshot.get("application_channels", [])
     rs_restored, rs_missing, rs_collisions = restore_requirement_sets(client, requirement_sets, programme_lookup, apply)
     ac_restored, ac_missing = restore_application_channels(client, application_channels, university_ids, apply)
+    # .get: в снимках до 2026-11-14 чек-листа документов нет.
+    foreign_documents = snapshot.get("foreign_documents", [])
+    fd_restored, fd_missing = restore_foreign_documents(client, foreign_documents, university_ids, apply)
 
     verb = "восстановлено" if apply else "было бы восстановлено (сухой прогон, для записи запустите с --apply)"
     print(f"формулы: {verb} {f_restored} из {len(snapshot['formulas'])}")
@@ -312,6 +337,7 @@ def main(apply: bool) -> None:
     print(f"направления программ: {verb} {pf_restored} из {len(snapshot['programme_fields'])}")
     print(f"требования к поступающим: {verb} {rs_restored} из {len(requirement_sets)}")
     print(f"каналы подачи: {verb} {ac_restored} из {len(application_channels)}")
+    print(f"документы для иностранцев: {verb} {fd_restored} из {len(foreign_documents)}")
 
     if pf_without_method:
         print(
@@ -321,7 +347,7 @@ def main(apply: bool) -> None:
             "(verification_method: \"rule\" или \"manual\"), см. скрипты confirm_*.py и docs/checks/."
         )
 
-    missing = f_missing + ar_missing + at_missing + pf_missing + rs_missing + ac_missing
+    missing = f_missing + ar_missing + at_missing + pf_missing + rs_missing + ac_missing + fd_missing
     if missing:
         print(f"\nне нашлось в текущем каталоге ({len(missing)}):")
         for line in missing:
@@ -533,6 +559,25 @@ def selftest() -> None:
     saved_channel = client.store["application_channel"][0]
     assert saved_channel["university_id"] == "uni-1" and saved_channel["degree_level"] is None
     assert "university_slug" not in saved_channel
+
+    # Документ чек-листа: строка доходит с university_id вместо слага.
+    restored_fd, missing_fd = restore_foreign_documents(
+        client,
+        [
+            {"university_slug": "lu", "degree_level": "bachelor", "document": "passport", "applies_to": "all",
+             "stage": "application", "note": None, "sort_order": 0, "source_url": "https://example.com",
+             "source_excerpt": "Passport copy;", "verified_at": "2026-11-14T00:00:00Z"},
+            {"university_slug": "nope", "degree_level": "master", "document": "cv", "applies_to": "all",
+             "stage": "application", "note": None, "sort_order": 1, "source_url": "https://example.com",
+             "source_excerpt": "CV", "verified_at": "2026-11-14T00:00:00Z"},
+        ],
+        university_ids,
+        apply=True,
+    )
+    assert restored_fd == 1 and len(missing_fd) == 1 and "nope/master/cv" in missing_fd[0], missing_fd
+    saved_document = client.store["foreign_document_requirement"][0]
+    assert saved_document["university_id"] == "uni-1" and saved_document["verified_at"] == "2026-11-14T00:00:00Z"
+    assert "university_slug" not in saved_document
 
     # Чтение страницами: 1005 строк приходят двумя запросами и все доходят.
     class FakeQuery:
