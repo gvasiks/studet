@@ -533,6 +533,7 @@ export default async function ProgrammePage({ params }: { params: Params }) {
           degreeLevel={record.degree_level}
           items={foreignDocuments}
           english={foreignEnglish}
+          allHref={hasFeature(locale, "studentDocuments") ? `/${locale}/student-documents` : null}
         />
       )}
 

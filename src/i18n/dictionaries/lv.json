@@ -247,12 +247,14 @@
       "more": "Dažām programmām un valstīm augstskola var prasīt vairāk dokumentu. Pirms pieteikšanās jāpārbauda augstskolas lapa.",
       "sources": "Avoti:",
       "progress": "Sagatavoti {done} no {total}",
+      "allLink": "Visu augstskolu dokumentu saraksti",
       "english": {
         "title": "Minimālais angļu valodas testa rezultāts",
         "ielts": "IELTS {score}",
         "toefl": "TOEFL iBT {score}",
         "toeflBand": "TOEFL iBT {score} (vai {band} pēc skalas, ko lieto no 2026. gada 21. janvāra)",
-        "otherTests": "Citi pieņemtie testi — augstskolas lapā."
+        "otherTests": "Citi pieņemtie testi — augstskolas lapā.",
+        "byProgramme": "Angļu valodas prasības katrai programmai savas — tās norādītas programmas lapā"
       }
     },
     "deadlinesTitle": "Pieteikšanās termiņi",
@@ -276,6 +278,7 @@
     "glossary": "Vārdnīca",
     "rights": "Tiesības",
     "studentPermit": "Uzturēšanās atļauja studijām",
+    "studentDocuments": "Dokumenti ārvalstu reflektantiem",
     "menu": "Izvēlne",
     "main": "Galvenā navigācija",
     "footer": "Navigācija lapas apakšā",
@@ -621,6 +624,12 @@
     "compareEmpty": "Lai redzētu programmas blakus, uz to kartītēm jāatzīmē “Salīdzināt”.",
     "missingNote": "Saglabātās programmas, kuru pašlaik nav katalogā: {count}. Iespējams, tas ir uz laiku.",
     "removeMissing": "Noņemt tās no saraksta"
+  },
+  "studentDocuments": {
+    "title": "Dokumenti ārvalstu reflektantiem",
+    "intro": "Ko augstskolas prasa ārvalstu reflektantiem bakalaura un maģistra studijās: dokumenti pa posmiem un minimālais angļu valodas testa rezultāts. Atzīmes tiek saglabātas tikai šajā pārlūkā, un tās ir tās pašas, kas programmas lapā.",
+    "tocTitle": "Augstskolas",
+    "empty": "Pārbaudītu dokumentu sarakstu vēl nav."
   },
   "studentPermit": {
     "title": "Uzturēšanās atļauja studijām Latvijā",

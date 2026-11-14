@@ -247,12 +247,14 @@
       "more": "For some programmes and countries the university may ask for more. Check its pages before applying.",
       "sources": "Sources:",
       "progress": "{done} of {total} ready",
+      "allLink": "Document lists of all universities",
       "english": {
         "title": "Minimum English test result",
         "ielts": "IELTS {score}",
         "toefl": "TOEFL iBT {score}",
         "toeflBand": "TOEFL iBT {score} (or {band} on the scale used since 21 January 2026)",
-        "otherTests": "Other accepted tests are listed on the university's page."
+        "otherTests": "Other accepted tests are listed on the university's page.",
+        "byProgramme": "English requirements differ by programme — see the programme page"
       }
     },
     "deadlinesTitle": "Application windows",
@@ -276,6 +278,7 @@
     "glossary": "Glossary",
     "rights": "Your rights",
     "studentPermit": "Student residence permit",
+    "studentDocuments": "Documents for international applicants",
     "menu": "Menu",
     "main": "Main navigation",
     "footer": "Footer navigation",
@@ -621,6 +624,12 @@
     "compareEmpty": "Tick “Compare” on the programme cards to see them side by side.",
     "missingNote": "Saved programmes not in the catalogue right now: {count}. This may be temporary.",
     "removeMissing": "Remove them from the list"
+  },
+  "studentDocuments": {
+    "title": "Documents for international applicants",
+    "intro": "What universities ask international applicants for in bachelor's and master's studies: documents by stage and the minimum English test result. Your ticks are saved only in this browser and are the same as on the programme pages.",
+    "tocTitle": "Universities",
+    "empty": "No checked document lists yet."
   },
   "studentPermit": {
     "title": "Residence permit for studies in Latvia",

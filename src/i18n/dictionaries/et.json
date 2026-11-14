@@ -247,12 +247,14 @@
       "more": "Mõne õppekava ja riigi puhul võib ülikool nõuda rohkem dokumente. Enne avalduse esitamist tasub ülikooli lehte kontrollida.",
       "sources": "Allikad:",
       "progress": "Valmis {done}/{total}",
+      "allLink": "Kõigi ülikoolide dokumentide loendid",
       "english": {
         "title": "Inglise keele testi miinimumtulemus",
         "ielts": "IELTS {score}",
         "toefl": "TOEFL iBT {score}",
         "toeflBand": "TOEFL iBT {score} (või {band} skaalal, mida kasutatakse alates 21. jaanuarist 2026)",
-        "otherTests": "Teised aktsepteeritud testid on ülikooli lehel."
+        "otherTests": "Teised aktsepteeritud testid on ülikooli lehel.",
+        "byProgramme": "Inglise keele nõuded on igal õppekaval oma — vt õppekava lehte"
       }
     },
     "deadlinesTitle": "Avalduste esitamise tähtajad",
@@ -276,6 +278,7 @@
     "glossary": "Sõnastik",
     "rights": "Õigused",
     "studentPermit": "Elamisluba õppimiseks",
+    "studentDocuments": "Dokumendid välismaa kandidaatidele",
     "menu": "Menüü",
     "main": "Peamenüü",
     "footer": "Jaluse menüü",
@@ -621,6 +624,12 @@
     "compareEmpty": "Õppekavade kõrvuti nägemiseks tuleb nende kaartidel märkida „Võrdle“.",
     "missingNote": "Salvestatud õppekavu, mida praegu kataloogis ei ole: {count}. See võib olla ajutine.",
     "removeMissing": "Eemalda need loendist"
+  },
+  "studentDocuments": {
+    "title": "Dokumendid välismaa kandidaatidele",
+    "intro": "Mida ülikoolid nõuavad välismaa kandidaatidelt bakalaureuse- ja magistriõppes: dokumendid etappide kaupa ja inglise keele testi miinimumtulemus. Märked salvestatakse ainult selles brauseris ja on samad mis õppekava lehel.",
+    "tocTitle": "Ülikoolid",
+    "empty": "Kontrollitud dokumentide loendeid veel ei ole."
   },
   "studentPermit": {
     "title": "Elamisluba õppimiseks Lätis",

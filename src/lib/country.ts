@@ -16,7 +16,9 @@ export type Feature =
   | "privacy"
   | "verification"
   // путь ВНЖ для студента — только Латвия (docs/PLAN-FOREIGNERS.md, шаг 2, решение Р1)
-  | "studentPermit";
+  | "studentPermit"
+  // списки документов всех вузов — только Латвия (docs/PLAN-FOREIGNERS.md, шаг 3)
+  | "studentDocuments";
 
 // Фильтр каталога, для которого у страны может не быть данных. Город,
 // язык, вуз и длительность есть у всех. Формы обучения нет у Эстонии:
@@ -74,7 +76,7 @@ const profiles: Record<Country, CountryProfile> = {
     // закрыта решением владельца 2026-10-24 — адрес отдаёт 404, её очередь
     // закрыта от публичного ключа (миграция 20261024120000). Вернуть —
     // добавить раздел сюда и выдать обратно select на verification_queue.
-    features: ["favorites", "survey", "match", "calculator", "glossary", "rights", "privacy", "studentPermit"],
+    features: ["favorites", "survey", "match", "calculator", "glossary", "rights", "privacy", "studentPermit", "studentDocuments"],
     filters: ["interest", "fee", "budget", "mode"],
     surveySteps: ["exams", "interests", "levelDuration", "fundingFee", "city", "languageMode", "kind"],
     levels: ["bachelor", "master", "doctoral", "college"],

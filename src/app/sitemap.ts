@@ -23,6 +23,7 @@ const SECTIONS: { path: string; feature?: Feature }[] = [
   { path: "/glossary", feature: "glossary" },
   { path: "/rights", feature: "rights" },
   { path: "/student-permit", feature: "studentPermit" },
+  { path: "/student-documents", feature: "studentDocuments" },
   { path: "/privacy", feature: "privacy" },
 ];
 

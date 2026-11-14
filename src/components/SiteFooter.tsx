@@ -40,6 +40,7 @@ export function SiteFooter({ dict, locale, tone }: { dict: Dictionary; locale: L
     { href: `/${locale}/glossary`, label: dict.nav.glossary, feature: "glossary" },
     { href: `/${locale}/rights`, label: dict.nav.rights, feature: "rights" },
     { href: `/${locale}/student-permit`, label: dict.nav.studentPermit, feature: "studentPermit" },
+    { href: `/${locale}/student-documents`, label: dict.nav.studentDocuments, feature: "studentDocuments" },
     { href: `/${locale}/privacy`, label: dict.privacy.title, feature: "privacy" },
   ];
   const links = allLinks.filter((link) => link.feature === null || hasFeature(locale, link.feature));

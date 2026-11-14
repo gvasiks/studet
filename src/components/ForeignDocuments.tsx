@@ -1,3 +1,4 @@
+import Link from "next/link";
 import type { Dictionary } from "@/i18n/dictionaries";
 import { formatDate } from "@/lib/dates";
 import { httpUrl } from "@/lib/application-channel";
@@ -18,6 +19,8 @@ import { DocumentChecklistItems, type ChecklistGroup } from "@/components/Docume
 // 2026-11-14); под списком — источники и дата проверки (правило 5).
 // Сверху — минимум теста по английскому (шаг 4, правило 6: только подтверждённый).
 // Этап by_university (вуз делает сам) — отдельным списком без отметок.
+// Тот же блок стоит на странице /student-documents (все вузы): там заголовок
+// — уровень обучения (h3), а отметки общие с карточкой — ключ тот же.
 
 export function ForeignDocuments({
   dict,
@@ -26,6 +29,10 @@ export function ForeignDocuments({
   degreeLevel,
   items,
   english,
+  heading,
+  headingId = "foreign-documents",
+  englishByProgramme = null,
+  allHref = null,
 }: {
   dict: Dictionary;
   language: string;
@@ -33,6 +40,13 @@ export function ForeignDocuments({
   degreeLevel: string;
   items: DocumentRequirement[];
   english: EnglishRequirement | null;
+  /** Заголовок h3 вместо h2 «Documents to prepare» (страница всех вузов). */
+  heading?: string;
+  headingId?: string;
+  /** Требования к английскому у вуза по программам: ссылка на каталог вместо цифр. */
+  englishByProgramme?: string | null;
+  /** Ссылка «все вузы» под списком на карточке. */
+  allHref?: string | null;
 }) {
   const t = dict.programme.foreignDocuments;
   const stages = groupByStage(items);
@@ -46,19 +60,39 @@ export function ForeignDocuments({
       note: item.note,
     })),
   }));
+  // внутренние заголовки на ступень ниже заголовка блока: h3 на карточке, h4 на странице всех вузов
+  const Inner = heading ? "h4" : "h3";
+  const Root = heading ? "div" : "section";
   const sources = checklistSources(items);
   const englishLines = english ? englishTests(english, t.english, language) : [];
   const englishSource = english ? httpUrl(english.sourceUrl) : null;
 
   return (
-    <section className="mt-8" aria-labelledby="foreign-documents">
-      <h2 id="foreign-documents" className="text-xs uppercase tracking-wide text-zinc-500">
-        {t.title}
-      </h2>
-      <p className="mt-2 text-sm text-zinc-600">{t.intro}</p>
+    // На странице всех вузов блок уровня — не отдельная область: восемь областей
+    // «Bachelor's studies» / «Master's studies» с одинаковыми названиями (axe: landmark-unique).
+    <Root className={heading ? "mt-6" : "mt-8"} aria-labelledby={heading ? undefined : headingId}>
+      {heading ? (
+        <h3 id={headingId} className="text-base font-semibold text-zinc-900">
+          {heading}
+        </h3>
+      ) : (
+        <>
+          <h2 id={headingId} className="text-xs uppercase tracking-wide text-zinc-600">
+            {t.title}
+          </h2>
+          <p className="mt-2 text-sm text-zinc-600">{t.intro}</p>
+        </>
+      )}
+      {!english && englishByProgramme && (
+        <p className="mt-3 rounded-2xl bg-zinc-50 p-4 text-sm text-zinc-800">
+          <Link href={englishByProgramme} className="font-medium text-brand-dark underline hover:text-brand">
+            {t.english.byProgramme}
+          </Link>
+        </p>
+      )}
       {english && englishLines.length > 0 && (
         <div className="mt-3 rounded-2xl bg-zinc-50 p-4 text-sm">
-          <h3 className="font-semibold text-zinc-900">{t.english.title}</h3>
+          <Inner className="font-semibold text-zinc-900">{t.english.title}</Inner>
           <ul className="mt-1 text-zinc-800">
             {englishLines.map((line) => (
               <li key={line}>{line}</li>
@@ -69,7 +103,7 @@ export function ForeignDocuments({
               {english.note}
             </p>
           )}
-          <p className="mt-1 text-xs leading-relaxed text-zinc-500">
+          <p className="mt-1 text-xs leading-relaxed text-zinc-600">
             {t.english.otherTests} {dict.catalog.verifiedPrefix}{" "}
             {formatDate(english.verifiedAt, language).replace(/\.?$/, ".")}
             {englishSource && (
@@ -95,7 +129,7 @@ export function ForeignDocuments({
       )}
       {byUniversity.length > 0 && (
         <div className="mt-3 rounded-2xl bg-zinc-50 p-4 text-sm">
-          <h3 className="font-semibold text-zinc-900">{t.stages.by_university}</h3>
+          <Inner className="font-semibold text-zinc-900">{t.stages.by_university}</Inner>
           <ul className="mt-2 space-y-2">
             {byUniversity.map((item) => (
               <li key={`${item.document}:${item.appliesTo}`} className="text-zinc-800">
@@ -111,12 +145,15 @@ export function ForeignDocuments({
           </ul>
         </div>
       )}
-      <p className="mt-3 text-xs leading-relaxed text-zinc-500">
-        {language !== "en" && <>{t.notesLanguage} </>}
-        {t.more}
-      </p>
+      {/* На странице всех вузов эта оговорка стоит один раз вверху. */}
+      {!heading && (
+        <p className="mt-3 text-xs leading-relaxed text-zinc-600">
+          {language !== "en" && <>{t.notesLanguage} </>}
+          {t.more}
+        </p>
+      )}
       {sources.verifiedAt && (
-        <p className="mt-1 text-xs leading-relaxed text-zinc-500">
+        <p className="mt-1 text-xs leading-relaxed text-zinc-600">
           {dict.catalog.verifiedPrefix} {formatDate(sources.verifiedAt, language).replace(/\.?$/, ".")} {t.sources}{" "}
           {sources.urls
             .map((url) => httpUrl(url))
@@ -131,7 +168,12 @@ export function ForeignDocuments({
             ))}
         </p>
       )}
-    </section>
+      {allHref && (
+        <Link href={allHref} className="mt-3 inline-block text-sm font-medium text-brand-dark underline hover:text-brand">
+          {t.allLink}
+        </Link>
+      )}
+    </Root>
   );
 }
 

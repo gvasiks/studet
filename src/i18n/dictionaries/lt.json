@@ -247,12 +247,14 @@
       "more": "Kai kurioms programoms ir šalims universitetas gali prašyti daugiau dokumentų. Prieš teikdami prašymą, patikrinkite universiteto svetainę.",
       "sources": "Šaltiniai:",
       "progress": "Paruošta {done} iš {total}",
+      "allLink": "Visų universitetų dokumentų sąrašai",
       "english": {
         "title": "Minimalus anglų kalbos testo rezultatas",
         "ielts": "IELTS {score}",
         "toefl": "TOEFL iBT {score}",
         "toeflBand": "TOEFL iBT {score} (arba {band} pagal skalę, taikomą nuo 2026 m. sausio 21 d.)",
-        "otherTests": "Kiti priimami testai — universiteto svetainėje."
+        "otherTests": "Kiti priimami testai — universiteto svetainėje.",
+        "byProgramme": "Anglų kalbos reikalavimai skiriasi pagal programą — žr. programos puslapį"
       }
     },
     "deadlinesTitle": "Prašymų teikimo terminai",
@@ -276,6 +278,7 @@
     "glossary": "Žodynėlis",
     "rights": "Jūsų teisės",
     "studentPermit": "Leidimas gyventi studijoms",
+    "studentDocuments": "Dokumentai užsienio stojantiesiems",
     "menu": "Meniu",
     "main": "Pagrindinė navigacija",
     "footer": "Poraštės navigacija",
@@ -621,6 +624,12 @@
     "compareEmpty": "Programų kortelėse pažymėkite „Lyginti“, kad pamatytumėte jas greta.",
     "missingNote": "Išsaugotų programų, kurių dabar nėra kataloge: {count}. Galbūt tai laikina.",
     "removeMissing": "Pašalinti jas iš sąrašo"
+  },
+  "studentDocuments": {
+    "title": "Dokumentai užsienio stojantiesiems",
+    "intro": "Ko universitetai prašo užsienio stojančiųjų bakalauro ir magistro studijose: dokumentai pagal etapus ir minimalus anglų kalbos testo rezultatas. Jūsų žymės išsaugomos tik šioje naršyklėje ir sutampa su žymėmis programos puslapyje.",
+    "tocTitle": "Universitetai",
+    "empty": "Patikrintų dokumentų sąrašų dar nėra."
   },
   "studentPermit": {
     "title": "Leidimas gyventi studijoms Latvijoje",

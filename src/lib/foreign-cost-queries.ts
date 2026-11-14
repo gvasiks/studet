@@ -135,3 +135,69 @@ export async function getEnglishRequirements(universityId: string, degreeLevel: 
     return parseEnglishRequirements(data ?? []);
   });
 }
+
+export type UniversityDocumentList = {
+  university: { slug: string; name_lv: string | null; name_en: string | null; name_lt: string | null; name_et: string | null };
+  degreeLevel: string;
+  items: DocumentRequirement[];
+  /** Требование к английскому на весь уровень вуза (programme_id пустой). */
+  english: EnglishRequirement | null;
+  /** У вуза на этом уровне требования к английскому заданы по программам (как у ЛУ). */
+  englishByProgramme: boolean;
+};
+
+// Все подтверждённые списки документов страны — для страницы /student-documents.
+// Порядок: вузы по названию на латышском, внутри — бакалавриат, магистратура.
+const LEVEL_ORDER = ["college", "bachelor", "master", "doctoral"];
+
+export async function getCountryDocumentLists(country: Country): Promise<UniversityDocumentList[]> {
+  return remember(`document-lists:${country}`, COUNTRY_COSTS_MEMORY_MS, async () => {
+    const [documents, english] = await Promise.all([
+      supabase
+        .from("foreign_document_requirement")
+        .select(
+          "university_id, degree_level, document, applies_to, stage, note, sort_order, source_url, verified_at, " +
+            "university!inner(slug, name_lv, name_en, name_lt, name_et, country)",
+        )
+        .eq("university.country", country)
+        .not("verified_at", "is", null),
+      supabase
+        .from("english_requirement")
+        .select("university_id, degree_level, programme_id, ielts_min, toefl_ibt_min, toefl_ibt_band, note, source_url, verified_at")
+        .not("verified_at", "is", null),
+    ]);
+    if (documents.error) return [];
+    const englishRows = english.error ? [] : (english.data ?? []);
+
+    type DocumentRow = Parameters<typeof parseRequirements>[0][number] & {
+      university_id: string;
+      degree_level: string;
+      university: UniversityDocumentList["university"];
+    };
+    const groups = new Map<string, { university: UniversityDocumentList["university"]; universityId: string; level: string; rows: DocumentRow[] }>();
+    for (const row of (documents.data ?? []) as unknown as DocumentRow[]) {
+      const key = `${row.university_id}:${row.degree_level}`;
+      const group = groups.get(key) ?? { university: row.university, universityId: row.university_id, level: row.degree_level, rows: [] };
+      group.rows.push(row);
+      groups.set(key, group);
+    }
+
+    return [...groups.values()]
+      .map((group) => {
+        const own = englishRows.filter((row) => row.university_id === group.universityId && row.degree_level === group.level);
+        const universityWide = parseEnglishRequirements(own.filter((row) => row.programme_id === null));
+        return {
+          university: group.university,
+          degreeLevel: group.level,
+          items: parseRequirements(group.rows),
+          english: universityWide[0] ?? null,
+          englishByProgramme: own.some((row) => row.programme_id !== null),
+        };
+      })
+      .sort(
+        (a, b) =>
+          (a.university.name_lv ?? "").localeCompare(b.university.name_lv ?? "", "lv") ||
+          LEVEL_ORDER.indexOf(a.degreeLevel) - LEVEL_ORDER.indexOf(b.degreeLevel),
+      );
+  });
+}
