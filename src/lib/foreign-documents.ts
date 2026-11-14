@@ -3,7 +3,8 @@
 // который вуз просит на этом уровне. Сюда приходят только подтверждённые
 // строки (решение владельца 2026-11-14).
 
-// Совпадает с check в миграции 20261114120000_foreign_document_requirement.sql.
+// Совпадает с check в миграциях 20261114120000_foreign_document_requirement.sql
+// и 20261114130000_foreign_document_aic_statement.sql.
 export const DOCUMENT_KEYS = [
   "passport",
   "photo",
@@ -13,6 +14,7 @@ export const DOCUMENT_KEYS = [
   "enrolment_letter",
   "english_translation",
   "legalisation",
+  "aic_statement",
   "english_certificate",
   "motivation_letter",
   "cv",

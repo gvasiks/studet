@@ -12,10 +12,14 @@ verified_at проставляет владелец в Studio. Уже подтв
   «Immigration regulations» (что подготовить до приезда) и apply.rtu.lv
   (справка для выпускников, страница от 26.03.2026);
 - ЛУ: lu.lv/en/admissions/degree-studies/;
+- RISEBA: правила приёма 2026/2027 (riseba.lv/en/come-study/terms-of-enrolment/),
+  список общий для всех поступающих; справку AIC о признании образования
+  абитуриент прикладывает сам (у ЛУ и RSU её запрашивает вуз);
 - RSU: правила приёма на английские программы 2026/2027 (PDF, глава V).
   У RSU у каждой программы своё приложение к правилам (медицина, стоматология
   и др. просят больше) — здесь только общий список главы V.
-Turība, TSI и ViA запрещают обход агентам Anthropic в robots.txt — их списки
+BA с ноября 2026 перенаправляет на LU FinTech Business School (ftbs.lu.lv) и
+пропущена решением владельца 2026-11-09. Turība, TSI и ViA запрещают обход агентам Anthropic в robots.txt — их списки
 вносятся вручную. Докторантура не заполнена: у РТУ и ЛУ для неё отдельный
 порядок.
 
@@ -31,10 +35,10 @@ from __future__ import annotations
 
 import sys
 
-# Совпадает с check в миграции 20261114120000 и с src/lib/foreign-documents.ts.
+# Совпадает с check в миграциях 20261114120000 и 20261114130000 и с src/lib/foreign-documents.ts.
 DOCUMENTS = {
     "passport", "photo", "secondary_diploma", "bachelor_diploma", "transcript",
-    "enrolment_letter", "english_translation", "legalisation", "english_certificate",
+    "enrolment_letter", "english_translation", "legalisation", "aic_statement", "english_certificate",
     "motivation_letter", "cv", "recommendation_letters", "criminal_record",
     "minor_documents", "proof_of_funds", "application_fee_receipt",
 }
@@ -48,6 +52,7 @@ RTU_VISA_FREE = "https://www.rtu.lv/en/studies/immigration-regulations/visa-free
 RTU_EU = "https://www.rtu.lv/en/studies/immigration-regulations/eu-member-states-the-european-economic-area-switzerland"
 RTU_BACHELOR_DOCS = "https://apply.rtu.lv/news/new/35-required-education-documents-bachelors-students"
 LU_ADMISSION = "https://www.lu.lv/en/admissions/degree-studies/"
+RISEBA_TERMS = "https://riseba.lv/en/come-study/terms-of-enrolment/"
 RSU_PROCEDURE = "https://www.rsu.lv/sites/default/files/imce/SSD/admissions_procedure_2026_2027_eng.pdf"
 
 BM = ["bachelor", "master"]
@@ -107,6 +112,23 @@ ROWS: list[tuple] = [
     ("lu", BM, "legalisation", "docs_issued_outside_eu", "before_arrival",
      "Under the Hague Convention. Best done before applying; must be done before the visa or residence permit application.",
      LU_ADMISSION, "Step 3: Legalisation of documents (documents issued in non-EU/EEA countries) … NB! Applicants are advised to complete the legalisation of their documents before applying for studies, and this step must be fully completed before applying for a visa or residence permit."),
+    # --- RISEBA: правила приёма 2026/2027 ---
+    ("riseba", ["bachelor"], "secondary_diploma", "all", "application",
+     "A copy; show the original when signing the study agreement. Can be added after you graduate.",
+     RISEBA_TERMS, "a copy of the proof of previous education (original) / proof can be provided upon receipt of the document after graduation;"),
+    ("riseba", ["master"], "bachelor_diploma", "all", "application", "A copy; show the original when signing the study agreement.",
+     RISEBA_TERMS, "a copy of the proof of previous education (original) / proof can be provided upon receipt of the document after graduation;"),
+    ("riseba", BM, "aic_statement", "all", "application",
+     "For education obtained abroad: which Latvian degree or diploma it corresponds to (aic.lv).",
+     RISEBA_TERMS, "If the applicant has acquired previous education or degrees abroad, the educational documents must be accompanied by a statement from the Academic Information Center on the recognition of education and equalization with the level of education in Latvia;"),
+    ("riseba", BM, "photo", "all", "application", "A portrait photo.",
+     RISEBA_TERMS, "a portrait photo in a size appropriate to the document format;"),
+    ("riseba", ["master"], "cv", "all", "application", None,
+     RISEBA_TERMS, "a curriculum vitae (CV) – only for the candidates for the master’s programme;"),
+    ("riseba", BM, "passport", "all", "application", "A copy of the passport or ID card; show the original.",
+     RISEBA_TERMS, "a copy of your passport or ID card (original)."),
+    ("riseba", BM, "application_fee_receipt", "all", "application", "A payment order from the online bank.",
+     RISEBA_TERMS, "registration fee (payment order from the online bank):"),
     # --- RSU: правила приёма 2026/2027, глава V ---
     ("rsu", ["bachelor"], "secondary_diploma", "all", "application", "Original language and English.",
      RSU_PROCEDURE, "educational documents (Secondary school leaving diploma and the official transcript, Bachelor's diploma and the official transcript, Master’s diploma and the official transcript, etc.) both in original language and in English"),
