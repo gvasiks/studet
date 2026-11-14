@@ -209,6 +209,19 @@
       "ielts_min": 6.0,
       "note": null,
       "programme_name": null,
+      "programme_slug": "industrial-engineering-and-management-en",
+      "source_excerpt": "TOEFL IBT – at least score 80 … IELTS – at least score 6.00",
+      "source_url": "https://apply.lu.lv/courses/course/110",
+      "toefl_ibt_band": null,
+      "toefl_ibt_min": 80,
+      "university_slug": "lu",
+      "verified_at": "2026-11-14T19:40:02.705889+00:00"
+    },
+    {
+      "degree_level": "bachelor",
+      "ielts_min": 6.0,
+      "note": null,
+      "programme_name": null,
       "programme_slug": "international-economics-and-commercial-diplomacy-en",
       "source_excerpt": "TOEFL IBT : at least 80 for tests taken on or before 21 January 2026, or a minimum score of 4 for tests taken after 21 January 2026. … IELTS – at least score 6.00",
       "source_url": "https://apply.lu.lv/courses/course/26-bachelor-international-economics-and-commercial-diplomacy",
@@ -255,6 +268,19 @@
       "toefl_ibt_min": 80,
       "university_slug": "lu",
       "verified_at": "2026-11-14T19:06:07.500101+00:00"
+    },
+    {
+      "degree_level": "bachelor",
+      "ielts_min": 6.0,
+      "note": null,
+      "programme_name": null,
+      "programme_slug": "philology-en",
+      "source_excerpt": "TOEFL IBT : at least 80 for tests taken on or before 21 January 2026, or a minimum score of 4 for tests taken after 21 January 2026. … IELTS – at least score 6.00",
+      "source_url": "https://apply.lu.lv/courses/course/114",
+      "toefl_ibt_band": 4.0,
+      "toefl_ibt_min": 80,
+      "university_slug": "lu",
+      "verified_at": "2026-11-14T19:40:02.705889+00:00"
     },
     {
       "degree_level": "doctoral",
@@ -534,6 +560,19 @@
       "ielts_min": 6.0,
       "note": null,
       "programme_name": null,
+      "programme_slug": "european-studies-and-economic-diplomacy-en-1-year-master",
+      "source_excerpt": "TOEFL IBT – at least score 72 … IELTS – at least score 6.00",
+      "source_url": "https://apply.lu.lv/courses/course/141",
+      "toefl_ibt_band": null,
+      "toefl_ibt_min": 72,
+      "university_slug": "lu",
+      "verified_at": "2026-11-14T19:40:02.705889+00:00"
+    },
+    {
+      "degree_level": "master",
+      "ielts_min": 6.0,
+      "note": null,
+      "programme_name": null,
       "programme_slug": "european-studies-and-economic-diplomacy-en-2-years-master",
       "source_excerpt": "TOEFL IBT : at least 80 for tests taken on or before 21 January 2026, or a minimum score of 4 for tests taken after 21 January 2026. … IELTS – at least score 6.00",
       "source_url": "https://apply.lu.lv/courses/course/116-master-european-studies-and-economic-diplomacy-2-years",
@@ -580,6 +619,19 @@
       "toefl_ibt_min": 80,
       "university_slug": "lu",
       "verified_at": "2026-11-14T19:06:07.500101+00:00"
+    },
+    {
+      "degree_level": "master",
+      "ielts_min": 6.0,
+      "note": null,
+      "programme_name": null,
+      "programme_slug": "linguistics-literature-and-regional-culture-studies-en-master",
+      "source_excerpt": "TOEFL IBT : at least 80 for tests taken on or before 21 January 2026, or a minimum score of 4 for tests taken after 21 January 2026. … IELTS – at least score 6.00",
+      "source_url": "https://apply.lu.lv/courses/course/115",
+      "toefl_ibt_band": 4.0,
+      "toefl_ibt_min": 80,
+      "university_slug": "lu",
+      "verified_at": "2026-11-14T19:40:02.705889+00:00"
     },
     {
       "degree_level": "master",
