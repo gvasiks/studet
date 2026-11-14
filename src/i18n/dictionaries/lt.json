@@ -214,7 +214,8 @@
       "intro": "Ko universitetas šioje pakopoje prašo užsienio stojančiųjų. Jūsų žymės išsaugomos tik šioje naršyklėje.",
       "stages": {
         "application": "Teikiant prašymą",
-        "before_arrival": "Prieš atvykstant į Latviją"
+        "before_arrival": "Prieš atvykstant į Latviją",
+        "by_university": "Tai atlieka universitetas"
       },
       "documents": {
         "passport": "Pasas",
@@ -245,7 +246,14 @@
       "notesLanguage": "Pastabos — anglų kalba, kaip universiteto svetainėje.",
       "more": "Kai kurioms programoms ir šalims universitetas gali prašyti daugiau dokumentų. Prieš teikdami prašymą, patikrinkite universiteto svetainę.",
       "sources": "Šaltiniai:",
-      "progress": "Paruošta {done} iš {total}"
+      "progress": "Paruošta {done} iš {total}",
+      "english": {
+        "title": "Minimalus anglų kalbos testo rezultatas",
+        "ielts": "IELTS {score}",
+        "toefl": "TOEFL iBT {score}",
+        "toeflBand": "TOEFL iBT {score} (arba {band} pagal skalę, taikomą nuo 2026 m. sausio 21 d.)",
+        "otherTests": "Kiti priimami testai — universiteto svetainėje."
+      }
     },
     "deadlinesTitle": "Prašymų teikimo terminai",
     "deadlinesNotAvailable": "Šios programos priėmimo datos dar nepatvirtintos.",

@@ -20,7 +20,14 @@ import { matchRounds } from "@/lib/deadlines";
 import { getAdmissionType } from "@/lib/admission-type-queries";
 import { httpUrl, matchChannel } from "@/lib/application-channel";
 import { getApplicationChannels } from "@/lib/application-channel-queries";
-import { getCountryCosts, getDocumentRequirements, getHousingCosts, getProgrammeFees } from "@/lib/foreign-cost-queries";
+import {
+  getCountryCosts,
+  getDocumentRequirements,
+  getEnglishRequirements,
+  getHousingCosts,
+  getProgrammeFees,
+} from "@/lib/foreign-cost-queries";
+import { pickEnglishRequirement } from "@/lib/english-requirement";
 import { currentCountryCosts, currentHousingCost } from "@/lib/foreign-costs";
 import { getProgrammeOutcome } from "@/lib/outcome-queries";
 import { areaCode } from "@/lib/fields";
@@ -125,6 +132,10 @@ export default async function ProgrammePage({ params }: { params: Params }) {
           record.language_of_instruction === "en"
             ? getDocumentRequirements(record.university_id, record.degree_level)
             : Promise.resolve([]),
+          // минимум теста по английскому — тоже у английских программ (шаг 4)
+          record.language_of_instruction === "en"
+            ? getEnglishRequirements(record.university_id, record.degree_level)
+            : Promise.resolve([]),
         ])
       : Promise.resolve(null);
   const [formula, rounds, admissionType, outcome, channels, hasLtCalculator, ltField, ltStats, eeField, eeAdmission, vuppStats, foreign] =
@@ -159,6 +170,7 @@ export default async function ProgrammePage({ params }: { params: Params }) {
     ((foreignCosts.length > 0 || foreignHousing !== null) && record.language_of_instruction === "en") ||
     foreignFees.length > 0;
   const foreignDocuments = foreign ? foreign[3] : [];
+  const foreignEnglish = foreign ? pickEnglishRequirement(foreign[4], record.id) : null;
   // Где подать документы: только подтверждённая человеком запись вуза для
   // этого уровня (или для всех уровней). Нет записи — блока нет.
   const channel = matchChannel(channels, record.university_id, record.degree_level);
@@ -513,13 +525,14 @@ export default async function ProgrammePage({ params }: { params: Params }) {
         />
       )}
 
-      {foreignDocuments.length > 0 && (
+      {(foreignDocuments.length > 0 || foreignEnglish) && (
         <ForeignDocuments
           dict={dict}
           language={language}
           universitySlug={record.university.slug}
           degreeLevel={record.degree_level}
           items={foreignDocuments}
+          english={foreignEnglish}
         />
       )}
 

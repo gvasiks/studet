@@ -214,7 +214,8 @@
       "intro": "Ko augstskola šajā līmenī prasa ārvalstu reflektantiem. Atzīmes tiek saglabātas tikai šajā pārlūkā.",
       "stages": {
         "application": "Piesakoties",
-        "before_arrival": "Pirms ierašanās Latvijā"
+        "before_arrival": "Pirms ierašanās Latvijā",
+        "by_university": "To izdara augstskola"
       },
       "documents": {
         "passport": "Pase",
@@ -245,7 +246,14 @@
       "notesLanguage": "Piezīmes — angļu valodā, kā augstskolas lapā.",
       "more": "Dažām programmām un valstīm augstskola var prasīt vairāk dokumentu. Pirms pieteikšanās jāpārbauda augstskolas lapa.",
       "sources": "Avoti:",
-      "progress": "Sagatavoti {done} no {total}"
+      "progress": "Sagatavoti {done} no {total}",
+      "english": {
+        "title": "Minimālais angļu valodas testa rezultāts",
+        "ielts": "IELTS {score}",
+        "toefl": "TOEFL iBT {score}",
+        "toeflBand": "TOEFL iBT {score} (vai {band} pēc skalas, ko lieto no 2026. gada 21. janvāra)",
+        "otherTests": "Citi pieņemtie testi — augstskolas lapā."
+      }
     },
     "deadlinesTitle": "Pieteikšanās termiņi",
     "deadlinesNotAvailable": "Uzņemšanas datumi šai programmai vēl nav apstiprināti.",

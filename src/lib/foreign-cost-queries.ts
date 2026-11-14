@@ -15,6 +15,7 @@ import {
   type ProgrammeFee,
 } from "@/lib/foreign-costs";
 import { parseRequirements, type DocumentRequirement } from "@/lib/foreign-documents";
+import { parseEnglishRequirements, type EnglishRequirement } from "@/lib/english-requirement";
 
 // Общие суммы страны меняются раз в год — живут в памяти сервера пять минут,
 // как каталог (server-memo.ts). Подтверждение в Studio видно с той же задержкой.
@@ -117,5 +118,20 @@ export async function getDocumentRequirements(universityId: string, degreeLevel:
       .not("verified_at", "is", null);
     if (error) return [];
     return parseRequirements(data ?? []);
+  });
+}
+
+// Требования к английскому вуза на уровне программы (шаг 4): строки вуза и
+// строки отдельных программ этого уровня; выбирает pickEnglishRequirement.
+export async function getEnglishRequirements(universityId: string, degreeLevel: string): Promise<EnglishRequirement[]> {
+  return remember(`english:${universityId}:${degreeLevel}`, COUNTRY_COSTS_MEMORY_MS, async () => {
+    const { data, error } = await supabase
+      .from("english_requirement")
+      .select("programme_id, ielts_min, toefl_ibt_min, toefl_ibt_band, note, source_url, verified_at")
+      .eq("university_id", universityId)
+      .eq("degree_level", degreeLevel)
+      .not("verified_at", "is", null);
+    if (error) return [];
+    return parseEnglishRequirements(data ?? []);
   });
 }

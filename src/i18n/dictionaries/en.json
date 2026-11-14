@@ -214,7 +214,8 @@
       "intro": "What the university asks international applicants for at this level. Your ticks are saved only in this browser.",
       "stages": {
         "application": "When applying",
-        "before_arrival": "Before travelling to Latvia"
+        "before_arrival": "Before travelling to Latvia",
+        "by_university": "Done by the university"
       },
       "documents": {
         "passport": "Passport",
@@ -245,7 +246,14 @@
       "notesLanguage": "Notes follow the university's own wording.",
       "more": "For some programmes and countries the university may ask for more. Check its pages before applying.",
       "sources": "Sources:",
-      "progress": "{done} of {total} ready"
+      "progress": "{done} of {total} ready",
+      "english": {
+        "title": "Minimum English test result",
+        "ielts": "IELTS {score}",
+        "toefl": "TOEFL iBT {score}",
+        "toeflBand": "TOEFL iBT {score} (or {band} on the scale used since 21 January 2026)",
+        "otherTests": "Other accepted tests are listed on the university's page."
+      }
     },
     "deadlinesTitle": "Application windows",
     "deadlinesNotAvailable": "Admission dates for this programme aren't confirmed yet.",

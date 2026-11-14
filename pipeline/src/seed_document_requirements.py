@@ -43,7 +43,7 @@ DOCUMENTS = {
     "minor_documents", "proof_of_funds", "application_fee_receipt",
 }
 APPLIES_TO = {"all", "docs_issued_outside_eu", "non_eu_citizens", "visa_required", "under_18", "final_year"}
-STAGES = {"application", "before_arrival"}
+STAGES = {"application", "before_arrival", "by_university"}  # by_university — миграция 20261114140000
 LEVELS = {"college", "bachelor", "master", "doctoral"}
 
 RTU_ADMISSION = "https://www.rtu.lv/en/studies/admission-1"
@@ -112,6 +112,8 @@ ROWS: list[tuple] = [
     ("lu", BM, "legalisation", "docs_issued_outside_eu", "before_arrival",
      "Under the Hague Convention. Best done before applying; must be done before the visa or residence permit application.",
      LU_ADMISSION, "Step 3: Legalisation of documents (documents issued in non-EU/EEA countries) … NB! Applicants are advised to complete the legalisation of their documents before applying for studies, and this step must be fully completed before applying for a visa or residence permit."),
+    ("lu", BM, "aic_statement", "all", "by_university", "After the application fee is paid; takes about 4–6 weeks.",
+     LU_ADMISSION, "After completing the payment, the applicant will receive a notification from the UL coordinator, who will submit the applicant’s documents to the Academic Information Centre (AIC) for diploma recognition (the estimated duration of this process is 4 to 6 weeks)"),
     # --- RISEBA: правила приёма 2026/2027 ---
     ("riseba", ["bachelor"], "secondary_diploma", "all", "application",
      "A copy; show the original when signing the study agreement. Can be added after you graduate.",
@@ -149,6 +151,9 @@ ROWS: list[tuple] = [
      RSU_PROCEDURE, "results of the internationally recognised English proficiency test"),
     ("rsu", BM, "passport", "all", "application", "Data page, or an ID card.",
      RSU_PROCEDURE, "a passport (data page) or a personal identity card (ID card)"),
+    ("rsu", BM, "aic_statement", "all", "by_university",
+     "You can also get it yourself. Not needed for documents issued in Estonia and Lithuania after 07.01.2019.",
+     RSU_PROCEDURE, "If the applicant has obtained the educational document or academic degree abroad (not in Latvia), ID responsible employees shall take the necessary actions in the State Education Information System (hereinafter – SEIS) to obtain a reference from the Academic Information Centre"),
     ("rsu", BM, "photo", "all", "application", "Taken in the last 6 months, plain light background.",
      RSU_PROCEDURE, "Photo – to be uploaded onto the section “Personal Information” of the eA Portal."),
     ("rsu", BM, "application_fee_receipt", "all", "application", None,

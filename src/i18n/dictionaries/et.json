@@ -214,7 +214,8 @@
       "intro": "Mida ülikool sellel õppeastmel välismaa kandidaatidelt nõuab. Märked salvestatakse ainult selles brauseris.",
       "stages": {
         "application": "Avalduse esitamisel",
-        "before_arrival": "Enne Lätti saabumist"
+        "before_arrival": "Enne Lätti saabumist",
+        "by_university": "Seda teeb ülikool"
       },
       "documents": {
         "passport": "Pass",
@@ -245,7 +246,14 @@
       "notesLanguage": "Märkused on inglise keeles, nagu ülikooli lehel.",
       "more": "Mõne õppekava ja riigi puhul võib ülikool nõuda rohkem dokumente. Enne avalduse esitamist tasub ülikooli lehte kontrollida.",
       "sources": "Allikad:",
-      "progress": "Valmis {done}/{total}"
+      "progress": "Valmis {done}/{total}",
+      "english": {
+        "title": "Inglise keele testi miinimumtulemus",
+        "ielts": "IELTS {score}",
+        "toefl": "TOEFL iBT {score}",
+        "toeflBand": "TOEFL iBT {score} (või {band} skaalal, mida kasutatakse alates 21. jaanuarist 2026)",
+        "otherTests": "Teised aktsepteeritud testid on ülikooli lehel."
+      }
     },
     "deadlinesTitle": "Avalduste esitamise tähtajad",
     "deadlinesNotAvailable": "Selle õppekava vastuvõtu kuupäevad ei ole veel kinnitatud.",

@@ -36,7 +36,8 @@ export const DOCUMENT_CONDITIONS = [
 ] as const;
 export type DocumentCondition = (typeof DOCUMENT_CONDITIONS)[number];
 
-export const DOCUMENT_STAGES = ["application", "before_arrival"] as const;
+// by_university — то, что вуз делает сам (миграция 20261114140000): без отметок.
+export const DOCUMENT_STAGES = ["application", "before_arrival", "by_university"] as const;
 export type DocumentStage = (typeof DOCUMENT_STAGES)[number];
 
 export type DocumentRequirement = {
