@@ -21,6 +21,7 @@
   python src/seed_english_requirements.py              # показать, что будет записано
   python src/seed_english_requirements.py --apply      # записать черновики
   python src/seed_english_requirements.py --only rtu   # один вуз (rtu, rsu, lu)
+  python src/seed_english_requirements.py --only lu --lu-slugs philology-en,...  # только эти программы ЛУ
   python src/seed_english_requirements.py --selftest   # разбор ЛУ на образце, без сети и базы
 """
 
@@ -100,18 +101,36 @@ def lu_course_links(page: str) -> list[str]:
     return sorted(set(re.findall(r"https://apply\.lu\.lv/courses/course/[\w\-]+", page)))
 
 
-def lu_rows(fetch, programmes: list[dict]) -> tuple[list[dict], list[str]]:
+# Страницы приёма, на которые страница программы на lu.lv не ссылается
+# (найдены по карте apply.lu.lv 2026-11-14). Добавляются к ссылкам со
+# страницы программы; у English Studies вторая подпрограмма называет другой
+# TOEFL (72 против 100) — программа уходит в «решает человек».
+LU_EXTRA_COURSES: dict[str, list[str]] = {
+    "philology-en": ["22", "28", "114"],
+    "linguistics-literature-and-regional-culture-studies-en-master": ["39", "43", "115"],
+    "european-studies-and-economic-diplomacy-en-1-year-master": ["141"],
+    "industrial-engineering-and-management-en": ["110"],
+    "english-studies-master": ["156"],
+}
+
+
+def lu_rows(fetch, programmes: list[dict], only_slugs: set[str] | None = None) -> tuple[list[dict], list[str]]:
     rows: list[dict] = []
     skipped: list[str] = []
     for programme in programmes:
         url = programme["source_url"] or ""
         if programme["language_of_instruction"] != "en" or not url.startswith("https://www.lu.lv/en/"):
             continue
-        try:
-            links = lu_course_links(fetch(url))
-        except Exception as exc:  # noqa: BLE001 — страница пропала: в журнал, не падаем
-            skipped.append(f"{programme['slug']}: страница не открылась ({type(exc).__name__})")
+        if only_slugs is not None and programme["slug"] not in only_slugs:
             continue
+        extra = [f"https://apply.lu.lv/courses/course/{course}" for course in LU_EXTRA_COURSES.get(programme["slug"], [])]
+        try:
+            links = sorted(set(lu_course_links(fetch(url)) + extra))
+        except Exception as exc:  # noqa: BLE001 — страница пропала: в журнал, не падаем
+            if not extra:
+                skipped.append(f"{programme['slug']}: страница не открылась ({type(exc).__name__})")
+                continue
+            links = extra
         if not links:
             skipped.append(f"{programme['slug']}: нет ссылки на apply.lu.lv")
             continue
@@ -172,7 +191,7 @@ def selftest() -> None:
     print("selftest ok")
 
 
-def main(apply: bool, only: str | None) -> None:
+def main(apply: bool, only: str | None, only_slugs: set[str] | None = None) -> None:
     from dotenv import load_dotenv
 
     from db import get_service_client
@@ -203,7 +222,7 @@ def main(apply: bool, only: str | None) -> None:
             .select("id, slug, source_url, degree_level, language_of_instruction")
             .eq("university_id", universities["lu"])
         ).data
-        lu, skipped = lu_rows(fetch_text, programmes)
+        lu, skipped = lu_rows(fetch_text, programmes, only_slugs)
         drafts += lu
 
     written = kept = 0
@@ -239,4 +258,6 @@ if __name__ == "__main__":
         only = sys.argv[sys.argv.index("--only") + 1] if "--only" in sys.argv else None
         if only is not None and only not in ("rtu", "rsu", "lu"):
             raise SystemExit("--only: rtu, rsu или lu")
-        main("--apply" in sys.argv, only)
+        # --lu-slugs a,b — только эти программы ЛУ (дозапись без 15-минутного прогона)
+        slugs = set(sys.argv[sys.argv.index("--lu-slugs") + 1].split(",")) if "--lu-slugs" in sys.argv else None
+        main("--apply" in sys.argv, only, slugs)

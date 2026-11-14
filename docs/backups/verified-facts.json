@@ -518,19 +518,6 @@
     },
     {
       "degree_level": "master",
-      "ielts_min": 7.0,
-      "note": null,
-      "programme_name": null,
-      "programme_slug": "english-studies-master",
-      "source_excerpt": "TOEFL IBT – at least 100 is required for tests taken on or before 21 January 2026, or a minimum score of 5 for tests taken after 21 January 2026. … IELTS – at least score 7.00",
-      "source_url": "https://apply.lu.lv/courses/course/37-master-english-language-literature-and-language-acquisition-sub-programme-academic-programme-english-studies",
-      "toefl_ibt_band": 5.0,
-      "toefl_ibt_min": 100,
-      "university_slug": "lu",
-      "verified_at": "2026-11-14T19:06:07.500101+00:00"
-    },
-    {
-      "degree_level": "master",
       "ielts_min": 6.0,
       "note": null,
       "programme_name": null,
