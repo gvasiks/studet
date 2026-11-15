@@ -6,7 +6,9 @@
    собираются, а запись о прогоне получает итог 'failed' — не остаётся «идёт»;
 3. источник, упавший при сборе, тоже не мешает остальным;
 4. поле, которое сборщик нашёл не у всех программ вуза, не обнуляется у
-   остальных: в базу уходят строки с одним набором ключей.
+   остальных: в базу уходят строки с одним набором ключей;
+5. служебное поле, которое сборщик ставит не всем строкам (Эстония:
+   details_extracted_at), не срывает запись вуза.
 
   python src/main_selftest.py
 """
@@ -36,6 +38,7 @@ class FakeQuery:
     def __init__(self, client: "FakeClient", table: str) -> None:
         self.client, self.table = client, table
         self.operation, self.payload = "select", None
+        self.columns: list[str] | None = None  # None — все колонки
 
     def insert(self, payload):  # type: ignore[no-untyped-def]
         self.operation, self.payload = "insert", payload
@@ -49,7 +52,10 @@ class FakeQuery:
         self.operation, self.payload = "update", payload
         return self
 
-    def select(self, *_):  # type: ignore[no-untyped-def]
+    def select(self, *columns, **_):  # type: ignore[no-untyped-def]
+        # как настоящая база: в ответе только перечисленные колонки
+        if columns and columns[0] != "*":
+            self.columns = [name.strip() for name in ",".join(columns).split(",")]
         return self
 
     # фильтры на ответ подставной базы не влияют
@@ -94,7 +100,11 @@ class FakeClient:
             self.saved_programmes += [row["slug"] for row in query.payload]
             self.upserted_rows += query.payload
         if query.table == "programme" and query.operation == "select":
-            return SimpleNamespace(data=self.existing_programmes)
+            if query.columns is None:
+                return SimpleNamespace(data=self.existing_programmes)
+            return SimpleNamespace(
+                data=[{k: row[k] for k in query.columns if k in row} for row in self.existing_programmes]
+            )
         return SimpleNamespace(data=[])
 
 
@@ -215,6 +225,33 @@ def selftest() -> None:
     source = fake_source("f", programmes=[fake_programme("f-1", language_of_instruction=None)])
     assert run(client, [source]) == 0
     assert client.saved_universities == ["f"] and client.upserted_rows == []
+
+    # 6б) Эстония: details_source_url / details_extracted_at стоят только у
+    #     программы со степенью. Вторая уже в базе со своей датой — запись
+    #     вуза не срывается (до 2026-11-15 падала с KeyError), у второй
+    #     остаются её значения из базы.
+    client = FakeClient({})
+    client.existing_programmes = [
+        {
+            **in_db, "slug": "g-2",
+            "details_source_url": "https://example.ee/g-2",
+            "details_extracted_at": "2026-10-13T00:00:00+00:00",
+        }
+    ]
+    source = fake_source(
+        "g",
+        programmes=[
+            fake_programme(
+                "g-1", details_source_url="https://example.ee/g-1",
+                details_extracted_at="2026-11-15T00:00:00+00:00",
+            ),
+            fake_programme("g-2"),
+        ],
+    )
+    assert run(client, [source]) == 0, client.run_updates[-1]
+    first, second = client.upserted_rows
+    assert first.keys() == second.keys(), sorted(first.keys() ^ second.keys())
+    assert second["details_extracted_at"] == "2026-10-13T00:00:00+00:00", second
 
     # 7) цена из NIID: тысячи через пробел не обрезаются до последних трёх цифр
     from sources.niid_colleges import _fee_and_funding

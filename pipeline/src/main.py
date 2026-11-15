@@ -306,6 +306,13 @@ def main() -> None:
 # Прогон идёт меньше часа; запись «идёт» старше этого — след прогона, который
 # убили (таймаут GitHub Actions, закрытое окно терминала, выключенный
 # компьютер) раньше, чем он успел записать итог.
+# Служебные поля, которые сборщик ставит не каждой строке пачки: эстонский
+# ставит details_source_url / details_extracted_at только программам, у
+# которых портал называет степень. fill_missing_keys дописывает недостающее
+# значением из базы — значит, их тоже надо прочитать, иначе запись вуза
+# срывается (KeyError; так упал сбор Эстонии 2026-11-04).
+SOMETIMES_SENT_FIELDS = ("details_source_url", "details_extracted_at")
+
 STALE_RUN_HOURS = 6
 
 
@@ -390,7 +397,7 @@ def _check_and_save(client, now: str, key: str, university, programmes, reports:
         # должно попасть в ТУ ЖЕ запись, что мы вот-вот отправим.
         existing = execute(
             client.table("programme")
-            .select("slug, verified_at, verified_by, " + ", ".join(CONTENT_FIELDS))
+            .select("slug, verified_at, verified_by, " + ", ".join(CONTENT_FIELDS + SOMETIMES_SENT_FIELDS))
             .eq("university_id", university_id)
             .in_("slug", [row["slug"] for row in programme_rows])
         ).data
