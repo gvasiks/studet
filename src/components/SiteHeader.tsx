@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { languageOf, type Locale } from "@/i18n/config";
+import { countryOf, languageOf, type Locale } from "@/i18n/config";
 import type { Dictionary } from "@/i18n/dictionaries";
 import { GraduationCapIcon } from "@/components/icons";
 import { FavoritesLink, HeaderNav } from "@/components/HeaderNav";
@@ -62,8 +62,10 @@ export function SiteHeader({ locale, dict, tone }: { locale: Locale; dict: Dicti
           пока не обслуживается — сайт честно говорит об этом на английских
           страницах, а не молчит. Индексацию не закрываем (само по себе это
           не причина для noindex), просто не выдаём каталог и калькулятор за
-          нечто большее, чем они есть сегодня. */}
-      {languageOf(locale) === "en" && (
+          нечто большее, чем они есть сегодня.
+          У Латвии полоса снята 2026-11-15 (решение Р5, docs/PLAN-FOREIGNERS.md):
+          готовы стоимость, документы и путь ВНЖ. У Литвы и Эстонии остаётся. */}
+      {languageOf(locale) === "en" && countryOf(locale) !== "LV" && (
         <div
           role="region"
           aria-label={dict.coverage.label}
