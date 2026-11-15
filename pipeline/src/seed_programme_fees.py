@@ -56,6 +56,13 @@ from datetime import date
 from urllib.parse import urljoin
 
 RTU_REGISTRY_URL = "https://www.rtu.lv/en/studies/all-study-programmes"
+# Реестр РТУ год не называет. Его цены совпали с каталогом программ РТУ на
+# 2027 год (study_programme_catalogue_2027_(full)_v3.pdf, ссылка со страницы
+# rtu.lv/en/studies/tuition-fees; сверено 2026-11-15: 31 из 36 программ
+# бакалавриата и магистратуры, остальных в каталоге нет) — решение владельца
+# 2026-11-15: год 2027/28. Когда РТУ выложит каталог следующего года, сверить
+# и поднять год здесь.
+RTU_ACADEMIC_YEAR = "2027/28"
 RTU_FOOTNOTE = "* Citizens of EU, EFTA member countries and EU candidate countries"
 
 
@@ -338,7 +345,7 @@ def rtu_prices(fetch, programmes: list[dict]) -> tuple[list[tuple[dict, dict]], 
             # Программы, которой нет в каталоге, плата не создаёт — её сначала
             # должен записать сборщик rtu_english.
             skipped.append(f"{row['name']}: нет в каталоге — {row['source_url']}")
-        pairs.extend((programme, row) for programme in matches)
+        pairs.extend((programme, {**row, "academic_year": RTU_ACADEMIC_YEAR}) for programme in matches)
     return pairs, skipped
 
 

@@ -26,10 +26,9 @@ seed-скриптов и так снова генерируют свои id пр
 
 Что в снимке: формулы, сроки подачи, типы отбора, направления программ,
 требования к поступающим и каналы подачи (два последних — с 2026-10-10),
-чек-лист документов и требования к английскому для иностранцев (с 2026-11-14).
-Таблицы стоимости для
-иностранцев (country_cost, programme_fee, housing_cost) — дописать, когда
-в них появятся подтверждения.
+чек-лист документов и требования к английскому для иностранцев (с 2026-11-14),
+стоимость для иностранцев — суммы страны, плата за обучение, общежития
+(с 2026-11-15).
 Чего в снимке НЕТ: пометок verified_at у самих программ и вузов (цена,
 бюджетные места) и у коэффициентов уровня — подтверждённых записей там
 пока нет (проверено 2026-10-10). Когда появятся — дописать сюда и в
@@ -326,6 +325,55 @@ def _english_requirements(client) -> list[dict]:  # type: ignore[no-untyped-def]
     return sorted(out, key=lambda r: (r["university_slug"], r["degree_level"], r["programme_slug"] or ""))
 
 
+# Стоимость для иностранцев (шаг 1): суммы страны, плата программы, общежития.
+_COUNTRY_COST_COLUMNS = (
+    "country", "code", "applies_to", "amount", "currency", "period", "valid_from", "valid_to",
+    "source_title", "source_url", "source_excerpt",
+)
+_FEE_COLUMNS = ("kind", "applies_to", "amount", "currency", "period", "academic_year", "source_url", "source_excerpt", "eu_scope")
+_HOUSING_COLUMNS = ("amount_min", "amount_max", "currency", "period", "valid_from", "source_title", "source_url", "source_excerpt")
+
+
+def _country_costs(client) -> list[dict]:  # type: ignore[no-untyped-def]
+    rows = fetch_all(
+        lambda: client.table("country_cost").select(", ".join(_COUNTRY_COST_COLUMNS) + ", verified_at")
+        .not_.is_("verified_at", "null").order("id")
+    )
+    out = [{**{c: row[c] for c in _COUNTRY_COST_COLUMNS}, "verified_at": row["verified_at"]} for row in rows]
+    return sorted(out, key=lambda r: (r["country"], r["code"], r["applies_to"], r["valid_from"]))
+
+
+def _programme_fees(client) -> list[dict]:  # type: ignore[no-untyped-def]
+    rows = fetch_all(
+        lambda: client.table("programme_fee")
+        .select(", ".join(_FEE_COLUMNS) + ", verified_at, programme!inner(slug, name_lv, university!inner(slug))")
+        .not_.is_("verified_at", "null").order("id")
+    )
+    out = [
+        {
+            "university_slug": row["programme"]["university"]["slug"],
+            "programme_slug": row["programme"]["slug"],
+            "programme_name": row["programme"].get("name_lv"),
+            **{c: row[c] for c in _FEE_COLUMNS},
+            "verified_at": row["verified_at"],
+        }
+        for row in rows
+    ]
+    return sorted(out, key=lambda r: (r["university_slug"], r["programme_slug"], r["kind"], r["applies_to"], r["academic_year"]))
+
+
+def _housing_costs(client) -> list[dict]:  # type: ignore[no-untyped-def]
+    rows = fetch_all(
+        lambda: client.table("housing_cost").select(", ".join(_HOUSING_COLUMNS) + ", verified_at, university!inner(slug)")
+        .not_.is_("verified_at", "null").order("id")
+    )
+    out = [
+        {"university_slug": row["university"]["slug"], **{c: row[c] for c in _HOUSING_COLUMNS}, "verified_at": row["verified_at"]}
+        for row in rows
+    ]
+    return sorted(out, key=lambda r: (r["university_slug"], r["valid_from"]))
+
+
 def build_snapshot(client) -> dict:  # type: ignore[no-untyped-def]
     return {
         "formulas": _formulas(client),
@@ -336,6 +384,9 @@ def build_snapshot(client) -> dict:  # type: ignore[no-untyped-def]
         "application_channels": _application_channels(client),
         "foreign_documents": _foreign_documents(client),
         "english_requirements": _english_requirements(client),
+        "country_costs": _country_costs(client),
+        "programme_fees": _programme_fees(client),
+        "housing_costs": _housing_costs(client),
     }
 
 

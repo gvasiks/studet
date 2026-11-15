@@ -343,6 +343,56 @@ def restore_english_requirements(
     return restored, missing, collisions
 
 
+def restore_country_costs(client, rows: list[dict], apply: bool) -> int:  # type: ignore[no-untyped-def]
+    if apply:
+        for row in rows:
+            client.table("country_cost").upsert(row, on_conflict="country,code,applies_to,valid_from").execute()
+    return len(rows)
+
+
+def restore_programme_fees(
+    client, rows: list[dict], programme_lookup: dict, apply: bool  # type: ignore[no-untyped-def]
+) -> tuple[int, list[str], list[str]]:
+    restored = 0
+    missing: list[str] = []
+    collisions: list[str] = []
+    for row in rows:
+        key = (row["university_slug"], row["programme_slug"])
+        programme_id, collision = _resolve_programme(programme_lookup, key, row.get("programme_name"))
+        if collision:
+            collisions.append(f"programme_fee {collision}")
+            continue
+        if programme_id is None:
+            missing.append(f"programme_fee {key[0]}/{key[1]}: программы нет в каталоге")
+            continue
+        restored += 1
+        if not apply:
+            continue
+        payload = {
+            "programme_id": programme_id,
+            **{k: v for k, v in row.items() if k not in ("university_slug", "programme_slug", "programme_name")},
+        }
+        client.table("programme_fee").upsert(payload, on_conflict="programme_id,kind,applies_to,academic_year").execute()
+    return restored, missing, collisions
+
+
+def restore_housing_costs(
+    client, rows: list[dict], university_ids: dict[str, str], apply: bool  # type: ignore[no-untyped-def]
+) -> tuple[int, list[str]]:
+    restored = 0
+    missing: list[str] = []
+    for row in rows:
+        university_id = university_ids.get(row["university_slug"])
+        if university_id is None:
+            missing.append(f"housing_cost {row['university_slug']}: вуза нет в каталоге")
+            continue
+        restored += 1
+        if apply:
+            payload = {"university_id": university_id, **{k: v for k, v in row.items() if k != "university_slug"}}
+            client.table("housing_cost").upsert(payload, on_conflict="university_id,valid_from").execute()
+    return restored, missing
+
+
 def main(apply: bool) -> None:
     load_dotenv()
     client = get_service_client()
@@ -369,6 +419,13 @@ def main(apply: bool) -> None:
     er_restored, er_missing, er_collisions = restore_english_requirements(
         client, english_requirements, university_ids, programme_lookup, apply
     )
+    # .get: в снимках до 2026-11-15 стоимости нет.
+    country_costs = snapshot.get("country_costs", [])
+    programme_fees = snapshot.get("programme_fees", [])
+    housing_costs = snapshot.get("housing_costs", [])
+    cc_restored = restore_country_costs(client, country_costs, apply)
+    pfee_restored, pfee_missing, pfee_collisions = restore_programme_fees(client, programme_fees, programme_lookup, apply)
+    hc_restored, hc_missing = restore_housing_costs(client, housing_costs, university_ids, apply)
 
     verb = "восстановлено" if apply else "было бы восстановлено (сухой прогон, для записи запустите с --apply)"
     print(f"формулы: {verb} {f_restored} из {len(snapshot['formulas'])}")
@@ -379,6 +436,9 @@ def main(apply: bool) -> None:
     print(f"каналы подачи: {verb} {ac_restored} из {len(application_channels)}")
     print(f"документы для иностранцев: {verb} {fd_restored} из {len(foreign_documents)}")
     print(f"требования к английскому: {verb} {er_restored} из {len(english_requirements)}")
+    print(f"суммы страны: {verb} {cc_restored} из {len(country_costs)}")
+    print(f"плата за обучение: {verb} {pfee_restored} из {len(programme_fees)}")
+    print(f"общежития: {verb} {hc_restored} из {len(housing_costs)}")
 
     if pf_without_method:
         print(
@@ -388,13 +448,13 @@ def main(apply: bool) -> None:
             "(verification_method: \"rule\" или \"manual\"), см. скрипты confirm_*.py и docs/checks/."
         )
 
-    missing = f_missing + ar_missing + at_missing + pf_missing + rs_missing + ac_missing + fd_missing + er_missing
+    missing = f_missing + ar_missing + at_missing + pf_missing + rs_missing + ac_missing + fd_missing + er_missing + pfee_missing + hc_missing
     if missing:
         print(f"\nне нашлось в текущем каталоге ({len(missing)}):")
         for line in missing:
             print(f"  {line}")
 
-    collisions = f_collisions + pf_collisions + rs_collisions + er_collisions
+    collisions = f_collisions + pf_collisions + rs_collisions + er_collisions + pfee_collisions
     if collisions:
         print(f"\nПОХОЖЕ НА ПЕРЕСЛАГОВАНИЕ, НЕ ВОССТАНОВЛЕНО АВТОМАТИЧЕСКИ ({len(collisions)}):")
         for line in collisions:
@@ -639,6 +699,26 @@ def selftest() -> None:
     saved_english = client.store["english_requirement"]
     assert [row["programme_id"] for row in saved_english] == [None, "prog-1"], saved_english
     assert not {"university_slug", "programme_slug", "programme_name"} & set(saved_english[0])
+
+    # Стоимость: плата программы по слагу, общежитие по вузу, суммы страны как есть.
+    fee = {"kind": "tuition", "applies_to": "eu", "amount": 3340, "currency": "EUR", "period": "year",
+           "academic_year": "2026/27", "source_url": "https://example.com", "source_excerpt": "3340 EUR",
+           "eu_scope": None, "verified_at": "2026-11-15T00:00:00Z"}
+    restored_fee, missing_fee, collisions_fee = restore_programme_fees(
+        client,
+        [{"university_slug": "lu", "programme_slug": "sociology", "programme_name": "Socioloģija", **fee},
+         {"university_slug": "lu", "programme_slug": "gone", "programme_name": None, **fee}],
+        programme_lookup,
+        apply=True,
+    )
+    assert (restored_fee, len(missing_fee), collisions_fee) == (1, 1, []), (restored_fee, missing_fee, collisions_fee)
+    assert client.store["programme_fee"][0]["programme_id"] == "prog-1"
+    restored_hc, missing_hc = restore_housing_costs(
+        client, [{"university_slug": "lu", "amount_min": 114, "amount_max": 291, "valid_from": "2026-07-01",
+                  "verified_at": "2026-11-15T00:00:00Z"}], university_ids, apply=True
+    )
+    assert (restored_hc, missing_hc) == (1, []) and client.store["housing_cost"][0]["university_id"] == "uni-1"
+    assert restore_country_costs(client, [{"country": "LV", "code": "long_stay_visa"}], apply=True) == 1
 
     # Чтение страницами: 1005 строк приходят двумя запросами и все доходят.
     class FakeQuery:
