@@ -147,3 +147,52 @@ test("защитные заголовки на ответах сайта", async
   expect(headers["referrer-policy"]).toBe("strict-origin-when-cross-origin");
   expect(headers["x-powered-by"]).toBeUndefined();
 });
+
+// Продукт для иностранцев (предрелизная проверка 2026-11-15): чек-лист
+// документов отмечается пробелом, счётчик в живой области меняется, отметка
+// переживает перезагрузку; фокус виден на новых страницах.
+for (const locale of ["lv", "en-lv"]) {
+  test(`чек-лист документов отмечается клавиатурой: /${locale}`, async ({ page }) => {
+    await page.goto(`/${locale}/programmes/rtu/computer-science-236`);
+    const progress = page.locator('section[aria-labelledby="foreign-documents"] [aria-live="polite"]');
+    const before = await progress.innerText();
+    await tabTo(page, () => document.activeElement?.matches('section[aria-labelledby="foreign-documents"] input[type="checkbox"]') ?? false, 200);
+    const focusVisible = await page.evaluate(() => {
+      const style = getComputedStyle(document.activeElement as Element);
+      return (style.outlineStyle !== "none" && parseFloat(style.outlineWidth) > 0) || style.boxShadow !== "none";
+    });
+    expect(focusVisible, "нет видимого фокуса у флажка").toBe(true);
+    await page.keyboard.press("Space");
+    await expect(page.locator('section[aria-labelledby="foreign-documents"] input[type="checkbox"]').first()).toBeChecked();
+    await expect(progress).not.toHaveText(before);
+    await page.reload();
+    await expect(page.locator('section[aria-labelledby="foreign-documents"] input[type="checkbox"]').first()).toBeChecked();
+  });
+
+  test(`оглавление списков документов работает с клавиатуры: /${locale}/student-documents`, async ({ page }) => {
+    await page.goto(`/${locale}/student-documents`);
+    await tabTo(page, () => document.activeElement?.matches('main a[href^="#"]') ?? false, 120);
+    const target = await page.evaluate(() => (document.activeElement as HTMLAnchorElement).getAttribute("href"));
+    await page.keyboard.press("Enter");
+    await expect(page).toHaveURL(new RegExp(`${target}$`));
+    await expect(page.locator(target!)).toBeInViewport();
+  });
+}
+
+for (const path of ["/en-lv/student-permit", "/lv/student-permit", "/en-lv/student-documents", "/en-lv/programmes/rtu/computer-science-236"]) {
+  test(`фокус виден на первых шагах Tab: ${path}`, async ({ page }) => {
+    await page.goto(path);
+    for (let step = 0; step < 8; step += 1) {
+      await page.keyboard.press("Tab");
+      const visible = await page.evaluate(() => {
+        const element = document.activeElement;
+        if (!element || element === document.body) return { ok: true, what: "body" };
+        const style = getComputedStyle(element);
+        const outline = style.outlineStyle !== "none" && parseFloat(style.outlineWidth) > 0;
+        const ring = style.boxShadow !== "none";
+        return { ok: outline || ring, what: `${element.tagName} ${element.textContent?.trim().slice(0, 40)}` };
+      });
+      expect(visible.ok, `нет видимого фокуса у ${visible.what}`).toBe(true);
+    }
+  });
+}
