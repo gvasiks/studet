@@ -32,7 +32,16 @@ rtu_liepaja добавлен в тот же день, после вреда: о�
 # GitHub (или перестанет другой) — правится только этот список.
 # rtu_english (2026-10-10) — тот же сайт rtu.lv, поэтому сразу здесь: правило
 # выше — в список идут все источники сайта.
-LOCAL_ONLY: tuple[str, ...] = ("rtu_catalog", "rtu_english", "rtu_liepaja", "lma")
+# niid_universities, niid_colleges, via, rai (решение владельца 2026-11-16,
+# «Да, переноси»): с 26 октября ни один полный сбор на GitHub не прошёл —
+# niid.lv не открывает страницы за 30 с (ERR_CONNECTION_TIMED_OUT, 3–4
+# прогона из 4), rai.lv не отдаёт robots.txt даже браузеру (4 из 4). Из Риги
+# оба отвечают за доли секунды. via — тоже niid.lv (правило выше).
+# enrich-niid.yml (раз в месяц, тоже niid.lv) пока проходит — не тронут.
+LOCAL_ONLY: tuple[str, ...] = (
+    "rtu_catalog", "rtu_english", "rtu_liepaja", "lma",
+    "niid_universities", "niid_colleges", "via", "rai",
+)
 
 # Сколько дней источник из LOCAL_ONLY может не обновляться, прежде чем
 # напоминание начнёт падать. Сбор еженедельный, как и на GitHub.

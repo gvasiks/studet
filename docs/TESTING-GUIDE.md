@@ -626,7 +626,7 @@ Supabase Studio (вид `verification_queue`) или в отчётах `docs/che
 |---|---|---|
 | Scrape catalog | понедельник, 01:00 UTC | часть источников не собрана; база при этом не портится |
 | Pipeline health check | ежедневно | успешного полного сбора не было больше 9 дней |
-| Reminder: run local scrape | ежедневно | РТУ и LMA давно не обновлялись: запустить `python src/main.py --local` в `pipeline/` со своего компьютера |
+| Reminder: run local scrape | ежедневно | РТУ, LMA, NIID, ViA или RAI давно не обновлялись: запустить `python src/main.py --local` в `pipeline/` со своего компьютера |
 | Lithuania / Estonia data health check | ежедневно | данные страны старше срока |
 
 - [ ] В последнем прогоне Scrape catalog нет ошибок; в его сводке (Summary)

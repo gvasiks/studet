@@ -69,7 +69,7 @@ def check() -> None:
             f"\nПОРА ЗАПУСТИТЬ ЛОКАЛЬНЫЙ СБОР: {', '.join(stale)} не обновлялись дольше "
             f"{LOCAL_MAX_STALE_DAYS} дней. На своём компьютере, в папке pipeline:\n\n"
             "    .venv\\Scripts\\python.exe src\\main.py --local\n\n"
-            "Занимает около пяти минут. Подробности — pipeline/README.md, раздел «Локальный сбор»."
+            "Подробности — pipeline/README.md, раздел «Локальный сбор»."
         )
         sys.exit(1)
 
