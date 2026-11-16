@@ -151,7 +151,9 @@ def _college_level(programme_type: str) -> str | None:
 def _duration_years(value: str) -> float | None:
     """"2,5 gadi" -> 2.5; "3 gadi un 3 mēneši" -> 3.25."""
     years = re.search(r"(\d+(?:[.,]\d+)?)\s*gad", value)
-    months = re.search(r"(\d+)\s*mēnes", value)
+    # «mēnes» не ловит множественное «mēneši» (š) — до 2026-11-16 месяцы
+    # в нём терялись: «3 gadi un 3 mēneši» давало 3.0
+    months = re.search(r"(\d+)\s*mēne[sš]", value)
     if not years and not months:
         return None
     total = float(years.group(1).replace(",", ".")) if years else 0.0

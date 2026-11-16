@@ -5,8 +5,9 @@
 from __future__ import annotations
 
 from datetime import date
+from decimal import ROUND_HALF_UP, Decimal
 
-from pydantic import BaseModel
+from pydantic import BaseModel, field_validator
 
 
 class UniversityDraft(BaseModel):
@@ -67,3 +68,16 @@ class ProgrammeDraft(BaseModel):
     details_source_url: str | None = None
     details_extracted_at: str | None = None
     source_url: str
+
+    @field_validator("duration_years")
+    @classmethod
+    def _as_stored(cls, value: float | None) -> float | None:
+        """Один знак после запятой — столько хранит programme.duration_years
+        (numeric(3, 1)). Без этого «2 gadi un 1 mēnesis» = 2.0833… база
+        записывала как 2.1, а следующий сбор видел «2.1 → 2.0833» — изменение
+        каждую неделю (Juridiskā koledža, сентябрь–ноябрь 2026), и у
+        подтверждённой программы снималось бы подтверждение.
+        Половина — вверх, как у Postgres (3.25 -> 3.3); round() Python дал бы 3.2."""
+        if value is None:
+            return None
+        return float(Decimal(str(value)).quantize(Decimal("0.1"), rounding=ROUND_HALF_UP))

@@ -265,6 +265,18 @@ def selftest() -> None:
     assert _fee_and_funding("600 EUR semestrī") == (None, "paid"), "цена не за год не берётся"
     assert _fee_and_funding("Valsts budžets") == (None, "budget")
 
+    # 8) срок обучения из NIID: месяцы и во множественном числе («mēneši»),
+    #    а в черновике — один знак, как хранит база (numeric(3, 1)), с
+    #    округлением половины вверх, как у Postgres. Иначе каждый сбор видел
+    #    «2.1 → 2.0833» (Juridiskā koledža, сентябрь–ноябрь 2026).
+    from sources.niid_colleges import _duration_years
+
+    assert _duration_years("3 gadi un 3 mēneši") == 3.25
+    assert _duration_years("2 gadi un 1 mēnesis") == 2 + 1 / 12
+    assert _duration_years("4 gadi") == 4.0 and _duration_years("") is None
+    assert fake_programme("x", duration_years=2 + 1 / 12).duration_years == 2.1
+    assert fake_programme("x", duration_years=3.25).duration_years == 3.3
+
     print("самотест пройден")
 
 
