@@ -444,8 +444,9 @@ ut.ee. План и ход работ — `docs/PLAN-ESTONIA.md`.
   в репозиторий, см. `docs/backups/README.md`) и полный дамп схемы `public`
   в артефакт прогона (`pg_dump`, нужен секрет `SUPABASE_DB_URL` — строка
   подключения Postgres из дэшборда Supabase, Settings → Database →
-  Connection string; без него снимок подтверждений всё равно идёт, дамп —
-  нет).
+  Connection string, адрес Session pooler; без него снимок подтверждений
+  всё равно идёт, дамп — нет). Дамп выкладывается зашифрованным фразой из
+  секрета `BACKUP_PASSPHRASE` — расшифровка в `docs/backups/README.md`.
 - `python src/restore_verified.py` накатывает снимок `docs/backups/
   verified-facts.json` обратно на базу — по устойчивым слагам, не по
   UUID. Без `--apply` — сухой прогон: только проверяет, что каждый слаг

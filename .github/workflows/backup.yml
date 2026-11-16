@@ -14,7 +14,9 @@ name: Backup
 # 2. full-dump — полный дамп схемы public (весь каталог, включая ещё не
 #    подтверждённые черновики) через pg_dump уходит в артефакт прогона,
 #    не в git: он больше и может быстро устареть, поэтому не тот случай,
-#    где нужна история версий.
+#    где нужна история версий. Артефакт зашифрован фразой из секрета
+#    BACKUP_PASSPHRASE: репозиторий публичный (проверка безопасности
+#    2026-11-16).
 #
 # Раз в квартал стоит вручную развернуть дамп или снимок на чистый проект
 # и убедиться, что это действительно работает (копия, которую ни разу не
@@ -83,6 +85,20 @@ jobs:
             exit 1
           fi
 
+      # Проверка ДО дампа: без фразы дамп нельзя выкладывать (см. шаг
+      # «Зашифровать дамп»), поэтому незачем его и снимать.
+      - name: Проверить наличие секрета BACKUP_PASSPHRASE
+        env:
+          BACKUP_PASSPHRASE: ${{ secrets.BACKUP_PASSPHRASE }}
+        run: |
+          if [ -z "$BACKUP_PASSPHRASE" ]; then
+            echo "::error::BACKUP_PASSPHRASE не задан (Settings -> Secrets and variables -> Actions)."
+            echo "Это парольная фраза, которой шифруется дамп: репозиторий публичный, и"
+            echo "нешифрованный артефакт скачал бы любой вошедший пользователь GitHub."
+            echo "Фразу сохранить и в менеджер паролей: без неё копию не развернуть."
+            exit 1
+          fi
+
       - name: Установить postgresql-client, если его нет
         run: command -v pg_dump || (sudo apt-get update && sudo apt-get install -y postgresql-client)
 
@@ -100,10 +116,28 @@ jobs:
             --schema=public --no-owner --no-privileges --format=custom \
             --file=studet-public-schema.dump
 
+      # Репозиторий публичный: артефакт может скачать любой вошедший
+      # пользователь GitHub, а в дампе есть закрытое от публичного ключа —
+      # verified_by, disputed_reason, source_copy_*, черновики (проверка
+      # безопасности 2026-11-16, находка 1). Поэтому наружу уходит только
+      # зашифрованный файл. gpg уже стоит на серверах GitHub; фраза читается
+      # со стандартного ввода, а не из аргумента — так её не видно в списке
+      # процессов. Расшифровать: docs/backups/README.md, «Полный дамп».
+      - name: Зашифровать дамп
+        env:
+          BACKUP_PASSPHRASE: ${{ secrets.BACKUP_PASSPHRASE }}
+        run: |
+          printf '%s' "$BACKUP_PASSPHRASE" | gpg --batch --yes --pinentry-mode loopback \
+            --passphrase-fd 0 --symmetric --cipher-algo AES256 \
+            --output studet-public-schema.dump.gpg studet-public-schema.dump
+          rm studet-public-schema.dump
+
       - uses: actions/upload-artifact@v4
         with:
           name: studet-db-dump-${{ github.run_id }}
-          path: studet-public-schema.dump
+          path: studet-public-schema.dump.gpg
+          # нет файла — ошибка, а не тихий пустой артефакт
+          if-no-files-found: error
           # 14 дней вместо 90 (решение владельца 2026-10-10): репозиторий
           # публичный, а артефакт публичного репозитория может скачать любой
           # вошедший пользователь GitHub. Копия еженедельная, так что под
