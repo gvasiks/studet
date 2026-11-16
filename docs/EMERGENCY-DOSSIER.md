@@ -32,7 +32,7 @@
 |---|---|---|
 | `SUPABASE_URL` | `backup.yml`, `pipeline-health.yml`, `scrape-catalog.yml` | Адрес проекта Supabase (не секрет сам по себе, но нужен вместе со следующим) |
 | `SUPABASE_SERVICE_ROLE_KEY` | те же три | Полный доступ к базе в обход RLS — самый чувствительный секрет проекта (CLAUDE.md, A02). Никогда не должен попасть в код `src/` или в публичный лог |
-| `SUPABASE_DB_URL` | `backup.yml` | Прямое подключение к Postgres для `pg_dump` (полный дамп схемы в артефакт прогона). Ещё не добавлен владельцем на 2026-09-25 |
+| `SUPABASE_DB_URL` | `backup.yml` | Строка подключения к Postgres для `pg_dump` (полный дамп схемы в артефакт прогона) — **Session pooler** (`*.pooler.supabase.com`), не Direct connection: прямой адрес только IPv6, серверу GitHub недоступен (с 2026-10-05 по 2026-11-16 из-за этого не снят ни один дамп) |
 | `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY` | `ci.yml` | Публичный (publishable) ключ — тот же, что в собранном сайте у любого посетителя; безопасен для утечки по конструкции (ограничения через RLS), но нужен, чтобы сборка вообще прошла |
 
 **Если `SUPABASE_SERVICE_ROLE_KEY` скомпрометирован** (утёк, ушёл не туда): в

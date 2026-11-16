@@ -75,8 +75,9 @@ jobs:
         run: |
           if [ -z "$SUPABASE_DB_URL" ]; then
             echo "::error::SUPABASE_DB_URL не задан (Settings -> Secrets and variables -> Actions)."
-            echo "Формат: строка подключения Postgres из дэшборда Supabase — Settings -> Database ->"
-            echo "Connection string (Session pooler или Direct connection), с паролем внутри."
+            echo "Формат: строка подключения Postgres из дэшборда Supabase — кнопка Connect ->"
+            echo "Session pooler (адрес *.pooler.supabase.com), с паролем внутри. НЕ Direct connection:"
+            echo "db.<проект>.supabase.co отвечает только по IPv6, а у серверов GitHub его нет."
             echo "Без него полный дамп не снимается; снимок подтверждённых фактов (соседняя работа"
             echo "этого workflow) продолжает идти независимо."
             exit 1
@@ -85,6 +86,9 @@ jobs:
       - name: Установить postgresql-client, если его нет
         run: command -v pg_dump || (sudo apt-get update && sudo apt-get install -y postgresql-client)
 
+      # Адрес — Session pooler, не прямое подключение: прямое (db.<проект>.supabase.co)
+      # только IPv6, и с 2026-10-05 по 2026-11-16 каждый прогон падал с
+      # «Network is unreachable» — копий базы за это время нет.
       # --schema=public: только наши таблицы, без служебных схем Supabase
       # (auth, storage, realtime), к которым у сервисного ключа нет прав
       # на дамп и которые нам не принадлежат
