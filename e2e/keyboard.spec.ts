@@ -143,10 +143,48 @@ test("защитные заголовки на ответах сайта", async
   const headers = response.headers();
   expect(headers["x-frame-options"]).toBe("DENY");
   expect(headers["content-security-policy"]).toContain("frame-ancestors 'none'");
+  expect(headers["content-security-policy"]).toContain("default-src 'self'");
+  expect(headers["content-security-policy"]).toContain("script-src 'self' 'unsafe-inline'");
+  expect(headers["content-security-policy"]).not.toContain("unsafe-eval");
   expect(headers["x-content-type-options"]).toBe("nosniff");
   expect(headers["referrer-policy"]).toBe("strict-origin-when-cross-origin");
   expect(headers["x-powered-by"]).toBeUndefined();
 });
+
+// Политика ограничивает источники скриптов, стилей, картинок и запросов
+// (next.config.ts, проверка безопасности 2026-11-16, находка 2). Если Next.js,
+// HeroUI или новая страница возьмёт что-то не из разрешённого списка, браузер
+// это заблокирует молча — тест ловит такие отказы на главных страницах.
+for (const path of [
+  "/lv",
+  "/en-lv",
+  "/lv/programmes",
+  "/lv/programmes/lu/economics",
+  "/lv/programmes/lu/economics/calculator",
+  "/en-lv/programmes/rtu/computer-science-236",
+  "/lv/survey",
+  "/lv/match",
+  "/lv/favorites",
+  "/en-lv/student-documents",
+  "/en-lv/student-permit",
+]) {
+  test(`политика CSP ничего не блокирует: ${path}`, async ({ page }) => {
+    const violations: string[] = [];
+    await page.addInitScript(() => {
+      document.addEventListener("securitypolicyviolation", (event) => {
+        (window as unknown as { __csp: string[] }).__csp ??= [];
+        (window as unknown as { __csp: string[] }).__csp.push(`${event.violatedDirective} ${event.blockedURI}`);
+      });
+    });
+    page.on("console", (message) => {
+      if (/content security policy/i.test(message.text())) violations.push(message.text());
+    });
+    await page.goto(path);
+    await page.waitForLoadState("networkidle");
+    const fromPage = await page.evaluate(() => (window as unknown as { __csp?: string[] }).__csp ?? []);
+    expect([...violations, ...fromPage]).toEqual([]);
+  });
+}
 
 // Продукт для иностранцев (предрелизная проверка 2026-11-15): чек-лист
 // документов отмечается пробелом, счётчик в живой области меняется, отметка
