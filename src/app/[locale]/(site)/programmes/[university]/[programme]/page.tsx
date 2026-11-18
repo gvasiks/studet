@@ -176,6 +176,7 @@ export default async function ProgrammePage({ params }: { params: Params }) {
   const channel = matchChannel(channels, record.university_id, record.degree_level);
   const channelUrl = httpUrl(channel?.url);
   const channelSourceUrl = httpUrl(channel?.sourceUrl);
+  const recordSourceUrl = httpUrl(record.source_url);
   // У страны с общим приёмом (Литва) канал один на все программы каталога:
   // каждая взята из списка общего приёма. Человек эту запись не
   // подтверждает (отступление от правила 6 только для Литвы), поэтому под
@@ -617,11 +618,11 @@ export default async function ProgrammePage({ params }: { params: Params }) {
         {record.verified_at
           ? `${dict.catalog.verifiedPrefix} ${formatDate(record.verified_at, language)}`
           : dict.catalog.unverifiedLabel}
-        {record.source_url && (
+        {recordSourceUrl && (
           <>
             {" "}
             <a
-              href={record.source_url}
+              href={recordSourceUrl}
               target="_blank"
               rel="noopener noreferrer"
               className="underline"

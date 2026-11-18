@@ -1,4 +1,5 @@
 import type { ContentLanguage, Language } from "@/i18n/config";
+import { httpUrl } from "@/lib/application-channel";
 // Диплом, квалификация и описание программы — чистая логика выбора, без
 // обращения к базе (тот же приём, что outcomes.ts): её можно тестировать
 // отдельно.
@@ -105,7 +106,7 @@ export function pickDetails(record: ProgrammeDetailsSource, language: Language):
   return {
     ...chosen,
     sourceHost: sourceHost(record.details_source_url),
-    sourceUrl: record.details_source_url ?? null,
+    sourceUrl: httpUrl(record.details_source_url),
     extractedAt: record.details_extracted_at ?? null,
   };
 }

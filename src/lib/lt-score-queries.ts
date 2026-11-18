@@ -2,6 +2,7 @@ import { cache } from "react";
 import type { Language } from "@/i18n/config";
 import { listProgrammes } from "@/lib/catalog";
 import { localizedName } from "@/lib/names";
+import { httpUrl } from "@/lib/application-channel";
 import { supabase } from "@/lib/supabase";
 import type { LtComponent } from "@/lib/lt-score";
 
@@ -17,7 +18,7 @@ export type LtProgrammeFormula = {
   number: string;
   admissionYear: number;
   components: LtComponent[];
-  sourceUrl: string;
+  sourceUrl: string | null;
   checkedAt: string;
 };
 
@@ -53,7 +54,7 @@ export const getLtFormula = cache(async (programmeId: string): Promise<LtProgram
   return {
     number: formula.number,
     admissionYear: formula.admission_year,
-    sourceUrl: formula.source_url,
+    sourceUrl: httpUrl(formula.source_url),
     checkedAt: formula.checked_at,
     components: [...formula.lt_formula_component]
       .sort((a, b) => a.position - b.position)
@@ -187,6 +188,6 @@ export const getLtMatchData = cache(async (language: Language): Promise<LtMatchD
     withoutCalculator,
     admissionYear: any?.admission_year ?? null,
     checkedAt: any?.checked_at ?? null,
-    sourceUrl: any?.source_url ?? null,
+    sourceUrl: httpUrl(any?.source_url),
   };
 });

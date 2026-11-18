@@ -42,7 +42,7 @@ function LtCalculatorFormForm({
   locale: Locale;
   components: LtComponent[];
   admissionYear: number;
-  sourceUrl: string;
+  sourceUrl: string | null;
   checkedAt: string;
 }) {
   const text = dict.ltCalculator;
@@ -167,9 +167,11 @@ function LtCalculatorFormForm({
       <p className="mt-4 text-xs leading-relaxed text-zinc-500">
         {interpolate(text.rulesNote, { year: String(admissionYear) })}{" "}
         {interpolate(text.checkedNote, { date: formatDate(checkedAt, language) })}{" "}
-        <a href={sourceUrl} target="_blank" rel="noopener noreferrer" className="underline">
-          {text.sourceLink}
-        </a>
+        {sourceUrl && (
+          <a href={sourceUrl} target="_blank" rel="noopener noreferrer" className="underline">
+            {text.sourceLink}
+          </a>
+        )}
       </p>
       <p className="mt-2 text-xs leading-relaxed text-zinc-500">{text.decidedBy}</p>
     </div>

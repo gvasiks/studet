@@ -1,5 +1,6 @@
 import { cache } from "react";
 import { supabase } from "@/lib/supabase";
+import { httpUrl } from "@/lib/application-channel";
 
 export type VerificationQueueItem = {
   factId: string;
@@ -72,7 +73,7 @@ export const getVerificationQueue = cache(async (): Promise<VerificationQueueIte
     universitySlug: row.university_slug,
     universityName: row.university_name,
     collectedAt: row.collected_at,
-    sourceUrl: row.source_url,
+    sourceUrl: httpUrl(row.source_url),
     itemCount: row.item_count,
     protocolComplete: row.protocol_complete,
     protocolMissing: row.protocol_missing,

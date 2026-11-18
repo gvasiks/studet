@@ -2,6 +2,7 @@ import { cache } from "react";
 import type { Country, Language } from "@/i18n/config";
 import { supabase } from "@/lib/supabase";
 import { localizedName } from "@/lib/names";
+import { httpUrl } from "@/lib/application-channel";
 import { getLevelCoefficients } from "@/lib/formula-queries";
 import { getVuppYears } from "@/lib/vupp-stat-queries";
 import type { ExamLevel, FormulaGate, FormulaTerm } from "@/lib/formula";
@@ -128,7 +129,7 @@ const loadMatchData = cache(async (language: Language, country: Country): Promis
       degreeLevel: programme.degree_level,
       language: programme.language_of_instruction,
       verifiedAt: row.verified_at as string,
-      sourceUrl: row.source_url,
+      sourceUrl: httpUrl(row.source_url),
       terms: termsByFormula.get(row.id) ?? [],
       gates: gatesByFormula.get(row.id) ?? [],
       pastAdmissionYear: pastYears.get(row.programme_id),
@@ -203,7 +204,7 @@ async function getMatchRequirements(
       universitySlug: programme.university.slug,
       universityName: localizedName(programme.university, language),
       verifiedAt: row.verified_at as string,
-      sourceUrl: row.source_url,
+      sourceUrl: httpUrl(row.source_url),
       subjectGroups: [...groups.values()],
     };
   });

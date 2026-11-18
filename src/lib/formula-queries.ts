@@ -1,6 +1,7 @@
 import { cache } from "react";
 import { supabase } from "@/lib/supabase";
 import { remember } from "@/lib/server-memo";
+import { httpUrl } from "@/lib/application-channel";
 import type { ExamLevel, FormulaGate, FormulaTerm } from "@/lib/formula";
 
 export type FormulaRecord = {
@@ -49,7 +50,7 @@ export const getFormula = cache(async (programmeId: string): Promise<FormulaReco
   return {
     id: formula.id,
     variant: formula.variant,
-    sourceUrl: formula.source_url,
+    sourceUrl: httpUrl(formula.source_url),
     verifiedAt: formula.verified_at,
     terms: (terms ?? []).map((term) => ({
       kind: term.kind as FormulaTerm["kind"],
