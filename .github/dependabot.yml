@@ -1,0 +1,20 @@
+# Dependabot — встроенная служба GitHub, зависимостей проекту не добавляет.
+#
+# Actions в .github/workflows закреплены хешем коммита, а не тегом (проверка
+# безопасности 2026-11-16, находка 3): тег вроде v4 можно перевесить на другой
+# код, хеш — нет. Обратная сторона: хеш сам не обновляется. Раз в месяц
+# Dependabot открывает PR с новым хешем и версией в комментарии — его
+# достаточно просмотреть (меняются только строки `uses:`) и слить.
+#
+# Новый action в workflow — тоже хешем: `git ls-remote --tags
+# https://github.com/actions/<имя>` показывает хеш каждого тега.
+version: 2
+updates:
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: monthly
+    # все обновления actions — одним PR, а не по одному на каждый
+    groups:
+      actions:
+        patterns: ["*"]
