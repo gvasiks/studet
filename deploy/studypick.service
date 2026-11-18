@@ -14,18 +14,48 @@ Group=studypick
 WorkingDirectory=/srv/studypick/app
 EnvironmentFile=/etc/studypick/env
 Environment=NODE_ENV=production
+# Next.js не отправляет анонимную статистику о себе и не пишет её настройки в
+# домашнюю папку — с ProtectSystem=strict ниже она только для чтения.
+Environment=NEXT_TELEMETRY_DISABLED=1
 # Свой Node.js 24 в /opt/node24: системный Node.js на сервере не трогаем,
 # им пользуется бот. Слушаем только 127.0.0.1 — наружу сайт отдаёт Caddy.
 ExecStart=/opt/node24/bin/node /srv/studypick/app/node_modules/next/dist/bin/next start -H 127.0.0.1 -p 3000
 Restart=on-failure
 RestartSec=5
 
-# Ограничения: службе не нужны новые права, чужие домашние папки и запись
-# в системные каталоги.
+# Ограничения: если сайт взломают, процесс почти ничего не сможет вне себя
+# (проверка безопасности 2026-11-16, находка 6). Оценку показывает
+# `systemd-analyze security studypick`, проверка после правки — deploy/README.md,
+# «Ограничения службы».
 NoNewPrivileges=true
-ProtectSystem=full
 ProtectHome=true
 PrivateTmp=true
+# Вся файловая система — только чтение, кроме кэша сборки: в .next/cache сайт
+# пишет сам во время работы. Код (остальная папка app) работающий сайт
+# переписать не может. update.sh собирает не через службу, ему это не мешает.
+ProtectSystem=strict
+ReadWritePaths=/srv/studypick/app/.next
+# Без доступа к устройствам, настройкам ядра, его модулям и журналу, часам и
+# имени сервера — сайту это не нужно.
+PrivateDevices=true
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectKernelLogs=true
+ProtectControlGroups=true
+ProtectClock=true
+ProtectHostname=true
+# Только сеть (AF_INET, AF_INET6), локальные сокеты (AF_UNIX) и AF_NETLINK —
+# через него Node.js узнаёт сетевые адреса сервера при запуске.
+RestrictAddressFamilies=AF_INET AF_INET6 AF_UNIX AF_NETLINK
+# Никаких особых прав пользователя root, даже частичных.
+CapabilityBoundingSet=
+RestrictNamespaces=true
+RestrictRealtime=true
+RestrictSUIDSGID=true
+LockPersonality=true
+SystemCallArchitectures=native
+# MemoryDenyWriteExecute здесь НЕ ставить: Node.js компилирует JavaScript в
+# машинный код на лету, с этим запретом сайт не запустится.
 
 [Install]
 WantedBy=multi-user.target

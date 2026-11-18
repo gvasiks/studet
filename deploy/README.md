@@ -302,6 +302,79 @@ logrotate --debug /etc/logrotate.d/studypick
 Проверка: откройте сайт и выполните `tail -n 1 /var/log/caddy/studypick-access.log` —
 появится строка о запросе.
 
+## Ограничения службы (с 2026-11-18)
+
+В `deploy/studypick.service` добавлены ограничения: файловая система для сайта
+только на чтение, кроме `.next`, нет доступа к устройствам и настройкам ядра,
+нет особых прав root (проверка безопасности 2026-11-16, находка 6). `update.sh`
+файл службы **не копирует** — на сервере, где сайт уже стоит, это делается
+руками, один раз. Все команды — под root.
+
+1. Обновить код и запомнить оценку до правки:
+
+```
+bash /srv/studypick/app/deploy/update.sh
+systemd-analyze security studypick | tail -n 1
+```
+
+Последняя строка — «→ Overall exposure level for studypick.service: <число> …».
+Запишите число.
+
+2. Проверить новый файл службы и поставить его:
+
+```
+systemd-analyze verify /srv/studypick/app/deploy/studypick.service
+cp /srv/studypick/app/deploy/studypick.service /etc/systemd/system/studypick.service
+systemctl daemon-reload
+systemctl restart studypick
+```
+
+`verify` ничего не печатает, если всё в порядке. Предупреждения о других службах
+сервера (не `studypick`) к делу не относятся.
+
+3. Проверить, что сайт работает:
+
+```
+systemctl status studypick --no-pager | head -n 5
+journalctl -u studypick -n 30 --no-pager
+curl -s -o /dev/null -w '%{http_code}\n' http://127.0.0.1:3000/lv
+curl -s -o /dev/null -w '%{http_code}\n' http://127.0.0.1:3000/lv/programmes
+curl -s -o /dev/null -w '%{http_code}\n' http://127.0.0.1:3000/lv/programmes/lu/economics/calculator
+```
+
+В `status` — `active (running)`; в журнале нет `EACCES`, `EROFS`, `read-only file
+system`, `Operation not permitted`; три `curl` отвечают `200`.
+
+4. Проверить, что ограничения действуют:
+
+```
+systemd-analyze security studypick | tail -n 1
+systemctl show studypick -p ProtectSystem -p ReadWritePaths -p CapabilityBoundingSet
+```
+
+Число «exposure» должно стать заметно меньше записанного в шаге 1 — пришлите
+оба числа. В `show` — `ProtectSystem=strict`, `ReadWritePaths=/srv/studypick/app/.next`
+и пустой `CapabilityBoundingSet=`.
+
+5. Проверить, что следующее обновление тоже проходит:
+
+```
+bash /srv/studypick/app/deploy/update.sh
+```
+
+В конце — «Готово: сайт отвечает».
+
+**Если сайт не стартовал** (`status` — `failed`, `curl` — `000` или `502`):
+вернуть прежний файл службы и прислать последние 50 строк журнала:
+
+```
+git -C /srv/studypick/app log --oneline -1 -- deploy/studypick.service
+git -C /srv/studypick/app show <хеш из строки выше>~1:deploy/studypick.service > /etc/systemd/system/studypick.service
+systemctl daemon-reload
+systemctl restart studypick
+journalctl -u studypick -n 50 --no-pager
+```
+
 ## Литва на закрытой выкладке
 
 Литва запускается позже Латвии, и до своего запуска её адреса (`/lt`, `/en-lt`,
