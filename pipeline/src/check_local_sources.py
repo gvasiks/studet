@@ -52,7 +52,9 @@ def check() -> None:
         rows = (
             client.table("programme")
             .select("extracted_at")
-            .eq("source_key", f"sources.{name}")
+            # NIID пишет ключ с суффиксом вуза («sources.niid_colleges:dmk») —
+            # без второго условия проверка считала NIID «ни разу» (2026-11-17)
+            .or_(f"source_key.eq.sources.{name},source_key.like.sources.{name}:*")
             .order("extracted_at", desc=True)
             .limit(1)
             .execute()
