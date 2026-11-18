@@ -18,10 +18,11 @@ name: Backup
 #    BACKUP_PASSPHRASE: репозиторий публичный (проверка безопасности
 #    2026-11-16).
 #
-# Раз в квартал стоит вручную развернуть дамп или снимок на чистый проект
-# и убедиться, что это действительно работает (копия, которую ни разу не
-# разворачивали, копией не является) — это отдельная ручная задача,
-# не автоматизирована здесь.
+# Каждый прогон разворачивает полный дамп на чистый Postgres и сверяет число
+# строк с живой базой (шаг «Пробное восстановление копии», с 2026-11-18).
+# Вручную, раз в год, остаётся проверить, что сайт работает на
+# восстановленной базе, и развернуть снимок подтверждённых фактов
+# (pipeline/src/restore_verified.py) на пустой проект.
 on:
   schedule:
     # понедельник 03:00 UTC — через два часа после недельного сбора
@@ -143,3 +144,76 @@ jobs:
           # вошедший пользователь GitHub. Копия еженедельная, так что под
           # рукой остаются две последние.
           retention-days: 14
+
+      # Пробное восстановление (2026-11-18): копия, которую ни разу не
+      # разворачивали, копией не является. Шаг стоит ПОСЛЕ выгрузки, чтобы
+      # копия сохранилась, даже если восстановление упадёт. Разворачивается
+      # именно выгруженный файл .gpg — так заодно проверяется, что фраза
+      # из секрета его расшифровывает.
+      #
+      # Куда: Postgres, который уже стоит на сервере GitHub (той же версии,
+      # что pg_dump, снявший копию, — не старее Supabase). Это чистый
+      # Postgres, а не проект Supabase: служебных схем auth и storage в копии
+      # и так нет, а роли anon/authenticated/service_role, на которые
+      # ссылаются политики RLS, создаются здесь.
+      #
+      # Что считается успехом: pg_restore без единой ошибки (--exit-on-error),
+      # и у каждой таблицы столько же строк, сколько в живой базе, и столько
+      # же политик RLS. Строки считаются через минуту-две после дампа; если
+      # в это время шёл сбор, числа могут разойтись — тогда просто
+      # перезапустить (Actions -> Backup -> Run workflow).
+      - name: Пробное восстановление копии
+        env:
+          BACKUP_PASSPHRASE: ${{ secrets.BACKUP_PASSPHRASE }}
+          SUPABASE_DB_URL: ${{ secrets.SUPABASE_DB_URL }}
+        run: |
+          set -euo pipefail
+          if ! command -v pg_ctlcluster >/dev/null; then
+            sudo apt-get update && sudo apt-get install -y postgresql
+          fi
+          sudo systemctl start postgresql.service
+          until pg_isready -h localhost -q; do sleep 1; done
+          sudo -u postgres psql -q -v ON_ERROR_STOP=1 \
+            -c "alter user postgres password 'drill'" \
+            -c "create database drill"
+          DRILL_URL="postgresql://postgres:drill@localhost:5432/drill"
+
+          psql "$DRILL_URL" -q -v ON_ERROR_STOP=1 \
+            -c "create role anon nologin" \
+            -c "create role authenticated nologin" \
+            -c "create role service_role nologin"
+
+          printf '%s' "$BACKUP_PASSPHRASE" | gpg --batch --pinentry-mode loopback \
+            --passphrase-fd 0 --decrypt --output drill.dump studet-public-schema.dump.gpg
+
+          # В пустой базе схема public уже есть; если дамп создаёт её сам
+          # (pg_dump --schema=public пишет CREATE SCHEMA), её надо убрать,
+          # иначе восстановление упадёт на первой же команде.
+          if pg_restore --list drill.dump | grep -q " SCHEMA - public "; then
+            psql "$DRILL_URL" -q -v ON_ERROR_STOP=1 -c "drop schema public cascade"
+          fi
+          pg_restore --no-owner --no-privileges --exit-on-error \
+            --dbname "$DRILL_URL" drill.dump
+          rm drill.dump
+          echo "pg_restore прошёл без ошибок"
+
+          # Число строк в каждой таблице public и число политик RLS — одним
+          # запросом, одинаковым для обеих баз.
+          COUNTS="
+            select table_name || ' ' || (xpath('/row/c/text()', query_to_xml(
+              format('select count(*) as c from public.%I', table_name),
+              false, true, '')))[1]::text
+            from information_schema.tables
+            where table_schema = 'public' and table_type = 'BASE TABLE'
+            union all
+            select 'RLS-политик ' || count(*) from pg_policies where schemaname = 'public'
+            order by 1"
+          psql "$SUPABASE_DB_URL" -At -v ON_ERROR_STOP=1 -c "$COUNTS" > live.txt
+          psql "$DRILL_URL" -At -v ON_ERROR_STOP=1 -c "$COUNTS" > restored.txt
+          echo "Таблиц: $(($(wc -l < live.txt) - 1)); строк всего:" \
+            "$(grep -v '^RLS' live.txt | awk '{s += $2} END {print s}')"
+          if ! diff -u live.txt restored.txt; then
+            echo "::error::Восстановленная копия расходится с живой базой (слева — живая, справа — копия)."
+            exit 1
+          fi
+          echo "Копия разворачивается: все таблицы и политики совпадают с живой базой."
