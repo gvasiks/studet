@@ -439,5 +439,66 @@
         ]
       }
     ]
+  },
+  "studentPermit": {
+    "title": "Elamisluba õppimiseks Leedus",
+    "intro": "Mida vajab teise riigi üliõpilane, et õpingute ajal Leedus elada: kes vajab elamisluba, millised tingimused tuleb täita, kuhu taotlus esitada ja millised reeglid kehtivad pärast vastuvõttu. Iga punkti juures on seaduse artikkel.",
+    "checkedNote": "Iga punkti võrreldi 19. novembril 2026 seaduse terviktekstiga, mis kehtib alates 1. jaanuarist 2027. Iga taotluse üle otsustab Migratsiooniamet (Migracijos departamentas); see leht ei asenda tema juhiseid.",
+    "sources": [
+      {
+        "label": "Välismaalaste õigusliku seisundi seadus (Įstatymas dėl užsieniečių teisinės padėties, nr IX-2206)",
+        "url": "https://e-seimas.lrs.lt/portal/legalAct/lt/TAD/TAIS.232378/asr"
+      }
+    ],
+    "items": [
+      {
+        "id": "eu-citizens",
+        "title": "EL-i ja EFTA riikide kodanikud elamisluba ei vaja",
+        "text": "EL-i liikmesriigi kodanik võib Leetu siseneda ja seal viibida kuni 3 kuud. Kui ta tuleb elama kauemaks kui 3 kuud poole aasta jooksul, saab ta tõendi ajutise elamisõiguse kohta. Üliõpilasel on see õigus, kui ta on õppima vastu võetud, tal on elatumiseks piisavalt vahendeid ja kehtiv ravikindlustus. Taotlus vaadatakse läbi ühe kuu jooksul. Samad reeglid kehtivad EFTA riikide (Island, Liechtenstein, Norra, Šveits) kodanikele.",
+        "source": "Artikli 1 lõige 2¹, artikli 97 lõige 1, artikli 99 lõige 1, artikkel 99¹, artikli 101 lõike 1 punkt 3"
+      },
+      {
+        "id": "who-needs-permit",
+        "title": "Kõik teised: tähtajaline elamisluba õppimiseks",
+        "text": "Tähtajalise elamisloa võib anda välismaalasele, kes on vastu võetud teadus- ja õppeasutusse õppekavale, magistriõppesse, residentuuri või doktoriõppesse. Õppimiseks antakse see õpingute ajaks, kuid mitte kauemaks kui 2 aastaks, ja seda saab pikendada; viimasel õppeaastal kuni 6 kuu võrra pikemaks ajaks. Kokku mitte kauem kui 8 aastat, välja arvatud residentuur ja doktoriõpe (doktoriõppeks antakse see 3 aastaks). Reisidokument peab kehtima 3 kuud kauem kui elamisluba, muidu vormistatakse luba lühemaks ajaks.",
+        "source": "Artikli 40 lõike 1 punkt 6 ja lõige 4, artikli 46 lõike 1 punktid 1 ja 5, lõiked 2 ja 4"
+      },
+      {
+        "id": "conditions",
+        "title": "Tingimused: vahendid, ravikindlustus, eluase ja andmed enda kohta",
+        "text": "Taotleja peab vastama Schengeni piirieeskirjade sisenemistingimustele, tal peab olema kehtiv ravikindlustus ja Leedus elatumiseks piisavalt vahendeid; piisavate vahendite suuruse kehtestab sotsiaalkaitse- ja tööminister. Üliõpilasele jäetakse luba andmata ka siis, kui tal ei ole piisavalt vahendeid õpinguteks ja tagasisõiduks. Esitada tuleb kirjalik kohustus registreerida elukoht ruumis, kus igale inimesele on vähemalt 4 m² eluruumi pinda, välisreiside ja välisriikides elamise loetelu ning üksikasjalikud andmed enda kohta, sealhulgas sidemete kohta Leedus elavate inimeste ja välisriikide luure-, julgeoleku- või sõjaliste asutustega. Ilma nende andmeteta taotlust vastu ei võeta.",
+        "source": "Artikli 26 lõige 1, lõiked 3¹ ja 4, artikkel 27, artikli 35 lõike 1 punkt 5"
+      },
+      {
+        "id": "submitting",
+        "title": "Kuhu taotlus esitada",
+        "text": "Väljaspool Leedut olles saab taotluse Migratsiooniametile esitada välise teenusepakkuja kaudu. Leedus seaduslikult viibiv üliõpilane võib taotluse esitada Migratsiooniametile, kui tal on Leedu riiklik viisa, kehtiv tähtajaline elamisluba, teise Schengeni või EL-i riigi elamisluba või kui ta viibib Leedus viisavabalt. Taotluse esitamine ise ei anna õigust Leedus viibida, kuni taotlust menetletakse. Otsus õppimiseks antava loa kohta tehakse 2 kuu jooksul.",
+        "source": "Artikli 11 lõige 2, artikli 28 lõiked 2, 2¹ ja 4, artikli 33 lõike 1 punkti 2 alapunkt c"
+      },
+      {
+        "id": "visa",
+        "title": "Riiklik viisa",
+        "text": "Riikliku viisa võib anda välismaalasele, kes tuleb Leetu pikemaks ajaks; see antakse kuni 12 kuuks. Viisa taotlemisel võetakse näokujutis ja kümne sõrme sõrmejäljed. Ravikindlustus peab kehtima kõigis Schengeni riikides ja kindlustussumma peab olema vähemalt 30 000 eurot.",
+        "source": "Artikkel 17, artikkel 6¹"
+      },
+      {
+        "id": "work",
+        "title": "Töötamine õpingute ajal",
+        "text": "Õppimiseks antud tähtajalise elamisloaga üliõpilasel on õigus töötada. Esimese astme 1. ja 2. kursuse üliõpilased võivad töötada kuni 20 tundi nädalas, välja arvatud suvepuhkuse ja praktika ajal, mille määrab õppeasutus. Selle piirangu rikkumine on alus luba kehtetuks tunnistada.",
+        "source": "Artikli 46 lõige 6, artikli 50 lõike 1 punkt 9, artikli 58 lõike 1 punkt 1¹"
+      },
+      {
+        "id": "progress",
+        "title": "Õppeedukus mõjutab elamisluba",
+        "text": "Luba saab pikendada, kui üliõpilane kogus viimasel õppeaastal vähemalt 40 ainepunkti või vähem mõjuvatel põhjustel ega katkestanud õpinguid. Luba tunnistatakse kehtetuks, kui õpingud katkestatakse, üliõpilane ei tulnud õppima või kogus mõjuvate põhjusteta alla 40 ainepunkti; enne seda konsulteerib Migratsiooniamet õppeasutusega. Kes kandideerib samaväärsele õppekavale teises õppeasutuses, peab 2 kuu jooksul tõendama, et ta võeti vastu.",
+        "source": "Artikli 35 lõike 1 punkt 18 ja lõige 1¹, artikli 46 lõiked 2 ja 7, artikli 50 lõike 1 punkt 9 ja lõige 1¹"
+      },
+      {
+        "id": "after-studies",
+        "title": "Pärast õpingute lõpetamist",
+        "text": "Kui õppeaeg lõpeb või õpingud katkestatakse, peab välismaalane lahkuma, kui ta ei saa elamisluba muul alusel. Leedus õpingud lõpetanud välismaalane võib saada tähtajalise elamisloa 12 kuuks, et otsida tööd ja tööle asuda või alustada tegevust füüsilisest isikust ettevõtjana, kui kvalifikatsiooni omandamisest ei ole möödunud üle aasta. Selline taotlus vaadatakse läbi ühe kuu jooksul.",
+        "source": "Artikli 33 lõike 1 punkti 3 alapunkt c, artikli 40 lõike 1 punkt 15, artikli 46 lõige 5, artikkel 49⁴"
+      }
+    ]
   }
 }

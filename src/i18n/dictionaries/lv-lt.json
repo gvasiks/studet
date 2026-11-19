@@ -431,5 +431,66 @@
         ]
       }
     ]
+  },
+  "studentPermit": {
+    "title": "Uzturēšanās atļauja studijām Lietuvā",
+    "intro": "Kas citas valsts studentam vajadzīgs, lai studiju laikā dzīvotu Lietuvā: kam vajadzīga uzturēšanās atļauja, kādi nosacījumi jāizpilda, kur iesniedz pieteikumu un kādi noteikumi ir spēkā pēc uzņemšanas. Pie katra punkta norādīts likuma pants.",
+    "checkedNote": "Katrs punkts 2026. gada 19. novembrī salīdzināts ar likuma konsolidēto redakciju, kas ir spēkā no 2027. gada 1. janvāra. Par katru pieteikumu lemj Migrācijas departaments; šī lapa neaizstāj tā norādījumus.",
+    "sources": [
+      {
+        "label": "Likums par ārzemnieku tiesisko stāvokli (Įstatymas dėl užsieniečių teisinės padėties, Nr. IX-2206)",
+        "url": "https://e-seimas.lrs.lt/portal/legalAct/lt/TAD/TAIS.232378/asr"
+      }
+    ],
+    "items": [
+      {
+        "id": "eu-citizens",
+        "title": "ES un EBTA valstu pilsoņiem uzturēšanās atļauja nav vajadzīga",
+        "text": "ES dalībvalsts pilsonis var ieceļot Lietuvā un uzturēties tajā līdz 3 mēnešiem. Ja viņš ierodas dzīvot ilgāk par 3 mēnešiem pusgada laikā, viņš saņem apliecību par tiesībām uz laiku dzīvot Lietuvas Republikā. Studentam šādas tiesības ir, ja viņš ir uzņemts studijās, viņam ir pietiekami līdzekļi iztikai un derīga veselības apdrošināšana. Pieteikumu izskata viena mēneša laikā. Tie paši noteikumi attiecas uz EBTA valstu (Islandes, Lihtenšteinas, Norvēģijas, Šveices) pilsoņiem.",
+        "source": "1. panta 2¹. daļa, 97. panta 1. daļa, 99. panta 1. daļa, 99.¹ pants, 101. panta 1. daļas 3. punkts"
+      },
+      {
+        "id": "who-needs-permit",
+        "title": "Visiem pārējiem: termiņuzturēšanās atļauja studijām",
+        "text": "Termiņuzturēšanās atļauju var izsniegt ārzemniekam, kas uzņemts zinātnes un studiju iestādē studiju programmā, maģistrantūrā, rezidentūrā vai doktorantūrā. Studijām to izsniedz uz studiju laiku, bet ne ilgāk kā uz 2 gadiem, un to var mainīt; pēdējā studiju gadā — uz laiku, kas līdz 6 mēnešiem pārsniedz studiju laiku. Kopā — ne ilgāk kā 8 gadi, izņemot rezidentūru un doktorantūru (doktorantūrai to izsniedz uz 3 gadiem). Ceļošanas dokumentam jābūt derīgam 3 mēnešus ilgāk par atļauju, citādi atļauju noformē uz īsāku laiku.",
+        "source": "40. panta 1. daļas 6. punkts un 4. daļa, 46. panta 1. daļas 1. un 5. punkts, 2. un 4. daļa"
+      },
+      {
+        "id": "conditions",
+        "title": "Nosacījumi: līdzekļi, veselības apdrošināšana, mājoklis un ziņas par sevi",
+        "text": "Pieteicējam jāatbilst Šengenas Robežu kodeksa ieceļošanas nosacījumiem, jābūt derīgai veselības apdrošināšanai un pietiekamiem līdzekļiem iztikai Lietuvā; pietiekamo līdzekļu apmēru nosaka sociālās drošības un darba ministrs. Studentam atļauju atsaka arī tad, ja viņam nav pietiekamu līdzekļu studijām un atpakaļceļam. Jāiesniedz rakstiska apņemšanās deklarēt dzīvesvietu telpās, kur uz katru personu ir vismaz 4 m² dzīvojamās platības, saraksts ar braucieniem un dzīvi ārvalstīs un izsmeļošas ziņas par sevi, arī par saitēm ar Lietuvā dzīvojošām personām un ārvalstu izlūkošanas, drošības vai militārajām iestādēm. Bez šīm ziņām pieteikumu nepieņem.",
+        "source": "26. panta 1. daļa, 3.¹ un 4. daļa, 27. pants, 35. panta 1. daļas 5. punkts"
+      },
+      {
+        "id": "submitting",
+        "title": "Kur iesniedz pieteikumu",
+        "text": "Atrodoties ārpus Lietuvas, pieteikumu Migrācijas departamentam var iesniegt ar ārēja pakalpojumu sniedzēja starpniecību. Students, kas Lietuvā atrodas likumīgi, var iesniegt pieteikumu Migrācijas departamentam, ja viņam ir Lietuvas nacionālā vīza, derīga termiņuzturēšanās atļauja, citas Šengenas vai ES valsts uzturēšanās atļauja vai ja viņš Lietuvā ir bezvīzu režīmā. Pieteikuma iesniegšana pati par sevi nedod tiesības uzturēties Lietuvā, kamēr to izskata. Lēmumu par atļauju studijām pieņem 2 mēnešu laikā.",
+        "source": "11. panta 2. daļa, 28. panta 2., 2.¹ un 4. daļa, 33. panta 1. daļas 2. punkta c apakšpunkts"
+      },
+      {
+        "id": "visa",
+        "title": "Nacionālā vīza",
+        "text": "Nacionālo vīzu var izsniegt ārzemniekam, kas ierodas Lietuvā uz ilgu laiku; to izsniedz ne ilgāk kā uz 12 mēnešiem. Pieprasot vīzu, tiek ņemts sejas attēls un desmit pirkstu nospiedumi. Veselības apdrošināšanai jābūt derīgai visās Šengenas valstīs, apdrošinājuma summa — vismaz 30 000 eiro.",
+        "source": "17. pants, 6.¹ pants"
+      },
+      {
+        "id": "work",
+        "title": "Darbs studiju laikā",
+        "text": "Studentam ar termiņuzturēšanās atļauju studijām ir tiesības strādāt. Pirmā līmeņa studiju 1. un 2. kursa studenti var strādāt ne vairāk kā 20 stundas nedēļā, izņemot vasaras brīvdienas un prakses laiku, ko nosaka zinātnes un studiju iestāde. Šī ierobežojuma neievērošana ir pamats atļaujas anulēšanai.",
+        "source": "46. panta 6. daļa, 50. panta 1. daļas 9. punkts, 58. panta 1. daļas 1.¹ punkts"
+      },
+      {
+        "id": "progress",
+        "title": "Sekmes studijās ietekmē atļauju",
+        "text": "Atļauju var mainīt, ja students pēdējā studiju gadā ieguvis vismaz 40 kredītpunktu vai mazāk attaisnojošu iemeslu dēļ un nav pārtraucis studijas. Atļauju anulē, ja studijas pārtrauktas, students neieradās studēt vai bez attaisnojošiem iemesliem ieguva mazāk par 40 kredītpunktiem; pirms tam Migrācijas departaments konsultējas ar zinātnes un studiju iestādi. Kas piesakās līdzvērtīgā programmā citā iestādē, tam 2 mēnešu laikā jāpierāda, ka ir uzņemts.",
+        "source": "35. panta 1. daļas 18. punkts un 1.¹ daļa, 46. panta 2. un 7. daļa, 50. panta 1. daļas 9. punkts un 1.¹ daļa"
+      },
+      {
+        "id": "after-studies",
+        "title": "Pēc studiju beigšanas",
+        "text": "Kad studiju laiks beidzas vai studijas tiek pārtrauktas, ārzemniekam jāizbrauc, ja vien viņš nesaņem uzturēšanās atļauju uz cita pamata. Ārzemnieks, kas pabeidzis studijas Lietuvā, var saņemt termiņuzturēšanās atļauju uz 12 mēnešiem, lai meklētu darbu un sāktu strādāt vai sāktu pašnodarbinātas personas darbību, ja kopš kvalifikācijas iegūšanas nav pagājis gads. Šādu pieteikumu izskata viena mēneša laikā.",
+        "source": "33. panta 1. daļas 3. punkta c apakšpunkts, 40. panta 1. daļas 15. punkts, 46. panta 5. daļa, 49.⁴ pants"
+      }
+    ]
   }
 }

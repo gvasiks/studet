@@ -48,6 +48,9 @@ const LT_ROUTES = [
   "/lt/glossary",
   "/lt/rights",
   "/lt/privacy",
+  // путь ВНЖ Литвы (2026-11-19)
+  "/lt/student-permit",
+  "/en-lt/student-permit",
   "/lt/verification",
   "/en-lt",
   "/en-lt/programmes",

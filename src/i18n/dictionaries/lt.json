@@ -284,7 +284,12 @@
     "footer": "Poraštės navigacija",
     "country": "Šalis",
     "language": "Kalba",
-    "languageNames": { "lv": "Latviešu", "lt": "Lietuvių", "et": "Eesti", "en": "English" }
+    "languageNames": {
+      "lv": "Latviešu",
+      "lt": "Lietuvių",
+      "et": "Eesti",
+      "en": "English"
+    }
   },
   "countries": {
     "LV": "Latvija",
@@ -632,87 +637,65 @@
     "empty": "Patikrintų dokumentų sąrašų dar nėra."
   },
   "studentPermit": {
-    "title": "Leidimas gyventi studijoms Latvijoje",
-    "intro": "Ko reikia kitos šalies studentui, kad studijų metu galėtų gyventi Latvijoje: kam reikia leidimo gyventi, kas pateikia dokumentus, kokie mokesčiai ir kokios taisyklės galioja po įstojimo. Prie kiekvieno punkto nurodyta teisės norma. Jei vertimas skiriasi, galioja latviškas tekstas.",
-    "checkedNote": "Kiekvienas punktas 2026 m. lapkričio 14 d. palygintas su galiojančia redakcija likumi.lv. Dėl kiekvieno prašymo sprendžia Pilietybės ir migracijos reikalų valdyba (PMLP); šis puslapis jos nurodymų nepakeičia.",
+    "title": "Leidimas gyventi studijoms Lietuvoje",
+    "intro": "Ko reikia kitos šalies studentui, kad studijų metu galėtų gyventi Lietuvoje: kam reikia leidimo gyventi, kokių sąlygų reikia laikytis, kur pateikti prašymą ir kokios taisyklės galioja po įstojimo. Prie kiekvieno punkto nurodytas įstatymo straipsnis.",
+    "checkedNote": "Kiekvienas punktas 2026 m. lapkričio 19 d. palygintas su įstatymo suvestine redakcija, galiojančia nuo 2027 m. sausio 1 d. Dėl kiekvieno prašymo sprendžia Migracijos departamentas; šis puslapis jo nurodymų nepakeičia.",
     "sourceLabel": "Teisinis pagrindas",
     "sourcesTitle": "Teisės aktai",
     "items": [
       {
         "id": "eu-citizens",
-        "title": "ES, EEE ir Šveicarijos piliečiams leidimo gyventi nereikia",
-        "text": "Jie atvyksta į Latviją su galiojančiu kelionės dokumentu. Norėdami be pertraukos gyventi ilgiau nei tris mėnesius, jie registruojasi PMLP ir prašo registracijos pažymėjimo. Studentui, kurio numatomas buvimas neviršija vienerių metų, registruotis nereikia. Pažymėjimui gauti studentui reikia pakankamų pragyvenimo lėšų ir sveikatos draudimo arba ES dokumento, suteikiančio teisę Latvijoje gauti būtinąją medicinos pagalbą.",
-        "source": "Europos Sąjungos, Europos ekonominės erdvės ir Šveicarijos Konfederacijos piliečių ir jų šeimos narių atvykimo ir buvimo Latvijos Respublikoje įstatymas, 9 straipsnis, 19 straipsnio 1 dalis, 24 straipsnio 3 punktas ir 25 straipsnio 1 dalies 3 punktas"
+        "title": "ES ir ELPA valstybių piliečiams leidimo gyventi nereikia",
+        "text": "ES valstybės narės pilietis gali atvykti į Lietuvą ir būti joje iki 3 mėnesių. Atvykęs gyventi ilgiau nei 3 mėnesius per pusę metų, jis gauna teisės laikinai gyventi Lietuvos Respublikoje pažymėjimą. Studentui tokia teisė suteikiama, jei jis priimtas studijuoti, turi pakankamai išteklių pragyventi ir galiojantį sveikatos draudimą. Prašymas išnagrinėjamas per vieną mėnesį. Tos pačios taisyklės taikomos ELPA valstybių (Islandijos, Lichtenšteino, Norvegijos, Šveicarijos) piliečiams.",
+        "source": "1 straipsnio 2¹ dalis, 97 straipsnio 1 dalis, 99 straipsnio 1 dalis, 99¹ straipsnis, 101 straipsnio 1 dalies 3 punktas"
       },
       {
         "id": "who-needs-permit",
-        "title": "Visiems kitiems: laikinasis leidimas gyventi nuolatinėms studijoms",
-        "text": "Kitos šalies pilietis, priimtas į nuolatinių studijų programą Latvijos universitete ar kolegijoje, gali prašyti laikinojo leidimo gyventi studijoms. Jis išduodamas nuolatinių studijų laikotarpiui ir dar keturiems mėnesiams.",
-        "source": "Imigracijos įstatymas, 1 straipsnio 7⁴ punktas ir 23 straipsnio 1 dalies 10¹ punktas"
+        "title": "Visiems kitiems: leidimas laikinai gyventi studijoms",
+        "text": "Leidimas laikinai gyventi gali būti išduotas užsieniečiui, priimtam studijuoti į mokslo ir studijų instituciją pagal studijų programą, magistrantūrą, rezidentūrą ar doktorantūrą. Studijoms jis išduodamas studijų laikotarpiui, bet ne ilgiau kaip 2 metams, ir gali būti keičiamas; paskutiniais studijų metais – iki 6 mėnesių ilgesniam laikotarpiui. Iš viso – ne ilgiau kaip 8 metai, išskyrus rezidentūrą ir doktorantūrą (doktorantūrai jis išduodamas 3 metams). Kelionės dokumentas turi galioti 3 mėnesiais ilgiau nei leidimas, kitaip leidimas įforminamas trumpesniam laikotarpiui.",
+        "source": "40 straipsnio 1 dalies 6 punktas ir 4 dalis, 46 straipsnio 1 dalies 1 ir 5 punktai, 2 ir 4 dalys"
       },
       {
-        "id": "university-request",
-        "title": "Pirmiausia į PMLP kreipiasi aukštoji mokykla",
-        "text": "Aukštoji mokykla kaip kviečiančioji šalis pateikia PMLP prašymą. Jame ji nurodo numatomą studijų pabaigos datą.",
-        "source": "Ministrų kabineto nutarimas Nr. 564, 16.4.5 papunktis"
+        "id": "conditions",
+        "title": "Sąlygos: lėšos, sveikatos draudimas, būstas ir informacija apie save",
+        "text": "Prašantis leidimo turi atitikti Šengeno sienų kodekso atvykimo sąlygas, turėti galiojantį sveikatos draudimą ir pakankamai lėšų pragyventi Lietuvoje; pakankamų lėšų dydį nustato socialinės apsaugos ir darbo ministras. Studentui leidimas neišduodamas ir tada, jei jis neturi pakankamai lėšų studijoms ir grįžimo kelionei. Reikia raštu pasižadėti deklaruoti gyvenamąją vietą patalpoje, kurioje studentui tenka ne mažiau kaip 4 kv. m gyvenamojo ploto, pateikti išvykų ir gyvenimo užsienio valstybėse sąrašą ir išsamią informaciją apie save, įskaitant ryšius su Lietuvoje gyvenančiais asmenimis ir su užsienio valstybių žvalgybos, saugumo ar karinėmis institucijomis. Be šios informacijos prašymas nepriimamas.",
+        "source": "26 straipsnio 1 dalis, 3¹ ir 4 dalys, 27 straipsnis, 35 straipsnio 1 dalies 5 punktas"
       },
       {
         "id": "submitting",
-        "title": "Kaip pateikiami dokumentai",
-        "text": "Prie prašymo pridedama studijų sutartis. Jei studentas nėra Latvijoje, dokumentus pirmajam leidimui gyventi gauti jo vardu gali pateikti aukštoji mokykla. Tai netaikoma šalių, įtrauktų į Ministrų kabineto papildomo tikrinimo sąrašą, piliečiams ir asmenims, kuriems užsienyje suteiktas pabėgėlio, asmens be pilietybės ar alternatyvusis statusas arba laikinoji apsauga. Dokumentus taip pat galima pateikti elektroniniu būdu, įskaitant PMLP e. paslaugą, ir paštu, jei studentas jau yra Latvijoje.",
-        "source": "Ministrų kabineto nutarimas Nr. 564, 2, 3¹ ir 51 punktai"
+        "title": "Kur pateikti prašymą",
+        "text": "Būdamas ne Lietuvoje, užsienietis prašymą Migracijos departamentui gali pateikti per išorės paslaugų teikėją. Teisėtai Lietuvoje esantis studentas prašymą gali pateikti Migracijos departamentui, jei turi Lietuvos nacionalinę vizą, galiojantį leidimą laikinai gyventi, kitos Šengeno ar ES valstybės leidimą gyventi arba yra Lietuvoje pagal bevizį režimą. Pats prašymas nesuteikia teisės būti Lietuvoje, kol jis nagrinėjamas. Sprendimas dėl leidimo studijoms priimamas per 2 mėnesius.",
+        "source": "11 straipsnio 2 dalis, 28 straipsnio 2, 2¹ ir 4 dalys, 33 straipsnio 1 dalies 2 punkto c papunktis"
       },
       {
-        "id": "fees-and-funds",
-        "title": "Valstybės rinkliavos ir lėšos, kurias reikia įrodyti",
-        "text": "Valstybės rinkliava mokama už dokumentų nagrinėjimą ir atskirai už leidimo gyventi registravimą; ilgalaikė viza, jei jos reikia, turi savo rinkliavą. Patikrintos sumos rodomos programų puslapiuose, bloke „Išlaidos užsienio studentams“. Už kiekvieną buvimo mėnesį reikia turėti lėšų, ne mažesnių už minimalųjį mėnesinį darbo užmokestį.",
-        "source": "Ministrų kabineto nutarimas Nr. 731, 2.1, 5.1.1 ir 6.1.1 papunkčiai; Ministrų kabineto nutarimas Nr. 225, 11.7 papunktis"
+        "id": "visa",
+        "title": "Nacionalinė viza",
+        "text": "Nacionalinė viza gali būti išduota užsieniečiui, kuris atvyksta į Lietuvą ilgam laikui; ji išduodama ne ilgiau kaip 12 mėnesių. Prašant vizos imamas veido atvaizdas ir dešimties pirštų atspaudai. Sveikatos draudimas turi galioti visose Šengeno valstybėse, draudimo suma – ne mažesnė kaip 30 000 eurų.",
+        "source": "17 straipsnis, 6¹ straipsnis"
       },
       {
         "id": "work",
         "title": "Darbas studijų metu",
-        "text": "Studentas, turintis leidimą gyventi arba ilgalaikę vizą nuolatinėms studijoms, gali dirbti bet kuriam darbdaviui iki 20 valandų per savaitę, o per studijų atostogas – iki 40 valandų per savaitę. Nuolatinių magistrantūros ir doktorantūros studijų studentams, turintiems leidimą gyventi, šis apribojimas netaikomas.",
-        "source": "Imigracijos įstatymas, 9 straipsnio 5 dalies 25 punktas ir 9 straipsnio 5¹ dalis"
+        "text": "Studentas, turintis leidimą laikinai gyventi studijoms, turi teisę dirbti. Pirmosios pakopos 1 ir 2 kurso studentai gali dirbti ne daugiau kaip 20 valandų per savaitę, išskyrus vasaros atostogas ir praktikos laikotarpius, kuriuos nustato mokslo ir studijų institucija. Šio apribojimo nesilaikymas yra pagrindas panaikinti leidimą.",
+        "source": "46 straipsnio 6 dalis, 50 straipsnio 1 dalies 9 punktas, 58 straipsnio 1 dalies 1¹ punktas"
       },
       {
         "id": "progress",
-        "title": "Studijų pažanga turi įtakos leidimui gyventi",
-        "text": "Leidimas gyventi neišduodamas, jei be nuo studento nepriklausančių aplinkybių jis per penkerius metus iki prašymo bent du kartus buvo pašalintas iš studijų programos dėl nepažangumo ar studijų sutarties nevykdymo, per tuos penkerius metus bent du kartus pradėjo ir nutraukė studijas arba vienoje programoje daugiau nei vienais metais (iki trejų metų programose) ar daugiau nei dvejais metais (ilgesnėse programose) viršija sutartyje nustatytą studijų laiką. Išduotas leidimas gyventi dėl studijų laiko viršijimo taip pat panaikinamas.",
-        "source": "Imigracijos įstatymas, 34 straipsnio 1 dalies 39 punktas ir 35 straipsnio 1 dalies 34 punktas"
+        "title": "Studijų pažanga turi įtakos leidimui",
+        "text": "Leidimas gali būti keičiamas, jei studentas per pastaruosius vienerius studijų metus surinko ne mažiau kaip 40 studijų kreditų arba mažiau, bet dėl pateisinamų priežasčių, ir nenutraukė studijų. Leidimas panaikinamas, jei studijos nutraukiamos, studentas neatvyko studijuoti arba be pateisinamų priežasčių surinko mažiau kaip 40 kreditų; prieš tai Migracijos departamentas konsultuojasi su mokslo ir studijų institucija. Prašantis priimti į lygiavertę programą kitoje institucijoje turi per 2 mėnesius pateikti įrodymus, kad buvo priimtas.",
+        "source": "35 straipsnio 1 dalies 18 punktas ir 1¹ dalis, 46 straipsnio 2 ir 7 dalys, 50 straipsnio 1 dalies 9 punktas ir 1¹ dalis"
       },
       {
-        "id": "after-graduation",
-        "title": "Po magistro ar daktaro laipsnio",
-        "text": "Latvijoje nuolatines magistrantūros ar doktorantūros studijas baigęs asmuo, turintis valstybės pripažintą diplomą, gali prašyti laikinojo leidimo gyventi devyniems mėnesiams. Prašymą reikia pateikti ne vėliau kaip per tris mėnesius nuo studijoms išduoto leidimo gyventi galiojimo pabaigos.",
-        "source": "Imigracijos įstatymas, 23 straipsnio 1 dalies 32 punktas"
-      },
-      {
-        "id": "russia-belarus",
-        "title": "Rusijos ir Baltarusijos piliečiams: atskiros taisyklės",
-        "text": "Rusijos pilietis gali prašyti laikinojo leidimo gyventi studijoms ne ilgiau kaip vieneriems metams ir tik tada, jei teisė gyventi nustatyta Europos Sąjungos teisės aktais. Baltarusijos pilietis gali jo prašyti nuolatinių studijų laikotarpiui ir dar keturiems mėnesiams.",
-        "source": "Imigracijos įstatymas, 23¹ straipsnio 1 dalis, 2 dalies 3 punktas ir 3 dalies 12 punktas"
+        "id": "after-studies",
+        "title": "Baigus studijas",
+        "text": "Kai studijų laikotarpis baigiasi arba studijos nutraukiamos, užsienietis privalo išvykti, nebent gauna leidimą gyventi kitu pagrindu. Lietuvoje studijas baigęs užsienietis gali gauti leidimą laikinai gyventi 12 mėnesių, kad ieškotų darbo ir pradėtų dirbti arba pradėtų savarankišką veiklą, jei nuo kvalifikacijos įgijimo nepraėjo vieneri metai. Toks prašymas išnagrinėjamas per vieną mėnesį.",
+        "source": "33 straipsnio 1 dalies 3 punkto c papunktis, 40 straipsnio 1 dalies 15 punktas, 46 straipsnio 5 dalis, 49⁴ straipsnis"
       }
     ],
     "sources": [
       {
-        "label": "Imigracijos įstatymas (Imigrācijas likums)",
-        "url": "https://likumi.lv/ta/id/68522"
-      },
-      {
-        "label": "ES, EEE ir Šveicarijos piliečių ir jų šeimos narių atvykimo ir buvimo Latvijoje įstatymas (galioja nuo 2026 m. liepos 10 d.)",
-        "url": "https://likumi.lv/ta/id/369282"
-      },
-      {
-        "label": "Ministrų kabineto nutarimas Nr. 564 „Leidimų gyventi taisyklės“",
-        "url": "https://likumi.lv/ta/id/212441"
-      },
-      {
-        "label": "Ministrų kabineto nutarimas Nr. 731 dėl valstybės rinkliavos už migracijos paslaugas",
-        "url": "https://likumi.lv/ta/id/356656"
-      },
-      {
-        "label": "Ministrų kabineto nutarimas Nr. 225 dėl užsieniečių finansinių lėšų",
-        "url": "https://likumi.lv/ta/id/290808"
+        "label": "Įstatymas dėl užsieniečių teisinės padėties (Nr. IX-2206)",
+        "url": "https://e-seimas.lrs.lt/portal/legalAct/lt/TAD/TAIS.232378/asr"
       }
     ]
   },

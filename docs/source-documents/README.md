@@ -31,6 +31,7 @@
 | `r1mk/uznemsanas-noteikumi-2026-27.html` | LU Rīgas 1. medicīnas koledžas uzņemšanas noteikumi īsā cikla programmās 2026./2027., domes lēmums Nr. 40 (06.11.2025); страница сайта | [rmk1.lv](https://www.rmk1.lv/lv/studiju-iespejas/ieraksts/pirma-limena-profesionalas-augstakas-izglitibas-uznemsanas-noteikumi/) | 2026-10-25 | 0 — требования |
 | `vpk/uznemsanas-noteikumi-2026-27.docx` | Uzņemšanas noteikumi Valsts policijas koledžā 2026./2027., iekšējie noteikumi Nr. 1.4-19 (28.11.2025), grozījumi Nr. 1.4-4 (02.06.2026) | [policijas.koledza.gov.lv](https://www.policijas.koledza.gov.lv/lv/uznemsanas-noteikumi-0) | 2026-10-25 | 0 — требования |
 | `jvlma/uznemsanas-noteikumi-makslas-2026-27.docx`, `jvlma/uznemsanas-noteikumi-izglitiba-2026-27.docx` | JVLMA uzņemšanas noteikumi virzienos «Mākslas» un «Izglītība un pedagoģija» 2026./2027., Senāts 05.11.2025 prot. nr. 8, grozījumi 17.06.2026 prot. nr. 9 | [jvlma.lv](https://www.jvlma.lv/studijas/uznemsana) | 2026-10-25 | 0 — требования, тип отбора |
+| `lt-migration/AR_2027-01-01.pdf` | Lietuvos Respublikos įstatymas dėl užsieniečių teisinės padėties Nr. IX-2206, **suvestinė redakcija nuo 2027-01-01**; 2 МБ. Не формула — источник страницы «путь ВНЖ» Литвы (`docs/checks/STUDENT-PERMIT-SOURCES-LT.md`) | e-tar.lt (скачал владелец: сайты закрыты от автоматического доступа) | 2026-11-19 | 0 |
 
 ## Что из этого следует
 

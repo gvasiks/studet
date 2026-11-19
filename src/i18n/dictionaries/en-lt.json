@@ -417,5 +417,66 @@
         ]
       }
     ]
+  },
+  "studentPermit": {
+    "title": "Residence permit for studies in Lithuania",
+    "intro": "What a student from another country needs in order to live in Lithuania during studies: who needs a residence permit, which conditions apply, where to apply and the rules that apply after enrolment. Each point gives the article of the law it is based on.",
+    "checkedNote": "Each point was checked on 19 November 2026 against the consolidated version of the law in force from 1 January 2027. The Migration Department decides on every application; this page does not replace its instructions.",
+    "sources": [
+      {
+        "label": "Law on the Legal Status of Aliens (Įstatymas dėl užsieniečių teisinės padėties, No. IX-2206)",
+        "url": "https://e-seimas.lrs.lt/portal/legalAct/lt/TAD/TAIS.232378/asr"
+      }
+    ],
+    "items": [
+      {
+        "id": "eu-citizens",
+        "title": "Citizens of the EU and EFTA countries do not need a residence permit",
+        "text": "A citizen of an EU member state may enter Lithuania and stay for up to 3 months. If they come to live for longer than 3 months within half a year, they receive a certificate of the right of temporary residence. A student has this right if they are admitted to study, have sufficient resources to live on and valid health insurance. The application is decided within one month. The same rules apply to citizens of the EFTA countries (Iceland, Liechtenstein, Norway, Switzerland).",
+        "source": "Article 1(2¹), Article 97(1), Article 99(1), Article 99¹, Article 101(1)(3)"
+      },
+      {
+        "id": "who-needs-permit",
+        "title": "Everyone else: a temporary residence permit for studies",
+        "text": "A temporary residence permit may be issued to a foreigner admitted to a higher education and research institution for a study programme, a master's programme, residency or doctoral studies. For studies it is issued for the period of studies but for no longer than 2 years, and it can be renewed; in the final year of studies, for up to 6 months longer. In total, no longer than 8 years, except for residency and doctoral studies (for doctoral studies it is issued for 3 years). The travel document must be valid 3 months longer than the permit; otherwise the permit is issued for a shorter period.",
+        "source": "Article 40(1)(6) and 40(4), Article 46(1)(1) and (5), 46(2) and 46(4)"
+      },
+      {
+        "id": "conditions",
+        "title": "Conditions: funds, health insurance, housing and information about yourself",
+        "text": "The applicant must meet the entry conditions of the Schengen Borders Code, have valid health insurance and sufficient funds to live in Lithuania; the amount considered sufficient is set by the Minister of Social Security and Labour. A student is also refused a permit if they lack sufficient funds for studies and the return journey. You must give a written undertaking to declare your place of residence in premises with at least 4 m² of living space per person, a list of trips and stays abroad, and detailed information about yourself, including ties with people living in Lithuania and with foreign intelligence, security or military institutions. Without this information the application is not accepted.",
+        "source": "Article 26(1), 26(3¹) and 26(4), Article 27, Article 35(1)(5)"
+      },
+      {
+        "id": "submitting",
+        "title": "Where to apply",
+        "text": "From outside Lithuania, the application to the Migration Department may be submitted through an external service provider. A student who is in Lithuania legally may apply to the Migration Department if they hold a Lithuanian national visa, a valid temporary residence permit, a residence permit of another Schengen or EU state, or are in Lithuania under the visa-free regime. Submitting the application does not by itself give the right to stay in Lithuania while it is examined. The decision on a permit for studies is taken within 2 months.",
+        "source": "Article 11(2), Article 28(2), 28(2¹) and 28(4), Article 33(1)(2)(c)"
+      },
+      {
+        "id": "visa",
+        "title": "National visa",
+        "text": "A national visa may be issued to a foreigner coming to Lithuania for a long-term stay; it is issued for no longer than 12 months. A facial image and ten fingerprints are taken when applying. Health insurance must be valid in all Schengen states, with cover of at least 30,000 euros.",
+        "source": "Article 17, Article 6¹"
+      },
+      {
+        "id": "work",
+        "title": "Working during studies",
+        "text": "A student with a temporary residence permit for studies has the right to work. First-cycle students in their 1st or 2nd year may work no more than 20 hours a week, except during summer holidays and internship periods set by the institution. Breaking this limit is a ground for revoking the permit.",
+        "source": "Article 46(6), Article 50(1)(9), Article 58(1)(1¹)"
+      },
+      {
+        "id": "progress",
+        "title": "Study progress affects the permit",
+        "text": "The permit may be renewed if the student earned at least 40 study credits in the last academic year, or fewer for justified reasons, and has not discontinued studies. The permit is revoked if studies are discontinued, the student did not arrive to study, or earned fewer than 40 credits without justified reasons; before that, the Migration Department consults the institution. A student who applies to an equivalent programme at another institution must prove within 2 months that they were admitted.",
+        "source": "Article 35(1)(18) and 35(1¹), Article 46(2) and 46(7), Article 50(1)(9) and 50(1¹)"
+      },
+      {
+        "id": "after-studies",
+        "title": "After graduation",
+        "text": "When the period of studies ends or studies are discontinued, the foreigner must leave unless they receive a residence permit on another basis. A foreigner who has graduated in Lithuania may receive a temporary residence permit for 12 months to look for work and start working or to start self-employment, if no more than one year has passed since obtaining the qualification. Such an application is decided within one month.",
+        "source": "Article 33(1)(3)(c), Article 40(1)(15), Article 46(5), Article 49⁴"
+      }
+    ]
   }
 }

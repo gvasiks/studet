@@ -200,6 +200,35 @@ describe("файлы отличий словарей", () => {
     });
   });
 
+  // Путь ВНЖ у Литвы свой (2026-11-19, docs/checks/STUDENT-PERMIT-SOURCES-LT.md):
+  // латвийский текст на литовском переехал из lt.json в lt-lv.json.
+  describe("Литва: путь ВНЖ на четырёх языках", () => {
+    const ids = (list: { id: string }[]) => list.map((entry) => entry.id);
+    const lithuania = [
+      { name: "lt", permit: lt.studentPermit },
+      { name: "lv-lt", permit: mergeDictionary(lv, lvLt).studentPermit },
+      { name: "en-lt", permit: mergeDictionary(en, enLt).studentPermit },
+      { name: "et-lt", permit: mergeDictionary(mergeDictionary(en, et), etLt).studentPermit },
+    ];
+
+    it("на каждом языке те же пункты и ссылка на литовский закон", () => {
+      for (const { name, permit } of lithuania) {
+        expect(ids(permit.items), name).toEqual(ids(lt.studentPermit.items));
+        expect(permit.sources.map((source) => source.url), name).toEqual([
+          "https://e-seimas.lrs.lt/portal/legalAct/lt/TAD/TAIS.232378/asr",
+        ]);
+        for (const item of permit.items) expect(item.title && item.text && item.source, `${name} ${item.id}`).toBeTruthy();
+        expect(JSON.stringify(permit), name).not.toMatch(/likumi\.lv|riigiteataja|PMLP|PPA|Imigrācijas|Välismaalaste seadus/);
+      }
+    });
+
+    it("латвийский путь ВНЖ на литовском остался латвийским", () => {
+      const latvia = mergeDictionary(lt, ltLv).studentPermit;
+      expect(latvia.sources.every((source) => source.url.startsWith("https://likumi.lv/")), "lt-lv").toBe(true);
+      expect(ids(latvia.items)).toEqual(ids(lv.studentPermit.items));
+    });
+  });
+
   describe("Литва: словарь, права и политика на четырёх языках", () => {
     const ids = (list: { id: string }[]) => list.map((entry) => entry.id);
 
