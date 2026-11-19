@@ -15,7 +15,8 @@ export type Feature =
   | "rights"
   | "privacy"
   | "verification"
-  // путь ВНЖ для студента — только Латвия (docs/PLAN-FOREIGNERS.md, шаг 2, решение Р1)
+  // путь ВНЖ для студента (docs/PLAN-FOREIGNERS.md, шаг 2): Латвия; Эстония — с 2026-11-19
+  // (Р1 расширено владельцем), Литва — следующей
   | "studentPermit"
   // списки документов всех вузов — только Латвия (docs/PLAN-FOREIGNERS.md, шаг 3)
   | "studentDocuments";
@@ -120,7 +121,7 @@ const profiles: Record<Country, CountryProfile> = {
   // (2026-10-13) — по закону о высшем образовании Эстонии, на четырёх
   // языках. Расчёта балла и «куда можно поступить» пока нет.
   EE: {
-    features: ["favorites", "survey", "glossary", "rights", "privacy"],
+    features: ["favorites", "survey", "glossary", "rights", "privacy", "studentPermit"],
     filters: ["interest"],
     surveySteps: ["interests", "levelDuration", "city", "language", "kind"],
     levels: ["bachelor", "master", "doctoral", "college", "integrated"],

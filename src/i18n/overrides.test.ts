@@ -169,6 +169,37 @@ describe("файлы отличий словарей", () => {
   // Литовские словарь, права и политика написаны сразу на трёх языках
   // (lt.json — литовский; английский и латышский — в файлах отличий);
   // эстонский перевод добавлен 2026-10-13 (et-lt.json).
+  // Путь ВНЖ у Эстонии свой (2026-11-19, docs/checks/STUDENT-PERMIT-SOURCES-EE.md):
+  // латвийский текст на эстонском переехал в et-lv.json, а у Эстонии на
+  // каждом языке — эстонский закон.
+  describe("Эстония: путь ВНЖ на четырёх языках", () => {
+    const ids = (list: { id: string }[]) => list.map((entry) => entry.id);
+    const estonia = [
+      { name: "et", permit: et.studentPermit },
+      { name: "lv-ee", permit: mergeDictionary(lv, lvEe).studentPermit },
+      { name: "en-ee", permit: mergeDictionary(en, enEe).studentPermit },
+      { name: "lt-ee", permit: mergeDictionary(lt, ltEe).studentPermit },
+    ];
+
+    it("на каждом языке те же пункты и ссылки на эстонские законы", () => {
+      for (const { name, permit } of estonia) {
+        expect(ids(permit.items), name).toEqual(ids(et.studentPermit.items));
+        expect(permit.sources.map((source) => source.url), name).toEqual([
+          "https://www.riigiteataja.ee/akt/VMS",
+          "https://www.riigiteataja.ee/akt/ELKS",
+        ]);
+        for (const item of permit.items) expect(item.title && item.text && item.source, `${name} ${item.id}`).toBeTruthy();
+        expect(JSON.stringify(permit), name).not.toMatch(/likumi\.lv|PMLP|OCMA|Imigrācijas/);
+      }
+    });
+
+    it("латвийский путь ВНЖ на эстонском остался латвийским", () => {
+      const latvia = mergeDictionary(mergeDictionary(en, et), etLv).studentPermit;
+      expect(latvia.sources.every((source) => source.url.startsWith("https://likumi.lv/")), "et-lv").toBe(true);
+      expect(ids(latvia.items)).toEqual(ids(lv.studentPermit.items));
+    });
+  });
+
   describe("Литва: словарь, права и политика на четырёх языках", () => {
     const ids = (list: { id: string }[]) => list.map((entry) => entry.id);
 

@@ -118,6 +118,9 @@ const LT_ROUTES = [
   "/et/glossary",
   "/et/rights",
   "/et/privacy",
+  // путь ВНЖ Эстонии (2026-11-19)
+  "/et/student-permit",
+  "/en-ee/student-permit",
   "/lv-ee/glossary",
   "/lv-ee/rights",
   "/en-ee/rights",

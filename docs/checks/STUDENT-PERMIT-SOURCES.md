@@ -1,7 +1,8 @@
 # Раздел «Residence permit for studies» — сверка с текстом норм
 
-Страница `/…/student-permit` (только Латвия, четыре языка), тексты — `studentPermit` в `lv.json`, `en.json`,
-`lt.json`, `et.json`. Шаг 2 плана `docs/PLAN-FOREIGNERS.md`. Сверено 2026-11-14 с действующими редакциями на
+Страница `/…/student-permit` у Латвии (четыре языка), тексты — `studentPermit` в `lv.json`, `en.json`,
+`lt.json` и `et-lv.json` (до 2026-11-19 — в `et.json`; теперь там эстонский текст, сверка —
+`STUDENT-PERMIT-SOURCES-EE.md`). Шаг 2 плана `docs/PLAN-FOREIGNERS.md`. Сверено 2026-11-14 с действующими редакциями на
 likumi.lv. Цитаты ниже — дословные фрагменты норм; пересказ на странице не должен говорить больше, чем они.
 
 ## Источники и их редакции

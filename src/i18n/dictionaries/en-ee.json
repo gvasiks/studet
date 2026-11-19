@@ -362,5 +362,76 @@
         ]
       }
     ]
+  },
+  "studentPermit": {
+    "title": "Residence permit for studies in Estonia",
+    "intro": "What a student from another country needs in order to live in Estonia during studies: who needs a residence permit, who sends the invitation and where to apply, and the rules that apply after enrolment. Each point gives the legal provision it is based on.",
+    "checkedNote": "Each point was checked against the current text in Riigi Teataja on 19 November 2026 (the version of the Aliens Act in force until 31 December 2026). The Police and Border Guard Board (PPA) decides on every application; this page does not replace its instructions.",
+    "sources": [
+      {
+        "label": "Aliens Act (Välismaalaste seadus)",
+        "url": "https://www.riigiteataja.ee/akt/VMS"
+      },
+      {
+        "label": "Citizen of the European Union Act (Euroopa Liidu kodaniku seadus)",
+        "url": "https://www.riigiteataja.ee/akt/ELKS"
+      }
+    ],
+    "items": [
+      {
+        "id": "eu-citizens",
+        "title": "Citizens of the EU, EEA and Switzerland do not need a residence permit",
+        "text": "They may stay in Estonia with a valid travel document or identity card. No later than three months after entering Estonia, they register their place of residence under the Population Register Act. The registration gives a temporary right of residence for five years.",
+        "source": "Aliens Act, § 1(2); Citizen of the European Union Act, § 7(1)–(2) and § 13(1)"
+      },
+      {
+        "id": "who-needs-permit",
+        "title": "Everyone else: a temporary residence permit for studies",
+        "text": "A temporary residence permit may be granted for studies. In higher education it is granted for full-time studies in a first- or second-cycle programme, or for doctoral studies, at an institutionally accredited institution. It is valid until the end of the nominal duration of the programme, but not longer than the expected duration of studies, and it can be extended.",
+        "source": "Aliens Act, § 118(3), § 162(2) and § 170(1)–(2)"
+      },
+      {
+        "id": "invitation",
+        "title": "The university sends an invitation to the PPA",
+        "text": "When a residence permit for studies is applied for, the educational institution submits an invitation to the Police and Border Guard Board. Command of the language of instruction must meet the minimum requirements set by the institution.",
+        "source": "Aliens Act, § 163 and § 168(1)–(2)"
+      },
+      {
+        "id": "conditions",
+        "title": "General conditions: purpose, place of residence, income and health insurance",
+        "text": "For any temporary residence permit, the purpose of the application must be justified, and the applicant needs an actual place of residence in Estonia, sufficient legal income for subsistence and a health insurance contract that meets the requirements of the Act. For a permit for studies, the income requirement may also be met with income of kinds not listed in § 9 of the Act.",
+        "source": "Aliens Act, § 117(1), § 120 and § 168¹"
+      },
+      {
+        "id": "submitting",
+        "title": "Where to apply",
+        "text": "The application is submitted in person at an Estonian foreign mission, which forwards it to the Police and Border Guard Board. Someone who already has a legal basis to stay in Estonia may apply at the Board. Coming in person is not needed if fingerprints were taken in an earlier procedure and still allow identification. A minor aged 15 or older may apply alone only with the notarised consent of a legal representative.",
+        "source": "Aliens Act, § 213(1), (1¹) and (2), § 215 and § 216(1)(1)"
+      },
+      {
+        "id": "visa",
+        "title": "A visa to start studies",
+        "text": "A foreigner admitted to a higher education institution may be issued a short-stay or long-stay visa to start studies; for higher education, only if the institution is institutionally accredited. A long-stay visa is applied for in person at an Estonian foreign mission.",
+        "source": "Aliens Act, § 62²(1)–(2) and § 90(2)"
+      },
+      {
+        "id": "work",
+        "title": "Working during studies",
+        "text": "A foreigner with a residence permit for studies may work in Estonia without a separate permit, provided that the work does not hinder studies.",
+        "source": "Aliens Act, § 175"
+      },
+      {
+        "id": "progress",
+        "title": "Keeping up with studies",
+        "text": "If the programme is not completed to the extent required for holding the permit, or studies are discontinued, the permit ends 30 days later. The permit is revoked if an obligation under the Act or another law has been materially left unfulfilled; for doctoral students, not completing the programme to the required extent is not a ground for revocation.",
+        "source": "Aliens Act, § 173 and § 173¹"
+      },
+      {
+        "id": "after-permit",
+        "title": "When the permit expires",
+        "text": "If a residence permit for studies expires at the end of its term, the person may stay in Estonia legally for the following 270 days.",
+        "source": "Aliens Act, § 43(1)(8) and § 43(5)"
+      }
+    ]
   }
 }

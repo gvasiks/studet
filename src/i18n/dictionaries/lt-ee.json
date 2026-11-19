@@ -365,5 +365,76 @@
         ]
       }
     ]
+  },
+  "studentPermit": {
+    "title": "Leidimas gyventi studijoms Estijoje",
+    "intro": "Ko reikia kitos šalies studentui, kad studijų metu galėtų gyventi Estijoje: kam reikia leidimo gyventi, kas siunčia kvietimą ir kur pateikiamas prašymas, ir kokios taisyklės taikomos pradėjus studijas. Prie kiekvieno punkto nurodyta teisės norma, kuria jis grindžiamas.",
+    "checkedNote": "Kiekvienas punktas palygintas su galiojančiu tekstu Riigi Teataja 2026 m. lapkričio 19 d. (Užsieniečių įstatymo redakcija, galiojanti iki 2026 m. gruodžio 31 d.). Dėl kiekvieno prašymo sprendžia Estijos policijos ir pasieniečių tarnyba (PPA); šis puslapis nepakeičia jos nurodymų.",
+    "sources": [
+      {
+        "label": "Užsieniečių įstatymas (Välismaalaste seadus)",
+        "url": "https://www.riigiteataja.ee/akt/VMS"
+      },
+      {
+        "label": "Europos Sąjungos piliečio įstatymas (Euroopa Liidu kodaniku seadus)",
+        "url": "https://www.riigiteataja.ee/akt/ELKS"
+      }
+    ],
+    "items": [
+      {
+        "id": "eu-citizens",
+        "title": "ES, EEE ir Šveicarijos piliečiams leidimo gyventi nereikia",
+        "text": "Estijoje galima būti su galiojančiu kelionės dokumentu arba asmens tapatybės kortele. Ne vėliau kaip per tris mėnesius nuo atvykimo į Estiją gyvenamoji vieta registruojama Gyventojų registro įstatymo nustatyta tvarka. Įregistravus įgyjama laikinoji teisė gyventi penkerius metus.",
+        "source": "Užsieniečių įstatymas, § 1(2); Europos Sąjungos piliečio įstatymas, § 7(1)–(2) ir § 13(1)"
+      },
+      {
+        "id": "who-needs-permit",
+        "title": "Kitiems: laikinasis leidimas gyventi studijoms",
+        "text": "Laikinasis leidimas gyventi gali būti išduotas studijoms. Aukštojo mokslo studijoms jis išduodamas nuolatinėms pirmosios ar antrosios pakopos studijoms arba doktorantūrai institucionaliai akredituotoje mokymo įstaigoje. Leidimas galioja iki programos nominalios trukmės pabaigos, bet ne ilgiau nei numatoma studijų trukmė, ir gali būti pratęstas.",
+        "source": "Užsieniečių įstatymas, § 118(3), § 162(2) ir § 170(1)–(2)"
+      },
+      {
+        "id": "invitation",
+        "title": "Aukštoji mokykla siunčia kvietimą PPA",
+        "text": "Prašant leidimo gyventi studijoms, mokymo įstaiga pateikia Policijos ir pasieniečių tarnybai kvietimą. Dėstomosios kalbos mokėjimas turi atitikti įstaigos nustatytus minimalius reikalavimus.",
+        "source": "Užsieniečių įstatymas, § 163 ir § 168(1)–(2)"
+      },
+      {
+        "id": "conditions",
+        "title": "Bendrosios sąlygos: tikslas, gyvenamoji vieta, pajamos ir sveikatos draudimas",
+        "text": "Bet kokiam laikinajam leidimui gyventi prašymo tikslas turi būti pagrįstas, taip pat reikia faktinės gyvenamosios vietos Estijoje, pakankamų teisėtų pajamų pragyvenimui ir įstatymo reikalavimus atitinkančios sveikatos draudimo sutarties. Leidimo studijoms atveju pajamų reikalavimą galima įvykdyti ir tokiomis pajamomis, kurios nenurodytos įstatymo § 9.",
+        "source": "Užsieniečių įstatymas, § 117(1), § 120 ir § 168¹"
+      },
+      {
+        "id": "submitting",
+        "title": "Kur pateikiamas prašymas",
+        "text": "Prašymas asmeniškai pateikiamas Estijos diplomatinei atstovybei, kuri jį perduoda Policijos ir pasieniečių tarnybai. Jei Estijoje jau yra teisėtas pagrindas būti, prašymą galima pateikti PPA. Atvykti asmeniškai nereikia, jei pirštų atspaudai buvo paimti ankstesnėje procedūroje ir vis dar leidžia nustatyti asmens tapatybę. Ne jaunesnis kaip 15 metų nepilnametis prašymą savarankiškai gali pateikti tik su notaro patvirtintu teisėto atstovo sutikimu.",
+        "source": "Užsieniečių įstatymas, § 213(1), (1¹) ir (2), § 215 ir § 216(1)(1)"
+      },
+      {
+        "id": "visa",
+        "title": "Viza studijoms pradėti",
+        "text": "Į aukštąją mokyklą priimtam užsieniečiui studijoms pradėti gali būti išduota trumpalaikė arba ilgalaikė viza; aukštojo mokslo studijoms — tik jei įstaiga institucionaliai akredituota. Ilgalaikės vizos prašymas asmeniškai pateikiamas Estijos diplomatinei atstovybei.",
+        "source": "Užsieniečių įstatymas, § 62²(1)–(2) ir § 90(2)"
+      },
+      {
+        "id": "work",
+        "title": "Darbas studijų metu",
+        "text": "Užsienietis, gavęs leidimą gyventi studijoms, Estijoje gali dirbti be atskiro leidimo, jei darbas netrukdo studijoms.",
+        "source": "Užsieniečių įstatymas, § 175"
+      },
+      {
+        "id": "progress",
+        "title": "Studijų pažanga",
+        "text": "Jei studijų programa neįvykdoma leidimui turėti reikalinga apimtimi arba studijos nutraukiamos, leidimo galiojimas baigiasi po 30 dienų. Leidimas pripažįstamas negaliojančiu, jei iš esmės neįvykdyta įstatyme nustatyta pareiga; doktorantūroje programos neįvykdymas reikalinga apimtimi nėra pagrindas pripažinti leidimą negaliojančiu.",
+        "source": "Užsieniečių įstatymas, § 173 ir § 173¹"
+      },
+      {
+        "id": "after-permit",
+        "title": "Kai leidimas baigiasi",
+        "text": "Jei studijoms išduoto leidimo gyventi galiojimas baigiasi suėjus terminui, Estijoje teisėtai galima būti dar 270 dienų.",
+        "source": "Užsieniečių įstatymas, § 43(1)(8) ir § 43(5)"
+      }
+    ]
   }
 }

@@ -362,5 +362,76 @@
         ]
       }
     ]
+  },
+  "studentPermit": {
+    "title": "Uzturēšanās atļauja studijām Igaunijā",
+    "intro": "Kas vajadzīgs citas valsts studentam, lai studiju laikā dzīvotu Igaunijā: kam vajadzīga uzturēšanās atļauja, kas nosūta uzaicinājumu un kur iesniedz pieteikumu, kā arī kādi noteikumi piemērojami pēc studiju sākšanas. Pie katra punkta norādīta tiesību norma, uz kuru tas balstās.",
+    "checkedNote": "Katrs punkts salīdzināts ar spēkā esošo tekstu Riigi Teataja 2026. gada 19. novembrī (Ārzemnieku likuma redakcija, kas ir spēkā līdz 2026. gada 31. decembrim). Par katru pieteikumu lemj Igaunijas Policijas un robežsardzes pārvalde (PPA); šī lapa neaizstāj tās norādījumus.",
+    "sources": [
+      {
+        "label": "Ārzemnieku likums (Välismaalaste seadus)",
+        "url": "https://www.riigiteataja.ee/akt/VMS"
+      },
+      {
+        "label": "Eiropas Savienības pilsoņa likums (Euroopa Liidu kodaniku seadus)",
+        "url": "https://www.riigiteataja.ee/akt/ELKS"
+      }
+    ],
+    "items": [
+      {
+        "id": "eu-citizens",
+        "title": "ES, EEZ un Šveices pilsoņiem uzturēšanās atļauja nav vajadzīga",
+        "text": "Igaunijā var uzturēties ar derīgu ceļošanas dokumentu vai personas apliecību. Ne vēlāk kā trīs mēnešus pēc ieceļošanas Igaunijā dzīvesvieta jāreģistrē Iedzīvotāju reģistra likumā noteiktajā kārtībā. Reģistrācija dod termiņuzturēšanās tiesības uz pieciem gadiem.",
+        "source": "Ārzemnieku likums, § 1(2); Eiropas Savienības pilsoņa likums, § 7(1)–(2) un § 13(1)"
+      },
+      {
+        "id": "who-needs-permit",
+        "title": "Pārējiem: termiņuzturēšanās atļauja studijām",
+        "text": "Termiņuzturēšanās atļauju var piešķirt studijām. Augstākajā izglītībā to piešķir pilna laika studijām pirmā vai otrā cikla programmā vai doktorantūrā institucionāli akreditētā izglītības iestādē. Atļauja ir derīga līdz programmas nominālā ilguma beigām, bet ne ilgāk par paredzamo studiju ilgumu, un to var pagarināt.",
+        "source": "Ārzemnieku likums, § 118(3), § 162(2) un § 170(1)–(2)"
+      },
+      {
+        "id": "invitation",
+        "title": "Augstskola nosūta PPA uzaicinājumu",
+        "text": "Pieprasot uzturēšanās atļauju studijām, izglītības iestāde iesniedz Policijas un robežsardzes pārvaldei uzaicinājumu. Mācību valodas zināšanām jāatbilst iestādes noteiktajām minimālajām prasībām.",
+        "source": "Ārzemnieku likums, § 163 un § 168(1)–(2)"
+      },
+      {
+        "id": "conditions",
+        "title": "Vispārīgie nosacījumi: mērķis, dzīvesvieta, ienākumi un veselības apdrošināšana",
+        "text": "Jebkurai termiņuzturēšanās atļaujai pieteikuma mērķim jābūt pamatotam, un vajadzīga faktiskā dzīvesvieta Igaunijā, pietiekami likumīgi ienākumi iztikai un likuma prasībām atbilstošs veselības apdrošināšanas līgums. Atļaujai studijām ienākumu prasību var izpildīt arī ar tādiem ienākumiem, kas nav minēti likuma § 9.",
+        "source": "Ārzemnieku likums, § 117(1), § 120 un § 168¹"
+      },
+      {
+        "id": "submitting",
+        "title": "Kur iesniedz pieteikumu",
+        "text": "Pieteikumu iesniedz personīgi Igaunijas ārvalstu pārstāvniecībā, kas to nosūta Policijas un robežsardzes pārvaldei. Ja Igaunijā jau ir likumīgs pamats uzturēties, pieteikumu var iesniegt PPA. Ierasties personīgi nav vajadzīgs, ja pirkstu nospiedumi ņemti iepriekšējā procedūrā un joprojām ļauj personu identificēt. Nepilngadīgais no 15 gadu vecuma pieteikumu var iesniegt patstāvīgi tikai ar likumiskā pārstāvja notariāli apliecinātu piekrišanu.",
+        "source": "Ārzemnieku likums, § 213(1), (1¹) un (2), § 215 un § 216(1)(1)"
+      },
+      {
+        "id": "visa",
+        "title": "Vīza studiju sākšanai",
+        "text": "Augstskolā uzņemtam ārzemniekam studiju sākšanai var izsniegt īstermiņa vai ilgtermiņa vīzu; augstākās izglītības studijām — tikai tad, ja iestāde ir institucionāli akreditēta. Ilgtermiņa vīzas pieteikumu iesniedz personīgi Igaunijas ārvalstu pārstāvniecībā.",
+        "source": "Ārzemnieku likums, § 62²(1)–(2) un § 90(2)"
+      },
+      {
+        "id": "work",
+        "title": "Darbs studiju laikā",
+        "text": "Ārzemnieks, kam piešķirta uzturēšanās atļauja studijām, Igaunijā var strādāt bez atsevišķas atļaujas ar nosacījumu, ka darbs netraucē studijām.",
+        "source": "Ārzemnieku likums, § 175"
+      },
+      {
+        "id": "progress",
+        "title": "Sekmes studijās",
+        "text": "Ja studiju programma netiek apgūta atļaujas saglabāšanai nepieciešamajā apjomā vai studijas tiek pārtrauktas, atļaujas derīgums beidzas 30 dienas pēc tam. Atļauju atzīst par spēkā neesošu, ja būtiski nav izpildīts likumā noteikts pienākums; doktorantūrā programmas neapgūšana nepieciešamajā apjomā nav pamats atzīt atļauju par spēkā neesošu.",
+        "source": "Ārzemnieku likums, § 173 un § 173¹"
+      },
+      {
+        "id": "after-permit",
+        "title": "Kad atļaujas termiņš beidzas",
+        "text": "Ja studijām piešķirtās uzturēšanās atļaujas derīguma termiņš beidzas, iestājoties termiņam, Igaunijā var likumīgi uzturēties vēl 270 dienas.",
+        "source": "Ārzemnieku likums, § 43(1)(8) un § 43(5)"
+      }
+    ]
   }
 }

@@ -7,10 +7,12 @@ import { buildAlternates } from "@/lib/site";
 import { LegalItems } from "@/components/LegalItems";
 import { ClipboardCheckIcon } from "@/components/icons";
 
-// Путь ВНЖ для студента (docs/PLAN-FOREIGNERS.md, шаг 2). Только Латвия
-// (решение Р1): раздел "studentPermit" есть лишь в профиле LV, на всех четырёх
-// языках. Тексты — в словарях (studentPermit.*), у каждого пункта норма;
-// сверка с дословным текстом — docs/checks/STUDENT-PERMIT-SOURCES.md.
+// Путь ВНЖ для студента (docs/PLAN-FOREIGNERS.md, шаг 2). У каждой страны
+// свой закон и свой текст: раздел "studentPermit" есть в профиле Латвии и (с
+// 2026-11-19) Эстонии, на всех четырёх языках. Тексты — в словарях
+// (studentPermit.*; эстонский — в et.json и файлах отличий *-ee.json), у
+// каждого пункта норма; сверка с дословным текстом —
+// docs/checks/STUDENT-PERMIT-SOURCES.md (Латвия) и STUDENT-PERMIT-SOURCES-EE.md.
 // Сумм пошлин здесь нет: это поля правила 6, они показываются в блоке
 // стоимости на карточке программы только после подтверждения человеком.
 export async function generateMetadata({ params }: PageProps<"/[locale]/student-permit">): Promise<Metadata> {

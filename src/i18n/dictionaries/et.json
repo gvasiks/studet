@@ -284,7 +284,12 @@
     "footer": "Jaluse menüü",
     "country": "Riik",
     "language": "Keel",
-    "languageNames": { "lv": "Latviešu", "lt": "Lietuvių", "et": "Eesti", "en": "English" }
+    "languageNames": {
+      "lv": "Latviešu",
+      "lt": "Lietuvių",
+      "et": "Eesti",
+      "en": "English"
+    }
   },
   "countries": {
     "LV": "Läti",
@@ -632,87 +637,75 @@
     "empty": "Kontrollitud dokumentide loendeid veel ei ole."
   },
   "studentPermit": {
-    "title": "Elamisluba õppimiseks Lätis",
-    "intro": "Mida on teise riigi üliõpilasel vaja, et õpingute ajal Lätis elada: kellele on elamisluba vaja, kes dokumendid esitab, millised on lõivud ja millised reeglid kehtivad pärast immatrikuleerimist. Iga punkti juures on õigusnorm. Tõlke erinevuse korral kehtib lätikeelne tekst.",
-    "checkedNote": "Iga punkti on 14. novembril 2026 võrreldud kehtiva redaktsiooniga likumi.lv-s. Iga taotluse üle otsustab Kodakondsus- ja migratsiooniasjade amet (PMLP); see leht ei asenda ameti juhiseid.",
+    "title": "Elamisluba õppimiseks Eestis",
+    "intro": "Mida on vaja teise riigi üliõpilasel, et õpingute ajal Eestis elada: kes vajab elamisluba, kes saadab kutse ja kus taotlus esitatakse ning millised reeglid kehtivad pärast õppima asumist. Iga punkti juures on õigusnorm, millel see põhineb.",
+    "checkedNote": "Iga punkti on võrreldud Riigi Teatajas avaldatud kehtiva tekstiga 19. novembril 2026 (välismaalaste seaduse redaktsioon, mis kehtib kuni 31. detsembrini 2026). Iga taotluse üle otsustab Politsei- ja Piirivalveamet (PPA); see lehekülg ei asenda tema juhiseid.",
     "sourceLabel": "Õiguslik alus",
     "sourcesTitle": "Õigusaktid",
     "items": [
       {
         "id": "eu-citizens",
         "title": "EL-i, EMP ja Šveitsi kodanikel elamisluba vaja ei ole",
-        "text": "Nad saabuvad Lätti kehtiva reisidokumendiga. Kauem kui kolm kuud järjest viibimiseks registreeritakse end PMLP-s ja taotletakse registreerimistunnistust. Üliõpilane, kelle eeldatav viibimine ei ületa ühte aastat, ei pea end registreerima. Tunnistuse saamiseks on üliõpilasel vaja piisavaid elatusvahendeid ja ravikindlustust või EL-i dokumenti, mis annab õiguse saada Lätis vajalikku arstiabi.",
-        "source": "Euroopa Liidu, Euroopa Majanduspiirkonna ja Šveitsi Konföderatsiooni kodanike ja nende pereliikmete Läti Vabariiki sisenemise ja seal viibimise seadus, § 9, § 19 lg 1, § 24 p 3 ja § 25 lg 1 p 3"
+        "text": "Eestis võib viibida kehtiva reisidokumendi või isikutunnistusega. Hiljemalt kolme kuu möödumisel Eestisse sisenemisest registreeritakse elukoht rahvastikuregistri seaduses sätestatud korras. Registreerimisega tekib tähtajaline elamisõigus viieks aastaks.",
+        "source": "Välismaalaste seadus, § 1 lg 2; Euroopa Liidu kodaniku seadus, § 7 lg 1–2 ja § 13 lg 1"
       },
       {
         "id": "who-needs-permit",
-        "title": "Kõik teised: tähtajaline elamisluba päevaõppeks",
-        "text": "Teise riigi kodanik, kes on vastu võetud Läti ülikooli või kolledži päevaõppe õppekavale, võib taotleda tähtajalist elamisluba õppimiseks. See antakse päevaõppe ajaks ja veel neljaks kuuks.",
-        "source": "Immigratsiooniseadus, § 1 p 7⁴ ja § 23 lg 1 p 10¹"
+        "title": "Teistel: tähtajaline elamisluba õppimiseks",
+        "text": "Tähtajalise elamisloa võib anda õppimiseks. Kõrgharidustaseme õppes antakse see institutsionaalselt akrediteeritud õppeasutuses esimese või teise astme õppekava täiskoormusega läbimiseks või doktoriõppeks. Elamisluba kehtib kuni õppekava nominaalaja lõpuni, kuid mitte kauem kui õppimise eeldatav kestus, ja seda saab pikendada.",
+        "source": "Välismaalaste seadus, § 118 p 3, § 162 lg 2 ja § 170 lg 1–2"
       },
       {
-        "id": "university-request",
-        "title": "Esmalt pöördub PMLP poole kõrgkool",
-        "text": "Kõrgkool esitab kutsujana PMLP-le taotluse. Selles märgib kõrgkool õpingute eeldatava lõppkuupäeva.",
-        "source": "Ministrite kabineti määrus nr 564, alapunkt 16.4.5"
+        "id": "invitation",
+        "title": "Õppeasutus esitab PPA-le kutse",
+        "text": "Õppimiseks elamisloa taotlemisel esitab õppeasutus Politsei- ja Piirivalveametile kutse. Õppekeele oskus peab vastama õppeasutuse kehtestatud miinimumnõuetele.",
+        "source": "Välismaalaste seadus, § 163 ja § 168 lg 1–2"
+      },
+      {
+        "id": "conditions",
+        "title": "Üldtingimused: eesmärk, elukoht, sissetulek ja ravikindlustus",
+        "text": "Iga tähtajalise elamisloa puhul peab taotlemise eesmärk olema põhjendatud ning vaja on tegelikku elukohta Eestis, piisavat legaalset sissetulekut toimetulekuks ja seaduse nõuetele vastavat ravikulukindlustuse lepingut. Õppimiseks antava elamisloa puhul võib sissetuleku nõude täita ka sissetulekuga, mida seaduse §-s 9 ei ole nimetatud.",
+        "source": "Välismaalaste seadus, § 117 lg 1, § 120 ja § 168¹"
       },
       {
         "id": "submitting",
-        "title": "Kuidas dokumendid esitatakse",
-        "text": "Taotlusele lisatakse õppeleping. Kui üliõpilane ei viibi Lätis, võib esmase elamisloa dokumendid tema eest esitada kõrgkool. See ei kehti Ministrite kabineti lisakontrolli nimekirja kantud riikide kodanikele ega isikutele, kellele on välismaal antud pagulase, kodakondsuseta isiku või alternatiivne staatus või ajutine kaitse. Dokumente saab esitada ka elektrooniliselt, sealhulgas PMLP e-teenuse kaudu, ning posti teel, kui üliõpilane juba viibib Lätis.",
-        "source": "Ministrite kabineti määrus nr 564, punktid 2, 3¹ ja 51"
+        "title": "Kus taotlus esitatakse",
+        "text": "Taotlus esitatakse isiklikult Eesti välisesindusele, kes edastab selle Politsei- ja Piirivalveametile. Kui Eestis viibimiseks on juba seaduslik alus, võib taotluse esitada PPA-le. Isiklikult ei pea ilmuma, kui sõrmejäljed on võetud varasemas menetluses ja need võimaldavad isiku tuvastada. Vähemalt 15-aastane alaealine võib taotluse esitada iseseisvalt üksnes seadusliku esindaja notariaalselt kinnitatud nõusolekul.",
+        "source": "Välismaalaste seadus, § 213 lg 1, 1¹ ja 2, § 215 ja § 216 lg 1 p 1"
       },
       {
-        "id": "fees-and-funds",
-        "title": "Riigilõivud ja tõendatavad vahendid",
-        "text": "Riigilõiv makstakse dokumentide läbivaatamise eest ja eraldi elamisloa registreerimise eest; pikaajalisel viisal, kui seda on vaja, on oma lõiv. Kontrollitud summad on näha õppekavade lehtedel plokis „Kulud välisüliõpilastele“. Iga viibimiskuu kohta peavad olema vahendid vähemalt kuu alampalga ulatuses.",
-        "source": "Ministrite kabineti määrus nr 731, alapunktid 2.1, 5.1.1 ja 6.1.1; Ministrite kabineti määrus nr 225, alapunkt 11.7"
+        "id": "visa",
+        "title": "Viisa õppima asumiseks",
+        "text": "Kõrgkooli vastuvõetud välismaalasele võib õppima asumiseks anda lühiajalise või pikaajalise viisa; kõrgharidustaseme õppeks üksnes siis, kui õppeasutus on institutsionaalselt akrediteeritud. Pikaajalise viisa taotlus esitatakse Eesti välisesindusele isiklikult.",
+        "source": "Välismaalaste seadus, § 62² lg 1–2 ja § 90 lg 2"
       },
       {
         "id": "work",
         "title": "Töötamine õpingute ajal",
-        "text": "Päevaõppe elamisloa või pikaajalise viisaga üliõpilane võib töötada mis tahes tööandja juures kuni 20 tundi nädalas ja õppepuhkuse ajal kuni 40 tundi nädalas. Elamisloaga päevaõppe magistri- ja doktoriõppe üliõpilastele see piirang ei kehti.",
-        "source": "Immigratsiooniseadus, § 9 lg 5 p 25 ja § 9 lg 5¹"
+        "text": "Õppimiseks elamisloa saanud välismaalane võib Eestis töötada eraldi luba omamata, kui töötamine ei takista õppimist.",
+        "source": "Välismaalaste seadus, § 175"
       },
       {
         "id": "progress",
-        "title": "Edasijõudmine õpingutes mõjutab elamisluba",
-        "text": "Elamisloa andmisest keeldutakse, kui üliõpilane ilma temast sõltumatute asjaoludeta on viie aasta jooksul enne taotlust vähemalt kaks korda õppekavast välja arvatud õppeedukuse või õppelepingu rikkumise tõttu, on nende viie aasta jooksul vähemalt kaks korda õpingud alustanud ja katkestanud või ületab ühel õppekaval lepingus ette nähtud õppeaega rohkem kui ühe aasta võrra (kuni kolmeaastastel õppekavadel) või rohkem kui kahe aasta võrra (pikematel õppekavadel). Antud elamisluba tunnistatakse õppeaja ületamise eest samamoodi kehtetuks.",
-        "source": "Immigratsiooniseadus, § 34 lg 1 p 39 ja § 35 lg 1 p 34"
+        "title": "Õpingutega toimetulek",
+        "text": "Kui õppekava jäetakse elamisloa omamiseks nõutavas ulatuses täitmata või õpingud katkestatakse, lõpeb elamisloa kehtivus 30 päeva pärast seda. Elamisluba tunnistatakse kehtetuks, kui seadusest tulenev kohustus on jäetud olulisel määral täitmata; doktoriõppes ei ole õppekava nõutavas ulatuses täitmata jätmine kehtetuks tunnistamise alus.",
+        "source": "Välismaalaste seadus, § 173 ja § 173¹"
       },
       {
-        "id": "after-graduation",
-        "title": "Pärast magistri- või doktorikraadi",
-        "text": "Lätis päevaõppe magistri- või doktoriõppe lõpetanu, kellel on riiklikult tunnustatud diplom, võib taotleda tähtajalist elamisluba üheksaks kuuks. Taotlus tuleb esitada hiljemalt kolm kuud pärast õppimiseks antud elamisloa tähtaja lõppu.",
-        "source": "Immigratsiooniseadus, § 23 lg 1 p 32"
-      },
-      {
-        "id": "russia-belarus",
-        "title": "Venemaa ja Valgevene kodanikud: eraldi reeglid",
-        "text": "Venemaa kodanik võib taotleda tähtajalist elamisluba õppimiseks kõige rohkem üheks aastaks ja ainult juhul, kui viibimisõigus on sätestatud Euroopa Liidu õigusaktidega. Valgevene kodanik võib seda taotleda päevaõppe ajaks ja veel neljaks kuuks.",
-        "source": "Immigratsiooniseadus, § 23¹ lg 1, lg 2 p 3 ja lg 3 p 12"
+        "id": "after-permit",
+        "title": "Kui elamisluba lõpeb",
+        "text": "Kui õppimiseks antud elamisloa kehtivusaeg lõpeb tähtaja saabumisel, võib Eestis seaduslikult viibida järgneva 270 päeva jooksul.",
+        "source": "Välismaalaste seadus, § 43 lg 1 p 8 ja lg 5"
       }
     ],
     "sources": [
       {
-        "label": "Immigratsiooniseadus (Imigrācijas likums)",
-        "url": "https://likumi.lv/ta/id/68522"
+        "label": "Välismaalaste seadus",
+        "url": "https://www.riigiteataja.ee/akt/VMS"
       },
       {
-        "label": "EL-i, EMP ja Šveitsi kodanike ja nende pereliikmete Lätti sisenemise ja seal viibimise seadus (kehtib alates 10. juulist 2026)",
-        "url": "https://likumi.lv/ta/id/369282"
-      },
-      {
-        "label": "Ministrite kabineti määrus nr 564 „Elamislubade eeskiri“",
-        "url": "https://likumi.lv/ta/id/212441"
-      },
-      {
-        "label": "Ministrite kabineti määrus nr 731 migratsiooniteenuste riigilõivu kohta",
-        "url": "https://likumi.lv/ta/id/356656"
-      },
-      {
-        "label": "Ministrite kabineti määrus nr 225 välismaalaste rahaliste vahendite kohta",
-        "url": "https://likumi.lv/ta/id/290808"
+        "label": "Euroopa Liidu kodaniku seadus",
+        "url": "https://www.riigiteataja.ee/akt/ELKS"
       }
     ]
   },
