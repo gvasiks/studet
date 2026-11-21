@@ -138,11 +138,12 @@ export default async function ProgrammePage({ params }: { params: Params }) {
             : Promise.resolve([]),
         ])
       : Promise.resolve(null);
-  // Чек-лист документов у Литвы (решение 2026-11-19): без блока стоимости,
-  // строки извлечены автоматически — у английских программ, как у Латвии.
+  // Чек-лист документов у Литвы и Эстонии (решение 2026-11-19): без блока
+  // стоимости, строки извлечены автоматически — у английских программ, как у Латвии.
+  const cardCountry = countryOf(locale);
   const ltDocumentsPromise =
-    countryOf(locale) === "LT" && record.language_of_instruction === "en"
-      ? getDocumentRequirements(record.university_id, record.degree_level, "LT")
+    (cardCountry === "LT" || cardCountry === "EE") && record.language_of_instruction === "en"
+      ? getDocumentRequirements(record.university_id, record.degree_level, cardCountry)
       : Promise.resolve([]);
   const [formula, rounds, admissionType, outcome, channels, hasLtCalculator, ltField, ltStats, eeField, eeAdmission, vuppStats, foreign, ltDocuments] =
     await Promise.all([

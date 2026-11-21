@@ -120,9 +120,10 @@ const profiles: Record<Country, CountryProfile> = {
   // (ISCED-F, src/lib/ee-fields.ts). Анкета — без экзаменов, бюджета, платы
   // и формы обучения. Словарь, права и политика конфиденциальности
   // (2026-10-13) — по закону о высшем образовании Эстонии, на четырёх
-  // языках. Расчёта балла и «куда можно поступить» пока нет.
+  // языках. Расчёта балла и «куда можно поступить» пока нет. Путь ВНЖ и
+  // (с 2026-11-21) документы для иностранцев — как у Литвы, автоматически.
   EE: {
-    features: ["favorites", "survey", "glossary", "rights", "privacy", "studentPermit"],
+    features: ["favorites", "survey", "glossary", "rights", "privacy", "studentPermit", "studentDocuments"],
     filters: ["interest"],
     surveySteps: ["interests", "levelDuration", "city", "language", "kind"],
     levels: ["bachelor", "master", "doctoral", "college", "integrated"],

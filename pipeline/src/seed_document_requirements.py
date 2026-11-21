@@ -359,6 +359,132 @@ ROWS += [
      LTVK_RECOGNITION, "the College carries out the academic recognition of foreign qualifications in a centralized manner"),
 ]
 
+# --- Эстония (решение владельца 2026-11-19): строки выписаны 2026-11-21 со страниц
+# вузов для английских программ первой ступени (бакалавр и прикладное высшее).
+# Факты Эстонии показываются без подтверждения человеком, с пометкой «извлечено
+# автоматически» (миграция 20261120120000). Не вошли: EEK Mainor (robots.txt
+# запрещает обход агентам Anthropic), Euroakadeemia (на её домене теперь сайт о
+# кредитах), TTK (английской страницы приёма нет) — их списки вручную.
+UT_PROGRAMME = "https://ut.ee/en/curriculum/science-and-technology"
+UT_GENERAL = "https://ut.ee/en/content/bachelors-and-masters-studies-university-tartu"
+TLU_BACHELOR = "https://www.tlu.ee/en/admission-bachelors-studies"
+EBS_BACHELOR = "https://www.ebs.ee/en/university/bachelors-studies/bachelors-admission-information"
+TALTECH_APPLY = "https://taltech.ee/en/apply"
+EAMT_DATES = "https://eamt.ee/en/admissions/admission-dates/"
+EAMT_GUIDELINE = "https://eamt.ee/en/admissions/international-students-guideline/"
+EAVA_CAM = "https://lennuakadeemia.ee/admissions/cam/how-to-apply"
+EMKTS_FOREIGN = "https://www.emkts.ee/index.php/en/admission/foreign-student"
+
+ROWS += [
+    # --- UT (University of Tartu) ---
+    ("ut", B, "secondary_diploma", "all", "application", "Certified copy, with the grade list and grading scale, in the original language.",
+     UT_PROGRAMME, "official certified copy of the secondary school certificate and grade list in the original language"),
+    ("ut", B, "legalisation", "all", "application", "Copies certified by the issuing school, a notary or with an apostille.",
+     UT_GENERAL, "The documents can be certified 1) by an authorized official of the issuing institution, 2) by a notary, or 3) with an Apostille attached"),
+    ("ut", B, "transcript", "final_year", "application", "Most recent grades for all upper secondary years; only from some countries.",
+     UT_PROGRAMME, "should electronically submit their most recent grade sheet or transcript with results for all higher secondary school years"),
+    ("ut", B, "enrolment_letter", "final_year", "application", "From your school: current enrolment and expected graduation date.",
+     UT_PROGRAMME, "supplemented by an official statement from the issuing school indicating current enrollment and expected graduation date"),
+    ("ut", B, "english_translation", "all", "application", "Certified translation of the certificate and grade list.",
+     UT_PROGRAMME, "official certified translation of the secondary school certificate and grade list into English"),
+    ("ut", B, "english_certificate", "all", "application", None,
+     UT_PROGRAMME, "proof of English language proficiency"),
+    ("ut", B, "motivation_letter", "all", "application", "In English; the programme page lists the questions.",
+     UT_PROGRAMME, "Please write a brief motivation letter"),
+    ("ut", B, "passport", "all", "application", None,
+     UT_PROGRAMME, "copy of valid international passport page stating the applicant's personal particulars"),
+    ("ut", B, "application_fee_receipt", "all", "application", "Not needed if the previous study level was completed in Estonia.",
+     UT_PROGRAMME, "confirmation/receipt of application fee payment (if applicable)"),
+
+    # --- TLU (Tallinn University) ---
+    ("tlu", B, "secondary_diploma", "all", "application", None,
+     TLU_BACHELOR, "Copy of Secondary Education Certificate/Diploma"),
+    ("tlu", B, "transcript", "all", "application", None,
+     TLU_BACHELOR, "Transcript of Records/Academic Transcript"),
+    ("tlu", B, "english_translation", "all", "application", "For the diploma and transcript, if not in English.",
+     TLU_BACHELOR, "an official translation is requested if the document is not in English"),
+    ("tlu", B, "english_certificate", "all", "application", None,
+     TLU_BACHELOR, "Proof of English language Proficiency"),
+    ("tlu", B, "passport", "all", "application", None,
+     TLU_BACHELOR, "Copy of the identification page of the passport"),
+    ("tlu", B, "application_fee_receipt", "all", "application", "The application is reviewed after the fee arrives.",
+     TLU_BACHELOR, "the application fee has been received"),
+    ("tlu", B, "minor_documents", "under_18", "application",
+     "After a conditional offer: notarised copies of parents' passports, birth certificate and a letter of consent or power of attorney.",
+     TLU_BACHELOR, "three sets of documents will be required at a later stage of the admission process, once the applicant has received a conditional study offer"),
+
+    # --- EBS (Estonian Business School) ---
+    ("ebs", B, "secondary_diploma", "all", "application", "Proper scans.",
+     EBS_BACHELOR, "Previous education documents (certificate/diploma and grade transcript)"),
+    ("ebs", B, "transcript", "all", "application", "If final documents are not ready yet, the most recent transcripts in English.",
+     EBS_BACHELOR, "If your final documents are not available yet, then upload your most recent academic transcripts in English"),
+    ("ebs", B, "english_translation", "all", "application", "Together with the originals.",
+     EBS_BACHELOR, "Provide authorised English translations of your documents if the originals are not in English"),
+    ("ebs", B, "english_certificate", "all", "application", "An internationally recognised test, valid until the start of studies.",
+     EBS_BACHELOR, "The language certificate must be valid until the beginning of the academic year"),
+    ("ebs", B, "passport", "all", "application", None,
+     EBS_BACHELOR, "Copy of passport identification pages"),
+    ("ebs", B, "recommendation_letters", "all", "application", "Contacts of two referees; EBS asks them for an assessment by email.",
+     EBS_BACHELOR, "contact information of two references"),
+
+    # --- TalTech (Tallinn University of Technology) ---
+    ("taltech", B + C, "secondary_diploma", "all", "application", "Final or most recent; scans, not photos.",
+     TALTECH_APPLY, "education documents of the required level (final or most recent ) and official English translations"),
+    ("taltech", B + C, "english_translation", "all", "application", None,
+     TALTECH_APPLY, "official English translations"),
+    ("taltech", B + C, "passport", "all", "application", "Valid during the application process.",
+     TALTECH_APPLY, "passport identification page (document needs to be valid during the application process)"),
+    ("taltech", B + C, "english_certificate", "all", "application", None,
+     TALTECH_APPLY, "proof of English language proficiency"),
+    ("taltech", B + C, "motivation_letter", "all", "application", "Typed into DreamApply; most programmes ask for it.",
+     TALTECH_APPLY, "most study programmes require a motivation letter to be submitted when applying"),
+    ("taltech", B + C, "application_fee_receipt", "all", "application", None,
+     TALTECH_APPLY, "After completing the payment, upload the application fee receipt"),
+    ("taltech", B + C, "recognition", "all", "by_university", "Estonian ENIC/NARIC assesses the documents; may take up to a month.",
+     TALTECH_APPLY, "All education documents will be assessed by the Estonian ENIC/NARIC"),
+
+    # --- EMTA (Estonian Academy of Music and Theatre) ---
+    ("emta", B, "photo", "all", "application", "Electronic.",
+     EAMT_DATES, "1 photo (electronic form)"),
+    ("emta", B, "passport", "all", "application", "Or an ID card.",
+     EAMT_DATES, "copy of identity card or passport"),
+    ("emta", B, "secondary_diploma", "all", "application", "With the grades.",
+     EAMT_DATES, "copy of document certifying completion of the previous educational level with a certificate with grades or diploma supplement"),
+    ("emta", B, "english_certificate", "all", "application", None,
+     EAMT_DATES, "Proof of English language Proficiency"),
+    ("emta", B, "application_fee_receipt", "all", "application", "Normally paid by bank transfer.",
+     EAMT_DATES, "normally needs to be paid by bank transfer"),
+    ("emta", B, "criminal_record", "non_eu_citizens", "before_arrival",
+     "For the residence permit; issued within six months before arrival, from age 14.",
+     EAMT_GUIDELINE, "you are required to submit a criminal record certificate (or proof of no criminal record) from a foreign country"),
+
+    # --- EAVA (Estonian Aviation Academy), страница программы CAM ---
+    ("eava", C, "passport", "all", "application", "Or an ID card.",
+     EAVA_CAM, "a copy of an identity document (passport or ID card)"),
+    ("eava", C, "secondary_diploma", "all", "application", None,
+     EAVA_CAM, "a document certifying secondary education and a transcript of results"),
+    ("eava", C, "transcript", "all", "application", None,
+     EAVA_CAM, "a document certifying secondary education and a transcript of results"),
+    ("eava", C, "english_certificate", "all", "application", "At least B2.",
+     EAVA_CAM, "document certifying English language proficiency of at least B2 level"),
+    ("eava", C, "english_translation", "all", "application", "On request, for documents not in English or Estonian; certified translation.",
+     EAVA_CAM, "along with an Estonian or English translation, which must be certified by the issuer of the document, a sworn translator or a notary"),
+    ("eava", C, "application_fee_receipt", "all", "application", "The invoice is sent after you submit the application.",
+     EAVA_CAM, "confirmation/receipt of application fee"),
+
+    # --- EMKTS (Baltic Methodist Theological Seminary) ---
+    ("emkts", C, "secondary_diploma", "all", "application", "Show the original on arrival.",
+     EMKTS_FOREIGN, "A copy of the document certifying secondary education"),
+    ("emkts", C, "passport", "all", "application", None,
+     EMKTS_FOREIGN, "A copy of a valid identity card (passport)."),
+    ("emkts", C, "recommendation_letters", "all", "application",
+     "From your pastor; the seminary sends the form. Non-EU applicants also need an agreement with a church in the EU.",
+     EMKTS_FOREIGN, "Recommendation from applicant pastor"),
+    ("emkts", C, "application_fee_receipt", "non_eu_citizens", "application", "Only for applicants who need a residence permit.",
+     EMKTS_FOREIGN, "Pay the application fee required of those needing a living permit."),
+]
+
+
 
 def expanded() -> list[dict]:
     rows = []

@@ -436,5 +436,19 @@
         "source": "Užsieniečių įstatymas, § 43(1)(8) ir § 43(5)"
       }
     ]
+  },
+  "programme": {
+    "foreignDocuments": {
+      "stages": {
+        "before_arrival": "Prieš atvykstant į Estiją"
+      },
+      "conditions": {
+        "visa_required": "jei atvykti į Estiją jums reikia vizos"
+      }
+    }
+  },
+  "studentDocuments": {
+    "intro": "Ko Estijos aukštosios mokyklos prašo užsienio stojančiųjų į anglų kalba dėstomas bakalauro ir profesinio aukštojo mokslo studijas: dokumentai pagal etapus. Sąrašai surinkti automatiškai iš aukštųjų mokyklų puslapių – prieš teikdami prašymą, pasitikrinkite juose. Jūsų žymės išsaugomos tik šioje naršyklėje ir sutampa su žymėmis programos puslapyje.",
+    "empty": "Dokumentų sąrašų dar nėra."
   }
 }

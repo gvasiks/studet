@@ -433,5 +433,19 @@
         "source": "Aliens Act, § 43(1)(8) and § 43(5)"
       }
     ]
+  },
+  "programme": {
+    "foreignDocuments": {
+      "stages": {
+        "before_arrival": "Before travelling to Estonia"
+      },
+      "conditions": {
+        "visa_required": "if you need a visa to enter Estonia"
+      }
+    }
+  },
+  "studentDocuments": {
+    "intro": "What Estonian higher education institutions ask international applicants for in English-taught bachelor's and professional higher education studies: documents by stage. The lists were collected automatically from the institutions' pages — check them before applying. Your ticks are saved only in this browser and are the same as on the programme pages.",
+    "empty": "No document lists yet."
   }
 }

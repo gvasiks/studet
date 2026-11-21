@@ -20,7 +20,15 @@
     "applyTypes": {
       "unified_portal": "Avaldus esitatakse ühtses vastuvõtusüsteemis riigiteenuste portaalis — üks avaldus mitmele kõrgkoolile."
     },
-    "applyNote": "Kehtib Lätis hariduse omandanud kandidaatide kohta; välismaalt kandideerijatele võib kord erineda."
+    "applyNote": "Kehtib Lätis hariduse omandanud kandidaatide kohta; välismaalt kandideerijatele võib kord erineda.",
+    "foreignDocuments": {
+      "stages": {
+        "before_arrival": "Enne Lätti saabumist"
+      },
+      "conditions": {
+        "visa_required": "kui Lätti sisenemiseks on vaja viisat"
+      }
+    }
   },
   "match": {
     "intro": "Sisestatud tsentraliseeritud eksamite tulemuste põhjal näidatakse, milliste õppekavade konkursipunkte saab juba praegu arvutada ja millised eksamid on veel puudu."
@@ -494,5 +502,9 @@
         "url": "https://likumi.lv/ta/id/290808"
       }
     ]
+  },
+  "studentDocuments": {
+    "intro": "Mida ülikoolid nõuavad välismaa kandidaatidelt bakalaureuse- ja magistriõppes: dokumendid etappide kaupa ja inglise keele testi miinimumtulemus. Märked salvestatakse ainult selles brauseris ja on samad mis õppekava lehel.",
+    "empty": "Kontrollitud dokumentide loendeid veel ei ole."
   }
 }

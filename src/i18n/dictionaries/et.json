@@ -214,7 +214,7 @@
       "intro": "Mida ülikool sellel õppeastmel välismaa kandidaatidelt nõuab. Märked salvestatakse ainult selles brauseris.",
       "stages": {
         "application": "Avalduse esitamisel",
-        "before_arrival": "Enne Lätti saabumist",
+        "before_arrival": "Enne Eestisse saabumist",
         "by_university": "Seda teeb ülikool"
       },
       "documents": {
@@ -240,7 +240,7 @@
       "conditions": {
         "docs_issued_outside_eu": "kui dokumendid on välja antud väljaspool EL-i, EMP-d ja Šveitsi",
         "non_eu_citizens": "EL-i, EMP ja Šveitsi väliste riikide kodanikele",
-        "visa_required": "kui Lätti sisenemiseks on vaja viisat",
+        "visa_required": "kui Eestisse sisenemiseks on vaja viisat",
         "under_18": "alla 18-aastastele",
         "final_year": "kui õpingud pole veel lõpetatud"
       },
@@ -633,9 +633,9 @@
   },
   "studentDocuments": {
     "title": "Dokumendid välismaa kandidaatidele",
-    "intro": "Mida ülikoolid nõuavad välismaa kandidaatidelt bakalaureuse- ja magistriõppes: dokumendid etappide kaupa ja inglise keele testi miinimumtulemus. Märked salvestatakse ainult selles brauseris ja on samad mis õppekava lehel.",
+    "intro": "Mida Eesti kõrgkoolid nõuavad välismaa kandidaatidelt ingliskeelsetes bakalaureuse- ja rakenduskõrgharidusõppe kavades: dokumendid etappide kaupa. Loendid on kogutud automaatselt kõrgkoolide lehtedelt — enne kandideerimist tuleb neid seal kontrollida. Märked salvestatakse ainult selles brauseris ja on samad mis õppekava lehel.",
     "tocTitle": "Ülikoolid",
-    "empty": "Kontrollitud dokumentide loendeid veel ei ole."
+    "empty": "Dokumentide loendeid veel ei ole."
   },
   "studentPermit": {
     "title": "Elamisluba õppimiseks Eestis",
