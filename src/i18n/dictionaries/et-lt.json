@@ -26,7 +26,15 @@
     "applyTypes": {
       "unified_portal": "Õppekava on ühise vastuvõtu loendis: avaldus esitatakse LAMA BPO ühise vastuvõtu süsteemis — üks avaldus mitmele kõrgkoolile."
     },
-    "applyNote": "Kehtib Leedus hariduse omandanud kandidaatide kohta; välismaalt kandideerijatele võib kord erineda."
+    "applyNote": "Kehtib Leedus hariduse omandanud kandidaatide kohta; välismaalt kandideerijatele võib kord erineda.",
+    "foreignDocuments": {
+      "stages": {
+        "before_arrival": "Enne Leetu saabumist"
+      },
+      "conditions": {
+        "visa_required": "kui Leetu sisenemiseks on vaja viisat"
+      }
+    }
   },
   "match": {
     "intro": "Sisestatud riiklike küpsuseksamite (VBE) tulemuste põhjal näidatakse Leedu ühise vastuvõtu õppekavade konkursipunktid ja see, millised eksamid on veel puudu."
@@ -500,5 +508,9 @@
         "source": "Artikli 33 lõike 1 punkti 3 alapunkt c, artikli 40 lõike 1 punkt 15, artikli 46 lõige 5, artikkel 49⁴"
       }
     ]
+  },
+  "studentDocuments": {
+    "intro": "Mida Leedu kõrgkoolid nõuavad välismaa kandidaatidelt ingliskeelsetes bakalaureuse- ja rakenduskõrgharidusõppe kavades: dokumendid etappide kaupa. Loendid on kogutud automaatselt kõrgkoolide lehtedelt — enne kandideerimist tuleb neid seal kontrollida. Märked salvestatakse ainult selles brauseris ja on samad mis õppekava lehel.",
+    "empty": "Dokumentide loendeid veel ei ole."
   }
 }

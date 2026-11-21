@@ -12,7 +12,15 @@
     "applyTypes": {
       "unified_portal": "The programme is on the general admission list: you apply in the LAMA BPO general admission system — one application for several institutions."
     },
-    "applyNote": "Applies to applicants with Lithuanian education; the procedure for international applicants may differ."
+    "applyNote": "Applies to applicants with Lithuanian education; the procedure for international applicants may differ.",
+    "foreignDocuments": {
+      "stages": {
+        "before_arrival": "Before travelling to Lithuania"
+      },
+      "conditions": {
+        "visa_required": "if you need a visa to enter Lithuania"
+      }
+    }
   },
   "match": {
     "intro": "Enter your state matura exam (VBE) results — we'll show the competition score for the programmes of Lithuania's general admission and which exams are still missing."
@@ -478,5 +486,9 @@
         "source": "Article 33(1)(3)(c), Article 40(1)(15), Article 46(5), Article 49⁴"
       }
     ]
+  },
+  "studentDocuments": {
+    "intro": "What Lithuanian higher education institutions ask international applicants for in English-taught bachelor's and professional bachelor's studies: documents by stage. The lists were collected automatically from the institutions' pages — check them before applying. Your ticks are saved only in this browser and are the same as on the programme pages.",
+    "empty": "No document lists yet."
   }
 }

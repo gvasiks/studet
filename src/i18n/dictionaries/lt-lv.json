@@ -35,7 +35,15 @@
     "applyTypes": {
       "unified_portal": "Prašymai teikiami per vieningą priėmimo sistemą valstybės paslaugų portale — vienas prašymas į kelias aukštąsias mokyklas."
     },
-    "applyNote": "Taikoma stojantiesiems, įgijusiems išsilavinimą Latvijoje; užsienio stojantiesiems tvarka gali skirtis."
+    "applyNote": "Taikoma stojantiesiems, įgijusiems išsilavinimą Latvijoje; užsienio stojantiesiems tvarka gali skirtis.",
+    "foreignDocuments": {
+      "stages": {
+        "before_arrival": "Prieš atvykstant į Latviją"
+      },
+      "conditions": {
+        "visa_required": "jei atvykti į Latviją jums reikia vizos"
+      }
+    }
   },
   "outcomes": {
     "source": "Šaltinis: IZM/CSP aukštojo mokslo absolventų stebėsena"
@@ -515,5 +523,9 @@
         "url": "https://likumi.lv/ta/id/290808"
       }
     ]
+  },
+  "studentDocuments": {
+    "intro": "Ko universitetai prašo užsienio stojančiųjų bakalauro ir magistro studijose: dokumentai pagal etapus ir minimalus anglų kalbos testo rezultatas. Jūsų žymės išsaugomos tik šioje naršyklėje ir sutampa su žymėmis programos puslapyje.",
+    "empty": "Patikrintų dokumentų sąrašų dar nėra."
   }
 }

@@ -214,7 +214,7 @@
       "intro": "Ko universitetas šioje pakopoje prašo užsienio stojančiųjų. Jūsų žymės išsaugomos tik šioje naršyklėje.",
       "stages": {
         "application": "Teikiant prašymą",
-        "before_arrival": "Prieš atvykstant į Latviją",
+        "before_arrival": "Prieš atvykstant į Lietuvą",
         "by_university": "Tai atlieka universitetas"
       },
       "documents": {
@@ -227,6 +227,7 @@
         "english_translation": "Vertimas į anglų kalbą",
         "legalisation": "Legalizavimas arba apostilė",
         "aic_statement": "Akademinės informacijos centro pažyma dėl išsilavinimo pripažinimo",
+        "recognition": "Užsienyje įgyto išsilavinimo akademinis pripažinimas",
         "english_certificate": "Anglų kalbos sertifikatas",
         "motivation_letter": "Motyvacinis laiškas",
         "cv": "Gyvenimo aprašymas (CV)",
@@ -239,7 +240,7 @@
       "conditions": {
         "docs_issued_outside_eu": "jei dokumentai išduoti ne ES, EEE ar Šveicarijoje",
         "non_eu_citizens": "ne ES, EEE ir Šveicarijos piliečiams",
-        "visa_required": "jei atvykti į Latviją jums reikia vizos",
+        "visa_required": "jei atvykti į Lietuvą jums reikia vizos",
         "under_18": "jei jums nėra 18 metų",
         "final_year": "jei dar nebaigėte mokslų"
       },
@@ -632,9 +633,9 @@
   },
   "studentDocuments": {
     "title": "Dokumentai užsienio stojantiesiems",
-    "intro": "Ko universitetai prašo užsienio stojančiųjų bakalauro ir magistro studijose: dokumentai pagal etapus ir minimalus anglų kalbos testo rezultatas. Jūsų žymės išsaugomos tik šioje naršyklėje ir sutampa su žymėmis programos puslapyje.",
+    "intro": "Ko Lietuvos aukštosios mokyklos prašo užsienio stojančiųjų į anglų kalba dėstomas bakalauro ir profesinio bakalauro studijas: dokumentai pagal etapus. Sąrašai surinkti automatiškai iš aukštųjų mokyklų puslapių – prieš teikdami prašymą, pasitikrinkite juose. Jūsų žymės išsaugomos tik šioje naršyklėje ir sutampa su žymėmis programos puslapyje.",
     "tocTitle": "Universitetai",
-    "empty": "Patikrintų dokumentų sąrašų dar nėra."
+    "empty": "Dokumentų sąrašų dar nėra."
   },
   "studentPermit": {
     "title": "Leidimas gyventi studijoms Lietuvoje",

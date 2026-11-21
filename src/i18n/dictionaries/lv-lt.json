@@ -26,7 +26,15 @@
     "applyTypes": {
       "unified_portal": "Programma ir kopējās uzņemšanas sarakstā: pieteikumu iesniedz LAMA BPO kopējās uzņemšanas sistēmā — viens pieteikums vairākām augstskolām."
     },
-    "applyNote": "Attiecas uz reflektantiem ar Lietuvā iegūtu izglītību; ārvalstu reflektantiem kārtība var atšķirties."
+    "applyNote": "Attiecas uz reflektantiem ar Lietuvā iegūtu izglītību; ārvalstu reflektantiem kārtība var atšķirties.",
+    "foreignDocuments": {
+      "stages": {
+        "before_arrival": "Pirms ierašanās Lietuvā"
+      },
+      "conditions": {
+        "visa_required": "ja ieceļošanai Lietuvā vajadzīga vīza"
+      }
+    }
   },
   "match": {
     "intro": "Pēc ievadītajiem valsts brieduma eksāmenu (VBE) vērtējumiem tiek parādīti konkursa punkti Lietuvas kopējās uzņemšanas programmām un tas, kuru eksāmenu vēl trūkst."
@@ -492,5 +500,9 @@
         "source": "33. panta 1. daļas 3. punkta c apakšpunkts, 40. panta 1. daļas 15. punkts, 46. panta 5. daļa, 49.⁴ pants"
       }
     ]
+  },
+  "studentDocuments": {
+    "intro": "Ko Lietuvas augstskolas prasa ārvalstu reflektantiem angļu valodā īstenotās bakalaura un profesionālā bakalaura studijās: dokumenti pa posmiem. Saraksti savākti automātiski no augstskolu lapām — pirms pieteikšanās tie jāpārbauda tur. Atzīmes tiek saglabātas tikai šajā pārlūkā, un tās ir tās pašas, kas programmas lapā.",
+    "empty": "Dokumentu sarakstu vēl nav."
   }
 }

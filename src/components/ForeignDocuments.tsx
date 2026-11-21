@@ -152,9 +152,17 @@ export function ForeignDocuments({
           {t.more}
         </p>
       )}
-      {sources.verifiedAt && (
+      {/* Литва и Эстония: строки не проверены человеком — пометка вместо даты. */}
+      {(sources.verifiedAt || sources.automatic) && (
         <p className="mt-1 text-xs leading-relaxed text-zinc-600">
-          {dict.catalog.verifiedPrefix} {formatDate(sources.verifiedAt, language).replace(/\.?$/, ".")} {t.sources}{" "}
+          {sources.automatic ? (
+            <>{dict.catalog.unverifiedLabel}. </>
+          ) : (
+            <>
+              {dict.catalog.verifiedPrefix} {formatDate(sources.verifiedAt ?? "", language).replace(/\.?$/, ".")}{" "}
+            </>
+          )}
+          {t.sources}{" "}
           {sources.urls
             .map((url) => httpUrl(url))
             .filter((url): url is string => Boolean(url))

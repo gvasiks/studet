@@ -106,18 +106,27 @@ export const getProgrammeFees = cache(async (programmeId: string): Promise<Progr
     }));
 });
 
-// Чек-лист документов вуза на уровне программы (шаг 3) — подтверждённые строки.
-// В памяти пять минут, как цены общежитий; ошибка — пустой список.
-export async function getDocumentRequirements(universityId: string, degreeLevel: string): Promise<DocumentRequirement[]> {
+// Чек-лист документов вуза на уровне программы (шаг 3). У Латвии — только
+// подтверждённые строки; у Литвы и Эстонии — и извлечённые автоматически
+// (решение 2026-11-19; политика доступа таблицы пропускает их только для вузов
+// этих стран). В памяти пять минут, как цены общежитий; ошибка — пустой список.
+const documentsUnverifiedAllowed = (country: Country) => country !== "LV";
+
+export async function getDocumentRequirements(
+  universityId: string,
+  degreeLevel: string,
+  country: Country,
+): Promise<DocumentRequirement[]> {
   return remember(`documents:${universityId}:${degreeLevel}`, COUNTRY_COSTS_MEMORY_MS, async () => {
-    const { data, error } = await supabase
+    let query = supabase
       .from("foreign_document_requirement")
       .select("document, applies_to, stage, note, sort_order, source_url, verified_at")
       .eq("university_id", universityId)
-      .eq("degree_level", degreeLevel)
-      .not("verified_at", "is", null);
+      .eq("degree_level", degreeLevel);
+    if (!documentsUnverifiedAllowed(country)) query = query.not("verified_at", "is", null);
+    const { data, error } = await query;
     if (error) return [];
-    return parseRequirements(data ?? []);
+    return parseRequirements(data ?? [], documentsUnverifiedAllowed(country));
   });
 }
 
@@ -146,21 +155,24 @@ export type UniversityDocumentList = {
   englishByProgramme: boolean;
 };
 
-// Все подтверждённые списки документов страны — для страницы /student-documents.
-// Порядок: вузы по названию на латышском, внутри — бакалавриат, магистратура.
+// Все списки документов страны — для страницы /student-documents (у Латвии —
+// только подтверждённые). Порядок: вузы по названию на латышском, затем
+// английскому (у литовских и эстонских вузов латышского названия нет), внутри —
+// колледж, бакалавриат, магистратура.
 const LEVEL_ORDER = ["college", "bachelor", "master", "doctoral"];
 
 export async function getCountryDocumentLists(country: Country): Promise<UniversityDocumentList[]> {
   return remember(`document-lists:${country}`, COUNTRY_COSTS_MEMORY_MS, async () => {
+    let documentQuery = supabase
+      .from("foreign_document_requirement")
+      .select(
+        "university_id, degree_level, document, applies_to, stage, note, sort_order, source_url, verified_at, " +
+          "university!inner(slug, name_lv, name_en, name_lt, name_et, country)",
+      )
+      .eq("university.country", country);
+    if (!documentsUnverifiedAllowed(country)) documentQuery = documentQuery.not("verified_at", "is", null);
     const [documents, english] = await Promise.all([
-      supabase
-        .from("foreign_document_requirement")
-        .select(
-          "university_id, degree_level, document, applies_to, stage, note, sort_order, source_url, verified_at, " +
-            "university!inner(slug, name_lv, name_en, name_lt, name_et, country)",
-        )
-        .eq("university.country", country)
-        .not("verified_at", "is", null),
+      documentQuery,
       supabase
         .from("english_requirement")
         .select("university_id, degree_level, programme_id, ielts_min, toefl_ibt_min, toefl_ibt_band, note, source_url, verified_at")
@@ -189,14 +201,14 @@ export async function getCountryDocumentLists(country: Country): Promise<Univers
         return {
           university: group.university,
           degreeLevel: group.level,
-          items: parseRequirements(group.rows),
+          items: parseRequirements(group.rows, documentsUnverifiedAllowed(country)),
           english: universityWide[0] ?? null,
           englishByProgramme: own.some((row) => row.programme_id !== null),
         };
       })
       .sort(
         (a, b) =>
-          (a.university.name_lv ?? "").localeCompare(b.university.name_lv ?? "", "lv") ||
+          (a.university.name_lv ?? a.university.name_en ?? "").localeCompare(b.university.name_lv ?? b.university.name_en ?? "", "lv") ||
           LEVEL_ORDER.indexOf(a.degreeLevel) - LEVEL_ORDER.indexOf(b.degreeLevel),
       );
   });

@@ -35,12 +35,13 @@ from __future__ import annotations
 
 import sys
 
-# Совпадает с check в миграциях 20261114120000 и 20261114130000 и с src/lib/foreign-documents.ts.
+# Совпадает с check в миграциях 20261114120000, 20261114130000 и 20261120120000 и с src/lib/foreign-documents.ts.
 DOCUMENTS = {
     "passport", "photo", "secondary_diploma", "bachelor_diploma", "transcript",
     "enrolment_letter", "english_translation", "legalisation", "aic_statement", "english_certificate",
     "motivation_letter", "cv", "recommendation_letters", "criminal_record",
     "minor_documents", "proof_of_funds", "application_fee_receipt",
+    "recognition",  # миграция 20261120120000
 }
 APPLIES_TO = {"all", "docs_issued_outside_eu", "non_eu_citizens", "visa_required", "under_18", "final_year"}
 STAGES = {"application", "before_arrival", "by_university"}  # by_university — миграция 20261114140000
@@ -158,6 +159,204 @@ ROWS: list[tuple] = [
      RSU_PROCEDURE, "Photo – to be uploaded onto the section “Personal Information” of the eA Portal."),
     ("rsu", BM, "application_fee_receipt", "all", "application", None,
      RSU_PROCEDURE, "application fee payment confirmation (such as payment slip, bank reference, bank statement, bank transfer printout etc.)"),
+]
+
+
+# --- Литва (решение владельца 2026-11-19): строки выписаны 2026-11-20 со страниц
+# вузов для английских программ. Факты Литвы показываются без подтверждения
+# человеком, с пометкой «извлечено автоматически» (миграция 20261120120000).
+# Не вошли: VU (английской страницы нет, PDF — общий приём LAMA BPO), EHU
+# (страница приёма — 404), ILK (сайт отдаёт текст только с JavaScript), KSU
+# (robots.txt запрещает обход агентам Anthropic) — их списки вручную. У KTU нет
+# легализации и справки о несудимости: они названы только на страницах программ
+# apply.ktu.edu, а там robots.txt тоже запрещает обход агентам Anthropic.
+VDU_DEGREE = "https://www.vdu.lt/en/studies/degree-studies/"
+VDU_DOCS = "https://www.vdu.lt/en/studies/qualification-recognition/requirements-for-documents/"
+KU_PROCEDURE = "https://www.ku.lt/en/studies-admission/admission/application-procedure/application-procedure-for-degree-students-and-recognition-of-previous-education"
+MRU_ADMISSION = "https://www.mruni.eu/en/admission/"
+KTU_RECOGNITION = "https://admissions.ktu.edu/academic-recognition/"
+VT_REQUIREMENTS = "https://vilniustech.lt/en/international-students/admission-requirements/"
+VT_PROCEDURE = "https://vilniustech.lt/en/international-students/full-time-students/application-procedure/"
+ISM_ADMISSION = "https://www.ism.lt/en/admission"
+LCC_ADMISSIONS = "https://lcc.lt/admissions"
+LMTA_APPLICATION = "https://old.lmta.lt/en/english-lmta-welcomes-foreign-students/english-studies/bachelor-application/"
+VIKO_APPLY = "https://en.viko.lt/for-students/how-to-apply/"
+VIKO_REQUIREMENTS = "https://en.viko.lt/for-students/admission-requirements/"
+VVK_STEPS = "https://www.kolegija.lt/en/application-steps-for-international-students/"
+LTVK_RECOGNITION = "https://ltvk.lt/en/for-applicants/enrolment/recognition-of-education-and-qualifications-acquired-abroad/"
+LTVK_RULES = "https://ltvk.lt/wp-content/uploads/2026/01/Enrolment-Rules-for-International-Students-2026.pdf"
+
+B = ["bachelor"]
+C = ["college"]
+
+ROWS += [
+    # --- VDU (Vytautas Magnus University) ---
+    ("vdu", B, "secondary_diploma", "all", "application", "With its supplement; average grade at least 60%.",
+     VDU_DEGREE, "Copy of High School / Bachelor / Master's degree diploma and its supplement"),
+    ("vdu", B, "transcript", "all", "application", None,
+     VDU_DEGREE, "Mark sheet / Transcript of Records / Diploma Supplement"),
+    ("vdu", B, "english_translation", "all", "application", "For documents not issued in English.",
+     VDU_DOCS, "All documents issued in languages other than English should be supplemented with an"),
+    ("vdu", B, "legalisation", "docs_issued_outside_eu", "application",
+     "Apostille or consular legalisation; not needed for documents from the EU, UK, USA, Canada, Ukraine or Moldova.",
+     VDU_DOCS, "Certified with an Apostille – if they were issued in a country that is part of"),
+    ("vdu", B, "english_certificate", "all", "application", "B2 level.", VDU_DEGREE, "Proof of English proficiency"),
+    ("vdu", B, "motivation_letter", "all", "application", "1200–3000 characters.",
+     VDU_DEGREE, "Self written Motivational Letter (1200-3000 characters)."),
+    ("vdu", B, "cv", "all", "application", "In English.", VDU_DEGREE, "Curriculum Vitae (Resume) in English."),
+    ("vdu", B, "passport", "all", "application", "Both name and surname must be in the passport.",
+     VDU_DEGREE, "Copy of passport."),
+    ("vdu", B, "photo", "all", "application", "3×4 cm.", VDU_DEGREE, "1 recent photo (3×4 cm)."),
+    ("vdu", B, "enrolment_letter", "final_year", "application", "A recent transcript and a certificate in English.",
+     VDU_DEGREE, "If the applicant is currently studying in the final year"),
+    ("vdu", B, "recognition", "all", "by_university", "VMU assesses the documents itself.",
+     VDU_DEGREE, "educational documents will be processed for academic assessment and recognition"),
+
+    # --- KU (Klaipėda University) ---
+    ("ku", B, "secondary_diploma", "all", "application", "Only final diplomas; average grade above 60%.",
+     KU_PROCEDURE, "Higher school certificate for bachelors degree"),
+    ("ku", B, "legalisation", "all", "application", "Apostille.", KU_PROCEDURE, "Document of approval certification (Apostille)"),
+    ("ku", B, "english_certificate", "all", "application", "Not required for native English speakers.",
+     KU_PROCEDURE, "Proof of English Language proficiency"),
+    ("ku", B, "passport", "all", "application", None, KU_PROCEDURE, "Passport copy"),
+    ("ku", B, "photo", "all", "application", None, KU_PROCEDURE, "Passport type photo"),
+    ("ku", B, "english_translation", "non_eu_citizens", "before_arrival",
+     "Originals with official translations into English or Lithuanian, for the residence permit appointment.",
+     KU_PROCEDURE, "Official translations in English or Lithuanian"),
+
+    # --- MRU (Mykolas Romeris University) ---
+    ("mru", B, "secondary_diploma", "all", "application", "With final grades; at least 60% of the maximum.",
+     MRU_ADMISSION, "Secondary education diploma or equivalent including final grades"),
+    ("mru", B, "english_certificate", "all", "application",
+     "B2; not needed for native speakers; the university's free online test is an alternative.",
+     MRU_ADMISSION, "Document proving English language level"),
+    ("mru", B, "motivation_letter", "all", "application", "Written without AI assistance; checked with software.",
+     MRU_ADMISSION, "Motivational letter"),
+    ("mru", B, "passport", "all", "application", "Must show both given name and surname.", MRU_ADMISSION, "Passport copy"),
+    ("mru", B, "recognition", "all", "by_university", "Some countries need extra documents — see the country list.",
+     MRU_ADMISSION, "while processing the academic verification"),
+
+    # --- KTU (Kaunas University of Technology) ---
+    ("ktu", B, "secondary_diploma", "all", "application", "A provisional certificate if the final diploma is not issued yet.",
+     KTU_RECOGNITION, "Diploma or degree certificate, if the final diploma is yet to be issued, please include a provisional certification"),
+    ("ktu", B, "transcript", "all", "application",
+     "In the original language; for some countries the school must send it directly.",
+     KTU_RECOGNITION, "The academic transcript, records of grades, or a similar document has to be in the original language."),
+    ("ktu", B, "english_translation", "all", "application", "For documents not in English or Lithuanian.",
+     KTU_RECOGNITION, "All documents issued in languages other than English or Lithuanian should be supplemented with an official translation."),
+    ("ktu", B, "english_certificate", "all", "application", "KTU may organise an online test instead.",
+     KTU_RECOGNITION, "a certificate of the knowledge of the English language"),
+    ("ktu", B, "recognition", "all", "by_university", "Free of charge.",
+     KTU_RECOGNITION, "The procedure of the recognition of foreign qualifications at the University is performed"),
+
+    # --- VILNIUS TECH ---
+    ("vilnius-tech", B, "secondary_diploma", "all", "application", "Average grade at least 60%.",
+     VT_REQUIREMENTS, "A High school graduation certificate with a minimum accumulated grade point average (CGPA) of 60%."),
+    ("vilnius-tech", B, "english_translation", "all", "application", "Legalised; for documents not in English.",
+     VT_REQUIREMENTS, "All applications must include official, legalized English translations of academic transcripts if they are not issued in English."),
+    ("vilnius-tech", B, "legalisation", "all", "application",
+     "Apostille, or consular legalisation for countries outside the 1961 Hague Convention.",
+     VT_REQUIREMENTS, "Certified with an Apostille – if they were issued in a country that is part of the 1961 Hague Convention"),
+    ("vilnius-tech", B, "english_certificate", "all", "application", "Not needed if previous studies were fully in English.",
+     VT_PROCEDURE, "English proficiency certificate"),
+    ("vilnius-tech", B, "cv", "all", "application", None, VT_PROCEDURE, "Curriculum Vitae"),
+    ("vilnius-tech", B, "passport", "all", "application",
+     "Valid for at least two years; the admission requirements page says one year from first entry — check with the university.",
+     VT_PROCEDURE, "A Copy of Passport valid for at least two years"),
+    ("vilnius-tech", B, "recognition", "all", "by_university", "Done by the International Studies Centre.",
+     VT_PROCEDURE, "The International Studies Centre reviews your education documents for qualification recognition purposes"),
+    ("vilnius-tech", B, "proof_of_funds", "non_eu_citizens", "before_arrival",
+     "A bank certificate and a notarised letter of guarantee from parents or sponsors, for the residence permit.",
+     VT_PROCEDURE, "Certificate from a foreign bank and notarized letter of guarantee from parents / sponsors"),
+    ("vilnius-tech", B, "criminal_record", "non_eu_citizens", "before_arrival",
+     "From countries of residence in the last two years; legalised or apostilled.",
+     VT_PROCEDURE, "Non conviction / Police Clearance certificate from countries of residence in last two years (needed for TRP application)"),
+    ("vilnius-tech", B, "minor_documents", "under_18", "before_arrival", "A notarised letter of authorisation from parents.",
+     VT_PROCEDURE, "Minor students (under age of 18) must bring notarized Letter of Authorization"),
+
+    # --- ISM ---
+    ("ism", B, "passport", "all", "application", "Or an ID card.",
+     ISM_ADMISSION, "Personal info, copy of passport or ID card and photo, contact information."),
+    ("ism", B, "photo", "all", "application", None,
+     ISM_ADMISSION, "Personal info, copy of passport or ID card and photo, contact information."),
+    ("ism", B, "transcript", "all", "application", "Grades of the last 1.5 years, or the diploma if already graduated.",
+     ISM_ADMISSION, "Mark sheet from the last 1,5 years at school (or secondary school diploma if candidate has already graduated);"),
+    ("ism", B, "secondary_diploma", "final_year", "application", "By 1 August.",
+     ISM_ADMISSION, "Copy of Final diploma of Secondary Education submitted by the 1st of August;"),
+    ("ism", B, "english_certificate", "all", "application", "If a test was taken; ISM's own test and other proofs are accepted.",
+     ISM_ADMISSION, "International English Language Exam results (if test was taken);"),
+    ("ism", B, "motivation_letter", "all", "application", None, ISM_ADMISSION, "Motivation letter."),
+    ("ism", B, "application_fee_receipt", "all", "application", None, ISM_ADMISSION, "Application fee ("),
+    ("ism", B, "recognition", "all", "by_university", "ISM may ask for more documents.",
+     ISM_ADMISSION, "ISM has the right to request additional documents necessary for making a decision on academic recognition."),
+
+    # --- LCC International University ---
+    ("lcc", B, "transcript", "all", "application", "Grades for the last 3 years.",
+     LCC_ADMISSIONS, "Get your high school grades for the last 3 years from your school and an international passport."),
+    ("lcc", B, "passport", "all", "application", None,
+     LCC_ADMISSIONS, "Get your high school grades for the last 3 years from your school and an international passport."),
+    ("lcc", B, "secondary_diploma", "final_year", "application", "After graduation.",
+     LCC_ADMISSIONS, "Submit your final high school diploma upon graduation"),
+    ("lcc", B, "english_certificate", "all", "application", "Not older than 2 years; may be waived in some cases.",
+     LCC_ADMISSIONS, "Submit an official English proficiency test certificate."),
+
+    # --- LMTA (страница — приём 2026 года, поддомен old.) ---
+    ("lmta", B, "secondary_diploma", "all", "application", "Original or notarised copy.",
+     LMTA_APPLICATION, "Certificate of secondary education (original or notarised copy)"),
+    ("lmta", B, "recognition", "all", "application", "A certificate from LMTA or SKVC.",
+     LMTA_APPLICATION, "Recognition of your foreign education (certificate from LMTA or SKVC"),
+    ("lmta", B, "passport", "all", "application", "Or an ID card.", LMTA_APPLICATION, "Copy of your passport or ID card"),
+    ("lmta", B, "english_certificate", "all", "application", "At least B1.",
+     LMTA_APPLICATION, "English language certificate (minimum B1 level"),
+
+    # --- VIKO (Vilniaus kolegija) ---
+    ("vk", C, "passport", "all", "application", None, VIKO_APPLY, "Copy of an identity document"),
+    ("vk", C, "secondary_diploma", "all", "application", "Certificate and its supplement; scans from originals.",
+     VIKO_APPLY, "Copies of qualification (education) documents"),
+    ("vk", C, "legalisation", "docs_issued_outside_eu", "application",
+     "Not needed for documents from the EU, EEA, USA, Russia, Belarus, Moldova or Ukraine.",
+     VIKO_APPLY, "Education documents must be legalized or certified with an Apostille"),
+    ("vk", C, "english_translation", "all", "application", "Into Lithuanian or English; not needed for documents in English.",
+     VIKO_APPLY, "Documents issued in other languages must be accompanied by an official translation into Lithuanian or English"),
+    ("vk", C, "application_fee_receipt", "all", "application", "Non-refundable.",
+     VIKO_APPLY, "Copy of the payment receipt confirming the non-refundable application fee"),
+    ("vk", C, "recognition", "all", "by_university", None,
+     VIKO_REQUIREMENTS, "The academic assessment and recognition of your education documents will be processed by VIKO."),
+
+    # --- Vilniaus verslo kolegija ---
+    ("vvk", C, "secondary_diploma", "all", "application", "Copy, with a translation into English or Lithuanian.",
+     VVK_STEPS, "Secondary education or High School Diploma and Transcripts (copy) accompanied with their translation into English or Lithuanian."),
+    ("vvk", C, "transcript", "all", "application", None,
+     VVK_STEPS, "Secondary education or High School Diploma and Transcripts (copy) accompanied with their translation into English or Lithuanian."),
+    ("vvk", C, "english_translation", "all", "application", "Into English or Lithuanian.",
+     VVK_STEPS, "Secondary education or High School Diploma and Transcripts (copy) accompanied with their translation into English or Lithuanian."),
+    ("vvk", C, "passport", "all", "application", "Or an ID card.", VVK_STEPS, "A copy of your Passport or ID card."),
+    ("vvk", C, "application_fee_receipt", "all", "application", "The fee also covers legalisation for the residence permit.",
+     VVK_STEPS, "payment confirmation."),
+    ("vvk", C, "recognition", "all", "application", "The applicant applies to SKVC for the evaluation.",
+     VVK_STEPS, "Apply to the Lithuanian Centre for Quality Assessment in Higher Education for your Secondary School Diploma and transcript evaluation"),
+    ("vvk", C, "proof_of_funds", "all", "before_arrival",
+     "A letter of support from parents or sponsors and a bank letter, after conditional acceptance.",
+     VVK_STEPS, "A Letter of Affidavit of Support from your parents/sponsors and the Certificate/Letter from a bank"),
+
+    # --- Lietuvos verslo kolegija (LTVK) ---
+    ("ltvk", C, "secondary_diploma", "all", "application", "Original and copy, with the supplement.",
+     LTVK_RULES, "Secondary education diploma and supplement (original and copy)"),
+    ("ltvk", C, "legalisation", "all", "application", "Apostille.",
+     LTVK_RULES, "Diploma of Education in international country must be certificated by Apostille by Consulate"),
+    ("ltvk", C, "english_translation", "all", "application", "Into Lithuanian or English, certified by a notary.",
+     LTVK_RECOGNITION, "official translations of the education documents and their annexes into Lithuanian or English, certified by a notary"),
+    ("ltvk", C, "passport", "all", "application", "Or an ID card; original and copy of the data page.",
+     LTVK_RULES, "Personal Identification Card or Passport (original and copy of page with photo and personal data)"),
+    ("ltvk", C, "english_certificate", "all", "application", "B2 or higher.",
+     LTVK_RULES, "English language proficiency certificate (copy);"),
+    ("ltvk", C, "motivation_letter", "all", "application", None, LTVK_RECOGNITION, "Motivational letter."),
+    ("ltvk", C, "criminal_record", "all", "application", "If needed; apostilled.",
+     LTVK_RULES, "Police criminal report (if needed) certificated by Apostille"),
+    ("ltvk", C, "application_fee_receipt", "all", "application", None,
+     LTVK_RULES, "confirmation of paid document Registration fee"),
+    ("ltvk", C, "recognition", "all", "by_university", "Done by the college after the first-year payment.",
+     LTVK_RECOGNITION, "the College carries out the academic recognition of foreign qualifications in a centralized manner"),
 ]
 
 

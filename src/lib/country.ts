@@ -18,7 +18,8 @@ export type Feature =
   // путь ВНЖ для студента (docs/PLAN-FOREIGNERS.md, шаг 2): Латвия; Эстония и Литва — с
   // 2026-11-19 (Р1 расширено владельцем)
   | "studentPermit"
-  // списки документов всех вузов — только Латвия (docs/PLAN-FOREIGNERS.md, шаг 3)
+  // списки документов всех вузов (docs/PLAN-FOREIGNERS.md, шаг 3): Латвия; Литва — с
+  // 2026-11-20, строки извлечены автоматически
   | "studentDocuments";
 
 // Фильтр каталога, для которого у страны может не быть данных. Город,
@@ -94,7 +95,7 @@ const profiles: Record<Country, CountryProfile> = {
   // направлениям, а не по программам). Интересы работают по направлению
   // программы из списка общего приёма (src/lib/lt-fields.ts).
   LT: {
-    features: ["favorites", "survey", "match", "calculator", "glossary", "rights", "privacy", "studentPermit"],
+    features: ["favorites", "survey", "match", "calculator", "glossary", "rights", "privacy", "studentPermit", "studentDocuments"],
     filters: ["interest", "mode"],
     // Без экзаменов (вопрос ни на что не влияет, а оценки вводятся в «куда
     // я прохожу») и без бюджета с платой (данных нет).

@@ -130,7 +130,7 @@ export default async function ProgrammePage({ params }: { params: Params }) {
           getHousingCosts(record.university_id),
           // чек-лист документов — у английских программ (шаг 3)
           record.language_of_instruction === "en"
-            ? getDocumentRequirements(record.university_id, record.degree_level)
+            ? getDocumentRequirements(record.university_id, record.degree_level, "LV")
             : Promise.resolve([]),
           // минимум теста по английскому — тоже у английских программ (шаг 4)
           record.language_of_instruction === "en"
@@ -138,7 +138,13 @@ export default async function ProgrammePage({ params }: { params: Params }) {
             : Promise.resolve([]),
         ])
       : Promise.resolve(null);
-  const [formula, rounds, admissionType, outcome, channels, hasLtCalculator, ltField, ltStats, eeField, eeAdmission, vuppStats, foreign] =
+  // Чек-лист документов у Литвы (решение 2026-11-19): без блока стоимости,
+  // строки извлечены автоматически — у английских программ, как у Латвии.
+  const ltDocumentsPromise =
+    countryOf(locale) === "LT" && record.language_of_instruction === "en"
+      ? getDocumentRequirements(record.university_id, record.degree_level, "LT")
+      : Promise.resolve([]);
+  const [formula, rounds, admissionType, outcome, channels, hasLtCalculator, ltField, ltStats, eeField, eeAdmission, vuppStats, foreign, ltDocuments] =
     await Promise.all([
       getFormula(record.id),
       getApplicationRoundsForCards(),
@@ -152,6 +158,7 @@ export default async function ProgrammePage({ params }: { params: Params }) {
       eeAdmissionPromise,
       vuppStatsPromise,
       foreignPromise,
+      ltDocumentsPromise,
     ]);
   // Действующий это конкурс или прошлый приём — по сроку (ee-admission.ts).
   const eeAdmissionState = eeAdmission ? admissionState(eeAdmission, new Date()) : null;
@@ -169,7 +176,7 @@ export default async function ProgrammePage({ params }: { params: Params }) {
   const showForeignCosts =
     ((foreignCosts.length > 0 || foreignHousing !== null) && record.language_of_instruction === "en") ||
     foreignFees.length > 0;
-  const foreignDocuments = foreign ? foreign[3] : [];
+  const foreignDocuments = foreign ? foreign[3] : ltDocuments;
   const foreignEnglish = foreign ? pickEnglishRequirement(foreign[4], record.id) : null;
   // Где подать документы: только подтверждённая человеком запись вуза для
   // этого уровня (или для всех уровней). Нет записи — блока нет.

@@ -58,7 +58,18 @@ describe("checklistSources", () => {
     const sources = checklistSources(items);
     expect(sources.urls).toHaveLength(2);
     expect(sources.verifiedAt).toBe("2026-11-15T00:00:00Z");
-    expect(checklistSources([])).toEqual({ urls: [], verifiedAt: null });
+    expect(sources.automatic).toBe(false);
+    expect(checklistSources([])).toEqual({ urls: [], verifiedAt: null, automatic: false });
+  });
+
+  // Литва и Эстония (решение 2026-11-19): неподтверждённые строки проходят
+  // только по флагу, и тогда весь список — «извлечено автоматически», без даты.
+  it("неподтверждённые строки — только с allowUnverified, и список без даты", () => {
+    const rows = [row({ verified_at: "2026-11-20T00:00:00Z" }), row({ document: "cv", verified_at: null })];
+    expect(parseRequirements(rows)).toHaveLength(1);
+    const items = parseRequirements(rows, true);
+    expect(items).toHaveLength(2);
+    expect(checklistSources(items)).toMatchObject({ verifiedAt: null, automatic: true });
   });
 });
 

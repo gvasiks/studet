@@ -1,10 +1,11 @@
 // Чек-лист документов для иностранных абитуриентов (docs/PLAN-FOREIGNERS.md,
 // шаг 3). Таблица foreign_document_requirement: одна строка — документ,
-// который вуз просит на этом уровне. Сюда приходят только подтверждённые
-// строки (решение владельца 2026-11-14).
+// который вуз просит на этом уровне. У Латвии сюда приходят только
+// подтверждённые строки (решение владельца 2026-11-14); у Литвы и Эстонии —
+// и неподтверждённые, с пометкой «извлечено автоматически» (решение 2026-11-19).
 
-// Совпадает с check в миграциях 20261114120000_foreign_document_requirement.sql
-// и 20261114130000_foreign_document_aic_statement.sql.
+// Совпадает с check в миграциях 20261114120000_foreign_document_requirement.sql,
+// 20261114130000_foreign_document_aic_statement.sql и 20261120120000_foreign_documents_lt_ee.sql.
 export const DOCUMENT_KEYS = [
   "passport",
   "photo",
@@ -15,6 +16,9 @@ export const DOCUMENT_KEYS = [
   "english_translation",
   "legalisation",
   "aic_statement",
+  // академическое признание иностранного образования вне Латвии: в Литве его
+  // делает вуз или SKVC
+  "recognition",
   "english_certificate",
   "motivation_letter",
   "cv",
@@ -48,10 +52,15 @@ export type DocumentRequirement = {
   note: string | null;
   sortOrder: number;
   sourceUrl: string;
-  verifiedAt: string;
+  /** null — строка извлечена автоматически и человеком не проверена (Литва, Эстония). */
+  verifiedAt: string | null;
 };
 
-/** Строки базы в типизированный вид; строки с неизвестным ключом отбрасываются. */
+/**
+ * Строки базы в типизированный вид; строки с неизвестным ключом отбрасываются.
+ * Неподтверждённые строки проходят только с allowUnverified (страны, где факты
+ * показываются с пометкой «извлечено автоматически»).
+ */
 export function parseRequirements(
   rows: {
     document: string;
@@ -62,10 +71,11 @@ export function parseRequirements(
     source_url: string;
     verified_at: string | null;
   }[],
+  allowUnverified = false,
 ): DocumentRequirement[] {
   const out: DocumentRequirement[] = [];
   for (const row of rows) {
-    if (!row.verified_at) continue;
+    if (!row.verified_at && !allowUnverified) continue;
     if (!(DOCUMENT_KEYS as readonly string[]).includes(row.document)) continue;
     if (!(DOCUMENT_CONDITIONS as readonly string[]).includes(row.applies_to)) continue;
     if (!(DOCUMENT_STAGES as readonly string[]).includes(row.stage)) continue;
@@ -90,11 +100,16 @@ export function groupByStage(items: DocumentRequirement[]): { stage: DocumentSta
   })).filter((group) => group.items.length > 0);
 }
 
-/** Источники списка без повторов и самая ранняя дата проверки — для подписи под списком. */
-export function checklistSources(items: DocumentRequirement[]): { urls: string[]; verifiedAt: string | null } {
+/**
+ * Источники списка без повторов и самая ранняя дата проверки — для подписи под
+ * списком. Если хоть одна строка не проверена человеком, весь список
+ * подписывается как извлечённый автоматически (automatic) и без даты.
+ */
+export function checklistSources(items: DocumentRequirement[]): { urls: string[]; verifiedAt: string | null; automatic: boolean } {
   const urls = [...new Set(items.map((item) => item.sourceUrl))];
-  const dates = items.map((item) => item.verifiedAt).sort();
-  return { urls, verifiedAt: dates[0] ?? null };
+  const automatic = items.some((item) => item.verifiedAt === null);
+  const dates = items.map((item) => item.verifiedAt).filter((date): date is string => date !== null).sort();
+  return { urls, verifiedAt: automatic ? null : (dates[0] ?? null), automatic };
 }
 
 /** Ключ отметок в localStorage браузера: список у вуза и уровня свой. */
