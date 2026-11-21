@@ -5,7 +5,7 @@ import { countryOf, isLocale, languageOf } from "@/i18n/config";
 import { hasFeature } from "@/lib/country";
 import { getDictionary } from "@/i18n/dictionaries";
 import { getProgramme, localizedName } from "@/lib/catalog";
-import { getFormula, getLevelCoefficients } from "@/lib/formula-queries";
+import { getFormula, getLevelCoefficients, getLevelCoefficientSource } from "@/lib/formula-queries";
 import { getAdmissionType } from "@/lib/admission-type-queries";
 import { getLtFormula } from "@/lib/lt-score-queries";
 import { buildAlternates, SITE_URL } from "@/lib/site";
@@ -81,10 +81,12 @@ export default async function CalculatorPage({ params }: { params: Params }) {
   // Параллельно: коэффициенты уровней от программы не зависят (и живут в
   // памяти сервера, formula-queries.ts).
   // Прошлогодний конкурс программы — рядом с баллом (CLAUDE.md, правило 2).
-  const [formula, levelCoefficients, vuppStats] = await Promise.all([
+  // Источник коэффициентов — латвийская норма (MK Nr. 846), поэтому только у Латвии.
+  const [formula, levelCoefficients, vuppStats, coefficientSource] = await Promise.all([
     getFormula(record.id),
     getLevelCoefficients(),
     getVuppYear(record.id),
+    countryOf(locale) === "LV" ? getLevelCoefficientSource() : Promise.resolve(null),
   ]);
 
   // Пункт 06 ревью 2026-09: если тип отбора подтверждён и это не
@@ -117,6 +119,7 @@ export default async function CalculatorPage({ params }: { params: Params }) {
           levelCoefficients={levelCoefficients}
           sourceUrl={formula.sourceUrl}
           verifiedAt={formula.verifiedAt}
+          coefficientSource={coefficientSource}
           locale={locale}
         />
       )}

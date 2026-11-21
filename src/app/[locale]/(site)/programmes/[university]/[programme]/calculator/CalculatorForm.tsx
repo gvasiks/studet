@@ -39,6 +39,7 @@ function CalculatorFormForm({
   levelCoefficients,
   sourceUrl,
   verifiedAt,
+  coefficientSource,
   locale,
 }: {
   dict: Dictionary;
@@ -47,6 +48,8 @@ function CalculatorFormForm({
   levelCoefficients: Record<ExamLevel, number>;
   sourceUrl: string | null;
   verifiedAt: string | null;
+  // источник коэффициентов уровня (MK Nr. 846); null — не Латвия
+  coefficientSource: { sourceUrl: string | null; verifiedAt: string | null } | null;
   locale: Locale;
 }) {
   const subjects = useMemo(
@@ -291,6 +294,22 @@ function CalculatorFormForm({
           </>
         )}
       </p>
+      {coefficientSource && (
+        <p className="mt-3 text-xs leading-relaxed text-zinc-600">
+          {dict.calculator.levelCoefficientsSource}{" "}
+          {coefficientSource.verifiedAt
+            ? `${dict.catalog.verifiedPrefix} ${formatDate(coefficientSource.verifiedAt, languageOf(locale))}.`
+            : dict.calculator.levelCoefficientsUnverified}
+          {coefficientSource.sourceUrl && (
+            <>
+              {" "}
+              <a href={coefficientSource.sourceUrl} target="_blank" rel="noopener noreferrer" className="underline">
+                {dict.calculator.levelCoefficientsLink}
+              </a>
+            </>
+          )}
+        </p>
+      )}
       <p className="mt-4 text-xs text-zinc-500">{dict.calculator.disclaimer}</p>
     </div>
   );

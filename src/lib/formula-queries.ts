@@ -88,6 +88,26 @@ export function getLevelCoefficients(): Promise<Record<ExamLevel, number>> {
   return remember("level-coefficients", 5 * 60 * 1000, loadLevelCoefficients);
 }
 
+// Источник коэффициентов (правило 5): MK noteikumi Nr. 846, п. 10 и 20 —
+// записан 2026-11-21 (pipeline/src/source_level_coefficients.py). Дата
+// проверки — только если подтверждены все строки, самая ранняя из них.
+export type LevelCoefficientSource = { sourceUrl: string | null; verifiedAt: string | null };
+
+export function getLevelCoefficientSource(): Promise<LevelCoefficientSource> {
+  return remember("level-coefficient-source", 5 * 60 * 1000, loadLevelCoefficientSource);
+}
+
+async function loadLevelCoefficientSource(): Promise<LevelCoefficientSource> {
+  const { data, error } = await supabase.from("level_coefficient").select("source_url, verified_at");
+  if (error) throw error;
+
+  const rows = data ?? [];
+  const sourceUrl = rows.find((row) => row.source_url)?.source_url ?? null;
+  const dates = rows.map((row) => row.verified_at as string | null);
+  const verifiedAt = rows.length > 0 && dates.every(Boolean) ? (dates as string[]).sort()[0] : null;
+  return { sourceUrl, verifiedAt };
+}
+
 const loadLevelCoefficients = cache(async (): Promise<Record<ExamLevel, number>> => {
   const { data, error } = await supabase
     .from("level_coefficient")
