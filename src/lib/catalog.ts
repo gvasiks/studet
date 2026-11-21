@@ -277,10 +277,16 @@ export async function listUniversities(country: Country): Promise<UniversityOpti
     const rows = data as unknown as (Pick<University, "slug" | "name_lv" | "name_lt" | "name_et" | "name_en"> & {
       programme: { id: string }[];
     })[];
-    return rows.map(({ programme, ...university }) => ({
-      ...university,
-      programmeCount: programme.length,
-    }));
+    // Учреждение без видимых программ не показывается ни в фильтре, ни в
+    // счётчике на главной: так скрыты закрытые эстонские вузы, чьи старые
+    // записи хранит портал (Euroakadeemia, Lääne-Viru Rakenduskõrgkool —
+    // решение владельца 2026-11-21, sources/ee_haridusportaal.py).
+    return rows
+      .filter(({ programme }) => programme.length > 0)
+      .map(({ programme, ...university }) => ({
+        ...university,
+        programmeCount: programme.length,
+      }));
   });
   return [...universities];
 }

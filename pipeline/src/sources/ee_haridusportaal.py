@@ -34,6 +34,12 @@
 раз возвращает город из адреса — запускайте всё вместе через ee_refresh.py.
 
 Не записываются:
+- программы учреждений без лицензии на обучение (у учреждения в записи нет
+  fieldHasActivityLicense = "1"). Портал хранит старые записи закрытых вузов:
+  на 2026-11-21 это Euroakadeemia (лишена права обучения с 31.08.2020) и
+  Lääne-Viru Rakenduskõrgkool (в 2019 году влит в TTK) — 34 программы без
+  аккредитации и конкурса. Решение владельца 2026-11-21 («Да, убирай»);
+  уже записанные программы скрыты разово (docs/PLAN-ESTONIA.md, ход работ);
 - записи без уровня (ординатура врачей и ещё около двадцати без пометки);
 - программа без языка, если её ещё нет в базе (общее правило main.py).
 
@@ -243,6 +249,9 @@ def catalog_rows(records: list[dict]) -> dict[str, list[tuple[dict, str, str, st
             skipped["нет учреждения"] += 1
             continue
         name = institution["title"]
+        if str(institution.get("fieldHasActivityLicense")) != "1":
+            skipped[f"нет лицензии на обучение ({name})"] += 1
+            continue
         levels = [LEVELS[level] for level in values(record.get("fieldStudyProgrammeLevel")) if level in LEVELS]
         if len(levels) != 1:
             skipped["нет уровня"] += 1
@@ -373,6 +382,7 @@ def _selftest() -> None:
             "fieldEducationalInstitution": {
                 "5": {
                     "title": "Tartu Ülikool",
+                    "fieldHasActivityLicense": "1",
                     "fieldOwnershipType": {"1": "Avalik-õiguslik"},
                     "fieldSchoolWebpageAddress": "http://www.ut.ee/",
                     "fieldSchoolLocation": {"7": {"fieldAddress": "Ülikooli tn 18, Tartu linn, Tartu linn, Tartu maakond"}},
@@ -417,6 +427,13 @@ def _selftest() -> None:
     unknown["fieldEducationalInstitution"]["5"].update(title="Uus Kõrgkool", fieldOwnershipType={"1": "Munitsipaalomand"})
     built = dict((university.slug, university.kind) for university, _ in build([private, unknown]))
     assert built == {"ebs": "private"}, built
+
+    # учреждение без лицензии на обучение (закрытый вуз, запись осталась на
+    # портале) — его программы не записываются
+    closed = record("8", "/erialad/moedisain", title="Moedisain")
+    closed["fieldEducationalInstitution"]["5"].update(title="Euroakadeemia", fieldOwnershipType={"1": "Eraomand"})
+    closed["fieldEducationalInstitution"]["5"].pop("fieldHasActivityLicense")
+    assert build([closed]) == [] and list(catalog_rows([closed])) == []
 
     # ответ не похож на список программ — остановка
     for broken in ([], [{"nid": "1", "foo": "bar"}]):
