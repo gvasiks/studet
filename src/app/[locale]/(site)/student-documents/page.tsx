@@ -16,6 +16,13 @@ import { ClipboardCheckIcon } from "@/components/icons";
 // (решение 2026-11-19). Те же строки, что на карточке
 // программы, и тот же блок; отметки общие с карточкой — ключ хранения один
 // (вуз + уровень). Серверная страница: клиентский только островок с галочками.
+
+// Страница статическая, но пересобирается раз в пять минут — как каталог
+// (src/lib/server-memo.ts). Без этого Next.js хранил ответ базы в
+// .next/cache/fetch-cache год, и кеш переживал пересборку: подтверждённая в
+// Studio строка не появлялась на странице (найдено 2026-11-21).
+export const revalidate = 300;
+
 export async function generateMetadata({ params }: PageProps<"/[locale]/student-documents">): Promise<Metadata> {
   const { locale } = await params;
   if (!isLocale(locale)) notFound();
@@ -49,6 +56,9 @@ export default async function StudentDocumentsPage({ params }: PageProps<"/[loca
     }
     entry.lists.push(list);
   }
+  // по показанному названию: у части литовских вузов нет ни латышского, ни
+  // английского имени, и сортировка запроса ставила их первыми
+  universities.sort((a, b) => a.name.localeCompare(b.name, language));
 
   return (
     <main className="page-container py-8 sm:py-12">
