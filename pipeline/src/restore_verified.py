@@ -350,6 +350,13 @@ def restore_country_costs(client, rows: list[dict], apply: bool) -> int:  # type
     return len(rows)
 
 
+def restore_level_coefficients(client, rows: list[dict], apply: bool) -> int:  # type: ignore[no-untyped-def]
+    if apply:
+        for row in rows:
+            client.table("level_coefficient").upsert(row, on_conflict="level,valid_from").execute()
+    return len(rows)
+
+
 def restore_programme_fees(
     client, rows: list[dict], programme_lookup: dict, apply: bool  # type: ignore[no-untyped-def]
 ) -> tuple[int, list[str], list[str]]:
@@ -426,6 +433,9 @@ def main(apply: bool) -> None:
     cc_restored = restore_country_costs(client, country_costs, apply)
     pfee_restored, pfee_missing, pfee_collisions = restore_programme_fees(client, programme_fees, programme_lookup, apply)
     hc_restored, hc_missing = restore_housing_costs(client, housing_costs, university_ids, apply)
+    # .get: в снимках до 2026-11-21 коэффициентов уровня нет.
+    level_coefficients = snapshot.get("level_coefficients", [])
+    lc_restored = restore_level_coefficients(client, level_coefficients, apply)
 
     verb = "восстановлено" if apply else "было бы восстановлено (сухой прогон, для записи запустите с --apply)"
     print(f"формулы: {verb} {f_restored} из {len(snapshot['formulas'])}")
@@ -439,6 +449,7 @@ def main(apply: bool) -> None:
     print(f"суммы страны: {verb} {cc_restored} из {len(country_costs)}")
     print(f"плата за обучение: {verb} {pfee_restored} из {len(programme_fees)}")
     print(f"общежития: {verb} {hc_restored} из {len(housing_costs)}")
+    print(f"коэффициенты уровня ЦЭ: {verb} {lc_restored} из {len(level_coefficients)}")
 
     if pf_without_method:
         print(
@@ -719,6 +730,8 @@ def selftest() -> None:
     )
     assert (restored_hc, missing_hc) == (1, []) and client.store["housing_cost"][0]["university_id"] == "uni-1"
     assert restore_country_costs(client, [{"country": "LV", "code": "long_stay_visa"}], apply=True) == 1
+    assert restore_level_coefficients(client, [{"level": "optimalais", "coefficient": 0.75, "valid_from": "2022-01-01"}], apply=True) == 1
+    assert client.store["level_coefficient"][0]["coefficient"] == 0.75
 
     # Чтение страницами: 1005 строк приходят двумя запросами и все доходят.
     class FakeQuery:

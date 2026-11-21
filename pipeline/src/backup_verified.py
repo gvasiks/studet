@@ -374,6 +374,16 @@ def _housing_costs(client) -> list[dict]:  # type: ignore[no-untyped-def]
     return sorted(out, key=lambda r: (r["university_slug"], r["valid_from"]))
 
 
+def _level_coefficients(client) -> list[dict]:  # type: ignore[no-untyped-def]
+    # подтверждены 2026-11-21 (source_level_coefficients.py); verified_by не
+    # пишется — снимок лежит в публичном репозитории
+    rows = fetch_all(
+        lambda: client.table("level_coefficient").select("level, coefficient, valid_from, source_url, verified_at")
+        .not_.is_("verified_at", "null").order("level")
+    )
+    return sorted(rows, key=lambda r: (r["level"], r["valid_from"]))
+
+
 def build_snapshot(client) -> dict:  # type: ignore[no-untyped-def]
     return {
         "formulas": _formulas(client),
@@ -387,6 +397,7 @@ def build_snapshot(client) -> dict:  # type: ignore[no-untyped-def]
         "country_costs": _country_costs(client),
         "programme_fees": _programme_fees(client),
         "housing_costs": _housing_costs(client),
+        "level_coefficients": _level_coefficients(client),
     }
 
 

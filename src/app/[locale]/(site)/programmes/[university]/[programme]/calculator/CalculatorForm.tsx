@@ -298,7 +298,8 @@ function CalculatorFormForm({
         <p className="mt-3 text-xs leading-relaxed text-zinc-600">
           {dict.calculator.levelCoefficientsSource}{" "}
           {coefficientSource.verifiedAt
-            ? `${dict.catalog.verifiedPrefix} ${formatDate(coefficientSource.verifiedAt, languageOf(locale))}.`
+            ? // латышская дата уже кончается точкой («21.11.2026.»)
+              `${dict.catalog.verifiedPrefix} ${formatDate(coefficientSource.verifiedAt, languageOf(locale))}`.replace(/\.?$/, ".")
             : dict.calculator.levelCoefficientsUnverified}
           {coefficientSource.sourceUrl && (
             <>

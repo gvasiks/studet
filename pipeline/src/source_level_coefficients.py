@@ -30,7 +30,10 @@ SOURCE_URL = "https://likumi.lv/ta/id/146637-noteikumi-par-prasibam-kriterijiem-
 EXPECTED = {"augstakais": 1.00, "optimalais": 0.75, "vispaarigais": 0.50}
 
 # Решение владельца в чате — вписать дословно перед --confirm.
-OWNER_DECISION: str | None = None
+OWNER_DECISION: str | None = (
+    "Gvasiks (решение владельца 2026-11-21 в чате: «Да, подтверждаю» — коэффициенты 1,00 / 0,75 / 0,50 "
+    "по MK noteikumi Nr. 846, п. 10 и 20)"
+)
 
 
 def main(apply: bool, confirm: bool) -> None:
