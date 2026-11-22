@@ -45,10 +45,22 @@ multimedia-communication, physiotherapy-0-lv, public-relations, social-work-0. �
 ## LBTU
 
 Формула LBTU по-прежнему не разобрана (альтернативы «CE или GA», ×1,25 — `project_formula_extraction_status`).
-Обязательные ЦЭ (латышский, иностранный, математика) те же. В таблице раздела 3 поменялись
-необязательные предметы «papildus, ja ir» у нескольких программ (например, добавлено «CE kultūrā un
-mākslā», «sociālajās zinātnēs» вместо «bioloģijā vai dabaszinībās»), Ainavu arhitektūra un plānošana
-перенесена в факультет MVZF. Требования LBTU в декабре сверить с `requirements_lbtu.py` построчно.
+**Требования — таблица раздела 3 сверена построчно с `requirements_lbtu.py` 2026-11-22** (режим
+`layout`, стр. 4–6). У требований LBTU нет года: у программы один набор, все 27 подтверждены
+владельцем по документу 2026/27.
+
+| Что | 2026/27 (в базе) | 2027/28 |
+|---|---|---|
+| Обязательные ЦЭ у 14 блоков из 16 | латышский, иностранный, математика | **те же** |
+| Pārtikas kvalitāte un inovācijas / Pārtikas produktu tehnoloģija | + «CE ķīmijā vai GA ķīmijā vai dabas zinībās» (не разобрано) | + «CE ķīmijā vai GA ķīmijā vai CE dabaszinībās vai GA dabaszinībās» — по-прежнему не только ЦЭ, не разбирается |
+| Veterinārmedicīna | + «CE vai GA bioloģijā», «CE vai GA ķīmijā» (не разобрано) | **то же** |
+| Lauksaimniecības inženierzinātne, a(b) (`niid-208`) | в таблице, набор подтверждён | **нет в документе вообще** — ни в таблице, ни в списке программ п. 1. Приём 2027/28, похоже, не объявлен — вопрос к LBTU |
+| Ainavu arhitektūra un plānošana, a(b) (`niid-24576`) | в документе не было, набора нет | **новая строка (MVZF)**: латышский, иностранный, математика **и обязательное «sekmīgi nokārtots LBTU zīmēšanas iestājpārbaudījums»** (рисунок, 2 части). Испытание модель требований не выражает — решить, писать ли набор только из ЦЭ |
+| «Papildus, ja ir» (в базу не идут) | — | Org. socioloģija: + CE kultūrā un mākslā; Ēdināšanas un viesnīcu vadība: CE sociālajās zinātnēs вместо «bioloģijā vai dabas zinībās»; Lauksaimniecība: + CE dabaszinībās |
+
+Новое и вне модели требований: п. 2.7 — для бесплатных мест на Būvniecība, p(b) минимум ЦЭ по
+математике (25% / 33% / 50% по уровням, 33% до 2022 года) и годовая оценка по математике не ниже 6.
+В п. 3.3 у формулы появилась строка с рисунком (0,15 × три ЦЭ + 0,15 × среднее ЦЭ + 0,85 × рисунок) — по смыслу для Ainavu arhitektūra; формулы LBTU не разбираются, не проверялось.
 Бюджетные места в тексте теперь «studiju vietas, kas pilnībā finansētas no augstskolas līdzekļiem»
 (п. 2.2, 2.5) — новая формулировка закона, не новое правило.
 
@@ -72,5 +84,7 @@ mākslā», «sociālajās zinātnēs» вместо «bioloģijā vai dabaszin�
    `requirements_rsu.py` и `seed_admission_types.py` пока читают редакцию 2026/27.
 2. Решить, что показывать у `sports-coach*`, `medical-massage-liepaja-branch`,
    `physician-assistant-liepaja-branch`, когда начнётся приём 2027/28.
-3. LBTU — сверка требований; JK — срок зимнего приёма на подтверждение.
+3. LBTU — требования сверены (2026-11-22, таблица выше): решить про `niid-208` (нет в документе) и `niid-24576`
+   (новая, с обязательным испытанием по рисунку); в `requirements_lbtu.py` поменять реквизиты документа.
+   JK — срок зимнего приёма на подтверждение.
 4. 1 декабря и позже — `rules_watch.py` снова, по остальным 14 вузам.
