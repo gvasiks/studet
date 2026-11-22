@@ -85,6 +85,80 @@ RSU_SLUGS: dict[str, list[str]] = {
 # Без формулы по конкурсу: 18 (Policijas darbs — по направлению служб),
 # 28B (по списку Jaunsardzes centrs) — в документе конкурса баллов нет.
 
+
+@dataclass(frozen=True)
+class Edition:
+    """Одна редакция правил приёма: документ, его реквизиты и нумерация приложений."""
+
+    copy_path: str
+    source_url: str
+    source_doc: str
+    valid_from: date
+    slugs: dict[str, list[str]]
+    start_marker: str  # с этого места в тексте начинаются приложения
+    protocol_number: str
+    protocol_date: date
+    fetched_on: date
+
+
+EDITIONS: dict[int, Edition] = {
+    2026: Edition(
+        COPY_PATH, SOURCE_URL, SOURCE_DOC, VALID_FROM, RSU_SLUGS,
+        start_marker="Pielikums Nr. 1 – Ārstnieciskā masāža",
+        protocol_number="1-PB-9/36/2025 (grozījumi: 1-PB-9/14/2026, 1-PB-9/29/2026)",
+        protocol_date=date(2026, 5, 14),
+        fetched_on=date(2026, 9, 20),
+    ),
+    # Правила 2027/28 (RSU 1-PB-9/85/2026 от 13.11.2026), найдены rules_watch.py
+    # 2026-11-21; сравнение с 2026/27 — docs/checks/RULES-2027-28-FIRST-LOOK.md.
+    # Приложения перенумерованы; Лиепайского филиала в документе нет вовсе
+    # (нет приложений Ārstnieciskā masāža и Ārsta palīgs, у Sporta treneris и
+    # Māszinības — только Рига), нет и 28A/28B (Veselība, fiziskā aktivitāte un drošība).
+    2027: Edition(
+        copy_path="docs/source-documents/rsu/uznemsanas-noteikumi-pamatstudijas-2027-28.pdf",
+        source_url=(
+            "https://www.rsu.lv/sites/default/files/imce/Dokumenti/noteikumi/"
+            "uznemsanas_noteikumi_pamatstudijas_2027_2028_akad_gads.pdf"
+        ),
+        source_doc=(
+            "Uzņemšanas noteikumi īsā cikla, pirmā cikla un otrā cikla studiju programmās "
+            "2027./2028. akadēmiskajam gadam (RSU 1-PB-9/85/2026, 13.11.2026.)"
+        ),
+        valid_from=date(2026, 11, 13),  # дата акта
+        slugs={
+            "1": ["sports-coach"],
+            "2": ["dental-hygiene"],
+            "3": ["audio-speech-therapy"],
+            "4": ["occupational-therapy-lv"],
+            "5": ["pharmacy-lv-0"],
+            "6": ["physiotherapy-0-lv"],
+            "7": ["nursing-lv"],
+            "8": ["medicine", "medicine-lv"],
+            "9": ["multimedia-communication"],
+            "10": ["orthotics-and-prosthetics"],
+            "12": ["psychology-0"],
+            "13": ["public-health-0"],
+            "14": ["social-work-0"],
+            "15": ["public-relations"],
+            "16": ["international-business-and-sustainable-economy"],
+            "17": ["international-business-and-start-up-entrepreneurship"],
+            "18": ["international-marketing-and-advertising"],
+            "19": ["international-relations-european-studies"],
+            "20": ["sports-science-ba"],
+            "21": ["law"],
+            "22": ["nutrition"],
+            "23": ["midwifery"],
+            "24": ["dentistry", "dentistry-lv"],
+            "25": ["journalism"],
+        },
+        # 11 — Policijas darbs, как и прежде без конкурса баллов; 26 — таблицы физподготовки
+        start_marker="Rektors",
+        protocol_number="1-PB-9/85/2026",
+        protocol_date=date(2026, 11, 13),
+        fetched_on=date(2026, 11, 21),
+    ),
+}
+
 CE_SUBJECTS = {
     "matemātikā": "mathematics",
     "latviešu valodā": "latvian",
@@ -194,8 +268,11 @@ def parse_criteria(criteria: str) -> ParsedFormula:
     return result
 
 
-def parse_document(text: str) -> list[ParsedAppendix]:
-    body = text[text.find("Pielikums Nr. 1 – Ārstnieciskā masāža") :]
+def parse_document(text: str, edition: Edition = EDITIONS[2026]) -> list[ParsedAppendix]:
+    start = text.find(edition.start_marker)
+    if start < 0:
+        raise ValueError(f"в документе нет «{edition.start_marker}» — та ли редакция?")
+    body = text[start:]
     body = body[body.find("Rektors") :]  # после списка приложений
     parts = re.split(r"Pielikums Nr\.\s*(\d+\s?[AB]?)\s+(?=1\.\s+Studiju|1\.\s*\n)", body)
     appendices: list[ParsedAppendix] = []
@@ -203,14 +280,15 @@ def parse_document(text: str) -> list[ParsedAppendix]:
         number = re.sub(r"\s+", "", parts[k])
         txt = parts[k + 1]
         name = re.sub(r"\s+", " ", txt[:220]).split("2. Studiju")[0]
-        name = re.sub(r"^1\.\s*Studiju programma\s*\d+\.\s*", "", name).strip()
+        name = re.sub(r"^1\.\s*Studiju programma\s*(?:\d+\.\s*)?", "", name).strip()
         excerpt = re.sub(r"[ \t]+", " ", re.sub(r"\n\s*\n+", "\n", txt)).strip()
 
-        row = re.search(r"Konkursa vērtēšanas\s+kritē-?\s*riji:?\s+(Studiju programm.*)", txt, re.S)
+        # в 2027/28 заголовок переносится и как «kri-tēriji», не только «kritē-riji»
+        row = re.search(r"Konkursa vērtēšanas\s+kri-?\s*tē-?\s*riji:?\s+(Studiju programm.*)", txt, re.S)
         formula: ParsedFormula | None = None
         note: str | None = None
         criteria_text: str | None = None
-        if number not in RSU_SLUGS:
+        if number not in edition.slugs:
             note = "нет конкурса по баллам (приём по направлению/списку) или нет в каталоге"
         elif not row:
             note = "в приложении нет строки «Konkursa vērtēšanas kritēriji»"
@@ -220,7 +298,7 @@ def parse_document(text: str) -> list[ParsedAppendix]:
             criteria_text = crit
             # "Uzņemšanas rezultāta kopvērtējums nevar būt zemāks par N punktiem" — только в excerpt
         appendices.append(
-            ParsedAppendix(number, name, excerpt, RSU_SLUGS.get(number, []), formula, note, criteria_text)
+            ParsedAppendix(number, name, excerpt, edition.slugs.get(number, []), formula, note, criteria_text)
         )
     return appendices
 
@@ -235,7 +313,7 @@ def report(items: list[ParsedAppendix]) -> None:
             print(f"  [{a.number}] {a.name[:60]}: не берётся — " + "; ".join(a.formula.problems))
 
 
-def seed(items: list[ParsedAppendix], apply: bool) -> None:
+def seed(items: list[ParsedAppendix], apply: bool, edition: Edition = EDITIONS[2026]) -> None:
     ready = [a for a in items if a.formula and a.formula.ok]
     drafts = [Draft(f"Nr. {a.number}", a.slugs, a.formula.terms, a.excerpt) for a in ready]  # type: ignore[union-attr]
     protocol = {}
@@ -243,12 +321,13 @@ def seed(items: list[ParsedAppendix], apply: bool) -> None:
         from seed_formulas import source_protocol
 
         protocol = source_protocol(
-            number="1-PB-9/36/2025 (grozījumi: 1-PB-9/14/2026, 1-PB-9/29/2026)",
-            doc_date=date(2026, 5, 14),
-            copy_path=COPY_PATH,
-            fetched_on=date(2026, 9, 20),
+            number=edition.protocol_number,
+            doc_date=edition.protocol_date,
+            copy_path=edition.copy_path,
+            fetched_on=edition.fetched_on,
         )
-    write_drafts(DocumentMeta("rsu", SOURCE_URL, SOURCE_DOC, VALID_FROM, protocol), drafts, apply)
+    meta = DocumentMeta("rsu", edition.source_url, edition.source_doc, edition.valid_from, protocol)
+    write_drafts(meta, drafts, apply)
 
 
 def selftest() -> None:
@@ -294,6 +373,12 @@ if __name__ == "__main__":
     if "--selftest" in sys.argv:
         selftest()
     else:
-        parsed = parse_document(load_text())
+        # --year 2027 — правила 2027/28; без флага — 2026/27, как раньше.
+        # --apply закрывает формулы прошлого года (valid_to) — до подтверждения
+        # новых у программ RSU на сайте формулы не будет.
+        year = int(sys.argv[sys.argv.index("--year") + 1]) if "--year" in sys.argv else 2026
+        edition = EDITIONS[year]
+        parsed = parse_document(load_text(REPO_ROOT / edition.copy_path), edition)
+        print(f"редакция {year}/{year + 1 - 2000}: {edition.copy_path}")
         report(parsed)
-        seed(parsed, apply="--apply" in sys.argv)
+        seed(parsed, apply="--apply" in sys.argv, edition=edition)
