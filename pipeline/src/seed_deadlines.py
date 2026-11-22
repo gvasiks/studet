@@ -34,6 +34,14 @@ seed_formulas.py). Даты CLAUDE.md ("9–20 июля 2027", "Turība 5 янв
 раздел INTAKES, проверено 2026-09-17). Год не указан вообще — значит
 не устареет к январю 2027 само по себе.
 
+Juridiskā koledža (добавлено 2026-11-22): правила приёма 2027./2028. на
+jk.lv/uznemsana/uznemsana/uznemsanas-noteikumi/ (JK Dome 29.10.2026, prot.
+Nr. 3-01/142; копия — docs/source-documents/juridiska-koledza/
+uznemsanas-noteikumi-2027-28.html) — «ZIEMAS UZŅEMŠANA: Dokumentus pieņemam
+no 2027. gada 5. janvāra līdz 5.februārim», «VASARAS UZŅEMŠANA: Dokumentus
+pieņemam no 2027. gada 1. jūlija» (даты окончания летнего приёма нет — в базе
+пусто). Надпись — на языке источника, как названия программ.
+
 Запуск:
   python src/seed_deadlines.py             # записать черновики
   python src/seed_deadlines.py --selftest  # самотест без базы
@@ -70,6 +78,31 @@ TURIBA_EN_ROUNDS = [
 ]
 
 
+JK_SOURCE_URL = "https://jk.lv/uznemsana/uznemsana/uznemsanas-noteikumi/"
+
+# Окна относятся ко всем программам JK — degree_level и язык не заданы.
+JK_ROUNDS = [
+    {
+        "label": "Ziemas uzņemšana 2027",
+        "opens_on": date(2027, 1, 5),
+        "closes_on": date(2027, 2, 5),
+        "note": "JK 2027./2028. studiju gada uzņemšanas noteikumi: dokumentus pieņem no 2027. gada 5. janvāra līdz 5. februārim.",
+    },
+    {
+        "label": "Vasaras uzņemšana 2027",
+        "opens_on": date(2027, 7, 1),
+        "closes_on": None,
+        "note": "JK 2027./2028. studiju gada uzņemšanas noteikumi: dokumentus pieņem no 2027. gada 1. jūlija; beigu datums nav norādīts.",
+    },
+]
+
+# вуз -> (окна, источник); запуск пишет все
+SOURCES = {
+    "turiba": (TURIBA_EN_ROUNDS, TURIBA_SOURCE_URL),
+    "juridiska-koledza": (JK_ROUNDS, JK_SOURCE_URL),
+}
+
+
 def seed(client, university_slug: str, rounds: list[dict], source_url: str) -> None:  # type: ignore[no-untyped-def]
     university = (
         client.table("university").select("id").eq("slug", university_slug).single().execute()
@@ -95,8 +128,8 @@ def seed(client, university_slug: str, rounds: list[dict], source_url: str) -> N
             "degree_level": entry.get("degree_level"),
             "language_of_instruction": entry.get("language_of_instruction"),
             "label": entry["label"],
-            "opens_on": entry["opens_on"].isoformat(),
-            "closes_on": entry["closes_on"].isoformat(),
+            "opens_on": entry["opens_on"].isoformat() if entry["opens_on"] else None,
+            "closes_on": entry["closes_on"].isoformat() if entry["closes_on"] else None,
             "note": entry.get("note"),
             "source_url": source_url,
         }
@@ -162,6 +195,13 @@ def selftest() -> None:
     empty = _FakeClient({"university": [{"id": "uni-1"}]})
     seed(empty, "turiba", TURIBA_EN_ROUNDS, TURIBA_SOURCE_URL)
     assert len(empty.written["application_round"]) == 2
+
+    # летний приём JK без даты окончания — в базе пусто, а не ошибка
+    jk = _FakeClient({"university": [{"id": "uni-2"}]})
+    seed(jk, "juridiska-koledza", JK_ROUNDS, JK_SOURCE_URL)
+    summer = jk.written["application_round"][1]
+    assert summer["opens_on"] == "2027-07-01" and summer["closes_on"] is None, summer
+    assert summer["degree_level"] is None and summer["language_of_instruction"] is None, summer
     print("самотест пройден")
 
 
@@ -171,4 +211,6 @@ if __name__ == "__main__":
         selftest()
     else:
         load_dotenv()
-        seed(get_service_client(), "turiba", TURIBA_EN_ROUNDS, TURIBA_SOURCE_URL)
+        client = get_service_client()
+        for slug, (rounds, source_url) in SOURCES.items():
+            seed(client, slug, rounds, source_url)
