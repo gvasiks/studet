@@ -454,7 +454,8 @@
     "optionalSkipped": "sisestamata — pole kohustuslik",
     "levelCoefficientsSource": "Tasemekoefitsiendid (kõrgem 1,00, optimaalne 0,75, üldine 0,50) on kehtestatud Läti Ministrite Kabineti määruse nr 846 punktidega 10 ja 20.",
     "levelCoefficientsUnverified": "Allikat ei ole veel inimene kontrollinud.",
-    "levelCoefficientsLink": "Määruse tekst"
+    "levelCoefficientsLink": "Määruse tekst",
+    "rulesYear": "Arvutatud õppeaasta {from}/{to} vastuvõtutingimuste järgi."
   },
   "ltCalculator": {
     "intro": "Sisestada tuleb riiklike küpsuseksamite (VBE) tulemused. Näidatud on ainult need õppeained, mida selle õppekava konkursipunktides arvestatakse.",

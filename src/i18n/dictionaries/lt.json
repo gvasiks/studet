@@ -454,7 +454,8 @@
     "optionalSkipped": "neįvesta — neprivaloma",
     "levelCoefficientsSource": "Lygio koeficientus (aukštesnysis 1,00, optimalusis 0,75, bendrasis 0,50) nustato Latvijos Ministrų kabineto taisyklės Nr. 846, 10 ir 20 punktai.",
     "levelCoefficientsUnverified": "Šaltinio dar nepatikrino žmogus.",
-    "levelCoefficientsLink": "Taisyklių tekstas"
+    "levelCoefficientsLink": "Taisyklių tekstas",
+    "rulesYear": "Apskaičiuota pagal {from}–{to} m. m. priėmimo taisykles."
   },
   "ltCalculator": {
     "intro": "Įveskite valstybinių brandos egzaminų (VBE) įvertinimus. Rodomi tik tie dalykai, kurie įskaitomi į šios programos konkursinį balą.",

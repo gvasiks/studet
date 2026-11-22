@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { calculateScore, extraKey, type ExamResult, type FormulaTerm, lineFormula } from "./formula";
+import { academicYearOf, calculateScore, extraKey, type ExamResult, type FormulaTerm, lineFormula } from "./formula";
 
 // Пример расчёта ЛУ из docs/PLAN.md, раздел 6 (опубликован университетом):
 // математика 56% (augstākais) × 1,00 × 6,5 = 364,00
@@ -133,5 +133,17 @@ describe("запись разбора балла", () => {
 
   it("нет данных — нет записи", () => {
     expect(lineFormula({ term: term("ce", 1), input: null, points: 0, percent: null, levelCoefficient: null }, "lv")).toBeNull();
+  });
+});
+
+describe("academicYearOf", () => {
+  it("берёт учебный год из названия документа", () => {
+    expect(academicYearOf("Uzņemšanas prasības un kritēriji pamatstudiju programmās 2026./2027. akadēmiskajā gadā, 2. sadaļa")).toEqual({ from: 2026, to: 2027 });
+  });
+
+  it("без года, с годами не подряд или без документа — null", () => {
+    expect(academicYearOf("Uzņemšanas noteikumi (RSU 1-PB-9/36/2025)")).toBeNull();
+    expect(academicYearOf("2026./2028. akadēmiskajā gadā")).toBeNull();
+    expect(academicYearOf(null)).toBeNull();
   });
 });

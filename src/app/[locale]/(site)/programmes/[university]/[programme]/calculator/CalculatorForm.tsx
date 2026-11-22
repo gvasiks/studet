@@ -39,6 +39,7 @@ function CalculatorFormForm({
   levelCoefficients,
   sourceUrl,
   verifiedAt,
+  rulesYear,
   coefficientSource,
   locale,
 }: {
@@ -48,6 +49,8 @@ function CalculatorFormForm({
   levelCoefficients: Record<ExamLevel, number>;
   sourceUrl: string | null;
   verifiedAt: string | null;
+  // учебный год правил приёма; null — год не назван в документе
+  rulesYear: { from: number; to: number } | null;
   // источник коэффициентов уровня (MK Nr. 846); null — не Латвия
   coefficientSource: { sourceUrl: string | null; verifiedAt: string | null } | null;
   locale: Locale;
@@ -282,6 +285,11 @@ function CalculatorFormForm({
       </div>
 
       <p className="mt-6 rounded-xl bg-amber-50 px-4 py-3 text-sm text-amber-900">
+        {rulesYear && (
+          <>
+            {interpolate(dict.calculator.rulesYear, { from: String(rulesYear.from), to: String(rulesYear.to) })}{" "}
+          </>
+        )}
         {verifiedAt
           ? `${dict.catalog.verifiedPrefix} ${formatDate(verifiedAt, languageOf(locale))}`
           : dict.catalog.unverifiedLabel}

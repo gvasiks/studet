@@ -119,6 +119,7 @@ export default async function CalculatorPage({ params }: { params: Params }) {
           levelCoefficients={levelCoefficients}
           sourceUrl={formula.sourceUrl}
           verifiedAt={formula.verifiedAt}
+          rulesYear={formula.rulesYear}
           coefficientSource={coefficientSource}
           locale={locale}
         />

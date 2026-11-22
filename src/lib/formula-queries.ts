@@ -2,13 +2,15 @@ import { cache } from "react";
 import { supabase } from "@/lib/supabase";
 import { remember } from "@/lib/server-memo";
 import { httpUrl } from "@/lib/application-channel";
-import type { ExamLevel, FormulaGate, FormulaTerm } from "@/lib/formula";
+import { academicYearOf, type AcademicYear, type ExamLevel, type FormulaGate, type FormulaTerm } from "@/lib/formula";
 
 export type FormulaRecord = {
   id: string;
   variant: string;
   sourceUrl: string | null;
   verifiedAt: string | null;
+  // учебный год правил приёма, по которым посчитан балл (из названия документа)
+  rulesYear: AcademicYear | null;
   terms: FormulaTerm[];
   gates: FormulaGate[];
 };
@@ -33,7 +35,7 @@ export const getFormula = cache(async (programmeId: string): Promise<FormulaReco
   const { data: formula, error } = await supabase
     .from("formula")
     .select(
-      "id, variant, source_url, verified_at, formula_term(kind, subject, coefficient, optional), formula_gate(subject, min_percent)",
+      "id, variant, source_url, source_doc, verified_at, formula_term(kind, subject, coefficient, optional), formula_gate(subject, min_percent)",
     )
     .eq("programme_id", programmeId)
     .is("valid_to", null)
@@ -52,6 +54,7 @@ export const getFormula = cache(async (programmeId: string): Promise<FormulaReco
     variant: formula.variant,
     sourceUrl: httpUrl(formula.source_url),
     verifiedAt: formula.verified_at,
+    rulesYear: academicYearOf(formula.source_doc),
     terms: (terms ?? []).map((term) => ({
       kind: term.kind as FormulaTerm["kind"],
       subject: term.subject,

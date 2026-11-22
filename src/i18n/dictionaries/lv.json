@@ -449,7 +449,8 @@
     "optionalSkipped": "nav ievadīts — nav obligāts",
     "levelCoefficientsSource": "Līmeņa koeficientus (augstākais 1,00, optimālais 0,75, vispārīgais 0,50) nosaka MK noteikumi Nr. 846, 10. un 20. punkts.",
     "levelCoefficientsUnverified": "Avots vēl nav pārbaudīts cilvēka rokām.",
-    "levelCoefficientsLink": "Noteikumu teksts"
+    "levelCoefficientsLink": "Noteikumu teksts",
+    "rulesYear": "Aprēķins pēc {from}./{to}. akadēmiskā gada uzņemšanas noteikumiem."
   },
   "ltCalculator": {
     "intro": "Jāievada valsts brieduma eksāmenu (VBE) vērtējumi. Redzami tikai tie mācību priekšmeti, kurus ieskaita šīs programmas konkursa punktos.",

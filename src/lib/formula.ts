@@ -126,3 +126,19 @@ export function lineFormula(line: ScoreLine, language: string): string | null {
         : [percent(line.percent), number(line.levelCoefficient)];
   return [...parts, number(line.term.coefficient)].join(" × ");
 }
+
+export type AcademicYear = { from: number; to: number };
+
+// «… 2026./2027. akadēmiskajā gadā …» -> {from: 2026, to: 2027}. Год берётся из
+// названия документа (formula.source_doc), а не из valid_from: дата акта
+// (ноябрь–декабрь) учебный год не называет. Пока формулы нового года не
+// подтверждены, калькулятор считает по прошлогодним — посетитель должен видеть,
+// по каким (лист решения о публикации, «Правила 2027/28»). Нет года или второй
+// не следует за первым — не показываем.
+export function academicYearOf(sourceDoc: string | null | undefined): AcademicYear | null {
+  const match = sourceDoc?.match(/(20\d\d)\.?\s*\/\s*(20\d\d)\./);
+  if (!match) return null;
+  const from = Number(match[1]);
+  const to = Number(match[2]);
+  return to === from + 1 ? { from, to } : null;
+}

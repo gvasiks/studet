@@ -449,7 +449,8 @@
     "optionalSkipped": "not entered — optional",
     "levelCoefficientsSource": "The level coefficients (higher 1.00, optimal 0.75, general 0.50) are set by Cabinet Regulation No. 846, points 10 and 20.",
     "levelCoefficientsUnverified": "The source has not yet been checked by a person.",
-    "levelCoefficientsLink": "Text of the regulation"
+    "levelCoefficientsLink": "Text of the regulation",
+    "rulesYear": "Calculated under the admission rules for the {from}/{to} academic year."
   },
   "ltCalculator": {
     "intro": "Enter your state matura exam (VBE) results. Only the subjects that count towards this programme's competition score are shown.",
