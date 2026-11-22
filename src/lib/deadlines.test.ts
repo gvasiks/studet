@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { matchRounds, type ApplicationRound } from "./deadlines";
+import { matchRounds, roundSources, type ApplicationRound } from "./deadlines";
 
 const round = (overrides: Partial<ApplicationRound>): ApplicationRound => ({
   universityId: "uni-1",
@@ -10,6 +10,7 @@ const round = (overrides: Partial<ApplicationRound>): ApplicationRound => ({
   closesOn: null,
   note: null,
   sourceUrl: null,
+  verifiedAt: "2026-11-22T09:55:29Z",
   ...overrides,
 });
 
@@ -38,5 +39,18 @@ describe("matchRounds", () => {
     ];
     expect(matchRounds(rounds, "uni-1", "bachelor", "en")).toHaveLength(2);
     expect(matchRounds(rounds, "uni-1", "bachelor", "lv")).toHaveLength(0);
+  });
+});
+
+describe("roundSources", () => {
+  it("два окна из одного документа, подтверждённые в один день, — одна строка", () => {
+    const url = "https://jk.lv/uznemsana/";
+    const rounds = [round({ label: "Ziemas", sourceUrl: url }), round({ label: "Vasaras", sourceUrl: url, verifiedAt: "2026-11-22T18:00:00Z" })];
+    expect(roundSources(rounds)).toEqual([{ sourceUrl: url, verifiedAt: "2026-11-22T09:55:29Z" }]);
+  });
+
+  it("разные источники — разные строки; не-http адрес ссылкой не становится", () => {
+    const rounds = [round({ sourceUrl: "https://a.lv" }), round({ sourceUrl: "javascript:alert(1)" })];
+    expect(roundSources(rounds).map((s) => s.sourceUrl)).toEqual(["https://a.lv/", null]);
   });
 });

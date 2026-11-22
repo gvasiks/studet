@@ -98,7 +98,30 @@
     }
   ],
   "application_channels": [],
-  "application_rounds": [],
+  "application_rounds": [
+    {
+      "closes_on": null,
+      "degree_level": null,
+      "label": "Vasaras uzņemšana 2027",
+      "language_of_instruction": null,
+      "note": "JK 2027./2028. studiju gada uzņemšanas noteikumi: dokumentus pieņem no 2027. gada 1. jūlija; beigu datums nav norādīts.",
+      "opens_on": "2027-07-01",
+      "source_url": "https://jk.lv/uznemsana/uznemsana/uznemsanas-noteikumi/",
+      "university_slug": "juridiska-koledza",
+      "verified_at": "2026-11-22T09:55:29.580984+00:00"
+    },
+    {
+      "closes_on": "2027-02-05",
+      "degree_level": null,
+      "label": "Ziemas uzņemšana 2027",
+      "language_of_instruction": null,
+      "note": "JK 2027./2028. studiju gada uzņemšanas noteikumi: dokumentus pieņem no 2027. gada 5. janvāra līdz 5. februārim.",
+      "opens_on": "2027-01-05",
+      "source_url": "https://jk.lv/uznemsana/uznemsana/uznemsanas-noteikumi/",
+      "university_slug": "juridiska-koledza",
+      "verified_at": "2026-11-22T09:55:29.580984+00:00"
+    }
+  ],
   "country_costs": [
     {
       "amount": 90.0,

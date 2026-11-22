@@ -1,3 +1,5 @@
+import { httpUrl } from "@/lib/application-channel";
+
 export type ApplicationRound = {
   universityId: string;
   degreeLevel: string | null;
@@ -7,6 +9,8 @@ export type ApplicationRound = {
   closesOn: string | null;
   note: string | null;
   sourceUrl: string | null;
+  // когда человек подтвердил срок (правило 6); публичный запрос отдаёт только подтверждённые
+  verifiedAt: string;
 };
 
 // Раунд относится к программе, если университет совпадает, а
@@ -27,4 +31,17 @@ export function matchRounds(
       (round.degreeLevel === null || round.degreeLevel === degreeLevel) &&
       (round.languageOfInstruction === null || round.languageOfInstruction === languageOfInstruction),
   );
+}
+
+// Источники сроков программы для строки «проверено … Источник» (правило 5):
+// одна запись на пару «адрес + день проверки», в порядке появления. Адрес —
+// только http(s), иначе ссылки нет (тот же httpUrl, что у «Kur pieteikties»).
+export function roundSources(rounds: ApplicationRound[]): { sourceUrl: string | null; verifiedAt: string }[] {
+  const seen = new Map<string, { sourceUrl: string | null; verifiedAt: string }>();
+  for (const round of rounds) {
+    const sourceUrl = httpUrl(round.sourceUrl);
+    const key = `${sourceUrl ?? ""}|${round.verifiedAt.slice(0, 10)}`;
+    if (!seen.has(key)) seen.set(key, { sourceUrl, verifiedAt: round.verifiedAt });
+  }
+  return [...seen.values()];
 }

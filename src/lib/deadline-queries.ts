@@ -12,7 +12,7 @@ import { remember } from "@/lib/server-memo";
 export const getApplicationRounds = cache(async (): Promise<ApplicationRound[]> => {
   const { data, error } = await supabase
     .from("application_round")
-    .select("university_id, degree_level, language_of_instruction, label, opens_on, closes_on, note, source_url")
+    .select("university_id, degree_level, language_of_instruction, label, opens_on, closes_on, note, source_url, verified_at")
     .not("verified_at", "is", null);
 
   if (error) throw error;
@@ -26,6 +26,7 @@ export const getApplicationRounds = cache(async (): Promise<ApplicationRound[]> 
     closesOn: row.closes_on,
     note: row.note,
     sourceUrl: row.source_url,
+    verifiedAt: row.verified_at,
   }));
 });
 

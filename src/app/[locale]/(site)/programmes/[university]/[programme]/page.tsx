@@ -16,7 +16,7 @@ import { getEeProgrammeField } from "@/lib/ee-field-queries";
 import { admissionState, tallinnDate } from "@/lib/ee-admission";
 import { getEeAdmission } from "@/lib/ee-admission-queries";
 import { getApplicationRoundsForCards } from "@/lib/deadline-queries";
-import { matchRounds } from "@/lib/deadlines";
+import { matchRounds, roundSources } from "@/lib/deadlines";
 import { getAdmissionType } from "@/lib/admission-type-queries";
 import { httpUrl, matchChannel } from "@/lib/application-channel";
 import { getApplicationChannels } from "@/lib/application-channel-queries";
@@ -461,6 +461,26 @@ export default async function ProgrammePage({ params }: { params: Params }) {
           </ul>
         ) : (
           <p className="mt-2 text-zinc-500">{dict.programme.deadlinesNotAvailable}</p>
+        )}
+        {/* Дата проверки и источник рядом со сроками — правило 5. Окна одного
+            вуза обычно из одного документа и подтверждены разом: одна строка
+            на каждую пару «источник + дата проверки», а не на каждое окно. */}
+        {!(eeAdmission && eeAdmissionState !== "undated") && applicationRounds.length > 0 && (
+          <>
+            {roundSources(applicationRounds).map(({ sourceUrl, verifiedAt }) => (
+              <p key={`${sourceUrl}-${verifiedAt}`} className="mt-2 text-xs leading-relaxed text-zinc-500">
+                {dict.catalog.verifiedPrefix} {formatDate(verifiedAt, language).replace(/\.?$/, ".")}
+                {sourceUrl && (
+                  <>
+                    {" "}
+                    <a href={sourceUrl} target="_blank" rel="noopener noreferrer" className="underline">
+                      {dict.catalog.sourceLinkLabel}
+                    </a>
+                  </>
+                )}
+              </p>
+            ))}
+          </>
         )}
       </section>
 
