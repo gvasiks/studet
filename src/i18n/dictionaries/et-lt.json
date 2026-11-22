@@ -316,7 +316,7 @@
   "privacy": {
     "title": "Privaatsuspoliitika",
     "intro": "Kuidas see sait isikuandmeid töötleb: mida säilitatakse, mida mitte ja millised on andmesubjekti õigused. See tekst on tõlge; lahknevuse korral kehtib leedukeelne tekst.",
-    "updated": "Redaktsioon: 14. november 2026",
+    "updated": "Redaktsioon: 22. november 2026",
     "authorityLabel": "Leedu Riiklik Andmekaitse Inspektsioon (vdai.lrv.lt)",
     "authorityUrl": "https://vdai.lrv.lt",
     "sections": [
@@ -381,15 +381,6 @@
         ]
       },
       {
-        "id": "email",
-        "title": "E-posti meeldetuletused",
-        "body": [
-          "Kui külastaja ise palub meeldetuletust (näiteks vastuvõtu alguse või salvestatud õppekavade loendi muudatuste kohta), säilitame tema e-posti aadressi ja selle, mille kohta teateid sooviti. Neid andmeid kasutame ainult soovitud eesmärgil.",
-          "Alus: nõusolek (üldmääruse artikli 6 lõike 1 punkt a). Nõusoleku saab igal ajal tagasi võtta iga e-kirja lingi kaudu või kirjutades aadressil {email}; tagasivõtmine ei mõjuta varasemate e-kirjade seaduslikkust.",
-          "E-kirju saadab teenusepakkuja Resend. Aadressi kustutame pärast nõusoleku tagasivõtmist ja hiljemalt 12 kuud pärast viimast saadetud e-kirja."
-        ]
-      },
-      {
         "id": "minors",
         "title": "Õpilased ja noored",
         "body": [
@@ -403,9 +394,8 @@
         "body": [
           "Me ei müü andmeid ega näita reklaami. Andmeid töötlevad ainult meie teenusepakkujad (volitatud töötlejad) ja ainult meie ülesandel:",
           "- majutusteenuse pakkuja Contabo GmbH, Saksamaa (saidi toimimine; server asub Euroopa Liidus);",
-          "- andmebaasiteenuse osutaja (serverid Euroopa Liidus; e-posti aadressid, kui need on esitatud);",
+          "- andmebaasiteenuse osutaja (serverid Euroopa Liidus);",
           "- PostHog (kasutusstatistika, serverid Euroopa Liidus);",
-          "- Resend (e-kirjade saatmine).",
           "Meile saadetud kirjavahetus on Gmaili postkastis. Seda teenust osutab Google oma tingimuste ja privaatsuspoliitika (policies.google.com/privacy) alusel iseseisva vastutava töötlejana, mitte meie ülesandel: isikuandmete töötlemise lepingut meil Google'iga ei ole. Kirjavahetust võidakse säilitada ka väljaspool Euroopa Majanduspiirkonda.",
           "Kui teenusepakkuja edastab andmeid väljapoole Euroopa Majanduspiirkonda, toimub see Euroopa Komisjoni heakskiidetud kaitsemeetmetega, näiteks lepingu tüüptingimustega."
         ]

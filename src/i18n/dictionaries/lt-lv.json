@@ -309,7 +309,7 @@
   },
   "privacy": {
     "intro": "Kaip ši svetainė tvarko asmens duomenis: ką saugome, ko nesaugome ir kokios yra jūsų teisės. Šis tekstas — vertimas iš latvių kalbos; jei tekstai skiriasi, galioja tekstas latvių kalba.",
-    "updated": "Redakcija: 2026 m. lapkričio 14 d.",
+    "updated": "Redakcija: 2026 m. lapkričio 22 d.",
     "authorityLabel": "Latvijos duomenų valstybinė inspekcija (dvi.gov.lv)",
     "authorityUrl": "https://www.dvi.gov.lv/en",
     "sections": [
@@ -374,15 +374,6 @@
         ]
       },
       {
-        "id": "email",
-        "title": "Priminimai el. paštu",
-        "body": [
-          "Jei patys paprašote priminimo (pavyzdžiui, apie priėmimo pradžią arba pokyčius jūsų programų sąraše), saugome jūsų el. pašto adresą ir tai, apie ką norite būti informuoti. Naudojame juos tik tam, ko prašėte.",
-          "Teisinis pagrindas: jūsų sutikimas (6 straipsnio 1 dalies a punktas). Sutikimą galite atšaukti bet kada — nuoroda kiekviename laiške arba parašę {email}; atšaukimas neturi įtakos jau išsiųstiems laiškams.",
-          "Laiškus siunčia paslaugų teikėjas „Resend“. Adresą ištriname jums atšaukus sutikimą ir ne vėliau kaip po 12 mėnesių nuo paskutinio išsiųsto laiško."
-        ]
-      },
-      {
         "id": "minors",
         "title": "Moksleiviai ir jaunimas",
         "body": [
@@ -396,9 +387,8 @@
         "body": [
           "Duomenų neparduodame ir nerodome reklamos. Duomenis tvarko tik mūsų paslaugų teikėjai (duomenų tvarkytojai) ir tik mūsų pavedimu:",
           "- prieglobos paslaugų teikėjas Contabo GmbH, Vokietija (svetainės veikimas; serveris yra Europos Sąjungoje);",
-          "- duomenų bazės paslaugų teikėjas (serveriai Europos Sąjungoje; el. pašto adresai, jei juos pateikiate);",
+          "- duomenų bazės paslaugų teikėjas (serveriai Europos Sąjungoje);",
           "- „PostHog“ (naudojimo statistika, serveriai Europos Sąjungoje);",
-          "- „Resend“ (el. laiškų siuntimas).",
           "Jei mums rašote, susirašinėjimas saugomas „Gmail“ pašto dėžutėje. Šią paslaugą „Google“ teikia pagal savo sąlygas ir privatumo politiką (policies.google.com/privacy) kaip savarankiškas duomenų valdytojas, o ne mūsų pavedimu: duomenų tvarkymo sutarties su „Google“ neturime. Susirašinėjimas gali būti saugomas ir už Europos ekonominės erdvės ribų.",
           "Jei paslaugų teikėjas perduoda duomenis už Europos ekonominės erdvės ribų, jis tai daro taikydamas Europos Komisijos patvirtintas apsaugos priemones, pavyzdžiui, standartines sutarčių sąlygas."
         ]

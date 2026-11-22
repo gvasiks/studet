@@ -1034,7 +1034,7 @@
   "privacy": {
     "title": "Privacy policy",
     "intro": "How this site handles personal data: what we keep, what we don't, and what your rights are.",
-    "updated": "Version: 14 November 2026",
+    "updated": "Version: 22 November 2026",
     "authorityLabel": "Data State Inspectorate (dvi.gov.lv)",
     "authorityUrl": "https://www.dvi.gov.lv/en",
     "sections": [
@@ -1099,15 +1099,6 @@
         ]
       },
       {
-        "id": "email",
-        "title": "E-mail reminders",
-        "body": [
-          "If you ask for a reminder yourself (for example about the start of admission or changes in your programme list), we store your e-mail address and what you want to be told about. We use them only for what you asked.",
-          "Legal basis: your consent (Article 6(1)(a)). You can withdraw consent at any time with the link in every e-mail or by writing to {email}; withdrawal does not affect e-mails already sent.",
-          "E-mails are sent by the provider Resend. We delete the address after you withdraw consent and no later than 12 months after the last e-mail sent."
-        ]
-      },
-      {
         "id": "minors",
         "title": "School pupils and young people",
         "body": [
@@ -1121,9 +1112,8 @@
         "body": [
           "We do not sell data and we show no advertising. Data is processed only by our service providers (processors), and only on our behalf:",
           "- the hosting provider Contabo GmbH, Germany (running the site; the server is in the European Union);",
-          "- the database provider (servers in the European Union; e-mail addresses, if you submit them);",
+          "- the database provider (servers in the European Union);",
           "- PostHog (usage statistics, servers in the European Union);",
-          "- Resend (sending e-mail).",
           "If you write to us, the correspondence is kept in a Gmail mailbox. Google provides this service under its own terms and privacy policy (policies.google.com/privacy) as an independent controller, not on our behalf: we have no data processing agreement with Google. The correspondence may also be stored outside the European Economic Area.",
           "If a provider transfers data outside the European Economic Area, it does so with safeguards approved by the European Commission, for example standard contractual clauses."
         ]
