@@ -39,6 +39,8 @@ export type MatchFormula = {
   language: string | null;
   verifiedAt: string;
   sourceUrl: string | null;
+  // учебный год правил приёма (academicYearOf из названия документа); нет — не показываем
+  rulesYear?: { from: number; to: number } | null;
   terms: FormulaTerm[];
   gates: FormulaGate[];
   // Год прошлого приёма, цифры которого есть на странице программы

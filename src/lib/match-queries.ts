@@ -5,7 +5,7 @@ import { localizedName } from "@/lib/names";
 import { httpUrl } from "@/lib/application-channel";
 import { getLevelCoefficients } from "@/lib/formula-queries";
 import { getVuppYears } from "@/lib/vupp-stat-queries";
-import type { ExamLevel, FormulaGate, FormulaTerm } from "@/lib/formula";
+import { academicYearOf, type ExamLevel, type FormulaGate, type FormulaTerm } from "@/lib/formula";
 import { FIXTURE_FORMULAS, FIXTURE_LEVEL_COEFFICIENTS, FIXTURE_REQUIREMENTS } from "@/lib/match-fixture";
 import type { MatchFormula, MatchRequirement } from "@/lib/match";
 import { remember } from "@/lib/server-memo";
@@ -58,7 +58,7 @@ const loadMatchData = cache(async (language: Language, country: Country): Promis
   const { data: rows, error } = await supabase
     .from("formula")
     .select(
-      "id, programme_id, valid_from, source_url, verified_at, programme!inner(slug, name_lv, name_en, degree_level, language_of_instruction, university!inner(slug, name_lv, name_en))",
+      "id, programme_id, valid_from, source_url, source_doc, verified_at, programme!inner(slug, name_lv, name_en, degree_level, language_of_instruction, university!inner(slug, name_lv, name_en))",
     )
     .eq("variant", "ce")
     .eq("programme.university.country", country)
@@ -130,6 +130,7 @@ const loadMatchData = cache(async (language: Language, country: Country): Promis
       language: programme.language_of_instruction,
       verifiedAt: row.verified_at as string,
       sourceUrl: httpUrl(row.source_url),
+      rulesYear: academicYearOf(row.source_doc as string | null),
       terms: termsByFormula.get(row.id) ?? [],
       gates: gatesByFormula.get(row.id) ?? [],
       pastAdmissionYear: pastYears.get(row.programme_id),

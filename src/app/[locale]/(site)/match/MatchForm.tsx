@@ -532,6 +532,8 @@ function ResultRow({
           <p className="mt-3 flex flex-wrap items-center gap-x-2 gap-y-1 text-xs text-zinc-600">
             <CheckIcon size={13} className="shrink-0 text-emerald-600" />
             <span>
+              {formula.rulesYear &&
+                `${interpolate(dict.calculator.rulesYear, { from: String(formula.rulesYear.from), to: String(formula.rulesYear.to) })} `}
               {dict.catalog.verifiedPrefix} {formatDate(formula.verifiedAt, languageOf(locale))}
             </span>
             {formula.sourceUrl && (
