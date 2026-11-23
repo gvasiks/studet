@@ -189,6 +189,7 @@ LTVK_RULES = "https://ltvk.lt/wp-content/uploads/2026/01/Enrolment-Rules-for-Int
 
 B = ["bachelor"]
 C = ["college"]
+M = ["master"]
 
 ROWS += [
     # --- VDU (Vytautas Magnus University) ---
@@ -444,18 +445,18 @@ ROWS += [
     ("taltech", B + C, "recognition", "all", "by_university", "Estonian ENIC/NARIC assesses the documents; may take up to a month.",
      TALTECH_APPLY, "All education documents will be assessed by the Estonian ENIC/NARIC"),
 
-    # --- EMTA (Estonian Academy of Music and Theatre) ---
-    ("emta", B, "photo", "all", "application", "Electronic.",
+    # --- EMTA (Estonian Academy of Music and Theatre); список общий для бакалавриата и магистратуры ---
+    ("emta", B + M, "photo", "all", "application", "Electronic.",
      EAMT_DATES, "1 photo (electronic form)"),
-    ("emta", B, "passport", "all", "application", "Or an ID card.",
+    ("emta", B + M, "passport", "all", "application", "Or an ID card.",
      EAMT_DATES, "copy of identity card or passport"),
     ("emta", B, "secondary_diploma", "all", "application", "With the grades.",
      EAMT_DATES, "copy of document certifying completion of the previous educational level with a certificate with grades or diploma supplement"),
-    ("emta", B, "english_certificate", "all", "application", None,
+    ("emta", B + M, "english_certificate", "all", "application", None,
      EAMT_DATES, "Proof of English language Proficiency"),
-    ("emta", B, "application_fee_receipt", "all", "application", "Normally paid by bank transfer.",
+    ("emta", B + M, "application_fee_receipt", "all", "application", "Normally paid by bank transfer.",
      EAMT_DATES, "normally needs to be paid by bank transfer"),
-    ("emta", B, "criminal_record", "non_eu_citizens", "before_arrival",
+    ("emta", B + M, "criminal_record", "non_eu_citizens", "before_arrival",
      "For the residence permit; issued within six months before arrival, from age 14.",
      EAMT_GUIDELINE, "you are required to submit a criminal record certificate (or proof of no criminal record) from a foreign country"),
 
@@ -491,7 +492,11 @@ ROWS += [
 # Выписаны 2026-11-23, отчёт — docs/checks/STUDENT-DOCUMENTS-EE.md.
 UT_MASTER = "https://ut.ee/en/curriculum/international-law-and-human-rights"
 TLU_MASTER = "https://www.tlu.ee/en/admission-masters-studies"
-M = ["master"]
+EBS_MASTER = "https://www.ebs.ee/en/university/masters-studies/admission-information"
+EMU_ADMISSIONS = "https://www.emu.ee/en/admissions"
+TARTUH_PHYSIO = "https://www.tartuh.ee/en/admission/physiotherapy/admission-requirements/"
+EKA_MASTER = "https://www.artun.ee/en/admissions/masters/admissions/"
+EKA_DOCS = "https://www.artun.ee/en/admissions/masters/educational-documents/"
 
 ROWS += [
     # --- UT: перечень одинаков на страницах магистратур (сверено на двух) ---
@@ -528,6 +533,8 @@ ROWS += [
      TALTECH_APPLY, "most study programmes require a motivation letter to be submitted when applying"),
     ("taltech", M, "application_fee_receipt", "all", "application", "Uploaded to DreamApply; the application can be submitted only after payment.",
      TALTECH_APPLY, "upload the application fee receipt to the \"TalTech application fee\" task in the DreamApply system"),
+    ("taltech", M, "recognition", "all", "by_university", "Estonian ENIC/NARIC assesses the documents; may take up to a month.",
+     TALTECH_APPLY, "All education documents will be assessed by the Estonian ENIC/NARIC"),
 
     # --- TLU ---
     ("tlu", M, "bachelor_diploma", "all", "application", "Or a certificate of a corresponding qualification.",
@@ -542,6 +549,72 @@ ROWS += [
      TLU_MASTER, "Copy of the identification page of the passport"),
     ("tlu", M, "application_fee_receipt", "all", "application", "The application is reviewed after the fee arrives.",
      TLU_MASTER, "the application fee has been received"),
+
+    # --- EMTA: строки бакалавриата выше расширены на магистратуру; здесь — диплом ---
+    ("emta", M, "bachelor_diploma", "all", "application", "With the diploma supplement.",
+     EAMT_DATES, "copy of document certifying completion of the previous educational level with a certificate with grades or diploma supplement"),
+
+    # --- EBS: общая страница приёма в магистратуру (MA, MBA) ---
+    ("ebs", M, "bachelor_diploma", "all", "application", "Proper scans, with the grade transcript.",
+     EBS_MASTER, "Previous education documents (certificate/diploma and grade transcript)"),
+    ("ebs", M, "transcript", "final_year", "application", "If final documents are not ready yet, the most recent transcripts in English.",
+     EBS_MASTER, "If your final documents are not available yet, then upload your most recent academic transcripts in English"),
+    ("ebs", M, "english_translation", "all", "application", "Together with the originals.",
+     EBS_MASTER, "Provide authorised English translations of your documents if the originals are not in English, along with the original documents"),
+    ("ebs", M, "english_certificate", "all", "application", "An internationally recognised test, at least B2.",
+     EBS_MASTER, "we ask the candidates to present an internationally recognised English language test"),
+    ("ebs", M, "cv", "all", "application", "MBA programmes: it must show 3 years of management or team-lead experience.",
+     EBS_MASTER, "Has 3 years of management or team-lead experience and demonstrates in in their CV"),
+    ("ebs", M, "motivation_letter", "all", "application", "Answers to questions about your background, achievements and goals, in DreamApply.",
+     EBS_MASTER, "you will answer several questions about your background, achievements and future goals"),
+    ("ebs", M, "recommendation_letters", "all", "application", "Contacts of two referees; EBS asks them for an assessment by email.",
+     EBS_MASTER, "provide the contact information of two references"),
+    ("ebs", M, "passport", "all", "application", None,
+     EBS_MASTER, "Copy of passport identification pages"),
+
+    # --- EMU: английская первая ступень у EMU — только ветеринария (интегрированная) ---
+    ("emu", M, "bachelor_diploma", "all", "application", "Final or most recent; scans, not photos.",
+     EMU_ADMISSIONS, "education documents (final or most recent) and official English translations"),
+    ("emu", M, "english_translation", "all", "application", None,
+     EMU_ADMISSIONS, "official English translations"),
+    ("emu", M, "passport", "all", "application", "Valid during the application process.",
+     EMU_ADMISSIONS, "passport identification page (document needs to be valid during the application process)"),
+    ("emu", M, "english_certificate", "all", "application", None,
+     EMU_ADMISSIONS, "proof of English language proficiency"),
+    ("emu", M, "motivation_letter", "all", "application", "Typed into DreamApply.",
+     EMU_ADMISSIONS, "Type in your motivation letter"),
+    ("emu", M, "application_fee_receipt", "all", "application", "Not needed if the previous study level was completed in Estonia.",
+     EMU_ADMISSIONS, "applying to the Master's or Doctoral level programme at the Estonian University of Life Sciences are required to pay a non-refundable application fee"),
+
+    # --- Tartu tervishoiu kõrgkool: списки на страницах физиотерапии и радиографии совпадают ---
+    ("tartuh", M, "bachelor_diploma", "all", "application", "In the field of the programme (physiotherapy or radiography).",
+     TARTUH_PHYSIO, "Bachelor’s degree – a copy of the diploma and the diploma supplement/academic transcript"),
+    ("tartuh", M, "transcript", "all", "application", "The diploma supplement or academic transcript.",
+     TARTUH_PHYSIO, "Bachelor’s diploma and transcript of records"),
+    ("tartuh", M, "cv", "all", "application", None,
+     TARTUH_PHYSIO, "Submit your CV."),
+    ("tartuh", M, "passport", "all", "application", "Or an ID card.",
+     TARTUH_PHYSIO, "copy of passport (identification page) or ID"),
+    ("tartuh", M, "english_certificate", "all", "application", None,
+     TARTUH_PHYSIO, "Proof of English language proficiency"),
+
+    # --- EKA: общий список; программы добавляют своё (портфолио, мотивационное письмо) ---
+    ("eka-ee", M, "bachelor_diploma", "all", "application", "Scans are enough at first; accepted applicants post certified copies.",
+     EKA_MASTER, "Copy of your bachelor’s degree certificate or equivalent"),
+    ("eka-ee", M, "transcript", "all", "application", None,
+     EKA_MASTER, "Copy of your transcript of records"),
+    ("eka-ee", M, "enrolment_letter", "final_year", "application", "From your school: final documents will be issued by the deadline set by EKA.",
+     EKA_MASTER, "a written confirmation (email, certificate etc) from their educational institution"),
+    ("eka-ee", M, "english_translation", "all", "application", "Certified; only if the documents are not in English or Estonian.",
+     EKA_DOCS, "If the documents are not in English or Estonian, certified translations need to be included."),
+    ("eka-ee", M, "english_certificate", "all", "application", None,
+     EKA_MASTER, "English language proficiency certificate"),
+    ("eka-ee", M, "passport", "all", "application", None,
+     EKA_MASTER, "Copy of the data page of your passport"),
+    ("eka-ee", M, "cv", "all", "application", "With education, work experience and creative activity; the page lists what to include.",
+     EKA_MASTER, "CV that contains the following information"),
+    ("eka-ee", M, "application_fee_receipt", "all", "application", "The application is processed after the fee arrives.",
+     EKA_MASTER, "applications will only be processed after"),
 ]
 
 
@@ -603,7 +676,7 @@ def main(apply: bool) -> None:
         print("foreign_document_requirement ещё нет в базе (миграция не применена) — показываю черновики без сверки\n")
         existing = {}
 
-    written = skipped = 0
+    written = skipped = not_allowed = 0
     for source in expanded():
         if source["university"] not in universities:
             raise SystemExit(f"вуза {source['university']!r} нет в таблице university")
@@ -616,10 +689,20 @@ def main(apply: bool) -> None:
         print(f"{source['university']:4} {row['degree_level']:9} {row['stage']:15} {row['document']:24} {row['applies_to']}")
         if apply:
             # verified_at/verified_by в записи нет — их ставит только человек
-            execute(client.table("foreign_document_requirement").upsert(
-                row, on_conflict="university_id,degree_level,document,applies_to"
-            ))
+            try:
+                execute(client.table("foreign_document_requirement").upsert(
+                    row, on_conflict="university_id,degree_level,document,applies_to"
+                ))
+            except Exception as exc:  # noqa: BLE001
+                # 23514 — нарушение check: ключ документа новее миграции в базе
+                if "23514" not in str(exc):
+                    raise
+                print(f"    пропущено: ключа {row['document']!r} ещё нет в базе — примените миграцию в Studio")
+                not_allowed += 1
+                continue
             written += 1
+    if not_allowed:
+        print(f"\nпропущено до миграции: {not_allowed}")
     print(f"\nуже подтверждено (не трогаю): {skipped}")
     print(f"записано: {written}" + ("" if apply else " (сухой прогон — запись только с --apply)"))
 
