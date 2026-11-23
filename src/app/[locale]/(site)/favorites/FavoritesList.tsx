@@ -154,6 +154,22 @@ export function FavoritesList({
   }
 
   const calculatorSet = new Set(calculatorIds);
+  const now = new Date();
+
+  // Срок подачи — тот же, что в чипе карточки каталога: у эстонской программы
+  // конец её действующего конкурса, у остальных — ближайший подтверждённый
+  // раунд с датой закрытия. null — срока нет.
+  function deadlineOf(programme: ProgrammeWithUniversity): string | null {
+    const eeClosesAt = openDeadline(eeDeadlines, programme.id, now);
+    if (eeClosesAt) return `${dict.programme.deadlinesCloses} ${tallinnDate(eeClosesAt, languageOf(locale))}`;
+    const nextRound = matchRounds(
+      applicationRounds,
+      programme.university_id,
+      programme.degree_level,
+      programme.language_of_instruction,
+    ).find((round) => round.closesOn !== null);
+    return nextRound ? `${dict.programme.deadlinesCloses} ${formatDate(nextRound.closesOn!, languageOf(locale))}` : null;
+  }
 
   const rows: Row[] = [
     { label: dict.programme.degreeLevel, render: (p) => enumLabel(dict.catalog.degreeLevel, p.degree_level) },
@@ -176,6 +192,7 @@ export function FavoritesList({
       label: dict.programme.budgetPlaces,
       render: (p) => (p.budget_places !== null ? String(p.budget_places) : "—"),
     },
+    { label: dict.programme.deadlinesTitle, render: (p) => deadlineOf(p) ?? "—" },
   ];
 
   // Первая колонка прилипает к левому краю: при четырёх программах таблица
@@ -191,13 +208,6 @@ export function FavoritesList({
       <div className="mt-8 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
         {programmes.map((programme) => {
           const selected = compareIds.includes(programme.id);
-          const nextRound = matchRounds(
-            applicationRounds,
-            programme.university_id,
-            programme.degree_level,
-            programme.language_of_instruction,
-          ).find((round) => round.closesOn !== null);
-          const eeClosesAt = openDeadline(eeDeadlines, programme.id, new Date());
 
           return (
             <ProgrammeCard
@@ -207,13 +217,7 @@ export function FavoritesList({
               programme={programme}
               showCountry={countries.length > 1}
               hasCalculator={calculatorSet.has(programme.id)}
-              deadline={
-                eeClosesAt
-                  ? `${dict.programme.deadlinesCloses} ${tallinnDate(eeClosesAt, languageOf(locale))}`
-                  : nextRound
-                    ? `${dict.programme.deadlinesCloses} ${formatDate(nextRound.closesOn!, languageOf(locale))}`
-                    : null
-              }
+              deadline={deadlineOf(programme)}
               footer={
                 <label
                   className={`inline-flex items-center gap-2 text-sm font-medium ${
