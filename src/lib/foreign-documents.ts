@@ -5,7 +5,8 @@
 // и неподтверждённые, с пометкой «извлечено автоматически» (решение 2026-11-19).
 
 // Совпадает с check в миграциях 20261114120000_foreign_document_requirement.sql,
-// 20261114130000_foreign_document_aic_statement.sql и 20261120120000_foreign_documents_lt_ee.sql.
+// 20261114130000_foreign_document_aic_statement.sql, 20261120120000_foreign_documents_lt_ee.sql
+// и 20261123120000_foreign_document_test_score.sql.
 export const DOCUMENT_KEYS = [
   "passport",
   "photo",
@@ -20,6 +21,8 @@ export const DOCUMENT_KEYS = [
   // делает вуз или SKVC
   "recognition",
   "english_certificate",
+  // результат вступительного теста (GRE у магистратур TalTech)
+  "test_score",
   "motivation_letter",
   "cv",
   "recommendation_letters",

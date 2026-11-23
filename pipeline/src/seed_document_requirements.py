@@ -35,13 +35,14 @@ from __future__ import annotations
 
 import sys
 
-# Совпадает с check в миграциях 20261114120000, 20261114130000 и 20261120120000 и с src/lib/foreign-documents.ts.
+# Совпадает с check в миграциях 20261114120000, 20261114130000, 20261120120000 и 20261123120000 и с src/lib/foreign-documents.ts.
 DOCUMENTS = {
     "passport", "photo", "secondary_diploma", "bachelor_diploma", "transcript",
     "enrolment_letter", "english_translation", "legalisation", "aic_statement", "english_certificate",
     "motivation_letter", "cv", "recommendation_letters", "criminal_record",
     "minor_documents", "proof_of_funds", "application_fee_receipt",
     "recognition",  # миграция 20261120120000
+    "test_score",  # миграция 20261123120000
 }
 APPLIES_TO = {"all", "docs_issued_outside_eu", "non_eu_citizens", "visa_required", "under_18", "final_year"}
 STAGES = {"application", "before_arrival", "by_university"}  # by_university — миграция 20261114140000
@@ -482,6 +483,65 @@ ROWS += [
      EMKTS_FOREIGN, "Recommendation from applicant pastor"),
     ("emkts", C, "application_fee_receipt", "non_eu_citizens", "application", "Only for applicants who need a residence permit.",
      EMKTS_FOREIGN, "Pay the application fee required of those needing a living permit."),
+]
+
+# --- Эстония, магистратура (решение владельца 2026-11-23: «Да, только Эстония») ---
+# Английские магистратуры Эстонии; у Литвы магистратур в каталоге нет (общий приём
+# LAMA BPO и AIKOS дают только первую ступень), поэтому её строки не пишутся.
+# Выписаны 2026-11-23, отчёт — docs/checks/STUDENT-DOCUMENTS-EE.md.
+UT_MASTER = "https://ut.ee/en/curriculum/international-law-and-human-rights"
+TLU_MASTER = "https://www.tlu.ee/en/admission-masters-studies"
+M = ["master"]
+
+ROWS += [
+    # --- UT: перечень одинаков на страницах магистратур (сверено на двух) ---
+    ("ut", M, "bachelor_diploma", "all", "application", "Official copy with the Diploma Supplement, in the original language, with the grading scale.",
+     UT_MASTER, "bachelor's diploma or its equivalent and Diploma Supplement (transcript) in the original language (must include a description of the grading scale)"),
+    ("ut", M, "transcript", "final_year", "application", "Most recent official transcript, with a statement of current enrolment and expected graduation date.",
+     UT_MASTER, "should electronically submit their most recent official transcript by the application deadline"),
+    ("ut", M, "english_translation", "all", "application", "Certified translation of the diploma and Diploma Supplement.",
+     UT_MASTER, "official translation of the bachelor’s diploma and Diploma Supplement (transcript) into English, translation certified"),
+    ("ut", M, "legalisation", "all", "application", "Certified copies; admitted students post them within 3 weeks of the offer.",
+     UT_MASTER, "All copies of educational documents (diplomas and Diploma Supplements/transcripts) must be officially certified"),
+    ("ut", M, "english_certificate", "all", "application", None,
+     UT_MASTER, "proof of English language proficiency"),
+    ("ut", M, "motivation_letter", "all", "application", "In English; the programme page sets the length and questions.",
+     UT_MASTER, "Please write a brief motivation letter"),
+    ("ut", M, "passport", "all", "application", None,
+     UT_MASTER, "copy of the passport page stating the applicant’s personal particulars"),
+    ("ut", M, "application_fee_receipt", "all", "application", "Not needed if the previous study level was completed in Estonia.",
+     UT_MASTER, "confirmation/receipt of application fee payment (if applicable)"),
+
+    # --- TalTech: страница подачи общая для бакалавриата и магистратуры ---
+    ("taltech", M, "bachelor_diploma", "all", "application", "Final or most recent; scans, not photos. Country-specific requirements may ask for more.",
+     TALTECH_APPLY, "education documents of the required level (final or most recent ) and official English translations"),
+    ("taltech", M, "english_translation", "all", "application", None,
+     TALTECH_APPLY, "official English translations"),
+    ("taltech", M, "passport", "all", "application", "Valid during the application process.",
+     TALTECH_APPLY, "passport identification page (document needs to be valid during the application process)"),
+    ("taltech", M, "english_certificate", "all", "application", None,
+     TALTECH_APPLY, "proof of English language proficiency"),
+    ("taltech", M, "test_score", "all", "application",
+     "GRE General Test, sent by ETS directly to TalTech. Not needed with a full degree from an EU, EFTA or OECD country; e-Governance applicants may take TalTech's own test instead.",
+     TALTECH_APPLY, "In order to apply for Master’s programmes, a candidate is required to present a Test-taker Score Report of the GRE General Test"),
+    ("taltech", M, "motivation_letter", "all", "application", "Typed into DreamApply; most programmes ask for it.",
+     TALTECH_APPLY, "most study programmes require a motivation letter to be submitted when applying"),
+    ("taltech", M, "application_fee_receipt", "all", "application", "Uploaded to DreamApply; the application can be submitted only after payment.",
+     TALTECH_APPLY, "upload the application fee receipt to the \"TalTech application fee\" task in the DreamApply system"),
+
+    # --- TLU ---
+    ("tlu", M, "bachelor_diploma", "all", "application", "Or a certificate of a corresponding qualification.",
+     TLU_MASTER, "Copy of a Bachelor’s degree certificate or certificate of a corresponding qualification"),
+    ("tlu", M, "transcript", "all", "application", None,
+     TLU_MASTER, "Copy of Bachelor's degree Transcript of Records/Academic Transcript"),
+    ("tlu", M, "english_translation", "all", "application", "For the diploma and transcript, if not in English.",
+     TLU_MASTER, "an official translation is requested if the document is not in English"),
+    ("tlu", M, "english_certificate", "all", "application", None,
+     TLU_MASTER, "Proof of English language Proficiency"),
+    ("tlu", M, "passport", "all", "application", "A sworn affidavit is also needed if the name differs between documents.",
+     TLU_MASTER, "Copy of the identification page of the passport"),
+    ("tlu", M, "application_fee_receipt", "all", "application", "The application is reviewed after the fee arrives.",
+     TLU_MASTER, "the application fee has been received"),
 ]
 
 
