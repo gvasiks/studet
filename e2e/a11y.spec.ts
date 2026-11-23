@@ -106,6 +106,8 @@ const LT_ROUTES = [
   // правило конкурса (с 2026-10-15): пороги TalTech с рейтингом и только
   // порог (балл ТÜ — на /lv-ee/programmes/ut/informaatika-4 выше)
   "/en-ee/programmes/taltech/informaatika-ja-tehisintellekt",
+  // английская магистратура: блок «Documents to prepare» (с 2026-11-23)
+  "/en-ee/programmes/ut/rahvusvaheline-oigus-ja-inimoigused",
   "/et/programmes/taltech/riistvara-arendus-ja-programmeerimine",
   "/et/survey",
   "/et-lv",
