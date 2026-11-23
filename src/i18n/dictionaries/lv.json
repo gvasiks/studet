@@ -111,6 +111,10 @@
     "found": "Atrastas {count} programmas",
     "foundOne": "Atrasta {count} programma",
     "calculatorCta": "Aprēķināt punktus",
+    "variantSpecialization": "Specializācija: {name}",
+    "variantAdmission": "Konkurss SAIS: {year}",
+    "variantAdmissionUndated": "Konkurss SAIS bez datumiem",
+    "variantNoAdmission": "Konkursa SAIS nav",
     "clear": "Notīrīt",
     "openFilters": "Filtri",
     "filters": {

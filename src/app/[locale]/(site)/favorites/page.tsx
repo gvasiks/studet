@@ -7,6 +7,8 @@ import { getApplicationRoundsForCards } from "@/lib/deadline-queries";
 import type { ApplicationRound } from "@/lib/deadlines";
 import { getCalculatorProgrammeIds } from "@/lib/calculator-ids";
 import { getEeOpenDeadlines } from "@/lib/ee-admission-queries";
+import { getEeVariants } from "@/lib/ee-variant-queries";
+import type { EeVariant } from "@/lib/ee-variants";
 import { FavoritesList } from "./FavoritesList";
 
 // noindex — страница у каждого посетителя своя (localStorage конкретного
@@ -35,18 +37,21 @@ async function loadCardData(): Promise<{
   calculatorIds: string[];
   applicationRounds: ApplicationRound[];
   eeDeadlines: Record<string, string>;
+  eeVariants: Record<string, EeVariant>;
 }> {
   try {
     // Список общий для всех открытых стран — и кнопка расчёта нужна программам каждой.
-    const [idSets, applicationRounds, eeDeadlines] = await Promise.all([
+    const [idSets, applicationRounds, eeDeadlines, eeVariants] = await Promise.all([
       Promise.all(countries.map((country) => getCalculatorProgrammeIds(country))),
       getApplicationRoundsForCards(),
       // Действующие сроки подачи эстонских программ (id программы -> конец подачи).
       countries.includes("EE") ? getEeOpenDeadlines() : {},
+      // Чем различаются версии одного учебного плана у эстонских программ.
+      countries.includes("EE") ? getEeVariants() : ({} as Record<string, EeVariant>),
     ]);
-    return { calculatorIds: idSets.flatMap((ids) => [...ids]), applicationRounds, eeDeadlines };
+    return { calculatorIds: idSets.flatMap((ids) => [...ids]), applicationRounds, eeDeadlines, eeVariants };
   } catch {
-    return { calculatorIds: [], applicationRounds: [], eeDeadlines: {} };
+    return { calculatorIds: [], applicationRounds: [], eeDeadlines: {}, eeVariants: {} };
   }
 }
 
@@ -56,7 +61,7 @@ export default async function FavoritesPage({ params }: PageProps<"/[locale]/fav
   if (!hasFeature(locale, "favorites")) notFound();
 
   const dict = await getDictionary(locale);
-  const { calculatorIds, applicationRounds, eeDeadlines } = await loadCardData();
+  const { calculatorIds, applicationRounds, eeDeadlines, eeVariants } = await loadCardData();
 
   return (
     // Заголовок — на сером фоне, как на /rights, /glossary и /survey;
@@ -73,6 +78,7 @@ export default async function FavoritesPage({ params }: PageProps<"/[locale]/fav
         calculatorIds={calculatorIds}
         applicationRounds={applicationRounds}
         eeDeadlines={eeDeadlines}
+        eeVariants={eeVariants}
       />
     </main>
   );

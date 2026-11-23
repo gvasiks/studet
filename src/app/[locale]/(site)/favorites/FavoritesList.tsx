@@ -7,6 +7,7 @@ import type { Dictionary } from "@/i18n/dictionaries";
 import { enumLabel, getProgrammesByIds, localizedName, type ProgrammeWithUniversity } from "@/lib/catalog";
 import { matchRounds, type ApplicationRound } from "@/lib/deadlines";
 import { openDeadline, tallinnDate } from "@/lib/ee-admission";
+import { variantLines, variantTexts, type EeVariant } from "@/lib/ee-variants";
 import { getFavoriteIds, removeFavorites, subscribeToFavorites } from "@/lib/favorites";
 import { interpolate } from "@/lib/outcomes";
 import { ProgrammeCard } from "@/components/ProgrammeCard";
@@ -28,6 +29,7 @@ export function FavoritesList({
   calculatorIds,
   applicationRounds,
   eeDeadlines,
+  eeVariants,
 }: {
   locale: Locale;
   dict: Dictionary;
@@ -37,6 +39,7 @@ export function FavoritesList({
   applicationRounds: ApplicationRound[];
   /** Действующие сроки подачи эстонских программ: id программы -> конец подачи. */
   eeDeadlines: Record<string, string>;
+  eeVariants: Record<string, EeVariant>;
 }) {
   // null — ещё не прочитали localStorage (первая отрисовка на сервере его
   // не видит); [] — прочитали, и там пусто. Различие нужно, чтобы не
@@ -218,6 +221,7 @@ export function FavoritesList({
               showCountry={countries.length > 1}
               hasCalculator={calculatorSet.has(programme.id)}
               deadline={deadlineOf(programme)}
+              notes={variantLines(eeVariants[programme.id], variantTexts(dict.catalog))}
               footer={
                 <label
                   className={`inline-flex items-center gap-2 text-sm font-medium ${

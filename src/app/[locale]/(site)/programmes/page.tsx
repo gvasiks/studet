@@ -10,6 +10,8 @@ import { getCalculatorProgrammeIds } from "@/lib/calculator-ids";
 import { matchRounds } from "@/lib/deadlines";
 import { openDeadline, tallinnDate } from "@/lib/ee-admission";
 import { getEeOpenDeadlines } from "@/lib/ee-admission-queries";
+import { getEeVariants } from "@/lib/ee-variant-queries";
+import { variantLines, variantTexts, type EeVariant } from "@/lib/ee-variants";
 import { listProgrammes, listUniversities } from "@/lib/catalog";
 import { countriesShown, hasActiveFilters, onlySupported, parseCatalogState } from "@/lib/catalog-query";
 import { buildCatalogView } from "@/lib/catalog-view";
@@ -83,13 +85,15 @@ export default async function ProgrammesPage({
     university: state.university,
     kind: state.kind ?? undefined,
   };
-  const [programmeLists, universityLists, applicationRounds, calculatorIdSets, eeDeadlines] = await Promise.all([
+  const [programmeLists, universityLists, applicationRounds, calculatorIdSets, eeDeadlines, eeVariants] = await Promise.all([
     Promise.all(shown.map((country) => listProgrammes(country, filters))),
     Promise.all(shown.map((country) => listUniversities(country))),
     getApplicationRoundsForCards(),
     Promise.all(shown.map((country) => getCalculatorProgrammeIds(country))),
     // Действующие сроки подачи эстонских программ — из данных государственного портала.
     shown.includes("EE") ? getEeOpenDeadlines() : {},
+    // Чем различаются версии одного учебного плана у эстонских программ.
+    shown.includes("EE") ? getEeVariants() : ({} as Record<string, EeVariant>),
   ]);
   const now = new Date();
   const programmes = programmeLists.flat();
@@ -169,6 +173,7 @@ export default async function ProgrammesPage({
                       programme={programme}
                       showCountry={shown.length > 1}
                       hasCalculator={calculatorIds.has(programme.id)}
+                      notes={variantLines(eeVariants[programme.id], variantTexts(dict.catalog))}
                       deadline={
                         eeClosesAt
                           ? `${dict.programme.deadlinesCloses} ${tallinnDate(eeClosesAt, languageOf(locale))}`

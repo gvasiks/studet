@@ -85,7 +85,7 @@ def _selftest() -> None:
             "title": "Õigusteadus",
             "fieldStudyProgrammeLevel": {"1": "Bakalaureuseõpe"},
             "fieldTeachingLanguage": {"1689": "eesti keel"},
-            "fieldEducationalInstitution": {"5": {"title": "Tartu Ülikool"}},
+            "fieldEducationalInstitution": {"5": {"title": "Tartu Ülikool", "fieldHasActivityLicense": "1"}},
             "fieldAdmissionId": "20554",
             "fieldAdmissionLink": "https://sais.ee/AdmissionSearch/View/20554",
             "fieldAdmissionBeginDate": "1791147600",

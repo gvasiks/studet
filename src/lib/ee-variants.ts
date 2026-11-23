@@ -1,0 +1,106 @@
+// Версии одного учебного плана у эстонских программ — чистая логика, без
+// обращения к базе (запросы — ee-variant-queries.ts).
+//
+// Государственный портал хранит несколько записей одной программы одного
+// учреждения: старую и новую версию учебного плана (например, две
+// «Audiovisuaalne meedia» в Таллинском университете). На карточках они
+// выглядели одинаково — 76 групп на 2026-11-23. Решение владельца 2026-11-23
+// («Специализация и конкурс»): у таких записей показывать
+//   - специализацию с портала, если она у записей группы разная;
+//   - конкурс SAIS (год последнего или «нет»), если он у записей разный.
+// У программ без двойника ничего не добавляется. Совпадающее у всех записей
+// группы не показывается: оно их не различает.
+
+export type EeVariantSource = {
+  id: string;
+  university_id: string;
+  name_et: string | null;
+  degree_level: string;
+  language_of_instruction: string;
+};
+
+/** Последний конкурс программы в SAIS: год или null, если портал не называет дат. */
+export type EeAdmissionYear = { year: number | null };
+
+export type EeVariant = {
+  /** Специализация, как на портале; нет поля — специализация группу не различает. */
+  specialization?: string;
+  /** Конкурс SAIS: год (null — без даты) или "none" — у записи конкурса нет. Нет поля — не различает. */
+  admission?: EeAdmissionYear | "none";
+};
+
+// Год по эстонским часам: подача, открытая 1 января в 00:00 по Таллину, по
+// UTC начинается ещё 31 декабря.
+const YEAR = new Intl.DateTimeFormat("en", { year: "numeric", timeZone: "Europe/Tallinn" });
+
+export function admissionYear(opensAt: string | null, closesAt: string | null): number | null {
+  const moment = opensAt ?? closesAt;
+  return moment === null ? null : Number(YEAR.format(new Date(moment)));
+}
+
+export function eeVariants(
+  programmes: readonly EeVariantSource[],
+  specializations: ReadonlyMap<string, string>,
+  admissions: ReadonlyMap<string, EeAdmissionYear>,
+): Map<string, EeVariant> {
+  const groups = new Map<string, EeVariantSource[]>();
+  for (const programme of programmes) {
+    if (!programme.name_et) continue;
+    const key = [programme.university_id, programme.name_et, programme.degree_level, programme.language_of_instruction].join("\u0000");
+    groups.set(key, [...(groups.get(key) ?? []), programme]);
+  }
+
+  const result = new Map<string, EeVariant>();
+  for (const group of groups.values()) {
+    if (group.length < 2) continue;
+    const specs = group.map((p) => specializations.get(p.id) ?? "");
+    const differentSpecs = new Set(specs.map((s) => s.toLowerCase())).size > 1;
+    const admissionKeys = group.map((p) => {
+      const admission = admissions.get(p.id);
+      return admission === undefined ? "none" : String(admission.year);
+    });
+    const differentAdmissions = new Set(admissionKeys).size > 1;
+
+    group.forEach((programme, index) => {
+      const variant: EeVariant = {};
+      if (differentSpecs && specs[index]) variant.specialization = specs[index];
+      if (differentAdmissions) variant.admission = admissions.get(programme.id) ?? "none";
+      if (variant.specialization !== undefined || variant.admission !== undefined) result.set(programme.id, variant);
+    });
+  }
+  return result;
+}
+
+/** Подписи для карточки и страницы программы, по строке на различие. */
+export function variantLines(
+  variant: EeVariant | undefined,
+  texts: { specialization: string; admission: string; admissionUndated: string; noAdmission: string },
+): string[] {
+  if (!variant) return [];
+  const lines: string[] = [];
+  if (variant.specialization) lines.push(texts.specialization.replace("{name}", variant.specialization));
+  if (variant.admission === "none") lines.push(texts.noAdmission);
+  else if (variant.admission) {
+    lines.push(
+      variant.admission.year === null
+        ? texts.admissionUndated
+        : texts.admission.replace("{year}", String(variant.admission.year)),
+    );
+  }
+  return lines;
+}
+
+/** Тексты для variantLines из раздела catalog словаря. */
+export function variantTexts(catalog: {
+  variantSpecialization: string;
+  variantAdmission: string;
+  variantAdmissionUndated: string;
+  variantNoAdmission: string;
+}) {
+  return {
+    specialization: catalog.variantSpecialization,
+    admission: catalog.variantAdmission,
+    admissionUndated: catalog.variantAdmissionUndated,
+    noAdmission: catalog.variantNoAdmission,
+  };
+}

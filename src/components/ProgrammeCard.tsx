@@ -18,6 +18,7 @@ export function ProgrammeCard({
   deadline,
   hasCalculator,
   showCountry = false,
+  notes = [],
   footer,
 }: {
   locale: Locale;
@@ -28,6 +29,8 @@ export function ProgrammeCard({
   hasCalculator: boolean;
   /** Показать страну программы — в общем списке двух стран. */
   showCountry?: boolean;
+  /** Чем программа отличается от своего двойника — версии одного учебного плана у Эстонии (ee-variants.ts). */
+  notes?: string[];
   /** Необязательный блок внизу карточки (галочка «сравнить» в «Моём списке»). */
   footer?: ReactNode;
 }) {
@@ -68,6 +71,11 @@ export function ProgrammeCard({
         <BuildingIcon size={14} className="mt-0.5 shrink-0" />
         {localizedName(programme.university, languageOf(locale))}
       </p>
+      {notes.map((note) => (
+        <p key={note} className="mt-1 text-[13px] leading-snug text-zinc-600">
+          {note}
+        </p>
+      ))}
 
       <div className="mt-auto pt-4">
         <div className="flex flex-wrap gap-2 border-t border-zinc-100 pt-4">

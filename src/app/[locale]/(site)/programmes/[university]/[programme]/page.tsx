@@ -15,6 +15,8 @@ import { getLtFieldOutcome } from "@/lib/lt-field-outcome-queries";
 import { getEeProgrammeField } from "@/lib/ee-field-queries";
 import { admissionState, tallinnDate } from "@/lib/ee-admission";
 import { getEeAdmission } from "@/lib/ee-admission-queries";
+import { getEeVariants } from "@/lib/ee-variant-queries";
+import { variantLines, variantTexts } from "@/lib/ee-variants";
 import { getApplicationRoundsForCards } from "@/lib/deadline-queries";
 import { matchRounds, roundSources } from "@/lib/deadlines";
 import { getAdmissionType } from "@/lib/admission-type-queries";
@@ -115,6 +117,8 @@ export default async function ProgrammePage({ params }: { params: Params }) {
   const eeFieldPromise = countryOf(locale) === "EE" ? getEeProgrammeField(record.id) : Promise.resolve(null);
   // Последний конкурс программы с того же портала: сроки и страница в SAIS.
   const eeAdmissionPromise = countryOf(locale) === "EE" ? getEeAdmission(record.id) : Promise.resolve(null);
+  // Чем программа отличается от двойника — другой версии того же учебного плана.
+  const eeVariantsPromise = countryOf(locale) === "EE" ? getEeVariants() : Promise.resolve(null);
   // Цифры прошлого приёма из открытого набора LAMA BPO — тоже только у Литвы.
   const ltStatsPromise = countryOf(locale) === "LT" ? getLtAdmissionYear(record.id) : Promise.resolve(null);
   // Прошлогодний конкурс с statistika.vupp.lv — у Латвии, где связь программы
@@ -145,7 +149,7 @@ export default async function ProgrammePage({ params }: { params: Params }) {
     (cardCountry === "LT" || cardCountry === "EE") && record.language_of_instruction === "en"
       ? getDocumentRequirements(record.university_id, record.degree_level, cardCountry)
       : Promise.resolve([]);
-  const [formula, rounds, admissionType, outcome, channels, hasLtCalculator, ltField, ltStats, eeField, eeAdmission, vuppStats, foreign, ltDocuments] =
+  const [formula, rounds, admissionType, outcome, channels, hasLtCalculator, ltField, ltStats, eeField, eeAdmission, vuppStats, foreign, ltDocuments, eeVariants] =
     await Promise.all([
       getFormula(record.id),
       getApplicationRoundsForCards(),
@@ -160,7 +164,9 @@ export default async function ProgrammePage({ params }: { params: Params }) {
       vuppStatsPromise,
       foreignPromise,
       ltDocumentsPromise,
+      eeVariantsPromise,
     ]);
+  const variantNotes = variantLines(eeVariants?.[record.id], variantTexts(dict.catalog));
   // Действующий это конкурс или прошлый приём — по сроку (ee-admission.ts).
   const eeAdmissionState = eeAdmission ? admissionState(eeAdmission, new Date()) : null;
   const eeSaisUrl = httpUrl(eeAdmission?.saisUrl);
@@ -273,6 +279,11 @@ export default async function ProgrammePage({ params }: { params: Params }) {
           className="mt-1"
         />
       </div>
+      {variantNotes.map((note) => (
+        <p key={note} className="mt-1 text-sm text-zinc-600">
+          {note}
+        </p>
+      ))}
 
       <dl className="mt-8 grid grid-cols-1 gap-x-6 gap-y-4 sm:grid-cols-2">
         <Fact label={dict.programme.degreeLevel} value={enumLabel(dict.catalog.degreeLevel, record.degree_level)} />
