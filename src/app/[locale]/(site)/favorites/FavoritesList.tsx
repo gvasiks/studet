@@ -298,6 +298,15 @@ export function FavoritesList({
                         <p className="mt-1.5 text-xs font-normal leading-snug text-zinc-500">
                           {localizedName(programme.university, languageOf(locale))}
                         </p>
+                        {/* Двойники одной эстонской программы (ee-variants.ts):
+                            без подписи в шапке два столбца не различить. */}
+                        {variantLines(eeVariants[programme.id], variantTexts(dict.catalog), CARD_SPECIALIZATION_CHARS).map(
+                          (line) => (
+                            <p key={line} className="mt-1 text-xs font-normal leading-snug text-zinc-600">
+                              {line}
+                            </p>
+                          ),
+                        )}
                       </th>
                     ))}
                   </tr>
