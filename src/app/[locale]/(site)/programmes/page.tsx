@@ -11,7 +11,7 @@ import { matchRounds } from "@/lib/deadlines";
 import { openDeadline, tallinnDate } from "@/lib/ee-admission";
 import { getEeOpenDeadlines } from "@/lib/ee-admission-queries";
 import { getEeVariants } from "@/lib/ee-variant-queries";
-import { variantLines, variantTexts, type EeVariant } from "@/lib/ee-variants";
+import { CARD_SPECIALIZATION_CHARS, variantLines, variantTexts, type EeVariant } from "@/lib/ee-variants";
 import { listProgrammes, listUniversities } from "@/lib/catalog";
 import { countriesShown, hasActiveFilters, onlySupported, parseCatalogState } from "@/lib/catalog-query";
 import { buildCatalogView } from "@/lib/catalog-view";
@@ -173,7 +173,7 @@ export default async function ProgrammesPage({
                       programme={programme}
                       showCountry={shown.length > 1}
                       hasCalculator={calculatorIds.has(programme.id)}
-                      notes={variantLines(eeVariants[programme.id], variantTexts(dict.catalog))}
+                      notes={variantLines(eeVariants[programme.id], variantTexts(dict.catalog), CARD_SPECIALIZATION_CHARS)}
                       deadline={
                         eeClosesAt
                           ? `${dict.programme.deadlinesCloses} ${tallinnDate(eeClosesAt, languageOf(locale))}`

@@ -71,14 +71,38 @@ export function eeVariants(
   return result;
 }
 
-/** Подписи для карточки и страницы программы, по строке на различие. */
+// Портал иногда пишет в специализацию целый перечень (до 544 знаков на
+// 2026-11-24). На карточке каталога он занял бы полкарточки, поэтому там
+// показывается начало — до 80 знаков, по границе слова, с многоточием
+// (решение владельца 2026-11-24). На странице программы — полностью.
+export const CARD_SPECIALIZATION_CHARS = 80;
+
+export function shorten(text: string, limit: number): string {
+  if (text.length <= limit) return text;
+  const cut = text.slice(0, limit);
+  const space = cut.lastIndexOf(" ");
+  // Слово длиннее предела режем как есть, иначе — по последнему пробелу.
+  const head = space > 0 ? cut.slice(0, space) : cut;
+  return `${head.replace(/[\s,;]+$/, "")}…`;
+}
+
+/**
+ * Подписи для карточки и страницы программы, по строке на различие.
+ * specializationLimit — сколько знаков специализации показать (карточка);
+ * без него специализация выводится полностью (страница программы).
+ */
 export function variantLines(
   variant: EeVariant | undefined,
   texts: { specialization: string; admission: string; admissionUndated: string; noAdmission: string },
+  specializationLimit?: number,
 ): string[] {
   if (!variant) return [];
   const lines: string[] = [];
-  if (variant.specialization) lines.push(texts.specialization.replace("{name}", variant.specialization));
+  if (variant.specialization) {
+    const name =
+      specializationLimit === undefined ? variant.specialization : shorten(variant.specialization, specializationLimit);
+    lines.push(texts.specialization.replace("{name}", name));
+  }
   if (variant.admission === "none") lines.push(texts.noAdmission);
   else if (variant.admission) {
     lines.push(

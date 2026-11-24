@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { admissionYear, eeVariants, variantLines, type EeVariantSource } from "./ee-variants";
+import { admissionYear, eeVariants, shorten, variantLines, type EeVariantSource } from "./ee-variants";
 
 function programme(id: string, name: string, extra: Partial<EeVariantSource> = {}): EeVariantSource {
   return { id, university_id: "tlu", name_et: name, degree_level: "bachelor", language_of_instruction: "et", ...extra };
@@ -89,5 +89,14 @@ describe("версии одного учебного плана у эстонс�
     expect(variantLines({ specialization: "x", admission: { year: 2026 } }, texts)).toEqual(["Specialisation: x", "SAIS 2026"]);
     expect(variantLines({ admission: "none" }, texts)).toEqual(["No SAIS round"]);
     expect(variantLines({ admission: { year: null } }, texts)).toEqual(["SAIS, no dates"]);
+  });
+
+  it("длинная специализация на карточке обрезается по слову, на странице — нет", () => {
+    const long = "inglise keele õpetaja, saksa keele õpetaja, prantsuse keele õpetaja";
+    expect(shorten(long, 30)).toBe("inglise keele õpetaja, saksa…");
+    expect(shorten("lühike", 30)).toBe("lühike");
+    expect(shorten("a".repeat(40), 30)).toBe(`${"a".repeat(30)}…`);
+    expect(variantLines({ specialization: long }, texts, 30)).toEqual(["Specialisation: inglise keele õpetaja, saksa…"]);
+    expect(variantLines({ specialization: long }, texts)).toEqual([`Specialisation: ${long}`]);
   });
 });

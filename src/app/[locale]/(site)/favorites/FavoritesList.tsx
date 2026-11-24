@@ -7,7 +7,7 @@ import type { Dictionary } from "@/i18n/dictionaries";
 import { enumLabel, getProgrammesByIds, localizedName, type ProgrammeWithUniversity } from "@/lib/catalog";
 import { matchRounds, type ApplicationRound } from "@/lib/deadlines";
 import { openDeadline, tallinnDate } from "@/lib/ee-admission";
-import { variantLines, variantTexts, type EeVariant } from "@/lib/ee-variants";
+import { CARD_SPECIALIZATION_CHARS, variantLines, variantTexts, type EeVariant } from "@/lib/ee-variants";
 import { getFavoriteIds, removeFavorites, subscribeToFavorites } from "@/lib/favorites";
 import { interpolate } from "@/lib/outcomes";
 import { ProgrammeCard } from "@/components/ProgrammeCard";
@@ -221,7 +221,7 @@ export function FavoritesList({
               showCountry={countries.length > 1}
               hasCalculator={calculatorSet.has(programme.id)}
               deadline={deadlineOf(programme)}
-              notes={variantLines(eeVariants[programme.id], variantTexts(dict.catalog))}
+              notes={variantLines(eeVariants[programme.id], variantTexts(dict.catalog), CARD_SPECIALIZATION_CHARS)}
               footer={
                 <label
                   className={`inline-flex items-center gap-2 text-sm font-medium ${
