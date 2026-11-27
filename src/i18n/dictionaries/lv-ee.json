@@ -356,7 +356,7 @@
   "studentPermit": {
     "title": "Uzturēšanās atļauja studijām Igaunijā",
     "intro": "Kas vajadzīgs citas valsts studentam, lai studiju laikā dzīvotu Igaunijā: kam vajadzīga uzturēšanās atļauja, kas nosūta uzaicinājumu un kur iesniedz pieteikumu, kā arī kādi noteikumi piemērojami pēc studiju sākšanas. Pie katra punkta norādīta tiesību norma, uz kuru tas balstās.",
-    "checkedNote": "Katrs punkts salīdzināts ar spēkā esošo tekstu Riigi Teataja 2026. gada 19. novembrī (Ārzemnieku likuma redakcija, kas ir spēkā līdz 2026. gada 31. decembrim). Par katru pieteikumu lemj Igaunijas Policijas un robežsardzes pārvalde (PPA); šī lapa neaizstāj tās norādījumus.",
+    "checkedNote": "Katrs punkts salīdzināts ar spēkā esošo tekstu Riigi Teataja 2026. gada 19. novembrī (Ārzemnieku likuma redakcija, kas ir spēkā līdz 2026. gada 31. decembrim). Punkti par sankcijām pārbaudīti 2026. gada 27. novembrī: Krievija un Baltkrievija — pēc noteikumiem Nr. 42 Riigi Teataja, Irāna — pēc TalTech uzņemšanas nosacījumiem. Par katru pieteikumu lemj Igaunijas Policijas un robežsardzes pārvalde (PPA); šī lapa neaizstāj tās norādījumus.",
     "sources": [
       {
         "label": "Ārzemnieku likums (Välismaalaste seadus)",
@@ -365,6 +365,14 @@
       {
         "label": "Eiropas Savienības pilsoņa likums (Euroopa Liidu kodaniku seadus)",
         "url": "https://www.riigiteataja.ee/akt/ELKS"
+      },
+      {
+        "label": "Valdības sankcija saistībā ar Krieviju un Baltkrieviju (noteikumi Nr. 42)",
+        "url": "https://www.riigiteataja.ee/akt/120052023004"
+      },
+      {
+        "label": "TalTech uzņemšanas nosacījumi 2027./2028. gadam (senāta lēmums Nr. 40)",
+        "url": "https://oigusaktid.taltech.ee/i-ja-ii-korgharidusastme-uliopilaste-oppeaasta-vastuvotutingimused/"
       }
     ],
     "items": [
@@ -403,6 +411,18 @@
         "title": "Vīza studiju sākšanai",
         "text": "Augstskolā uzņemtam ārzemniekam studiju sākšanai var izsniegt īstermiņa vai ilgtermiņa vīzu; augstākās izglītības studijām — tikai tad, ja iestāde ir institucionāli akreditēta. Ilgtermiņa vīzas pieteikumu iesniedz personīgi Igaunijas ārvalstu pārstāvniecībā.",
         "source": "Ārzemnieku likums, § 62²(1)–(2) un § 90(2)"
+      },
+      {
+        "id": "russia-belarus",
+        "title": "Krievijas un Baltkrievijas pilsoņi: sankcijas",
+        "text": "Krievijas pilsoņiem netiek piešķirta termiņuzturēšanās atļauja studijām un, izņemot sankcijā uzskaitītos gadījumus (piemēram, tuvu radinieku apmeklējums vai ES brīvas pārvietošanās tiesības), arī vīza. Jau piešķirtu uzturēšanās atļauju studijām var pagarināt vienu reizi, ne vairāk kā par gadu. Sankcija neattiecas uz Krievijas vai Baltkrievijas pilsoni, kuram ir ilgtermiņa vīza vai uzturēšanās atļauja studijām un kurš ir pabeidzis studijas igauņu valodā vai prot igauņu valodu vismaz B2 līmenī. Baltkrievijas pilsoņiem tā ierobežo vīzas un uzturēšanās atļaujas darbam un uzņēmējdarbībai, nevis studijām.",
+        "source": "Valdības 08.04.2022. noteikumi Nr. 42, § 2(1¹)(2), (1²), (6), (7) un (8)"
+      },
+      {
+        "id": "iran",
+        "title": "Irānas pilsoņi: slēgtas jomas TalTech",
+        "text": "TalTech uzņemšanas nosacījumos 2027./2028. gadam noteikts, ka Irānas pilsoņi nevar pieteikties programmām fizikālajās zinātnēs, informātikā un informācijas tehnoloģijās, kā arī tehnikā, ražošanā un tehnoloģijās — saskaņā ar valdības 2026. gada 2. oktobra noteikumiem Nr. 94 par ierobežojošiem pasākumiem pret Irānu.",
+        "source": "TalTech senāta 24.11.2026. lēmums Nr. 40, 5. punkts"
       },
       {
         "id": "work",

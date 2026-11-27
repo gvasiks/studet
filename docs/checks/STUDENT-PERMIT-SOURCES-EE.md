@@ -65,15 +65,28 @@
    lõppemisest tulenev õigus Eestis viibida»; lg 5: «järgneva 270 päeva jooksul käesoleva seaduse § 118 punkti 3 …
    alusel antud tähtajalise elamisloa kehtivusaja lõppemise päevast arvates, kui välismaalase elamisloa kehtivusaeg
    lõppes tähtaja saabumisel».
+10. **Россия и Беларусь: санкция** (добавлено 2026-11-27, сверено с действующей редакцией в Riigi Teataja — RT I,
+   20.05.2023, 4, «hetkel kehtiv», `riigiteataja.ee/akt/120052023004`). Vabariigi Valitsuse 08.04.2022 määrus nr 42
+   § 2 lg 1¹ p 2 — ограничение для граждан России: «§ 118 punktis 3 nimetatud tähtajaline elamisluba õppimiseks»;
+   lg 1² — «kõigile Venemaa Föderatsiooni kodanikele, kes taotlevad viisat»; lg 6 — исключения для визы (близкие
+   родственники, дипломаты, транспорт, «Euroopa Liidu õiguse alusel vaba liikumise õigust omav isikud», гуманитарные
+   причины); lg 7 — «õppimiseks antud tähtajalise elamisloa pikendamist ühekordselt kuni ühe aasta võrra»; lg 8 — не
+   применяется к гражданам России и Беларуси с визой или ВНЖ для учёбы, «kes on lõpetanud õpingud eestikeelse
+   õppekava alusel või kes oskavad eesti keelt vähemalt B2-tasemel». Для граждан Беларуси (lg 1) — только визы и ВНЖ
+   для работы и предпринимательства.
+11. **Иран: закрытые направления в TalTech** (добавлено 2026-11-27). Источник — решение сената TalTech 24.11.2026
+   № 40, п. 5: «Iraani Islamivabariigi kodanikud ei saa kandideerida tulenevalt Vabariigi Valitsuse 2. oktoobri 2026. a
+   määrusega nr 94 … kehtestatud riigisisestest meetmetest järgmistele õppekavagruppidele: füüsikalised
+   loodusteadused, informaatika ja infotehnoloogia, tehnika, tootmine ja tehnoloogia». Текст самого постановления
+   № 94 в Riigi Teataja не найден (поиск 2026-11-27), поэтому пункт сформулирован как условие TalTech, а не как
+   общее правило для всех вузов Эстонии; когда постановление найдётся — перечитать и, если оно общее, переписать.
 
 ## Что не вошло и почему
 
 - **Пошлины и требуемая сумма средств.** Сумм нет: VMS называет только «piisav legaalne sissetulek», а размер
   пошлины задаёт закон о государственных пошлинах (Riigilõivuseadus), который в этой сверке не читался.
-- **Россия и Беларусь.** В VMS особых правил для их граждан нет (поиск по «Venemaa» и «Valgevene» — 0 совпадений).
-  Ограничения на визы для граждан России в Эстонии существуют на уровне решений правительства и санкций — их
-  текст не читался, поэтому на странице о них ничего не утверждается. У Латвии такой пункт есть, потому что он
-  записан в самом Imigrācijas likums.
+- **Россия и Беларусь в самом VMS.** В законе особых правил для их граждан нет (поиск по «Venemaa» и «Valgevene» —
+  0 совпадений); ограничение — в санкции правительства, пункт 10 выше (до 2026-11-27 на странице о нём не было ничего).
 - **Список документов для ВНЖ** — шаг 3 плана (по вузу).
 - **Регистрация места жительства граждан ЕС**: где именно регистрироваться (самоуправление, rahvastikuregister),
   — на странице только ссылка на порядок закона о регистре населения; сам закон не читался.

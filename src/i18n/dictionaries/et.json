@@ -664,7 +664,7 @@
   "studentPermit": {
     "title": "Elamisluba õppimiseks Eestis",
     "intro": "Mida on vaja teise riigi üliõpilasel, et õpingute ajal Eestis elada: kes vajab elamisluba, kes saadab kutse ja kus taotlus esitatakse ning millised reeglid kehtivad pärast õppima asumist. Iga punkti juures on õigusnorm, millel see põhineb.",
-    "checkedNote": "Iga punkti on võrreldud Riigi Teatajas avaldatud kehtiva tekstiga 19. novembril 2026 (välismaalaste seaduse redaktsioon, mis kehtib kuni 31. detsembrini 2026). Iga taotluse üle otsustab Politsei- ja Piirivalveamet (PPA); see lehekülg ei asenda tema juhiseid.",
+    "checkedNote": "Iga punkti on võrreldud Riigi Teatajas avaldatud kehtiva tekstiga 19. novembril 2026 (välismaalaste seaduse redaktsioon, mis kehtib kuni 31. detsembrini 2026). Sanktsioonide punkte on kontrollitud 27. novembril 2026: Venemaa ja Valgevene — Riigi Teatajas avaldatud määruse nr 42 järgi, Iraan — TalTechi vastuvõtutingimuste järgi. Iga taotluse üle otsustab Politsei- ja Piirivalveamet (PPA); see lehekülg ei asenda tema juhiseid.",
     "sourceLabel": "Õiguslik alus",
     "sourcesTitle": "Õigusaktid",
     "items": [
@@ -705,6 +705,18 @@
         "source": "Välismaalaste seadus, § 62² lg 1–2 ja § 90 lg 2"
       },
       {
+        "id": "russia-belarus",
+        "title": "Venemaa ja Valgevene kodanikud: sanktsioon",
+        "text": "Venemaa kodanikule ei anta tähtajalist elamisluba õppimiseks ega, välja arvatud sanktsioonis loetletud juhtudel (näiteks lähisugulase külastamine või Euroopa Liidu õiguse alusel vaba liikumise õigus), viisat. Õppimiseks antud elamisluba võib pikendada ühekordselt kuni ühe aasta võrra. Sanktsiooni ei kohaldata Venemaa ega Valgevene kodanikule, kellel on pikaajaline viisa või tähtajaline elamisluba õppimiseks ja kes on lõpetanud õpingud eestikeelse õppekava alusel või oskab eesti keelt vähemalt B2-tasemel. Valgevene kodanikele piirab see viisasid ja elamislube töötamiseks ja ettevõtluseks, mitte õppimiseks.",
+        "source": "Vabariigi Valitsuse 08.04.2022 määrus nr 42, § 2 lg 1¹ p 2, lg 1², 6, 7 ja 8"
+      },
+      {
+        "id": "iran",
+        "title": "Iraani kodanikud: TalTechis suletud valdkonnad",
+        "text": "TalTechi 2027/2028. õppeaasta vastuvõtutingimuste järgi ei saa Iraani Islamivabariigi kodanikud kandideerida füüsikaliste loodusteaduste, informaatika ja infotehnoloogia ning tehnika, tootmise ja tehnoloogia õppekavagruppidesse, tulenevalt Vabariigi Valitsuse 2. oktoobri 2026 määrusest nr 94 „Iraani Islamivabariigi vastu suunatud piiravate meetmete rakendamine“.",
+        "source": "TalTechi senati 24.11.2026 otsus nr 40, punkt 5"
+      },
+      {
         "id": "work",
         "title": "Töötamine õpingute ajal",
         "text": "Õppimiseks elamisloa saanud välismaalane võib Eestis töötada eraldi luba omamata, kui töötamine ei takista õppimist.",
@@ -731,6 +743,14 @@
       {
         "label": "Euroopa Liidu kodaniku seadus",
         "url": "https://www.riigiteataja.ee/akt/ELKS"
+      },
+      {
+        "label": "Vabariigi Valitsuse sanktsioon seoses Venemaa ja Valgevenega (määrus nr 42)",
+        "url": "https://www.riigiteataja.ee/akt/120052023004"
+      },
+      {
+        "label": "TalTechi 2027/2028. õa vastuvõtutingimused (senati otsus nr 40)",
+        "url": "https://oigusaktid.taltech.ee/i-ja-ii-korgharidusastme-uliopilaste-oppeaasta-vastuvotutingimused/"
       }
     ]
   },

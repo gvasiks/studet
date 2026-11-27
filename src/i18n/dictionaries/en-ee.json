@@ -356,7 +356,7 @@
   "studentPermit": {
     "title": "Residence permit for studies in Estonia",
     "intro": "What a student from another country needs in order to live in Estonia during studies: who needs a residence permit, who sends the invitation and where to apply, and the rules that apply after enrolment. Each point gives the legal provision it is based on.",
-    "checkedNote": "Each point was checked against the current text in Riigi Teataja on 19 November 2026 (the version of the Aliens Act in force until 31 December 2026). The Police and Border Guard Board (PPA) decides on every application; this page does not replace its instructions.",
+    "checkedNote": "Each point was checked against the current text in Riigi Teataja on 19 November 2026 (the version of the Aliens Act in force until 31 December 2026). The points on sanctions were checked on 27 November 2026: Russia and Belarus against regulation no. 42 in Riigi Teataja, Iran against TalTech's admission conditions. The Police and Border Guard Board (PPA) decides on every application; this page does not replace its instructions.",
     "sources": [
       {
         "label": "Aliens Act (Välismaalaste seadus)",
@@ -365,6 +365,14 @@
       {
         "label": "Citizen of the European Union Act (Euroopa Liidu kodaniku seadus)",
         "url": "https://www.riigiteataja.ee/akt/ELKS"
+      },
+      {
+        "label": "Government sanction regarding Russia and Belarus (regulation no. 42)",
+        "url": "https://www.riigiteataja.ee/akt/120052023004"
+      },
+      {
+        "label": "TalTech admission conditions 2027/2028 (senate decision no. 40)",
+        "url": "https://oigusaktid.taltech.ee/i-ja-ii-korgharidusastme-uliopilaste-oppeaasta-vastuvotutingimused/"
       }
     ],
     "items": [
@@ -403,6 +411,18 @@
         "title": "A visa to start studies",
         "text": "A foreigner admitted to a higher education institution may be issued a short-stay or long-stay visa to start studies; for higher education, only if the institution is institutionally accredited. A long-stay visa is applied for in person at an Estonian foreign mission.",
         "source": "Aliens Act, § 62²(1)–(2) and § 90(2)"
+      },
+      {
+        "id": "russia-belarus",
+        "title": "Citizens of Russia and Belarus: sanctions",
+        "text": "Citizens of Russia are not granted a temporary residence permit for studies and, apart from the exceptions the sanction lists (such as visiting close family or having an EU right of free movement), no visa. A residence permit for studies that is already held may be extended once, by up to one year. The sanction does not apply to a citizen of Russia or Belarus who holds a long-stay visa or a residence permit for studies and has graduated from an Estonian-taught programme or knows Estonian at least at B2 level. For citizens of Belarus it restricts visas and residence permits for work and business, not for studies.",
+        "source": "Government regulation of 08.04.2022 no. 42, § 2(1¹)(2), (1²), (6), (7) and (8)"
+      },
+      {
+        "id": "iran",
+        "title": "Citizens of Iran: closed fields at TalTech",
+        "text": "TalTech's admission conditions for 2027/28 state that citizens of Iran cannot apply to programmes in physical sciences, informatics and information technology, and engineering, manufacturing and technology, under the Government regulation of 2 October 2026 no. 94 on restrictive measures against Iran.",
+        "source": "TalTech senate decision of 24.11.2026 no. 40, point 5"
       },
       {
         "id": "work",

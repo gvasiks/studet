@@ -187,6 +187,9 @@ describe("файлы отличий словарей", () => {
         expect(permit.sources.map((source) => source.url), name).toEqual([
           "https://www.riigiteataja.ee/akt/VMS",
           "https://www.riigiteataja.ee/akt/ELKS",
+          // санкции (2026-11-27): постановление № 42 и условия приёма TalTech
+          "https://www.riigiteataja.ee/akt/120052023004",
+          "https://oigusaktid.taltech.ee/i-ja-ii-korgharidusastme-uliopilaste-oppeaasta-vastuvotutingimused/",
         ]);
         for (const item of permit.items) expect(item.title && item.text && item.source, `${name} ${item.id}`).toBeTruthy();
         expect(JSON.stringify(permit), name).not.toMatch(/likumi\.lv|PMLP|OCMA|Imigrācijas/);
