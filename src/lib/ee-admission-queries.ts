@@ -1,7 +1,7 @@
 import { cache } from "react";
 import { supabase } from "@/lib/supabase";
 import { parseFunding, type EeAdmission } from "@/lib/ee-admission";
-import { parseRule, type EeRule } from "@/lib/ee-rule";
+import { parseRule, parseTextRule, type EeRule, type EeTextRule } from "@/lib/ee-rule";
 import { remember } from "@/lib/server-memo";
 
 // Последний конкурс эстонской программы (таблица ee_admission). Сроки и
@@ -72,7 +72,7 @@ export function getEeOpenDeadlines(): Promise<Record<string, string>> {
 // откроются весной. Если правил несколько лет, берётся последний год.
 export type EeNextRule = {
   academicYear: string;
-  rule: EeRule;
+  rule: EeRule | EeTextRule;
   newCurriculum: boolean;
   sourceUrl: string;
   sourceTitle: string;
@@ -94,7 +94,8 @@ export const getEeNextRule = cache(async (programmeId: string): Promise<EeNextRu
   if (error && MISSING_TABLE.has(error.code)) return null;
   if (error) throw error;
   if (!data) return null;
-  const rule = parseRule(data.rule);
+  // у бакалавриата — пороги (как у прошлого конкурса), у магистратуры — текст
+  const rule = parseRule(data.rule) ?? parseTextRule(data.rule);
   if (!rule) return null;
   return {
     academicYear: data.academic_year,

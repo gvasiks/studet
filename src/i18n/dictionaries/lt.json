@@ -547,7 +547,15 @@
       "title": "Priėmimo sąlygos {year}",
       "approved": "Patvirtino aukštosios mokyklos senatas {date}:",
       "newCurriculum": "Nauja studijų programa: priėmimas vyks, tik jei ją įregistruos Estijos švietimo ir mokslo ministerija.",
-      "note": "Dėl priėmimo sprendžia aukštoji mokykla; slenksčiai – jos {year} m. m. priėmimo taisyklės. {year} m. m. konkursai SAIS bus paskelbti vėliau."
+      "note": "Dėl priėmimo sprendžia aukštoji mokykla; slenksčiai – jos {year} m. m. priėmimo taisyklės. {year} m. m. konkursai SAIS bus paskelbti vėliau.",
+      "education": "Reikalavimai išsilavinimui",
+      "tests": "Stojamieji išbandymai",
+      "threshold": "Slenkstis studijų vietai (skalė 0–10)",
+      "foreign": "Užsienio stojantiesiems",
+      "scaleNote": "Stojamieji išbandymai vertinami 0–10 balų skalėje; teigiamas rezultatas – 5–10 balų.",
+      "plusNote": "„5+5“ reiškia, kad abi išbandymo dalys turi būti įvertintos ne mažiau kaip 5 balais.",
+      "gre": "Užsienio stojantieji turi laikyti GRE General Test: žodinė dalis – ne mažiau kaip 145, kiekybinė – ne mažiau kaip 150, rašymo – ne mažiau kaip 3.",
+      "textNote": "Sąlygos pateikiamos taip, kaip parašyta aukštosios mokyklos sprendime, estų kalba."
     },
     "rule": {
       "scoreTitle": "Iš ko susideda konkursinis balas",

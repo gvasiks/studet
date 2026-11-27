@@ -542,7 +542,15 @@
       "title": "Uzņemšanas nosacījumi {year}",
       "approved": "Augstskolas senāts apstiprinājis {date}:",
       "newCurriculum": "Jauna studiju programma: uzņemšana notiks tikai tad, ja to reģistrēs Igaunijas Izglītības un pētniecības ministrija.",
-      "note": "Par uzņemšanu lemj augstskola; sliekšņi ir tās uzņemšanas noteikumi {year} mācību gadam. Konkursi {year} mācību gadam SAIS tiks atvērti vēlāk."
+      "note": "Par uzņemšanu lemj augstskola; sliekšņi ir tās uzņemšanas noteikumi {year} mācību gadam. Konkursi {year} mācību gadam SAIS tiks atvērti vēlāk.",
+      "education": "Prasības izglītībai",
+      "tests": "Iestājpārbaudījumi",
+      "threshold": "Slieksnis studiju vietai (skala 0–10)",
+      "foreign": "Ārvalstu reflektantiem",
+      "scaleNote": "Iestājpārbaudījumus vērtē skalā 0–10; pozitīvs rezultāts ir 5–10 punkti.",
+      "plusNote": "“5+5” nozīmē, ka abām pārbaudījuma daļām jābūt vismaz 5 punktiem.",
+      "gre": "Ārvalstu reflektantiem jākārto GRE General Test: verbālā daļa vismaz 145, kvantitatīvā daļa vismaz 150, rakstīšanas daļa vismaz 3.",
+      "textNote": "Nosacījumi norādīti tā, kā tie rakstīti augstskolas lēmumā, igauņu valodā."
     },
     "rule": {
       "scoreTitle": "No kā veidojas konkursa punkti",

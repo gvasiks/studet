@@ -108,6 +108,9 @@ const LT_ROUTES = [
   "/en-ee/programmes/taltech/informaatika-ja-tehisintellekt",
   // английская магистратура: блок «Documents to prepare» (с 2026-11-23)
   "/en-ee/programmes/ut/rahvusvaheline-oigus-ja-inimoigused",
+  // условия магистратуры TalTech 2027/28 текстом решения, со строкой для
+  // иностранцев и GRE (с 2026-11-27)
+  "/en-ee/programmes/taltech/puidu-plasti-ja-tekstiilitehnoloogia",
   "/et/programmes/taltech/riistvara-arendus-ja-programmeerimine",
   "/et/survey",
   "/et-lv",

@@ -542,7 +542,15 @@
       "title": "Admission conditions {year}",
       "approved": "Approved by the university's senate on {date}:",
       "newCurriculum": "New curriculum: admission takes place only if the Estonian Ministry of Education and Research registers it.",
-      "note": "The university decides on admission; the thresholds are its admission rule for the {year} academic year. Admission rounds for {year} open in SAIS later."
+      "note": "The university decides on admission; the thresholds are its admission rule for the {year} academic year. Admission rounds for {year} open in SAIS later.",
+      "education": "Education requirements",
+      "tests": "Admission tests",
+      "threshold": "Threshold for a study place (0–10 scale)",
+      "foreign": "For international applicants",
+      "scaleNote": "Admission tests are scored on a 0–10 scale; a positive result is 5–10 points.",
+      "plusNote": "“5+5” means that both parts of the test must be at least 5 points.",
+      "gre": "International applicants must take the GRE General Test: verbal reasoning at least 145, quantitative reasoning at least 150, analytical writing at least 3.",
+      "textNote": "The conditions are given as written in the university's decision, in Estonian."
     },
     "rule": {
       "scoreTitle": "How the competition score is made up",

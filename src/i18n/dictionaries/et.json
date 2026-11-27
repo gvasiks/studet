@@ -547,7 +547,15 @@
       "title": "Vastuvõtutingimused {year}",
       "approved": "Kinnitatud kõrgkooli senati otsusega {date}:",
       "newCurriculum": "Uus õppekava: vastuvõtt toimub juhul, kui Haridus- ja Teadusministeerium õppekava registreerib.",
-      "note": "Vastuvõtu üle otsustab kõrgkool; lävendid on tema {year}. õppeaasta vastuvõtutingimused. {year}. õppeaasta konkursid avatakse SAIS-is hiljem."
+      "note": "Vastuvõtu üle otsustab kõrgkool; lävendid on tema {year}. õppeaasta vastuvõtutingimused. {year}. õppeaasta konkursid avatakse SAIS-is hiljem.",
+      "education": "Nõuded haridusele",
+      "tests": "Sisseastumiskatsed",
+      "threshold": "Õppekoha saamise lävend (skaala 0–10)",
+      "foreign": "Väliskandidaatidele",
+      "scaleNote": "Sisseastumiskatsed on skaalal 0–10 punkti; positiivne tulemus on 5–10 punkti.",
+      "plusNote": "„5+5“ tähendab, et mõlemad katse osad peavad olema vähemalt 5 punkti.",
+      "gre": "Väliskandidaadil on kandideerimise eeltingimuseks GRE testi sooritamine: keele osa vähemalt 145, matemaatika osa vähemalt 150, kirjutamise osa vähemalt 3 punkti.",
+      "textNote": "Tingimused on esitatud nii, nagu need on kõrgkooli otsuses."
     },
     "rule": {
       "scoreTitle": "Kuidas kujuneb konkursipunktide summa",

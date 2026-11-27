@@ -124,3 +124,41 @@ export function parseRule(value: unknown): EeRule | null {
   if (value.model === "thresholds") return thresholdsOf(value);
   return null;
 }
+
+// Условия магистратуры из решения вуза (ee_next_rule, модель text, пишет
+// pipeline/src/ee_load_taltech_conditions.py): требования к образованию,
+// испытания и порог по шкале 0–10 — текстом по-эстонски, как в решении.
+// Сайт их не переводит и не разбирает: только подписывает.
+export type EeStudyFormCode = "P" | "S" | "P/S";
+
+export type EeTextRule = {
+  model: "text";
+  /** P — дневное обучение, S — сессиями, P/S — оба. */
+  studyForm: EeStudyFormCode;
+  education: string;
+  tests: string;
+  threshold: string;
+  /** Условия для иностранцев, если у них свои. */
+  foreignTests: string | null;
+  foreignThreshold: string | null;
+  /** Иностранцу нужен GRE (сноска решения). */
+  gre: boolean;
+};
+
+const text = (value: unknown): string | null => (typeof value === "string" && value.trim() !== "" ? value : null);
+const textOrNull = (value: unknown): string | null | undefined =>
+  value === null || value === undefined ? null : text(value) ?? undefined;
+
+export function parseTextRule(value: unknown): EeTextRule | null {
+  if (!isObject(value) || value.model !== "text") return null;
+  const studyForm = value.study_form;
+  if (studyForm !== "P" && studyForm !== "S" && studyForm !== "P/S") return null;
+  const education = text(value.education);
+  const tests = text(value.tests);
+  const threshold = text(value.threshold);
+  const foreignTests = textOrNull(value.foreign_tests);
+  const foreignThreshold = textOrNull(value.foreign_threshold);
+  if (!education || !tests || !threshold || foreignTests === undefined || foreignThreshold === undefined) return null;
+  if (typeof value.gre !== "boolean") return null;
+  return { model: "text", studyForm, education, tests, threshold, foreignTests, foreignThreshold, gre: value.gre };
+}

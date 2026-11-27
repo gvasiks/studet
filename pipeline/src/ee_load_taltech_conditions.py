@@ -6,11 +6,15 @@
 решением сената («I ja II kõrgharidusastme üliõpilaste 2027/2028. õa
 vastuvõtutingimused», 24.11.2026 № 40), а конкурсы SAIS появляются весной.
 Решение владельца 2026-11-27: показывать условия следующего года уже сейчас,
-рядом с прошлым приёмом. Здесь читается приложение 1 решения (бакалавриат,
-интегрированное и прикладное высшее) — Excel-файл со страницы решения на
-oigusaktid.taltech.ee — и пишется ee_next_rule.
+рядом с прошлым приёмом. Здесь читаются приложения решения — Excel-файлы со
+страницы решения на oigusaktid.taltech.ee — и пишется ee_next_rule:
+  - приложение 1 (бакалавриат, интегрированное и прикладное высшее) — пороги
+    госэкзаменов и места, правило «thresholds»;
+  - приложение 2 (магистратура, с 2026-11-27) — требования к образованию,
+    испытания и порог по шкале 0–10 свободным текстом по-эстонски; они
+    записываются как есть, правилом «text», без перевода и разбора смысла.
 
-Разбор строгий, как у ee_rules.taltech_rule: правило записывается, только
+Разбор приложения 1 строгий, как у ee_rules.taltech_rule: правило записывается, только
 если у программы одни госэкзамены (математика, эстонский, английский), а
 каждая строка с порогами узнана. Тест, собеседование, средняя оценка, две
 формы обучения — правила нет, и сайт его не показывает.
@@ -191,8 +195,9 @@ def decision_of(page: str) -> dict:
     decided = _DECIDED.search(text)
     year = _YEAR.search(text)
     links = re.findall(r'href="([^"]+_Lisa_1\.xlsx)"', page)
-    if not decided or not year or len(set(links)) != 1:
-        raise ValueError("страница решения не узнана: нет даты решения, учебного года или единственной ссылки на приложение 1")
+    masters = re.findall(r'href="([^"]+[_-][Ll]isa_?2\.xlsx)"', page)
+    if not decided or not year or len(set(links)) != 1 or len(set(masters)) != 1:
+        raise ValueError("страница решения не узнана: нет даты решения, учебного года или единственных ссылок на приложения 1 и 2")
     day, month, year_of_decision, number = decided.groups()
     academic_year = f"{year.group(1)}/{year.group(2)}"
     return {
@@ -200,7 +205,86 @@ def decision_of(page: str) -> dict:
         "decided_on": date(int(year_of_decision), int(month), int(day)).isoformat(),
         "source_title": f"I ja II kõrgharidusastme üliõpilaste {academic_year}. õa vastuvõtutingimused (senati otsus nr {number})",
         "annex_url": urljoin(DECISION_URL, links[0]),
+        "masters_url": urljoin(DECISION_URL, masters[0]),
     }
+
+
+# ---------------------------------------------------------------- магистратура
+
+# Опечатка в названии в решении 24.11.2026 № 40 — каталогу нужно правильное.
+NAME_FIXES = {"tehnisintellekt äris": "tehisintellekt äris"}
+
+
+def master_blocks_of(rows: list[dict[str, str]]) -> list[dict]:
+    """Строки приложения 2 -> программы: название (B), форма обучения (C),
+    требования к образованию (D), испытания (E), порог (F). Строка без
+    номера в B со «Väliskandidaadil: …» в E — условия для иностранцев."""
+    blocks: list[dict] = []
+    current: dict | None = None
+    for cells in rows:
+        if cells.get("A", "").startswith("*"):
+            current = None
+            continue
+        start = _START.match(cells.get("B", ""))
+        if start:
+            current = {
+                "title": start.group(1),
+                "form": cells.get("C"),
+                "education": cells.get("D"),
+                "tests": cells.get("E"),
+                "threshold": cells.get("F"),
+                "foreign_tests": None,
+                "foreign_threshold": None,
+            }
+            blocks.append(current)
+        elif current is not None and cells.get("E", "").startswith("Väliskandidaadil:"):
+            current["foreign_tests"] = cells["E"].removeprefix("Väliskandidaadil:").strip()
+            current["foreign_threshold"] = cells.get("F")
+    return blocks
+
+
+def _clean(text: str | None) -> str | None:
+    """Без сносок «***»: что они значат, правило хранит отдельно."""
+    if text is None:
+        return None
+    text = re.sub(r"\s*\*+", "", text)
+    return " ".join(text.split()).strip(" ,") or None
+
+
+def text_rule_of(block: dict) -> dict | None:
+    """Правило «text»: условия как в решении. None — нет требований,
+    испытаний или порога (строка неполная — показывать нечего)."""
+    education, tests, threshold = _clean(block["education"]), _clean(block["tests"]), _clean(block["threshold"])
+    if not education or not tests or not threshold or block["form"] not in {"P", "S", "P/S"}:
+        return None
+    raw = " ".join(filter(None, [block["tests"], block["foreign_tests"]]))
+    return {
+        "model": "text",
+        "study_form": block["form"],
+        "education": education,
+        "tests": tests,
+        "threshold": threshold,
+        "foreign_tests": _clean(block["foreign_tests"]),
+        "foreign_threshold": _clean(block["foreign_threshold"]),
+        # сноска «***» (ровно три звезды): иностранцу нужен GRE, минимумы — в
+        # сноске решения; «****» — новый учебный план, это не GRE
+        "gre": bool(re.search(r"(?<!\*)\*{3}(?!\*)", raw)) or "GRE" in raw,
+    }
+
+
+def master_names_of(title: str) -> tuple[list[str], bool]:
+    """«1.7 Cybersecurity IVCM (Küberturve)» без номера -> (все названия
+    программы — английское и эстонское в скобках, без кода; новый ли план —
+    «****»)."""
+    new_curriculum = "****" in title
+    names = []
+    # «(NAEM), Tartu» — место учёбы после кода, не название
+    title = re.sub(r",\s*Tartu\s*$", "", title.replace("*", "").strip())
+    for part in re.split(r"[()]", title):
+        part = re.sub(r"\s+[A-Z]{4}$", "", part.strip(" ,")).strip()
+        if part and not re.fullmatch(r"[A-Z]{4}", part):
+            names.append(NAME_FIXES.get(normalized(part), part))
+    return names, new_curriculum
 
 
 # ---------------------------------------------------------------- самотест
@@ -212,7 +296,7 @@ def _xlsx(rows: list[list[str]]) -> bytes:
     sheet_rows = []
     for number, row in enumerate(rows, start=1):
         cells = []
-        for column, text in zip("ABCDE", row):
+        for column, text in zip("ABCDEF", row):
             if text:
                 shared.append(text)
                 cells.append(f'<c r="{column}{number}" t="s"><v>{len(shared) - 1}</v></c>')
@@ -291,16 +375,52 @@ def _selftest() -> None:
         '<a href="https://oigusaktid.taltech.ee/wp-content/uploads/2026/11/TT_x_Lisa_1.xlsx">Lisa 1</a>'
         '<a href="https://oigusaktid.taltech.ee/wp-content/uploads/2026/11/TT_x_Lisa_1.xlsx">Lisa 1</a>'
         '<a href="https://oigusaktid.taltech.ee/wp-content/uploads/2026/11/TT_x_Lisa_1_ja_2_VV.xlsx">Lisa 1 ja 2</a>'
+        '<a href="https://oigusaktid.taltech.ee/wp-content/uploads/2026/11/x_lisa2.xlsx">Lisa 2</a>'
     )
     decision = decision_of(page)
     assert decision["academic_year"] == "2027/2028" and decision["decided_on"] == "2026-11-24", decision
     assert decision["annex_url"].endswith("/TT_x_Lisa_1.xlsx")
     assert "nr 40" in decision["source_title"]
+    assert decision["masters_url"].endswith("/x_lisa2.xlsx")
     try:
         decision_of("<p>Lehte ei leitud</p>")
         raise AssertionError("неузнанная страница должна остановить загрузку")
     except ValueError:
         pass
+
+    # приложение 2 — строки как в решении 24.11.2026 № 40
+    masters = master_blocks_of(xlsx_rows(_xlsx([
+        ["Teaduskond / täpsustus", "Õppekava", "S/P*", "Hariduse nõuded", "Konkursitingimused**", "Õppekoha saamise lävend"],
+        ["", "1.7 Cybersecurity IVCM (Küberturve)", "P", "kõrgharidus info- ja kommunikatsioonitehnoloogia erialal",
+         "motivatsioonikiri, CV + vestlus, test ***, sh mõlemad katse osad vähemalt 5 punkti", "5+5"],
+        ["", "2.7 Technology of Wood, Plastics and Textiles (KVEM) (Puidu-, plasti- ja tekstiilitehnoloogia)", "P",
+         "kõrgharidus lähedasel erialal", "CV ja vestlus", "5"],
+        ["", "", "", "", "Väliskandidaadil: CV ja vestlus***", "5"],
+        ["", "2.12 Tööstusökoloogia (NAEM), Tartu", "S", "kõrgharidus", "test", "5"],
+        ["", "4.12 Tehnisintellekt äris (MAIM)", "S", "kõrgharidus", "CV, projektiplaan", "kandideerimislävend 5, piirarv 45 *****"],
+        ["", "7.3 Energia- ja tööstussüsteemid (RAEM)****", "S", "kõrgharidus loodus- või tehnikateadustes", "CV ja vestlus", "5"],
+        ["", "5.2 Maritime Digital Solutions (VAMM)", "P", "kõrgharidus", "motivatsioonikiri + vestlus", ""],
+        ["* õppevormi täpsustus", "", "", "", "", ""],
+    ])))
+    assert len(masters) == 6, [m["title"] for m in masters]
+    cyber, wood, tartu, ai, energy, maritime = masters
+    assert text_rule_of(cyber) == {
+        "model": "text", "study_form": "P",
+        "education": "kõrgharidus info- ja kommunikatsioonitehnoloogia erialal",
+        "tests": "motivatsioonikiri, CV + vestlus, test, sh mõlemad katse osad vähemalt 5 punkti",
+        "threshold": "5+5", "foreign_tests": None, "foreign_threshold": None, "gre": True,
+    }, text_rule_of(cyber)
+    wood_rule = text_rule_of(wood)
+    assert wood_rule and wood_rule["foreign_tests"] == "CV ja vestlus" and wood_rule["foreign_threshold"] == "5" and wood_rule["gre"], wood_rule
+    assert text_rule_of(tartu)["gre"] is False
+    assert text_rule_of(ai)["threshold"] == "kandideerimislävend 5, piirarv 45", text_rule_of(ai)
+    assert text_rule_of(energy)["gre"] is False, "«****» — новый план, а не GRE"
+    assert text_rule_of(maritime) is None, "нет порога — показывать нечего"
+    assert master_names_of(cyber["title"]) == (["Cybersecurity", "Küberturve"], False), master_names_of(cyber["title"])
+    assert master_names_of(wood["title"])[0] == ["Technology of Wood, Plastics and Textiles", "Puidu-, plasti- ja tekstiilitehnoloogia"]
+    assert master_names_of(tartu["title"])[0] == ["Tööstusökoloogia"], master_names_of(tartu["title"])
+    assert master_names_of(ai["title"])[0] == ["tehisintellekt äris"]
+    assert master_names_of(energy["title"]) == (["Energia- ja tööstussüsteemid"], True)
     print("ee_load_taltech_conditions selftest: ok")
 
 
@@ -323,37 +443,45 @@ def main() -> None:
     decision = decision_of(polite.fetch_text(DECISION_URL))
     with polite.open_url(decision["annex_url"]) as response:
         blocks = blocks_of(xlsx_rows(response.read()))
-    print(f"решение: {decision['source_title']}, {decision['decided_on']}; программ в приложении 1: {len(blocks)}")
+    with polite.open_url(decision["masters_url"]) as response:
+        masters = master_blocks_of(xlsx_rows(response.read()))
+    print(
+        f"решение: {decision['source_title']}, {decision['decided_on']}; "
+        f"программ в приложении 1: {len(blocks)}, в приложении 2: {len(masters)}"
+    )
 
     client = get_service_client()
     university = execute(client.table("university").select("id").eq("slug", "taltech")).data[0]["id"]
     programmes = fetch_all(
-        # В решении эстонские названия — у программ на эстонском; английские
-        # программы названы по-английски и с тестами, их правило не разбирается.
         lambda: client.table("programme")
-        .select("id, name_et, degree_level")
+        .select("id, name_et, degree_level, language_of_instruction")
         .eq("university_id", university)
-        .eq("language_of_instruction", "et")
         .order("id")
     )
+    # Приложение 1: эстонские названия — у программ на эстонском; английские
+    # программы названы по-английски и с тестами, их правило не разбирается.
+    # Приложение 2: у английских магистратур эстонское название стоит в
+    # скобках, поэтому язык обучения любой.
     by_name: dict[tuple[str, str], list[str]] = {}
+    masters_by_name: dict[str, list[str]] = {}
     for programme in programmes:
-        if programme["name_et"]:
+        if not programme["name_et"]:
+            continue
+        if programme["degree_level"] == "master":
+            masters_by_name.setdefault(normalized(programme["name_et"]), []).append(programme["id"])
+        elif programme["language_of_instruction"] == "et":
             by_name.setdefault((normalized(programme["name_et"]), programme["degree_level"]), []).append(programme["id"])
 
     now = datetime.now(timezone.utc).isoformat()
-    rows: list[dict] = []
-    for block in blocks:
-        name, new_curriculum = name_of(block["title"])
-        level = LEVELS.get(block["level"])
-        rule = rule_of(block)
-        ids = by_name.get((normalized(name), level or ""), [])
-        status = "правило" if rule else "не разобрано"
-        print(f"  {name} [{block['level']}]: {status}; в каталоге: {len(ids)}" + (" (новый учебный план)" if new_curriculum else ""))
-        if rule is None:
-            continue
+    rows: dict[str, dict] = {}
+
+    def add(ids: list[str], rule: dict, new_curriculum: bool) -> None:
         for programme_id in ids:
-            rows.append({
+            if programme_id in rows:
+                # две строки решения на одну программу — не угадываем, какая верна
+                print(f"    ! программа {programme_id} уже получила правило из другой строки — эта пропущена")
+                continue
+            rows[programme_id] = {
                 "programme_id": programme_id,
                 "academic_year": decision["academic_year"],
                 "rule": rule,
@@ -362,7 +490,27 @@ def main() -> None:
                 "source_title": decision["source_title"],
                 "decided_on": decision["decided_on"],
                 "extracted_at": now,
-            })
+            }
+
+    print("приложение 1:")
+    for block in blocks:
+        name, new_curriculum = name_of(block["title"])
+        level = LEVELS.get(block["level"])
+        rule = rule_of(block)
+        ids = by_name.get((normalized(name), level or ""), [])
+        status = "правило" if rule else "не разобрано"
+        print(f"  {name} [{block['level']}]: {status}; в каталоге: {len(ids)}" + (" (новый учебный план)" if new_curriculum else ""))
+        if rule is not None:
+            add(ids, rule, new_curriculum)
+    print("приложение 2:")
+    for block in masters:
+        names, new_curriculum = master_names_of(block["title"])
+        rule = text_rule_of(block)
+        ids = sorted({programme_id for name in names for programme_id in masters_by_name.get(normalized(name), [])})
+        status = "условия" if rule else "строка неполная"
+        print(f"  {' / '.join(names)}: {status}; в каталоге: {len(ids)}" + (" (новый учебный план)" if new_curriculum else ""))
+        if rule is not None:
+            add(ids, rule, new_curriculum)
     print(f"правил к записи: {len(rows)} (программ каталога)")
 
     if "--apply" not in args:
@@ -370,10 +518,10 @@ def main() -> None:
         print(polite.report_and_reset())
         return
     if rows:
-        execute(client.table("ee_next_rule").upsert(rows, on_conflict="programme_id,academic_year"))
+        execute(client.table("ee_next_rule").upsert(list(rows.values()), on_conflict="programme_id,academic_year"))
     # Правила этого года у программ TalTech, которых в решении больше нет
     # или которые теперь не разбираются, — удалить.
-    keep = {row["programme_id"] for row in rows}
+    keep = set(rows)
     stale = [p["id"] for p in programmes if p["id"] not in keep]
     for start in range(0, len(stale), 200):
         execute(

@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { parseRule } from "./ee-rule";
+import { parseRule, parseTextRule } from "./ee-rule";
 
 // Образцы — в той форме, в какой их пишет pipeline/src/ee_rules.py.
 const informatics = {
@@ -75,5 +75,40 @@ describe("правило конкурса эстонской программы"
     expect(parseRule({ ...logistics, ranking: false })).toBeNull();
     expect(parseRule({ ...logistics, guarantee: { math: 60, estonian: 50 } })).toBeNull();
     expect(parseRule({ ...logistics, places: 0 })).toBeNull();
+  });
+});
+
+describe("условия магистратуры текстом (модель text)", () => {
+  const raw = {
+    model: "text",
+    study_form: "P",
+    education: "kõrgharidus lähedasel erialal",
+    tests: "CV ja vestlus",
+    threshold: "5",
+    foreign_tests: "CV ja vestlus",
+    foreign_threshold: "5",
+    gre: true,
+  };
+
+  it("разбирает полное правило", () => {
+    expect(parseTextRule(raw)).toEqual({
+      model: "text",
+      studyForm: "P",
+      education: "kõrgharidus lähedasel erialal",
+      tests: "CV ja vestlus",
+      threshold: "5",
+      foreignTests: "CV ja vestlus",
+      foreignThreshold: "5",
+      gre: true,
+    });
+    expect(parseTextRule({ ...raw, foreign_tests: null, foreign_threshold: null })?.foreignTests).toBeNull();
+  });
+
+  it("незнакомое или неполное — не показывается", () => {
+    expect(parseTextRule({ ...raw, study_form: "X" })).toBeNull();
+    expect(parseTextRule({ ...raw, tests: "" })).toBeNull();
+    expect(parseTextRule({ ...raw, gre: "yes" })).toBeNull();
+    expect(parseTextRule({ ...raw, model: "thresholds" })).toBeNull();
+    expect(parseTextRule(null)).toBeNull();
   });
 });
