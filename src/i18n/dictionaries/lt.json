@@ -543,6 +543,12 @@
       "credit": "už kreditą"
     },
     "pastNote": "Tai ankstesnio priėmimo sąlygos; naujame priėmime jos gali skirtis.",
+    "next": {
+      "title": "Priėmimo sąlygos {year}",
+      "approved": "Patvirtino aukštosios mokyklos senatas {date}:",
+      "newCurriculum": "Nauja studijų programa: priėmimas vyks, tik jei ją įregistruos Estijos švietimo ir mokslo ministerija.",
+      "note": "Dėl priėmimo sprendžia aukštoji mokykla; slenksčiai – jos {year} m. m. priėmimo taisyklės. {year} m. m. konkursai SAIS bus paskelbti vėliau."
+    },
     "rule": {
       "scoreTitle": "Iš ko susideda konkursinis balas",
       "scoreIntro": "Kiekvienas rezultatas 0–100 balų skalėje dauginamas iš savo dalies, sandaugos sudedamos.",

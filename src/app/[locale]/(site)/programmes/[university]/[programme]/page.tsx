@@ -14,7 +14,7 @@ import { getVuppYear } from "@/lib/vupp-stat-queries";
 import { getLtFieldOutcome } from "@/lib/lt-field-outcome-queries";
 import { getEeProgrammeField } from "@/lib/ee-field-queries";
 import { admissionState, tallinnDate } from "@/lib/ee-admission";
-import { getEeAdmission } from "@/lib/ee-admission-queries";
+import { getEeAdmission, getEeNextRule } from "@/lib/ee-admission-queries";
 import { getEeVariants } from "@/lib/ee-variant-queries";
 import { variantLines, variantTexts } from "@/lib/ee-variants";
 import { getApplicationRoundsForCards } from "@/lib/deadline-queries";
@@ -41,6 +41,7 @@ import { LtAdmissionStats } from "@/components/LtAdmissionStats";
 import { VuppAdmissionStats } from "@/components/VuppAdmissionStats";
 import { LtFieldOutcome } from "@/components/LtFieldOutcome";
 import { EeAdmissionConditions } from "@/components/EeAdmissionConditions";
+import { EeNextRule } from "@/components/EeNextRule";
 import { ForeignCosts } from "@/components/ForeignCosts";
 import { ForeignDocuments } from "@/components/ForeignDocuments";
 import { ReportErrorLink } from "@/components/ReportErrorLink";
@@ -119,6 +120,9 @@ export default async function ProgrammePage({ params }: { params: Params }) {
   const eeAdmissionPromise = countryOf(locale) === "EE" ? getEeAdmission(record.id) : Promise.resolve(null);
   // Чем программа отличается от двойника — другой версии того же учебного плана.
   const eeVariantsPromise = countryOf(locale) === "EE" ? getEeVariants() : Promise.resolve(null);
+  // Условия приёма следующего года из решения вуза (пока TalTech) — до
+  // открытия конкурсов SAIS весной.
+  const eeNextRulePromise = countryOf(locale) === "EE" ? getEeNextRule(record.id) : Promise.resolve(null);
   // Цифры прошлого приёма из открытого набора LAMA BPO — тоже только у Литвы.
   const ltStatsPromise = countryOf(locale) === "LT" ? getLtAdmissionYear(record.id) : Promise.resolve(null);
   // Прошлогодний конкурс с statistika.vupp.lv — у Латвии, где связь программы
@@ -149,7 +153,7 @@ export default async function ProgrammePage({ params }: { params: Params }) {
     (cardCountry === "LT" || cardCountry === "EE") && record.language_of_instruction === "en"
       ? getDocumentRequirements(record.university_id, record.degree_level, cardCountry)
       : Promise.resolve([]);
-  const [formula, rounds, admissionType, outcome, channels, hasLtCalculator, ltField, ltStats, eeField, eeAdmission, vuppStats, foreign, ltDocuments, eeVariants] =
+  const [formula, rounds, admissionType, outcome, channels, hasLtCalculator, ltField, ltStats, eeField, eeAdmission, vuppStats, foreign, ltDocuments, eeVariants, eeNextRule] =
     await Promise.all([
       getFormula(record.id),
       getApplicationRoundsForCards(),
@@ -165,6 +169,7 @@ export default async function ProgrammePage({ params }: { params: Params }) {
       foreignPromise,
       ltDocumentsPromise,
       eeVariantsPromise,
+      eeNextRulePromise,
     ]);
   const variantNotes = variantLines(eeVariants?.[record.id], variantTexts(dict.catalog));
   // Действующий это конкурс или прошлый приём — по сроку (ee-admission.ts).
@@ -494,6 +499,8 @@ export default async function ProgrammePage({ params }: { params: Params }) {
           </>
         )}
       </section>
+
+      {eeNextRule && <EeNextRule dict={dict} language={language} next={eeNextRule} />}
 
       {eeAdmission && eeAdmissionState && (
         <EeAdmissionConditions dict={dict} language={language} admission={eeAdmission} state={eeAdmissionState} />

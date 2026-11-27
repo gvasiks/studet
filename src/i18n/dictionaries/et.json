@@ -543,6 +543,12 @@
       "credit": "ainepunkti eest"
     },
     "pastNote": "Need on eelmise vastuvõtu tingimused; uues vastuvõtus võivad need erineda.",
+    "next": {
+      "title": "Vastuvõtutingimused {year}",
+      "approved": "Kinnitatud kõrgkooli senati otsusega {date}:",
+      "newCurriculum": "Uus õppekava: vastuvõtt toimub juhul, kui Haridus- ja Teadusministeerium õppekava registreerib.",
+      "note": "Vastuvõtu üle otsustab kõrgkool; lävendid on tema {year}. õppeaasta vastuvõtutingimused. {year}. õppeaasta konkursid avatakse SAIS-is hiljem."
+    },
     "rule": {
       "scoreTitle": "Kuidas kujuneb konkursipunktide summa",
       "scoreIntro": "Iga tulemus 100-punktisel skaalal korrutatakse selle osakaaluga ja korrutised liidetakse.",

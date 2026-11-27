@@ -538,6 +538,12 @@
       "credit": "par kredītpunktu"
     },
     "pastNote": "Tie ir iepriekšējās uzņemšanas nosacījumi; jaunā uzņemšanā tie var atšķirties.",
+    "next": {
+      "title": "Uzņemšanas nosacījumi {year}",
+      "approved": "Augstskolas senāts apstiprinājis {date}:",
+      "newCurriculum": "Jauna studiju programma: uzņemšana notiks tikai tad, ja to reģistrēs Igaunijas Izglītības un pētniecības ministrija.",
+      "note": "Par uzņemšanu lemj augstskola; sliekšņi ir tās uzņemšanas noteikumi {year} mācību gadam. Konkursi {year} mācību gadam SAIS tiks atvērti vēlāk."
+    },
     "rule": {
       "scoreTitle": "No kā veidojas konkursa punkti",
       "scoreIntro": "Katru rezultātu 0–100 punktu skalā reizina ar tā daļu, reizinājumus saskaita.",
