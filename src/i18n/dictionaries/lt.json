@@ -113,6 +113,7 @@
     "variantAdmission": "Konkursas SAIS: {year}",
     "variantAdmissionUndated": "Konkursas SAIS be datų",
     "variantNoAdmission": "Konkurso SAIS nėra",
+    "variantPortalYear": "Į Haridusportaal įtraukta {year} m.",
     "clear": "Išvalyti",
     "openFilters": "Filtrai",
     "filtersSummary": "Rodoma pagal filtrą:",

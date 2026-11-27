@@ -113,6 +113,7 @@
     "variantAdmission": "Admission round in SAIS: {year}",
     "variantAdmissionUndated": "Admission round in SAIS, no dates",
     "variantNoAdmission": "No admission round in SAIS",
+    "variantPortalYear": "Added to Haridusportaal in {year}",
     "clear": "Clear",
     "openFilters": "Filters",
     "filtersSummary": "Shown by filter:",

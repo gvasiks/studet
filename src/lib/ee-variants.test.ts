@@ -10,6 +10,7 @@ const texts = {
   admission: "SAIS {year}",
   admissionUndated: "SAIS, no dates",
   noAdmission: "No SAIS round",
+  portalYear: "Portal {year}",
 };
 
 describe("версии одного учебного плана у эстонских программ", () => {
@@ -89,6 +90,29 @@ describe("версии одного учебного плана у эстонс�
     expect(variantLines({ specialization: "x", admission: { year: 2026 } }, texts)).toEqual(["Specialisation: x", "SAIS 2026"]);
     expect(variantLines({ admission: "none" }, texts)).toEqual(["No SAIS round"]);
     expect(variantLines({ admission: { year: null } }, texts)).toEqual(["SAIS, no dates"]);
+  });
+
+  it("год записи на портале — только если остальное не различает", () => {
+    const years = new Map([
+      ["a", 2018],
+      ["b", 2021],
+      ["c", 2018],
+      ["d", 2023],
+    ]);
+    const same = eeVariants([programme("a", "Ehitus"), programme("b", "Ehitus")], new Map(), new Map(), years);
+    expect(same.get("a")).toEqual({ portalYear: 2018 });
+    expect(same.get("b")).toEqual({ portalYear: 2021 });
+    // конкурс уже различает — год не добавляется
+    const byAdmission = eeVariants(
+      [programme("c", "Bioloogia"), programme("d", "Bioloogia")],
+      new Map(),
+      new Map([["d", { year: 2026 }]]),
+      years,
+    );
+    expect(byAdmission.get("c")).toEqual({ admission: "none" });
+    // год одинаковый — не различает
+    expect(eeVariants([programme("a", "Ehitus"), programme("c", "Ehitus")], new Map(), new Map(), years).size).toBe(0);
+    expect(variantLines({ portalYear: 2018 }, texts)).toEqual(["Portal 2018"]);
   });
 
   it("длинная специализация на карточке обрезается по слову, на странице — нет", () => {

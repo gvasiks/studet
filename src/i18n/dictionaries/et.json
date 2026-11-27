@@ -113,6 +113,7 @@
     "variantAdmission": "Konkurss SAIS-is: {year}",
     "variantAdmissionUndated": "Konkurss SAIS-is ilma kuupäevadeta",
     "variantNoAdmission": "SAIS-is konkurssi pole",
+    "variantPortalYear": "Haridusportaali lisatud {year}",
     "clear": "Tühjenda",
     "openFilters": "Filtrid",
     "filtersSummary": "Näidatud filtri järgi:",

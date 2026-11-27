@@ -115,6 +115,7 @@
     "variantAdmission": "Konkurss SAIS: {year}",
     "variantAdmissionUndated": "Konkurss SAIS bez datumiem",
     "variantNoAdmission": "Konkursa SAIS nav",
+    "variantPortalYear": "Haridusportaal pievienots {year}. gadā",
     "clear": "Notīrīt",
     "openFilters": "Filtri",
     "filters": {

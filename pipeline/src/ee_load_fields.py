@@ -11,7 +11,10 @@
 пишется специализация (fieldSpecialization) — по ней на сайте различаются
 версии одного учебного плана; колонка — миграция
 20261123130000_ee_programme_specialization.sql. Пока она не применена,
-направления записываются без специализации.
+направления записываются без специализации. С 2026-11-27 — и дата, когда
+запись появилась на портале (created): различает двойников, у которых
+специализация и конкурс одинаковые; миграция
+20261127120000_ee_programme_portal_created.sql.
 
 Запуск:
   python src/ee_load_fields.py --selftest
@@ -47,6 +50,22 @@ def specialization_of(record: dict) -> str | None:
     return None if value.lower() in NO_SPECIALIZATION else value
 
 
+def portal_created_at(record: dict) -> str | None:
+    """Поле created портала — секунды Unix строкой -> время ISO по UTC."""
+    value = str(record.get("created") or "").strip()
+    if not value.isdigit():
+        return None
+    return datetime.fromtimestamp(int(value), tz=timezone.utc).isoformat()
+
+
+# Колонки из поздних миграций: если миграция ещё не применена, загрузчик пишет
+# без колонки и подсказывает, какую миграцию применить.
+OPTIONAL_COLUMNS = {
+    "specialization": "20261123130000",
+    "portal_created_at": "20261127120000",
+}
+
+
 def fields_by_slug(records: list[dict]) -> tuple[dict[tuple[str, str], dict], int]:
     """(код учреждения, код программы) -> направление. Второе значение —
     сколько строк каталога осталось без направления (портал его не назвал)."""
@@ -66,6 +85,7 @@ def fields_by_slug(records: list[dict]) -> tuple[dict[tuple[str, str], dict], in
                 "field_name": narrow[1],
                 "detailed_name": detailed[1] if detailed else None,
                 "specialization": specialization_of(record),
+                "portal_created_at": portal_created_at(record),
                 "source_url": PORTAL + str(record["path"]),
             }
     return result, without
@@ -98,7 +118,8 @@ def _selftest() -> None:
                    fieldIscedfBoard={"2525": "IKT"}, fieldIscedfNarrow={"2526": "IKT"}, fieldIscedfDetailed=[]),
             # направления нет — строка без него
             record("3", "/erialad/keemia", fieldIscedfNarrow=[]),
-            record("4", "/erialad/ajakirjandus", title="Ajakirjandus", fieldSpecialization=" televisioon ja meedia "),
+            record("4", "/erialad/ajakirjandus", title="Ajakirjandus", fieldSpecialization=" televisioon ja meedia ",
+                   created="1537776980"),
             record("5", "/erialad/ajakirjandus-0", title="Ajakirjandus", fieldSpecialization="määramata"),
         ]
     )
@@ -109,6 +130,9 @@ def _selftest() -> None:
     assert fields[("ut", "ajakirjandus")]["specialization"] == "televisioon ja meedia"
     assert fields[("ut", "ajakirjandus-0")]["specialization"] is None
     assert fields[("ut", "oigusteadus")]["specialization"] is None
+    assert fields[("ut", "ajakirjandus")]["portal_created_at"] == "2018-09-24T08:16:20+00:00"
+    assert fields[("ut", "oigusteadus")]["portal_created_at"] is None
+    assert portal_created_at({"created": "abc"}) is None
     law = fields[("ut", "oigusteadus")]
     assert (law["field_code"], law["field_name"], law["broad_name"], law["detailed_name"]) == ("2481", "Õigus", "Ärindus, haldus ja õigus", "Õigus")
     assert law["source_url"] == "https://haridusportaal.edu.ee/erialad/%C3%B5igusteadus"
@@ -157,18 +181,21 @@ def main() -> None:
     for row in rows:
         row["extracted_at"] = now
     print("со специализацией:", sum(1 for row in rows if row["specialization"]))
+    print("с датой записи на портале:", sum(1 for row in rows if row["portal_created_at"]))
     for start in range(0, len(rows), 500):
         batch = rows[start : start + 500]
-        try:
-            execute(client.table("ee_programme_field").upsert(batch, on_conflict="programme_id"))
-        except Exception as error:
-            # Колонки ещё нет (миграция не применена) — пишем без неё.
-            if "specialization" not in str(error):
-                raise
-            print("колонки specialization ещё нет — примените миграцию 20261123130000 в Studio; пишу без неё")
-            for row in rows:
-                row.pop("specialization", None)
-            execute(client.table("ee_programme_field").upsert(batch, on_conflict="programme_id"))
+        while True:
+            try:
+                execute(client.table("ee_programme_field").upsert(batch, on_conflict="programme_id"))
+                break
+            except Exception as error:
+                # Колонки ещё нет (миграция не применена) — пишем без неё.
+                column = next((c for c in OPTIONAL_COLUMNS if c in str(error) and c in batch[0]), None)
+                if column is None:
+                    raise
+                print(f"колонки {column} ещё нет — примените миграцию {OPTIONAL_COLUMNS[column]} в Studio; пишу без неё")
+                for row in rows:
+                    row.pop(column, None)
     print(f"записано: {len(rows)}")
     print(polite.report_and_reset())
 
