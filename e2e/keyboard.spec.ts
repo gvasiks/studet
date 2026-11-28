@@ -234,3 +234,29 @@ for (const path of ["/en-lv/student-permit", "/lv/student-permit", "/en-lv/stude
     }
   });
 }
+
+// Эстонское «куда можно поступить» (2026-11-28): пороги TalTech 2027/28.
+// Результаты вводятся с клавиатуры, вид математики меняется стрелкой; после
+// ввода — группы по правилу владельца, и при узкой математике программы
+// уходят в «нужна широкая математика». axe — уже на заполненной форме.
+test("Эстония, «куда можно поступить»: ввод с клавиатуры и группы по порогам", async ({ page }) => {
+  const text = (JSON.parse(readFileSync("src/i18n/dictionaries/en.json", "utf8")) as {
+    eeMatch: { math: string; estonian: string; status: Record<string, string> };
+  }).eeMatch;
+  await page.goto("/en-ee/match");
+  await tabTo(page, () => document.activeElement?.getAttribute("aria-label") === "Mathematics state exam");
+  await page.keyboard.type("70");
+  await tabTo(page, () => document.activeElement?.getAttribute("aria-label") === "Estonian state exam");
+  await page.keyboard.type("62");
+  const results = page.locator('section[aria-labelledby="ee-match-results"]');
+  await expect(results.getByRole("heading", { name: new RegExp(text.status.applyPassed) })).toBeVisible();
+  const { default: AxeBuilder } = await import("@axe-core/playwright");
+  const axe = await new AxeBuilder({ page }).analyze();
+  expect(axe.violations, JSON.stringify(axe.violations, null, 2)).toEqual([]);
+
+  // узкая математика: стрелкой с «широкой» на «узкую»
+  await page.getByRole("radio", { name: /advanced/ }).focus();
+  await page.keyboard.press("ArrowRight");
+  await expect(results.getByRole("heading", { name: new RegExp(text.status.wideMathRequired) })).toBeVisible();
+  await expect(results.getByRole("heading", { name: new RegExp(text.status.applyPassed) })).toHaveCount(0);
+});

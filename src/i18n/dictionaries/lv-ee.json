@@ -457,5 +457,8 @@
   "studentDocuments": {
     "intro": "Ko Igaunijas augstskolas prasa ārvalstu reflektantiem angļu valodā īstenotās bakalaura un profesionālās augstākās izglītības studijās: dokumenti pa posmiem. Saraksti savākti automātiski no augstskolu lapām — pirms pieteikšanās tie jāpārbauda tur. Atzīmes tiek saglabātas tikai šajā pārlūkā, un tās ir tās pašas, kas programmas lapā.",
     "empty": "Dokumentu sarakstu vēl nav."
+  },
+  "match": {
+    "intro": "Ievadītos valsts eksāmenu rezultātus salīdzina ar sliekšņiem augstskolu uzņemšanas noteikumos nākamajam mācību gadam. Pagaidām tikai TalTech."
   }
 }

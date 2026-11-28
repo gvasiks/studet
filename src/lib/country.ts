@@ -123,7 +123,8 @@ const profiles: Record<Country, CountryProfile> = {
   // языках. Расчёта балла и «куда можно поступить» пока нет. Путь ВНЖ и
   // (с 2026-11-21) документы для иностранцев — как у Литвы, автоматически.
   EE: {
-    features: ["favorites", "survey", "glossary", "rights", "privacy", "studentPermit", "studentDocuments"],
+    // match — пороги правил приёма следующего года, пока TalTech 2027/28 (2026-11-28)
+    features: ["favorites", "survey", "match", "glossary", "rights", "privacy", "studentPermit", "studentDocuments"],
     filters: ["interest"],
     surveySteps: ["interests", "levelDuration", "city", "language", "kind"],
     levels: ["bachelor", "master", "doctoral", "college", "integrated"],

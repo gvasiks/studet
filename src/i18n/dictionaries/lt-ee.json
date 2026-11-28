@@ -460,5 +460,8 @@
   "studentDocuments": {
     "intro": "Ko Estijos aukštosios mokyklos prašo užsienio stojančiųjų į anglų kalba dėstomas bakalauro ir profesinio aukštojo mokslo studijas: dokumentai pagal etapus. Sąrašai surinkti automatiškai iš aukštųjų mokyklų puslapių – prieš teikdami prašymą, pasitikrinkite juose. Jūsų žymės išsaugomos tik šioje naršyklėje ir sutampa su žymėmis programos puslapyje.",
     "empty": "Dokumentų sąrašų dar nėra."
+  },
+  "match": {
+    "intro": "Įveskite valstybinių egzaminų rezultatus – palyginsime juos su slenksčiais aukštųjų mokyklų kitų mokslo metų priėmimo taisyklėse. Kol kas tik TalTech."
   }
 }

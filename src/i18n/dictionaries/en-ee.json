@@ -457,5 +457,8 @@
   "studentDocuments": {
     "intro": "What Estonian higher education institutions ask international applicants for in English-taught bachelor's and professional higher education studies: documents by stage. The lists were collected automatically from the institutions' pages — check them before applying. Your ticks are saved only in this browser and are the same as on the programme pages.",
     "empty": "No document lists yet."
+  },
+  "match": {
+    "intro": "Enter your state exam results to compare them with the thresholds in the universities' admission rules for the next academic year. So far only TalTech."
   }
 }

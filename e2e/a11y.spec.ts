@@ -140,8 +140,10 @@ const LT_ROUTES = [
   "/en-ee/rights",
   "/en-ee/privacy",
   "/lt-ee/glossary",
-  // «куда можно поступить» у Эстонии ещё нет — страница «не найдено»
+  // «куда можно поступить» у Эстонии — пороги TalTech 2027/28 (с 2026-11-28);
+  // заполненная форма проверяется в keyboard.spec.ts
   "/et/match",
+  "/lv-ee/match",
 ];
 
 for (const route of LT_ROUTES) {

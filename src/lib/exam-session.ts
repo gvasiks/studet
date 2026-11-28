@@ -128,3 +128,16 @@ export function isLtExamInput(value: unknown): value is { score: string; course:
   const { score, course } = value as Record<string, unknown>;
   return typeof score === "string" && score.length <= MAX_LENGTH && (course === "A" || course === "B");
 }
+
+const EE_KINDS: readonly unknown[] = ["wide", "narrow", "native", "second", "none", "B1", "B2", "C1", ""];
+
+/**
+ * Поле эстонского экзамена: результат и вид — «широкая / узкая» у математики,
+ * «эстонский / эстонский как второй» у эстонского, у английского — уровень
+ * (результат пустой; "" — уровень не выбран).
+ */
+export function isEeExamInput(value: unknown): value is { score: string; kind: string } {
+  if (value === null || typeof value !== "object") return false;
+  const { score, kind } = value as Record<string, unknown>;
+  return typeof score === "string" && score.length <= MAX_LENGTH && EE_KINDS.includes(kind);
+}
